@@ -82,6 +82,44 @@ def test_request(config, logical_id):
     assert len(body["messages"]) == 2
 
 
+@pytest.mark.parametrize("logical_id", ["E1", "E2", "E2E-E"])
+def test_extraction_prompt_contract(config, logical_id):
+    prompt = q.request_body(config, logical_id)["messages"][0]["content"]
+    assert 'propositions explicitly stated by the input' in prompt
+    assert ('When the input explicitly states one current fact, do not omit that fact '
+            'or return an empty memory list.') in prompt
+    assert ('When the input describes a change from an old value to a new value, '
+            'return only the new/current value.') in prompt
+    assert 'Superseded historical values must not be returned as current.' in prompt
+    assert 'For these qualification calls, return exactly one current MemoryItem.' in prompt
+    assert 'Use snake_case attribute names.' in prompt
+    assert '{"memories":[{"entity":"...","attribute":"...","value":"..."}]}' in prompt
+
+
+@pytest.mark.parametrize("logical_id", ["M1", "M2", "M3", "E2E-M"])
+def test_maintenance_prompt_contract(config, logical_id):
+    prompt = q.request_body(config, logical_id, candidate=q.memory("cobalt"),
+                            active=q.active_memory("amber"))["messages"][0]["content"]
+    assert "Match active memory using the candidate's (entity, attribute) pair." in prompt
+    assert 'If no active entry has that pair, choose "add" with "target_id": null.' in prompt
+    assert ('If an active entry has that pair and its current value is different from the '
+            'candidate value, choose "update" with "target_id" set to the matching active memory ID.') in prompt
+    assert ('If an active entry has that pair and its current value is the same as the '
+            'candidate value, choose "noop" with "target_id": null.') in prompt
+    assert 'The existence of the same entity-attribute pair alone does not imply noop.' in prompt
+    assert ('Noop is valid only when the existing current value and candidate value are '
+            'the same; changed value means update.') in prompt
+
+
+@pytest.mark.parametrize("logical_id", q.LOGICAL_IDS)
+def test_system_prompts_do_not_embed_fixture_answers(config, logical_id):
+    prompt = q.request_body(config, logical_id, candidate=q.memory("cobalt"),
+                            active=q.active_memory("amber"))["messages"][0]["content"].casefold()
+    forbidden = [*q.memory("cobalt").values(), "amber", "mem-1", q.MODEL, q.PROVIDER,
+                 "expected answer", "expected decision", "pass/fail", "hu et al."]
+    assert all(word.casefold() not in prompt for word in forbidden)
+
+
 @pytest.mark.parametrize("data", [
     {"memories": []}, {"memories": [q.memory("cobalt"), q.memory("amber")]},
     {"memories": [{**q.memory("cobalt"), "id": "x"}]},

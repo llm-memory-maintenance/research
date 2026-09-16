@@ -100,15 +100,24 @@ def active_memory(value):
 
 
 EXTRACTION_PROMPT = (
-    'Extract only current entity-attribute-value propositions. Do not return superseded '
-    'historical values as current. Return JSON: {"memories":[{"entity":"...",'
+    'Extract current entity-attribute-value propositions explicitly stated by the input. '
+    'When the input explicitly states one current fact, do not omit that fact or return '
+    'an empty memory list. When the input describes a change from an old value to a new '
+    'value, return only the new/current value. Superseded historical values must not be '
+    'returned as current. For these qualification calls, return exactly one current '
+    'MemoryItem. Return JSON: {"memories":[{"entity":"...",'
     '"attribute":"...","value":"..."}]}. Use snake_case attribute names.'
 )
 MAINTENANCE_PROMPT = (
-    'Add when no entity-attribute memory exists. Update when the same entity-attribute '
-    'exists with a different current value. Noop when the same entity-attribute already '
-    'has the candidate current value. Return JSON with "operation" ("add", "update", '
-    'or "noop") and "target_id" (the existing memory ID for update, otherwise null).'
+    "Match active memory using the candidate's (entity, attribute) pair. "
+    'If no active entry has that pair, choose "add" with "target_id": null. '
+    'If an active entry has that pair and its current value is different from the '
+    'candidate value, choose "update" with "target_id" set to the matching active memory ID. '
+    'If an active entry has that pair and its current value is the same as the candidate '
+    'value, choose "noop" with "target_id": null. The existence of the same entity-attribute '
+    'pair alone does not imply noop. Noop is valid only when the existing current value '
+    'and candidate value are the same; changed value means update. '
+    'Return JSON with "operation" ("add", "update", or "noop") and "target_id".'
 )
 ANSWER_PROMPT = (
     'Answer using supplied active memory only. Return the canonical value in JSON: '
