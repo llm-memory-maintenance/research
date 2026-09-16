@@ -1,0 +1,150 @@
+{
+  "abs_overlap": 6,
+  "administrative_gaps": [
+    "Reviewer identities and actual review dates not supplied",
+    "Dedicated validation-set Git commit/tag not created"
+  ],
+  "artifact_version": "1.0",
+  "calibration_non_overlap_rule": "All future retrieval/model calibration must use data separated from the 56 IDs in frozen_usable_ids.json; no calibration was performed during this freeze.",
+  "candidate_N": 72,
+  "checkpoint": "LongMemEvalAudit v1.0",
+  "checks": {
+    "accepted_stage_a_b_preserved": true,
+    "all_sixteen_excludes_absent": true,
+    "candidate_partition": true,
+    "canonical_order": true,
+    "code_counts": true,
+    "first_review_decisions_unchanged": true,
+    "pending_zero": true,
+    "raw_unchanged": true,
+    "two_human_includes_present": true
+  },
+  "eligibility_statement": "Eligibility and ordered external-validation IDs were frozen before M1/M2/M3 policy outcomes were inspected; no policy outputs were accessed or run.",
+  "excluded_N": 16,
+  "exclusion_count_by_code": {
+    "E01_WRONG_OR_INVALID_KU_SEMANTICS": 8,
+    "E03_SUPERSEDED_EVIDENCE_UNTRACEABLE": 4,
+    "E05_CURRENT_STATE_AMBIGUOUS": 1,
+    "E06_GOLD_INCONSISTENT_WITH_CURRENT_STATE": 2,
+    "E07_ANNOTATION_CONFLICT": 1
+  },
+  "final_aggregate_sha256": {
+    "aggregate_summary.json": "39c68cf4d2e67495c087fbedf0dfcfb954306f84428943608abbd5fa7f76b038",
+    "aggregate_summary.md": "04c78d6fc05a9c04d0b89dcaafbfa9c1fa4d586b7032a580124123b4d9662495"
+  },
+  "final_usable_N": 56,
+  "freeze_artifact_git_commit": null,
+  "freeze_timestamp_utc": "2026-09-12T16:24:03.604794+00:00",
+  "git_commit": "bc157e09ab797ea8d4e8a61cb4bcdbf330a44580",
+  "git_commit_scope": "Pre-freeze repository HEAD, not a commit containing the new freeze artifacts.",
+  "human_include_N": 2,
+  "inclusion_exclusion_artifact_sha256": {
+    "exclusions.json": "4c56d5699cabee19a7a63a0d702d059c970de765a44874470a6bb3caa4ae973b",
+    "frozen_usable_ids.json": "44da19001c42694a465bdc86069fdedfe1c25e5f30b7d6e547f934e4fe861faa",
+    "human_adjudication.jsonl": "ecd69485ef4a434839ebeb06d965bdc5aef2e8a944e850465483d1b260dad857",
+    "second_review_queue.json": "af9903e30ef9a4b08928fad71df6a666dd5937ed13cabd2e7d1d66eb6116c98c"
+  },
+  "machine_clean_N": 54,
+  "metadata_handling": "Missing fields remain null; only the supplied agreement statement is recorded. Freeze explicitly authorized by user with missing reviewer/date metadata.",
+  "methodology_sha256": {
+    "00_CURRENT_STATE__Skripsi_LLM_Memory__LongMemEvalAudit_v1.0__2026-09-12.md": "2985f4f183862150709be0d11ed48df71483c0fc528cda84c7a04e8e76314caf",
+    "20_RESEARCH_CONTEXT__LongMemEvalAudit_v1.0__2026-09-12.md": "a4037afea799027d216992a8c5bb866c5efe3a11c12b229eb0b9753bb21dffb6",
+    "21_RESEARCH_DECISIONS__LongMemEvalAudit_v1.0__2026-09-12.md": "df4bbb8e1eb10675168fe83d61b35b7e0339687957868ce08d29d1100895f09e",
+    "22_EXPERIMENT_SPEC__LongMemEvalAudit_v1.0__2026-09-12.md": "5fa4f5a3415caa4bb5df3e660b02be4fbf226cf642689a0af4d53cd7d4bff62a",
+    "23_DATASET_SPEC__LongMemEvalAudit_v1.0__2026-09-12.md": "3be10ee150b57c76876e85e26029b9785c0d9b2c6c56bcb8fd4a1c51553eafac",
+    "24_STATISTICAL_ANALYSIS__LongMemEvalAudit_v1.0__2026-09-12.md": "ded02b73e017531be3d49e678258ca70e25458c04b8f45b8e5745a759d84d386",
+    "40_LONGMEMEVAL_DATA_AUDIT_PROTOCOL__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "15b98ac96757497d06e6a4b729b4f30077539daa2cd22a06b87f833867d3c2ee",
+    "41_LONGMEMEVAL_DATA_SOURCE_MANIFEST__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "e03fa20aff150be97a702a4c92ae9d71b20da584858eb667ce85e32131a44f65",
+    "42_LONGMEMEVAL_CONFORMANCE_REPORT_SPEC__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "6c5caefe43edef524f933bccd755f658e5ae1a8b44c83a95a3d6488f94f5a74e",
+    "50_PRESEMPRO_WORKFLOW__LongMemEvalAudit_v1.0__2026-09-12.md": "b45e674057c7fe34b9af67621f29214e1ad72a568792b8638c2f9e27ab27e6e4",
+    "README.md": "f0adc437e39da884068002932f748e4c9df3757ecbf7923e0321180eb8059cca",
+    "SOURCE_SYNC_MANIFEST__LongMemEvalAudit_v1.0__2026-09-12.md": "1e3dc363862f718d5be32cd43a943b355a3d7db3eadf49578681edec11d9a873"
+  },
+  "missing_metadata": {
+    "actual_first_review_dates": true,
+    "actual_second_review_dates": true,
+    "first_reviewer_identity": true,
+    "per_unit_second_review_rationale": true,
+    "second_reviewer_identity": true
+  },
+  "naming_refactor_provenance": {
+    "audit_results_and_frozen_membership_unchanged": true,
+    "historical_hash_scope": "Execution-time tool, input, prompt, embedded provenance, pre-freeze aggregate, and pre-sync methodology hashes remain historical byte hashes. Their path labels use the current names; they do not assert equality to renamed current bytes.",
+    "pre_rename_artifact_sha256": {
+      "aggregate_summary.json": "d12f5c7d0bf270ceeae9b2fa0e41719842a6a8eccae6aef07c96b608b612dc80",
+      "aggregate_summary.md": "1d080ba5d70e64e14035cfbcdaa593073e72880fe129dae5c6823fcc20101838",
+      "analysis_packets.jsonl": "05628fbe06da20ae2ac68c7b063e2882cff7a4fb744ee90c78d89241a0039d68",
+      "broader_history_searches.json": "fc3f29f043298c47ca6a261cb30e1609a0993e09dc85d18735f7f211bcb3bf14",
+      "conformance_units.jsonl": "7bcf0830384b001c361ecb9ca100841ae6d4a864659b5137326329d94b287d74",
+      "deterministic_units.jsonl": "85369de4473062496245f499d392dd443ef8eeaf5b4bd2fde31864a5bdab765f",
+      "exclusions.json": "39c9e76743b8ced43efaa14733d370e4b922fc0016d80970e92cf24bea2d5ea6",
+      "findings.json": "1f64116edeeed5150c70dc86040b029809be2c200141d11a7574b7a6bf280fa9",
+      "frozen_usable_ids.json": "19933f9c98eecb8337fb0895284e56ff93a538b3bee6f50bbee9d8fdc1340780",
+      "human_adjudication.jsonl": "ecd69485ef4a434839ebeb06d965bdc5aef2e8a944e850465483d1b260dad857",
+      "human_review_packets.md": "f44dd6a727af30928157fecad7a86e67ed2701b2bc3f789f0e27f329f4fba5c6",
+      "human_review_queue.json": "b9d676e5432e9efd7a06c607e2439182cea61de5749f87093d28ee98408d350e",
+      "second_review_packets.md": "251ba57735216fe6b81e8399c9130cdb1e9e5bfa183cae401693f74d32f85c4c",
+      "second_review_queue.json": "af9903e30ef9a4b08928fad71df6a666dd5937ed13cabd2e7d1d66eb6116c98c",
+      "semantic_assessments.jsonl": "22cdf56ef48f49e9bf06a5d87ee74316f152f60bb4240106774298bf2b738f58",
+      "source_verification.json": "2570abb3a2fd144b5e6fdfb34227d065e3e3f6c5f18225e7dbe2b8037d39146e",
+      "stage_a_report.md": "d2d49c37afae1ab949786994b75bb766cc28619f310a3fc0bc82b32fcb22420e",
+      "stage_b_provenance.json": "15977584ee67c632d7e24980a0f0cca90009ce410044c4531c353cfda6f5aa71",
+      "validation_set_freeze_manifest.json": "399225092e8f874b882f89c0aa3b5da582b4888e1b03d93ab0f23d9c4c9c0dad"
+    },
+    "scope": "Checkpoint labels, filenames, artifact directory references, and dependent current-file hashes only; no audit stage rerun."
+  },
+  "pending_N": 0,
+  "policy_outputs_accessed": false,
+  "pre_freeze_aggregate_sha256": {
+    "aggregate_summary.json": "318d79970aa6e986207a0c139ff2eb97ddb4f4361bce776bbe4c106eb3da599a",
+    "aggregate_summary.md": "9180f0609b898f17a6e4d292021c585e5b0f6b58f9403361029f3eaab2fc4359"
+  },
+  "pre_sync_methodology_sha256": {
+    "00_CURRENT_STATE__Skripsi_LLM_Memory__LongMemEvalAudit_v1.0__2026-09-12.md": "22cbbd310789931f8f3f60428f6070aee7f296ffc42e42521ccbbc807d3f9500",
+    "20_RESEARCH_CONTEXT__LongMemEvalAudit_v1.0__2026-09-12.md": "f8042b4278741b662d8079e62ce79b12399bec8c7a2e2977d66f4608b0441560",
+    "21_RESEARCH_DECISIONS__LongMemEvalAudit_v1.0__2026-09-12.md": "4cb56a01b7c57bc27d175fe335d4ca88047b29ecf4b96bdc567da7545392a2f5",
+    "22_EXPERIMENT_SPEC__LongMemEvalAudit_v1.0__2026-09-12.md": "772aff0d2fd2e122ad6c293d4b7091e46075fa8e1e6f385343c5d1a9e5ffd605",
+    "23_DATASET_SPEC__LongMemEvalAudit_v1.0__2026-09-12.md": "a8c8fd53881ddb714dc08a5fa54ca39d83f0c577dc23e827d306a8a2b84b185b",
+    "24_STATISTICAL_ANALYSIS__LongMemEvalAudit_v1.0__2026-09-12.md": "29eeb27be78d015127054df3202874540d51e46c8f2e1af1fe2acd0b508b0a42",
+    "40_LONGMEMEVAL_DATA_AUDIT_PROTOCOL__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "88768f314fb7b9dcec4c761e900b4b59315280230fd962a55b6548bd7990cd8b",
+    "41_LONGMEMEVAL_DATA_SOURCE_MANIFEST__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "a975ad60d0065054ab8795975cdc4c7805e844cfbeaee2f6d3b0204f76935647",
+    "42_LONGMEMEVAL_CONFORMANCE_REPORT_SPEC__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "8a1ee164080182f5a1a88d14d57b1fdd9666399bd08b6de8bc7c775534c400fb",
+    "50_PRESEMPRO_WORKFLOW__LongMemEvalAudit_v1.0__2026-09-12.md": "fc60827b7348dd35ff6b920d6aa9112546d5e4af64f0b42e7c5587de3c20dde2",
+    "README.md": "448bfd67efbe0971f9449fc252fca9db31f32c5d9a23dd9176be244333988e7b",
+    "SOURCE_SYNC_MANIFEST__LongMemEvalAudit_v1.0__2026-09-12.md": "57fd8796dacb99b6b422ba9b0f1e7e684bd6fe050ce6be62f00af508e39d461a"
+  },
+  "preserved_artifact_sha256": {
+    "analysis_packets.jsonl": "05628fbe06da20ae2ac68c7b063e2882cff7a4fb744ee90c78d89241a0039d68",
+    "broader_history_searches.json": "fc3f29f043298c47ca6a261cb30e1609a0993e09dc85d18735f7f211bcb3bf14",
+    "conformance_units.jsonl": "7bcf0830384b001c361ecb9ca100841ae6d4a864659b5137326329d94b287d74",
+    "deterministic_units.jsonl": "85369de4473062496245f499d392dd443ef8eeaf5b4bd2fde31864a5bdab765f",
+    "findings.json": "1f64116edeeed5150c70dc86040b029809be2c200141d11a7574b7a6bf280fa9",
+    "human_review_packets.md": "17ffb3968fb691b564fb274c0972ae355513661fd801c3212e9ec7d91f97a9d2",
+    "human_review_queue.json": "b9d676e5432e9efd7a06c607e2439182cea61de5749f87093d28ee98408d350e",
+    "second_review_packets.md": "251ba57735216fe6b81e8399c9130cdb1e9e5bfa183cae401693f74d32f85c4c",
+    "semantic_assessments.jsonl": "22cdf56ef48f49e9bf06a5d87ee74316f152f60bb4240106774298bf2b738f58",
+    "source_verification.json": "83da3ee32ae865861c7ec040a3bf531a82964487aba1fab1a4fd96045589bb75",
+    "stage_a_report.md": "219e41bf0e23e8da7087573658e418d2e889263f8c0ebd0afd90aaaee4776a30",
+    "stage_b_provenance.json": "195d5adb42115edaadaa854351235f17092573217748e7645c78fa4d2fa3abee"
+  },
+  "raw_KU_N": 78,
+  "raw_dataset_byte_size": 277383467,
+  "raw_dataset_sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+  "remaining_eligibility_freeze_conditions": [],
+  "review_confirmation_source": "User confirms independent blinded second review agreed with all 16 first-review exclusions and authorizes final freeze.",
+  "stage_a_artifact_sha256": {
+    "deterministic_units.jsonl": "85369de4473062496245f499d392dd443ef8eeaf5b4bd2fde31864a5bdab765f",
+    "source_verification.json": "83da3ee32ae865861c7ec040a3bf531a82964487aba1fab1a4fd96045589bb75",
+    "stage_a_report.md": "219e41bf0e23e8da7087573658e418d2e889263f8c0ebd0afd90aaaee4776a30"
+  },
+  "stage_b_artifact_sha256": {
+    "analysis_packets.jsonl": "05628fbe06da20ae2ac68c7b063e2882cff7a4fb744ee90c78d89241a0039d68",
+    "broader_history_searches.json": "fc3f29f043298c47ca6a261cb30e1609a0993e09dc85d18735f7f211bcb3bf14",
+    "conformance_units.jsonl": "7bcf0830384b001c361ecb9ca100841ae6d4a864659b5137326329d94b287d74",
+    "findings.json": "1f64116edeeed5150c70dc86040b029809be2c200141d11a7574b7a6bf280fa9",
+    "semantic_assessments.jsonl": "22cdf56ef48f49e9bf06a5d87ee74316f152f60bb4240106774298bf2b738f58",
+    "stage_b_provenance.json": "195d5adb42115edaadaa854351235f17092573217748e7645c78fa4d2fa3abee"
+  },
+  "status": "FROZEN",
+  "total_source_N": 500
+}

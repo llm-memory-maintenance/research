@@ -1,0 +1,1651 @@
+{
+  "artifact_provenance_sha256": {
+    "analysis_packets.jsonl": "05628fbe06da20ae2ac68c7b063e2882cff7a4fb744ee90c78d89241a0039d68",
+    "broader_history_searches.json": "fc3f29f043298c47ca6a261cb30e1609a0993e09dc85d18735f7f211bcb3bf14",
+    "semantic_assessments.jsonl": "22cdf56ef48f49e9bf06a5d87ee74316f152f60bb4240106774298bf2b738f58",
+    "stage_b_provenance.json": "c95a69c1c24ebed12023a8716fc9c9fff84f29617b59b3944dca4810cfc7edc3"
+  },
+  "broader_history_search_count": 16,
+  "broader_history_search_ids": [
+    "9ea5eabc",
+    "07741c44",
+    "5a4f22c0",
+    "2133c1b5",
+    "18bc8abd",
+    "7a87bd0c",
+    "eace081b",
+    "0ddfec37",
+    "dfde3500",
+    "cf22b7bf",
+    "a2f3aa27",
+    "c7dc5443",
+    "26bdc477",
+    "0977f2af",
+    "89941a94",
+    "07741c45"
+  ],
+  "candidate_count": 72,
+  "checkpoint": "LongMemEvalAudit v1.0",
+  "conformance_units_sha256": "7bcf0830384b001c361ecb9ca100841ae6d4a864659b5137326329d94b287d74",
+  "criteria_counts": {
+    "C1_category_compatibility": {
+      "FLAG": 9,
+      "PASS": 56,
+      "UNCERTAIN": 7
+    },
+    "C2_superseded_state_traceability": {
+      "FLAG": 0,
+      "PASS": 65,
+      "UNCERTAIN": 7
+    },
+    "C3_updated_state_traceability": {
+      "FLAG": 0,
+      "PASS": 67,
+      "UNCERTAIN": 5
+    },
+    "C4_current_state_determinability": {
+      "FLAG": 0,
+      "PASS": 64,
+      "UNCERTAIN": 8
+    },
+    "C5_gold_consistency": {
+      "FLAG": 4,
+      "PASS": 61,
+      "UNCERTAIN": 7
+    },
+    "C6_chronology_annotation_conflict": {
+      "FLAG": 1,
+      "PASS": 65,
+      "UNCERTAIN": 6
+    },
+    "C7_material_ambiguity": {
+      "FLAG": 2,
+      "PASS": 62,
+      "UNCERTAIN": 8
+    }
+  },
+  "current_stage_b_provenance_sha256": "195d5adb42115edaadaa854351235f17092573217748e7645c78fa4d2fa3abee",
+  "final_counts": {
+    "candidate_N": 72,
+    "final_usable_N": 56,
+    "human_exclude_N": 16,
+    "human_include_N": 2,
+    "machine_clean_N": 54,
+    "pending_N": 0
+  },
+  "finding_status_counts": {
+    "CLEAN": 54,
+    "MATERIAL_OR_UNCERTAIN": 18
+  },
+  "freeze_provenance": {
+    "eligibility_frozen_before_policy_outcome_inspection": true,
+    "exclusions_sha256": "4c56d5699cabee19a7a63a0d702d059c970de765a44874470a6bb3caa4ae973b",
+    "frozen_usable_ids_sha256": "44da19001c42694a465bdc86069fdedfe1c25e5f30b7d6e547f934e4fe861faa",
+    "git_commit": "bc157e09ab797ea8d4e8a61cb4bcdbf330a44580",
+    "git_scope": "Pre-freeze HEAD; freeze outputs uncommitted",
+    "human_adjudication_sha256": "ecd69485ef4a434839ebeb06d965bdc5aef2e8a944e850465483d1b260dad857",
+    "policy_outputs_accessed": false
+  },
+  "freeze_status": {
+    "N_KU_usable": 56,
+    "exclusion_count_by_code": {
+      "E01_WRONG_OR_INVALID_KU_SEMANTICS": 8,
+      "E03_SUPERSEDED_EVIDENCE_UNTRACEABLE": 4,
+      "E05_CURRENT_STATE_AMBIGUOUS": 1,
+      "E06_GOLD_INCONSISTENT_WITH_CURRENT_STATE": 2,
+      "E07_ANNOTATION_CONFLICT": 1
+    },
+    "final_usable_N": 56,
+    "freeze_timestamp_utc": "2026-09-12T16:24:03.604794+00:00",
+    "human_adjudication_performed": true,
+    "may_freeze": true,
+    "metadata_caveat": "Reviewer identities/actual dates remain null; user confirmed completion and authorized freeze. No per-unit second-review rationale supplied.",
+    "second_review_confirmed_N": 16,
+    "status": "FROZEN",
+    "unresolved_human_review_count": 0,
+    "validation_set_frozen": true
+  },
+  "human_review_count": 18,
+  "human_review_queue": [
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C4_current_state_determinability",
+        "C5_gold_consistency",
+        "C7_material_ambiguity"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "9ea5eabc",
+      "primary_exclusion_code": "E05_CURRENT_STATE_AMBIGUOUS",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_02e66dec_1",
+            "session_index": 6,
+            "timestamp": "2023/05/26 (Fri) 23:01",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_02e66dec_2",
+            "session_index": 45,
+            "timestamp": "2023/05/28 (Sun) 04:55",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_02e66dec_2",
+            "session_index": 45,
+            "timestamp": "2023/05/28 (Sun) 04:55",
+            "turn_index": 8
+          },
+          {
+            "role": "user",
+            "session_id": "sharegpt_gn21BMy_0",
+            "session_index": 10,
+            "timestamp": "2023/05/26 (Fri) 04:31",
+            "turn_index": 8
+          },
+          {
+            "role": "user",
+            "session_id": "418c27fa",
+            "session_index": 27,
+            "timestamp": "2023/05/27 (Sat) 10:03",
+            "turn_index": 6
+          },
+          {
+            "role": "user",
+            "session_id": "66cffcc7",
+            "session_index": 43,
+            "timestamp": "2023/05/28 (Sun) 16:48",
+            "turn_index": 4
+          },
+          {
+            "role": "user",
+            "session_id": "29695e1c_2",
+            "session_index": 46,
+            "timestamp": "2023/05/28 (Sun) 04:56",
+            "turn_index": 0
+          }
+        ],
+        "text": "Most-recent mention is not necessarily most-recent travel: Paris is dated last month, Hawaii is only recent, and broader history also mentions a family Japan trip after Hawaii. Event order is insufficiently established."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C3_updated_state_traceability",
+        "C4_current_state_determinability",
+        "C5_gold_consistency",
+        "C6_chronology_annotation_conflict",
+        "C7_material_ambiguity"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "07741c44",
+      "primary_exclusion_code": "E01_WRONG_OR_INVALID_KU_SEMANTICS",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_7e9ad7b4_1",
+            "session_index": 7,
+            "timestamp": "2023/08/11 (Fri) 02:38",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_7e9ad7b4_2",
+            "session_index": 30,
+            "timestamp": "2023/11/30 (Thu) 11:44",
+            "turn_index": 0
+          },
+          {
+            "role": "user",
+            "session_id": "answer_7e9ad7b4_2",
+            "session_index": 30,
+            "timestamp": "2023/11/30 (Thu) 11:44",
+            "turn_index": 10
+          },
+          {
+            "role": "assistant",
+            "session_id": "answer_7e9ad7b4_2",
+            "session_index": 30,
+            "timestamp": "2023/11/30 (Thu) 11:44",
+            "turn_index": 11
+          }
+        ],
+        "text": "The question explicitly asks the initial location; its gold answers that historical query. Separately, conflicting completed-versus-planned storage language prevents treating the annotated later turn as an unambiguous current-location update."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C2_superseded_state_traceability",
+        "C6_chronology_annotation_conflict"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "5a4f22c0",
+      "primary_exclusion_code": "E03_SUPERSEDED_EVIDENCE_UNTRACEABLE",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_b0f3dfff_1",
+            "session_index": 7,
+            "timestamp": "2023/05/23 (Tue) 20:06",
+            "turn_index": 2
+          },
+          {
+            "role": "assistant",
+            "session_id": "answer_b0f3dfff_1",
+            "session_index": 7,
+            "timestamp": "2023/05/23 (Tue) 20:06",
+            "turn_index": 3
+          },
+          {
+            "role": "user",
+            "session_id": "answer_b0f3dfff_2",
+            "session_index": 40,
+            "timestamp": "2023/05/26 (Fri) 20:48",
+            "turn_index": 0
+          }
+        ],
+        "text": "The prior colleague relationship does not establish Rachel's then-current employer. The assistant's template is not a confirmed prior employer, and targeted history search finds no transition evidence. Current TechCorp and its gold are clear, but supersession is not."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C6_chronology_annotation_conflict",
+        "C7_material_ambiguity"
+      ],
+      "human_decision": "INCLUDE",
+      "instance_id": "2133c1b5",
+      "primary_exclusion_code": null,
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_52382508_1",
+            "session_index": 23,
+            "timestamp": "2023/04/11 (Tue) 08:03",
+            "turn_index": 4
+          },
+          {
+            "role": "user",
+            "session_id": "answer_52382508_2",
+            "session_index": 34,
+            "timestamp": "2023/10/15 (Sun) 20:50",
+            "turn_index": 2
+          }
+        ],
+        "text": "The after-question same-day clock alone does not defeat canonical ordering or the stated three-month answer. However, six elapsed calendar months between one-month and three-month tenure reports leave an unexplained correction or restart; targeted history finds no explanation. Materiality of that temporal inconsistency remains uncertain."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "NOT_REQUIRED"
+    },
+    {
+      "criteria": [
+        "C6_chronology_annotation_conflict",
+        "C7_material_ambiguity"
+      ],
+      "human_decision": "INCLUDE",
+      "instance_id": "7a87bd0c",
+      "primary_exclusion_code": null,
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_d08a934d_1",
+            "session_index": 0,
+            "timestamp": "2023/06/11 (Sun) 22:24",
+            "turn_index": 0
+          },
+          {
+            "role": "user",
+            "session_id": "answer_d08a934d_1",
+            "session_index": 0,
+            "timestamp": "2023/06/11 (Sun) 22:24",
+            "turn_index": 8
+          },
+          {
+            "role": "user",
+            "session_id": "answer_d08a934d_2",
+            "session_index": 36,
+            "timestamp": "2023/09/30 (Sat) 17:52",
+            "turn_index": 0
+          }
+        ],
+        "text": "The latest reported value is clear and matches gold, but more than three calendar months elapse while the reported duration rises only one week. A restart or correction is not established by the packet or targeted search; chronology materiality remains uncertain."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "NOT_REQUIRED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C2_superseded_state_traceability",
+        "C6_chronology_annotation_conflict"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "eace081b",
+      "primary_exclusion_code": "E03_SUPERSEDED_EVIDENCE_UNTRACEABLE",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_8a791264_1",
+            "session_index": 4,
+            "timestamp": "2023/05/22 (Mon) 11:21",
+            "turn_index": 0
+          },
+          {
+            "role": "user",
+            "session_id": "answer_8a791264_1",
+            "session_index": 4,
+            "timestamp": "2023/05/22 (Mon) 11:21",
+            "turn_index": 8
+          },
+          {
+            "role": "user",
+            "session_id": "answer_8a791264_1",
+            "session_index": 4,
+            "timestamp": "2023/05/22 (Mon) 11:21",
+            "turn_index": 10
+          },
+          {
+            "role": "user",
+            "session_id": "answer_8a791264_2",
+            "session_index": 39,
+            "timestamp": "2023/05/25 (Thu) 18:17",
+            "turn_index": 2
+          }
+        ],
+        "text": "Missing has_answer does not hide the earlier Kauai planning text. However, activities on Kauai could coexist with an Oahu stay, so an actual superseded accommodation plan is not established. Search found no prior stay commitment."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C5_gold_consistency"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "50635ada",
+      "primary_exclusion_code": "E01_WRONG_OR_INVALID_KU_SEMANTICS",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_dcd74827_1",
+            "session_index": 19,
+            "timestamp": "2022/09/16 (Fri) 17:22",
+            "turn_index": 4
+          },
+          {
+            "role": "user",
+            "session_id": "answer_dcd74827_2",
+            "session_index": 42,
+            "timestamp": "2023/05/30 (Tue) 08:58",
+            "turn_index": 2
+          }
+        ],
+        "text": "The question and gold deliberately request the previous Silver status, not the governing current Gold status. This is a thesis current-state compatibility issue, not an assertion that the historical benchmark answer is wrong."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C5_gold_consistency"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "e66b632c",
+      "primary_exclusion_code": "E01_WRONG_OR_INVALID_KU_SEMANTICS",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_ac0140ce_1",
+            "session_index": 4,
+            "timestamp": "2023/04/11 (Tue) 13:31",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_ac0140ce_2",
+            "session_index": 45,
+            "timestamp": "2023/07/30 (Sun) 18:30",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_ac0140ce_2",
+            "session_index": 45,
+            "timestamp": "2023/07/30 (Sun) 18:30",
+            "turn_index": 8
+          }
+        ],
+        "text": "The question and gold request the previous record, rather than the latest record. The approximate minute-and-a-half improvement is not exact, but the later explicit 26:30 is unique; this is historical-query scope, not a benchmark QA error."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C2_superseded_state_traceability",
+        "C3_updated_state_traceability",
+        "C4_current_state_determinability",
+        "C5_gold_consistency",
+        "C7_material_ambiguity"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "0ddfec37",
+      "primary_exclusion_code": "E01_WRONG_OR_INVALID_KU_SEMANTICS",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_a22b654d_1",
+            "session_index": 18,
+            "timestamp": "2023/07/11 (Tue) 14:38",
+            "turn_index": 0
+          },
+          {
+            "role": "user",
+            "session_id": "answer_a22b654d_2",
+            "session_index": 32,
+            "timestamp": "2023/12/30 (Sat) 02:28",
+            "turn_index": 0
+          }
+        ],
+        "text": "The question targets a fixed historical interval that is not superseded by a newer moving-window total. Neither search nor packet proves that 20 is a new cumulative total; adding the counts would be unsupported."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C2_superseded_state_traceability",
+        "C3_updated_state_traceability",
+        "C4_current_state_determinability",
+        "C5_gold_consistency",
+        "C7_material_ambiguity"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "dfde3500",
+      "primary_exclusion_code": "E01_WRONG_OR_INVALID_KU_SEMANTICS",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_35d6c0be_1",
+            "session_index": 13,
+            "timestamp": "2023/05/20 (Sat) 09:33",
+            "turn_index": 8
+          },
+          {
+            "role": "user",
+            "session_id": "answer_35d6c0be_2",
+            "session_index": 23,
+            "timestamp": "2023/05/28 (Sun) 05:19",
+            "turn_index": 0
+          },
+          {
+            "role": "user",
+            "session_id": "answer_35d6c0be_2",
+            "session_index": 23,
+            "timestamp": "2023/05/28 (Sun) 05:19",
+            "turn_index": 2
+          }
+        ],
+        "text": "The question asks about a previous tutor and the Wednesday gold is historically supported. Evidence does not establish Maria replacing Juan rather than a second tutor, so a superseding current schedule cannot be assumed."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C2_superseded_state_traceability"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "cf22b7bf",
+      "primary_exclusion_code": "E03_SUPERSEDED_EVIDENCE_UNTRACEABLE",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_ae3a122b_1",
+            "session_index": 28,
+            "timestamp": "2023/05/21 (Sun) 12:29",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_ae3a122b_1",
+            "session_index": 28,
+            "timestamp": "2023/05/21 (Sun) 12:29",
+            "turn_index": 8
+          },
+          {
+            "role": "user",
+            "session_id": "answer_ae3a122b_2",
+            "session_index": 53,
+            "timestamp": "2023/06/21 (Wed) 05:37",
+            "turn_index": 2
+          }
+        ],
+        "text": "The newer cumulative amount and gold are clear, but the earlier monthly amount can coexist with it and is not a demonstrated superseded cumulative total. Targeted search does not supply that missing baseline."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C3_updated_state_traceability",
+        "C4_current_state_determinability",
+        "C5_gold_consistency",
+        "C7_material_ambiguity"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "a2f3aa27",
+      "primary_exclusion_code": "E06_GOLD_INCONSISTENT_WITH_CURRENT_STATE",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_5126c02d_1",
+            "session_index": 12,
+            "timestamp": "2023/05/25 (Thu) 05:26",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_5126c02d_2",
+            "session_index": 39,
+            "timestamp": "2023/05/25 (Thu) 09:28",
+            "turn_index": 0
+          },
+          {
+            "role": "assistant",
+            "session_id": "answer_5126c02d_2",
+            "session_index": 39,
+            "timestamp": "2023/05/25 (Thu) 09:28",
+            "turn_index": 1
+          },
+          {
+            "role": "assistant",
+            "session_id": "39709ef6_2",
+            "session_index": 40,
+            "timestamp": "2023/06/05 (Mon) 22:13",
+            "turn_index": 3
+          }
+        ],
+        "text": "Neither statement establishes an exact current 1,300 count. The exact gold may be a rounded approximation, but its exact consistency and a definite changed value remain uncertain after search."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C5_gold_consistency"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "9bbe84a2",
+      "primary_exclusion_code": "E01_WRONG_OR_INVALID_KU_SEMANTICS",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_c6a0c6c2_1",
+            "session_index": 5,
+            "timestamp": "2023/06/16 (Fri) 04:38",
+            "turn_index": 0
+          },
+          {
+            "role": "user",
+            "session_id": "answer_c6a0c6c2_2",
+            "session_index": 14,
+            "timestamp": "2023/09/30 (Sat) 12:45",
+            "turn_index": 4
+          },
+          {
+            "role": "user",
+            "session_id": "answer_c6a0c6c2_2",
+            "session_index": 14,
+            "timestamp": "2023/09/30 (Sat) 12:45",
+            "turn_index": 8
+          }
+        ],
+        "text": "The question and gold ask the previous goal. Both states are clear, but the gold is not the governing current target; this is thesis scope compatibility, not a wrong historical answer."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C5_gold_consistency"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "10e09553",
+      "primary_exclusion_code": "E01_WRONG_OR_INVALID_KU_SEMANTICS",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_67be2c38_1",
+            "session_index": 4,
+            "timestamp": "2023/08/11 (Fri) 03:49",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_67be2c38_2",
+            "session_index": 36,
+            "timestamp": "2023/11/30 (Thu) 00:28",
+            "turn_index": 2
+          }
+        ],
+        "text": "The question explicitly targets the earlier dated trip, whose seven-fish fact remains true. The later event does not correct that earlier event; using this as a current-state replacement task needs human scope review."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C2_superseded_state_traceability"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "26bdc477",
+      "primary_exclusion_code": "E03_SUPERSEDED_EVIDENCE_UNTRACEABLE",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_f762ad8d_1",
+            "session_index": 21,
+            "timestamp": "2023/03/16 (Thu) 19:05",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_f762ad8d_2",
+            "session_index": 40,
+            "timestamp": "2023/05/30 (Tue) 00:43",
+            "turn_index": 0
+          }
+        ],
+        "text": "The latest five and gold are clear. The earlier three named examples are a lower bound, not a demonstrated superseded total, and no exact old count should be invented."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C2_superseded_state_traceability",
+        "C4_current_state_determinability",
+        "C5_gold_consistency",
+        "C7_material_ambiguity"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "0977f2af",
+      "primary_exclusion_code": "E01_WRONG_OR_INVALID_KU_SEMANTICS",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_3bf5b73b_1",
+            "session_index": 20,
+            "timestamp": "2023/05/21 (Sun) 05:48",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_3bf5b73b_2",
+            "session_index": 39,
+            "timestamp": "2023/05/21 (Sun) 22:54",
+            "turn_index": 2
+          },
+          {
+            "role": "assistant",
+            "session_id": "b3642bd9_3",
+            "session_index": 2,
+            "timestamp": "2023/04/22 (Sat) 23:57",
+            "turn_index": 1
+          }
+        ],
+        "text": "The question asks which purchase preceded another, not the current gadget. Session order is not sufficient to prove purchase order because the newer-mentioned Air Fryer was acquired yesterday while Instant Pot purchase time is unspecified; both gadgets can remain owned."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C4_current_state_determinability",
+        "C6_chronology_annotation_conflict",
+        "C7_material_ambiguity"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "89941a94",
+      "primary_exclusion_code": "E07_ANNOTATION_CONFLICT",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_e1403127_1",
+            "session_index": 30,
+            "timestamp": "2023/05/25 (Thu) 15:36",
+            "turn_index": 4
+          },
+          {
+            "role": "user",
+            "session_id": "answer_e1403127_1",
+            "session_index": 30,
+            "timestamp": "2023/05/25 (Thu) 15:36",
+            "turn_index": 6
+          },
+          {
+            "role": "user",
+            "session_id": "answer_e1403127_2",
+            "session_index": 44,
+            "timestamp": "2023/05/28 (Sun) 13:41",
+            "turn_index": 4
+          },
+          {
+            "role": "user",
+            "session_id": "answer_e1403127_2",
+            "session_index": 44,
+            "timestamp": "2023/05/28 (Sun) 13:41",
+            "turn_index": 6
+          },
+          {
+            "role": "assistant",
+            "session_id": "de275215_3",
+            "session_index": 5,
+            "timestamp": "2023/04/29 (Sat) 23:29",
+            "turn_index": 11
+          }
+        ],
+        "text": "The road-bike historical answer is supported, but the gravel-purchase reference has no matching user evidence. Search finds only generic gravel advice; equating gravel with hybrid would be an unsupported repair."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    },
+    {
+      "criteria": [
+        "C1_category_compatibility",
+        "C3_updated_state_traceability",
+        "C4_current_state_determinability",
+        "C5_gold_consistency",
+        "C6_chronology_annotation_conflict",
+        "C7_material_ambiguity"
+      ],
+      "human_decision": "EXCLUDE",
+      "instance_id": "07741c45",
+      "primary_exclusion_code": "E06_GOLD_INCONSISTENT_WITH_CURRENT_STATE",
+      "reason": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_7e9ad7b4_1",
+            "session_index": 2,
+            "timestamp": "2023/05/25 (Thu) 10:04",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_7e9ad7b4_2",
+            "session_index": 31,
+            "timestamp": "2023/05/29 (Mon) 15:01",
+            "turn_index": 0
+          },
+          {
+            "role": "user",
+            "session_id": "answer_7e9ad7b4_2",
+            "session_index": 31,
+            "timestamp": "2023/05/29 (Mon) 15:01",
+            "turn_index": 10
+          },
+          {
+            "role": "assistant",
+            "session_id": "answer_7e9ad7b4_2",
+            "session_index": 31,
+            "timestamp": "2023/05/29 (Mon) 15:01",
+            "turn_index": 11
+          },
+          {
+            "role": "assistant",
+            "session_id": "af4a2fd1",
+            "session_index": 26,
+            "timestamp": "2023/05/28 (Sun) 12:43",
+            "turn_index": 1
+          },
+          {
+            "role": "user",
+            "session_id": "af4a2fd1",
+            "session_index": 26,
+            "timestamp": "2023/05/28 (Sun) 12:43",
+            "turn_index": 2
+          },
+          {
+            "role": "assistant",
+            "session_id": "af4a2fd1",
+            "session_index": 26,
+            "timestamp": "2023/05/28 (Sun) 12:43",
+            "turn_index": 3
+          },
+          {
+            "role": "user",
+            "session_id": "af4a2fd1",
+            "session_index": 26,
+            "timestamp": "2023/05/28 (Sun) 12:43",
+            "turn_index": 4
+          },
+          {
+            "role": "assistant",
+            "session_id": "af4a2fd1",
+            "session_index": 26,
+            "timestamp": "2023/05/28 (Sun) 12:43",
+            "turn_index": 5
+          },
+          {
+            "role": "assistant",
+            "session_id": "af4a2fd1",
+            "session_index": 26,
+            "timestamp": "2023/05/28 (Sun) 12:43",
+            "turn_index": 7
+          },
+          {
+            "role": "user",
+            "session_id": "af4a2fd1",
+            "session_index": 26,
+            "timestamp": "2023/05/28 (Sun) 12:43",
+            "turn_index": 8
+          },
+          {
+            "role": "assistant",
+            "session_id": "af4a2fd1",
+            "session_index": 26,
+            "timestamp": "2023/05/28 (Sun) 12:43",
+            "turn_index": 9
+          },
+          {
+            "role": "assistant",
+            "session_id": "af4a2fd1",
+            "session_index": 26,
+            "timestamp": "2023/05/28 (Sun) 12:43",
+            "turn_index": 11
+          }
+        ],
+        "text": "The marked sentence suggests current rack placement, but the later user and assistant describe rack storage as future. The current location and exact gold cannot be resolved confidently; broader hits concern different new white sneakers."
+      },
+      "review_status": "RESOLVED",
+      "second_review_status": "CONFIRMED"
+    }
+  ],
+  "insufficient_evidence_ids": [
+    "9ea5eabc",
+    "07741c44",
+    "5a4f22c0",
+    "2133c1b5",
+    "7a87bd0c",
+    "eace081b",
+    "0ddfec37",
+    "dfde3500",
+    "cf22b7bf",
+    "a2f3aa27",
+    "26bdc477",
+    "0977f2af",
+    "89941a94",
+    "07741c45"
+  ],
+  "pending_human_review_count": 0,
+  "provenance": {
+    "analysis_date": "2026-09-12",
+    "analyst": "Codex assistant in the current authorized session",
+    "checkpoint": "LongMemEvalAudit v1.0",
+    "exact_runtime_model_id": "Not exposed; not independently pinned",
+    "external_model_api_calls": 0,
+    "immutable_input_sha256": {
+      "data/longmemeval/audit_v1_0/deterministic_units.jsonl": "85369de4473062496245f499d392dd443ef8eeaf5b4bd2fde31864a5bdab765f",
+      "data/longmemeval/audit_v1_0/source_verification.json": "2570abb3a2fd144b5e6fdfb34227d065e3e3f6c5f18225e7dbe2b8037d39146e",
+      "data/longmemeval/audit_v1_0/stage_a_report.md": "d2d49c37afae1ab949786994b75bb766cc28619f310a3fc0bc82b32fcb22420e",
+      "docs/methodology/00_CURRENT_STATE__Skripsi_LLM_Memory__LongMemEvalAudit_v1.0__2026-09-12.md": "22cbbd310789931f8f3f60428f6070aee7f296ffc42e42521ccbbc807d3f9500",
+      "docs/methodology/20_RESEARCH_CONTEXT__LongMemEvalAudit_v1.0__2026-09-12.md": "f8042b4278741b662d8079e62ce79b12399bec8c7a2e2977d66f4608b0441560",
+      "docs/methodology/21_RESEARCH_DECISIONS__LongMemEvalAudit_v1.0__2026-09-12.md": "4cb56a01b7c57bc27d175fe335d4ca88047b29ecf4b96bdc567da7545392a2f5",
+      "docs/methodology/22_EXPERIMENT_SPEC__LongMemEvalAudit_v1.0__2026-09-12.md": "772aff0d2fd2e122ad6c293d4b7091e46075fa8e1e6f385343c5d1a9e5ffd605",
+      "docs/methodology/23_DATASET_SPEC__LongMemEvalAudit_v1.0__2026-09-12.md": "a8c8fd53881ddb714dc08a5fa54ca39d83f0c577dc23e827d306a8a2b84b185b",
+      "docs/methodology/24_STATISTICAL_ANALYSIS__LongMemEvalAudit_v1.0__2026-09-12.md": "29eeb27be78d015127054df3202874540d51e46c8f2e1af1fe2acd0b508b0a42",
+      "docs/methodology/40_LONGMEMEVAL_DATA_AUDIT_PROTOCOL__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "88768f314fb7b9dcec4c761e900b4b59315280230fd962a55b6548bd7990cd8b",
+      "docs/methodology/41_LONGMEMEVAL_DATA_SOURCE_MANIFEST__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "a975ad60d0065054ab8795975cdc4c7805e844cfbeaee2f6d3b0204f76935647",
+      "docs/methodology/42_LONGMEMEVAL_CONFORMANCE_REPORT_SPEC__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "8a1ee164080182f5a1a88d14d57b1fdd9666399bd08b6de8bc7c775534c400fb",
+      "docs/methodology/50_PRESEMPRO_WORKFLOW__LongMemEvalAudit_v1.0__2026-09-12.md": "fc60827b7348dd35ff6b920d6aa9112546d5e4af64f0b42e7c5587de3c20dde2",
+      "docs/methodology/README.md": "448bfd67efbe0971f9449fc252fca9db31f32c5d9a23dd9176be244333988e7b",
+      "docs/methodology/SOURCE_SYNC_MANIFEST__LongMemEvalAudit_v1.0__2026-09-12.md": "57fd8796dacb99b6b422ba9b0f1e7e684bd6fe050ce6be62f00af508e39d461a"
+    },
+    "limitations": [
+      "Semantic judgments are model assessments, not human adjudication.",
+      "Not an exhaustive semantic scan of all non-evidence history or every assistant recommendation.",
+      "Bounded lexical searches can miss paraphrased references; unresolved evidence is marked UNCERTAIN rather than silently passed.",
+      "Reproducibility is exact packet/search/report regeneration from saved semantic assessments, not a claim that a fresh model run gives identical judgments.",
+      "The exact runtime model revision and inference parameters are not independently exposed or pinned."
+    ],
+    "model_read_scope": "All user turns and has_answer-marked turns in all 144 evidence sessions; focused assistant context for ambiguous cases. Every evidence-session turn is preserved in analysis_packets.jsonl. Non-evidence history searched only for the 16 logged concrete triggers.",
+    "policy_outputs_accessed": false,
+    "semantic_method": "Fresh per-candidate evidence analysis by the assistant; saved explicit C1–C7 assessments, not a deterministic classifier or external policy evaluation.",
+    "stage": "B"
+  },
+  "repeated_session_id_checks": [
+    {
+      "checks": [
+        {
+          "annotated_evidence_mapping_unique": true,
+          "canonical_positions_distinguishable": true,
+          "current_state_interpretation_affected": false,
+          "evidence_locators": [
+            {
+              "role": "user",
+              "session_id": "sharegpt_vyHqfrX_0",
+              "session_index": 13,
+              "timestamp": "2023/04/10 (Mon) 11:41",
+              "turn_index": 0
+            },
+            {
+              "role": "user",
+              "session_id": "sharegpt_vyHqfrX_0",
+              "session_index": 41,
+              "timestamp": "2023/06/26 (Mon) 16:08",
+              "turn_index": 0
+            },
+            {
+              "role": "user",
+              "session_id": "answer_fff743f5_1",
+              "session_index": 17,
+              "timestamp": "2023/04/16 (Sun) 02:28",
+              "turn_index": 2
+            },
+            {
+              "role": "user",
+              "session_id": "answer_fff743f5_2",
+              "session_index": 43,
+              "timestamp": "2023/06/30 (Fri) 05:15",
+              "turn_index": 0
+            },
+            {
+              "role": "user",
+              "session_id": "answer_fff743f5_2",
+              "session_index": 43,
+              "timestamp": "2023/06/30 (Fri) 05:15",
+              "turn_index": 10
+            },
+            {
+              "role": "assistant",
+              "session_id": "7da6f798_1",
+              "session_index": 12,
+              "timestamp": "2023/04/08 (Sat) 00:40",
+              "turn_index": 5
+            },
+            {
+              "role": "user",
+              "session_id": "sharegpt_vyHqfrX_0",
+              "session_index": 13,
+              "timestamp": "2023/04/10 (Mon) 11:41",
+              "turn_index": 0
+            },
+            {
+              "role": "assistant",
+              "session_id": "sharegpt_vyHqfrX_0",
+              "session_index": 13,
+              "timestamp": "2023/04/10 (Mon) 11:41",
+              "turn_index": 1
+            },
+            {
+              "role": "user",
+              "session_id": "sharegpt_vyHqfrX_0",
+              "session_index": 13,
+              "timestamp": "2023/04/10 (Mon) 11:41",
+              "turn_index": 2
+            },
+            {
+              "role": "assistant",
+              "session_id": "sharegpt_vyHqfrX_0",
+              "session_index": 13,
+              "timestamp": "2023/04/10 (Mon) 11:41",
+              "turn_index": 3
+            },
+            {
+              "role": "user",
+              "session_id": "sharegpt_vyHqfrX_0",
+              "session_index": 41,
+              "timestamp": "2023/06/26 (Mon) 16:08",
+              "turn_index": 0
+            },
+            {
+              "role": "assistant",
+              "session_id": "sharegpt_vyHqfrX_0",
+              "session_index": 41,
+              "timestamp": "2023/06/26 (Mon) 16:08",
+              "turn_index": 1
+            },
+            {
+              "role": "user",
+              "session_id": "sharegpt_vyHqfrX_0",
+              "session_index": 41,
+              "timestamp": "2023/06/26 (Mon) 16:08",
+              "turn_index": 2
+            },
+            {
+              "role": "assistant",
+              "session_id": "sharegpt_vyHqfrX_0",
+              "session_index": 41,
+              "timestamp": "2023/06/26 (Mon) 16:08",
+              "turn_index": 3
+            }
+          ],
+          "rationale": "The target preference is explicitly updated. Repeated cover-letter sessions at positions 13 and 41 are distinguishable and unrelated to the sauce preference; evidence mapping remains unique.",
+          "session_id": "sharegpt_vyHqfrX_0",
+          "session_indices": [
+            13,
+            41
+          ]
+        }
+      ],
+      "instance_id": "18bc8abd"
+    },
+    {
+      "checks": [
+        {
+          "annotated_evidence_mapping_unique": true,
+          "canonical_positions_distinguishable": true,
+          "current_state_interpretation_affected": false,
+          "evidence_locators": [
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 0
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 0
+            },
+            {
+              "role": "user",
+              "session_id": "answer_0cdbca92_1",
+              "session_index": 7,
+              "timestamp": "2023/06/16 (Fri) 12:33",
+              "turn_index": 0
+            },
+            {
+              "role": "user",
+              "session_id": "answer_0cdbca92_2",
+              "session_index": 43,
+              "timestamp": "2023/06/30 (Fri) 14:20",
+              "turn_index": 0
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 0
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 1
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 2
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 3
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 4
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 5
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 6
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 7
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 8
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 9
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 10
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 6,
+              "timestamp": "2023/06/10 (Sat) 02:11",
+              "turn_index": 11
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 0
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 1
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 2
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 3
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 4
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 5
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 6
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 7
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 8
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 9
+            },
+            {
+              "role": "user",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 10
+            },
+            {
+              "role": "assistant",
+              "session_id": "6b8e8bb3_1",
+              "session_index": 44,
+              "timestamp": "2023/07/10 (Mon) 19:09",
+              "turn_index": 11
+            }
+          ],
+          "rationale": "The new record explicitly updates the same league context. Repeated shopping-list sessions at positions 6 and 44 contain no volleyball-state update; positions are distinct and evidence mapping unique.",
+          "session_id": "6b8e8bb3_1",
+          "session_indices": [
+            6,
+            44
+          ]
+        }
+      ],
+      "instance_id": "c7dc5443"
+    }
+  ],
+  "reproducibility": "Deterministic regeneration from saved semantic assessments; fresh model inference is not claimed reproducible.",
+  "screening_history_note": "C1–C7, finding_status_counts, insufficient_evidence_ids, Stage A/B interpretations and embedded provenance are accepted historical screening results. All 18 exceptions are now human-resolved; none remain pending. Original screening artifacts are unchanged.",
+  "source": {
+    "abs_overlap": 6,
+    "byte_size": 277383467,
+    "candidate_count": 72,
+    "file_name": "longmemeval_s_cleaned.json",
+    "raw_ku_count": 78,
+    "sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+    "total_rows": 500
+  },
+  "stage": "AUDIT_COMPLETE",
+  "stage_a_findings_by_code": {
+    "answer_session_without_has_answer": {
+      "affected_instance_ids": [
+        "22d2cb42",
+        "eace081b"
+      ],
+      "occurrence_count": 2
+    },
+    "cross_calendar_day_inversion": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "duplicate_instance_id": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "evidence_after_question_clock_same_day": {
+      "affected_instance_ids": [
+        "2133c1b5"
+      ],
+      "occurrence_count": 1
+    },
+    "evidence_cross_day_inversion": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "evidence_full_timestamp_decrease": {
+      "affected_instance_ids": [
+        "618f13b2"
+      ],
+      "occurrence_count": 1
+    },
+    "evidence_later_calendar_day_than_question": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "evidence_same_day_timestamp_inversion": {
+      "affected_instance_ids": [
+        "618f13b2"
+      ],
+      "occurrence_count": 1
+    },
+    "history_after_question_clock_same_day": {
+      "affected_instance_ids": [
+        "d7c942c3",
+        "71315a70",
+        "07741c44",
+        "2698e78f",
+        "2133c1b5",
+        "db467c8c",
+        "7a87bd0c",
+        "e61a7584",
+        "ed4ddc30",
+        "5831f84d",
+        "0ddfec37",
+        "7401057b",
+        "06db6396",
+        "3ba21379",
+        "9bbe84a2"
+      ],
+      "occurrence_count": 47
+    },
+    "history_array_misalignment": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "history_later_calendar_day_than_question": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "invalid_array": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "invalid_history_session_id": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "invalid_required_field": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "malformed_session": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "malformed_turn": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "missing_required_field": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "multiply_resolved_evidence_id": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "packet_rendering_failure": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "predicate_mismatch": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "repeated_answer_session_id": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "repeated_history_session_id": {
+      "affected_instance_ids": [
+        "18bc8abd",
+        "c7dc5443"
+      ],
+      "occurrence_count": 2
+    },
+    "same_day_timestamp_inversion": {
+      "affected_instance_ids": [
+        "6a1eabeb",
+        "6aeb4375",
+        "830ce83f",
+        "852ce960",
+        "945e3d21",
+        "d7c942c3",
+        "71315a70",
+        "89941a93",
+        "ce6d2d27",
+        "9ea5eabc",
+        "07741c44",
+        "a1eacc2a",
+        "184da446",
+        "031748ae",
+        "4d6b87c8",
+        "0f05491a",
+        "08e075c7",
+        "f9e8c073",
+        "41698283",
+        "2698e78f",
+        "b6019101",
+        "45dc21b6",
+        "5a4f22c0",
+        "6071bd76",
+        "e493bb7c",
+        "618f13b2",
+        "72e3ee87",
+        "c4ea545c",
+        "01493427",
+        "6a27ffc2",
+        "2133c1b5",
+        "18bc8abd",
+        "db467c8c",
+        "7a87bd0c",
+        "e61a7584",
+        "1cea1afa",
+        "ed4ddc30",
+        "8fb83627",
+        "b01defab",
+        "22d2cb42",
+        "0e4e4c46",
+        "4b24c848",
+        "7e974930",
+        "603deb26",
+        "59524333",
+        "5831f84d",
+        "eace081b",
+        "affe2881",
+        "50635ada",
+        "e66b632c",
+        "0ddfec37",
+        "f685340e",
+        "cc5ded98",
+        "dfde3500",
+        "69fee5aa",
+        "7401057b",
+        "cf22b7bf",
+        "a2f3aa27",
+        "c7dc5443",
+        "06db6396",
+        "3ba21379",
+        "9bbe84a2",
+        "10e09553",
+        "dad224aa",
+        "ba61f0b9",
+        "42ec0761",
+        "5c40ec5b",
+        "c6853660",
+        "26bdc477",
+        "0977f2af",
+        "89941a94",
+        "07741c45"
+      ],
+      "occurrence_count": 695
+    },
+    "timestamp_parse_failure": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "unresolved_evidence_id": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    }
+  },
+  "stage_a_flag_analysis": [
+    {
+      "finding_status": "CLEAN",
+      "human_review_required": false,
+      "instance_id": "618f13b2",
+      "interpretation": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_caf5b52e_1",
+            "session_index": 17,
+            "timestamp": "2023/05/30 (Tue) 22:16",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_caf5b52e_1",
+            "session_index": 17,
+            "timestamp": "2023/05/30 (Tue) 22:16",
+            "turn_index": 10
+          },
+          {
+            "role": "user",
+            "session_id": "answer_caf5b52e_2",
+            "session_index": 32,
+            "timestamp": "2023/05/30 (Tue) 17:45",
+            "turn_index": 0
+          }
+        ],
+        "text": "Canonical position 32 updates position 17 from four to six. Reversed same-day clocks are a source warning, but do not prevent this coherent count trajectory under the required canonical-order rule."
+      }
+    },
+    {
+      "finding_status": "MATERIAL_OR_UNCERTAIN",
+      "human_review_required": true,
+      "instance_id": "2133c1b5",
+      "interpretation": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_52382508_1",
+            "session_index": 23,
+            "timestamp": "2023/04/11 (Tue) 08:03",
+            "turn_index": 4
+          },
+          {
+            "role": "user",
+            "session_id": "answer_52382508_2",
+            "session_index": 34,
+            "timestamp": "2023/10/15 (Sun) 20:50",
+            "turn_index": 2
+          }
+        ],
+        "text": "The after-question same-day clock alone does not defeat canonical ordering or the stated three-month answer. However, six elapsed calendar months between one-month and three-month tenure reports leave an unexplained correction or restart; targeted history finds no explanation. Materiality of that temporal inconsistency remains uncertain."
+      }
+    },
+    {
+      "finding_status": "CLEAN",
+      "human_review_required": false,
+      "instance_id": "22d2cb42",
+      "interpretation": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_bcce0b73_1",
+            "session_index": 10,
+            "timestamp": "2023/05/20 (Sat) 16:26",
+            "turn_index": 0
+          },
+          {
+            "role": "user",
+            "session_id": "answer_bcce0b73_1",
+            "session_index": 10,
+            "timestamp": "2023/05/20 (Sat) 16:26",
+            "turn_index": 6
+          },
+          {
+            "role": "user",
+            "session_id": "answer_bcce0b73_2",
+            "session_index": 24,
+            "timestamp": "2023/05/29 (Mon) 14:10",
+            "turn_index": 2
+          },
+          {
+            "role": "user",
+            "session_id": "answer_bcce0b73_2",
+            "session_index": 24,
+            "timestamp": "2023/05/29 (Mon) 14:10",
+            "turn_index": 4
+          }
+        ],
+        "text": "The earlier unmarked turn explicitly establishes not-yet-serviced; later unmarked turn 4 clarifies the awkward marked turn 2 with where I got my guitar serviced. Missing has_answer does not prevent traceability."
+      }
+    },
+    {
+      "finding_status": "MATERIAL_OR_UNCERTAIN",
+      "human_review_required": true,
+      "instance_id": "eace081b",
+      "interpretation": {
+        "evidence_locators": [
+          {
+            "role": "user",
+            "session_id": "answer_8a791264_1",
+            "session_index": 4,
+            "timestamp": "2023/05/22 (Mon) 11:21",
+            "turn_index": 0
+          },
+          {
+            "role": "user",
+            "session_id": "answer_8a791264_1",
+            "session_index": 4,
+            "timestamp": "2023/05/22 (Mon) 11:21",
+            "turn_index": 8
+          },
+          {
+            "role": "user",
+            "session_id": "answer_8a791264_1",
+            "session_index": 4,
+            "timestamp": "2023/05/22 (Mon) 11:21",
+            "turn_index": 10
+          },
+          {
+            "role": "user",
+            "session_id": "answer_8a791264_2",
+            "session_index": 39,
+            "timestamp": "2023/05/25 (Thu) 18:17",
+            "turn_index": 2
+          }
+        ],
+        "text": "Missing has_answer does not hide the earlier Kauai planning text. However, activities on Kauai could coexist with an Oahu stay, so an actual superseded accommodation plan is not established. Search found no prior stay commitment."
+      }
+    }
+  ],
+  "stage_a_structural_status_counts": {
+    "FAIL": 0,
+    "FLAG": 4,
+    "PASS": 68
+  },
+  "tool_sha256": "b3c5da0541b43ea45f1e0867c71c22a60a813ef59c6defc61c32571c246c01fb",
+  "validation": {
+    "all_claim_locators_resolve": true,
+    "all_nonpass_criteria_have_rationale": true,
+    "candidate_coverage": "72 unique records in canonical candidate order",
+    "packet_regeneration_matches": true,
+    "policy_outputs_accessed": false,
+    "raw_source_unchanged": true,
+    "search_regeneration_matches": true,
+    "stage_a_artifacts_byte_unchanged": true
+  }
+}

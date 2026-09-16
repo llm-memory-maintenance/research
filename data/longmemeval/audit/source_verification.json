@@ -1,0 +1,299 @@
+{
+  "N_KU_usable": "OPEN",
+  "abs_overlap": 6,
+  "benchmark_repository": "xiaowu0162/LongMemEval",
+  "byte_size": 277383467,
+  "candidate_count": 72,
+  "candidate_predicate": "question_type == \"knowledge-update\" and not question_id.endswith(\"_abs\")",
+  "canonical_repository": "xiaowu0162/longmemeval-cleaned",
+  "checkpoint": "LongMemEvalAudit v1.0",
+  "chronology_totals": {
+    "cross_calendar_day_inversion_count": 0,
+    "evidence_after_question_clock_same_day_count": 1,
+    "evidence_cross_day_inversion_count": 0,
+    "evidence_full_timestamp_decrease_count": 1,
+    "evidence_later_calendar_day_than_question_count": 0,
+    "evidence_same_day_timestamp_inversion_count": 1,
+    "history_after_question_clock_same_day_count": 47,
+    "history_later_calendar_day_than_question_count": 0,
+    "same_day_timestamp_inversion_count": 695
+  },
+  "conformance_analysis": "NOT_RUN",
+  "deterministic_units_sha256": "85369de4473062496245f499d392dd443ef8eeaf5b4bd2fde31864a5bdab765f",
+  "duplicate_instance_ids": {},
+  "file_name": "longmemeval_s_cleaned.json",
+  "findings_by_code": {
+    "answer_session_without_has_answer": {
+      "affected_instance_ids": [
+        "22d2cb42",
+        "eace081b"
+      ],
+      "occurrence_count": 2
+    },
+    "cross_calendar_day_inversion": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "duplicate_instance_id": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "evidence_after_question_clock_same_day": {
+      "affected_instance_ids": [
+        "2133c1b5"
+      ],
+      "occurrence_count": 1
+    },
+    "evidence_cross_day_inversion": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "evidence_full_timestamp_decrease": {
+      "affected_instance_ids": [
+        "618f13b2"
+      ],
+      "occurrence_count": 1
+    },
+    "evidence_later_calendar_day_than_question": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "evidence_same_day_timestamp_inversion": {
+      "affected_instance_ids": [
+        "618f13b2"
+      ],
+      "occurrence_count": 1
+    },
+    "history_after_question_clock_same_day": {
+      "affected_instance_ids": [
+        "d7c942c3",
+        "71315a70",
+        "07741c44",
+        "2698e78f",
+        "2133c1b5",
+        "db467c8c",
+        "7a87bd0c",
+        "e61a7584",
+        "ed4ddc30",
+        "5831f84d",
+        "0ddfec37",
+        "7401057b",
+        "06db6396",
+        "3ba21379",
+        "9bbe84a2"
+      ],
+      "occurrence_count": 47
+    },
+    "history_array_misalignment": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "history_later_calendar_day_than_question": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "invalid_array": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "invalid_history_session_id": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "invalid_required_field": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "malformed_session": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "malformed_turn": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "missing_required_field": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "multiply_resolved_evidence_id": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "packet_rendering_failure": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "predicate_mismatch": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "repeated_answer_session_id": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "repeated_history_session_id": {
+      "affected_instance_ids": [
+        "18bc8abd",
+        "c7dc5443"
+      ],
+      "occurrence_count": 2
+    },
+    "same_day_timestamp_inversion": {
+      "affected_instance_ids": [
+        "6a1eabeb",
+        "6aeb4375",
+        "830ce83f",
+        "852ce960",
+        "945e3d21",
+        "d7c942c3",
+        "71315a70",
+        "89941a93",
+        "ce6d2d27",
+        "9ea5eabc",
+        "07741c44",
+        "a1eacc2a",
+        "184da446",
+        "031748ae",
+        "4d6b87c8",
+        "0f05491a",
+        "08e075c7",
+        "f9e8c073",
+        "41698283",
+        "2698e78f",
+        "b6019101",
+        "45dc21b6",
+        "5a4f22c0",
+        "6071bd76",
+        "e493bb7c",
+        "618f13b2",
+        "72e3ee87",
+        "c4ea545c",
+        "01493427",
+        "6a27ffc2",
+        "2133c1b5",
+        "18bc8abd",
+        "db467c8c",
+        "7a87bd0c",
+        "e61a7584",
+        "1cea1afa",
+        "ed4ddc30",
+        "8fb83627",
+        "b01defab",
+        "22d2cb42",
+        "0e4e4c46",
+        "4b24c848",
+        "7e974930",
+        "603deb26",
+        "59524333",
+        "5831f84d",
+        "eace081b",
+        "affe2881",
+        "50635ada",
+        "e66b632c",
+        "0ddfec37",
+        "f685340e",
+        "cc5ded98",
+        "dfde3500",
+        "69fee5aa",
+        "7401057b",
+        "cf22b7bf",
+        "a2f3aa27",
+        "c7dc5443",
+        "06db6396",
+        "3ba21379",
+        "9bbe84a2",
+        "10e09553",
+        "dad224aa",
+        "ba61f0b9",
+        "42ec0761",
+        "5c40ec5b",
+        "c6853660",
+        "26bdc477",
+        "0977f2af",
+        "89941a94",
+        "07741c45"
+      ],
+      "occurrence_count": 695
+    },
+    "timestamp_parse_failure": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    },
+    "unresolved_evidence_id": {
+      "affected_instance_ids": [],
+      "occurrence_count": 0
+    }
+  },
+  "invalid_identity_source_row_indices": [],
+  "packet_blocked_instance_ids": [],
+  "packet_constructible_count": 72,
+  "provenance": {
+    "git_revision": "851943c0f76d39c26f0ca5a7fd5731abf4e6fc96",
+    "methodology_sha256": {
+      "00_CURRENT_STATE__Skripsi_LLM_Memory__LongMemEvalAudit_v1.0__2026-09-12.md": "22cbbd310789931f8f3f60428f6070aee7f296ffc42e42521ccbbc807d3f9500",
+      "21_RESEARCH_DECISIONS__LongMemEvalAudit_v1.0__2026-09-12.md": "4cb56a01b7c57bc27d175fe335d4ca88047b29ecf4b96bdc567da7545392a2f5",
+      "23_DATASET_SPEC__LongMemEvalAudit_v1.0__2026-09-12.md": "a8c8fd53881ddb714dc08a5fa54ca39d83f0c577dc23e827d306a8a2b84b185b",
+      "40_LONGMEMEVAL_DATA_AUDIT_PROTOCOL__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "88768f314fb7b9dcec4c761e900b4b59315280230fd962a55b6548bd7990cd8b",
+      "41_LONGMEMEVAL_DATA_SOURCE_MANIFEST__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "a975ad60d0065054ab8795975cdc4c7805e844cfbeaee2f6d3b0204f76935647",
+      "42_LONGMEMEVAL_CONFORMANCE_REPORT_SPEC__LongMemEvalAudit_v1.0__2026-09-12__rev1.0.md": "8a1ee164080182f5a1a88d14d57b1fdd9666399bd08b6de8bc7c775534c400fb",
+      "50_PRESEMPRO_WORKFLOW__LongMemEvalAudit_v1.0__2026-09-12.md": "fc60827b7348dd35ff6b920d6aa9112546d5e4af64f0b42e7c5587de3c20dde2"
+    },
+    "python_version": "3.10.21",
+    "tool_git_status": "?? scripts/longmemeval/audit_stage_a.py",
+    "tool_sha256": "ff3403cd68b2fbfb722e3339bbb3e024b618b947a94e69f420cc609be4aa5a5d",
+    "tool_version": "LongMemEvalAudit-v1.0-stage-a-2"
+  },
+  "raw_ku_count": 78,
+  "sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+  "source_contract_checks": {
+    "abs_overlap": {
+      "actual": 6,
+      "expected": 6,
+      "matches": true
+    },
+    "byte_size": {
+      "actual": 277383467,
+      "expected": 277383467,
+      "matches": true
+    },
+    "candidate_count": {
+      "actual": 72,
+      "expected": 72,
+      "matches": true
+    },
+    "file_name": {
+      "actual": "longmemeval_s_cleaned.json",
+      "expected": "longmemeval_s_cleaned.json",
+      "matches": true
+    },
+    "raw_ku_count": {
+      "actual": 78,
+      "expected": 78,
+      "matches": true
+    },
+    "sha256": {
+      "actual": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+      "expected": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442",
+      "matches": true
+    },
+    "total_rows": {
+      "actual": 500,
+      "expected": 500,
+      "matches": true
+    }
+  },
+  "source_contract_verified": true,
+  "source_identity_basis": "Manifest filename, size, SHA-256 and counts; upstream revision not supplied",
+  "stage": "A",
+  "structural_status_counts": {
+    "FAIL": 0,
+    "FLAG": 4,
+    "PASS": 68
+  },
+  "total_rows": 500,
+  "unevaluable_predicate_source_row_indices": [],
+  "unique_question_id_count": 500,
+  "upstream_revision": null,
+  "validation_set_frozen": false
+}
