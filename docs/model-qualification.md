@@ -1,6 +1,6 @@
 # Model Qualification
 
-## Purpose
+## 1. Purpose
 
 Model qualification verifies that the fixed experimental backbone can execute
 the interfaces required by the study.
@@ -8,18 +8,17 @@ the interfaces required by the study.
 The procedure is not a model benchmark, model comparison, or capability
 ranking.
 
-Planned backbone:
+Planned model:
 
 `meta-llama/llama-3.1-8b-instruct`
 
-Planned upstream provider:
+Planned provider:
 
 `coreweave/bf16`
 
-The qualification is performed before any comparative M1, M2, or M3
-experiment.
+Qualification is completed before any comparative M1, M2, or M3 experiment.
 
-## Qualification Scope
+## 2. Scope
 
 The model must support four experimental functions:
 
@@ -28,35 +27,32 @@ The model must support four experimental functions:
 3. answer generation; and
 4. API interface and accounting requirements.
 
-Qualification uses synthetic technical fixtures that are separate from CRST and
-LongMemEval-S.
+Qualification uses synthetic technical fixtures that are separate from CRST
+and LongMemEval-S.
 
 No CRST or LongMemEval-S experimental instance is used during qualification.
 
-## Memory Representation
+## 3. Memory Representation
 
 A memory item represents one current entity-attribute-value proposition.
 
 Example:
 
-- entity: `Mira`
-- attribute: `locker_color`
-- value: `cobalt`
+- entity: Mira
+- attribute: locker_color
+- value: cobalt
 
-The exact machine-readable schemas are defined by the qualification
-implementation and validated locally.
+Machine-readable responses are validated locally using predefined schemas.
 
-## Technical Fixtures
+## 4. Qualification Fixtures
 
-### Extraction
-
-Two extraction fixtures are used.
+### 4.1 Extraction
 
 E1 tests extraction of a simple current fact.
 
 Input meaning:
 
-`Mira's locker is cobalt.`
+Mira's locker is cobalt.
 
 Expected proposition:
 
@@ -64,11 +60,11 @@ Expected proposition:
 - attribute: locker_color
 - value: cobalt
 
-E2 tests extraction of an explicitly revised current fact.
+E2 tests extraction after an explicit revision.
 
 Input meaning:
 
-`Mira changed her locker color from amber to cobalt.`
+Mira changed her locker color from amber to cobalt.
 
 Expected current proposition:
 
@@ -76,12 +72,9 @@ Expected current proposition:
 - attribute: locker_color
 - value: cobalt
 
-Historical wording must not cause the superseded value to become the extracted
-current value.
+The superseded value must not be extracted as the current value.
 
-### Maintenance
-
-Three maintenance fixtures are used.
+### 4.2 Maintenance
 
 M1 tests Add.
 
@@ -97,7 +90,7 @@ Candidate:
 
 Expected operation:
 
-`add`
+add
 
 M2 tests Update.
 
@@ -115,11 +108,9 @@ Candidate:
 
 Expected operation:
 
-`update`
+update
 
-Expected target:
-
-the existing Mira locker-color memory item
+The existing locker-color memory item must be selected as the update target.
 
 M3 tests Noop.
 
@@ -137,144 +128,138 @@ Candidate:
 
 Expected operation:
 
-`noop`
+noop
 
-### Answering
-
-Two answering fixtures are used.
+### 4.3 Answering
 
 A1 tests direct use of current memory.
 
-Active memory states that Mira's locker color is cobalt.
+Current memory states that Mira's locker color is cobalt.
 
 Question:
 
-`What color is Mira's locker?`
+What color is Mira's locker?
 
 Expected answer:
 
-`cobalt`
+cobalt
 
-A2 tests resistance to a stale value.
+A2 tests resistance to stale information.
 
-Active memory contains the current value `cobalt` and metadata identifying
-`amber` as superseded historical information.
+The current value is cobalt and amber is explicitly identified as superseded
+historical information.
 
 Question:
 
-`What color is Mira's locker now?`
+What color is Mira's locker now?
 
 Expected answer:
 
-`cobalt`
+cobalt
 
-The model must not answer `amber`.
+The model must not answer amber.
 
-### End-to-End Interface
+### 4.4 End-to-End Interface
 
-One end-to-end fixture verifies that extraction, maintenance, memory-state
-application, and answering can be executed sequentially using the same frozen
-schemas and model configuration.
+One end-to-end fixture verifies extraction, maintenance, memory-state
+application, and answering in sequence.
 
-The fixture starts with Mira's locker color as amber, introduces a revision to
-cobalt, applies the resulting maintenance decision, and asks for the current
-locker color.
+The fixture begins with Mira's locker color as amber, introduces a revision to
+cobalt, applies the maintenance decision, and asks for the current locker
+color.
 
 Expected final answer:
 
-`cobalt`
+cobalt
 
-## Execution
+## 5. Execution
 
-The qualification contains eight logical calls:
+The qualification consists of eight logical calls:
 
-- 2 extraction calls;
-- 3 maintenance calls;
-- 2 answering calls;
-- 1 end-to-end verification call.
+- two extraction calls;
+- three maintenance calls;
+- two answering calls; and
+- one end-to-end verification call.
 
 Calls are stateless at the API level.
 
 Required state is supplied explicitly by the qualification program.
 
-Concurrency is 1.
+Concurrency is one.
 
 Automatic provider fallback is disabled.
 
-## Output Validation
+## 6. Response Validation
 
-Every response required to be structured must:
+Every structured response must:
 
 1. return successfully;
 2. contain parseable JSON;
-3. pass the predefined local Pydantic schema;
-4. contain no additional unsupported operation or target value.
+3. pass the predefined local schema; and
+4. conform to the expected operation and target constraints.
 
-A response is evaluated exactly once.
+Each response is evaluated once.
 
 Semantic repair, corrective reprompting, best-of sampling, and LLM judging are
 not used.
 
-Infrastructure retries may occur only under the configured transport retry
+Infrastructure retries are permitted only under the configured transport retry
 policy.
 
-## Qualification Criteria
+## 7. Qualification Criteria
 
-The model configuration qualifies only if all of the following hold:
+The configuration qualifies only if all of the following conditions hold:
 
 - all eight logical calls complete;
-- every required structured response parses successfully;
-- every structured response passes local schema validation;
+- all required structured responses parse successfully;
+- all structured responses pass local schema validation;
 - E1 and E2 produce the expected current proposition;
 - M1 returns Add;
 - M2 returns Update with the correct target;
 - M3 returns Noop;
 - A1 and A2 return the expected current value;
 - the end-to-end fixture returns the expected current value;
-- the requested model is the configured Llama 3.1 8B model;
-- the observed provider is consistent with the pinned CoreWeave endpoint;
-- automatic provider fallback does not occur;
-- input-token and output-token accounting is available for successful model
+- the requested model matches the configured model;
+- the observed provider is consistent with the pinned provider;
+- automatic provider fallback does not occur; and
+- input-token and output-token accounting is available for successful
   responses.
 
-If any required condition fails, the configuration is not frozen for the main
-experiment until the cause is reviewed.
+There are only two final outcomes:
 
-A failed qualification does not authorize changing prompts, schemas, model
-parameters, or providers and rerunning them repeatedly until a pass is
-obtained. Any material change requires an explicit documented decision before
-a new qualification run.
+- QUALIFIED
+- NOT_QUALIFIED
 
-## Recorded Evidence
+No numerical model score is produced.
 
-The qualification output must record:
+## 8. Failure Handling
 
-- qualification timestamp;
+A failed qualification does not authorize repeated changes until a passing
+result is obtained.
+
+Any material change to the model, provider, prompts, schemas, generation
+parameters, or qualification criteria must be documented before a new
+qualification run.
+
+Infrastructure retry behavior follows the frozen transport configuration.
+
+## 9. Recorded Evidence
+
+The qualification records:
+
+- timestamp;
 - model identifier;
 - requested provider;
-- observed provider when exposed;
+- observed provider when available;
 - generation parameters;
-- prompt and schema identifiers;
-- logical call identifiers;
+- logical-call identifier;
 - request status;
 - parse status;
 - schema-validation status;
 - deterministic expected-versus-observed result;
 - token accounting;
 - latency;
-- retry information;
-- final qualification status.
+- retry information; and
+- final qualification outcome.
 
-Secrets must never be written to qualification artifacts.
-
-## Outcome
-
-There are only two qualification outcomes:
-
-- `QUALIFIED`
-- `NOT_QUALIFIED`
-
-No numerical model score or cross-model ranking is produced.
-
-A `QUALIFIED` result permits the exact model configuration to be frozen for the
-main experimental workflow.
+Secrets are never written to qualification artifacts.
