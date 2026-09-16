@@ -15,3 +15,13 @@ generation:
 transport:
   timeout_seconds: 180
   max_retries: 2
+  retry_backoff_seconds:
+    - 1
+    - 2
+  retry_status_codes:
+    - 408
+    - 429
+    - 500
+    - 502
+    - 503
+    - 504
