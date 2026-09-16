@@ -1,0 +1,1009 @@
+{
+  "started_at": "2026-09-16T15:09:00.481313+00:00",
+  "model_configuration": {
+    "id": "meta-llama/llama-3.1-8b-instruct"
+  },
+  "provider_configuration": {
+    "gateway": "openrouter",
+    "upstream": "coreweave/bf16",
+    "allow_fallbacks": false,
+    "require_parameters": true
+  },
+  "generation": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_output_tokens": 2048
+  },
+  "transport": {
+    "timeout_seconds": 180,
+    "max_retries": 2,
+    "retry_backoff_seconds": [
+      1,
+      2
+    ],
+    "retry_status_codes": [
+      408,
+      429,
+      500,
+      502,
+      503,
+      504
+    ]
+  },
+  "fixture_identifiers": [
+    "E1",
+    "E2",
+    "M1",
+    "M2",
+    "M3",
+    "A1",
+    "A2",
+    "E2E-E",
+    "E2E-M",
+    "E2E-A"
+  ],
+  "logical_calls": [
+    {
+      "logical_id": "E1",
+      "request_status": "success",
+      "attempts": [
+        {
+          "attempt": 1,
+          "started_at": "2026-09-16T15:09:00.481348+00:00",
+          "http_status": 200,
+          "error_type": null,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "requested_provider_endpoint": "coreweave/bf16",
+          "returned_model": "meta-llama/llama-3.1-8b-instruct",
+          "openrouter_metadata": {
+            "requested": "meta-llama/llama-3.1-8b-instruct",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1, selected=CoreWeave",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 5,
+              "available": [
+                {
+                  "provider": "CoreWeave",
+                  "model": "meta-llama/llama-3.1-8b-instruct",
+                  "selected": true
+                }
+              ]
+            },
+            "generation_time": 352
+          },
+          "request_id": null,
+          "response_id": "gen-1789571340-LNCQjfLgNM2IIQlFtxJD",
+          "service_tier": null,
+          "usage": {
+            "prompt_tokens": 94,
+            "completion_tokens": 6,
+            "total_tokens": 100,
+            "cost": 2.2e-05,
+            "cached_tokens": 0
+          },
+          "latency_seconds": 0.8542741010005557,
+          "will_retry": false
+        }
+      ],
+      "raw_assistant_content": "{\"memories\":[]}",
+      "parsed_output": {
+        "memories": []
+      },
+      "usage": {
+        "prompt_tokens": 94,
+        "completion_tokens": 6,
+        "total_tokens": 100,
+        "cost": 2.2e-05,
+        "cached_tokens": 0
+      },
+      "latency_seconds": 0.8543359569994209,
+      "parse_status": "passed",
+      "schema_status": "failed",
+      "evaluation_status": "not_run",
+      "expected": {
+        "memories": [
+          {
+            "entity": "Mira",
+            "attribute": "locker_color",
+            "value": "cobalt"
+          }
+        ]
+      },
+      "routing_ok": true,
+      "accounting_ok": true,
+      "request": {
+        "model": "meta-llama/llama-3.1-8b-instruct",
+        "provider": {
+          "order": [
+            "coreweave/bf16"
+          ],
+          "allow_fallbacks": false,
+          "require_parameters": true
+        },
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 2048,
+        "response_format": {
+          "type": "json_object"
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "Extract only current entity-attribute-value propositions. Do not return superseded historical values as current. Return JSON: {\"memories\":[{\"entity\":\"...\",\"attribute\":\"...\",\"value\":\"...\"}]}. Use snake_case attribute names."
+          },
+          {
+            "role": "user",
+            "content": "{\"text\": \"Mira's locker is cobalt.\"}"
+          }
+        ]
+      }
+    },
+    {
+      "logical_id": "E2",
+      "request_status": "success",
+      "attempts": [
+        {
+          "attempt": 1,
+          "started_at": "2026-09-16T15:09:01.335714+00:00",
+          "http_status": 200,
+          "error_type": null,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "requested_provider_endpoint": "coreweave/bf16",
+          "returned_model": "meta-llama/llama-3.1-8b-instruct",
+          "openrouter_metadata": {
+            "requested": "meta-llama/llama-3.1-8b-instruct",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1, selected=CoreWeave",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 5,
+              "available": [
+                {
+                  "provider": "CoreWeave",
+                  "model": "meta-llama/llama-3.1-8b-instruct",
+                  "selected": true
+                }
+              ]
+            },
+            "generation_time": 438
+          },
+          "request_id": null,
+          "response_id": "gen-1789571341-V31UHuOSgndj1rRWIcan",
+          "service_tier": null,
+          "usage": {
+            "prompt_tokens": 98,
+            "completion_tokens": 27,
+            "total_tokens": 125,
+            "cost": 2.75e-05,
+            "cached_tokens": 0
+          },
+          "latency_seconds": 0.7161280469990743,
+          "will_retry": false
+        }
+      ],
+      "raw_assistant_content": "{\"memories\": [{\"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"cobalt\"}]}",
+      "parsed_output": {
+        "memories": [
+          {
+            "entity": "Mira",
+            "attribute": "locker_color",
+            "value": "cobalt"
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 98,
+        "completion_tokens": 27,
+        "total_tokens": 125,
+        "cost": 2.75e-05,
+        "cached_tokens": 0
+      },
+      "latency_seconds": 0.7163489040012792,
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "evaluation_status": "passed",
+      "expected": {
+        "memories": [
+          {
+            "entity": "Mira",
+            "attribute": "locker_color",
+            "value": "cobalt"
+          }
+        ]
+      },
+      "routing_ok": true,
+      "accounting_ok": true,
+      "request": {
+        "model": "meta-llama/llama-3.1-8b-instruct",
+        "provider": {
+          "order": [
+            "coreweave/bf16"
+          ],
+          "allow_fallbacks": false,
+          "require_parameters": true
+        },
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 2048,
+        "response_format": {
+          "type": "json_object"
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "Extract only current entity-attribute-value propositions. Do not return superseded historical values as current. Return JSON: {\"memories\":[{\"entity\":\"...\",\"attribute\":\"...\",\"value\":\"...\"}]}. Use snake_case attribute names."
+          },
+          {
+            "role": "user",
+            "content": "{\"text\": \"Mira changed her locker color from amber to cobalt.\"}"
+          }
+        ]
+      }
+    },
+    {
+      "logical_id": "M1",
+      "request_status": "success",
+      "attempts": [
+        {
+          "attempt": 1,
+          "started_at": "2026-09-16T15:09:02.052128+00:00",
+          "http_status": 429,
+          "error_type": null,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "requested_provider_endpoint": "coreweave/bf16",
+          "returned_model": null,
+          "openrouter_metadata": {
+            "requested": "meta-llama/llama-3.1-8b-instruct",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 5,
+              "available": [
+                {
+                  "provider": "CoreWeave",
+                  "model": "meta-llama/llama-3.1-8b-instruct",
+                  "selected": false
+                }
+              ]
+            },
+            "generation_time": 251
+          },
+          "request_id": null,
+          "response_id": null,
+          "service_tier": null,
+          "usage": null,
+          "latency_seconds": 0.3086622549999447,
+          "will_retry": true
+        },
+        {
+          "attempt": 2,
+          "started_at": "2026-09-16T15:09:03.361812+00:00",
+          "http_status": 200,
+          "error_type": null,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "requested_provider_endpoint": "coreweave/bf16",
+          "returned_model": "meta-llama/llama-3.1-8b-instruct",
+          "openrouter_metadata": {
+            "requested": "meta-llama/llama-3.1-8b-instruct",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1, selected=CoreWeave",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 5,
+              "available": [
+                {
+                  "provider": "CoreWeave",
+                  "model": "meta-llama/llama-3.1-8b-instruct",
+                  "selected": true
+                }
+              ]
+            },
+            "generation_time": 449
+          },
+          "request_id": null,
+          "response_id": "gen-1789571343-RDQnKVA8nAK2jeXMFn0N",
+          "service_tier": null,
+          "usage": {
+            "prompt_tokens": 134,
+            "completion_tokens": 19,
+            "total_tokens": 153,
+            "cost": 3.366e-05,
+            "cached_tokens": 0
+          },
+          "latency_seconds": 0.5340045709999686,
+          "will_retry": false
+        }
+      ],
+      "raw_assistant_content": "{ \n  \"operation\": \"add\", \n  \"target_id\": null \n}",
+      "parsed_output": {
+        "operation": "add",
+        "target_id": null
+      },
+      "usage": {
+        "prompt_tokens": 134,
+        "completion_tokens": 19,
+        "total_tokens": 153,
+        "cost": 3.366e-05,
+        "cached_tokens": 0
+      },
+      "latency_seconds": 1.8438064109996049,
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "evaluation_status": "passed",
+      "expected": {
+        "operation": "add",
+        "target_id": null
+      },
+      "routing_ok": true,
+      "accounting_ok": true,
+      "request": {
+        "model": "meta-llama/llama-3.1-8b-instruct",
+        "provider": {
+          "order": [
+            "coreweave/bf16"
+          ],
+          "allow_fallbacks": false,
+          "require_parameters": true
+        },
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 2048,
+        "response_format": {
+          "type": "json_object"
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "Add when no entity-attribute memory exists. Update when the same entity-attribute exists with a different current value. Noop when the same entity-attribute already has the candidate current value. Return JSON with \"operation\" (\"add\", \"update\", or \"noop\") and \"target_id\" (the existing memory ID for update, otherwise null)."
+          },
+          {
+            "role": "user",
+            "content": "{\"active_memory\": [], \"candidate\": {\"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"cobalt\"}}"
+          }
+        ]
+      }
+    },
+    {
+      "logical_id": "M2",
+      "request_status": "success",
+      "attempts": [
+        {
+          "attempt": 1,
+          "started_at": "2026-09-16T15:09:03.895975+00:00",
+          "http_status": 200,
+          "error_type": null,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "requested_provider_endpoint": "coreweave/bf16",
+          "returned_model": "meta-llama/llama-3.1-8b-instruct",
+          "openrouter_metadata": {
+            "requested": "meta-llama/llama-3.1-8b-instruct",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1, selected=CoreWeave",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 5,
+              "available": [
+                {
+                  "provider": "CoreWeave",
+                  "model": "meta-llama/llama-3.1-8b-instruct",
+                  "selected": true
+                }
+              ]
+            },
+            "generation_time": 393
+          },
+          "request_id": null,
+          "response_id": "gen-1789571343-oP0NEk1RAxXEHzeLRlSB",
+          "service_tier": null,
+          "usage": {
+            "prompt_tokens": 162,
+            "completion_tokens": 19,
+            "total_tokens": 181,
+            "cost": 3.982e-05,
+            "cached_tokens": 0
+          },
+          "latency_seconds": 0.4305664280000201,
+          "will_retry": false
+        }
+      ],
+      "raw_assistant_content": "{ \n  \"operation\": \"noop\", \n  \"target_id\": null \n}",
+      "parsed_output": {
+        "operation": "noop",
+        "target_id": null
+      },
+      "usage": {
+        "prompt_tokens": 162,
+        "completion_tokens": 19,
+        "total_tokens": 181,
+        "cost": 3.982e-05,
+        "cached_tokens": 0
+      },
+      "latency_seconds": 0.4306902319985966,
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "evaluation_status": "failed",
+      "expected": {
+        "operation": "update",
+        "target_id": "mem-1"
+      },
+      "routing_ok": true,
+      "accounting_ok": true,
+      "request": {
+        "model": "meta-llama/llama-3.1-8b-instruct",
+        "provider": {
+          "order": [
+            "coreweave/bf16"
+          ],
+          "allow_fallbacks": false,
+          "require_parameters": true
+        },
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 2048,
+        "response_format": {
+          "type": "json_object"
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "Add when no entity-attribute memory exists. Update when the same entity-attribute exists with a different current value. Noop when the same entity-attribute already has the candidate current value. Return JSON with \"operation\" (\"add\", \"update\", or \"noop\") and \"target_id\" (the existing memory ID for update, otherwise null)."
+          },
+          {
+            "role": "user",
+            "content": "{\"active_memory\": [{\"id\": \"mem-1\", \"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"amber\"}], \"candidate\": {\"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"cobalt\"}}"
+          }
+        ]
+      }
+    },
+    {
+      "logical_id": "M3",
+      "request_status": "success",
+      "attempts": [
+        {
+          "attempt": 1,
+          "started_at": "2026-09-16T15:09:04.326723+00:00",
+          "http_status": 200,
+          "error_type": null,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "requested_provider_endpoint": "coreweave/bf16",
+          "returned_model": "meta-llama/llama-3.1-8b-instruct",
+          "openrouter_metadata": {
+            "requested": "meta-llama/llama-3.1-8b-instruct",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1, selected=CoreWeave",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 5,
+              "available": [
+                {
+                  "provider": "CoreWeave",
+                  "model": "meta-llama/llama-3.1-8b-instruct",
+                  "selected": true
+                }
+              ]
+            },
+            "generation_time": 394
+          },
+          "request_id": null,
+          "response_id": "gen-1789571344-VJC8Akel6pv3VaSe6Eds",
+          "service_tier": null,
+          "usage": {
+            "prompt_tokens": 163,
+            "completion_tokens": 19,
+            "total_tokens": 182,
+            "cost": 4.004e-05,
+            "cached_tokens": 0
+          },
+          "latency_seconds": 0.4430297109993262,
+          "will_retry": false
+        }
+      ],
+      "raw_assistant_content": "{ \n  \"operation\": \"noop\", \n  \"target_id\": null \n}",
+      "parsed_output": {
+        "operation": "noop",
+        "target_id": null
+      },
+      "usage": {
+        "prompt_tokens": 163,
+        "completion_tokens": 19,
+        "total_tokens": 182,
+        "cost": 4.004e-05,
+        "cached_tokens": 0
+      },
+      "latency_seconds": 0.44313702399995236,
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "evaluation_status": "passed",
+      "expected": {
+        "operation": "noop",
+        "target_id": null
+      },
+      "routing_ok": true,
+      "accounting_ok": true,
+      "request": {
+        "model": "meta-llama/llama-3.1-8b-instruct",
+        "provider": {
+          "order": [
+            "coreweave/bf16"
+          ],
+          "allow_fallbacks": false,
+          "require_parameters": true
+        },
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 2048,
+        "response_format": {
+          "type": "json_object"
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "Add when no entity-attribute memory exists. Update when the same entity-attribute exists with a different current value. Noop when the same entity-attribute already has the candidate current value. Return JSON with \"operation\" (\"add\", \"update\", or \"noop\") and \"target_id\" (the existing memory ID for update, otherwise null)."
+          },
+          {
+            "role": "user",
+            "content": "{\"active_memory\": [{\"id\": \"mem-1\", \"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"cobalt\"}], \"candidate\": {\"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"cobalt\"}}"
+          }
+        ]
+      }
+    },
+    {
+      "logical_id": "A1",
+      "request_status": "success",
+      "attempts": [
+        {
+          "attempt": 1,
+          "started_at": "2026-09-16T15:09:04.769892+00:00",
+          "http_status": 429,
+          "error_type": null,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "requested_provider_endpoint": "coreweave/bf16",
+          "returned_model": null,
+          "openrouter_metadata": {
+            "requested": "meta-llama/llama-3.1-8b-instruct",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 5,
+              "available": [
+                {
+                  "provider": "CoreWeave",
+                  "model": "meta-llama/llama-3.1-8b-instruct",
+                  "selected": false
+                }
+              ]
+            },
+            "generation_time": 252
+          },
+          "request_id": null,
+          "response_id": null,
+          "service_tier": null,
+          "usage": null,
+          "latency_seconds": 0.2871915169998829,
+          "will_retry": true
+        },
+        {
+          "attempt": 2,
+          "started_at": "2026-09-16T15:09:06.058032+00:00",
+          "http_status": 200,
+          "error_type": null,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "requested_provider_endpoint": "coreweave/bf16",
+          "returned_model": "meta-llama/llama-3.1-8b-instruct",
+          "openrouter_metadata": {
+            "requested": "meta-llama/llama-3.1-8b-instruct",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1, selected=CoreWeave",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 5,
+              "available": [
+                {
+                  "provider": "CoreWeave",
+                  "model": "meta-llama/llama-3.1-8b-instruct",
+                  "selected": true
+                }
+              ]
+            },
+            "generation_time": 314
+          },
+          "request_id": null,
+          "response_id": "gen-1789571346-EF1vesqqRIY3N0sDtSKZ",
+          "service_tier": null,
+          "usage": {
+            "prompt_tokens": 101,
+            "completion_tokens": 7,
+            "total_tokens": 108,
+            "cost": 2.376e-05,
+            "cached_tokens": 0
+          },
+          "latency_seconds": 0.503360024000358,
+          "will_retry": false
+        }
+      ],
+      "raw_assistant_content": "{\"answer\":\"cobalt\"}",
+      "parsed_output": {
+        "answer": "cobalt"
+      },
+      "usage": {
+        "prompt_tokens": 101,
+        "completion_tokens": 7,
+        "total_tokens": 108,
+        "cost": 2.376e-05,
+        "cached_tokens": 0
+      },
+      "latency_seconds": 1.7916307520008559,
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "evaluation_status": "passed",
+      "expected": {
+        "answer": "cobalt"
+      },
+      "routing_ok": true,
+      "accounting_ok": true,
+      "request": {
+        "model": "meta-llama/llama-3.1-8b-instruct",
+        "provider": {
+          "order": [
+            "coreweave/bf16"
+          ],
+          "allow_fallbacks": false,
+          "require_parameters": true
+        },
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 2048,
+        "response_format": {
+          "type": "json_object"
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "Answer using supplied active memory only. Return the canonical value in JSON: {\"answer\":\"...\"}."
+          },
+          {
+            "role": "user",
+            "content": "{\"active_memory\": [{\"id\": \"mem-1\", \"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"cobalt\"}], \"question\": \"What color is Mira's locker?\"}"
+          }
+        ]
+      }
+    },
+    {
+      "logical_id": "A2",
+      "request_status": "success",
+      "attempts": [
+        {
+          "attempt": 1,
+          "started_at": "2026-09-16T15:09:06.561618+00:00",
+          "http_status": 200,
+          "error_type": null,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "requested_provider_endpoint": "coreweave/bf16",
+          "returned_model": "meta-llama/llama-3.1-8b-instruct",
+          "openrouter_metadata": {
+            "requested": "meta-llama/llama-3.1-8b-instruct",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1, selected=CoreWeave",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 5,
+              "available": [
+                {
+                  "provider": "CoreWeave",
+                  "model": "meta-llama/llama-3.1-8b-instruct",
+                  "selected": true
+                }
+              ]
+            },
+            "generation_time": 330
+          },
+          "request_id": null,
+          "response_id": "gen-1789571346-rq0lDoxafj8vbLxkBYRF",
+          "service_tier": null,
+          "usage": {
+            "prompt_tokens": 130,
+            "completion_tokens": 7,
+            "total_tokens": 137,
+            "cost": 3.014e-05,
+            "cached_tokens": 0
+          },
+          "latency_seconds": 0.4043800529998407,
+          "will_retry": false
+        }
+      ],
+      "raw_assistant_content": "{\"answer\":\"cobalt\"}",
+      "parsed_output": {
+        "answer": "cobalt"
+      },
+      "usage": {
+        "prompt_tokens": 130,
+        "completion_tokens": 7,
+        "total_tokens": 137,
+        "cost": 3.014e-05,
+        "cached_tokens": 0
+      },
+      "latency_seconds": 0.4045057910007017,
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "evaluation_status": "passed",
+      "expected": {
+        "answer": "cobalt"
+      },
+      "routing_ok": true,
+      "accounting_ok": true,
+      "request": {
+        "model": "meta-llama/llama-3.1-8b-instruct",
+        "provider": {
+          "order": [
+            "coreweave/bf16"
+          ],
+          "allow_fallbacks": false,
+          "require_parameters": true
+        },
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 2048,
+        "response_format": {
+          "type": "json_object"
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "Answer using supplied active memory only. Return the canonical value in JSON: {\"answer\":\"...\"}."
+          },
+          {
+            "role": "user",
+            "content": "{\"active_memory\": [{\"id\": \"mem-1\", \"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"cobalt\"}], \"question\": \"What color is Mira's locker now?\", \"superseded_historical_memory\": [{\"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"amber\"}]}"
+          }
+        ]
+      }
+    },
+    {
+      "logical_id": "E2E-E",
+      "request_status": "success",
+      "attempts": [
+        {
+          "attempt": 1,
+          "started_at": "2026-09-16T15:09:06.966171+00:00",
+          "http_status": 200,
+          "error_type": null,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "requested_provider_endpoint": "coreweave/bf16",
+          "returned_model": "meta-llama/llama-3.1-8b-instruct",
+          "openrouter_metadata": {
+            "requested": "meta-llama/llama-3.1-8b-instruct",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1, selected=CoreWeave",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 5,
+              "available": [
+                {
+                  "provider": "CoreWeave",
+                  "model": "meta-llama/llama-3.1-8b-instruct",
+                  "selected": true
+                }
+              ]
+            },
+            "generation_time": 511
+          },
+          "request_id": null,
+          "response_id": "gen-1789571346-sE7gBUHgZZ3moT9bOGkz",
+          "service_tier": null,
+          "usage": {
+            "prompt_tokens": 98,
+            "completion_tokens": 27,
+            "total_tokens": 125,
+            "cost": 2.75e-05,
+            "cached_tokens": 0
+          },
+          "latency_seconds": 0.5495456560001912,
+          "will_retry": false
+        }
+      ],
+      "raw_assistant_content": "{\"memories\": [{\"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"cobalt\"}]}",
+      "parsed_output": {
+        "memories": [
+          {
+            "entity": "Mira",
+            "attribute": "locker_color",
+            "value": "cobalt"
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 98,
+        "completion_tokens": 27,
+        "total_tokens": 125,
+        "cost": 2.75e-05,
+        "cached_tokens": 0
+      },
+      "latency_seconds": 0.5496880950013292,
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "evaluation_status": "passed",
+      "expected": {
+        "memories": [
+          {
+            "entity": "Mira",
+            "attribute": "locker_color",
+            "value": "cobalt"
+          }
+        ]
+      },
+      "routing_ok": true,
+      "accounting_ok": true,
+      "request": {
+        "model": "meta-llama/llama-3.1-8b-instruct",
+        "provider": {
+          "order": [
+            "coreweave/bf16"
+          ],
+          "allow_fallbacks": false,
+          "require_parameters": true
+        },
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 2048,
+        "response_format": {
+          "type": "json_object"
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "Extract only current entity-attribute-value propositions. Do not return superseded historical values as current. Return JSON: {\"memories\":[{\"entity\":\"...\",\"attribute\":\"...\",\"value\":\"...\"}]}. Use snake_case attribute names."
+          },
+          {
+            "role": "user",
+            "content": "{\"text\": \"Mira changed her locker color from amber to cobalt.\"}"
+          }
+        ]
+      }
+    },
+    {
+      "logical_id": "E2E-M",
+      "request_status": "success",
+      "attempts": [
+        {
+          "attempt": 1,
+          "started_at": "2026-09-16T15:09:07.515900+00:00",
+          "http_status": 200,
+          "error_type": null,
+          "requested_model": "meta-llama/llama-3.1-8b-instruct",
+          "requested_provider_endpoint": "coreweave/bf16",
+          "returned_model": "meta-llama/llama-3.1-8b-instruct",
+          "openrouter_metadata": {
+            "requested": "meta-llama/llama-3.1-8b-instruct",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1, selected=CoreWeave",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 5,
+              "available": [
+                {
+                  "provider": "CoreWeave",
+                  "model": "meta-llama/llama-3.1-8b-instruct",
+                  "selected": true
+                }
+              ]
+            },
+            "generation_time": 463
+          },
+          "request_id": null,
+          "response_id": "gen-1789571347-yr3qyDkX3kzb4ZZJB1Fm",
+          "service_tier": null,
+          "usage": {
+            "prompt_tokens": 162,
+            "completion_tokens": 19,
+            "total_tokens": 181,
+            "cost": 3.982e-05,
+            "cached_tokens": 0
+          },
+          "latency_seconds": 0.5778650510001171,
+          "will_retry": false
+        }
+      ],
+      "raw_assistant_content": "{ \n  \"operation\": \"noop\", \n  \"target_id\": null \n}",
+      "parsed_output": {
+        "operation": "noop",
+        "target_id": null
+      },
+      "usage": {
+        "prompt_tokens": 162,
+        "completion_tokens": 19,
+        "total_tokens": 181,
+        "cost": 3.982e-05,
+        "cached_tokens": 0
+      },
+      "latency_seconds": 0.5780117190006422,
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "evaluation_status": "failed",
+      "expected": {
+        "operation": "update",
+        "target_id": "mem-1"
+      },
+      "routing_ok": true,
+      "accounting_ok": true,
+      "request": {
+        "model": "meta-llama/llama-3.1-8b-instruct",
+        "provider": {
+          "order": [
+            "coreweave/bf16"
+          ],
+          "allow_fallbacks": false,
+          "require_parameters": true
+        },
+        "temperature": 0.0,
+        "top_p": 1.0,
+        "max_tokens": 2048,
+        "response_format": {
+          "type": "json_object"
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "Add when no entity-attribute memory exists. Update when the same entity-attribute exists with a different current value. Noop when the same entity-attribute already has the candidate current value. Return JSON with \"operation\" (\"add\", \"update\", or \"noop\") and \"target_id\" (the existing memory ID for update, otherwise null)."
+          },
+          {
+            "role": "user",
+            "content": "{\"active_memory\": [{\"id\": \"mem-1\", \"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"amber\"}], \"candidate\": {\"entity\": \"Mira\", \"attribute\": \"locker_color\", \"value\": \"cobalt\"}}"
+          }
+        ]
+      }
+    },
+    {
+      "logical_id": "E2E-A",
+      "request_status": "blocked",
+      "attempts": [],
+      "raw_assistant_content": null,
+      "parsed_output": null,
+      "usage": null,
+      "latency_seconds": null,
+      "parse_status": "not_run",
+      "schema_status": "not_run",
+      "evaluation_status": "not_run",
+      "expected": {
+        "answer": "cobalt"
+      },
+      "routing_ok": false,
+      "accounting_ok": false
+    }
+  ],
+  "local_update_applied": false,
+  "final_active_memory": [
+    {
+      "id": "mem-1",
+      "entity": "Mira",
+      "attribute": "locker_color",
+      "value": "amber"
+    }
+  ],
+  "ended_at": "2026-09-16T15:09:08.093917+00:00",
+  "final_status": "NOT_QUALIFIED"
+}
