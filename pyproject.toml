@@ -4,7 +4,15 @@ version = "0.1.0"
 description = "Experimental repository for evaluating conversational memory-maintenance policies under repeated information revisions."
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "httpx>=0.28.1",
+    "pydantic>=2.13.5",
+]
 
 [tool.uv]
 package = false
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]

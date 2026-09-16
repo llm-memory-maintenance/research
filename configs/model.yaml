@@ -1,0 +1,17 @@
+model:
+  id: meta-llama/llama-3.1-8b-instruct
+
+provider:
+  gateway: openrouter
+  upstream: coreweave/bf16
+  allow_fallbacks: false
+  require_parameters: true
+
+generation:
+  temperature: 0.0
+  top_p: 1.0
+  max_output_tokens: 2048
+
+transport:
+  timeout_seconds: 180
+  max_retries: 2
