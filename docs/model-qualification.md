@@ -161,12 +161,27 @@ The model must not answer amber.
 
 ### 4.4 End-to-End Interface
 
-One end-to-end fixture verifies extraction, maintenance, memory-state
-application, and answering in sequence.
+One end-to-end fixture verifies the actual extraction, maintenance,
+memory-state application, and answering sequence.
 
-The fixture begins with Mira's locker color as amber, introduces a revision to
-cobalt, applies the maintenance decision, and asks for the current locker
-color.
+The fixture begins with active memory stating that Mira's locker color is
+amber. It then introduces the revision:
+
+Mira changed her locker color from amber to cobalt.
+
+The end-to-end fixture consists of three model calls:
+
+1. extraction produces the current candidate proposition for cobalt;
+2. maintenance selects Update for the existing locker-color memory item; and
+3. answering receives the locally updated active memory and answers the final
+   question.
+
+The maintenance decision is applied by the experimental software between the
+second and third calls.
+
+Final question:
+
+What color is Mira's locker now?
 
 Expected final answer:
 
@@ -174,12 +189,13 @@ cobalt
 
 ## 5. Execution
 
-The qualification consists of eight logical calls:
+The qualification consists of ten logical model calls:
 
-- two extraction calls;
-- three maintenance calls;
-- two answering calls; and
-- one end-to-end verification call.
+- two standalone extraction calls;
+- three standalone maintenance calls;
+- two standalone answering calls; and
+- three calls forming one end-to-end fixture: extraction, maintenance, and
+  answering.
 
 Calls are stateless at the API level.
 
@@ -210,7 +226,7 @@ policy.
 
 The configuration qualifies only if all of the following conditions hold:
 
-- all eight logical calls complete;
+- all ten logical calls complete;
 - all required structured responses parse successfully;
 - all structured responses pass local schema validation;
 - E1 and E2 produce the expected current proposition;
