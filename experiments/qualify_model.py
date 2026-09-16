@@ -106,7 +106,16 @@ EXTRACTION_PROMPT = (
     'value, return only the new/current value. Superseded historical values must not be '
     'returned as current. For these qualification calls, return exactly one current '
     'MemoryItem. Return JSON: {"memories":[{"entity":"...",'
-    '"attribute":"...","value":"..."}]}. Use snake_case attribute names.'
+    '"attribute":"...","value":"..."}]}. Use snake_case attribute names. '
+    'The entity is the primary owner/subject whose state is remembered; the attribute '
+    'is the property associated with that entity. For possessive constructions giving '
+    'a property of an owned or associated object, keep the owner/subject as entity and '
+    'combine object and property in a snake_case attribute when needed for a stable key. '
+    'Do not collapse the owner and possessed object into one entity string when the '
+    'owner can be represented separately. Use the same canonical (entity, attribute) '
+    'representation for semantically corresponding direct-state and revision statements. '
+    'For example, "Jordan\'s bicycle is green." uses entity "Jordan", attribute '
+    '"bicycle_color", and value "green", rather than entity "Jordan\'s bicycle".'
 )
 MAINTENANCE_PROMPT = (
     "Match active memory using the candidate's (entity, attribute) pair. "

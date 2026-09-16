@@ -96,6 +96,24 @@ def test_extraction_prompt_contract(config, logical_id):
     assert '{"memories":[{"entity":"...","attribute":"...","value":"..."}]}' in prompt
 
 
+@pytest.mark.parametrize("logical_id", ["E1", "E2", "E2E-E"])
+def test_extraction_canonicalization_contract(config, logical_id):
+    prompt = q.request_body(config, logical_id)["messages"][0]["content"]
+    assert 'The entity is the primary owner/subject whose state is remembered' in prompt
+    assert 'the attribute is the property associated with that entity.' in prompt
+    assert ('For possessive constructions giving a property of an owned or associated '
+            'object, keep the owner/subject as entity') in prompt
+    assert 'combine object and property in a snake_case attribute when needed for a stable key.' in prompt
+    assert ('Do not collapse the owner and possessed object into one entity string '
+            'when the owner can be represented separately.') in prompt
+    assert ('Use the same canonical (entity, attribute) representation for semantically '
+            'corresponding direct-state and revision statements.') in prompt
+    assert ('"Jordan\'s bicycle is green." uses entity "Jordan", attribute "bicycle_color", '
+            'and value "green", rather than entity "Jordan\'s bicycle".') in prompt
+    assert all(word not in prompt.casefold() for word in
+               ("mira", "locker", "locker_color", "cobalt", "amber", "mem-1"))
+
+
 @pytest.mark.parametrize("logical_id", ["M1", "M2", "M3", "E2E-M"])
 def test_maintenance_prompt_contract(config, logical_id):
     prompt = q.request_body(config, logical_id, candidate=q.memory("cobalt"),
