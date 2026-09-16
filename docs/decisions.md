@@ -1,22 +1,21 @@
 # Research Decisions
 
-## 2026-09-16 — Reference language model
+## 2026-09-16 — Experimental Backbone
 
-The planned experimental backbone is
-`meta-llama/llama-3.1-8b-instruct`.
+The experimental backbone is `meta-llama/llama-3.1-8b-instruct`.
 
 The model is selected for methodological comparability with Hu et al. (2026),
-which uses LLaMA-3.1-8B for both memory extraction and answer generation in its
+which uses LLaMA-3.1-8B for memory extraction and answer generation in its
 default experimental setting.
 
-The language model is not an experimental factor in this study. The selection
-is fixed before any comparative M1, M2, or M3 experiment is executed.
+The language model is not an experimental factor in this study. The backbone
+is selected before any comparative M1, M2, or M3 experiment is executed.
 
-## 2026-09-16 — Upstream provider
+## 2026-09-16 — Upstream Provider
 
 The planned OpenRouter endpoint is `coreweave/bf16`.
 
-The endpoint was selected before model qualification using the following
+The provider was selected before model qualification using the following
 priority order:
 
 1. technical compatibility;
@@ -25,12 +24,12 @@ priority order:
 4. operational efficiency;
 5. cost.
 
-At the time of selection, the endpoint exposed BF16 quantization, a 131072-token
-context window, structured-output support, complete support for the required
-generation parameters, the strongest observed short-term availability among
-the eligible endpoints, and the lowest observed median latency.
+At the time of inspection, the endpoint exposed BF16 quantization, a
+131072-token context window, support for the required generation parameters,
+structured-output support, high observed availability, and low observed
+latency.
 
 Automatic provider fallback is disabled for experimental execution.
 
-Provider availability and request compatibility must still be confirmed during
-technical qualification.
+The provider and request configuration must pass technical qualification before
+the configuration is frozen for the main experiment.
