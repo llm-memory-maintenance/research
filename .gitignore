@@ -1,0 +1,24 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Development tools
+.ruff_cache/
+.mypy_cache/
+
+# Raw datasets
+data/longmemeval/raw/
+
+# Experiment outputs
+results/raw/
+
+# Logs and local artifacts
+*.log
+.DS_Store
