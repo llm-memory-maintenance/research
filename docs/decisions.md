@@ -193,3 +193,70 @@ exact history material, historical serialization, and context budget. The
 broader Retrieval / Context Calibration workstream is not fully closed until
 that separate deterministic historical-context calibration is resolved under
 the existing B0 rule.
+
+## 2026-09-17 — CRST Conversation, Memory, and B0 Implementation Resolutions
+
+New researcher-adjudicated post-Proposal resolutions are frozen in the
+[CRST specification](crst-specification.md), without changing its factorial
+methodology or completed qualifications. Each of the 16 information events is
+one user message followed by deterministic `Noted.`; Q and the final answer
+are separate messages. Counts are 32 before Q, 33 through Q, and 34 after the
+answer, excluding system instructions. Naturalization models never generate
+the acknowledgements.
+
+Explicitly freeze the CRST one-line memory format
+`[memory_id=<ID>; created=<CREATED>; updated=<UPDATED>] <TEXT>` and ascending
+last-update/creation/memory-ID order over COMPLETE active memory. No retrieval
+selection or budget admission applies. M2 same-state Update advances recency;
+M3 Noop does not. Do not neutralize this policy consequence post hoc.
+
+Semantic time is the fixed UTC baseline `2000-01-01T00:00:00Z` plus
+`event_index` minutes: I1–I7=01–07, U1–U6=08–13, N1=14, U7=15, N2=16.
+Acknowledgements and actual execution time never advance semantic time.
+Canonical initial IDs are `mem_0001`–`mem_0007`; treatment events reserve
+`mem_0008`–`mem_0016` in chronological order, activated only by executed Add.
+Fixed canonical target IDs remain evaluator ground truth after model mistakes.
+An append-only journal records reference and actual transitions separately;
+physical journal storage/schema remains open. Existing actual-decision/error
+and Noop execution semantics are unchanged.
+
+B0 uses a contiguous suffix of complete user/acknowledgement exchanges: expand
+backward, stop at the first nonfitting exchange, never skip or truncate, and
+present chronologically. An oversized newest exchange yields empty history
+and `history_unit_overflow`, failing calibration. Structural calibration must
+retain complete U7 and N2 exchanges; main selection is blind to U7 identity.
+
+Explicitly extend the pinned Llama tokenizer
+`meta-llama/Llama-3.1-8B-Instruct` at
+`0e9e39f249a16976918f6564b8830bc894c89659` to B0 marginal chat-template counting:
+`T_chat(system + history) - T_chat(system)`, excluding Q and final generation
+prefix/output. The system prompt is outside the historical budget. This local
+protocol count is distinct from provider-reported usage and does not assert
+identical provider rendering. B0 history material, grid, and final budget remain
+OPEN; no B0 calibration has run.
+
+## 2026-09-17 — Generator Qualification Plan and Candidate Pair
+
+The [Generator Qualification plan](generator-qualification.md) declares primary
+candidates `openai/gpt-5.6-sol` and `anthropic/claude-sonnet-5`, with corresponding
+fallbacks `openai/gpt-5.6-terra` and `anthropic/claude-opus-5`. They are CANDIDATE,
+not QUALIFIED. Different vendor/family construction tools must independently
+pass an absolute fidelity contract, not a ranking or downstream performance gate.
+Fallbacks activate only for corresponding contract failure or unavailability.
+
+One logical naturalization call returns one complete structured-truth-controlled
+Low/Medium/High triplet. Dedicated qualification comprises 12 base fixtures,
+one per frozen domain, separate from final CRST, B0 material, LongMemEval-S, and
+Model Qualification fixtures: 24 logical calls for the primary pair. Every
+triplet must pass automated checks and manual audit. Do not regenerate semantic
+failures into passes. A defective shared prompt/schema revision invalidates the
+affected attempt and requires full requalification of both primaries.
+
+After qualification, assign by base scenario with exact 50/50 global allocation
+and per-domain balance (at most one difference for odd counts). Final N is a
+multiple of 12 but remains unselected; assignment mechanism/seed remains OPEN.
+Provider pins, reasoning controls, output limits, timeout/retry settings, and
+standard versus batch execution require verification before execution; intended
+zero-temperature/top_p=1/JSON-schema defaults are not verified capabilities.
+The 5%/2% length tolerances remain PROVISIONAL and are not qualification gates.
+No fixtures, qualification calls, or CRST data are created by these records.

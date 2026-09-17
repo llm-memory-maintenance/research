@@ -22,6 +22,11 @@ Source hierarchy:
 3. **OPEN details:** absence of a decision is not permission to invent one.
    Recommendations require explicit later adjudication before implementation.
 
+The methodology checkpoint is `75bd7e3`. This update records the researcher's
+new explicit post-Proposal resolutions for conversation, memory, semantic time,
+IDs/journaling, B0 exchange/counting rules, and the generator qualification plan;
+it does not reinterpret prior recommendations as already-adopted decisions.
+
 Repository sources inspected are [README](../README.md),
 [Research Design](research-design.md), [Dataset Specification](dataset-specification.md),
 [Research Decisions](decisions.md),
@@ -88,9 +93,10 @@ returns as current. CRST spans **12 domains**.
 11. Location & Logistics
 12. Quantitative Planning
 
-**OPEN:** final base-scenario count N, scenario allocation details not already
-constrained here, and technical repetition count R. The frozen inventory does
-not determine N or make domain a primary experimental factor.
+**FROZEN allocation constraint:** final N is a multiple of 12 and therefore even;
+this does not select its value or make domain a primary experimental factor.
+**OPEN:** final base-scenario count N, scenario allocation details beyond the
+frozen generator-balancing rules in Section 4, and technical repetition count R.
 
 ## 3. CRST Information Structure
 
@@ -103,7 +109,7 @@ not determine N or make domain a primary experimental factor.
 
 Each variant contains I1–I7, U1–U7, N1, N2, and Q. There are **16
 information-bearing events before Q**: seven initial units, seven updates, and
-two Noop opportunities. Event notation does not specify message boundaries.
+two Noop opportunities. The explicit message mapping is frozen in Section 13.
 
 The ending is `... -> U6 -> N1 -> U7 -> N2 -> Q`.
 
@@ -117,8 +123,8 @@ The ending is `... -> U6 -> N1 -> U7 -> N2 -> Q`.
 Within each Low/Medium/High triplet, preserve the same structured initial
 information, final target state, final question, gold answer, hard distractor,
 N2 secondary, total update count, Noop-opportunity count, final target-update
-position, and message count. Equal message counts do not determine the actual
-message structure or require equal intermediate target states or identical wording.
+position, and message count. Section 13 now freezes the actual message structure;
+matching does not require equal intermediate target states or identical wording.
 
 **OPEN:** exact allocation and trajectories of the four updateable secondaries,
 and exact ordering of initial roles within I1–I7, subject to these invariants.
@@ -138,10 +144,30 @@ balanced across generators. Naturalization may vary wording but cannot change
 structured truth. Assistant responses must remain neutral, introduce no new
 state-changing information, and neither alter truth nor leak the final answer.
 
-**OPEN:** generator identities, versions, naturalization prompts/configuration,
-exact balanced-allocation procedure, and assistant-response mechanism. The
-repository has not frozen these identities. Two generators do not authorize
-LLM extraction of CRST candidates or model-generated reference labels.
+**FROZEN naturalization unit:** one logical call receives the already-fixed
+structured truth for one complete base-scenario Low/Medium/High triplet and
+returns all three variants in one structured response. They remain three separate
+dataset conversations. This keeps the generator shared, permits supplying common
+facts once, and supports joint matched-control, message-count, and wording checks.
+The construction layer alone inserts the exact acknowledgement `Noted.`; neither
+naturalization LLM generates acknowledgements or experimental final answers.
+
+The [Generator Qualification plan](generator-qualification.md) predeclares G1
+`openai/gpt-5.6-sol` and G2 `anthropic/claude-sonnet-5` as **CANDIDATE**, not
+QUALIFIED. Corresponding fallback candidates are `openai/gpt-5.6-terra` and
+`anthropic/claude-opus-5`. Qualification requires absolute fidelity, not ranking.
+
+**FROZEN assignment constraints after qualification:** assign at base-scenario
+level, retain the complete triplet with its generator, allocate exactly 50/50
+globally, and balance within each domain (difference at most one for an odd domain
+count). Record generator identity in provenance; it is not a primary experimental
+factor. Final N remains unresolved within the multiple-of-12 constraint.
+
+**OPEN:** qualification outcomes/final qualified pair, shared naturalization
+prompt/schema, exact provider/execution parameters listed in the qualification
+plan, and deterministic assignment mechanism/seed. Candidate IDs do not certify
+API availability or compatibility. Controlled candidates and reference labels
+remain independent of naturalization; no LLM candidate extraction is introduced.
 
 ## 5. Initial State and Treatment Boundary
 
@@ -192,10 +218,30 @@ classification to score against M2/M3 references.
 - Output that cannot be mapped to the available action space leaves state
   unchanged and logs an invalid maintenance decision.
 
-**OPEN implementation details:** exact Add ID-generation mechanism, physical
-version-history artifact/schema, and reference-target linkage representation
-after erroneous state transitions. These representation details must implement
-the frozen execution rules rather than alter them.
+**FROZEN identity and reference lineage:** I1–I7 create `mem_0001`–`mem_0007`.
+Each canonical ID remains the reference lineage for its original structured state
+key throughout the run. Treatment events reserve `mem_0008`–`mem_0016` in actual
+chronological event order (Section 13). A reserved ID becomes active only if Add
+executes, including an erroneous Add; unused reservations never renumber later
+births. Update retains the chosen existing ID, not the reserved birth ID.
+
+The fixed structured reference trajectory defines one canonical Update target ID.
+Target correctness compares the selected ID against that fixed ID; earlier errors
+never redefine evaluator ground truth. Even if actual content diverges from its
+original lineage, a semantically wrong but executable Update is still executed.
+Reference lineage is evaluation data, never a state-repair mechanism.
+
+**FROZEN journal requirements:** maintain an append-only execution journal separate
+from reader-visible active memory. It must support scenario/run/policy identifiers,
+`event_index`, reference state key and operation, canonical reference target ID
+where applicable, raw model response, parsed operation, selected target ID,
+execution/error status, pre-state, actual transition, post-state, and semantic
+timestamp. Version/audit history is not active reader memory; M1's retained
+historical entries are active by policy definition.
+
+**OPEN:** physical journal/version-history artifact schema and storage layout.
+These representation details must preserve the frozen identities, lineage,
+execution semantics, and journal evidence.
 
 The qualification helper's guarded application of its single expected Update
 is a technical-fixture contract. It must not be promoted into a general policy
@@ -213,13 +259,22 @@ CRST answering.
 including all of M1's retained historical versions. Evaluator annotations and
 reference labels are excluded.
 
-**OPEN:** exact CRST serializer and deterministic ordering/tie mechanics,
-including the exact timestamp basis. No explicit CRST-specific repository
-decision was found freezing the one-line serializer or
-`last_updated_time -> created_time -> entry_id` ordering from the dense-retrieval
-implementation. Those exact rules remain frozen for the LongMemEval retrieval
-path; they are not silently generalized to CRST. Neither retrieval selection
-nor retrieval budget admission applies to complete-memory CRST answering.
+**FROZEN new explicit CRST implementation decision:** serialize each active entry
+as one line in the following deterministic form:
+
+```text
+[memory_id=<ID>; created=<CREATED>; updated=<UPDATED>] <TEXT>
+```
+
+Order entries ascending by `last_updated_time`, then `created_time`, then
+`memory_id`. Exclude evaluator/reference annotations. This is an explicit CRST
+adjudication, not an assumption inherited from LongMemEval retrieval. Supply all
+active entries, without retrieval, top-k, similarity selection, or token-budget
+admission.
+
+An M2 same-state Update advances `last_updated_time`; an M3 reference Noop does
+not. Presentation order may therefore differ as an actual consequence of policy
+semantics. Do not neutralize that consequence post hoc.
 
 **OPEN:** exact CRST answer prompt, response schema, request wrapper, and handling
 of an unexpectedly oversized complete-memory request. Qualification answering
@@ -265,10 +320,13 @@ Update-target correctness is a **separate diagnostic**, evaluated only when
 both the reference operation is Update and the model selects Update. Do not
 combine operation and target correctness into a single metric.
 
-**OPEN:** operational target-reference matching after erroneous state changes,
-representation of unavailable targets, and treatment of missing/invalid responses
-or runs in diagnostic summaries. Do not silently drop such events or redefine
-the fixed reference trajectory.
+**FROZEN target rule:** compare the selected target ID with the fixed canonical
+reference ID from Section 6, including after earlier model mistakes. The existing
+eligibility condition (reference Update and selected Update) remains unchanged.
+
+**OPEN:** physical diagnostic representation and treatment of missing/invalid
+responses or runs in summaries. Do not silently drop events or redefine the
+fixed reference trajectory; invalid/unavailable targets still follow Section 6.
 
 ## 10. Efficiency and Logging
 
@@ -313,13 +371,13 @@ The pinned reader tokenizer is
 `meta-llama/Llama-3.1-8B-Instruct` at
 `0e9e39f249a16976918f6564b8830bc894c89659`, with artifact identities in
 `configs/retrieval.yaml`. Its frozen `add_special_tokens=False` rule concerns
-serialized retrieval memory blocks, not an already-adjudicated CRST conversation
-or B0 token-counting serialization.
+serialized retrieval memory blocks. B0 now has its own explicit marginal
+chat-template counting rule in Section 11; CRST length-matching and active-memory
+size counting are not automatically settled by that B0 scope extension.
 
 **OPEN:** exact CRST accounting schema and aggregation, active-memory tokenizer
 and counting representation, timer instrumentation, missing-usage handling for
-failed attempts, and exact local token-counting measures for CRST length matching
-and B0. The primary memory-size unit/sampling point and timing boundary above
+failed attempts, and exact local token-counting measures for CRST length matching. The primary memory-size unit/sampling point and timing boundary above
 are not open. Preserve actual per-attempt evidence rather than guessing details.
 
 ## 11. B0 Recent Window
@@ -338,12 +396,46 @@ window procedure mechanically; it must not search for, identify, or center the
 window around U7. This is an implementation safeguard derived from the fixed-
 budget design, not a quotation attributed to the Proposal.
 
-**OPEN:** raw-conversation serialization, role/message formatting, historical
-atomic unit, overflow handling, exact token-counting serialization/special-token
-policy, and `B0_CONTEXT_TOKENS`. The atomic unit might be a message, exchange,
-or another historical unit; none is selected here. No skip/partial-truncation
-rule is frozen before those dependencies are adjudicated. Dense-retrieval
-whole-entry admission is not a B0 rule.
+**FROZEN new B0 execution decisions:** the atomic historical unit is one complete
+user information message plus its immediate deterministic assistant `Noted.`
+acknowledgement. Supply B0 as role-bearing chat messages. Starting with the newest
+exchange, expand backward to construct a contiguous suffix of complete exchanges.
+Never skip an exchange or partially retain one. Preserve chronology in the
+selected history and count the complete proposed suffix at each admission.
+
+When the next older exchange does not fit, stop without skipping or truncating.
+If even the newest complete exchange cannot fit, select an empty history and
+emit `history_unit_overflow`; that candidate budget cannot qualify in B0
+calibration. Append Q only after selection. The fixed system prompt and Q are
+outside `B0_CONTEXT_TOKENS`; their actual API resource usage remains recorded
+separately. Main-run selection uses only the suffix procedure and fixed budget,
+never U7 identity.
+
+**FROZEN new B0 tokenizer scope:** use the pinned official
+`meta-llama/Llama-3.1-8B-Instruct` tokenizer at
+`0e9e39f249a16976918f6564b8830bc894c89659` and its local chat template.
+Define the marginal historical token count as:
+
+```text
+T_history(selected_history)
+  = T_chat(system + selected_history) - T_chat(system)
+```
+
+Here `+` denotes ordered role-bearing messages, not concatenation of raw text.
+Both terms use the same fixed system prompt and pinned template, exclude Q,
+and exclude the final assistant-generation prefix/output. `T_chat` counts the
+local template token sequence without adding an answer-generation prefix.
+The difference includes incremental role/message structure for selected exchanges
+and excludes the fixed system-prompt contribution. This is not the LongMemEval
+retrieval memory-block counting rule.
+
+This local B0 count is a reproducible methodological protocol count, not a claim
+that OpenRouter or the serving provider uses byte-identical internal chat
+rendering. Provider-reported `prompt_tokens` remains a separate observed resource
+metric. Local subtraction does not replace actual API accounting.
+
+**OPEN:** exact fixed system/answer prompt wording, calibration history material,
+candidate calibration grid, and final `B0_CONTEXT_TOKENS`.
 
 ## 12. B0 Calibration Requirements
 
@@ -351,12 +443,14 @@ whole-entry admission is not a B0 rule.
 Its selection criterion is structural retention of U7 and the required following
 conversation, not final QA accuracy, CSA, SRR, comparative M1/M2/M3 results, or
 main-experiment effect sizes. Freeze the chosen rule and budget before main
-execution. The general U7-retention principle is already fixed; its executable
-history/window specification is not.
+execution. **FROZEN structural retention requirement:** retain the complete U7
+exchange and the complete N2 exchange. N1 precedes U7 and is not part of the
+minimum retention criterion. Event identity is available only to the dedicated
+structural calibration check, not to normal window selection.
 
-**OPEN:** exact calibration history material, historical serialization, candidate
-budget grid, historical-unit/overflow mechanics, and final budget. Do not infer
-B0 budgets from the qualified dense-retrieval 512-token setting.
+**OPEN:** exact calibration history material, candidate budget grid, and final
+budget. The exchange, overflow, and counting rules are fixed in Section 11.
+Do not infer B0 budgets from the qualified dense-retrieval 512-token setting.
 
 **RECOMMENDATION FOR ADJUDICATION:** use dedicated B0 calibration material fully
 separate from final confirmatory CRST cases. This is a proposed safeguard, not
@@ -365,31 +459,55 @@ an existing repository freeze. No candidate budget grid is proposed here.
 Dense Retrieval Qualification is CLOSED. The broader Retrieval / Context
 Calibration workstream still awaits this separate B0 resolution.
 
-## 13. Conversation-Format Dependencies
+## 13. Conversation Format and Synthetic Semantic Time
 
-**FROZEN:** information-event order, semantic roles, the ending in Section 3,
-neutral assistant content, comparable variant length, and the same message count
-within each Low/Medium/High triplet. These requirements do not establish actual
-conversational message boundaries or roles.
+**FROZEN new conversation decision:** each I1–I7, U1–U7, N1, and N2 event is
+exactly one user message, immediately followed by exactly one deterministic
+assistant acknowledgement with exact content `Noted.`. The construction layer
+inserts it; neither naturalization LLM generates it. It is identical across
+domains, generators, policies, and revision intensities. It neither changes
+state nor repeats the fact, claims maintenance success, or leaks Q/gold answer.
+Q is a separate final user message; the experimental final answer is a separate
+assistant message afterward.
 
-The repository audit found no final implementation decision for these **OPEN**
-dependencies:
+Every variant has 16 information messages plus 16 acknowledgements = **32
+historical chat messages before Q**, **33 through Q**, and **34 in a complete
+interaction record including the generated final answer**. System instructions
+are outside the dataset message count. This explicitly preserves equal message
+count within every Low/Medium/High triplet without grouping events.
 
-| Dependency | Unresolved choice |
-| --- | --- |
-| Event-to-message mapping | Exact user/assistant roles and message boundaries |
-| Initial units | Separate I1–I7 turns or grouping |
-| Treatment events | Separate U1–U7/N1/N2 turns or grouping |
-| Acknowledgements | Whether each information event receives one |
-| Assistant-response mechanism | Deterministic templates or LLM generation; exact neutral wording |
-| Timestamp assignment | Mapping event/message positions to timestamps and deterministic increments |
-| Raw history representation | Role delimiters, serialization, and historical units for B0 |
+**FROZEN semantic time:** `event_index` is the source of truth. Its synthetic UTC
+mapping is `2000-01-01T00:00:00Z + event_index minutes`; thus I1 is at 00:01 and
+N2 at 00:16. Keep `event_index` in non-reader audit records.
 
-Oldest-to-newest CRST presentation and Update timestamp semantics are frozen;
-exact CRST ordering/tie mechanics and the method of assigning conversation/event
-timestamps are not. Resolve these dependencies before
-generating CRST data, pilot cases, or B0 calibration histories. Do not infer that
-16 information-bearing events imply 16 user messages or 32 user/assistant messages.
+| Event | event_index | Canonical initial / reserved birth ID |
+| --- | --- | --- |
+| I1 | 01 | mem_0001 |
+| I2 | 02 | mem_0002 |
+| I3 | 03 | mem_0003 |
+| I4 | 04 | mem_0004 |
+| I5 | 05 | mem_0005 |
+| I6 | 06 | mem_0006 |
+| I7 | 07 | mem_0007 |
+| U1 | 08 | mem_0008 |
+| U2 | 09 | mem_0009 |
+| U3 | 10 | mem_0010 |
+| U4 | 11 | mem_0011 |
+| U5 | 12 | mem_0012 |
+| U6 | 13 | mem_0013 |
+| N1 | 14 | mem_0014 |
+| U7 | 15 | mem_0015 |
+| N2 | 16 | mem_0016 |
+
+Acknowledgements do not advance semantic time. API latency, infrastructure
+retries, execution wall-clock time, and naturalization time never influence
+these timestamps. Identical event positions are comparable across variants.
+Scenario dates inside facts are distinct from system metadata time.
+
+Initial and later Add set both `created_time` and `last_updated_time` to the
+event timestamp. Update preserves creation time and sets last-update time to
+the current event timestamp. Noop preserves both. Treatment birth IDs become
+active only when Add actually executes; they are not Update replacement IDs.
 
 ## 14. Dataset Construction and Validation
 
@@ -409,11 +527,11 @@ Automated validation must eventually check at least:
   event, and current-value preservation at N1/N2.
 - Reference candidate/operation annotations, no reference Add treatment events,
   and final question/gold-answer agreement with structured truth.
-- Matched triplet controls listed in Section 3, including equal message counts;
-  no additional implicit controls.
+- Matched triplet controls and the exact 32/33/34 message structure, deterministic
+  acknowledgements, semantic timestamps, and ID reservations in Section 13.
 - The exact twelve-domain inventory in Section 2, same generator within each
-  triplet, and balanced scenario allocation across the two generators once
-  allocation is adjudicated.
+  triplet, and the global/per-domain allocation constraints in Section 4, using
+  the deterministic assignment mechanism once it is frozen.
 - Agreement between naturalized text and structured annotations, with exact
   automated/manual responsibilities fixed before final generation.
 
@@ -489,9 +607,11 @@ outputs and parse status, operations/targets, actual state transitions, resource
 usage, and physical attempts. Secrets are excluded. Provider-side chat state is
 not a reproducibility dependency.
 
-**OPEN:** exact CRST artifact schemas, identifiers, seed values, run/repetition
-scheduling, and final experimental prompts/response schemas. Record decisions
-before dependent execution rather than infer them from qualification fixtures.
+**OPEN:** physical CRST artifact schemas, scenario/run identifiers, assignment
+seed values, run/repetition scheduling, and final experimental prompts/response
+schemas. Memory IDs, event indices, and semantic journal fields are now frozen.
+Record remaining decisions before dependent execution rather than infer them
+from qualification fixtures.
 
 ## 17. Frozen Decisions
 
@@ -516,29 +636,34 @@ last-updated time and is logged.
 
 Post-Proposal qualification closures, exact model execution, reader-tokenizer
 identity, and LongMemEval-S retrieval configuration remain intact. CRST retains
-oldest-to-newest presentation with temporal metadata; its exact serializer and
-ordering/tie mechanics remain OPEN. Neither qualification nor statistical design
-is reopened.
+oldest-to-newest presentation with temporal metadata, now with explicitly frozen
+CRST serialization and last-update/creation/ID ordering. Sections 6, 11, and 13
+also freeze canonical IDs/reference targets, append-only journal semantics,
+deterministic exchanges/acknowledgements, synthetic semantic time, and B0
+exchange-suffix/marginal chat-template counting rules. Candidate generators and
+qualification/assignment contracts are predeclared, not qualified by declaration.
+Neither completed qualification nor final statistical values are reopened.
 
 ## 18. Open Decisions
 
 **OPEN before dependent implementation or execution:**
 
-- Conversation roles, grouping, acknowledgements/mechanism, timestamp assignment,
-  and raw-history serialization (Section 13); equal message count is already frozen.
-- B0 history material, atomic unit, overflow handling, token-counting format,
-  candidate budget grid, and final `B0_CONTEXT_TOKENS`.
-- Exact entry-ID generation, physical version-history artifact/schema, and
-  error-state reference-linkage representation; actual-decision/error and Noop
-  execution rules are frozen in Section 6.
-- Scenario allocation and trajectories beyond frozen constraints,
-  generator identities/configuration/allocation procedure, and CRST schema.
-- Exact CRST serializer and deterministic ordering/tie mechanics, prompts,
-  response/scoring contract, invalid-run treatment, resource aggregation,
-  active-memory tokenizer/counting representation, timer instrumentation, and
-  length-measure implementation. The primary size definition and timing boundary
-  are frozen in Section 10.
-- Pilot size/cases/procedure and reproducibility details not already frozen.
+- B0 calibration history material, candidate grid, and final
+  `B0_CONTEXT_TOKENS`; fixed system/answer prompt wording before calibration.
+- Physical journal/version-history artifact schema and storage layout; semantic
+  fields, canonical IDs, reference-target comparison, and execution rules are fixed.
+- Scenario allocation/trajectories beyond frozen constraints, CRST schema, and
+  deterministic generator-assignment mechanism/seed within the frozen balancing
+  constraints. Candidate IDs are declared; qualification outcomes remain pending.
+- Shared generator naturalization prompt/schema and final execution settings:
+  provider pins for Sol/Sonnet (and any activated fallback), reasoning controls,
+  max output tokens, timeout/retry constants, and standard versus batch execution.
+  Intended parameter defaults still require capability verification.
+- Exact CRST prompts, response/scoring contract, invalid-run treatment, resource
+  aggregation, active-memory tokenizer/counting representation, timer
+  instrumentation, and length-measure implementation. Memory serialization/order
+  and B0 tokenizer/counting semantics are already frozen.
+- Pilot size/cases/acceptance procedure and other unresolved reproducibility details.
 
 **PROVISIONAL:** manuscript-current 5%/2% length tolerances await explicit
 pre-main adjudication; they are not final enforcement thresholds.
@@ -557,19 +682,19 @@ LongMemEval-S analysis, and effectiveness/efficiency trade-offs without a compos
 **RECOMMENDATION:** keep B0 calibration material fully separate from final
 confirmatory CRST cases. The current repository has not frozen that separation.
 
-**RECOMMENDATION:** use an explicit decision record to resolve the conversation-
-format and remaining execution-representation dependencies with validation fixtures
-before any dataset generation. This recommends an adjudication process, not a
-particular message unit, acknowledgement mechanism, truncation rule, or grid.
+**RECOMMENDATION:** resolve the remaining physical artifact schemas, experimental
+prompts, and validation procedures before dependent dataset generation. This does
+not reopen the newly adjudicated conversation, identity, or B0 counting rules.
 
 Neither recommendation becomes FROZEN through inclusion in this document.
 
 ## 20. Explicit Non-Goals
 
-This task creates only this specification. It does not generate CRST or pilot
-cases, naturalize text, invoke a model/API, calibrate B0, run policy experiments,
+This specification and its implementation-resolution update are documentation
+only. They do not generate qualification fixtures, CRST or pilot cases,
+naturalize text, invoke a model/API, calibrate B0, run policy experiments,
 perform statistical simulation, select N/R/minimum effect of interest, or freeze
-provisional statistical/length parameters. It does not modify the external
-Proposal, decisions log, configs, completed qualifications, datasets, or Git
-history. It makes no claim that the full CRST, B0 calibration, or Small Pilot
-has already been executed.
+provisional statistical/length parameters. The accompanying Generator Qualification
+plan and concise decision-log entries do not modify the external Proposal, configs,
+completed qualifications, datasets, or Git history. This document makes no claim
+that the full CRST, B0 calibration, or Small Pilot has already been executed.
