@@ -260,3 +260,37 @@ standard versus batch execution require verification before execution; intended
 zero-temperature/top_p=1/JSON-schema defaults are not verified capabilities.
 The 5%/2% length tolerances remain PROVISIONAL and are not qualification gates.
 No fixtures, qualification calls, or CRST data are created by these records.
+
+
+## 2026-09-17 — Standard Generator Execution and Shared Naturalization Contract
+
+The researcher selects STANDARD execution for both Generator Qualification and
+final full CRST naturalization. Its lower operational/provenance complexity and
+the sufficiently small expected naturalization cost do not justify another
+asynchronous path for a batch discount. No batch model IDs are used.
+
+Freeze intended routing: `openai/gpt-5.6-sol` with provider order `["openai"]`,
+and `anthropic/claude-sonnet-5` with `["anthropic"]`; both disable fallback and
+require parameter support. Preserve requested versus observed model/provider
+identity separately. Actual route and parameter acceptance remain to verify.
+Calls have no tools, web/search, carry-over, or provider-side conversational state.
+
+The [shared naturalization contract](generator-naturalization-contract.md)
+specifies prompt `crst-naturalization-prompt/1.1.0`, output schema
+`crst-naturalization-triplet/1.0.0`, minimum structured input, and deterministic
+validation/manual-audit boundaries. One response contains low/medium/high named
+user-text fields only. Deterministic code inserts `Noted.`; gold answers,
+experimental answers, and evaluator metadata are not requested outputs.
+
+Temperature 0, top-p 1, low reasoning effort, strict JSON-schema response, and
+16,384 maximum output tokens remain PROPOSED / VERIFY BEFORE FREEZE as a joint
+combination. A 300-second per-attempt deadline, two infrastructure retries,
+1s/2s backoff, established retry statuses and transport classes are recommended
+pending probe-implementation review. Schema/semantic/truncation/refusal failures
+are not infrastructure retries.
+
+A later two-logical-call capability probe uses this exact contract and intended
+pins once per primary model. It checks compatibility/provenance, not semantic
+qualification; parameter rejection requires STOP and adjudication. Probe output
+cannot become qualification evidence or final CRST data. No probe, fixture
+generation, qualification, or experiment is executed by this decision record.

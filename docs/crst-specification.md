@@ -163,9 +163,12 @@ globally, and balance within each domain (difference at most one for an odd doma
 count). Record generator identity in provenance; it is not a primary experimental
 factor. Final N remains unresolved within the multiple-of-12 constraint.
 
-**OPEN:** qualification outcomes/final qualified pair, shared naturalization
-prompt/schema, exact provider/execution parameters listed in the qualification
-plan, and deterministic assignment mechanism/seed. Candidate IDs do not certify
+**OPEN:** qualification outcomes/final qualified pair, verified execution
+capabilities/parameters listed in the qualification plan, and deterministic
+assignment mechanism/seed. STANDARD mode and intended first-party routing are
+selected; the versioned shared prompt/schema and validation contract are in
+[the shared naturalization contract](generator-naturalization-contract.md).
+Candidate IDs do not certify
 API availability or compatibility. Controlled candidates and reference labels
 remain independent of naturalization; no LLM candidate extraction is introduced.
 
@@ -655,10 +658,11 @@ Neither completed qualification nor final statistical values are reopened.
 - Scenario allocation/trajectories beyond frozen constraints, CRST schema, and
   deterministic generator-assignment mechanism/seed within the frozen balancing
   constraints. Candidate IDs are declared; qualification outcomes remain pending.
-- Shared generator naturalization prompt/schema and final execution settings:
-  provider pins for Sol/Sonnet (and any activated fallback), reasoning controls,
-  max output tokens, timeout/retry constants, and standard versus batch execution.
-  Intended parameter defaults still require capability verification.
+- Generator execution capability verification: joint sampling/reasoning support,
+  exact strict-schema acceptance, output ceiling/mapping, intended first-party
+  route evidence, timeout/retry constants, and activated fallback settings.
+  STANDARD mode and intended routes are selected; prompt/schema versions are
+  specified in the shared contract. Exact input serialization remains to finalize.
 - Exact CRST prompts, response/scoring contract, invalid-run treatment, resource
   aggregation, active-memory tokenizer/counting representation, timer
   instrumentation, and length-measure implementation. Memory serialization/order

@@ -54,10 +54,12 @@ answer is produced only in later policy execution, not by the naturalizer.
 The assembled variant therefore has 32 pre-Q historical messages, 33 through Q,
 and 34 only after experimental answering. System instructions are excluded.
 
-**OPEN:** exact shared semantic prompt and machine-readable response schema.
-Freeze/version them before qualification. The schema must support separate,
-ordered realization of every required information event and Q for each variant,
-without acknowledgement generation or an experimental final answer.
+**SPECIFIED:** shared prompt `crst-naturalization-prompt/1.1.0` and output schema
+`crst-naturalization-triplet/1.0.0` are defined in the
+[shared naturalization contract](generator-naturalization-contract.md), together
+with minimum input requirements and validation responsibilities. Their exact
+execution package still requires the two-call capability probe before freeze.
+No acknowledgement or experimental answer is requested from the generator.
 
 ## 4. Dedicated Qualification Set
 
@@ -123,7 +125,8 @@ The required checks are:
 
 Automated validation and manual audit are both required; a structural parser
 alone does not establish semantic fidelity. **OPEN:** exact validator/audit
-procedure and response schema before execution. CSA, SRR, MOA, downstream policy
+implementation/recording procedure before execution. The shared output schema
+is specified in the naturalization contract. CSA, SRR, MOA, downstream policy
 performance, and final statistical effects are not qualification criteria.
 
 ## 6. Failure, Retry, and Prompt Revision
@@ -154,36 +157,54 @@ may also trigger the corresponding fallback, with its reason recorded. No
 replacement is qualified without the full absolute gate. Further fallback
 changes require separate adjudication rather than an improvised search.
 
-## 7. Execution Configuration: Pending Verification
+## 7. Standard Execution Selected; Capabilities Pending Verification
 
-**INTENDED COMMON DEFAULTS, not yet verified execution settings:**
+**FROZEN researcher decision:** use STANDARD execution for official qualification
+and final full CRST naturalization. Lower operational/provenance complexity and
+the researcher's sufficiently small expected total naturalization cost do not
+justify a second asynchronous path solely for a batch discount. No batch model
+IDs are permitted; qualification and final naturalization use the same mode.
 
-- `temperature = 0` and `top_p = 1`.
-- Structured JSON-schema response.
-- Sufficient max output tokens for a complete triplet without truncation.
-- Stateless calls with no conversational carry-over between fixtures.
+Freeze intended first-party routing:
 
-Verify exact OpenRouter/provider parameter support before execution. Do not
-invent reasoning controls, provider parameters, model revisions, or token limits.
-The frozen experimental reader configuration is not a generator configuration.
+| Slot | Requested model | provider.order |
+| --- | --- | --- |
+| G1 | `openai/gpt-5.6-sol` | `["openai"]` |
+| G2 | `anthropic/claude-sonnet-5` | `["anthropic"]` |
 
-**OPEN before qualification:**
+Both use `allow_fallbacks = false` and `require_parameters = true`. Requested
+and observed model/provider identities are separate provenance fields; actual
+route acceptance/evidence remains to verify. Calls are stateless without
+carry-over, tools, web/search, or plugins, with one complete triplet per logical
+call and one shared semantic prompt/schema across both models.
 
-- Exact provider pin for Sol.
-- Exact provider pin for Sonnet.
-- Exact reasoning-effort/control semantics per model.
-- Exact maximum output tokens.
-- Exact timeout/retry constants, retryable infrastructure conditions, and backoff.
-- Standard versus batch execution.
-- Corresponding provider/capability/execution settings for any activated fallback.
+**PROPOSED / VERIFY BEFORE FREEZE:** `temperature = 0`, `top_p = 1`,
+`reasoning.effort = low`, strict JSON-schema response using the exact versioned
+schema, and `max_output_tokens = 16384`. This is a ceiling, not a target length.
+Verify all parameters jointly, the strict-schema/API envelope, output-token
+parameter mapping, and reasoning/output accounting. Do not invent unsupported
+parameters or silently alter a rejected parameter. The reader configuration is
+not a generator configuration.
 
-Official qualification and full final naturalization must use a predeclared,
-reproducible execution configuration. Any later batch option for cost reduction
-requires explicit adjudication and verification; it cannot silently replace
-standard execution after standard qualification. Freeze and record the actual
-supported settings, prompt/schema versions, provider/model identities, input and
-output provenance, validation/audit evidence, and physical/logical call accounting.
-No API-capability inspection or inference occurs in this task.
+**RECOMMENDED / PENDING FREEZE after probe-implementation review:** a 300-second
+total per-attempt deadline, at most two infrastructure retries, 1s/2s backoff,
+HTTP statuses 408/429/500/502/503/504 plus established network/transport timeout
+classes. Semantic/schema/truncation/refusal failures are not infrastructure
+retries. Do not continue an incomplete response or regenerate it into a pass.
+
+The [shared contract](generator-naturalization-contract.md) specifies a later
+**two-logical-call compatibility probe**, one per primary, with the exact prompt,
+schema, intended routes, and complete parameter combination. It is not Generator
+Qualification. Its output cannot enter qualification evidence or final CRST data.
+Parameter rejection requires STOP and adjudication. Nothing is probed here.
+
+Official qualification and full final naturalization require a predeclared,
+reproducible execution configuration. Verified parameter support, transport
+constants, physical input serialization, and any activated fallback's capabilities
+remain OPEN. Record actual supported settings, versions/hashes, source commit,
+requests, raw responses, routing evidence, validation/audit evidence, and physical
+versus logical accounting. A later execution-mode change requires explicit
+adjudication and qualification under the changed mode, not silent substitution.
 
 ## 8. Assignment for Final CRST
 
@@ -207,7 +228,7 @@ Qualification may record message/token lengths descriptively, but these numeric
 values are not final pass/fail gates without separate adjudication. Exact
 message-count requirements are independently frozen and must pass.
 
-**OPEN:** fixture contents, validator/audit implementation, shared prompt/schema,
+**OPEN:** fixture contents, validator/audit implementation, exact input serialization,
 verified execution settings, qualification outcomes, assignment mechanism/seed,
 B0 calibration material/grid/budget, and Small Pilot size/acceptance procedure.
 Final CRST N/R/minimum effect of interest and statistical procedures are not
