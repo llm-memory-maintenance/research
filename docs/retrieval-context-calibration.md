@@ -265,9 +265,10 @@ non-calibration fixtures; they do not implement a calibration runner.
 
 ## 9. Embedding Qualification
 
-Contriever is the **first qualification candidate**, for methodological
-comparability with Hu et al. It is **not yet the final frozen embedding model**.
-The first candidate implementation is frozen as canonical unsupervised
+Contriever was the **first qualification candidate**, for methodological
+comparability with Hu et al. Official Attempt 01 qualified it; it is now the
+**qualified/frozen embedding model** for this research design (Section 13.1).
+The implementation remains canonical unsupervised
 `facebook/contriever` at full repository revision
 `2bd46a25019aeea091fd42d1f0fd4801675cf699`. Its associated tokenizer uses the same
 repository and revision. No MS MARCO or multilingual variant is substituted.
@@ -424,7 +425,62 @@ adjudication before another calibration run.
 
 Freeze the qualifying embedding implementation, selected k values, smallest
 shared retrieval-context budget, and deterministically calibrated B0 budget
-with their provenance. No final parameter value is selected by this document.
+with their provenance. Section 13.1 records the resolved dense-retrieval values;
+B0 remains OPEN.
+
+### 13.1 Official Retrieval Calibration Attempt 01 — QUALIFIED
+
+The [immutable Attempt 01 result](../results/retrieval-calibration/attempt-01/calibration.json)
+records `status = QUALIFIED` and `embedding_qualified = true`. The resolved
+outcome is frozen separately in
+[configs/retrieval-qualified.yaml](../configs/retrieval-qualified.yaml):
+`K_MAINT = 3`, `K_ANSWER = 5`, and `LME_RETRIEVAL_CONTEXT_TOKENS = 512`.
+[configs/retrieval.yaml](../configs/retrieval.yaml) remains the unchanged,
+immutable calibration input; its unresolved fields are historical input state,
+not the current qualification outcome.
+
+At the pre-specified maximum budget of 3072 tokens, the 0.95 gates yielded:
+
+| K | Maintenance | Gate | Answer | Gate |
+| --- | --- | --- | --- | --- |
+| 1 | 47/60 | Fail | 40/60 | Fail |
+| 3 | 60/60 | Pass | 54/60 | Fail |
+| 5 | 60/60 | Pass | 58/60 | Pass |
+| 10 | 60/60 | Pass | 60/60 | Pass |
+| 20 | Not in maintenance grid | — | 60/60 | Pass |
+
+With the selected K values held fixed:
+
+| Shared budget (tokens) | Maintenance | Answer | Both gates |
+| --- | --- | --- | --- |
+| 512 | 60/60 | 58/60 | Pass |
+| 1024 | 60/60 | 58/60 | Pass |
+| 2048 | 60/60 | 58/60 | Pass |
+| 3072 | 60/60 | 58/60 | Pass |
+
+512 was selected because it was the smallest shared qualifying budget. No
+selected top-k context was budget-limited at 512 tokens; maximum serialized
+context lengths were 177 tokens for maintenance and 283 for answer retrieval.
+`answer-021` and `answer-049` remained ranking misses at K=5: their oracles were
+absent from `ranked_top_k_ids`, so these were not budget failures. Answer K=10
+scoring 60/60 does not supersede K=5 because the protocol selects the smallest
+qualifying K. No post-hoc tuning was performed.
+
+Provenance: protocol `24eb542`, corpus `5b0d6fe`, retrieval implementation
+`4a88d9b`, official runner/source commit
+`82977b7fe7baaa8221398329bcdb6b70c86048e9`, and evidence archive commit `7bb7598`.
+The result SHA-256 is
+`fc761160890792c654a2b4083a09e46cd6c9b2a6c6893d036bda8ffafdaaeec0`;
+the input configuration SHA-256 is
+`c00f6cf6fac8bf14f24bab6b16b7929c34a62369b9c2e8eee254faed919dbcf9`;
+the dataset SHA-256 remains
+`ce9605fe777febafde20b4675cb6a2fb456b0d12cd649001c25d703e6e4e9079`.
+
+These synthetic engineering calibration scores measure retrieval target
+retention, not downstream QA accuracy or expected LongMemEval performance.
+Dense retrieval qualification is complete. The broader Retrieval / Context
+Calibration workstream remains open until the separate B0 historical-context
+material, serialization, and budget are resolved under the frozen B0 rule.
 
 ## 14. Required Artifacts
 
@@ -445,17 +501,12 @@ The corpus is frozen as `retrieval-calibration-v1`, seed `20260917`, 140 cases,
 at checkpoint `5b0d6fe`, with SHA-256
 `ce9605fe777febafde20b4675cb6a2fb456b0d12cd649001c25d703e6e4e9079`.
 Protocol checkpoint `24eb542` and corpus contents are unchanged by the
-implementation freeze. No retrieval-success results or final parameter
-selections have been produced; the actual calibration runner is not created.
+implementation freeze and Attempt 01. The runner is frozen at `82977b7`;
+Section 13.1 identifies the archived evidence and resolved configuration.
 
 ## 15. Open Decisions
 
 Only the following implementation/calibration decisions remain OPEN here:
 
-- Contriever's retrieval qualification outcome; the first candidate's exact
-  implementation is pinned, but it is not yet the qualified final embedding.
 - Exact B0 calibration history material and historical-window serialization.
-- Final `K_MAINT`.
-- Final `K_ANSWER`.
-- Final `LME_RETRIEVAL_CONTEXT_TOKENS`.
 - Final `B0_CONTEXT_TOKENS`.

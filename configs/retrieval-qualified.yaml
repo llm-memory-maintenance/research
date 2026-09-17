@@ -1,0 +1,25 @@
+qualification:
+  status: QUALIFIED
+  embedding_qualified: true
+
+selected:
+  K_MAINT: 3
+  K_ANSWER: 5
+  LME_RETRIEVAL_CONTEXT_TOKENS: 512
+
+embedding:
+  repository_id: facebook/contriever
+  revision: 2bd46a25019aeea091fd42d1f0fd4801675cf699
+
+reader_tokenizer:
+  repository_id: meta-llama/Llama-3.1-8B-Instruct
+  revision: 0e9e39f249a16976918f6564b8830bc894c89659
+
+provenance:
+  calibration_attempt: attempt-01
+  calibration_result_path: results/retrieval-calibration/attempt-01/calibration.json
+  calibration_result_sha256: fc761160890792c654a2b4083a09e46cd6c9b2a6c6893d036bda8ffafdaaeec0
+  calibration_source_commit: 82977b7fe7baaa8221398329bcdb6b70c86048e9
+  calibration_input_config_sha256: c00f6cf6fac8bf14f24bab6b16b7929c34a62369b9c2e8eee254faed919dbcf9
+  calibration_dataset_sha256: ce9605fe777febafde20b4675cb6a2fb456b0d12cd649001c25d703e6e4e9079
+  evidence_archive_commit: 7bb7598
