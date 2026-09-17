@@ -1,0 +1,330 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Synthetic Retrieval Calibration Dataset",
+  "description": "Complete 140-case engineering calibration dataset. Cross-object ID uniqueness, oracle references, composition, factorial balance, semantic annotations and validation-content isolation require separate dataset validation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "source",
+    "cases"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "dataset_id": {
+      "$ref": "#/$defs/nonempty_string"
+    },
+    "source": {
+      "const": "synthetic_retrieval_calibration"
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 140,
+      "maxItems": 140,
+      "items": {
+        "$ref": "#/$defs/case"
+      }
+    }
+  },
+  "$defs": {
+    "nonempty_string": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "annotation": {
+      "type": "object",
+      "description": "Ground-truth metadata only; never part of embedding text or reader context.",
+      "additionalProperties": false,
+      "required": [
+        "entity",
+        "attribute",
+        "value"
+      ],
+      "properties": {
+        "entity": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "attribute": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S",
+          "description": "Canonical attribute/state key; paired with entity to identify the state."
+        },
+        "value": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "diagnostic_tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "oracle_current",
+              "oracle_existing_target",
+              "stale_competing_version",
+              "same_entity_different_attribute",
+              "different_entity_similar_attribute",
+              "semantically_related_different_key",
+              "other"
+            ]
+          },
+          "description": "Optional roles; may be empty. Not every entry is a distractor."
+        }
+      }
+    },
+    "memory_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entry_id",
+        "text",
+        "created_time",
+        "last_updated_time",
+        "annotation"
+      ],
+      "properties": {
+        "entry_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S",
+          "description": "Atomic textual fact; the only entry field embedded."
+        },
+        "created_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_updated_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "annotation": {
+          "$ref": "#/$defs/annotation"
+        }
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "task",
+        "active_memory",
+        "active_memory_size"
+      ],
+      "properties": {
+        "case_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "task": {
+          "enum": [
+            "maintenance",
+            "answer"
+          ]
+        },
+        "active_memory": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/memory_entry"
+          }
+        },
+        "active_memory_size": {
+          "type": "integer",
+          "enum": [
+            16,
+            64,
+            128
+          ]
+        },
+        "maintenance_case_type": {
+          "enum": [
+            "changed_state",
+            "same_state",
+            "new_key"
+          ]
+        },
+        "candidate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "text",
+            "annotation"
+          ],
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S",
+              "description": "Atomic candidate-memory text; maintenance retrieval query."
+            },
+            "annotation": {
+              "$ref": "#/$defs/annotation"
+            }
+          }
+        },
+        "oracle_target_entry_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/nonempty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "query_wording": {
+          "enum": [
+            "direct",
+            "paraphrased"
+          ]
+        },
+        "stale_competing_version": {
+          "type": "boolean"
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S",
+          "description": "Final natural-language question; answer retrieval query."
+        },
+        "oracle_entry_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/$defs/nonempty_string"
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "task": {
+              "const": "maintenance"
+            },
+            "query_wording": false,
+            "stale_competing_version": false,
+            "question": false,
+            "oracle_entry_ids": false
+          },
+          "required": [
+            "maintenance_case_type",
+            "candidate",
+            "oracle_target_entry_id"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "maintenance_case_type": {
+                    "const": "new_key"
+                  }
+                },
+                "required": [
+                  "maintenance_case_type"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "oracle_target_entry_id": {
+                    "type": "null"
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "oracle_target_entry_id": {
+                    "$ref": "#/$defs/nonempty_string"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "task": {
+              "const": "answer"
+            },
+            "maintenance_case_type": false,
+            "candidate": false,
+            "oracle_target_entry_id": false
+          },
+          "required": [
+            "query_wording",
+            "stale_competing_version",
+            "question",
+            "oracle_entry_ids"
+          ]
+        }
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "active_memory_size": {
+                "const": 16
+              }
+            },
+            "required": [
+              "active_memory_size"
+            ]
+          },
+          "then": {
+            "properties": {
+              "active_memory": {
+                "minItems": 16,
+                "maxItems": 16
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "active_memory_size": {
+                "const": 64
+              }
+            },
+            "required": [
+              "active_memory_size"
+            ]
+          },
+          "then": {
+            "properties": {
+              "active_memory": {
+                "minItems": 64,
+                "maxItems": 64
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "active_memory_size": {
+                "const": 128
+              }
+            },
+            "required": [
+              "active_memory_size"
+            ]
+          },
+          "then": {
+            "properties": {
+              "active_memory": {
+                "minItems": 128,
+                "maxItems": 128
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
