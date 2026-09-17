@@ -102,8 +102,50 @@ comparative M1/M2/M3 outcomes. A failed grid requires stopping and documented
 adjudication, without silently expanding grids, reducing thresholds, switching
 embeddings, or changing cases.
 
-Exact embedding implementation ID/revision, tokenizer ID/revision, package
-versions, and final `K_MAINT`, `K_ANSWER`, `LME_RETRIEVAL_CONTEXT_TOKENS`, and
-`B0_CONTEXT_TOKENS` remain **OPEN**, together with the implementation details
-listed in the specification. Model Qualification and its frozen execution
-configuration remain unchanged.
+Implementation identities and package versions are frozen in the entry below.
+Final `K_MAINT`, `K_ANSWER`, `LME_RETRIEVAL_CONTEXT_TOKENS`, and
+`B0_CONTEXT_TOKENS` remain **OPEN**, together with Contriever's retrieval
+qualification outcome and exact B0 history material. Model Qualification and
+its frozen execution configuration remain unchanged.
+
+## 2026-09-17 — Dense Retrieval Implementation Freeze
+
+Before any retrieval calibration result is observed, freeze the first candidate
+as canonical unsupervised `facebook/contriever`, model and tokenizer revision
+`2bd46a25019aeea091fd42d1f0fd4801675cf699`. The official reader tokenizer is
+`meta-llama/Llama-3.1-8B-Instruct` at
+`0e9e39f249a16976918f6564b8830bc894c89659`. Artifact checksums, model/tokenizer
+classes, and execution details are recorded in
+[configs/retrieval.yaml](../configs/retrieval.yaml) and the
+[calibration specification](retrieval-context-calibration.md).
+
+Use attention-mask-aware mean pooling of the last hidden state, float32 CPU
+execution in evaluation/inference mode, and L2 normalization followed by a
+float32 dot product for cosine. Contriever's verified input limit is 512 tokens
+including special tokens; overlength input fails before truncation. There are
+no external normalization steps or query/document prefixes.
+
+The shared one-line serializer is
+`[memory_id=<ID>; created=<CREATED>; updated=<UPDATED>] <TEXT>`, joined with one
+newline. Count only that memory block with `add_special_tokens=False`. Rank by
+cosine descending, breaking exact ties by SHA-256 of UTF-8 entry ID ascending.
+Admit a whole-entry top-k prefix, stopping at the first oversized entry without
+skipping or partial truncation. Then order by last-updated time, created time,
+and entry ID ascending; fail if the final serialized block exceeds the budget.
+This pre-calibration ordering correction reflects active-content recency: Update
+replaces content and advances last-updated time while retaining entry identity
+and created time. It affects only post-admission ordering, not similarity ranking,
+and introduces no recency weighting.
+
+The environment is Python 3.10.21, torch 2.8.0+cpu, Transformers 4.57.6, and
+huggingface_hub 0.36.0; supporting versions are locked in `uv.lock`. Compatibility
+verification uses only non-calibration fixtures and does not qualify retrieval
+adequacy or select any k/budget. No hardware-independent bitwise reproducibility
+is claimed.
+
+Protocol checkpoint `24eb542`, corpus checkpoint `5b0d6fe`, and corpus SHA-256
+`ce9605fe777febafde20b4675cb6a2fb456b0d12cd649001c25d703e6e4e9079`
+remain unchanged, as do all gates and grids. Contriever remains the first
+qualification candidate, not yet the qualified final embedding. B0 stays
+separate from dense-retrieval qualification and must be resolved by deterministic
+historical-window calibration before this workstream is closed.

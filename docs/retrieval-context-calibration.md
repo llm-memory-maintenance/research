@@ -88,10 +88,22 @@ deterministic context ordering and other non-embedding processing.
 
 Apply cosine similarity ranking, top-k selection, and whole-entry token-budget
 selection, then reorder the selected entries oldest -> newest for the reader.
-No recency weighting is introduced. The exact serializer, chronological timestamp
-basis, deterministic tie rules, and handling of a non-fitting whole entry must
-be specified before execution and held constant across configurations; they
-must not depend on oracle annotations or observed retrieval outcomes.
+No recency weighting is introduced. Implementation rules are frozen in
+[configs/retrieval.yaml](../configs/retrieval.yaml) before any calibration result
+is observed. Rank by float32 cosine similarity descending; exactly equal scores
+are ordered by SHA-256 of UTF-8 `entry_id`, ascending. This hash is solely a
+deterministic tie-break, not a retrieval feature. Neither timestamp affects
+similarity or retrieval rank. Nonfinite scores or duplicate entry IDs fail closed.
+
+After selection and budget admission, order entries by `last_updated_time` ascending,
+then `created_time` ascending, then stable `entry_id` ascending. Compare
+timestamps as UTC instants. These rules are shared across maintenance and answer
+retrieval and never depend on oracle annotations or observed outcomes.
+Here oldest -> newest reflects the effective recency of active content: Update
+replaces content and advances `last_updated_time` while preserving entry identity
+and `created_time`. Creation time is the deterministic secondary key and entry ID
+the final tie-break. This pre-calibration correction affects only post-admission
+ordering, never similarity ranking, and introduces no recency weighting.
 
 ## 6. Retrieval Success Definitions
 
@@ -209,37 +221,148 @@ The schema enforces total case count, allowed fields and values, single-oracle
 answer cardinality, maintenance target nullability, and memory length matching
 the declared size. It does not claim to enforce ID uniqueness across objects,
 reference integrity, composition/cell quotas, or semantic isolation. These
-remain mandatory dataset-validation requirements; no validator is implemented
-in this specification task. Date-time format checking must be enabled explicitly
-in a later validator, since support is not guaranteed by schema loading alone.
+remain mandatory dataset-validation requirements. The corpus checkpoint
+`5b0d6fe` includes an offline structural/semantic validator with explicit UTC
+timestamp checks; it does not claim full JSON Schema Draft 2020-12 validation.
 
 ## 8. Token Counting
 
-Use a tokenizer corresponding to the frozen Llama 3.1 8B Instruct reader for
-retrieval-context budgeting. The backbone-matched principle is frozen; the exact
-tokenizer repository/implementation ID, revision, checksum, and library versions
-remain OPEN pending implementation verification. No unverified ID is prescribed.
+Use the official `meta-llama/Llama-3.1-8B-Instruct` tokenizer pinned to
+`0e9e39f249a16976918f6564b8830bc894c89659`, loaded as
+`PreTrainedTokenizerFast` with Transformers 4.57.6. The exact tokenizer artifact
+SHA-256 checksums are recorded in `configs/retrieval.yaml`. Official gated
+artifacts were accessed directly; no mirror or Llama model weights are used.
 
-Count tokens over the exact serialized context actually sent to the reader,
-including delimiters and any metadata genuinely included in that context.
-Whole-context overhead must fit the budget as well as entries. Verify the token
-count of the final chronological serialization. An entry is included only when
-its complete serialized representation fits the remaining budget; memory text
-must never be partially truncated. Ground-truth annotations are not exposed to
-the reader. Freeze serialization and token-counting details before measuring
-candidate configurations.
+Serialize each selected entry as exactly:
+
+```text
+[memory_id=<ID>; created=<CREATED>; updated=<UPDATED>] <TEXT>
+```
+
+Join entries with exactly one newline, without a trailing newline or trailing
+whitespace. Preserve the stored ID, timestamp strings, and atomic fact text;
+reject invalid multiline or trailing-whitespace fields rather than rewriting
+them. The empty selection produces an empty string. Include only these four
+fields: no annotations, diagnostic tags, scores, ranks, policy labels,
+active-state labels, or other evaluator metadata.
+
+Count the complete block with
+`len(tokenizer.encode(context, add_special_tokens=False))`. All entry metadata,
+delimiters, spaces, and joining newlines count toward
+`LME_RETRIEVAL_CONTEXT_TOKENS`. The final question, maintenance candidate, system
+prompt, and other prompt wrappers are outside this budget. BOS/EOS and chat
+template tokens are excluded because this budget covers memory-context content,
+not the full model request.
+
+For each candidate k, take the first k entries from similarity ranking. Admit
+whole entries in rank order as a prefix, recounting the complete proposed block
+after each addition. When the next entry would exceed the budget, STOP admission:
+do not partially truncate it, skip it, or admit any lower-ranked entry. After
+admission, reorder chronologically using Section 5 and recount the final block.
+If it exceeds the same budget, fail closed; do not repair the selection. This is
+prefix admission, not packing. The deterministic helper and offline tests use
+non-calibration fixtures; they do not implement a calibration runner.
 
 ## 9. Embedding Qualification
 
 Contriever is the **first qualification candidate**, for methodological
 comparability with Hu et al. It is **not yet the final frozen embedding model**.
-Its exact implementation identifier and revision remain OPEN pending verification.
+The first candidate implementation is frozen as canonical unsupervised
+`facebook/contriever` at full repository revision
+`2bd46a25019aeea091fd42d1f0fd4801675cf699`. Its associated tokenizer uses the same
+repository and revision. No MS MARCO or multilingual variant is substituted.
 
 Apply an adequacy-first rule: evaluate Contriever first under this frozen
 protocol; if it satisfies every required retrieval gate, freeze it. Do not run
 further embedding comparisons merely to obtain a higher score. If it fails,
 STOP and document the failure before defining or testing any fallback candidate.
-Do not create an embedding leaderboard or silently choose an implementation ID.
+Do not create an embedding leaderboard or silently change the implementation ID.
+
+### 9.1 Frozen embedding implementation
+
+The [pinned canonical model card](https://huggingface.co/facebook/contriever/blob/2bd46a25019aeea091fd42d1f0fd4801675cf699/README.md)
+specifies masked mean pooling of the last hidden state. Load via
+`AutoModel.from_pretrained` as `BertModel`, with float32 parameters,
+`attn_implementation="eager"`, and `trust_remote_code=False`. Load the associated
+tokenizer via `AutoTokenizer` with `use_fast=True` as `BertTokenizerFast`.
+Both tokenizer and model configuration specify 512 positions/tokens, including
+special tokens; the model has 12 layers, hidden size 768, and vocabulary 30522.
+The pinned configuration declares architecture `Contriever` and model type
+`bert`; the canonical Transformers model-card path uses `AutoModel`.
+
+Tokenize each input first without truncation, including special tokens, to
+detect lengths above 512. Such inputs must STOP execution with an error before
+embedding; never silently truncate unexpected content. For admitted inputs,
+use `padding=True`, `truncation=True`, `max_length=512`,
+`add_special_tokens=True`, and `return_tensors="pt"`. Apply no query/document
+prefixes, instruction prefixes, or external text normalization. The pinned
+English tokenizer's own lowercasing/normalization remains in effect.
+
+Run on CPU in evaluation mode under `torch.inference_mode()`, using float32
+throughout, eager attention, one intra-op and one inter-op thread, deterministic
+algorithms enabled, and float32 matmul precision `highest`. Use memory batches
+of at most 32 entries in stored order and each query as a single-text batch.
+No autocast or reduced-precision embedding representation is used.
+
+For last hidden states `H` and attention mask `M`, compute exactly:
+
+```python
+pooled = H.masked_fill(~M[..., None].bool(), 0.0).sum(dim=1) / M.sum(dim=1)[..., None]
+```
+
+This produces one 768-dimensional float32 vector per input, includes all
+mask-valid tokens (including special tokens), and excludes padding. Reject
+empty masks, nonfinite vectors, or zero vector norms. No CLS/max pooling or
+sentence-transformers wrapper is used.
+
+Cosine uses `torch.nn.functional.normalize(v, p=2, dim=-1, eps=1e-12)` on both
+query and memory vectors, then `query_unit @ memory_unit.T` in float32. Do not
+round scores before tie-breaking. No recency weighting is applied.
+
+### 9.2 Environment and artifact provenance
+
+Use Python 3.10.21 on Linux x86_64 with torch 2.8.0+cpu, Transformers 4.57.6,
+huggingface_hub 0.36.0, tokenizers 0.22.2, NumPy 2.2.6, and safetensors 0.8.0.
+`pyproject.toml` and `uv.lock` record the dependencies; only torch uses the
+explicit official PyTorch CPU index. CUDA is not used. This environment freeze
+does not claim hardware-independent bitwise embedding reproducibility.
+
+Model/tokenizer files were obtained from official Hugging Face resolve URLs at
+the pinned revisions, locally staged under
+`/tmp/retrieval-implementation-identity/{contriever,reader}` for verification.
+These temporary paths are not portable artifact identities. Record and verify
+the repository revisions and file checksums in `configs/retrieval.yaml` whenever
+restoring artifacts to a local cache; never fall back to unpinned `main`.
+The Contriever weight checksum is checked against official LFS metadata.
+
+Compatibility checks use only new non-calibration text and serialization
+fixtures. They load Contriever and both tokenizers, check masked mean pooling
+and token counting, and do not evaluate any calibration k, budget, or gate.
+Passing these checks freezes implementation identity, not retrieval adequacy.
+
+### 9.3 Completed compatibility verification
+
+Offline verification on 2026-09-17 passed with the versions above and all
+recorded artifact checksums matching. Contriever loaded without missing,
+unexpected, or mismatched keys. The two smoke sentences below tokenized to
+10 and 12 Contriever tokens; masked pooling of the `(2, 12, 768)` last hidden
+state produced finite, nonzero float32 vectors of shape `(2, 768)`. Pooling
+agreed with a manual mean over mask-valid tokens and was unchanged when padded
+hidden states were replaced with large values. L2 normalization passed; the
+cosine expression was checked separately using artificial numeric vectors.
+An artificial 515-token input was detected without being passed to the model.
+
+The reader tokenizer counted this exact two-entry block as 98 tokens, its first
+line alone as 48 tokens, and an empty block as 0 tokens, deterministically with
+`add_special_tokens=False`:
+
+```text
+[memory_id=smoke-a; created=2025-01-02T00:00:00Z; updated=2025-01-02T01:00:00Z] A paper crane rests on a shelf.
+[memory_id=smoke-b; created=2025-01-03T00:00:00Z; updated=2025-01-03T01:00:00Z] Three glass beads sit inside a small wooden box.
+```
+
+No calibration case was embedded, no retrieval-success result was observed,
+and no calibration or reader inference ran during these compatibility checks.
 
 ## 10. Top-k Calibration
 
@@ -281,6 +404,10 @@ deterministic calibration is executed. B0 history material and serialization
 must be fixed before that execution; the active-memory case schema does not
 purport to encode B0 conversation histories.
 
+B0 is not part of dense-retrieval embedding qualification. Its exact history
+material and budget remain OPEN and must be resolved through separate
+deterministic historical-window calibration before this workstream is closed.
+
 ## 13. Selection and Freeze Rules
 
 Pre-specify the dataset, implementation identities, serialization, and grids
@@ -314,19 +441,19 @@ Later implementation/execution must preserve at minimum:
   that U7 and the required subsequent turns remain in each window.
 - Final freeze record and source commit used for official calibration.
 
-No result artifacts, calibration cases, retrieval implementation, or executable
-retrieval configuration are created by this specification task.
+The corpus is frozen as `retrieval-calibration-v1`, seed `20260917`, 140 cases,
+at checkpoint `5b0d6fe`, with SHA-256
+`ce9605fe777febafde20b4675cb6a2fb456b0d12cd649001c25d703e6e4e9079`.
+Protocol checkpoint `24eb542` and corpus contents are unchanged by the
+implementation freeze. No retrieval-success results or final parameter
+selections have been produced; the actual calibration runner is not created.
 
 ## 15. Open Decisions
 
 Only the following implementation/calibration decisions remain OPEN here:
 
-- Exact Contriever implementation identifier/revision and final qualification
-  outcome; Contriever is not yet the frozen final embedding.
-- Exact Llama 3.1 tokenizer implementation identifier/revision and verified checksum.
-- Exact package/library versions.
-- Exact context serialization, chronological timestamp basis, deterministic
-  ranking/ordering tie rules, and whole-entry overflow handling before execution.
+- Contriever's retrieval qualification outcome; the first candidate's exact
+  implementation is pinned, but it is not yet the qualified final embedding.
 - Exact B0 calibration history material and historical-window serialization.
 - Final `K_MAINT`.
 - Final `K_ANSWER`.
