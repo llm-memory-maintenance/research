@@ -1,0 +1,1038 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-location-logistics-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Location & Logistics",
+    "entities": [
+      {
+        "entity_id": "gq-location-logistics-01-primary",
+        "name": "Parcel route Plover"
+      },
+      {
+        "entity_id": "gq-location-logistics-01-distractor",
+        "name": "Parcel route Dunlin"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "destination_bay",
+        "meaning": "assigned destination bay",
+        "units_or_interpretation": "fictional bay label"
+      },
+      {
+        "attribute_id": "route_code",
+        "meaning": "parcel route identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "vehicle",
+        "meaning": "assigned vehicle",
+        "units_or_interpretation": "vehicle label"
+      },
+      {
+        "attribute_id": "loading_slot",
+        "meaning": "loading slot",
+        "units_or_interpretation": "slot label"
+      },
+      {
+        "attribute_id": "container",
+        "meaning": "assigned container",
+        "units_or_interpretation": "container label"
+      },
+      {
+        "attribute_id": "handling_team",
+        "meaning": "handling team",
+        "units_or_interpretation": "synthetic team"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-location-logistics-01-primary",
+        "attribute_id": "destination_bay",
+        "initial_value": "Bay Alden",
+        "role": "target",
+        "value_inventory": [
+          "Bay Alden",
+          "Bay Bexel",
+          "Bay Cavor",
+          "Bay Deren",
+          "Bay Evor",
+          "Bay Falin",
+          "Bay Goran",
+          "Bay Halen"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-location-logistics-01-distractor",
+        "attribute_id": "destination_bay",
+        "initial_value": "Bay Irel",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "Bay Irel",
+          "Bay Javin",
+          "Bay Koren"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-location-logistics-01-primary",
+        "attribute_id": "route_code",
+        "initial_value": "LOG-P9",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "LOG-P9"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-location-logistics-01-primary",
+        "attribute_id": "vehicle",
+        "initial_value": "Cart D1",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Cart D1",
+          "Cart D2",
+          "Cart D3"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-location-logistics-01-primary",
+        "attribute_id": "loading_slot",
+        "initial_value": "Slot V1",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Slot V1",
+          "Slot V2",
+          "Slot V3"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-location-logistics-01-primary",
+        "attribute_id": "container",
+        "initial_value": "Crate M1",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Crate M1",
+          "Crate M2",
+          "Crate M3"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-location-logistics-01-primary",
+        "attribute_id": "handling_team",
+        "initial_value": "Team Galu",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Team Galu",
+          "Team Heri",
+          "Team Ivo"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_a",
+      "I2": "k_b",
+      "I3": "k_c",
+      "I4": "k_d",
+      "I5": "k_target",
+      "I6": "k_hard",
+      "I7": "k_n2"
+    },
+    "question_intent": {
+      "entity_id": "gq-location-logistics-01-primary",
+      "attribute_id": "destination_bay",
+      "intent": "Ask only for the current assigned destination bay of Parcel route Plover."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Bay Halen",
+    "coverage": [
+      "locations",
+      "logistics",
+      "assignments"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Cart D1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "Slot V1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "Crate M1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "Team Galu",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "Bay Alden",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "Bay Irel",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Irel"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "LOG-P9",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_b",
+            "current_value": "Slot V2",
+            "semantics": "changed_state",
+            "previous_value": "Slot V1",
+            "superseded_values": [
+              "Slot V1"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V2",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "Crate M2",
+            "semantics": "changed_state",
+            "previous_value": "Crate M1",
+            "superseded_values": [
+              "Crate M1"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V2",
+              "k_c": "Crate M2",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_hard",
+            "current_value": "Bay Javin",
+            "semantics": "changed_state",
+            "previous_value": "Bay Irel",
+            "superseded_values": [
+              "Bay Irel"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V2",
+              "k_c": "Crate M2",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Javin",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "Crate M3",
+            "semantics": "changed_state",
+            "previous_value": "Crate M2",
+            "superseded_values": [
+              "Crate M1",
+              "Crate M2"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V2",
+              "k_c": "Crate M3",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Javin",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_d",
+            "current_value": "Team Heri",
+            "semantics": "changed_state",
+            "previous_value": "Team Galu",
+            "superseded_values": [
+              "Team Galu"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V2",
+              "k_c": "Crate M3",
+              "k_d": "Team Heri",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Javin",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "Cart D2",
+            "semantics": "changed_state",
+            "previous_value": "Cart D1",
+            "superseded_values": [
+              "Cart D1"
+            ],
+            "state_after": {
+              "k_a": "Cart D2",
+              "k_b": "Slot V2",
+              "k_c": "Crate M3",
+              "k_d": "Team Heri",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Javin",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Bay Alden",
+            "semantics": "same_state",
+            "previous_value": "Bay Alden",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D2",
+              "k_b": "Slot V2",
+              "k_c": "Crate M3",
+              "k_d": "Team Heri",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Javin",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Bay Halen",
+            "semantics": "changed_state",
+            "previous_value": "Bay Alden",
+            "superseded_values": [
+              "Bay Alden"
+            ],
+            "state_after": {
+              "k_a": "Cart D2",
+              "k_b": "Slot V2",
+              "k_c": "Crate M3",
+              "k_d": "Team Heri",
+              "k_target": "Bay Halen",
+              "k_hard": "Bay Javin",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "LOG-P9",
+            "semantics": "same_state",
+            "previous_value": "LOG-P9",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D2",
+              "k_b": "Slot V2",
+              "k_c": "Crate M3",
+              "k_d": "Team Heri",
+              "k_target": "Bay Halen",
+              "k_hard": "Bay Javin",
+              "k_n2": "LOG-P9"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Cart D2",
+          "k_b": "Slot V2",
+          "k_c": "Crate M3",
+          "k_d": "Team Heri",
+          "k_target": "Bay Halen",
+          "k_hard": "Bay Javin",
+          "k_n2": "LOG-P9"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Cart D1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "Slot V1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "Crate M1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "Team Galu",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "Bay Alden",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "Bay Irel",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Irel"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "LOG-P9",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Bay Bexel",
+            "semantics": "changed_state",
+            "previous_value": "Bay Alden",
+            "superseded_values": [
+              "Bay Alden"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Bexel",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_d",
+            "current_value": "Team Heri",
+            "semantics": "changed_state",
+            "previous_value": "Team Galu",
+            "superseded_values": [
+              "Team Galu"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Heri",
+              "k_target": "Bay Bexel",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Bay Deren",
+            "semantics": "changed_state",
+            "previous_value": "Bay Bexel",
+            "superseded_values": [
+              "Bay Alden",
+              "Bay Bexel"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Heri",
+              "k_target": "Bay Deren",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "Cart D2",
+            "semantics": "changed_state",
+            "previous_value": "Cart D1",
+            "superseded_values": [
+              "Cart D1"
+            ],
+            "state_after": {
+              "k_a": "Cart D2",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Heri",
+              "k_target": "Bay Deren",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Bay Falin",
+            "semantics": "changed_state",
+            "previous_value": "Bay Deren",
+            "superseded_values": [
+              "Bay Alden",
+              "Bay Bexel",
+              "Bay Deren"
+            ],
+            "state_after": {
+              "k_a": "Cart D2",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Heri",
+              "k_target": "Bay Falin",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "Bay Javin",
+            "semantics": "changed_state",
+            "previous_value": "Bay Irel",
+            "superseded_values": [
+              "Bay Irel"
+            ],
+            "state_after": {
+              "k_a": "Cart D2",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Heri",
+              "k_target": "Bay Falin",
+              "k_hard": "Bay Javin",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Bay Falin",
+            "semantics": "same_state",
+            "previous_value": "Bay Falin",
+            "superseded_values": [
+              "Bay Alden",
+              "Bay Bexel",
+              "Bay Deren"
+            ],
+            "state_after": {
+              "k_a": "Cart D2",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Heri",
+              "k_target": "Bay Falin",
+              "k_hard": "Bay Javin",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Bay Halen",
+            "semantics": "changed_state",
+            "previous_value": "Bay Falin",
+            "superseded_values": [
+              "Bay Alden",
+              "Bay Bexel",
+              "Bay Deren",
+              "Bay Falin"
+            ],
+            "state_after": {
+              "k_a": "Cart D2",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Heri",
+              "k_target": "Bay Halen",
+              "k_hard": "Bay Javin",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "LOG-P9",
+            "semantics": "same_state",
+            "previous_value": "LOG-P9",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D2",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Heri",
+              "k_target": "Bay Halen",
+              "k_hard": "Bay Javin",
+              "k_n2": "LOG-P9"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Cart D2",
+          "k_b": "Slot V1",
+          "k_c": "Crate M1",
+          "k_d": "Team Heri",
+          "k_target": "Bay Halen",
+          "k_hard": "Bay Javin",
+          "k_n2": "LOG-P9"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Cart D1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "Slot V1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "Crate M1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "Team Galu",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "Bay Alden",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "Bay Irel",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Irel"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "LOG-P9",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Alden",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Bay Bexel",
+            "semantics": "changed_state",
+            "previous_value": "Bay Alden",
+            "superseded_values": [
+              "Bay Alden"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Bexel",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Bay Cavor",
+            "semantics": "changed_state",
+            "previous_value": "Bay Bexel",
+            "superseded_values": [
+              "Bay Alden",
+              "Bay Bexel"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Cavor",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Bay Deren",
+            "semantics": "changed_state",
+            "previous_value": "Bay Cavor",
+            "superseded_values": [
+              "Bay Alden",
+              "Bay Bexel",
+              "Bay Cavor"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Deren",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "Bay Evor",
+            "semantics": "changed_state",
+            "previous_value": "Bay Deren",
+            "superseded_values": [
+              "Bay Alden",
+              "Bay Bexel",
+              "Bay Cavor",
+              "Bay Deren"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Evor",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Bay Falin",
+            "semantics": "changed_state",
+            "previous_value": "Bay Evor",
+            "superseded_values": [
+              "Bay Alden",
+              "Bay Bexel",
+              "Bay Cavor",
+              "Bay Deren",
+              "Bay Evor"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Falin",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "Bay Goran",
+            "semantics": "changed_state",
+            "previous_value": "Bay Falin",
+            "superseded_values": [
+              "Bay Alden",
+              "Bay Bexel",
+              "Bay Cavor",
+              "Bay Deren",
+              "Bay Evor",
+              "Bay Falin"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Goran",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Bay Goran",
+            "semantics": "same_state",
+            "previous_value": "Bay Goran",
+            "superseded_values": [
+              "Bay Alden",
+              "Bay Bexel",
+              "Bay Cavor",
+              "Bay Deren",
+              "Bay Evor",
+              "Bay Falin"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Goran",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Bay Halen",
+            "semantics": "changed_state",
+            "previous_value": "Bay Goran",
+            "superseded_values": [
+              "Bay Alden",
+              "Bay Bexel",
+              "Bay Cavor",
+              "Bay Deren",
+              "Bay Evor",
+              "Bay Falin",
+              "Bay Goran"
+            ],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Halen",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "LOG-P9",
+            "semantics": "same_state",
+            "previous_value": "LOG-P9",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Cart D1",
+              "k_b": "Slot V1",
+              "k_c": "Crate M1",
+              "k_d": "Team Galu",
+              "k_target": "Bay Halen",
+              "k_hard": "Bay Irel",
+              "k_n2": "LOG-P9"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Cart D1",
+          "k_b": "Slot V1",
+          "k_c": "Crate M1",
+          "k_d": "Team Galu",
+          "k_target": "Bay Halen",
+          "k_hard": "Bay Irel",
+          "k_n2": "LOG-P9"
+        }
+      }
+    }
+  }
+}

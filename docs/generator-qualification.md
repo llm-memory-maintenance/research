@@ -6,8 +6,9 @@
 for CRST natural-language realization, not experimental treatment factors.
 This document records researcher-adjudicated post-Proposal implementation
 resolutions compatible with the [CRST contract](crst-specification.md).
-No candidate is QUALIFIED by designation; API availability/support has not been
-verified in this documentation task. No qualification fixtures are created here.
+No candidate is QUALIFIED by designation. Capability Probe is CLOSED/PASS;
+12 structured qualification-only fixtures are now frozen after final researcher
+review. Generator Qualification has not run.
 
 Generator diversity addresses dependence on one model family. Qualification
 uses absolute fidelity to fixed structured truth, not a relative ranking,
@@ -58,7 +59,7 @@ and 34 only after experimental answering. System instructions are excluded.
 `crst-naturalization-triplet/1.0.0` are defined in the
 [shared naturalization contract](generator-naturalization-contract.md), together
 with minimum input requirements and validation responsibilities. Their exact
-execution package still requires the two-call capability probe before freeze.
+execution package is frozen after the completed two-call capability probe.
 No acknowledgement or experimental answer is requested from the generator.
 
 ## 4. Dedicated Qualification Set
@@ -87,7 +88,21 @@ An activated fallback requires its own complete 12-fixture qualification.
 Fixtures must be separate from final confirmatory CRST scenarios, B0 calibration
 material, LongMemEval-S, and historical Model Qualification fixtures. Fix their
 structured truth and provenance before any qualification response is observed.
-Do not generate or populate these fixtures in this documentation task.
+The [manifest](../data/generator-qualification/manifest.json) and
+[construction/audit specification](generator-qualification-audit.md) record the
+12 independently authored structured fixtures, reference schema, deterministic
+projection and allocation, hashes, and blank manual-audit format. The fixture set
+is FROZEN after final researcher review.
+Low/Medium include a hard-distractor update; the dedicated N2 secondary never
+changes. These explicit allocations apply only to qualification fixtures.
+Post-review construction corrections remove Study Planning's repeated Q-intent
+word, replace Communication's opaque schedule values with explicit daily clock
+schedules, and make Quantitative Planning counts compatible with encountered
+bundle sizes. Independent schedule/secondary-coverage/shared-value checks,
+normalized entity-name distinctness and basic Q-intent lint are now enforced.
+Identifier/code-valued N2 secondaries are retained as qualification-only stable
+reaffirmation anchors; N1 supplies domain-specific same-state diversity. This does
+not require identifier-valued N2 in final CRST. No qualification has executed.
 
 Coverage must exercise target and secondary revisions, the hard distractor,
 N1 target same-state reaffirmation, N2 dedicated-secondary same-state
@@ -234,9 +249,11 @@ Qualification may record message/token lengths descriptively, but these numeric
 values are not final pass/fail gates without separate adjudication. Exact
 message-count requirements are independently frozen and must pass.
 
-**OPEN:** fixture contents, validator/audit implementation, fallback capabilities,
+**OPEN:** qualification runner,
+naturalized-output validator and manual-audit execution procedure, fallback capabilities,
 qualification outcomes, assignment mechanism/seed,
 B0 calibration material/grid/budget, and Small Pilot size/acceptance procedure.
 Final CRST N/R/minimum effect of interest and statistical procedures are not
-chosen here. This plan generates no fixtures or dataset, performs no model/API
-call or experiment, and does not reopen completed qualifications.
+chosen here. Only structured qualification fixtures have been constructed; no
+naturalized dataset, model/API call or experiment has been produced or executed,
+and completed qualifications are not reopened.

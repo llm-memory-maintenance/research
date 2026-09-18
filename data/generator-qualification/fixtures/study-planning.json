@@ -1,0 +1,1038 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-study-planning-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Study Planning",
+    "entities": [
+      {
+        "entity_id": "gq-study-planning-01-primary",
+        "name": "Study plan Wren"
+      },
+      {
+        "entity_id": "gq-study-planning-01-distractor",
+        "name": "Study plan Lark"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "topic",
+        "meaning": "current study topic",
+        "units_or_interpretation": "self-contained fictional course label"
+      },
+      {
+        "attribute_id": "plan_code",
+        "meaning": "study plan identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "session_length",
+        "meaning": "study session length",
+        "units_or_interpretation": "minutes"
+      },
+      {
+        "attribute_id": "exercise_pack",
+        "meaning": "assigned exercise pack",
+        "units_or_interpretation": "pack label"
+      },
+      {
+        "attribute_id": "desk",
+        "meaning": "designated study desk",
+        "units_or_interpretation": "desk label"
+      },
+      {
+        "attribute_id": "review_cycle",
+        "meaning": "review cycle",
+        "units_or_interpretation": "synthetic calendar label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-study-planning-01-primary",
+        "attribute_id": "topic",
+        "initial_value": "Course Ena",
+        "role": "target",
+        "value_inventory": [
+          "Course Ena",
+          "Course Felo",
+          "Course Gira",
+          "Course Hanu",
+          "Course Iro",
+          "Course Jelu",
+          "Course Kora",
+          "Course Lavi"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-study-planning-01-distractor",
+        "attribute_id": "topic",
+        "initial_value": "Course Mero",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "Course Mero",
+          "Course Nori",
+          "Course Ovu"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-study-planning-01-primary",
+        "attribute_id": "plan_code",
+        "initial_value": "STU-W2",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "STU-W2"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-study-planning-01-primary",
+        "attribute_id": "session_length",
+        "initial_value": "25 minutes",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "25 minutes",
+          "40 minutes",
+          "65 minutes"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-study-planning-01-primary",
+        "attribute_id": "exercise_pack",
+        "initial_value": "Pack Uva",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Pack Uva",
+          "Pack Veli",
+          "Pack Wora"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-study-planning-01-primary",
+        "attribute_id": "desk",
+        "initial_value": "Desk Oris",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Desk Oris",
+          "Desk Peri",
+          "Desk Qeli"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-study-planning-01-primary",
+        "attribute_id": "review_cycle",
+        "initial_value": "Cycle Garo",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Cycle Garo",
+          "Cycle Heli",
+          "Cycle Iru"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_target",
+      "I2": "k_hard",
+      "I3": "k_n2",
+      "I4": "k_a",
+      "I5": "k_b",
+      "I6": "k_c",
+      "I7": "k_d"
+    },
+    "question_intent": {
+      "entity_id": "gq-study-planning-01-primary",
+      "attribute_id": "topic",
+      "intent": "Ask only for the current study topic of Study plan Wren."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Course Lavi",
+    "coverage": [
+      "study_planning",
+      "categorical_values",
+      "numeric_values"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "Course Ena",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "Course Mero",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "STU-W2",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "25 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "Pack Uva",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "Desk Oris",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "Cycle Garo",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_d",
+            "current_value": "Cycle Heli",
+            "semantics": "changed_state",
+            "previous_value": "Cycle Garo",
+            "superseded_values": [
+              "Cycle Garo"
+            ],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Heli"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "40 minutes",
+            "semantics": "changed_state",
+            "previous_value": "25 minutes",
+            "superseded_values": [
+              "25 minutes"
+            ],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Heli"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_b",
+            "current_value": "Pack Veli",
+            "semantics": "changed_state",
+            "previous_value": "Pack Uva",
+            "superseded_values": [
+              "Pack Uva"
+            ],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Heli"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "Desk Peri",
+            "semantics": "changed_state",
+            "previous_value": "Desk Oris",
+            "superseded_values": [
+              "Desk Oris"
+            ],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Peri",
+              "k_d": "Cycle Heli"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_d",
+            "current_value": "Cycle Iru",
+            "semantics": "changed_state",
+            "previous_value": "Cycle Heli",
+            "superseded_values": [
+              "Cycle Garo",
+              "Cycle Heli"
+            ],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Peri",
+              "k_d": "Cycle Iru"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "Course Nori",
+            "semantics": "changed_state",
+            "previous_value": "Course Mero",
+            "superseded_values": [
+              "Course Mero"
+            ],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Nori",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Peri",
+              "k_d": "Cycle Iru"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Course Ena",
+            "semantics": "same_state",
+            "previous_value": "Course Ena",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Nori",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Peri",
+              "k_d": "Cycle Iru"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Course Lavi",
+            "semantics": "changed_state",
+            "previous_value": "Course Ena",
+            "superseded_values": [
+              "Course Ena"
+            ],
+            "state_after": {
+              "k_target": "Course Lavi",
+              "k_hard": "Course Nori",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Peri",
+              "k_d": "Cycle Iru"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "STU-W2",
+            "semantics": "same_state",
+            "previous_value": "STU-W2",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Lavi",
+              "k_hard": "Course Nori",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Peri",
+              "k_d": "Cycle Iru"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "Course Lavi",
+          "k_hard": "Course Nori",
+          "k_n2": "STU-W2",
+          "k_a": "40 minutes",
+          "k_b": "Pack Veli",
+          "k_c": "Desk Peri",
+          "k_d": "Cycle Iru"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "Course Ena",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "Course Mero",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "STU-W2",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "25 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "Pack Uva",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "Desk Oris",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "Cycle Garo",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Course Felo",
+            "semantics": "changed_state",
+            "previous_value": "Course Ena",
+            "superseded_values": [
+              "Course Ena"
+            ],
+            "state_after": {
+              "k_target": "Course Felo",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "40 minutes",
+            "semantics": "changed_state",
+            "previous_value": "25 minutes",
+            "superseded_values": [
+              "25 minutes"
+            ],
+            "state_after": {
+              "k_target": "Course Felo",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Course Hanu",
+            "semantics": "changed_state",
+            "previous_value": "Course Felo",
+            "superseded_values": [
+              "Course Ena",
+              "Course Felo"
+            ],
+            "state_after": {
+              "k_target": "Course Hanu",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_b",
+            "current_value": "Pack Veli",
+            "semantics": "changed_state",
+            "previous_value": "Pack Uva",
+            "superseded_values": [
+              "Pack Uva"
+            ],
+            "state_after": {
+              "k_target": "Course Hanu",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Course Jelu",
+            "semantics": "changed_state",
+            "previous_value": "Course Hanu",
+            "superseded_values": [
+              "Course Ena",
+              "Course Felo",
+              "Course Hanu"
+            ],
+            "state_after": {
+              "k_target": "Course Jelu",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "Course Nori",
+            "semantics": "changed_state",
+            "previous_value": "Course Mero",
+            "superseded_values": [
+              "Course Mero"
+            ],
+            "state_after": {
+              "k_target": "Course Jelu",
+              "k_hard": "Course Nori",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Course Jelu",
+            "semantics": "same_state",
+            "previous_value": "Course Jelu",
+            "superseded_values": [
+              "Course Ena",
+              "Course Felo",
+              "Course Hanu"
+            ],
+            "state_after": {
+              "k_target": "Course Jelu",
+              "k_hard": "Course Nori",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Course Lavi",
+            "semantics": "changed_state",
+            "previous_value": "Course Jelu",
+            "superseded_values": [
+              "Course Ena",
+              "Course Felo",
+              "Course Hanu",
+              "Course Jelu"
+            ],
+            "state_after": {
+              "k_target": "Course Lavi",
+              "k_hard": "Course Nori",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "STU-W2",
+            "semantics": "same_state",
+            "previous_value": "STU-W2",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Lavi",
+              "k_hard": "Course Nori",
+              "k_n2": "STU-W2",
+              "k_a": "40 minutes",
+              "k_b": "Pack Veli",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "Course Lavi",
+          "k_hard": "Course Nori",
+          "k_n2": "STU-W2",
+          "k_a": "40 minutes",
+          "k_b": "Pack Veli",
+          "k_c": "Desk Oris",
+          "k_d": "Cycle Garo"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "Course Ena",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "Course Mero",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "STU-W2",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "25 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "Pack Uva",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "Desk Oris",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "Cycle Garo",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Ena",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Course Felo",
+            "semantics": "changed_state",
+            "previous_value": "Course Ena",
+            "superseded_values": [
+              "Course Ena"
+            ],
+            "state_after": {
+              "k_target": "Course Felo",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Course Gira",
+            "semantics": "changed_state",
+            "previous_value": "Course Felo",
+            "superseded_values": [
+              "Course Ena",
+              "Course Felo"
+            ],
+            "state_after": {
+              "k_target": "Course Gira",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Course Hanu",
+            "semantics": "changed_state",
+            "previous_value": "Course Gira",
+            "superseded_values": [
+              "Course Ena",
+              "Course Felo",
+              "Course Gira"
+            ],
+            "state_after": {
+              "k_target": "Course Hanu",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "Course Iro",
+            "semantics": "changed_state",
+            "previous_value": "Course Hanu",
+            "superseded_values": [
+              "Course Ena",
+              "Course Felo",
+              "Course Gira",
+              "Course Hanu"
+            ],
+            "state_after": {
+              "k_target": "Course Iro",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Course Jelu",
+            "semantics": "changed_state",
+            "previous_value": "Course Iro",
+            "superseded_values": [
+              "Course Ena",
+              "Course Felo",
+              "Course Gira",
+              "Course Hanu",
+              "Course Iro"
+            ],
+            "state_after": {
+              "k_target": "Course Jelu",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "Course Kora",
+            "semantics": "changed_state",
+            "previous_value": "Course Jelu",
+            "superseded_values": [
+              "Course Ena",
+              "Course Felo",
+              "Course Gira",
+              "Course Hanu",
+              "Course Iro",
+              "Course Jelu"
+            ],
+            "state_after": {
+              "k_target": "Course Kora",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Course Kora",
+            "semantics": "same_state",
+            "previous_value": "Course Kora",
+            "superseded_values": [
+              "Course Ena",
+              "Course Felo",
+              "Course Gira",
+              "Course Hanu",
+              "Course Iro",
+              "Course Jelu"
+            ],
+            "state_after": {
+              "k_target": "Course Kora",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Course Lavi",
+            "semantics": "changed_state",
+            "previous_value": "Course Kora",
+            "superseded_values": [
+              "Course Ena",
+              "Course Felo",
+              "Course Gira",
+              "Course Hanu",
+              "Course Iro",
+              "Course Jelu",
+              "Course Kora"
+            ],
+            "state_after": {
+              "k_target": "Course Lavi",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "STU-W2",
+            "semantics": "same_state",
+            "previous_value": "STU-W2",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "Course Lavi",
+              "k_hard": "Course Mero",
+              "k_n2": "STU-W2",
+              "k_a": "25 minutes",
+              "k_b": "Pack Uva",
+              "k_c": "Desk Oris",
+              "k_d": "Cycle Garo"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "Course Lavi",
+          "k_hard": "Course Mero",
+          "k_n2": "STU-W2",
+          "k_a": "25 minutes",
+          "k_b": "Pack Uva",
+          "k_c": "Desk Oris",
+          "k_d": "Cycle Garo"
+        }
+      }
+    }
+  }
+}

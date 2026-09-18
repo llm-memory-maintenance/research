@@ -345,3 +345,57 @@ Sol/Sonnet remain CANDIDATE; Generator Qualification has not executed. No hidden
 reasoning equivalence or cross-provider reasoning-token comparability is claimed;
 zero reasoning tokens does not imply disabled/ignored reasoning. Later changes
 require explicit adjudication and requalification as applicable.
+
+
+## Generator Qualification — Structured Fixture Construction Pending Review
+
+Construct exactly 12 qualification-only triplets, one per frozen domain, with
+one authoritative reference layer and an allowlisted deterministic input-1.1.0
+projection. Previous/superseded values, state traces and gold values remain
+reference-only. Same approved fixture set for G1/G2; never final CRST/B0/probe
+or external-validation material. Semantic prompt/schema and frozen execution
+package remain unchanged; no qualification or naturalization is executed.
+
+The qualification-only allocation rotates secondary assignments by domain index:
+Low covers the hard distractor and all four other updateable secondaries, with
+one repeat; Medium covers the hard distractor and two rotating others; High has
+no secondary updates. Dedicated N2 never changes. Exact allocations and hashes
+are in the [manifest](../data/generator-qualification/manifest.json). This resolves
+construction for these fixtures, not final-CRST secondary allocation. The
+capability probe's local allocation/validator is unchanged.
+
+The [audit specification](generator-qualification-audit.md) documents
+validation, reproducibility and a blank absolute PASS/FAIL manual-review format.
+Sol/Sonnet remain CANDIDATE; Capability Probe remains CLOSED/PASS.
+
+## Generator Qualification — Pre-Freeze Fixture Adjudication
+
+Retain all 12 identifier/code-valued dedicated N2 secondaries as a qualification-set
+convention: stable reaffirmation anchors, with domain-specific same-state diversity
+already exercised by N1. This neither claims inherent superiority nor requires
+identifier-valued N2 for final CRST.
+
+Correct Study Planning's repeated "current" in Q intent; replace Communication's
+opaque digest-schedule values with explicit daily 08:00–15:00 target and
+16:00–18:00 distractor schedules; use Quantitative Planning target counts
+420/450/480/510/540/570/600/630 and distractor counts 720/750/780 sheets, compatible
+with encountered bundle sizes. Preserve all other fixture semantics and allocations.
+
+Independently validate target schedules, secondary coverage and shared-position
+target values without the builder's allocation helper; require normalized distinct
+entity names and basic Q-intent lint. Exact rotations remain construction choices.
+Rebuild from authoritative source and update hashes. Semantic contract and frozen
+execution package are unchanged; no naturalization or Generator Qualification has
+run; Sol/Sonnet remain CANDIDATE.
+
+## Generator Qualification — Fixture Set Freeze
+
+**GENERATOR QUALIFICATION FIXTURE SET: FROZEN.** Final researcher review passed
+after the targeted adjudication. Exactly 12 qualification-only fixtures, one per
+frozen CRST domain, are immutable and must be used as the same set for G1 and G2.
+They cannot become final CRST scenarios. Identifier/code-valued N2 is a
+qualification-set convention only. Future changes require explicit defect
+adjudication and a new fixture-set version and freeze record. The manifest's
+construction-source commit remains the upstream base used to build the artifacts;
+it is not a circular claim about the commit that records this freeze. Generator
+Qualification has not run; Sol/Sonnet remain CANDIDATE.

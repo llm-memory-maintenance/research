@@ -1,0 +1,1037 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-personal-preference-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Personal Preference",
+    "entities": [
+      {
+        "entity_id": "gq-personal-preference-01-primary",
+        "name": "Person Fenli"
+      },
+      {
+        "entity_id": "gq-personal-preference-01-distractor",
+        "name": "Person Gavri"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "notebook_style",
+        "meaning": "preferred notebook cover style",
+        "units_or_interpretation": "style label"
+      },
+      {
+        "attribute_id": "member_code",
+        "meaning": "preference record identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "binding",
+        "meaning": "preferred notebook binding",
+        "units_or_interpretation": "binding label"
+      },
+      {
+        "attribute_id": "page_size",
+        "meaning": "preferred page size",
+        "units_or_interpretation": "synthetic size label"
+      },
+      {
+        "attribute_id": "paper_finish",
+        "meaning": "preferred paper finish",
+        "units_or_interpretation": "finish label"
+      },
+      {
+        "attribute_id": "ruling",
+        "meaning": "preferred page ruling",
+        "units_or_interpretation": "ruling label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-personal-preference-01-primary",
+        "attribute_id": "notebook_style",
+        "initial_value": "woven cover",
+        "role": "target",
+        "value_inventory": [
+          "woven cover",
+          "dotted cover",
+          "striped cover",
+          "grid cover",
+          "leaf cover",
+          "wave cover",
+          "spiral cover",
+          "plain cover"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-personal-preference-01-distractor",
+        "attribute_id": "notebook_style",
+        "initial_value": "star cover",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "star cover",
+          "ring cover",
+          "cloud cover"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-personal-preference-01-primary",
+        "attribute_id": "member_code",
+        "initial_value": "PREF-F3",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "PREF-F3"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-personal-preference-01-primary",
+        "attribute_id": "binding",
+        "initial_value": "sewn binding",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "sewn binding",
+          "glued binding",
+          "ring binding"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-personal-preference-01-primary",
+        "attribute_id": "page_size",
+        "initial_value": "Size N1",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Size N1",
+          "Size N2",
+          "Size N3"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-personal-preference-01-primary",
+        "attribute_id": "paper_finish",
+        "initial_value": "smooth finish",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "smooth finish",
+          "rough finish",
+          "ribbed finish"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-personal-preference-01-primary",
+        "attribute_id": "ruling",
+        "initial_value": "wide lines",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "wide lines",
+          "narrow lines",
+          "blank pages"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_c",
+      "I2": "k_d",
+      "I3": "k_target",
+      "I4": "k_hard",
+      "I5": "k_n2",
+      "I6": "k_a",
+      "I7": "k_b"
+    },
+    "question_intent": {
+      "entity_id": "gq-personal-preference-01-primary",
+      "attribute_id": "notebook_style",
+      "intent": "Ask only for the current preferred notebook cover style of Person Fenli."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "plain cover",
+    "coverage": [
+      "preferences",
+      "categorical_values"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "smooth finish",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "wide lines",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "woven cover",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "star cover",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "PREF-F3",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "sewn binding",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "Size N1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_b",
+            "current_value": "Size N2",
+            "semantics": "changed_state",
+            "previous_value": "Size N1",
+            "superseded_values": [
+              "Size N1"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N2"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "ring cover",
+            "semantics": "changed_state",
+            "previous_value": "star cover",
+            "superseded_values": [
+              "star cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N2"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_b",
+            "current_value": "Size N3",
+            "semantics": "changed_state",
+            "previous_value": "Size N2",
+            "superseded_values": [
+              "Size N1",
+              "Size N2"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N3"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "rough finish",
+            "semantics": "changed_state",
+            "previous_value": "smooth finish",
+            "superseded_values": [
+              "smooth finish"
+            ],
+            "state_after": {
+              "k_c": "rough finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N3"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_d",
+            "current_value": "narrow lines",
+            "semantics": "changed_state",
+            "previous_value": "wide lines",
+            "superseded_values": [
+              "wide lines"
+            ],
+            "state_after": {
+              "k_c": "rough finish",
+              "k_d": "narrow lines",
+              "k_target": "woven cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N3"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "glued binding",
+            "semantics": "changed_state",
+            "previous_value": "sewn binding",
+            "superseded_values": [
+              "sewn binding"
+            ],
+            "state_after": {
+              "k_c": "rough finish",
+              "k_d": "narrow lines",
+              "k_target": "woven cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "glued binding",
+              "k_b": "Size N3"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "woven cover",
+            "semantics": "same_state",
+            "previous_value": "woven cover",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "rough finish",
+              "k_d": "narrow lines",
+              "k_target": "woven cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "glued binding",
+              "k_b": "Size N3"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "plain cover",
+            "semantics": "changed_state",
+            "previous_value": "woven cover",
+            "superseded_values": [
+              "woven cover"
+            ],
+            "state_after": {
+              "k_c": "rough finish",
+              "k_d": "narrow lines",
+              "k_target": "plain cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "glued binding",
+              "k_b": "Size N3"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "PREF-F3",
+            "semantics": "same_state",
+            "previous_value": "PREF-F3",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "rough finish",
+              "k_d": "narrow lines",
+              "k_target": "plain cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "glued binding",
+              "k_b": "Size N3"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "rough finish",
+          "k_d": "narrow lines",
+          "k_target": "plain cover",
+          "k_hard": "ring cover",
+          "k_n2": "PREF-F3",
+          "k_a": "glued binding",
+          "k_b": "Size N3"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "smooth finish",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "wide lines",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "woven cover",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "star cover",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "PREF-F3",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "sewn binding",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "Size N1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "dotted cover",
+            "semantics": "changed_state",
+            "previous_value": "woven cover",
+            "superseded_values": [
+              "woven cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "dotted cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_d",
+            "current_value": "narrow lines",
+            "semantics": "changed_state",
+            "previous_value": "wide lines",
+            "superseded_values": [
+              "wide lines"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "narrow lines",
+              "k_target": "dotted cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "grid cover",
+            "semantics": "changed_state",
+            "previous_value": "dotted cover",
+            "superseded_values": [
+              "woven cover",
+              "dotted cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "narrow lines",
+              "k_target": "grid cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "ring cover",
+            "semantics": "changed_state",
+            "previous_value": "star cover",
+            "superseded_values": [
+              "star cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "narrow lines",
+              "k_target": "grid cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "wave cover",
+            "semantics": "changed_state",
+            "previous_value": "grid cover",
+            "superseded_values": [
+              "woven cover",
+              "dotted cover",
+              "grid cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "narrow lines",
+              "k_target": "wave cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "rough finish",
+            "semantics": "changed_state",
+            "previous_value": "smooth finish",
+            "superseded_values": [
+              "smooth finish"
+            ],
+            "state_after": {
+              "k_c": "rough finish",
+              "k_d": "narrow lines",
+              "k_target": "wave cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "wave cover",
+            "semantics": "same_state",
+            "previous_value": "wave cover",
+            "superseded_values": [
+              "woven cover",
+              "dotted cover",
+              "grid cover"
+            ],
+            "state_after": {
+              "k_c": "rough finish",
+              "k_d": "narrow lines",
+              "k_target": "wave cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "plain cover",
+            "semantics": "changed_state",
+            "previous_value": "wave cover",
+            "superseded_values": [
+              "woven cover",
+              "dotted cover",
+              "grid cover",
+              "wave cover"
+            ],
+            "state_after": {
+              "k_c": "rough finish",
+              "k_d": "narrow lines",
+              "k_target": "plain cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "PREF-F3",
+            "semantics": "same_state",
+            "previous_value": "PREF-F3",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "rough finish",
+              "k_d": "narrow lines",
+              "k_target": "plain cover",
+              "k_hard": "ring cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "rough finish",
+          "k_d": "narrow lines",
+          "k_target": "plain cover",
+          "k_hard": "ring cover",
+          "k_n2": "PREF-F3",
+          "k_a": "sewn binding",
+          "k_b": "Size N1"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "smooth finish",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "wide lines",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "woven cover",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "star cover",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "PREF-F3",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "sewn binding",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "Size N1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "woven cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "dotted cover",
+            "semantics": "changed_state",
+            "previous_value": "woven cover",
+            "superseded_values": [
+              "woven cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "dotted cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "striped cover",
+            "semantics": "changed_state",
+            "previous_value": "dotted cover",
+            "superseded_values": [
+              "woven cover",
+              "dotted cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "striped cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "grid cover",
+            "semantics": "changed_state",
+            "previous_value": "striped cover",
+            "superseded_values": [
+              "woven cover",
+              "dotted cover",
+              "striped cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "grid cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "leaf cover",
+            "semantics": "changed_state",
+            "previous_value": "grid cover",
+            "superseded_values": [
+              "woven cover",
+              "dotted cover",
+              "striped cover",
+              "grid cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "leaf cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "wave cover",
+            "semantics": "changed_state",
+            "previous_value": "leaf cover",
+            "superseded_values": [
+              "woven cover",
+              "dotted cover",
+              "striped cover",
+              "grid cover",
+              "leaf cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "wave cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "spiral cover",
+            "semantics": "changed_state",
+            "previous_value": "wave cover",
+            "superseded_values": [
+              "woven cover",
+              "dotted cover",
+              "striped cover",
+              "grid cover",
+              "leaf cover",
+              "wave cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "spiral cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "spiral cover",
+            "semantics": "same_state",
+            "previous_value": "spiral cover",
+            "superseded_values": [
+              "woven cover",
+              "dotted cover",
+              "striped cover",
+              "grid cover",
+              "leaf cover",
+              "wave cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "spiral cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "plain cover",
+            "semantics": "changed_state",
+            "previous_value": "spiral cover",
+            "superseded_values": [
+              "woven cover",
+              "dotted cover",
+              "striped cover",
+              "grid cover",
+              "leaf cover",
+              "wave cover",
+              "spiral cover"
+            ],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "plain cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "PREF-F3",
+            "semantics": "same_state",
+            "previous_value": "PREF-F3",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "smooth finish",
+              "k_d": "wide lines",
+              "k_target": "plain cover",
+              "k_hard": "star cover",
+              "k_n2": "PREF-F3",
+              "k_a": "sewn binding",
+              "k_b": "Size N1"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "smooth finish",
+          "k_d": "wide lines",
+          "k_target": "plain cover",
+          "k_hard": "star cover",
+          "k_n2": "PREF-F3",
+          "k_a": "sewn binding",
+          "k_b": "Size N1"
+        }
+      }
+    }
+  }
+}

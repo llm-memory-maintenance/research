@@ -1,0 +1,1038 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-quantitative-planning-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Quantitative Planning",
+    "entities": [
+      {
+        "entity_id": "gq-quantitative-planning-01-primary",
+        "name": "Plan Osprey"
+      },
+      {
+        "entity_id": "gq-quantitative-planning-01-distractor",
+        "name": "Plan Kestrel"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "sheet_count",
+        "meaning": "planned number of blank craft sheets",
+        "units_or_interpretation": "sheets"
+      },
+      {
+        "attribute_id": "plan_code",
+        "meaning": "quantity plan identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "bundle_size",
+        "meaning": "sheets per bundle",
+        "units_or_interpretation": "sheets per bundle"
+      },
+      {
+        "attribute_id": "storage_zone",
+        "meaning": "storage zone",
+        "units_or_interpretation": "zone label"
+      },
+      {
+        "attribute_id": "sheet_shape",
+        "meaning": "sheet shape",
+        "units_or_interpretation": "shape label"
+      },
+      {
+        "attribute_id": "dispatch_order",
+        "meaning": "dispatch priority",
+        "units_or_interpretation": "priority label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-quantitative-planning-01-primary",
+        "attribute_id": "sheet_count",
+        "initial_value": "420 sheets",
+        "role": "target",
+        "value_inventory": [
+          "420 sheets",
+          "450 sheets",
+          "480 sheets",
+          "510 sheets",
+          "540 sheets",
+          "570 sheets",
+          "600 sheets",
+          "630 sheets"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-quantitative-planning-01-distractor",
+        "attribute_id": "sheet_count",
+        "initial_value": "720 sheets",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "720 sheets",
+          "750 sheets",
+          "780 sheets"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-quantitative-planning-01-primary",
+        "attribute_id": "plan_code",
+        "initial_value": "QNT-O7",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "QNT-O7"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-quantitative-planning-01-primary",
+        "attribute_id": "bundle_size",
+        "initial_value": "10 sheets per bundle",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "10 sheets per bundle",
+          "15 sheets per bundle",
+          "20 sheets per bundle"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-quantitative-planning-01-primary",
+        "attribute_id": "storage_zone",
+        "initial_value": "Zone P1",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Zone P1",
+          "Zone P2",
+          "Zone P3"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-quantitative-planning-01-primary",
+        "attribute_id": "sheet_shape",
+        "initial_value": "square sheets",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "square sheets",
+          "round sheets",
+          "oval sheets"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-quantitative-planning-01-primary",
+        "attribute_id": "dispatch_order",
+        "initial_value": "Priority D1",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Priority D1",
+          "Priority D2",
+          "Priority D3"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_b",
+      "I2": "k_c",
+      "I3": "k_d",
+      "I4": "k_target",
+      "I5": "k_hard",
+      "I6": "k_n2",
+      "I7": "k_a"
+    },
+    "question_intent": {
+      "entity_id": "gq-quantitative-planning-01-primary",
+      "attribute_id": "sheet_count",
+      "intent": "Ask only for the current planned number of blank craft sheets of Plan Osprey."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "630 sheets",
+    "coverage": [
+      "quantities",
+      "numeric_values",
+      "planning"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "Zone P1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "square sheets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "Priority D1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "420 sheets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "720 sheets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets",
+              "k_hard": "720 sheets"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "QNT-O7",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "10 sheets per bundle",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_d",
+            "current_value": "Priority D2",
+            "semantics": "changed_state",
+            "previous_value": "Priority D1",
+            "superseded_values": [
+              "Priority D1"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D2",
+              "k_target": "420 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "750 sheets",
+            "semantics": "changed_state",
+            "previous_value": "720 sheets",
+            "superseded_values": [
+              "720 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D2",
+              "k_target": "420 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_d",
+            "current_value": "Priority D3",
+            "semantics": "changed_state",
+            "previous_value": "Priority D2",
+            "superseded_values": [
+              "Priority D1",
+              "Priority D2"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D3",
+              "k_target": "420 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "15 sheets per bundle",
+            "semantics": "changed_state",
+            "previous_value": "10 sheets per bundle",
+            "superseded_values": [
+              "10 sheets per bundle"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D3",
+              "k_target": "420 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "15 sheets per bundle"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_b",
+            "current_value": "Zone P2",
+            "semantics": "changed_state",
+            "previous_value": "Zone P1",
+            "superseded_values": [
+              "Zone P1"
+            ],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "square sheets",
+              "k_d": "Priority D3",
+              "k_target": "420 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "15 sheets per bundle"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "round sheets",
+            "semantics": "changed_state",
+            "previous_value": "square sheets",
+            "superseded_values": [
+              "square sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "round sheets",
+              "k_d": "Priority D3",
+              "k_target": "420 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "15 sheets per bundle"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "420 sheets",
+            "semantics": "same_state",
+            "previous_value": "420 sheets",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "round sheets",
+              "k_d": "Priority D3",
+              "k_target": "420 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "15 sheets per bundle"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "630 sheets",
+            "semantics": "changed_state",
+            "previous_value": "420 sheets",
+            "superseded_values": [
+              "420 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "round sheets",
+              "k_d": "Priority D3",
+              "k_target": "630 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "15 sheets per bundle"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "QNT-O7",
+            "semantics": "same_state",
+            "previous_value": "QNT-O7",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "round sheets",
+              "k_d": "Priority D3",
+              "k_target": "630 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "15 sheets per bundle"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "Zone P2",
+          "k_c": "round sheets",
+          "k_d": "Priority D3",
+          "k_target": "630 sheets",
+          "k_hard": "750 sheets",
+          "k_n2": "QNT-O7",
+          "k_a": "15 sheets per bundle"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "Zone P1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "square sheets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "Priority D1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "420 sheets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "720 sheets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets",
+              "k_hard": "720 sheets"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "QNT-O7",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "10 sheets per bundle",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "450 sheets",
+            "semantics": "changed_state",
+            "previous_value": "420 sheets",
+            "superseded_values": [
+              "420 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "450 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_b",
+            "current_value": "Zone P2",
+            "semantics": "changed_state",
+            "previous_value": "Zone P1",
+            "superseded_values": [
+              "Zone P1"
+            ],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "450 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "510 sheets",
+            "semantics": "changed_state",
+            "previous_value": "450 sheets",
+            "superseded_values": [
+              "420 sheets",
+              "450 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "510 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "750 sheets",
+            "semantics": "changed_state",
+            "previous_value": "720 sheets",
+            "superseded_values": [
+              "720 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "510 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "570 sheets",
+            "semantics": "changed_state",
+            "previous_value": "510 sheets",
+            "superseded_values": [
+              "420 sheets",
+              "450 sheets",
+              "510 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "570 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "15 sheets per bundle",
+            "semantics": "changed_state",
+            "previous_value": "10 sheets per bundle",
+            "superseded_values": [
+              "10 sheets per bundle"
+            ],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "570 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "15 sheets per bundle"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "570 sheets",
+            "semantics": "same_state",
+            "previous_value": "570 sheets",
+            "superseded_values": [
+              "420 sheets",
+              "450 sheets",
+              "510 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "570 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "15 sheets per bundle"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "630 sheets",
+            "semantics": "changed_state",
+            "previous_value": "570 sheets",
+            "superseded_values": [
+              "420 sheets",
+              "450 sheets",
+              "510 sheets",
+              "570 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "630 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "15 sheets per bundle"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "QNT-O7",
+            "semantics": "same_state",
+            "previous_value": "QNT-O7",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P2",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "630 sheets",
+              "k_hard": "750 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "15 sheets per bundle"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "Zone P2",
+          "k_c": "square sheets",
+          "k_d": "Priority D1",
+          "k_target": "630 sheets",
+          "k_hard": "750 sheets",
+          "k_n2": "QNT-O7",
+          "k_a": "15 sheets per bundle"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "Zone P1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "square sheets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "Priority D1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "420 sheets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "720 sheets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets",
+              "k_hard": "720 sheets"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "QNT-O7",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "10 sheets per bundle",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "420 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "450 sheets",
+            "semantics": "changed_state",
+            "previous_value": "420 sheets",
+            "superseded_values": [
+              "420 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "450 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "480 sheets",
+            "semantics": "changed_state",
+            "previous_value": "450 sheets",
+            "superseded_values": [
+              "420 sheets",
+              "450 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "480 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "510 sheets",
+            "semantics": "changed_state",
+            "previous_value": "480 sheets",
+            "superseded_values": [
+              "420 sheets",
+              "450 sheets",
+              "480 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "510 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "540 sheets",
+            "semantics": "changed_state",
+            "previous_value": "510 sheets",
+            "superseded_values": [
+              "420 sheets",
+              "450 sheets",
+              "480 sheets",
+              "510 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "540 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "570 sheets",
+            "semantics": "changed_state",
+            "previous_value": "540 sheets",
+            "superseded_values": [
+              "420 sheets",
+              "450 sheets",
+              "480 sheets",
+              "510 sheets",
+              "540 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "570 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "600 sheets",
+            "semantics": "changed_state",
+            "previous_value": "570 sheets",
+            "superseded_values": [
+              "420 sheets",
+              "450 sheets",
+              "480 sheets",
+              "510 sheets",
+              "540 sheets",
+              "570 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "600 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "600 sheets",
+            "semantics": "same_state",
+            "previous_value": "600 sheets",
+            "superseded_values": [
+              "420 sheets",
+              "450 sheets",
+              "480 sheets",
+              "510 sheets",
+              "540 sheets",
+              "570 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "600 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "630 sheets",
+            "semantics": "changed_state",
+            "previous_value": "600 sheets",
+            "superseded_values": [
+              "420 sheets",
+              "450 sheets",
+              "480 sheets",
+              "510 sheets",
+              "540 sheets",
+              "570 sheets",
+              "600 sheets"
+            ],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "630 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "QNT-O7",
+            "semantics": "same_state",
+            "previous_value": "QNT-O7",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Zone P1",
+              "k_c": "square sheets",
+              "k_d": "Priority D1",
+              "k_target": "630 sheets",
+              "k_hard": "720 sheets",
+              "k_n2": "QNT-O7",
+              "k_a": "10 sheets per bundle"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "Zone P1",
+          "k_c": "square sheets",
+          "k_d": "Priority D1",
+          "k_target": "630 sheets",
+          "k_hard": "720 sheets",
+          "k_n2": "QNT-O7",
+          "k_a": "10 sheets per bundle"
+        }
+      }
+    }
+  }
+}

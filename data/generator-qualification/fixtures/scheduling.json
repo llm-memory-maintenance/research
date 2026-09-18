@@ -1,0 +1,1038 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-scheduling-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Scheduling",
+    "entities": [
+      {
+        "entity_id": "gq-scheduling-01-primary",
+        "name": "Tern rehearsal"
+      },
+      {
+        "entity_id": "gq-scheduling-01-distractor",
+        "name": "Gull rehearsal"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "start_time",
+        "meaning": "scheduled rehearsal start time",
+        "units_or_interpretation": "24-hour local clock; one synthetic day"
+      },
+      {
+        "attribute_id": "session_code",
+        "meaning": "rehearsal identification code",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "room",
+        "meaning": "rehearsal room",
+        "units_or_interpretation": "room label"
+      },
+      {
+        "attribute_id": "duration",
+        "meaning": "rehearsal duration",
+        "units_or_interpretation": "minutes"
+      },
+      {
+        "attribute_id": "facilitator",
+        "meaning": "rehearsal facilitator",
+        "units_or_interpretation": "synthetic person"
+      },
+      {
+        "attribute_id": "agenda",
+        "meaning": "rehearsal agenda",
+        "units_or_interpretation": "agenda label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-scheduling-01-primary",
+        "attribute_id": "start_time",
+        "initial_value": "08:10",
+        "role": "target",
+        "value_inventory": [
+          "08:10",
+          "08:35",
+          "09:05",
+          "09:40",
+          "10:15",
+          "10:50",
+          "11:25",
+          "12:05"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-scheduling-01-distractor",
+        "attribute_id": "start_time",
+        "initial_value": "13:20",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "13:20",
+          "13:55",
+          "14:30"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-scheduling-01-primary",
+        "attribute_id": "session_code",
+        "initial_value": "TRN-X4",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "TRN-X4"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-scheduling-01-primary",
+        "attribute_id": "room",
+        "initial_value": "Room Vela",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Room Vela",
+          "Room Lyra",
+          "Room Ara"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-scheduling-01-primary",
+        "attribute_id": "duration",
+        "initial_value": "35 minutes",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "35 minutes",
+          "45 minutes",
+          "55 minutes"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-scheduling-01-primary",
+        "attribute_id": "facilitator",
+        "initial_value": "Person Zerin",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Person Zerin",
+          "Person Odel",
+          "Person Fira"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-scheduling-01-primary",
+        "attribute_id": "agenda",
+        "initial_value": "opening practice",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "opening practice",
+          "ensemble practice",
+          "closing practice"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_target",
+      "I2": "k_hard",
+      "I3": "k_n2",
+      "I4": "k_a",
+      "I5": "k_b",
+      "I6": "k_c",
+      "I7": "k_d"
+    },
+    "question_intent": {
+      "entity_id": "gq-scheduling-01-primary",
+      "attribute_id": "start_time",
+      "intent": "Ask only for the current scheduled rehearsal start time of Tern rehearsal."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "12:05",
+    "coverage": [
+      "times",
+      "scheduling",
+      "locations"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "08:10",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "13:20",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "TRN-X4",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "Room Vela",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "35 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "Person Zerin",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "opening practice",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_hard",
+            "current_value": "13:55",
+            "semantics": "changed_state",
+            "previous_value": "13:20",
+            "superseded_values": [
+              "13:20"
+            ],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "Room Lyra",
+            "semantics": "changed_state",
+            "previous_value": "Room Vela",
+            "superseded_values": [
+              "Room Vela"
+            ],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Lyra",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_b",
+            "current_value": "45 minutes",
+            "semantics": "changed_state",
+            "previous_value": "35 minutes",
+            "superseded_values": [
+              "35 minutes"
+            ],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Lyra",
+              "k_b": "45 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "Person Odel",
+            "semantics": "changed_state",
+            "previous_value": "Person Zerin",
+            "superseded_values": [
+              "Person Zerin"
+            ],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Lyra",
+              "k_b": "45 minutes",
+              "k_c": "Person Odel",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_d",
+            "current_value": "ensemble practice",
+            "semantics": "changed_state",
+            "previous_value": "opening practice",
+            "superseded_values": [
+              "opening practice"
+            ],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Lyra",
+              "k_b": "45 minutes",
+              "k_c": "Person Odel",
+              "k_d": "ensemble practice"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "Room Ara",
+            "semantics": "changed_state",
+            "previous_value": "Room Lyra",
+            "superseded_values": [
+              "Room Vela",
+              "Room Lyra"
+            ],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Ara",
+              "k_b": "45 minutes",
+              "k_c": "Person Odel",
+              "k_d": "ensemble practice"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "08:10",
+            "semantics": "same_state",
+            "previous_value": "08:10",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Ara",
+              "k_b": "45 minutes",
+              "k_c": "Person Odel",
+              "k_d": "ensemble practice"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "12:05",
+            "semantics": "changed_state",
+            "previous_value": "08:10",
+            "superseded_values": [
+              "08:10"
+            ],
+            "state_after": {
+              "k_target": "12:05",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Ara",
+              "k_b": "45 minutes",
+              "k_c": "Person Odel",
+              "k_d": "ensemble practice"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TRN-X4",
+            "semantics": "same_state",
+            "previous_value": "TRN-X4",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "12:05",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Ara",
+              "k_b": "45 minutes",
+              "k_c": "Person Odel",
+              "k_d": "ensemble practice"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "12:05",
+          "k_hard": "13:55",
+          "k_n2": "TRN-X4",
+          "k_a": "Room Ara",
+          "k_b": "45 minutes",
+          "k_c": "Person Odel",
+          "k_d": "ensemble practice"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "08:10",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "13:20",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "TRN-X4",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "Room Vela",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "35 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "Person Zerin",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "opening practice",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "08:35",
+            "semantics": "changed_state",
+            "previous_value": "08:10",
+            "superseded_values": [
+              "08:10"
+            ],
+            "state_after": {
+              "k_target": "08:35",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "13:55",
+            "semantics": "changed_state",
+            "previous_value": "13:20",
+            "superseded_values": [
+              "13:20"
+            ],
+            "state_after": {
+              "k_target": "08:35",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "09:40",
+            "semantics": "changed_state",
+            "previous_value": "08:35",
+            "superseded_values": [
+              "08:10",
+              "08:35"
+            ],
+            "state_after": {
+              "k_target": "09:40",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_b",
+            "current_value": "45 minutes",
+            "semantics": "changed_state",
+            "previous_value": "35 minutes",
+            "superseded_values": [
+              "35 minutes"
+            ],
+            "state_after": {
+              "k_target": "09:40",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "45 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "10:50",
+            "semantics": "changed_state",
+            "previous_value": "09:40",
+            "superseded_values": [
+              "08:10",
+              "08:35",
+              "09:40"
+            ],
+            "state_after": {
+              "k_target": "10:50",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "45 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "Person Odel",
+            "semantics": "changed_state",
+            "previous_value": "Person Zerin",
+            "superseded_values": [
+              "Person Zerin"
+            ],
+            "state_after": {
+              "k_target": "10:50",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "45 minutes",
+              "k_c": "Person Odel",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "10:50",
+            "semantics": "same_state",
+            "previous_value": "10:50",
+            "superseded_values": [
+              "08:10",
+              "08:35",
+              "09:40"
+            ],
+            "state_after": {
+              "k_target": "10:50",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "45 minutes",
+              "k_c": "Person Odel",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "12:05",
+            "semantics": "changed_state",
+            "previous_value": "10:50",
+            "superseded_values": [
+              "08:10",
+              "08:35",
+              "09:40",
+              "10:50"
+            ],
+            "state_after": {
+              "k_target": "12:05",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "45 minutes",
+              "k_c": "Person Odel",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TRN-X4",
+            "semantics": "same_state",
+            "previous_value": "TRN-X4",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "12:05",
+              "k_hard": "13:55",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "45 minutes",
+              "k_c": "Person Odel",
+              "k_d": "opening practice"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "12:05",
+          "k_hard": "13:55",
+          "k_n2": "TRN-X4",
+          "k_a": "Room Vela",
+          "k_b": "45 minutes",
+          "k_c": "Person Odel",
+          "k_d": "opening practice"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "08:10",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "13:20",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "TRN-X4",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "Room Vela",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "35 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "Person Zerin",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "opening practice",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "08:10",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "08:35",
+            "semantics": "changed_state",
+            "previous_value": "08:10",
+            "superseded_values": [
+              "08:10"
+            ],
+            "state_after": {
+              "k_target": "08:35",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "09:05",
+            "semantics": "changed_state",
+            "previous_value": "08:35",
+            "superseded_values": [
+              "08:10",
+              "08:35"
+            ],
+            "state_after": {
+              "k_target": "09:05",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "09:40",
+            "semantics": "changed_state",
+            "previous_value": "09:05",
+            "superseded_values": [
+              "08:10",
+              "08:35",
+              "09:05"
+            ],
+            "state_after": {
+              "k_target": "09:40",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "10:15",
+            "semantics": "changed_state",
+            "previous_value": "09:40",
+            "superseded_values": [
+              "08:10",
+              "08:35",
+              "09:05",
+              "09:40"
+            ],
+            "state_after": {
+              "k_target": "10:15",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "10:50",
+            "semantics": "changed_state",
+            "previous_value": "10:15",
+            "superseded_values": [
+              "08:10",
+              "08:35",
+              "09:05",
+              "09:40",
+              "10:15"
+            ],
+            "state_after": {
+              "k_target": "10:50",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "11:25",
+            "semantics": "changed_state",
+            "previous_value": "10:50",
+            "superseded_values": [
+              "08:10",
+              "08:35",
+              "09:05",
+              "09:40",
+              "10:15",
+              "10:50"
+            ],
+            "state_after": {
+              "k_target": "11:25",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "11:25",
+            "semantics": "same_state",
+            "previous_value": "11:25",
+            "superseded_values": [
+              "08:10",
+              "08:35",
+              "09:05",
+              "09:40",
+              "10:15",
+              "10:50"
+            ],
+            "state_after": {
+              "k_target": "11:25",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "12:05",
+            "semantics": "changed_state",
+            "previous_value": "11:25",
+            "superseded_values": [
+              "08:10",
+              "08:35",
+              "09:05",
+              "09:40",
+              "10:15",
+              "10:50",
+              "11:25"
+            ],
+            "state_after": {
+              "k_target": "12:05",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TRN-X4",
+            "semantics": "same_state",
+            "previous_value": "TRN-X4",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "12:05",
+              "k_hard": "13:20",
+              "k_n2": "TRN-X4",
+              "k_a": "Room Vela",
+              "k_b": "35 minutes",
+              "k_c": "Person Zerin",
+              "k_d": "opening practice"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "12:05",
+          "k_hard": "13:20",
+          "k_n2": "TRN-X4",
+          "k_a": "Room Vela",
+          "k_b": "35 minutes",
+          "k_c": "Person Zerin",
+          "k_d": "opening practice"
+        }
+      }
+    }
+  }
+}

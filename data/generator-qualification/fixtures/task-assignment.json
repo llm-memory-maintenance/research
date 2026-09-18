@@ -1,0 +1,1038 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-task-assignment-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Task Assignment",
+    "entities": [
+      {
+        "entity_id": "gq-task-assignment-01-primary",
+        "name": "Task Vireo"
+      },
+      {
+        "entity_id": "gq-task-assignment-01-distractor",
+        "name": "Task Siskin"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "assignee",
+        "meaning": "person assigned to the task",
+        "units_or_interpretation": "synthetic person name"
+      },
+      {
+        "attribute_id": "task_code",
+        "meaning": "task identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "priority",
+        "meaning": "task priority",
+        "units_or_interpretation": "tier label"
+      },
+      {
+        "attribute_id": "due_cycle",
+        "meaning": "task due cycle",
+        "units_or_interpretation": "synthetic calendar label"
+      },
+      {
+        "attribute_id": "output",
+        "meaning": "required task deliverable",
+        "units_or_interpretation": "deliverable label"
+      },
+      {
+        "attribute_id": "reviewer",
+        "meaning": "task reviewer",
+        "units_or_interpretation": "synthetic person"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-task-assignment-01-primary",
+        "attribute_id": "assignee",
+        "initial_value": "Person Aven",
+        "role": "target",
+        "value_inventory": [
+          "Person Aven",
+          "Person Belu",
+          "Person Ceri",
+          "Person Dovan",
+          "Person Etri",
+          "Person Falun",
+          "Person Gemi",
+          "Person Haru"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-task-assignment-01-distractor",
+        "attribute_id": "assignee",
+        "initial_value": "Person Iven",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "Person Iven",
+          "Person Jora",
+          "Person Kemi"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-task-assignment-01-primary",
+        "attribute_id": "task_code",
+        "initial_value": "TSK-V6",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "TSK-V6"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-task-assignment-01-primary",
+        "attribute_id": "priority",
+        "initial_value": "Tier R1",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Tier R1",
+          "Tier R2",
+          "Tier R3"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-task-assignment-01-primary",
+        "attribute_id": "due_cycle",
+        "initial_value": "Cycle Avo",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Cycle Avo",
+          "Cycle Bori",
+          "Cycle Celu"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-task-assignment-01-primary",
+        "attribute_id": "output",
+        "initial_value": "diagram package",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "diagram package",
+          "table package",
+          "index package"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-task-assignment-01-primary",
+        "attribute_id": "reviewer",
+        "initial_value": "Person Loru",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Person Loru",
+          "Person Mavi",
+          "Person Nelu"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_a",
+      "I2": "k_b",
+      "I3": "k_c",
+      "I4": "k_d",
+      "I5": "k_target",
+      "I6": "k_hard",
+      "I7": "k_n2"
+    },
+    "question_intent": {
+      "entity_id": "gq-task-assignment-01-primary",
+      "attribute_id": "assignee",
+      "intent": "Ask only for the current person assigned to the task of Task Vireo."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Person Haru",
+    "coverage": [
+      "assignments",
+      "categorical_values",
+      "planning"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Tier R1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "Cycle Avo",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "diagram package",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "Person Loru",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "Person Aven",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Aven"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "Person Iven",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Aven",
+              "k_hard": "Person Iven"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "TSK-V6",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Aven",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_b",
+            "current_value": "Cycle Bori",
+            "semantics": "changed_state",
+            "previous_value": "Cycle Avo",
+            "superseded_values": [
+              "Cycle Avo"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Bori",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Aven",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "table package",
+            "semantics": "changed_state",
+            "previous_value": "diagram package",
+            "superseded_values": [
+              "diagram package"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Bori",
+              "k_c": "table package",
+              "k_d": "Person Loru",
+              "k_target": "Person Aven",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_d",
+            "current_value": "Person Mavi",
+            "semantics": "changed_state",
+            "previous_value": "Person Loru",
+            "superseded_values": [
+              "Person Loru"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Bori",
+              "k_c": "table package",
+              "k_d": "Person Mavi",
+              "k_target": "Person Aven",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "Person Jora",
+            "semantics": "changed_state",
+            "previous_value": "Person Iven",
+            "superseded_values": [
+              "Person Iven"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Bori",
+              "k_c": "table package",
+              "k_d": "Person Mavi",
+              "k_target": "Person Aven",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_d",
+            "current_value": "Person Nelu",
+            "semantics": "changed_state",
+            "previous_value": "Person Mavi",
+            "superseded_values": [
+              "Person Loru",
+              "Person Mavi"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Bori",
+              "k_c": "table package",
+              "k_d": "Person Nelu",
+              "k_target": "Person Aven",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "Tier R2",
+            "semantics": "changed_state",
+            "previous_value": "Tier R1",
+            "superseded_values": [
+              "Tier R1"
+            ],
+            "state_after": {
+              "k_a": "Tier R2",
+              "k_b": "Cycle Bori",
+              "k_c": "table package",
+              "k_d": "Person Nelu",
+              "k_target": "Person Aven",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Person Aven",
+            "semantics": "same_state",
+            "previous_value": "Person Aven",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R2",
+              "k_b": "Cycle Bori",
+              "k_c": "table package",
+              "k_d": "Person Nelu",
+              "k_target": "Person Aven",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Person Haru",
+            "semantics": "changed_state",
+            "previous_value": "Person Aven",
+            "superseded_values": [
+              "Person Aven"
+            ],
+            "state_after": {
+              "k_a": "Tier R2",
+              "k_b": "Cycle Bori",
+              "k_c": "table package",
+              "k_d": "Person Nelu",
+              "k_target": "Person Haru",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TSK-V6",
+            "semantics": "same_state",
+            "previous_value": "TSK-V6",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R2",
+              "k_b": "Cycle Bori",
+              "k_c": "table package",
+              "k_d": "Person Nelu",
+              "k_target": "Person Haru",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Tier R2",
+          "k_b": "Cycle Bori",
+          "k_c": "table package",
+          "k_d": "Person Nelu",
+          "k_target": "Person Haru",
+          "k_hard": "Person Jora",
+          "k_n2": "TSK-V6"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Tier R1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "Cycle Avo",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "diagram package",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "Person Loru",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "Person Aven",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Aven"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "Person Iven",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Aven",
+              "k_hard": "Person Iven"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "TSK-V6",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Aven",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Person Belu",
+            "semantics": "changed_state",
+            "previous_value": "Person Aven",
+            "superseded_values": [
+              "Person Aven"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Belu",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "Person Jora",
+            "semantics": "changed_state",
+            "previous_value": "Person Iven",
+            "superseded_values": [
+              "Person Iven"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Belu",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Person Dovan",
+            "semantics": "changed_state",
+            "previous_value": "Person Belu",
+            "superseded_values": [
+              "Person Aven",
+              "Person Belu"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Dovan",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "Tier R2",
+            "semantics": "changed_state",
+            "previous_value": "Tier R1",
+            "superseded_values": [
+              "Tier R1"
+            ],
+            "state_after": {
+              "k_a": "Tier R2",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Dovan",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Person Falun",
+            "semantics": "changed_state",
+            "previous_value": "Person Dovan",
+            "superseded_values": [
+              "Person Aven",
+              "Person Belu",
+              "Person Dovan"
+            ],
+            "state_after": {
+              "k_a": "Tier R2",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Falun",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_b",
+            "current_value": "Cycle Bori",
+            "semantics": "changed_state",
+            "previous_value": "Cycle Avo",
+            "superseded_values": [
+              "Cycle Avo"
+            ],
+            "state_after": {
+              "k_a": "Tier R2",
+              "k_b": "Cycle Bori",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Falun",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Person Falun",
+            "semantics": "same_state",
+            "previous_value": "Person Falun",
+            "superseded_values": [
+              "Person Aven",
+              "Person Belu",
+              "Person Dovan"
+            ],
+            "state_after": {
+              "k_a": "Tier R2",
+              "k_b": "Cycle Bori",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Falun",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Person Haru",
+            "semantics": "changed_state",
+            "previous_value": "Person Falun",
+            "superseded_values": [
+              "Person Aven",
+              "Person Belu",
+              "Person Dovan",
+              "Person Falun"
+            ],
+            "state_after": {
+              "k_a": "Tier R2",
+              "k_b": "Cycle Bori",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Haru",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TSK-V6",
+            "semantics": "same_state",
+            "previous_value": "TSK-V6",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R2",
+              "k_b": "Cycle Bori",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Haru",
+              "k_hard": "Person Jora",
+              "k_n2": "TSK-V6"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Tier R2",
+          "k_b": "Cycle Bori",
+          "k_c": "diagram package",
+          "k_d": "Person Loru",
+          "k_target": "Person Haru",
+          "k_hard": "Person Jora",
+          "k_n2": "TSK-V6"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Tier R1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "Cycle Avo",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "diagram package",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "Person Loru",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "Person Aven",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Aven"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "Person Iven",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Aven",
+              "k_hard": "Person Iven"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "TSK-V6",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Aven",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Person Belu",
+            "semantics": "changed_state",
+            "previous_value": "Person Aven",
+            "superseded_values": [
+              "Person Aven"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Belu",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Person Ceri",
+            "semantics": "changed_state",
+            "previous_value": "Person Belu",
+            "superseded_values": [
+              "Person Aven",
+              "Person Belu"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Ceri",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Person Dovan",
+            "semantics": "changed_state",
+            "previous_value": "Person Ceri",
+            "superseded_values": [
+              "Person Aven",
+              "Person Belu",
+              "Person Ceri"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Dovan",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "Person Etri",
+            "semantics": "changed_state",
+            "previous_value": "Person Dovan",
+            "superseded_values": [
+              "Person Aven",
+              "Person Belu",
+              "Person Ceri",
+              "Person Dovan"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Etri",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Person Falun",
+            "semantics": "changed_state",
+            "previous_value": "Person Etri",
+            "superseded_values": [
+              "Person Aven",
+              "Person Belu",
+              "Person Ceri",
+              "Person Dovan",
+              "Person Etri"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Falun",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "Person Gemi",
+            "semantics": "changed_state",
+            "previous_value": "Person Falun",
+            "superseded_values": [
+              "Person Aven",
+              "Person Belu",
+              "Person Ceri",
+              "Person Dovan",
+              "Person Etri",
+              "Person Falun"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Gemi",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Person Gemi",
+            "semantics": "same_state",
+            "previous_value": "Person Gemi",
+            "superseded_values": [
+              "Person Aven",
+              "Person Belu",
+              "Person Ceri",
+              "Person Dovan",
+              "Person Etri",
+              "Person Falun"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Gemi",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Person Haru",
+            "semantics": "changed_state",
+            "previous_value": "Person Gemi",
+            "superseded_values": [
+              "Person Aven",
+              "Person Belu",
+              "Person Ceri",
+              "Person Dovan",
+              "Person Etri",
+              "Person Falun",
+              "Person Gemi"
+            ],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Haru",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TSK-V6",
+            "semantics": "same_state",
+            "previous_value": "TSK-V6",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tier R1",
+              "k_b": "Cycle Avo",
+              "k_c": "diagram package",
+              "k_d": "Person Loru",
+              "k_target": "Person Haru",
+              "k_hard": "Person Iven",
+              "k_n2": "TSK-V6"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Tier R1",
+          "k_b": "Cycle Avo",
+          "k_c": "diagram package",
+          "k_d": "Person Loru",
+          "k_target": "Person Haru",
+          "k_hard": "Person Iven",
+          "k_n2": "TSK-V6"
+        }
+      }
+    }
+  }
+}

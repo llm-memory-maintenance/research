@@ -1,0 +1,1039 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-communication-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Communication",
+    "entities": [
+      {
+        "entity_id": "gq-communication-01-primary",
+        "name": "Channel Skylark"
+      },
+      {
+        "entity_id": "gq-communication-01-distractor",
+        "name": "Channel Starling"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "digest_schedule",
+        "meaning": "digest delivery schedule",
+        "units_or_interpretation": "named schedule"
+      },
+      {
+        "attribute_id": "channel_code",
+        "meaning": "channel identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "delivery_mode",
+        "meaning": "digest delivery mode",
+        "units_or_interpretation": "mode label"
+      },
+      {
+        "attribute_id": "subject_prefix",
+        "meaning": "digest subject prefix",
+        "units_or_interpretation": "literal prefix"
+      },
+      {
+        "attribute_id": "layout",
+        "meaning": "digest layout",
+        "units_or_interpretation": "layout label"
+      },
+      {
+        "attribute_id": "recipient_group",
+        "meaning": "digest recipient group",
+        "units_or_interpretation": "synthetic group"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-communication-01-primary",
+        "attribute_id": "digest_schedule",
+        "initial_value": "daily at 08:00",
+        "role": "target",
+        "value_inventory": [
+          "daily at 08:00",
+          "daily at 09:00",
+          "daily at 10:00",
+          "daily at 11:00",
+          "daily at 12:00",
+          "daily at 13:00",
+          "daily at 14:00",
+          "daily at 15:00"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-communication-01-distractor",
+        "attribute_id": "digest_schedule",
+        "initial_value": "daily at 16:00",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "daily at 16:00",
+          "daily at 17:00",
+          "daily at 18:00"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-communication-01-primary",
+        "attribute_id": "channel_code",
+        "initial_value": "COM-S5",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "COM-S5"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-communication-01-primary",
+        "attribute_id": "delivery_mode",
+        "initial_value": "inbox delivery",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "inbox delivery",
+          "panel delivery",
+          "archive delivery"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-communication-01-primary",
+        "attribute_id": "subject_prefix",
+        "initial_value": "DG-RU",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "DG-RU",
+          "DG-SE",
+          "DG-TO"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-communication-01-primary",
+        "attribute_id": "layout",
+        "initial_value": "compact cards",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "compact cards",
+          "expanded cards",
+          "summary rows"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-communication-01-primary",
+        "attribute_id": "recipient_group",
+        "initial_value": "Group Daru",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Group Daru",
+          "Group Efi",
+          "Group Feno"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_hard",
+      "I2": "k_n2",
+      "I3": "k_a",
+      "I4": "k_b",
+      "I5": "k_c",
+      "I6": "k_d",
+      "I7": "k_target"
+    },
+    "question_intent": {
+      "entity_id": "gq-communication-01-primary",
+      "attribute_id": "digest_schedule",
+      "intent": "Ask only for the current digest delivery schedule of Channel Skylark."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "daily at 15:00",
+    "coverage": [
+      "communication_settings",
+      "categorical_values",
+      "assignments",
+      "times"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_hard",
+            "current_value": "daily at 16:00",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_n2",
+            "current_value": "COM-S5",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_a",
+            "current_value": "inbox delivery",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_b",
+            "current_value": "DG-RU",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_c",
+            "current_value": "compact cards",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_d",
+            "current_value": "Group Daru",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_target",
+            "current_value": "daily at 08:00",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 08:00"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_b",
+            "current_value": "DG-SE",
+            "semantics": "changed_state",
+            "previous_value": "DG-RU",
+            "superseded_values": [
+              "DG-RU"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-SE",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 08:00"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "expanded cards",
+            "semantics": "changed_state",
+            "previous_value": "compact cards",
+            "superseded_values": [
+              "compact cards"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 08:00"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_d",
+            "current_value": "Group Efi",
+            "semantics": "changed_state",
+            "previous_value": "Group Daru",
+            "superseded_values": [
+              "Group Daru"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Efi",
+              "k_target": "daily at 08:00"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "panel delivery",
+            "semantics": "changed_state",
+            "previous_value": "inbox delivery",
+            "superseded_values": [
+              "inbox delivery"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "panel delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Efi",
+              "k_target": "daily at 08:00"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_hard",
+            "current_value": "daily at 17:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 16:00",
+            "superseded_values": [
+              "daily at 16:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 17:00",
+              "k_n2": "COM-S5",
+              "k_a": "panel delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Efi",
+              "k_target": "daily at 08:00"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "archive delivery",
+            "semantics": "changed_state",
+            "previous_value": "panel delivery",
+            "superseded_values": [
+              "inbox delivery",
+              "panel delivery"
+            ],
+            "state_after": {
+              "k_hard": "daily at 17:00",
+              "k_n2": "COM-S5",
+              "k_a": "archive delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Efi",
+              "k_target": "daily at 08:00"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "daily at 08:00",
+            "semantics": "same_state",
+            "previous_value": "daily at 08:00",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 17:00",
+              "k_n2": "COM-S5",
+              "k_a": "archive delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Efi",
+              "k_target": "daily at 08:00"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "daily at 15:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 08:00",
+            "superseded_values": [
+              "daily at 08:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 17:00",
+              "k_n2": "COM-S5",
+              "k_a": "archive delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Efi",
+              "k_target": "daily at 15:00"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "COM-S5",
+            "semantics": "same_state",
+            "previous_value": "COM-S5",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 17:00",
+              "k_n2": "COM-S5",
+              "k_a": "archive delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Efi",
+              "k_target": "daily at 15:00"
+            }
+          }
+        ],
+        "final_state": {
+          "k_hard": "daily at 17:00",
+          "k_n2": "COM-S5",
+          "k_a": "archive delivery",
+          "k_b": "DG-SE",
+          "k_c": "expanded cards",
+          "k_d": "Group Efi",
+          "k_target": "daily at 15:00"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_hard",
+            "current_value": "daily at 16:00",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_n2",
+            "current_value": "COM-S5",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_a",
+            "current_value": "inbox delivery",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_b",
+            "current_value": "DG-RU",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_c",
+            "current_value": "compact cards",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_d",
+            "current_value": "Group Daru",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_target",
+            "current_value": "daily at 08:00",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 08:00"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "daily at 09:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 08:00",
+            "superseded_values": [
+              "daily at 08:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 09:00"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "expanded cards",
+            "semantics": "changed_state",
+            "previous_value": "compact cards",
+            "superseded_values": [
+              "compact cards"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "expanded cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 09:00"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "daily at 11:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 09:00",
+            "superseded_values": [
+              "daily at 08:00",
+              "daily at 09:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "expanded cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 11:00"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "daily at 17:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 16:00",
+            "superseded_values": [
+              "daily at 16:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 17:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "expanded cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 11:00"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "daily at 13:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 11:00",
+            "superseded_values": [
+              "daily at 08:00",
+              "daily at 09:00",
+              "daily at 11:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 17:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "expanded cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 13:00"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_b",
+            "current_value": "DG-SE",
+            "semantics": "changed_state",
+            "previous_value": "DG-RU",
+            "superseded_values": [
+              "DG-RU"
+            ],
+            "state_after": {
+              "k_hard": "daily at 17:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 13:00"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "daily at 13:00",
+            "semantics": "same_state",
+            "previous_value": "daily at 13:00",
+            "superseded_values": [
+              "daily at 08:00",
+              "daily at 09:00",
+              "daily at 11:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 17:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 13:00"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "daily at 15:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 13:00",
+            "superseded_values": [
+              "daily at 08:00",
+              "daily at 09:00",
+              "daily at 11:00",
+              "daily at 13:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 17:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 15:00"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "COM-S5",
+            "semantics": "same_state",
+            "previous_value": "COM-S5",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 17:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-SE",
+              "k_c": "expanded cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 15:00"
+            }
+          }
+        ],
+        "final_state": {
+          "k_hard": "daily at 17:00",
+          "k_n2": "COM-S5",
+          "k_a": "inbox delivery",
+          "k_b": "DG-SE",
+          "k_c": "expanded cards",
+          "k_d": "Group Daru",
+          "k_target": "daily at 15:00"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_hard",
+            "current_value": "daily at 16:00",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_n2",
+            "current_value": "COM-S5",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_a",
+            "current_value": "inbox delivery",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_b",
+            "current_value": "DG-RU",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_c",
+            "current_value": "compact cards",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_d",
+            "current_value": "Group Daru",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_target",
+            "current_value": "daily at 08:00",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 08:00"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "daily at 09:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 08:00",
+            "superseded_values": [
+              "daily at 08:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 09:00"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "daily at 10:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 09:00",
+            "superseded_values": [
+              "daily at 08:00",
+              "daily at 09:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 10:00"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "daily at 11:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 10:00",
+            "superseded_values": [
+              "daily at 08:00",
+              "daily at 09:00",
+              "daily at 10:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 11:00"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "daily at 12:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 11:00",
+            "superseded_values": [
+              "daily at 08:00",
+              "daily at 09:00",
+              "daily at 10:00",
+              "daily at 11:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 12:00"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "daily at 13:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 12:00",
+            "superseded_values": [
+              "daily at 08:00",
+              "daily at 09:00",
+              "daily at 10:00",
+              "daily at 11:00",
+              "daily at 12:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 13:00"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "daily at 14:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 13:00",
+            "superseded_values": [
+              "daily at 08:00",
+              "daily at 09:00",
+              "daily at 10:00",
+              "daily at 11:00",
+              "daily at 12:00",
+              "daily at 13:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 14:00"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "daily at 14:00",
+            "semantics": "same_state",
+            "previous_value": "daily at 14:00",
+            "superseded_values": [
+              "daily at 08:00",
+              "daily at 09:00",
+              "daily at 10:00",
+              "daily at 11:00",
+              "daily at 12:00",
+              "daily at 13:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 14:00"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "daily at 15:00",
+            "semantics": "changed_state",
+            "previous_value": "daily at 14:00",
+            "superseded_values": [
+              "daily at 08:00",
+              "daily at 09:00",
+              "daily at 10:00",
+              "daily at 11:00",
+              "daily at 12:00",
+              "daily at 13:00",
+              "daily at 14:00"
+            ],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 15:00"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "COM-S5",
+            "semantics": "same_state",
+            "previous_value": "COM-S5",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "daily at 16:00",
+              "k_n2": "COM-S5",
+              "k_a": "inbox delivery",
+              "k_b": "DG-RU",
+              "k_c": "compact cards",
+              "k_d": "Group Daru",
+              "k_target": "daily at 15:00"
+            }
+          }
+        ],
+        "final_state": {
+          "k_hard": "daily at 16:00",
+          "k_n2": "COM-S5",
+          "k_a": "inbox delivery",
+          "k_b": "DG-RU",
+          "k_c": "compact cards",
+          "k_d": "Group Daru",
+          "k_target": "daily at 15:00"
+        }
+      }
+    }
+  }
+}

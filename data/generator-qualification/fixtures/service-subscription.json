@@ -1,0 +1,1038 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-service-subscription-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Service & Subscription",
+    "entities": [
+      {
+        "entity_id": "gq-service-subscription-01-primary",
+        "name": "Service account Curlew"
+      },
+      {
+        "entity_id": "gq-service-subscription-01-distractor",
+        "name": "Service account Avocet"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "plan",
+        "meaning": "selected fictional service plan",
+        "units_or_interpretation": "plan label"
+      },
+      {
+        "attribute_id": "account_code",
+        "meaning": "service account identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "renewal_cycle",
+        "meaning": "renewal cycle",
+        "units_or_interpretation": "synthetic calendar label"
+      },
+      {
+        "attribute_id": "report_mode",
+        "meaning": "usage report mode",
+        "units_or_interpretation": "mode label"
+      },
+      {
+        "attribute_id": "seat_count",
+        "meaning": "account seat count",
+        "units_or_interpretation": "seats"
+      },
+      {
+        "attribute_id": "support_channel",
+        "meaning": "support contact channel",
+        "units_or_interpretation": "channel label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-service-subscription-01-primary",
+        "attribute_id": "plan",
+        "initial_value": "Plan Navo",
+        "role": "target",
+        "value_inventory": [
+          "Plan Navo",
+          "Plan Orel",
+          "Plan Peli",
+          "Plan Qari",
+          "Plan Renu",
+          "Plan Savi",
+          "Plan Tero",
+          "Plan Ulin"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-service-subscription-01-distractor",
+        "attribute_id": "plan",
+        "initial_value": "Plan Vena",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "Plan Vena",
+          "Plan Weri",
+          "Plan Xalo"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-service-subscription-01-primary",
+        "attribute_id": "account_code",
+        "initial_value": "SVC-C6",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "SVC-C6"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-service-subscription-01-primary",
+        "attribute_id": "renewal_cycle",
+        "initial_value": "Cycle Javi",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Cycle Javi",
+          "Cycle Kelo",
+          "Cycle Luri"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-service-subscription-01-primary",
+        "attribute_id": "report_mode",
+        "initial_value": "brief report",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "brief report",
+          "detailed report",
+          "tabular report"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-service-subscription-01-primary",
+        "attribute_id": "seat_count",
+        "initial_value": "6 seats",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "6 seats",
+          "8 seats",
+          "12 seats"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-service-subscription-01-primary",
+        "attribute_id": "support_channel",
+        "initial_value": "Channel Ash",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Channel Ash",
+          "Channel Beech",
+          "Channel Cedar"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_n2",
+      "I2": "k_a",
+      "I3": "k_b",
+      "I4": "k_c",
+      "I5": "k_d",
+      "I6": "k_target",
+      "I7": "k_hard"
+    },
+    "question_intent": {
+      "entity_id": "gq-service-subscription-01-primary",
+      "attribute_id": "plan",
+      "intent": "Ask only for the current selected fictional service plan of Service account Curlew."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Plan Ulin",
+    "coverage": [
+      "subscription_state",
+      "categorical_values",
+      "quantities"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_n2",
+            "current_value": "SVC-C6",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_a",
+            "current_value": "Cycle Javi",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_b",
+            "current_value": "brief report",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_c",
+            "current_value": "6 seats",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_d",
+            "current_value": "Channel Ash",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_target",
+            "current_value": "Plan Navo",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Navo"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_hard",
+            "current_value": "Plan Vena",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Navo",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_d",
+            "current_value": "Channel Beech",
+            "semantics": "changed_state",
+            "previous_value": "Channel Ash",
+            "superseded_values": [
+              "Channel Ash"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Navo",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "Cycle Kelo",
+            "semantics": "changed_state",
+            "previous_value": "Cycle Javi",
+            "superseded_values": [
+              "Cycle Javi"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Kelo",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Navo",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_b",
+            "current_value": "detailed report",
+            "semantics": "changed_state",
+            "previous_value": "brief report",
+            "superseded_values": [
+              "brief report"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Kelo",
+              "k_b": "detailed report",
+              "k_c": "6 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Navo",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "Plan Weri",
+            "semantics": "changed_state",
+            "previous_value": "Plan Vena",
+            "superseded_values": [
+              "Plan Vena"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Kelo",
+              "k_b": "detailed report",
+              "k_c": "6 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Navo",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_b",
+            "current_value": "tabular report",
+            "semantics": "changed_state",
+            "previous_value": "detailed report",
+            "superseded_values": [
+              "brief report",
+              "detailed report"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Kelo",
+              "k_b": "tabular report",
+              "k_c": "6 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Navo",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "8 seats",
+            "semantics": "changed_state",
+            "previous_value": "6 seats",
+            "superseded_values": [
+              "6 seats"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Kelo",
+              "k_b": "tabular report",
+              "k_c": "8 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Navo",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Plan Navo",
+            "semantics": "same_state",
+            "previous_value": "Plan Navo",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Kelo",
+              "k_b": "tabular report",
+              "k_c": "8 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Navo",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Plan Ulin",
+            "semantics": "changed_state",
+            "previous_value": "Plan Navo",
+            "superseded_values": [
+              "Plan Navo"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Kelo",
+              "k_b": "tabular report",
+              "k_c": "8 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Ulin",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "SVC-C6",
+            "semantics": "same_state",
+            "previous_value": "SVC-C6",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Kelo",
+              "k_b": "tabular report",
+              "k_c": "8 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Ulin",
+              "k_hard": "Plan Weri"
+            }
+          }
+        ],
+        "final_state": {
+          "k_n2": "SVC-C6",
+          "k_a": "Cycle Kelo",
+          "k_b": "tabular report",
+          "k_c": "8 seats",
+          "k_d": "Channel Beech",
+          "k_target": "Plan Ulin",
+          "k_hard": "Plan Weri"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_n2",
+            "current_value": "SVC-C6",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_a",
+            "current_value": "Cycle Javi",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_b",
+            "current_value": "brief report",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_c",
+            "current_value": "6 seats",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_d",
+            "current_value": "Channel Ash",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_target",
+            "current_value": "Plan Navo",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Navo"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_hard",
+            "current_value": "Plan Vena",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Navo",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Plan Orel",
+            "semantics": "changed_state",
+            "previous_value": "Plan Navo",
+            "superseded_values": [
+              "Plan Navo"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Orel",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "Plan Weri",
+            "semantics": "changed_state",
+            "previous_value": "Plan Vena",
+            "superseded_values": [
+              "Plan Vena"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Orel",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Plan Qari",
+            "semantics": "changed_state",
+            "previous_value": "Plan Orel",
+            "superseded_values": [
+              "Plan Navo",
+              "Plan Orel"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Qari",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "8 seats",
+            "semantics": "changed_state",
+            "previous_value": "6 seats",
+            "superseded_values": [
+              "6 seats"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "8 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Qari",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Plan Savi",
+            "semantics": "changed_state",
+            "previous_value": "Plan Qari",
+            "superseded_values": [
+              "Plan Navo",
+              "Plan Orel",
+              "Plan Qari"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "8 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Savi",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_d",
+            "current_value": "Channel Beech",
+            "semantics": "changed_state",
+            "previous_value": "Channel Ash",
+            "superseded_values": [
+              "Channel Ash"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "8 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Savi",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Plan Savi",
+            "semantics": "same_state",
+            "previous_value": "Plan Savi",
+            "superseded_values": [
+              "Plan Navo",
+              "Plan Orel",
+              "Plan Qari"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "8 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Savi",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Plan Ulin",
+            "semantics": "changed_state",
+            "previous_value": "Plan Savi",
+            "superseded_values": [
+              "Plan Navo",
+              "Plan Orel",
+              "Plan Qari",
+              "Plan Savi"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "8 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Ulin",
+              "k_hard": "Plan Weri"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "SVC-C6",
+            "semantics": "same_state",
+            "previous_value": "SVC-C6",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "8 seats",
+              "k_d": "Channel Beech",
+              "k_target": "Plan Ulin",
+              "k_hard": "Plan Weri"
+            }
+          }
+        ],
+        "final_state": {
+          "k_n2": "SVC-C6",
+          "k_a": "Cycle Javi",
+          "k_b": "brief report",
+          "k_c": "8 seats",
+          "k_d": "Channel Beech",
+          "k_target": "Plan Ulin",
+          "k_hard": "Plan Weri"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_n2",
+            "current_value": "SVC-C6",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_a",
+            "current_value": "Cycle Javi",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_b",
+            "current_value": "brief report",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_c",
+            "current_value": "6 seats",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_d",
+            "current_value": "Channel Ash",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_target",
+            "current_value": "Plan Navo",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Navo"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_hard",
+            "current_value": "Plan Vena",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Navo",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Plan Orel",
+            "semantics": "changed_state",
+            "previous_value": "Plan Navo",
+            "superseded_values": [
+              "Plan Navo"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Orel",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Plan Peli",
+            "semantics": "changed_state",
+            "previous_value": "Plan Orel",
+            "superseded_values": [
+              "Plan Navo",
+              "Plan Orel"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Peli",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Plan Qari",
+            "semantics": "changed_state",
+            "previous_value": "Plan Peli",
+            "superseded_values": [
+              "Plan Navo",
+              "Plan Orel",
+              "Plan Peli"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Qari",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "Plan Renu",
+            "semantics": "changed_state",
+            "previous_value": "Plan Qari",
+            "superseded_values": [
+              "Plan Navo",
+              "Plan Orel",
+              "Plan Peli",
+              "Plan Qari"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Renu",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Plan Savi",
+            "semantics": "changed_state",
+            "previous_value": "Plan Renu",
+            "superseded_values": [
+              "Plan Navo",
+              "Plan Orel",
+              "Plan Peli",
+              "Plan Qari",
+              "Plan Renu"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Savi",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "Plan Tero",
+            "semantics": "changed_state",
+            "previous_value": "Plan Savi",
+            "superseded_values": [
+              "Plan Navo",
+              "Plan Orel",
+              "Plan Peli",
+              "Plan Qari",
+              "Plan Renu",
+              "Plan Savi"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Tero",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Plan Tero",
+            "semantics": "same_state",
+            "previous_value": "Plan Tero",
+            "superseded_values": [
+              "Plan Navo",
+              "Plan Orel",
+              "Plan Peli",
+              "Plan Qari",
+              "Plan Renu",
+              "Plan Savi"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Tero",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Plan Ulin",
+            "semantics": "changed_state",
+            "previous_value": "Plan Tero",
+            "superseded_values": [
+              "Plan Navo",
+              "Plan Orel",
+              "Plan Peli",
+              "Plan Qari",
+              "Plan Renu",
+              "Plan Savi",
+              "Plan Tero"
+            ],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Ulin",
+              "k_hard": "Plan Vena"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "SVC-C6",
+            "semantics": "same_state",
+            "previous_value": "SVC-C6",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "SVC-C6",
+              "k_a": "Cycle Javi",
+              "k_b": "brief report",
+              "k_c": "6 seats",
+              "k_d": "Channel Ash",
+              "k_target": "Plan Ulin",
+              "k_hard": "Plan Vena"
+            }
+          }
+        ],
+        "final_state": {
+          "k_n2": "SVC-C6",
+          "k_a": "Cycle Javi",
+          "k_b": "brief report",
+          "k_c": "6 seats",
+          "k_d": "Channel Ash",
+          "k_target": "Plan Ulin",
+          "k_hard": "Plan Vena"
+        }
+      }
+    }
+  }
+}
