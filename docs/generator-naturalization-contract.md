@@ -182,10 +182,16 @@ The final current value is necessarily visible in U7's required fact; a separate
 answer field is unnecessary. Shared question intent suffices for faithful Q
 realization, with identical output Q wording checked across the triplet.
 
-**OPEN implementation representation details:** exact input JSON Schema and
-payload serialization. They must preserve the minimum field meanings above and
-be fixed before the probe; they do not change the output schema or semantic
-prompt. No qualification fixture is instantiated by this contract.
+**Probe implementation representation:**
+[probe_generators.py](../experiments/probe_generators.py) validates the exact
+field allowlists, reference integrity, roles, and event trajectories before
+constructing requests. Model-facing input is serialized as UTF-8 JSON with
+`ensure_ascii=False`, sorted object keys, compact separators `(',', ':')`, and
+no nonfinite numbers or incidental whitespace. Each request has exactly one
+system message (the shared prompt) and one user message (that JSON), with no
+assistant history. The input file contains realization data only; probe identity
+and CAPABILITY-PROBE-ONLY provenance remain in the separate config. The secondary
+update allocation is probe-local, not a general CRST allocation decision.
 
 ## 6. Deterministic Validation and Mandatory Manual Audit
 
@@ -241,8 +247,9 @@ truncation, or refusal failures. No continuation request for an incomplete
 triplet. Each physical attempt is logged and does not add a logical case.
 
 STANDARD mode and intended provider routes are decided; their actual acceptance,
-all proposed common parameter semantics, the transport constants, and final
-input serialization remain to verify/finalize before execution.
+all proposed common parameter semantics and the transport proposal remain to
+verify/finalize before official qualification. The guarded probe implementation
+tests the proposed constants and mappings without declaring them supported.
 
 ## 8. Later Two-Call Capability Probe: Specification Only
 
@@ -286,3 +293,21 @@ or final CRST data. A passing two-call probe authorizes no claim of semantic
 qualification, fidelity across the 12 domains, or guaranteed future output length.
 Generator Qualification still requires its dedicated 24 logical primary calls
 and mandatory manual audit after the execution contract is frozen.
+
+The executable mirror of the reviewed prompt/schema is
+[generator-naturalization-contract.json](../configs/generator-naturalization-contract.json).
+The [probe config](../configs/generator-capability-probe.yaml) pins its bytes and
+the documentation checksum; offline tests compare the exact prompt and schema
+with this document. Runtime uses the machine-readable artifact, not prose
+extraction. The prompt is UTF-8 with no trailing newline; schema hashes use the
+canonical JSON rule above. No semantic prompt/schema change is introduced.
+
+`python experiments/probe_generators.py` performs offline preview only. Sending
+requires both `--execute` and `--confirm-spend`, an environment API key, and a clean
+committed working tree. Later results are exclusively created under an explicit
+attempt directory (default `results/generator-capability-probe/attempt-01/`).
+Every physical attempt is bounded by an explicit 300-second asynchronous deadline.
+An unsuccessful logical call stops execution; the remaining slot is recorded as
+blocked. FAIL evidence is archived without trying alternative parameters. A probe
+PASS means observed execution/schema/provenance compatibility only; unobservable
+reasoning/sampling semantics remain VERIFY and generators remain CANDIDATE.
