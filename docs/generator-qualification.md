@@ -294,8 +294,8 @@ this frozen implementation and fixture set, archived at
 completed; the attempt was not invalidated. One infrastructure retry occurred
 and succeeded within the frozen retry budget. Completed human manual audit and
 offline adjudication are recorded at
-`results/generator-qualification/manual-audit/attempt-01.completed.json` and
-`results/generator-qualification/adjudication/attempt-01.json`. G1
+`results/generator-qualification/manual-audit/v1/attempt-01.completed.json` and
+`results/generator-qualification/adjudication/v1/attempt-01.json`. G1
 `openai/gpt-5.6-sol` FAIL: one researcher-approved manual `natural_english`
 failure (`gq-study-planning-01`/`low`/`I6`). G2 `anthropic/claude-sonnet-5`
 FAIL: four terminal strict-schema nonempty-string failures. Neither candidate

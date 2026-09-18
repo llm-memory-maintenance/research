@@ -810,15 +810,16 @@ def test_fallback_load_inputs_shares_frozen_contract_but_not_package(loaded, loa
     assert loaded_fallback['fixtures'] == loaded['fixtures'] and loaded_fallback['manifest'] == loaded['manifest']
 
 
-def test_fallback_qualification_preview_24_calls_terra_then_opus(fallback_inputs, capsys):
+def test_fallback_qualification_preview_24_calls_terra_then_opus(fallback_inputs, capsys, tmp_path):
     default_output = q.ROOT / 'results/generator-qualification/attempt-02'
     assert q.main(['--profile', 'fallback']) == 0
     shown = json.loads(capsys.readouterr().out)
     assert shown['status'] == 'NETWORK_DISABLED' and shown['credits'] == 'CREDITS_NOT_SPENT'
     assert shown['candidate_profile'] == 'FALLBACK'
     assert shown['planned_logical_calls'] == 24 and shown['per_candidate'] == 12
+    # The frozen default output path is correctly computed and reported -- a pure string check,
+    # independent of whether that real, historical attempt-02 directory already exists on disk.
     assert shown['result_directory'] == str(default_output)
-    assert not default_output.exists()
     ids = shown['fixture_ids']
     assert shown['planned_calls'][:12] == [f'{i + 1}:G1:{fid}' for i, fid in enumerate(ids)]
     assert shown['planned_calls'][12:] == [f'{i + 13}:G2:{fid}' for i, fid in enumerate(ids)]
@@ -830,11 +831,19 @@ def test_fallback_qualification_preview_24_calls_terra_then_opus(fallback_inputs
         assert not {'temperature', 'top_p'} & b.keys()
         assert b['reasoning'] == {'effort': 'low'} and b['max_tokens'] == 16384
         assert b['provider']['allow_fallbacks'] is False and b['provider']['require_parameters'] is True
+    # Preview never creates an output directory, verified hermetically against an isolated,
+    # guaranteed-nonexistent path rather than relying on the real default's historical state.
+    isolated = tmp_path / 'fallback-preview-must-not-create'
+    assert not isolated.exists()
+    assert q.main(['--profile', 'fallback', '--output-directory', str(isolated)]) == 0
+    isolated_shown = json.loads(capsys.readouterr().out)
+    assert isolated_shown['result_directory'] == str(isolated)
+    assert not isolated.exists()
     assert q.main([]) == 0  # Default --profile is still primary, unaffected.
     assert json.loads(capsys.readouterr().out)['candidate_profile'] == 'PRIMARY'
 
 
-def test_fallback_qualification_preview_g1_only_12_calls_no_opus(capsys):
+def test_fallback_qualification_preview_g1_only_12_calls_no_opus(capsys, tmp_path):
     """Single-slot preview: --profile fallback --slot G1 plans exactly Terra's 12 calls, the same
     frozen fixture order, and no Opus calls at all; no output directory is created."""
     assert q.main(['--profile', 'fallback', '--slot', 'G1']) == 0
@@ -848,9 +857,17 @@ def test_fallback_qualification_preview_g1_only_12_calls_no_opus(capsys):
     assert shown['planned_calls'] == [f'{i + 1}:G1:{fid}' for i, fid in enumerate(ids)]
     assert all(':G2:' not in call for call in shown['planned_calls'])  # No Opus calls at all.
     assert len(shown['request_hashes']) == 12 and len(set(shown['request_hashes'])) == 12
+    # Without an explicit --output-directory, single-slot preview reports the OPEN placeholder --
+    # a plain string, never a real candidate path -- so no attempt directory is even named yet.
     assert shown['result_directory'] == 'OPEN: official single-slot result-path identity not yet decided'
-    assert not (q.ROOT / 'results/generator-qualification/attempt-02').exists()
-    assert not (q.ROOT / 'results/generator-qualification/attempt-03').exists()
+    # Preview never creates an output directory, verified hermetically against an isolated,
+    # guaranteed-nonexistent path rather than relying on real historical attempt directories.
+    isolated = tmp_path / 'g1-only-preview-must-not-create'
+    assert not isolated.exists()
+    assert q.main(['--profile', 'fallback', '--slot', 'G1', '--output-directory', str(isolated)]) == 0
+    isolated_shown = json.loads(capsys.readouterr().out)
+    assert isolated_shown['result_directory'] == str(isolated)
+    assert not isolated.exists()
 
 
 def test_fallback_qualification_preview_g2_only_12_calls_no_terra(capsys):
@@ -1017,7 +1034,7 @@ def test_real_attempt_01_replay_unaffected_by_fallback_support(loaded):
     assert {c['request_body']['model'] for c in result['calls']} == {'openai/gpt-5.6-sol', 'anthropic/claude-sonnet-5'}
     assert not any('terra' in c['request_body']['model'] or 'opus' in c['request_body']['model']
                   for c in result['calls'])
-    audit = q.fixtures.read(q.ROOT / 'results/generator-qualification/manual-audit/attempt-01.completed.json')
+    audit = q.fixtures.read(q.ROOT / 'results/generator-qualification/manual-audit/v1/attempt-01.completed.json')
     verdict = q.adjudicate(result, audit, checksum, loaded['slots'])
     assert verdict['candidates'] == {'G1': 'FAIL', 'G2': 'FAIL'}
     assert q.probe.file_hash(directory / 'manual-audit.json') == \
