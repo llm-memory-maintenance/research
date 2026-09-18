@@ -2,13 +2,16 @@
 
 ## 1. Purpose and Decision Status
 
-**FROZEN plan; qualification NOT EXECUTED.** Generators are construction tools
-for CRST natural-language realization, not experimental treatment factors.
-This document records researcher-adjudicated post-Proposal implementation
-resolutions compatible with the [CRST contract](crst-specification.md).
-No candidate is QUALIFIED by designation. Capability Probe is CLOSED/PASS;
-12 structured qualification-only fixtures are now frozen after final researcher
-review. Generator Qualification has not run.
+**FROZEN plan; primary Attempt-01 CLOSED, both primaries FAIL.** Generators are
+construction tools for CRST natural-language realization, not experimental
+treatment factors. This document records researcher-adjudicated post-Proposal
+implementation resolutions compatible with the
+[CRST contract](crst-specification.md). No candidate is QUALIFIED by
+designation. Capability Probe is CLOSED/PASS; 12 structured qualification-only
+fixtures are frozen after final researcher review. Official Generator
+Qualification Attempt-01 ran under the frozen implementation and fixture set
+and closed 2026-09-18: G1 `openai/gpt-5.6-sol` FAIL, G2
+`anthropic/claude-sonnet-5` FAIL (§10). Fallback qualification is pending.
 
 Generator diversity addresses dependence on one model family. Qualification
 uses absolute fidelity to fixed structured truth, not a relative ranking,
@@ -20,8 +23,8 @@ CLOSED and unchanged; they do not qualify construction generators.
 
 | Slot | Primary candidate | Predeclared corresponding fallback | Current status |
 | --- | --- | --- | --- |
-| G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | CANDIDATE; not qualified |
-| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | CANDIDATE; not qualified |
+| G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | FAIL (Attempt-01); fallback eligible, not yet qualified |
+| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | FAIL (Attempt-01); fallback eligible, not yet qualified |
 
 **FROZEN:** use different OpenAI/Anthropic families/vendors to diversify
 naturalization provenance. Consider a fallback only if its corresponding primary
@@ -140,8 +143,9 @@ The required checks are:
 
 Automated validation and manual audit are both required; a structural parser
 alone does not establish semantic fidelity. The runner, deterministic checks and
-audit recording procedure are **IMPLEMENTED OFFLINE AND FROZEN** (§10).
-Generator Qualification itself remains NOT EXECUTED.
+audit recording procedure are **IMPLEMENTED OFFLINE AND FROZEN** (§10), and
+Attempt-01 applied them under both automated and completed human manual audit:
+G1 and G2 both FAIL; neither is QUALIFIED.
 The shared output schema
 is specified in the naturalization contract. CSA, SRR, MOA, downstream policy
 performance, and final statistical effects are not qualification criteria.
@@ -251,24 +255,37 @@ Qualification may record message/token lengths descriptively, but these numeric
 values are not final pass/fail gates without separate adjudication. Exact
 message-count requirements are independently frozen and must pass.
 
-**OPEN:** researcher review and freeze of the offline qualification runner,
-naturalized-output validator and manual-audit procedure (§10), fallback capabilities,
-qualification outcomes, assignment mechanism/seed,
-B0 calibration material/grid/budget, and Small Pilot size/acceptance procedure.
-Final CRST N/R/minimum effect of interest and statistical procedures are not
-chosen here. Only structured qualification fixtures have been constructed; no
-naturalized dataset, model/API call or experiment has been produced or executed,
-and completed qualifications are not reopened.
+**OPEN:** fallback qualification (`openai/gpt-5.6-terra`,
+`anthropic/claude-opus-5`) under the same frozen contract, assignment
+mechanism/seed, B0 calibration material/grid/budget, and Small Pilot
+size/acceptance procedure. Final CRST N/R/minimum effect of interest and
+statistical procedures are not chosen here. Official Generator Qualification
+Attempt-01 has executed and closed (§10); no naturalized CRST dataset or final
+CRST experiment has been produced or executed, and completed qualifications
+(Attempt-01) are not reopened.
 
-## 10. Offline Qualification Runner — Implementation FROZEN; Qualification NOT EXECUTED
+## 10. Offline Qualification Runner — Implementation FROZEN; Attempt-01 CLOSED
 
 **QUALIFICATION IMPLEMENTATION: FROZEN.** The reviewed implementation is
 committed at `e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e`, and
 `configs/generator-qualification-implementation-freeze.json` pins that commit
-and the three execution-critical source hashes. This makes the implementation
-technically eligible for a later researcher-approved official run; it is not
-itself that authorization, and no qualification call has been made under it.
-Generator Qualification is NOT EXECUTED; Sol/Sonnet remain CANDIDATE.
+and the three execution-critical source hashes.
+
+**ATTEMPT-01: CLOSED, both primaries FAIL.** The official attempt ran under
+this frozen implementation and fixture set, archived at
+`results/generator-qualification/attempt-01`. All 24 planned logical calls
+completed; the attempt was not invalidated. One infrastructure retry occurred
+and succeeded within the frozen retry budget. Completed human manual audit and
+offline adjudication are recorded at
+`results/generator-qualification/manual-audit/attempt-01.completed.json` and
+`results/generator-qualification/adjudication/attempt-01.json`. G1
+`openai/gpt-5.6-sol` FAIL: one researcher-approved manual `natural_english`
+failure (`gq-study-planning-01`/`low`/`I6`). G2 `anthropic/claude-sonnet-5`
+FAIL: four terminal strict-schema nonempty-string failures. Neither candidate
+is QUALIFIED. Predeclared fallbacks `openai/gpt-5.6-terra` and
+`anthropic/claude-opus-5` are now eligible but not qualified or executed; each
+requires its own complete 12-fixture qualification under this same frozen
+contract.
 
 `experiments/qualify_generators.py` (procedure
 `generator-qualification-procedure/1.0.0`) has three modes:

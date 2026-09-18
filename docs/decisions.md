@@ -441,3 +441,35 @@ working-tree source bytes ever drift from one another.
 The fixture set, naturalization contract, output schema, and execution package
 remain separately frozen and unchanged by this record. Generator Qualification
 itself is still NOT EXECUTED; Sol/Sonnet remain CANDIDATE.
+
+## Generator Qualification Attempt-01 — Closed
+
+**GENERATOR QUALIFICATION ATTEMPT-01: CLOSED.** Official Attempt-01 completed
+2026-09-18 under the frozen implementation and fixture set, archived at
+`results/generator-qualification/attempt-01`. All 24 planned logical calls
+completed; the attempt was not invalidated. One infrastructure retry occurred
+(G1 `gq-quantitative-planning-01`, HTTP 429 then success) and succeeded within
+the frozen retry budget.
+
+Completed human manual audit and adjudication:
+`results/generator-qualification/manual-audit/attempt-01.completed.json` and
+`results/generator-qualification/adjudication/attempt-01.json`.
+
+**G1 `openai/gpt-5.6-sol` = FAIL.** Basis: one researcher-approved manual
+`natural_english` failure at `gq-study-planning-01` / `low` / `I6`. All other
+applicable manual checks across G1's 12 fixtures were reviewed PASS. The
+task-assignment `q_attribute` automated ambiguity (`gq-task-assignment-01`, all
+three variants) was manually resolved PASS as a faithful paraphrase of the
+assignee attribute.
+
+**G2 `anthropic/claude-sonnet-5` = FAIL.** Basis: four terminal strict-schema
+nonempty-string failures (`gq-project-planning-01`, `gq-task-assignment-01`,
+`gq-personal-preference-01`, `gq-service-subscription-01`), each a
+machine-detectable terminal failure per the frozen adjudication rule. No
+candidate is QUALIFIED.
+
+**No primary generator qualified.** Predeclared fallback paths are now
+eligible: `openai/gpt-5.6-terra` (G1) and `anthropic/claude-opus-5` (G2).
+Neither fallback has been qualified or executed. Each requires its own
+complete 12-fixture qualification under the same frozen contract before any
+assignment for final CRST naturalization.
