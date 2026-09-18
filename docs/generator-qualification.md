@@ -264,12 +264,22 @@ Attempt-01 has executed and closed (§10); no naturalized CRST dataset or final
 CRST experiment has been produced or executed, and completed qualifications
 (Attempt-01) are not reopened.
 
-## 10. Offline Qualification Runner — Implementation FROZEN; Attempt-01 CLOSED
+## 10. Offline Qualification Runner — Attempt-01 CLOSED; Implementation Under Development for Fallback Support
 
-**QUALIFICATION IMPLEMENTATION: FROZEN.** The reviewed implementation is
-committed at `e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e`, and
-`configs/generator-qualification-implementation-freeze.json` pins that commit
-and the three execution-critical source hashes.
+**QUALIFICATION IMPLEMENTATION: NOT YET FROZEN (again).** The implementation
+reviewed and committed at `e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e` (pinned by
+`configs/generator-qualification-implementation-freeze.json`) was extended,
+offline only, to add the predeclared fallback candidate profile (§11). Those
+source edits mean current bytes no longer match that freeze record, so
+`qualification_implementation_status` correctly reports
+`NOT YET FROZEN FOR LIVE EXECUTION` again -- live execution (of either profile)
+is refused until the extended implementation is reviewed, committed, and a new
+freeze record pins the reviewed commit. This does not affect Attempt-01's own
+already-archived evidence: `replay()` verifies an archived attempt's
+implementation identity against the git history of the commit *it* records,
+not against the current working tree, so a later, legitimately re-frozen
+implementation cannot break replay of an attempt collected under an earlier
+freeze.
 
 **ATTEMPT-01: CLOSED, both primaries FAIL.** The official attempt ran under
 this frozen implementation and fixture set, archived at
@@ -285,10 +295,11 @@ FAIL: four terminal strict-schema nonempty-string failures. Neither candidate
 is QUALIFIED. Predeclared fallbacks `openai/gpt-5.6-terra` and
 `anthropic/claude-opus-5` are now eligible but not qualified or executed; each
 requires its own complete 12-fixture qualification under this same frozen
-contract.
+contract. See §11 for their offline-only design/implementation status.
 
 `experiments/qualify_generators.py` (procedure
-`generator-qualification-procedure/1.0.0`) has three modes:
+`generator-qualification-procedure/1.0.0`) has three modes, each taking
+`--profile {primary,fallback}` (default `primary`; see §11):
 
 | Mode | Invocation | Effect |
 | --- | --- | --- |
@@ -416,3 +427,80 @@ adjudicated:
 - any value in an NA cell.
 
 See the [reviewer convention](generator-qualification-audit.md#5-blank-manual-result-audit-format).
+
+## 11. Fallback Candidate Profile — Offline Design/Implementation Only
+
+**Not executed.** This section records the offline implementation added to
+represent the predeclared fallback pair. No fallback Capability Probe call and
+no fallback Generator Qualification call has been made. Sol/Sonnet already
+CLOSED FAIL (§10); Terra/Opus remain CANDIDATE, not qualified.
+
+**Candidate-profile mechanism.** Both `experiments/probe_generators.py` and
+`experiments/qualify_generators.py` take an explicit `--profile {primary,fallback}`
+(default `primary`; every existing invocation and test is therefore unaffected).
+`probe.PROFILES['fallback']` is fixed to exactly the predeclared pair -- G1
+`openai/gpt-5.6-terra` (`provider.order=["openai"]`), G2 `anthropic/claude-opus-5`
+(`provider.order=["anthropic"]`) -- with no open-ended model selection. The
+CLOSED primary Capability Probe config, `configs/generator-capability-probe.yaml`,
+and the primary `SLOTS` constant are unmodified; the primary path's default
+behavior, byte-for-byte, is unchanged.
+
+**Fallback Capability Probe.** A new, separate config,
+`configs/generator-capability-probe-fallback.yaml`, is `status: OPEN`,
+`capability_result: NOT_ASSESSED`, `execution_package: UNDER_DEVELOPMENT`,
+`execution_compatibility: UNVERIFIED` -- never `CLOSED` in this task. It shares
+the same naturalization contract, prompt, and output-schema identities as the
+primary probe, and reuses the same existing capability-probe-only synthetic
+input (`data/generator-capability-probe/probe-input.json`) -- not a downstream
+Generator Qualification fixture. Its request package is the **researcher-approved
+package**: identical to the primary's successful package except candidate
+identity --
+`allow_fallbacks=false`, `require_parameters=true`, `reasoning.effort=low`,
+`max_tokens=16384`, strict JSON-schema response, the same 300s/2-retry/1s-2s-backoff
+transport, and `temperature`/`top_p` intentionally OMITTED to stay consistent with
+the qualified primary package. This was a deliberate choice, not a catalog audit
+of Terra/Opus: **Terra and Opus's actual acceptance of this package is
+empirical and untested** until their own Capability Probe executes and closes.
+`python experiments/probe_generators.py --profile fallback` previews exactly 2
+logical calls (Terra, then Opus), offline, with no key read and no directory
+created; its `status` is explicitly `CAPABILITY_PROBE_FALLBACK_NOT_EXECUTED`
+and `candidate_profile` is `FALLBACK`, so it cannot be confused with the CLOSED
+primary preview.
+
+**Fallback Generator Qualification.** `python experiments/qualify_generators.py
+--profile fallback` previews the same 24-call plan structure as the primary --
+12 Terra calls in frozen manifest order, then 12 Opus calls in the same order --
+over the identical frozen 12 fixtures (`683c0416c5bf47c83021408f26bc7a7ab5e8becc`),
+naturalization prompt, input contract, output schema, deterministic/manual
+checks, absolute qualification gate, retry/invalidation semantics, and
+no-regeneration rule. Its default output directory is
+`results/generator-qualification/attempt-02`, distinct from the immutable
+`attempt-01`; preview reports this path but creates nothing.
+
+**Gate: live fallback qualification requires a CLOSED/PASS fallback Capability
+Probe.** `collect()` refuses fallback execution
+(`'Fallback qualification requires CLOSED/PASS fallback Capability Probe
+evidence; the fallback Capability Probe has not executed and closed'`) by
+reading `configs/generator-capability-probe-fallback.yaml` directly at
+execution time; it stays OPEN/NOT_ASSESSED in this task, so the gate is refused.
+The gate reads the fallback config specifically, so the primary's own real,
+already-CLOSED/PASS evidence cannot satisfy it. Primary execution is unaffected
+by this gate; it does not appear on the primary path at all.
+
+**Historical replay compatibility.** Extending the implementation changed
+`experiments/qualify_generators.py` and `experiments/probe_generators.py`
+bytes, so `configs/generator-qualification-implementation-freeze.json` (still
+pinning `e5e9d500...`) no longer matches; the live implementation status is
+`NOT YET FROZEN FOR LIVE EXECUTION` again (§10). Attempt-01 remains fully
+replayable and its adjudication still yields G1/G2 FAIL: `replay()` verifies an
+archived attempt's implementation claim against the git history of the commit
+*that attempt itself* records, independent of whatever the current working
+tree looks like mid-development. A fallback-profile `inputs` object cannot be
+substituted to replay the primary archive; every archived call's returned
+Sol/Sonnet identity mismatches the Terra/Opus slots at once.
+
+**Remaining before any live fallback execution:** researcher review of the
+extended implementation; commit it; a new implementation-freeze record pinning
+that reviewed commit (§10); then, separately, an actual fallback Capability
+Probe execution that closes CLOSED/PASS before fallback Generator Qualification
+can execute. None of these steps has occurred.

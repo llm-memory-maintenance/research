@@ -14,6 +14,7 @@ import tempfile
 import unicodedata
 
 import httpx
+import yaml
 
 import probe_generators as probe
 import validate_generator_qualification_fixtures as fixtures
@@ -25,7 +26,10 @@ PACKAGE_HASH = '848ca0219ff1d24adcf2f12d0789ebeb8e7a86427336672173b91e034dca6b62
 CONTRACT_HASH = '3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee'
 PROMPT_HASH = 'a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279'
 SCHEMA_HASH = 'c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917'
+# Fallback capability-probe execution-package identity (Sec. 1); UNDER_DEVELOPMENT, never CLOSED here.
+FALLBACK_PACKAGE_HASH = 'e1d4972704d92ffe3de5989a2a84fcaf1945d84fbfdef7ae68a0365ce00642a6'
 DEFAULT_OUTPUT = ROOT / 'results/generator-qualification/attempt-01'
+FALLBACK_DEFAULT_OUTPUT = ROOT / 'results/generator-qualification/attempt-02'
 PROCEDURE = 'generator-qualification-procedure/1.0.0'
 AUDIT_SCHEMA = 'generator-manual-audit/1.0.0'
 # Execution-critical sources. Hashed at run time (never a hardcoded self-hash) and,
@@ -70,7 +74,13 @@ def git(*args):
 
 
 def implementation():
-    """Technical source identity; live execution is permitted only under a valid freeze record."""
+    """Technical source identity; live execution is permitted only under a valid, CURRENT freeze record.
+
+    A well-formed freeze record whose pinned hashes no longer match current bytes means development has
+    continued past the last freeze -- an expected, normal state (NOT_FROZEN), not a fatal error. Only a
+    malformed record, or one whose claimed hashes don't match its own cited commit's real git history
+    (an authenticity problem), raises.
+    """
     sources = {path: probe.file_hash(ROOT / path) for path in SOURCES}
     if not FREEZE_RECORD.exists():
         return {'status': NOT_FROZEN, 'freeze_commit': None, 'source_sha256': sources}
@@ -78,21 +88,56 @@ def implementation():
     probe.fields(record, ['schema_version', 'implementation_commit', 'source_sha256'])
     commit = record['implementation_commit']
     require(record['schema_version'] == FREEZE_SCHEMA and type(commit) is str
-            and re.fullmatch(r'[0-9a-f]{40}', commit) is not None, 'Malformed implementation freeze record')
-    require(record['source_sha256'] == sources, 'Implementation drift from freeze record')
-    git('merge-base', '--is-ancestor', commit, 'HEAD')
+            and re.fullmatch(r'[0-9a-f]{40}', commit) is not None
+            and type(record['source_sha256']) is dict and set(record['source_sha256']) == set(SOURCES),
+            'Malformed implementation freeze record')
+    git('merge-base', '--is-ancestor', commit, 'HEAD')  # The cited commit must be real and reachable.
     for path in SOURCES:
-        require(git('show', f'{commit}:{path}') == (ROOT / path).read_bytes(),
-                'Implementation differs from frozen commit')
+        require(probe.digest(git('show', f'{commit}:{path}')) == record['source_sha256'][path],
+                'Implementation differs from frozen commit')  # The record must match its own cited commit.
+    if record['source_sha256'] != sources:
+        # The record is authentic, but development has continued past it: NOT_FROZEN, not a fatal error.
+        return {'status': NOT_FROZEN, 'freeze_commit': None, 'source_sha256': sources}
     return {'status': FROZEN, 'freeze_commit': commit, 'source_sha256': sources}
 
 
-def load_inputs():
-    """Pin current bytes to the reviewed committed fixture set and execution contract."""
-    require(probe.file_hash(probe.CONFIG) == PACKAGE_HASH, 'Execution package drift')
+def verify_archived_implementation(record):
+    """Independently re-verify an archived attempt's implementation identity against git history,
+    not against the current (possibly mid-development, uncommitted) working tree. A later,
+    legitimately re-frozen implementation must not break replay of an attempt collected under an
+    earlier freeze: this checks the archive's own claim is authentic, not that it matches right now.
+    """
+    probe.fields(record, ['status', 'freeze_commit', 'source_sha256'])
+    require(record['status'] == FROZEN, 'Archived attempt implementation not FROZEN')
+    commit = record['freeze_commit']
+    require(type(commit) is str and re.fullmatch(r'[0-9a-f]{40}', commit) is not None,
+            'Malformed archived implementation commit')
+    require(type(record['source_sha256']) is dict and set(record['source_sha256']) == set(SOURCES),
+            'Malformed archived source hash set')
+    git('merge-base', '--is-ancestor', commit, 'HEAD')
+    for path, expected_hash in record['source_sha256'].items():
+        require(probe.digest(git('show', f'{commit}:{path}')) == expected_hash,
+                "Archived implementation hash does not match its own frozen commit")
+
+
+def load_inputs(profile='primary'):
+    """Pin current bytes to the reviewed committed fixture set and execution contract.
+
+    profile selects the PRIMARY (CLOSED) or predeclared FALLBACK (Terra/Opus) candidate pair. The
+    frozen fixture set, naturalization contract, prompt, and output schema are shared and unchanged
+    by profile; only candidate identity and the execution-package file/hash under test differ.
+    """
+    require(profile in probe.PROFILES, f'Unknown candidate profile: {profile}')
+    package_hash = PACKAGE_HASH if profile == 'primary' else FALLBACK_PACKAGE_HASH
+    selected = probe.PROFILES[profile]
+    require(probe.file_hash(selected['config_path']) == package_hash, 'Execution package drift')
     require(probe.file_hash(ROOT / 'configs/generator-naturalization-contract.json') == CONTRACT_HASH,
             'Semantic contract drift')
-    bundle = probe.load_bundle()
+    bundle = probe.load_bundle(selected['config_path'], slots=selected['slots'], status=selected['status'],
+                               capability_result=selected['capability_result'],
+                               successful_attempt=selected['successful_attempt'],
+                               execution_package=selected['execution_package'],
+                               execution_compatibility=selected['execution_compatibility'])
     require(bundle['provenance']['prompt_sha256'] == PROMPT_HASH, 'Prompt drift')
     require(bundle['provenance']['output_schema_sha256'] == SCHEMA_HASH, 'Output schema drift')
     manifest_path = fixtures.DIRECTORY / 'manifest.json'
@@ -103,18 +148,33 @@ def load_inputs():
                  *[fixtures.DIRECTORY / e['fixture_path'] for e in manifest['fixtures']]]:
         committed = git('show', f'{FIXTURE_COMMIT}:{path.relative_to(ROOT).as_posix()}')
         require(committed == path.read_bytes(), 'Frozen fixture-set provenance mismatch')
-    return {'bundle': bundle, 'manifest': manifest, 'fixtures': truth,
+    return {'bundle': bundle, 'manifest': manifest, 'fixtures': truth, 'slots': selected['slots'],
+            'profile': profile,
             'provenance': {'source_commit': git('rev-parse', 'HEAD').decode().strip(),
+                'candidate_profile': profile.upper(),
                 'fixture_set_commit': FIXTURE_COMMIT, 'fixture_manifest_sha256': MANIFEST_HASH,
-                'execution_config_sha256': PACKAGE_HASH, 'contract_sha256': CONTRACT_HASH,
+                'execution_config_sha256': package_hash, 'contract_sha256': CONTRACT_HASH,
                 'prompt_sha256': PROMPT_HASH, 'output_schema_sha256': SCHEMA_HASH,
                 **probe.VERSIONS, 'procedure_version': PROCEDURE, 'implementation': implementation(),
                 'python': platform.python_version(),
                 'packages': {n: importlib.metadata.version(n) for n in ('httpx', 'pydantic', 'pyyaml')}}}
 
 
+def fallback_capability_gate():
+    """Live fallback qualification requires CLOSED/PASS fallback Capability Probe evidence.
+
+    Reads the fallback capability config directly, independent of load_inputs' own (currently
+    OPEN/NOT_ASSESSED) profile literals, so this gate tracks the file's real, current state.
+    """
+    config = yaml.safe_load(probe.FALLBACK_CONFIG.read_text(encoding='utf-8'))
+    require(type(config) is dict and config.get('status') == 'CLOSED'
+            and config.get('capability_result') == 'PASS',
+            'Fallback qualification requires CLOSED/PASS fallback Capability Probe evidence; '
+            'the fallback Capability Probe has not executed and closed')
+
+
 def plan(inputs):
-    return [(slot, truth, entry) for slot in probe.SLOTS
+    return [(slot, truth, entry) for slot in inputs['slots']
             for truth, entry in zip(inputs['fixtures'], inputs['manifest']['fixtures'])]
 
 
@@ -133,7 +193,7 @@ def preview(inputs, output):
             'fixture_ids': [e['fixture_id'] for e in inputs['manifest']['fixtures']],
             'planned_calls': [f'{i}:{s["logical_call_id"]}:{e["fixture_id"]}'
                               for i, (s, _, e) in enumerate(plan(inputs), 1)],
-            'candidates': probe.SLOTS, 'generation': probe.GENERATION, 'transport': probe.TRANSPORT,
+            'candidates': inputs['slots'], 'generation': probe.GENERATION, 'transport': probe.TRANSPORT,
             'execution_mode': 'standard', 'allow_fallbacks': False, 'require_parameters': True,
             'wire_mapping': probe.MAPPING, 'result_directory': str(output),
             'request_hashes': [probe.digest(probe.canonical(request(inputs, s, f)).encode())
@@ -218,13 +278,15 @@ def terminal(call):
     return None
 
 
-def audit_template(result, result_hash):
+def audit_template(result, result_hash, slots=None):
     """No invented review: null means unreviewed; NA only by the fixed applicability table.
 
     Terminally failed calls have no parsed output to review, so they carry no event records.
+    slots defaults to the primary pair; a fallback attempt passes its own candidate identity.
     """
+    slots = slots if slots is not None else probe.SLOTS
     candidates = {}
-    for slot in probe.SLOTS:
+    for slot in slots:
         records = {}
         for call in result['calls']:
             if call['candidate'] != slot['logical_call_id']:
@@ -255,9 +317,10 @@ def valid_timestamp(text):
     return True
 
 
-def adjudicate(result, audit, result_hash):
+def adjudicate(result, audit, result_hash, slots=None):
     """Terminal failure resolves FAIL at once; otherwise every applicable manual item must PASS."""
-    expected = audit_template(result, result_hash)
+    slots = slots if slots is not None else probe.SLOTS
+    expected = audit_template(result, result_hash, slots)
     probe.fields(audit, expected)
     for field in ('schema_version', 'qualification_sha256', 'check_applicability'):
         require(audit[field] == expected[field], 'Audit provenance mismatch')
@@ -270,7 +333,7 @@ def adjudicate(result, audit, result_hash):
     if result['status'] == 'INVALIDATED':  # Not model-capability evidence: no candidate becomes FAIL.
         return {'procedure_version': PROCEDURE, 'qualification_sha256': result_hash,
                 'manual_audit_sha256': probe.digest(probe.canonical(audit).encode()),
-                'candidates': {s['logical_call_id']: 'INVALIDATED' for s in probe.SLOTS},
+                'candidates': {s['logical_call_id']: 'INVALIDATED' for s in slots},
                 'basis': {'invalidation': result['invalidation']}}
 
     def manual(value, notes, level):
@@ -392,7 +455,9 @@ async def collect(inputs, key, output, *, client_factory=httpx.AsyncClient, slee
     require(not git('status', '--porcelain=v1', '-z', '--untracked-files=all', '--ignore-submodules=none'),
             'Official execution requires a clean worktree')
     git('ls-files', '--error-unmatch', *SOURCES)
-    fresh = load_inputs()  # Recheck frozen bytes immediately before any side effect.
+    if inputs['profile'] == 'fallback':
+        fallback_capability_gate()
+    fresh = load_inputs(profile=inputs['profile'])  # Recheck frozen bytes immediately before any side effect.
     require(fresh['provenance'] == inputs['provenance'], 'Source/input changed since preflight')
     require(fresh['provenance']['implementation']['status'] == FROZEN,
             f'Qualification implementation {NOT_FROZEN}; live execution refused')
@@ -401,7 +466,7 @@ async def collect(inputs, key, output, *, client_factory=httpx.AsyncClient, slee
     directory.mkdir(parents=True, exist_ok=False)
     result = {'procedure_version': PROCEDURE, 'status': 'PENDING_MANUAL_AUDIT',
               'provenance': inputs['provenance'], 'planned_logical_calls': 24,
-              'candidates': {s['logical_call_id']: 'CANDIDATE' for s in probe.SLOTS},
+              'candidates': {s['logical_call_id']: 'CANDIDATE' for s in inputs['slots']},
               'failure_reason': None, 'invalidation': None, 'calls': []}
     hashes = {}
     try:
@@ -437,7 +502,7 @@ async def collect(inputs, key, output, *, client_factory=httpx.AsyncClient, slee
                       invalidation={'kind': RUNNER, 'logical_call_index': None, 'reason': reason})
     hashes['qualification.json'] = publish(directory / 'qualification.json', result, key)
     hashes['manual-audit.json'] = publish(directory / 'manual-audit.json',
-        audit_template(result, hashes['qualification.json']), key)
+        audit_template(result, hashes['qualification.json'], inputs['slots']), key)
     with (directory / 'SHA256SUMS').open('x', encoding='utf-8') as stream:
         for name, checksum in sorted(hashes.items()):
             stream.write(f'{checksum}  {name}\n')
@@ -488,11 +553,14 @@ def replay(directory, inputs):
         require(result['invalidation'] is None and result['failure_reason'] is None
                 and not any(implied), 'Attempt should have been invalidated')
     require(result['planned_logical_calls'] == 24 and
-            result['candidates'] == {s['logical_call_id']: 'CANDIDATE' for s in probe.SLOTS}, 'Attempt header drift')
+            result['candidates'] == {s['logical_call_id']: 'CANDIDATE' for s in inputs['slots']}, 'Attempt header drift')
     for key in ('fixture_set_commit', 'fixture_manifest_sha256', 'execution_config_sha256', 'contract_sha256',
-                'prompt_sha256', 'output_schema_sha256', 'procedure_version', 'implementation', *probe.VERSIONS):
+                'prompt_sha256', 'output_schema_sha256', 'procedure_version', *probe.VERSIONS):
         require(result['provenance'][key] == inputs['provenance'][key], 'Archived provenance drift')
+    # The implementation may legitimately be re-frozen after this attempt; verify the archive's own
+    # claim against git history rather than requiring it to match the current live computation.
     require(result['provenance']['implementation']['status'] == FROZEN, 'Attempt ran without implementation freeze')
+    verify_archived_implementation(result['provenance']['implementation'])
     require(len(result['calls']) <= 24, 'Unexpected calls')
     if result['status'] != 'INVALIDATED':
         require(len(result['calls']) == 24, 'Incomplete attempt')
@@ -533,7 +601,8 @@ def replay(directory, inputs):
                 pass
             else:
                 raise ValueError('Archived terminal failure now passes; evidence altered')
-    require(fixtures.read(directory / 'manual-audit.json') == audit_template(result, sums['qualification.json']),
+    require(fixtures.read(directory / 'manual-audit.json')
+            == audit_template(result, sums['qualification.json'], inputs['slots']),
             'Archived blank audit template drift')
     return result, sums['qualification.json']
 
@@ -542,7 +611,9 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--execute', action='store_true')
     parser.add_argument('--confirm-spend', action='store_true')
-    parser.add_argument('--output-directory', type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument('--profile', choices=sorted(probe.PROFILES), default='primary',
+                        help='primary (CLOSED Attempt-01, FAIL/FAIL) or the predeclared fallback (Terra/Opus)')
+    parser.add_argument('--output-directory', type=Path, default=None)
     parser.add_argument('--attempt', type=Path, help='Offline replay/adjudication of archived attempt')
     parser.add_argument('--audit', type=Path, help='Completed copy of generated manual-audit.json')
     parser.add_argument('--adjudication-output', type=Path, help='New immutable offline adjudication JSON')
@@ -552,26 +623,29 @@ def main(argv=None):
     if (args.attempt or args.audit or args.adjudication_output) and (args.execute or not all(
             (args.attempt, args.audit, args.adjudication_output))):
         parser.error('Offline adjudication requires --attempt, --audit, --adjudication-output and no execution flags')
-    inputs = load_inputs()
+    output_directory = args.output_directory
+    if output_directory is None:
+        output_directory = DEFAULT_OUTPUT if args.profile == 'primary' else FALLBACK_DEFAULT_OUTPUT
+    inputs = load_inputs(profile=args.profile)
     if args.attempt:
         attempt = args.attempt.resolve()
         for path in (args.audit, args.adjudication_output):
             require(not path.resolve().is_relative_to(attempt),
                     'Completed audit and adjudication must be separate copies outside the archived attempt')
         result, checksum = replay(attempt, inputs)
-        verdict = adjudicate(result, fixtures.read(args.audit), checksum)
+        verdict = adjudicate(result, fixtures.read(args.audit), checksum, inputs['slots'])
         verdict['manual_audit_file_sha256'] = probe.file_hash(args.audit)
         publish(args.adjudication_output, verdict)
         print(json.dumps(verdict, indent=2))
         return 0
     if not args.execute:
-        print(json.dumps(preview(inputs, args.output_directory), indent=2))
+        print(json.dumps(preview(inputs, output_directory), indent=2))
         return 0
     key = os.environ.get('OPENROUTER_API_KEY', '')
     require(bool(key.strip()), 'Execution requires OPENROUTER_API_KEY')
     require(inputs['provenance']['implementation']['status'] == FROZEN,
             f'Qualification implementation {NOT_FROZEN}; live execution refused')
-    result = asyncio.run(collect(inputs, key, args.output_directory))
+    result = asyncio.run(collect(inputs, key, output_directory))
     print(result['status'] + ': qualification requires completed manual adjudication')
     return 1 if result['status'] == 'INVALIDATED' else 0
 

@@ -25,6 +25,12 @@ VARIANTS = ('low', 'medium', 'high')
 SCHEDULES = {'low': {7}, 'medium': {1, 3, 5, 7}, 'high': set(range(1, 8))}
 SLOTS = [dict(logical_call_id='G1', model='openai/gpt-5.6-sol', provider_order=['openai']),
          dict(logical_call_id='G2', model='anthropic/claude-sonnet-5', provider_order=['anthropic'])]
+# Predeclared corresponding fallbacks (docs/generator-qualification.md Sec. 2), activated because both
+# primaries FAILED Attempt-01. Same request package as the primaries except candidate identity; Terra/Opus
+# parameter ACCEPTANCE is empirically unverified until their own Capability Probe closes PASS.
+FALLBACK_CONFIG = ROOT / 'configs/generator-capability-probe-fallback.yaml'
+FALLBACK_SLOTS = [dict(logical_call_id='G1', model='openai/gpt-5.6-terra', provider_order=['openai']),
+                   dict(logical_call_id='G2', model='anthropic/claude-opus-5', provider_order=['anthropic'])]
 VERSIONS = {'prompt_version': 'crst-naturalization-prompt/1.1.0',
             'input_contract_version': 'crst-naturalization-input/1.1.0',
             'output_schema_version': 'crst-naturalization-triplet/1.0.0'}
@@ -33,6 +39,17 @@ MAPPING = {'max_output_tokens': 'max_tokens', 'reasoning_effort': 'reasoning.eff
 GENERATION = {'reasoning_effort': 'low', 'max_output_tokens': 16384}
 TRANSPORT = {'per_attempt_deadline_seconds': 300, 'max_infrastructure_retries': 2,
              'backoff_seconds': [1, 2], 'retryable_http_statuses': [408, 429, 500, 502, 503, 504]}
+# Candidate-profile identity: PRIMARY is the CLOSED, byte-frozen probe; FALLBACK is under development,
+# never CLOSED here. Only the predeclared Terra/Opus pair is representable -- not an open-ended model CLI.
+PROFILES = {
+    'primary': dict(config_path=CONFIG, slots=SLOTS, status='CLOSED', capability_result='PASS',
+                     successful_attempt='attempt-02', execution_package='FROZEN',
+                     execution_compatibility='VERIFIED', preview_status='CAPABILITY_PROBE_CLOSED_PASS'),
+    'fallback': dict(config_path=FALLBACK_CONFIG, slots=FALLBACK_SLOTS, status='OPEN',
+                      capability_result='NOT_ASSESSED', successful_attempt=None,
+                      execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED',
+                      preview_status='CAPABILITY_PROBE_FALLBACK_NOT_EXECUTED'),
+}
 
 
 def require(condition, message):
@@ -169,15 +186,18 @@ def source_commit(clean=False):
     return git('rev-parse', 'HEAD')
 
 
-def load_bundle(config_path=CONFIG):
+def load_bundle(config_path=CONFIG, *, slots=None, status='CLOSED', capability_result='PASS',
+                successful_attempt='attempt-02', execution_package='FROZEN',
+                execution_compatibility='VERIFIED'):
     config_path = Path(config_path)
     config = yaml.safe_load(config_path.read_text(encoding='utf-8'))
     require(type(config) is dict, 'Expected config object')
-    expected = dict(execution_mode='standard', logical_calls=SLOTS, allow_fallbacks=False,
-                    require_parameters=True, generation=GENERATION, transport=TRANSPORT,
-                    wire_mapping=MAPPING, status='CLOSED', capability_result='PASS',
-                    successful_attempt='attempt-02', execution_package='FROZEN',
-                    execution_compatibility='VERIFIED', output_directory=None, generator_status='CANDIDATE',
+    expected = dict(execution_mode='standard', logical_calls=slots if slots is not None else SLOTS,
+                    allow_fallbacks=False, require_parameters=True, generation=GENERATION, transport=TRANSPORT,
+                    wire_mapping=MAPPING, status=status, capability_result=capability_result,
+                    successful_attempt=successful_attempt, execution_package=execution_package,
+                    execution_compatibility=execution_compatibility, output_directory=None,
+                    generator_status='CANDIDATE',
                     parameter_semantics='HIDDEN_REASONING_EQUIVALENCE_NOT_CLAIMED', input_purpose='CAPABILITY-PROBE-ONLY',
                     input_domain='Software Configuration', **VERSIONS)
     for key, value in expected.items():
@@ -215,7 +235,7 @@ def load_bundle(config_path=CONFIG):
 
 def request_body(bundle, slot, *, input_validator=None):
     (input_validator or validate_input)(bundle['input'])  # Also enforce at the public construction boundary.
-    require(slot in SLOTS, 'Unknown probe slot')
+    require(slot in SLOTS or slot in FALLBACK_SLOTS, 'Unknown probe slot')
     return {'model': slot['model'],
             'provider': {'order': slot['provider_order'], 'allow_fallbacks': False, 'require_parameters': True},
             'messages': [{'role': 'system', 'content': bundle['contract']['prompt']},
@@ -226,20 +246,22 @@ def request_body(bundle, slot, *, input_validator=None):
                 'schema': bundle['contract']['output_schema']}}}
 
 
-def preview(bundle):
-    bodies = [request_body(bundle, slot) for slot in SLOTS]
-    return {'status': 'CAPABILITY_PROBE_CLOSED_PASS', **bundle['provenance'],
+def preview(bundle, *, slots=None, profile_name='PRIMARY', status='CAPABILITY_PROBE_CLOSED_PASS',
+            execution_package='FROZEN', execution_compatibility='VERIFIED', successful_attempt='attempt-02'):
+    slots = slots if slots is not None else SLOTS
+    bodies = [request_body(bundle, slot) for slot in slots]
+    return {'status': status, 'candidate_profile': profile_name, **bundle['provenance'],
             'execution_mode': 'standard', 'parameter_semantics': bundle['config']['parameter_semantics'],
-            'execution_package': 'FROZEN', 'execution_compatibility': 'VERIFIED',
-            'generator_status': 'CANDIDATE', 'successful_attempt': 'attempt-02',
+            'execution_package': execution_package, 'execution_compatibility': execution_compatibility,
+            'generator_status': 'CANDIDATE', 'successful_attempt': successful_attempt,
             'output_directory': bundle['config']['output_directory'],
             'generation': bundle['config']['generation'], 'wire_mapping_under_test': MAPPING,
             'transport': bundle['config']['transport'],
-            'expected_logical_calls': 2, 'maximum_physical_inference_attempts': 6,
+            'expected_logical_calls': len(slots), 'maximum_physical_inference_attempts': len(slots) * 3,
             'requests': [{'logical_call_id': slot['logical_call_id'], 'requested_model': body['model'],
                           'requested_provider_order': body['provider']['order'],
                           'wire_request_sha256': digest(canonical(body).encode('utf-8'))}
-                         for slot, body in zip(SLOTS, bodies)]}
+                         for slot, body in zip(slots, bodies)]}
 
 
 def selected_provider(metadata):
@@ -453,7 +475,8 @@ def archive(directory, result, key):
     return digest(payload)
 
 
-async def execute_probe(bundle, key, output_directory, *, client_factory=httpx.AsyncClient):
+async def execute_probe(bundle, key, output_directory, *, client_factory=httpx.AsyncClient, slots=None):
+    slots = slots if slots is not None else SLOTS
     require(bundle['config']['status'] != 'CLOSED', 'Capability probe CLOSED/PASS; reopening requires adjudication')
     require(bool(key.strip()), 'Execution requires OPENROUTER_API_KEY')
     require(source_commit(clean=True) == bundle['provenance']['source_commit'], 'Source changed since preflight')
@@ -463,12 +486,12 @@ async def execute_probe(bundle, key, output_directory, *, client_factory=httpx.A
               'parameter_semantics': 'UNOBSERVABLE_SEMANTICS_REMAIN_VERIFY', 'generator_status': 'CANDIDATE',
               'provenance': bundle['provenance'], 'config': bundle['config'],
               'wire_mapping_under_test': MAPPING, 'probe_input': bundle['input'],
-              'expected_logical_calls': 2, 'logical_calls': [
+              'expected_logical_calls': len(slots), 'logical_calls': [
                   {'logical_call_id': s['logical_call_id'], 'status': 'BLOCKED',
-                   'failure_reason': 'Not executed', 'attempts': []} for s in SLOTS]}
+                   'failure_reason': 'Not executed', 'attempts': []} for s in slots]}
     try:
         async with client_factory(trust_env=False, follow_redirects=False) as client:
-            for index, slot in enumerate(SLOTS):
+            for index, slot in enumerate(slots):
                 call = await probe_call(client, bundle, slot, key)
                 result['logical_calls'][index] = call
                 if call['status'] != 'PASS':
@@ -487,14 +510,26 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--execute', action='store_true', help='Permit execution only together with --confirm-spend')
     parser.add_argument('--confirm-spend', action='store_true', help='Acknowledge model charges; also requires --execute')
-    parser.add_argument('--config', type=Path, default=CONFIG)
+    parser.add_argument('--profile', choices=sorted(PROFILES), default='primary',
+                        help='primary (CLOSED) or the predeclared fallback (Terra/Opus)')
+    parser.add_argument('--config', type=Path, default=None, help='Override the profile default config path')
     parser.add_argument('--output-directory', type=Path, help='New immutable attempt directory (execution only)')
     args = parser.parse_args(argv)
     if args.execute != args.confirm_spend:
         parser.error('Execution requires BOTH --execute AND --confirm-spend')
-    bundle = load_bundle(args.config)
+    profile = PROFILES[args.profile]
+    config_path = args.config if args.config is not None else profile['config_path']
+    bundle = load_bundle(config_path, slots=profile['slots'], status=profile['status'],
+                         capability_result=profile['capability_result'],
+                         successful_attempt=profile['successful_attempt'],
+                         execution_package=profile['execution_package'],
+                         execution_compatibility=profile['execution_compatibility'])
     if not args.execute:
-        print(json.dumps(preview(bundle), ensure_ascii=False, indent=2, allow_nan=False))
+        print(json.dumps(preview(bundle, slots=profile['slots'], profile_name=args.profile.upper(),
+                                 status=profile['preview_status'], execution_package=profile['execution_package'],
+                                 execution_compatibility=profile['execution_compatibility'],
+                                 successful_attempt=profile['successful_attempt']),
+                         ensure_ascii=False, indent=2, allow_nan=False))
         return 0
     if bundle['config']['status'] == 'CLOSED':
         parser.error('Capability probe CLOSED/PASS; reopening requires adjudication')
@@ -502,7 +537,7 @@ def main(argv=None):
     if not key.strip():
         parser.error('Execution requires OPENROUTER_API_KEY')
     output = args.output_directory or ROOT / bundle['config']['output_directory']
-    result = asyncio.run(execute_probe(bundle, key, output))
+    result = asyncio.run(execute_probe(bundle, key, output, slots=profile['slots']))
     return 0 if result['status'] == 'PASS' else 1
 
 

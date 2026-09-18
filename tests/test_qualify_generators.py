@@ -55,9 +55,21 @@ def envelope(body, output):
             'choices': [{'finish_reason': 'stop', 'message': {'role': 'assistant', 'content': json.dumps(output)}}]}
 
 
+def fake_git(*args):
+    """Real bytes for the three SOURCES paths (so verify_archived_implementation authenticates
+    correctly against the real current file content); empty for every other call (status/ls-files/
+    merge-base all just need a falsy/no-exception result).
+    """
+    if args[:1] == ('show',) and ':' in args[1]:
+        path = args[1].split(':', 1)[1]
+        if path in q.SOURCES:
+            return (q.ROOT / path).read_bytes()
+    return b''
+
+
 def mocked_collect(inputs, tmp_path, monkeypatch, mutate=None):
-    monkeypatch.setattr(q, 'git', lambda *args: b'')
-    monkeypatch.setattr(q, 'load_inputs', lambda: inputs)
+    monkeypatch.setattr(q, 'git', fake_git)
+    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary': inputs)
     calls = []
     def handler(request):
         body = json.loads(request.content)
@@ -136,7 +148,7 @@ def test_real_git_execution_boundary(inputs, tmp_path, monkeypatch, state):
         git('commit', '-m', 'remove runner')
     monkeypatch.setattr(q, 'ROOT', repo)
     reached = []
-    def boundary():
+    def boundary(profile='primary'):
         reached.append(True)
         raise RuntimeError('mock execution boundary')
     monkeypatch.setattr(q, 'load_inputs', boundary)
@@ -166,7 +178,7 @@ def test_frozen_drift(inputs, monkeypatch, kind):
     elif kind in ('prompt', 'schema'):
         bundle = deepcopy(inputs['bundle'])
         bundle['provenance']['prompt_sha256' if kind == 'prompt' else 'output_schema_sha256'] = '0' * 64
-        monkeypatch.setattr(q.probe, 'load_bundle', lambda: bundle)
+        monkeypatch.setattr(q.probe, 'load_bundle', lambda *a, **k: bundle)
     else:
         monkeypatch.setattr(q, 'git', lambda *args: b'incorrect committed bytes')
     with pytest.raises(ValueError):
@@ -465,7 +477,7 @@ def test_replay_rejects_altered_evidence(inputs, tmp_path, monkeypatch):
     unfrozen['provenance']['implementation']['status'] = q.NOT_FROZEN
     for call in unfrozen['calls']: call['provenance'] = unfrozen['provenance']
     reseal(tampered, unfrozen)
-    checks['unfrozen'] = (tampered, 'provenance drift')
+    checks['unfrozen'] = (tampered, 'without implementation freeze')
     for name, (directory, message) in checks.items():
         with pytest.raises(ValueError, match=message):
             q.replay(directory, inputs)
@@ -511,21 +523,54 @@ def test_offline_adjudication_cli_uses_separate_copy(inputs, tmp_path, monkeypat
         q.main(['--attempt', str(path), '--audit', str(completed), '--adjudication-output', str(output)])
 
 
-def test_committed_freeze_record_reports_frozen(loaded, capsys):
-    """The real configs/generator-qualification-implementation-freeze.json, exercised as-is."""
+FROZEN_HISTORICAL_COMMIT = 'e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e'  # The reviewed, committed freeze.
+
+
+def test_real_freeze_record_drifted_reports_not_frozen(loaded, capsys):
+    """Sources have moved past the committed freeze (fallback support added): NOT_FROZEN, not a raise."""
     implementation = loaded['provenance']['implementation']
-    expected_sources = {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}
-    assert implementation['source_sha256'] == expected_sources
-    assert implementation['status'] == q.FROZEN
-    assert q.re.fullmatch(r'[0-9a-f]{40}', implementation['freeze_commit'])
-    # The frozen commit's sources are byte-identical to the current working tree (nothing drifted).
-    for path in q.SOURCES:
-        assert q.git('show', f'{implementation["freeze_commit"]}:{path}') == (q.ROOT / path).read_bytes()
+    current_sources = {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}
+    assert implementation['source_sha256'] == current_sources
+    assert q.FREEZE_RECORD.exists()  # The historical record is still committed and present.
+    committed = q.fixtures.read(q.FREEZE_RECORD)
+    assert committed['implementation_commit'] == FROZEN_HISTORICAL_COMMIT
+    assert committed['source_sha256'] != current_sources  # Genuinely drifted, not identical.
+    assert implementation['status'] == q.NOT_FROZEN and implementation['freeze_commit'] is None
     assert q.main([]) == 0
     shown = json.loads(capsys.readouterr().out)
-    assert shown['qualification_implementation_status'] == q.FROZEN
+    assert shown['qualification_implementation_status'] == q.NOT_FROZEN
     assert shown['qualification_status'] == 'NOT EXECUTED' and shown['status'] == 'NETWORK_DISABLED'
     assert shown['planned_calls'][0] == '1:G1:gq-scheduling-01' and shown['planned_calls'][12] == '13:G2:gq-scheduling-01'
+
+
+def synthetic_frozen_repo(tmp_path, monkeypatch, *, content=None):
+    """A self-contained repo where a freeze record's commit/hashes can genuinely, verifiably match."""
+    repo = tmp_path / 'repo'
+    repo.mkdir()
+    def git(*args):
+        return subprocess.check_output(['git', '-C', str(repo), *args], stderr=subprocess.DEVNULL)
+    git('init')
+    git('config', 'user.email', 'test@example.invalid')
+    git('config', 'user.name', 'Test')
+    (repo / 'experiments').mkdir()
+    for source in q.SOURCES:
+        (repo / source).write_text((content or {}).get(source, f'frozen content for {source}'))
+    git('add', '.')
+    git('commit', '-m', 'frozen baseline')
+    commit = git('rev-parse', 'HEAD').decode().strip()
+    sources = {s: q.probe.digest((repo / s).read_bytes()) for s in q.SOURCES}
+    monkeypatch.setattr(q, 'ROOT', repo)
+    return repo, commit, sources
+
+
+def test_matching_freeze_record_reports_frozen(tmp_path, monkeypatch):
+    """Self-contained: commit is a real ancestor, and its git content matches the record exactly."""
+    repo, commit, sources = synthetic_frozen_repo(tmp_path, monkeypatch)
+    record = repo / 'freeze.json'
+    record.write_text(json.dumps({'schema_version': q.FREEZE_SCHEMA, 'implementation_commit': commit,
+                                  'source_sha256': sources}))
+    monkeypatch.setattr(q, 'FREEZE_RECORD', record)
+    assert q.implementation() == {'status': q.FROZEN, 'freeze_commit': commit, 'source_sha256': sources}
 
 
 def test_missing_freeze_record_is_not_frozen(loaded, tmp_path, monkeypatch, capsys):
@@ -540,13 +585,15 @@ def test_missing_freeze_record_is_not_frozen(loaded, tmp_path, monkeypatch, caps
     assert not output.exists()
 
 
-@pytest.mark.parametrize('kind', ['malformed_schema', 'malformed_commit_shape'])
+@pytest.mark.parametrize('kind', ['malformed_schema', 'malformed_commit_shape', 'malformed_source_shape'])
 def test_freeze_record_malformed_fails_closed(loaded, tmp_path, monkeypatch, kind):
     record = tmp_path / 'freeze.json'
     monkeypatch.setattr(q, 'FREEZE_RECORD', record)
     sources = loaded['provenance']['implementation']['source_sha256']
     schema = q.FREEZE_SCHEMA if kind != 'malformed_schema' else 'wrong-schema/1.0.0'
     commit = 'f' * 40 if kind != 'malformed_commit_shape' else 'not-a-commit'
+    if kind == 'malformed_source_shape':
+        sources = {**sources, 'extra/unexpected.py': '0' * 64}
     record.write_text(json.dumps({'schema_version': schema, 'implementation_commit': commit,
                                   'source_sha256': sources}))
     with pytest.raises(ValueError, match='Malformed implementation freeze record'):
@@ -554,15 +601,15 @@ def test_freeze_record_malformed_fails_closed(loaded, tmp_path, monkeypatch, kin
 
 
 def test_freeze_record_wrong_source_hash_fails_closed(loaded, tmp_path, monkeypatch):
-    """A well-formed record naming the real reviewed commit, but a wrong pinned hash."""
+    """A well-formed record naming the real, permanently-committed freeze commit, but a wrong pinned hash."""
     record = tmp_path / 'freeze.json'
     monkeypatch.setattr(q, 'FREEZE_RECORD', record)
     real = loaded['provenance']['implementation']
     for path, wrong in [(q.SOURCES[0], {**real['source_sha256'], q.SOURCES[0]: '0' * 64}),
                         (q.SOURCES[1], {**real['source_sha256'], q.SOURCES[1]: '0' * 64})]:
         record.write_text(json.dumps({'schema_version': q.FREEZE_SCHEMA,
-                                      'implementation_commit': real['freeze_commit'], 'source_sha256': wrong}))
-        with pytest.raises(ValueError, match='Implementation drift from freeze record'):
+                                      'implementation_commit': FROZEN_HISTORICAL_COMMIT, 'source_sha256': wrong}))
+        with pytest.raises(ValueError, match='Implementation differs from frozen commit'):
             q.implementation()
 
 
@@ -576,21 +623,30 @@ def test_freeze_record_nonexistent_commit_fails_closed(loaded, tmp_path, monkeyp
         q.implementation()
 
 
-def test_freeze_record_source_drift_from_frozen_commit_fails_closed(loaded, tmp_path, monkeypatch):
-    """Record and current bytes agree, but the frozen commit's archived bytes differ (source edited post-freeze)."""
-    record = tmp_path / 'freeze.json'
+def test_freeze_record_source_drift_from_frozen_commit_fails_closed(tmp_path, monkeypatch):
+    """Record's declared hash disagrees with what its own cited commit's git history actually holds."""
+    repo, commit, sources = synthetic_frozen_repo(tmp_path, monkeypatch)
+    record = repo / 'freeze.json'
+    tampered = {**sources, q.SOURCES[0]: '0' * 64}  # Declared hash no longer matches that commit's content.
+    record.write_text(json.dumps({'schema_version': q.FREEZE_SCHEMA, 'implementation_commit': commit,
+                                  'source_sha256': tampered}))
     monkeypatch.setattr(q, 'FREEZE_RECORD', record)
-    real = loaded['provenance']['implementation']
-    record.write_text(json.dumps({'schema_version': q.FREEZE_SCHEMA,
-                                  'implementation_commit': real['freeze_commit'], 'source_sha256': real['source_sha256']}))
-    original_git = q.git
-    def drifted(*args):
-        if args[:1] == ('show',) and args[1].endswith(q.SOURCES[0]):
-            return b'drifted content, does not match the frozen commit'
-        return original_git(*args)
-    monkeypatch.setattr(q, 'git', drifted)
     with pytest.raises(ValueError, match='Implementation differs from frozen commit'):
         q.implementation()
+
+
+def test_implementation_reports_not_frozen_after_synthetic_development(tmp_path, monkeypatch):
+    """A previously-FROZEN synthetic repo whose sources are then edited: gracefully NOT_FROZEN, not a raise."""
+    repo, commit, sources = synthetic_frozen_repo(tmp_path, monkeypatch)
+    record = repo / 'freeze.json'
+    record.write_text(json.dumps({'schema_version': q.FREEZE_SCHEMA, 'implementation_commit': commit,
+                                  'source_sha256': sources}))
+    monkeypatch.setattr(q, 'FREEZE_RECORD', record)
+    assert q.implementation()['status'] == q.FROZEN
+    (repo / q.SOURCES[0]).write_text('development continued past the freeze')
+    result = q.implementation()
+    assert result['status'] == q.NOT_FROZEN and result['freeze_commit'] is None
+    assert result['source_sha256'][q.SOURCES[0]] == q.probe.digest((repo / q.SOURCES[0]).read_bytes())
 
 
 def test_probe_default_behavior_unchanged(loaded, monkeypatch):
@@ -612,8 +668,8 @@ def test_probe_default_behavior_unchanged(loaded, monkeypatch):
 
 @pytest.mark.parametrize('failure', ['http_503', 'read_timeout'])
 def test_infrastructure_retry_exhaustion_invalidates_attempt(inputs, tmp_path, monkeypatch, failure):
-    monkeypatch.setattr(q, 'git', lambda *args: b'')
-    monkeypatch.setattr(q, 'load_inputs', lambda: inputs)
+    monkeypatch.setattr(q, 'git', fake_git)
+    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary': inputs)
     requests, waits = [], []
     def handler(request):
         body = json.loads(request.content)
@@ -650,8 +706,8 @@ def test_infrastructure_retry_exhaustion_invalidates_attempt(inputs, tmp_path, m
 
 
 def test_retries_within_budget_do_not_invalidate(inputs, tmp_path, monkeypatch):
-    monkeypatch.setattr(q, 'git', lambda *args: b'')
-    monkeypatch.setattr(q, 'load_inputs', lambda: inputs)
+    monkeypatch.setattr(q, 'git', fake_git)
+    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary': inputs)
     requests = []
     def handler(request):
         body = json.loads(request.content)
@@ -717,3 +773,125 @@ def test_bounded_retries(inputs):
     assert len(attempts) == 3 and waits == [1, 2]
     assert q.probe.retryable(error=httpx.ReadTimeout('test'))
     assert not q.probe.retryable(status=401) and not q.probe.retryable(error=ValueError('semantic'))
+
+
+# --- Predeclared fallback candidate profile (Terra/Opus): offline design only, never executed here. ---
+
+@pytest.fixture(scope='module')
+def loaded_fallback():
+    return q.load_inputs(profile='fallback')
+
+
+@pytest.fixture
+def fallback_inputs(loaded_fallback):
+    """Simulated frozen implementation, matching the `inputs` fixture's convention for the primary."""
+    frozen = deepcopy(loaded_fallback)
+    frozen['provenance']['implementation'].update(status=q.FROZEN, freeze_commit='f' * 40)
+    return frozen
+
+
+def test_fallback_load_inputs_shares_frozen_contract_but_not_package(loaded, loaded_fallback):
+    assert loaded_fallback['profile'] == 'fallback' and loaded['profile'] == 'primary'
+    assert loaded_fallback['slots'] == q.probe.FALLBACK_SLOTS
+    assert [s['model'] for s in loaded_fallback['slots']] == ['openai/gpt-5.6-terra', 'anthropic/claude-opus-5']
+    shared = ('fixture_set_commit', 'fixture_manifest_sha256', 'contract_sha256',
+             'prompt_sha256', 'output_schema_sha256', *q.probe.VERSIONS)
+    for key in shared:
+        assert loaded_fallback['provenance'][key] == loaded['provenance'][key]
+    assert loaded_fallback['provenance']['execution_config_sha256'] == q.FALLBACK_PACKAGE_HASH
+    assert loaded['provenance']['execution_config_sha256'] == q.PACKAGE_HASH
+    assert loaded_fallback['provenance']['execution_config_sha256'] != loaded['provenance']['execution_config_sha256']
+    assert loaded_fallback['provenance']['candidate_profile'] == 'FALLBACK'
+    assert loaded['provenance']['candidate_profile'] == 'PRIMARY'
+    # Fixture set/manifest/reference schema, not any downstream Generator Qualification fixture.
+    assert loaded_fallback['fixtures'] == loaded['fixtures'] and loaded_fallback['manifest'] == loaded['manifest']
+
+
+def test_fallback_qualification_preview_24_calls_terra_then_opus(fallback_inputs, capsys):
+    default_output = q.ROOT / 'results/generator-qualification/attempt-02'
+    assert q.main(['--profile', 'fallback']) == 0
+    shown = json.loads(capsys.readouterr().out)
+    assert shown['status'] == 'NETWORK_DISABLED' and shown['credits'] == 'CREDITS_NOT_SPENT'
+    assert shown['candidate_profile'] == 'FALLBACK'
+    assert shown['planned_logical_calls'] == 24 and shown['per_candidate'] == 12
+    assert shown['result_directory'] == str(default_output)
+    assert not default_output.exists()
+    ids = shown['fixture_ids']
+    assert shown['planned_calls'][:12] == [f'{i + 1}:G1:{fid}' for i, fid in enumerate(ids)]
+    assert shown['planned_calls'][12:] == [f'{i + 13}:G2:{fid}' for i, fid in enumerate(ids)]
+    assert [c['model'] for c in shown['candidates']] == ['openai/gpt-5.6-terra', 'anthropic/claude-opus-5']
+    assert len(shown['request_hashes']) == 24 and len(set(shown['request_hashes'])) == 24
+    bodies = [q.request(fallback_inputs, s, f) for s, f, _ in q.plan(fallback_inputs)]
+    assert [b['model'] for b in bodies] == ['openai/gpt-5.6-terra'] * 12 + ['anthropic/claude-opus-5'] * 12
+    for b in bodies:
+        assert not {'temperature', 'top_p'} & b.keys()
+        assert b['reasoning'] == {'effort': 'low'} and b['max_tokens'] == 16384
+        assert b['provider']['allow_fallbacks'] is False and b['provider']['require_parameters'] is True
+    assert q.main([]) == 0  # Default --profile is still primary, unaffected.
+    assert json.loads(capsys.readouterr().out)['candidate_profile'] == 'PRIMARY'
+
+
+def test_fallback_qualification_execution_gated_on_closed_pass_capability_probe(fallback_inputs, monkeypatch, tmp_path):
+    monkeypatch.setenv('OPENROUTER_API_KEY', 'test-secret')
+    monkeypatch.setattr(q, 'git', fake_git)
+    output = tmp_path / 'absent'
+
+    def forbidden(**kwargs):
+        pytest.fail('Fallback execution reached the network before its capability gate')
+    with pytest.raises(ValueError, match='CLOSED/PASS fallback Capability Probe evidence'):
+        asyncio.run(q.collect(fallback_inputs, 'test-secret', output, client_factory=forbidden))
+    assert not output.exists()
+    # Primary's own real, genuinely-CLOSED/PASS evidence cannot accidentally satisfy the fallback gate:
+    # the gate reads the FALLBACK config specifically, which is still OPEN/NOT_ASSESSED right now.
+    primary_config = q.yaml.safe_load(q.probe.CONFIG.read_text())
+    assert primary_config['status'] == 'CLOSED' and primary_config['capability_result'] == 'PASS'
+    fallback_config = q.yaml.safe_load(q.probe.FALLBACK_CONFIG.read_text())
+    assert fallback_config['status'] != 'CLOSED' or fallback_config['capability_result'] != 'PASS'
+    with pytest.raises(ValueError, match='CLOSED/PASS fallback Capability Probe evidence'):
+        q.fallback_capability_gate()
+
+
+def test_primary_qualification_execution_ungated_by_fallback_capability_status(inputs, monkeypatch, tmp_path):
+    """The fallback gate is fallback-only: it must not appear on the primary execution path at all."""
+    monkeypatch.setattr(q, 'git', fake_git)
+    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary': inputs)
+    calls = []
+    def handler(request):
+        calls.append(1)
+        return httpx.Response(200, json=envelope(json.loads(request.content),
+                                                 mock_output(inputs['fixtures'][(len(calls) - 1) % 12])))
+    def factory(**kwargs):
+        return httpx.AsyncClient(transport=httpx.MockTransport(handler), **kwargs)
+    async def no_wait(seconds): pass
+    result = asyncio.run(q.collect(inputs, 'test-secret', tmp_path / 'attempt',
+                                   client_factory=factory, sleep=no_wait))
+    assert result['status'] == 'PENDING_MANUAL_AUDIT' and len(calls) == 24  # Never touched the fallback gate.
+
+
+def test_fallback_cannot_replay_primary_archive(loaded_fallback):
+    """A fallback-profile inputs object cannot be substituted to replay the archived primary Attempt-01:
+    every archived call's returned Sol/Sonnet identity mismatches the fallback Terra/Opus slots at once.
+    """
+    with pytest.raises(ValueError, match='should have been invalidated'):
+        q.replay(q.ROOT / 'results/generator-qualification/attempt-01', loaded_fallback)
+
+
+def test_real_attempt_01_replay_unaffected_by_fallback_support(loaded):
+    """Critical regression: Attempt-01 remains reproducible, Sol/Sonnet-only, after adding fallback support."""
+    directory = q.ROOT / 'results/generator-qualification/attempt-01'
+    result, checksum = q.replay(directory, loaded)
+    assert result['status'] == 'PENDING_MANUAL_AUDIT' and len(result['calls']) == 24
+    assert {c['request_body']['model'] for c in result['calls']} == {'openai/gpt-5.6-sol', 'anthropic/claude-sonnet-5'}
+    assert not any('terra' in c['request_body']['model'] or 'opus' in c['request_body']['model']
+                  for c in result['calls'])
+    audit = q.fixtures.read(q.ROOT / 'results/generator-qualification/manual-audit/attempt-01.completed.json')
+    verdict = q.adjudicate(result, audit, checksum, loaded['slots'])
+    assert verdict['candidates'] == {'G1': 'FAIL', 'G2': 'FAIL'}
+    assert q.probe.file_hash(directory / 'manual-audit.json') == \
+        '8decf4ba0177c7c5808050f846a61aad624073552c5d2f4a7e5b7db580ebede1'
+
+
+def test_implementation_not_falsely_frozen_during_fallback_development(loaded):
+    """The runner must not report itself FROZEN while fallback support is implemented but not yet re-frozen."""
+    assert loaded['provenance']['implementation']['status'] == q.NOT_FROZEN
+    assert loaded['provenance']['implementation']['freeze_commit'] is None

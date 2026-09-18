@@ -473,3 +473,31 @@ eligible: `openai/gpt-5.6-terra` (G1) and `anthropic/claude-opus-5` (G2).
 Neither fallback has been qualified or executed. Each requires its own
 complete 12-fixture qualification under the same frozen contract before any
 assignment for final CRST naturalization.
+
+## Fallback Candidate Profile — Offline Implementation, Not Executed
+
+Extended the qualification runner offline to represent the predeclared
+fallback pair (`openai/gpt-5.6-terra`, `anthropic/claude-opus-5`) via an
+explicit `--profile {primary,fallback}` mechanism, without altering the CLOSED
+primary Capability Probe's config, `SLOTS`, or default behavior. Added a
+separate, never-CLOSED `configs/generator-capability-probe-fallback.yaml`
+(status OPEN/NOT_ASSESSED/UNDER_DEVELOPMENT) using the same shared
+naturalization contract, prompt, schema, and probe-only input as the primary,
+with the researcher-approved request package identical to the successful
+primary package except candidate identity; `temperature`/`top_p` remain
+intentionally omitted, not catalog-audited for Terra/Opus. Live fallback
+Generator Qualification is gated on the fallback Capability Probe's config
+showing CLOSED/PASS, checked at execution time against that file directly, so
+the primary's own CLOSED/PASS evidence cannot satisfy it.
+
+This source change means `configs/generator-qualification-implementation-freeze.json`
+(pinning `e5e9d500...`) no longer matches current bytes; the runner now
+correctly reports `NOT YET FROZEN FOR LIVE EXECUTION` again rather than
+falsely claiming FROZEN. `replay()` was changed to verify an archived attempt's
+implementation identity against the git history of the commit that attempt
+itself records, rather than against the current working tree, so Attempt-01
+remains fully replayable and its adjudication is unchanged: G1/G2 FAIL, no
+candidate QUALIFIED. Neither fallback Capability Probe nor fallback Generator
+Qualification has executed. Terra/Opus remain CANDIDATE. This implementation
+is NOT YET FROZEN; it requires researcher review, commit, and a new freeze
+record before any live execution.

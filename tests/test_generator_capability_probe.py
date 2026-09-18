@@ -512,3 +512,80 @@ def test_closed_cli_does_not_read_key_or_execute(monkeypatch, capsys):
         p.main(['--execute', '--confirm-spend'])
     assert exc.value.code == 2
     assert 'CLOSED/PASS' in capsys.readouterr().err
+
+
+# --- Predeclared fallback candidate profile (Terra/Opus): offline design only, never executed here. ---
+
+def test_primary_profile_unchanged_by_default(bundle):
+    """The PRIMARY profile constant and its default load_bundle()/preview() behavior are untouched."""
+    assert p.SLOTS == [dict(logical_call_id='G1', model='openai/gpt-5.6-sol', provider_order=['openai']),
+                       dict(logical_call_id='G2', model='anthropic/claude-sonnet-5', provider_order=['anthropic'])]
+    assert p.load_bundle()['config'] == bundle['config']
+    prev = p.preview(bundle)
+    assert prev['status'] == 'CAPABILITY_PROBE_CLOSED_PASS' and prev['candidate_profile'] == 'PRIMARY'
+    assert prev['execution_package'] == 'FROZEN' and prev['successful_attempt'] == 'attempt-02'
+    assert [r['requested_model'] for r in prev['requests']] == ['openai/gpt-5.6-sol', 'anthropic/claude-sonnet-5']
+
+
+def test_fallback_profile_identities_and_package():
+    slots = p.FALLBACK_SLOTS
+    assert [(s['logical_call_id'], s['model'], s['provider_order']) for s in slots] == [
+        ('G1', 'openai/gpt-5.6-terra', ['openai']), ('G2', 'anthropic/claude-opus-5', ['anthropic'])]
+    profile = p.PROFILES['fallback']
+    assert profile['slots'] == slots and profile['config_path'] == p.FALLBACK_CONFIG
+    assert profile['status'] != 'CLOSED' and profile['capability_result'] != 'PASS'  # Never CLOSED here.
+    bundle = p.load_bundle(profile['config_path'], slots=slots, status=profile['status'],
+                           capability_result=profile['capability_result'],
+                           successful_attempt=profile['successful_attempt'],
+                           execution_package=profile['execution_package'],
+                           execution_compatibility=profile['execution_compatibility'])
+    for slot in slots:
+        body = p.request_body(bundle, slot)
+        assert body['model'] == slot['model'] and body['provider']['order'] == slot['provider_order']
+        assert body['provider']['allow_fallbacks'] is False and body['provider']['require_parameters'] is True
+        assert not {'temperature', 'top_p', 'tools'} & body.keys()
+        assert body['reasoning'] == {'effort': 'low'} and body['max_tokens'] == 16384
+        assert body['response_format']['json_schema']['strict'] is True
+
+
+def test_fallback_capability_preview_offline_two_calls_terra_then_opus(monkeypatch, tmp_path, capsys):
+    """Fallback preview: no network, no output directory, exactly 2 calls, Terra then Opus, no key read."""
+    def forbidden(*args, **kwargs):
+        pytest.fail('Execution entered by fallback preview')
+    monkeypatch.setattr(p, 'execute_probe', forbidden)
+    class Environment(dict):
+        def get(self, key, default=None):
+            if key == 'OPENROUTER_API_KEY':
+                pytest.fail('Fallback preview read API key')
+            return super().get(key, default)
+    monkeypatch.setattr(p.os, 'environ', Environment(p.os.environ))
+    output = tmp_path / 'must-not-exist'
+    assert p.main(['--profile', 'fallback', '--output-directory', str(output)]) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result['candidate_profile'] == 'FALLBACK'
+    assert result['status'] == 'CAPABILITY_PROBE_FALLBACK_NOT_EXECUTED'
+    assert result['execution_package'] == 'UNDER_DEVELOPMENT' and result['successful_attempt'] is None
+    assert result['expected_logical_calls'] == 2 and result['maximum_physical_inference_attempts'] == 6
+    assert [r['logical_call_id'] for r in result['requests']] == ['G1', 'G2']
+    assert [r['requested_model'] for r in result['requests']] == ['openai/gpt-5.6-terra', 'anthropic/claude-opus-5']
+    assert [r['requested_provider_order'] for r in result['requests']] == [['openai'], ['anthropic']]
+    assert len({r['wire_request_sha256'] for r in result['requests']}) == 2
+    assert not output.exists()
+    assert p.main([]) == 0  # Default --profile is still primary, unaffected.
+    assert json.loads(capsys.readouterr().out)['candidate_profile'] == 'PRIMARY'
+
+
+def test_fallback_probe_never_reopens_or_mutates_primary_evidence():
+    """Building/previewing the fallback profile does not touch the CLOSED primary config or its slots."""
+    before = p.CONFIG.read_bytes()
+    primary_bundle = p.load_bundle()
+    assert primary_bundle['config']['status'] == 'CLOSED' and primary_bundle['config']['capability_result'] == 'PASS'
+    fallback_profile = p.PROFILES['fallback']
+    p.load_bundle(fallback_profile['config_path'], slots=fallback_profile['slots'],
+                  status=fallback_profile['status'], capability_result=fallback_profile['capability_result'],
+                  successful_attempt=fallback_profile['successful_attempt'],
+                  execution_package=fallback_profile['execution_package'],
+                  execution_compatibility=fallback_profile['execution_compatibility'])
+    assert p.CONFIG.read_bytes() == before  # The CLOSED primary config file is untouched.
+    assert p.SLOTS == [dict(logical_call_id='G1', model='openai/gpt-5.6-sol', provider_order=['openai']),
+                       dict(logical_call_id='G2', model='anthropic/claude-sonnet-5', provider_order=['anthropic'])]
