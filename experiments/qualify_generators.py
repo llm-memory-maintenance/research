@@ -27,7 +27,7 @@ CONTRACT_HASH = '3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86e
 PROMPT_HASH = 'a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279'
 SCHEMA_HASH = 'c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917'
 # Fallback capability-probe execution-package identity (Sec. 1); UNDER_DEVELOPMENT, never CLOSED here.
-FALLBACK_PACKAGE_HASH = 'e1d4972704d92ffe3de5989a2a84fcaf1945d84fbfdef7ae68a0365ce00642a6'
+FALLBACK_PACKAGE_HASH = '1316b2b1f3a7f5f15f64d5b3b2ef379c60f96edddff8b5f62bf0e712d7099e1b'
 DEFAULT_OUTPUT = ROOT / 'results/generator-qualification/attempt-01'
 FALLBACK_DEFAULT_OUTPUT = ROOT / 'results/generator-qualification/attempt-02'
 PROCEDURE = 'generator-qualification-procedure/1.0.0'
@@ -120,12 +120,17 @@ def verify_archived_implementation(record):
                 "Archived implementation hash does not match its own frozen commit")
 
 
-def load_inputs(profile='primary'):
+def load_inputs(profile='primary', slot=None):
     """Pin current bytes to the reviewed committed fixture set and execution contract.
 
     profile selects the PRIMARY (CLOSED) or predeclared FALLBACK (Terra/Opus) candidate pair. The
     frozen fixture set, naturalization contract, prompt, and output schema are shared and unchanged
     by profile; only candidate identity and the execution-package file/hash under test differ.
+
+    slot, if given (e.g. 'G1'), restricts the returned plan to that one logical call from the
+    profile; the config itself is still validated against the FULL predeclared pair (it always
+    declares both), only the planned/active slots are filtered. Omit slot for the full profile --
+    the historical, unchanged two-slot behavior.
     """
     require(profile in probe.PROFILES, f'Unknown candidate profile: {profile}')
     package_hash = PACKAGE_HASH if profile == 'primary' else FALLBACK_PACKAGE_HASH
@@ -148,10 +153,13 @@ def load_inputs(profile='primary'):
                  *[fixtures.DIRECTORY / e['fixture_path'] for e in manifest['fixtures']]]:
         committed = git('show', f'{FIXTURE_COMMIT}:{path.relative_to(ROOT).as_posix()}')
         require(committed == path.read_bytes(), 'Frozen fixture-set provenance mismatch')
-    return {'bundle': bundle, 'manifest': manifest, 'fixtures': truth, 'slots': selected['slots'],
-            'profile': profile,
+    active_slots = selected['slots'] if slot is None else [
+        s for s in selected['slots'] if s['logical_call_id'] == slot]
+    require(active_slots, f'Unknown slot for profile {profile}: {slot}')
+    return {'bundle': bundle, 'manifest': manifest, 'fixtures': truth, 'slots': active_slots,
+            'profile': profile, 'selected_slot': slot,
             'provenance': {'source_commit': git('rev-parse', 'HEAD').decode().strip(),
-                'candidate_profile': profile.upper(),
+                'candidate_profile': profile.upper(), 'selected_slot': slot,
                 'fixture_set_commit': FIXTURE_COMMIT, 'fixture_manifest_sha256': MANIFEST_HASH,
                 'execution_config_sha256': package_hash, 'contract_sha256': CONTRACT_HASH,
                 'prompt_sha256': PROMPT_HASH, 'output_schema_sha256': SCHEMA_HASH,
@@ -160,17 +168,20 @@ def load_inputs(profile='primary'):
                 'packages': {n: importlib.metadata.version(n) for n in ('httpx', 'pydantic', 'pyyaml')}}}
 
 
-def fallback_capability_gate():
-    """Live fallback qualification requires CLOSED/PASS fallback Capability Probe evidence.
-
-    Reads the fallback capability config directly, independent of load_inputs' own (currently
-    OPEN/NOT_ASSESSED) profile literals, so this gate tracks the file's real, current state.
+def slot_capability_gate(profile_name, slot):
+    """Live Generator Qualification for one slot requires CLOSED/PASS capability evidence for the
+    EXACT candidate occupying that slot. Generic: reads probe.slot_capability(), never a
+    hardcoded Terra/Opus check. One slot's PASS never authorizes another slot; stale evidence for a
+    replaced candidate (model mismatch) never authorizes the new one; the primary profile's own
+    CLOSED/PASS evidence is read from ITS OWN config and cannot satisfy a different profile's slot.
     """
-    config = yaml.safe_load(probe.FALLBACK_CONFIG.read_text(encoding='utf-8'))
-    require(type(config) is dict and config.get('status') == 'CLOSED'
-            and config.get('capability_result') == 'PASS',
-            'Fallback qualification requires CLOSED/PASS fallback Capability Probe evidence; '
-            'the fallback Capability Probe has not executed and closed')
+    capability = probe.slot_capability(profile_name, slot)
+    require(capability['model'] == slot['model'] and capability['status'] == 'CLOSED'
+            and capability['capability_result'] == 'PASS',
+            f'Generator Qualification for {slot["logical_call_id"]} ({slot["model"]}) requires '
+            f'CLOSED/PASS capability evidence for this exact candidate; current status: '
+            f'{capability["status"]}/{capability["capability_result"]}'
+            + (f' ({capability["reason"]})' if capability.get('reason') else ''))
 
 
 def plan(inputs):
@@ -184,12 +195,16 @@ def request(inputs, slot, truth):
 
 
 def preview(inputs, output):
+    per_candidate = len(inputs['fixtures'])
+    planned = len(inputs['slots']) * per_candidate
     return {'status': 'NETWORK_DISABLED', 'credits': 'CREDITS_NOT_SPENT',
             'qualification_status': 'NOT EXECUTED', 'generator_status': 'CANDIDATE',
             'qualification_implementation_status': inputs['provenance']['implementation']['status'],
             **inputs['provenance'],
-            'planned_logical_calls': 24, 'per_candidate': 12, 'maximum_physical_attempts': 72,
-            'order': 'G1 all fixtures, then G2 all fixtures; frozen manifest order',
+            'planned_logical_calls': planned, 'per_candidate': per_candidate,
+            'maximum_physical_attempts': planned * 3,
+            'order': ', then '.join(f"{s['logical_call_id']} all fixtures" for s in inputs['slots'])
+                    + '; frozen manifest order',
             'fixture_ids': [e['fixture_id'] for e in inputs['manifest']['fixtures']],
             'planned_calls': [f'{i}:{s["logical_call_id"]}:{e["fixture_id"]}'
                               for i, (s, _, e) in enumerate(plan(inputs), 1)],
@@ -455,9 +470,9 @@ async def collect(inputs, key, output, *, client_factory=httpx.AsyncClient, slee
     require(not git('status', '--porcelain=v1', '-z', '--untracked-files=all', '--ignore-submodules=none'),
             'Official execution requires a clean worktree')
     git('ls-files', '--error-unmatch', *SOURCES)
-    if inputs['profile'] == 'fallback':
-        fallback_capability_gate()
-    fresh = load_inputs(profile=inputs['profile'])  # Recheck frozen bytes immediately before any side effect.
+    for slot in inputs['slots']:
+        slot_capability_gate(inputs['profile'], slot)
+    fresh = load_inputs(profile=inputs['profile'], slot=inputs.get('selected_slot'))  # Recheck frozen bytes immediately before any side effect.
     require(fresh['provenance'] == inputs['provenance'], 'Source/input changed since preflight')
     require(fresh['provenance']['implementation']['status'] == FROZEN,
             f'Qualification implementation {NOT_FROZEN}; live execution refused')
@@ -465,7 +480,8 @@ async def collect(inputs, key, output, *, client_factory=httpx.AsyncClient, slee
     directory = Path(output)
     directory.mkdir(parents=True, exist_ok=False)
     result = {'procedure_version': PROCEDURE, 'status': 'PENDING_MANUAL_AUDIT',
-              'provenance': inputs['provenance'], 'planned_logical_calls': 24,
+              'provenance': inputs['provenance'],
+              'planned_logical_calls': len(inputs['slots']) * len(inputs['fixtures']),
               'candidates': {s['logical_call_id']: 'CANDIDATE' for s in inputs['slots']},
               'failure_reason': None, 'invalidation': None, 'calls': []}
     hashes = {}
@@ -552,7 +568,8 @@ def replay(directory, inputs):
     else:
         require(result['invalidation'] is None and result['failure_reason'] is None
                 and not any(implied), 'Attempt should have been invalidated')
-    require(result['planned_logical_calls'] == 24 and
+    expected_calls = len(inputs['slots']) * len(inputs['fixtures'])
+    require(result['planned_logical_calls'] == expected_calls and
             result['candidates'] == {s['logical_call_id']: 'CANDIDATE' for s in inputs['slots']}, 'Attempt header drift')
     for key in ('fixture_set_commit', 'fixture_manifest_sha256', 'execution_config_sha256', 'contract_sha256',
                 'prompt_sha256', 'output_schema_sha256', 'procedure_version', *probe.VERSIONS):
@@ -561,9 +578,9 @@ def replay(directory, inputs):
     # claim against git history rather than requiring it to match the current live computation.
     require(result['provenance']['implementation']['status'] == FROZEN, 'Attempt ran without implementation freeze')
     verify_archived_implementation(result['provenance']['implementation'])
-    require(len(result['calls']) <= 24, 'Unexpected calls')
+    require(len(result['calls']) <= expected_calls, 'Unexpected calls')
     if result['status'] != 'INVALIDATED':
-        require(len(result['calls']) == 24, 'Incomplete attempt')
+        require(len(result['calls']) == expected_calls, 'Incomplete attempt')
     planned = plan(inputs)
     require(sums.keys() == {'qualification.json', 'manual-audit.json',
                             *(evidence_path(s, e) for s, _, e in planned[:len(result['calls'])])},
@@ -613,6 +630,9 @@ def main(argv=None):
     parser.add_argument('--confirm-spend', action='store_true')
     parser.add_argument('--profile', choices=sorted(probe.PROFILES), default='primary',
                         help='primary (CLOSED Attempt-01, FAIL/FAIL) or the predeclared fallback (Terra/Opus)')
+    parser.add_argument('--slot', choices=['G1', 'G2'], default=None,
+                        help='Restrict Generator Qualification to one candidate slot (12 calls); '
+                             'omit for the full profile (historical 24-call behavior, unchanged default)')
     parser.add_argument('--output-directory', type=Path, default=None)
     parser.add_argument('--attempt', type=Path, help='Offline replay/adjudication of archived attempt')
     parser.add_argument('--audit', type=Path, help='Completed copy of generated manual-audit.json')
@@ -625,8 +645,16 @@ def main(argv=None):
         parser.error('Offline adjudication requires --attempt, --audit, --adjudication-output and no execution flags')
     output_directory = args.output_directory
     if output_directory is None:
-        output_directory = DEFAULT_OUTPUT if args.profile == 'primary' else FALLBACK_DEFAULT_OUTPUT
-    inputs = load_inputs(profile=args.profile)
+        if args.slot is not None:
+            # OPEN: no official single-slot result-path convention has been decided yet (unlike
+            # attempt-01/attempt-02 for the full two-slot profiles); never invented here.
+            if args.execute:
+                parser.error('Single-slot execution requires an explicit --output-directory; no '
+                             'official single-slot result-path convention exists yet')
+            output_directory = 'OPEN: official single-slot result-path identity not yet decided'
+        else:
+            output_directory = DEFAULT_OUTPUT if args.profile == 'primary' else FALLBACK_DEFAULT_OUTPUT
+    inputs = load_inputs(profile=args.profile, slot=args.slot)
     if args.attempt:
         attempt = args.attempt.resolve()
         for path in (args.audit, args.adjudication_output):

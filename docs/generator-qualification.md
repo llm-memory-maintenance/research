@@ -553,11 +553,13 @@ attempt. Consequently, from Attempt-03 (§11):
 
 Attempt-03's own recorded overall status remains FAIL, unchanged. **No
 identical Opus re-probe is authorized**: refusal is terminal/non-retryable
-under the frozen transport policy, and the shared config
-`configs/generator-capability-probe-fallback.yaml` is unchanged (still
-`status: OPEN`, `capability_result: NOT_ASSESSED`) because its schema
-represents one shared profile outcome, not a mixed per-candidate result; this
-task does not redesign that schema.
+under the frozen transport policy. The shared config
+`configs/generator-capability-probe-fallback.yaml`'s whole-profile
+`status`/`capability_result` fields are unchanged (still `OPEN`/
+`NOT_ASSESSED`) -- the profile did not pass as a whole. A minimal, additive
+`slots:` section (schema_version `generator-capability-probe-fallback-config/
+1.1.0`) now represents this per-candidate outcome structurally (§13); it does
+not alter or redefine the existing whole-profile fields.
 
 **FROZEN: the G2 slot remains an Anthropic-family slot.** Opus's capability
 FAIL does not relax the two-generator, vendor-family-diversified design (§2).
@@ -583,13 +585,94 @@ called). Before any replacement G2 candidate is named or called, it must:
 An ordered backup list, if adopted, must itself be frozen in writing before
 the first candidate on it is probed.
 
-**Approved future procedural order** (none of these steps is executed here):
-(1) freeze these decisions; (2) implement generic per-slot capability state
-and single-slot probe/qualification support; (3) researcher review; (4)
-commit; (5) re-freeze the execution-critical implementation; (6) Generator
-Qualification of Terra may then run independently on the same frozen 12
-fixtures; (7) separately select the next G2 candidate using the frozen
-criteria above; (8) run that candidate's own Capability Probe; (9) only if
-capability closes PASS, run its full 12-fixture Generator Qualification; (10)
-final CRST generator assignment (§8) remains blocked until both G1 and G2
-slots each contain a Generator-Qualified candidate.
+**Approved future procedural order:** (1) freeze these decisions -- done; (2)
+implement generic per-slot capability state and single-slot probe/
+qualification support -- **implemented offline, see §13; not yet reviewed,
+committed, or re-frozen**; (3) researcher review; (4) commit; (5) re-freeze
+the execution-critical implementation; (6) Generator Qualification of Terra
+may then run independently on the same frozen 12 fixtures; (7) separately
+select the next G2 candidate using the frozen criteria above; (8) run that
+candidate's own Capability Probe; (9) only if capability closes PASS, run its
+full 12-fixture Generator Qualification; (10) final CRST generator assignment
+(§8) remains blocked until both G1 and G2 slots each contain a
+Generator-Qualified candidate. Steps (3)-(10) have not occurred.
+
+## 13. Per-Slot Capability State and Single-Slot Execution — Implemented Offline, Not Yet Re-Frozen
+
+**Implemented offline, not executed, not yet reviewed/committed/re-frozen.**
+This section records the software representation of the §12 decisions and the
+single-slot execution support built to act on them.
+
+**Per-slot capability representation.** `configs/generator-capability-probe-
+fallback.yaml` gained a `schema_version` field and an additive `slots:`
+section (one entry per logical-call slot: `model`, `status`,
+`capability_result`, `reason`, `evidence_attempt`, `evidence_path`,
+`evidence_sha256`). The existing whole-profile fields (`status`,
+`capability_result`, `execution_package`, ...) are untouched, so `load_bundle`
+and every existing check against this file are unaffected. `probe.
+slot_capability(profile_name, slot)` reads this section, checked against the
+slot's **exact model identity**, not just its symbolic name (`G1`/`G2`): a
+recorded entry only applies when its `model` matches the slot currently
+occupying that position, so a future replacement candidate has no evidence
+until its own entry exists. A profile config with no `slots:` section (the
+CLOSED primary, `configs/generator-capability-probe.yaml`, unmodified) is
+handled by the same function generically -- derived uniformly from that
+profile's whole-config `status`/`capability_result`, exactly reproducing
+existing primary behavior. This is one generic mechanism, not a Terra/Opus
+special case.
+
+Current recorded state, unchanged from §12: **G1 `openai/gpt-5.6-terra`:
+capability CLOSED/PASS. G2 `anthropic/claude-opus-5`: capability CLOSED/FAIL**
+(reason: provider-policy refusal). Attempt-03's own archived evidence and
+overall FAIL status are untouched.
+
+**Single-slot execution.** `experiments/probe_generators.py` and
+`experiments/qualify_generators.py` both take an optional `--slot {G1,G2}`
+(default: omitted, meaning the full profile -- byte-identical historical
+behavior). `load_bundle()` always validates the config against the full
+predeclared pair (unchanged); only the active/planned/requested slot list is
+filtered afterward, so a single-slot run still confirms the config correctly
+declares the whole profile. A single-slot Capability Probe preview plans
+exactly 1 logical call for the named candidate; a single-slot Generator
+Qualification preview plans exactly 12 (that candidate's fixtures only, same
+frozen order, no calls for the other slot). No arbitrary model ID can be
+supplied -- only `G1`/`G2` from the already-declared profile.
+
+**Per-slot Generator Qualification gate.** `qualify_generators.
+slot_capability_gate(profile_name, slot)` replaces the former whole-profile
+`fallback_capability_gate()`. `collect()` now calls it for every active slot,
+for every profile, generically: selecting G1 Terra for live Generator
+Qualification is permitted from the capability-status perspective (CLOSED/
+PASS); selecting G2 Opus is refused (CLOSED/FAIL); a future unassessed G2
+candidate is refused until its own exact CLOSED/PASS evidence exists; the
+primary's own CLOSED/PASS evidence, read from its own config, cannot satisfy
+a fallback slot. For the primary profile the gate transparently passes (no
+`slots:` section, uniform whole-profile CLOSED/PASS), so primary execution is
+unaffected. `execute_probe()` additionally refuses to reopen a per-slot
+already-CLOSED candidate (either PASS or FAIL) when given `profile_name`,
+guarding against an accidental automatic Terra/Opus re-probe beyond the
+existing whole-profile CLOSED guard.
+
+**Result-path identity for single-slot attempts is OPEN, not invented.**
+Unlike the full two-slot profiles (`attempt-01` primary, `attempt-02`
+fallback), no sequential-attempt convention obviously covers a 12-call
+single-slot attempt. Preview without an explicit `--output-directory` shows
+the literal string `"OPEN: official single-slot result-path identity not yet
+decided"` rather than a real path; live single-slot execution refuses to
+proceed without an explicit `--output-directory`.
+
+**Historical compatibility.** Extending the implementation changed
+`experiments/qualify_generators.py` and `experiments/probe_generators.py`
+bytes again, so `configs/generator-qualification-implementation-freeze.json`
+(still pinning `3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`, §10) no longer
+matches; `qualification_implementation_status` correctly reports `NOT YET
+FROZEN FOR LIVE EXECUTION` again. Live execution of any profile/slot is
+refused until this implementation is reviewed, committed, and re-frozen.
+Primary Capability Probe Attempt-01/Attempt-02, fallback Capability Probe
+Attempt-03, and Generator Qualification Attempt-01 (replay, completed audit,
+and adjudication: G1/G2 FAIL) all remain unchanged and were reverified after
+this implementation.
+
+**Status:** Terra Generator Qualification has **not executed**. No new G2
+candidate has been selected. Terra/Opus remain CANDIDATE, not Generator-
+Qualified.

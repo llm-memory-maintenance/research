@@ -675,3 +675,44 @@ this entry):**
 No step beyond (1) has been performed. Sol, Sonnet, and Opus remain
 disqualified/not-qualified as already recorded; Terra remains CANDIDATE for
 Generator Qualification, not qualified. No new G2 model has been selected.
+
+## Per-Slot Capability State and Single-Slot Execution — Implemented Offline
+
+Implemented step (2) of the approved future procedural order above: generic
+per-slot capability state and single-slot Capability Probe / Generator
+Qualification support. Offline only; not executed, not yet researcher-reviewed,
+not committed, not re-frozen.
+
+`configs/generator-capability-probe-fallback.yaml` gained a `schema_version`
+and an additive `slots:` section recording, per candidate slot, exactly the
+frozen adjudication above: G1 `openai/gpt-5.6-terra` CLOSED/PASS; G2
+`anthropic/claude-opus-5` CLOSED/FAIL (provider-policy refusal); both citing
+Attempt-03. The whole-profile `status`/`capability_result` fields are
+unchanged (`OPEN`/`NOT_ASSESSED`) and remain the attempt-level roll-up. A
+capability entry only applies when its recorded `model` matches the slot's
+current candidate exactly; a stale or replaced candidate has no evidence.
+
+`experiments/probe_generators.py` and `experiments/qualify_generators.py`
+both gained an optional `--slot {G1,G2}` (default: full profile, unchanged
+historical behavior). `qualify_generators.slot_capability_gate()` replaces the
+former whole-profile `fallback_capability_gate()`; it runs generically for
+every profile and slot in `collect()`, passing transparently for the primary
+(uniform CLOSED/PASS, no `slots:` section) and correctly gating the fallback
+per candidate: G1 Terra permitted, G2 Opus refused, any future unassessed G2
+candidate refused, primary evidence unable to satisfy a fallback slot.
+`execute_probe()` additionally refuses to reopen an already-CLOSED slot when
+given its profile name.
+
+The official result-path identity for a single-slot attempt is left OPEN
+(not invented); preview shows an explicit placeholder string, and live
+single-slot execution requires an explicit `--output-directory`.
+
+This source change means the current implementation freeze
+(`configs/generator-qualification-implementation-freeze.json`, pinning
+`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`) no longer matches; the runner
+correctly reports `NOT YET FROZEN FOR LIVE EXECUTION` again. Primary
+Capability Probe Attempt-01/Attempt-02, fallback Capability Probe Attempt-03,
+and Generator Qualification Attempt-01 (replay, completed audit, adjudication:
+G1/G2 FAIL) were all reverified unchanged after this implementation. Terra
+Generator Qualification has not executed. No new G2 candidate has been
+selected. Terra/Opus remain CANDIDATE, not Generator-Qualified.

@@ -589,3 +589,128 @@ def test_fallback_probe_never_reopens_or_mutates_primary_evidence():
     assert p.CONFIG.read_bytes() == before  # The CLOSED primary config file is untouched.
     assert p.SLOTS == [dict(logical_call_id='G1', model='openai/gpt-5.6-sol', provider_order=['openai']),
                        dict(logical_call_id='G2', model='anthropic/claude-sonnet-5', provider_order=['anthropic'])]
+
+
+def test_single_slot_capability_preview_g1_only_terra(monkeypatch, tmp_path, capsys):
+    """--profile fallback --slot G1: exactly 1 Terra logical call, offline, no key, no directory."""
+    def forbidden(*args, **kwargs):
+        pytest.fail('Execution entered by single-slot preview')
+    monkeypatch.setattr(p, 'execute_probe', forbidden)
+    class Environment(dict):
+        def get(self, key, default=None):
+            if key == 'OPENROUTER_API_KEY':
+                pytest.fail('Single-slot preview read API key')
+            return super().get(key, default)
+    monkeypatch.setattr(p.os, 'environ', Environment(p.os.environ))
+    output = tmp_path / 'must-not-exist'
+    assert p.main(['--profile', 'fallback', '--slot', 'G1', '--output-directory', str(output)]) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result['candidate_profile'] == 'FALLBACK'
+    assert result['expected_logical_calls'] == 1 and result['maximum_physical_inference_attempts'] == 3
+    assert [r['logical_call_id'] for r in result['requests']] == ['G1']
+    assert [r['requested_model'] for r in result['requests']] == ['openai/gpt-5.6-terra']
+    assert [r['requested_provider_order'] for r in result['requests']] == [['openai']]
+    assert not output.exists()
+
+
+def test_single_slot_capability_preview_g2_only_opus(tmp_path, capsys):
+    """--profile fallback --slot G2: exactly 1 Opus logical call, symmetric to G1's."""
+    output = tmp_path / 'must-not-exist'
+    assert p.main(['--profile', 'fallback', '--slot', 'G2', '--output-directory', str(output)]) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result['expected_logical_calls'] == 1
+    assert [r['logical_call_id'] for r in result['requests']] == ['G2']
+    assert [r['requested_model'] for r in result['requests']] == ['anthropic/claude-opus-5']
+    assert [r['requested_provider_order'] for r in result['requests']] == [['anthropic']]
+    assert not output.exists()
+
+
+def test_single_slot_preview_request_package_unchanged(bundle):
+    """The single-slot request body is byte-identical to that candidate's entry within the full,
+    two-slot preview -- restricting to one slot changes only which calls are planned, not their
+    content."""
+    fallback_profile = p.PROFILES['fallback']
+    fallback_bundle = p.load_bundle(fallback_profile['config_path'], slots=fallback_profile['slots'],
+                                    status=fallback_profile['status'],
+                                    capability_result=fallback_profile['capability_result'],
+                                    successful_attempt=fallback_profile['successful_attempt'],
+                                    execution_package=fallback_profile['execution_package'],
+                                    execution_compatibility=fallback_profile['execution_compatibility'])
+    full = p.preview(fallback_bundle, slots=fallback_profile['slots'], profile_name='FALLBACK')
+    g1_only = p.preview(fallback_bundle, slots=[fallback_profile['slots'][0]], profile_name='FALLBACK')
+    assert g1_only['requests'][0] == full['requests'][0]
+    assert g1_only['expected_logical_calls'] == 1 and full['expected_logical_calls'] == 2
+
+
+def test_default_two_slot_probe_behavior_unaffected_by_slot_support(monkeypatch, tmp_path, capsys):
+    """Omitting --slot still previews the full, historical two-candidate profile unchanged."""
+    output = tmp_path / 'must-not-exist'
+    assert p.main(['--output-directory', str(output)]) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result['status'] == 'CAPABILITY_PROBE_CLOSED_PASS' and result['candidate_profile'] == 'PRIMARY'
+    assert result['expected_logical_calls'] == 2 and result['maximum_physical_inference_attempts'] == 6
+    assert [r['requested_model'] for r in result['requests']] == ['openai/gpt-5.6-sol', 'anthropic/claude-sonnet-5']
+
+
+def test_slot_capability_generic_lookup_for_both_profiles(bundle):
+    """slot_capability() works generically: the primary (no `slots:` section) derives uniformly
+    from its whole-profile CLOSED/PASS status; the fallback profile reports its real per-slot mix."""
+    for slot in p.SLOTS:
+        capability = p.slot_capability('primary', slot)
+        assert capability['status'] == 'CLOSED' and capability['capability_result'] == 'PASS'
+        assert capability['model'] == slot['model']
+    terra_capability = p.slot_capability('fallback', p.FALLBACK_SLOTS[0])
+    opus_capability = p.slot_capability('fallback', p.FALLBACK_SLOTS[1])
+    assert terra_capability['status'] == 'CLOSED' and terra_capability['capability_result'] == 'PASS'
+    assert opus_capability['status'] == 'CLOSED' and opus_capability['capability_result'] == 'FAIL'
+    assert opus_capability['reason'] == 'provider-policy refusal'
+
+
+def test_slot_capability_mismatched_candidate_identity_has_no_evidence():
+    """A hypothetical future/replaced candidate occupying G2 has no recorded evidence at all -- the
+    stale Opus entry is never silently reused for a different model."""
+    hypothetical = dict(logical_call_id='G2', model='anthropic/claude-hypothetical-next',
+                        provider_order=['anthropic'])
+    capability = p.slot_capability('fallback', hypothetical)
+    assert capability['status'] == 'OPEN' and capability['capability_result'] == 'NOT_ASSESSED'
+    assert capability['evidence_attempt'] is None and capability['evidence_sha256'] is None
+
+
+def test_execute_probe_refuses_to_reopen_already_closed_slot(monkeypatch, tmp_path):
+    """Even with the whole-profile CLOSED guard bypassed (mock_open_bundle), execute_probe still
+    refuses to reopen a per-slot CLOSED candidate (Terra CLOSED/PASS) when given its profile_name --
+    a no-automatic-reprobe safeguard beyond the whole-profile check."""
+    fallback_profile = p.PROFILES['fallback']
+    fallback_bundle = p.load_bundle(fallback_profile['config_path'], slots=fallback_profile['slots'],
+                                    status=fallback_profile['status'],
+                                    capability_result=fallback_profile['capability_result'],
+                                    successful_attempt=fallback_profile['successful_attempt'],
+                                    execution_package=fallback_profile['execution_package'],
+                                    execution_compatibility=fallback_profile['execution_compatibility'])
+    def forbidden(*args, **kwargs):
+        pytest.fail('Reopen-a-closed-slot execution crossed boundary')
+    out = tmp_path / 'must-not-exist'
+    with pytest.raises(ValueError, match=r'G1.*already CLOSED/PASS'):
+        asyncio.run(p.execute_probe(fallback_bundle, 'mock-secret', out, slots=[p.FALLBACK_SLOTS[0]],
+                                    profile_name='fallback', client_factory=forbidden))
+    assert not out.exists()
+
+
+def test_execute_probe_without_profile_name_skips_per_slot_reopening_check(monkeypatch, tmp_path):
+    """Backward compatibility: existing direct callers that never pass profile_name are unaffected
+    by the new per-slot reopening guard (it is opt-in via that parameter)."""
+    fallback_profile = p.PROFILES['fallback']
+    fallback_bundle = p.load_bundle(fallback_profile['config_path'], slots=fallback_profile['slots'],
+                                    status=fallback_profile['status'],
+                                    capability_result=fallback_profile['capability_result'],
+                                    successful_attempt=fallback_profile['successful_attempt'],
+                                    execution_package=fallback_profile['execution_package'],
+                                    execution_compatibility=fallback_profile['execution_compatibility'])
+    monkeypatch.setattr(p, 'source_commit', lambda clean=False: fallback_bundle['provenance']['source_commit'])
+    def factory(**kwargs):
+        return httpx.AsyncClient(transport=httpx.MockTransport(lambda r: httpx.Response(401)), **kwargs)
+    out = tmp_path / 'attempt'
+    result = asyncio.run(p.execute_probe(fallback_bundle, 'mock-secret', out, slots=[p.FALLBACK_SLOTS[0]],
+                                         client_factory=factory))
+    assert result['status'] == 'FAIL'  # Reached real per-call execution, not refused up front.
+    assert out.exists()

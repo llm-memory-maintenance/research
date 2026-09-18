@@ -50,6 +50,10 @@ PROFILES = {
                       execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED',
                       preview_status='CAPABILITY_PROBE_FALLBACK_NOT_EXECUTED'),
 }
+# Schema version marking the per-slot capability addition to a profile's config (optional; a
+# profile's config with no `slots:` section, such as the CLOSED primary, predates this and is read
+# generically via the whole-profile status/capability_result fallback in slot_capability() below).
+SLOT_CAPABILITY_SCHEMA = 'generator-capability-probe-fallback-config/1.1.0'
 
 
 def require(condition, message):
@@ -231,6 +235,44 @@ def load_bundle(config_path=CONFIG, *, slots=None, status='CLOSED', capability_r
                   'input_domain': payload['domain'], 'input_origin': config['input_origin'],
                   'input_allocation_scope': config['input_allocation_scope']}
     return {'config': config, 'contract': contract, 'input': payload, 'provenance': provenance}
+
+
+def slot_capability(profile_name, slot):
+    """Generic per-candidate capability status for one logical-call slot within a named profile.
+
+    Reads the profile's own config file's `slots:` section if present (per-candidate capability,
+    keyed by logical_call_id and checked against that candidate's OWN model identity -- a slot whose
+    config entry names a DIFFERENT model than the one now occupying it has NO recorded evidence for
+    the current candidate). If the config has no `slots:` section at all (the CLOSED primary config,
+    which predates this convention), status is derived uniformly from the whole-profile
+    status/capability_result -- exactly reproducing prior behavior with no primary-side change.
+
+    Never hardcoded to any specific candidate identity; works for any profile/slot the config
+    declares.
+    """
+    profile = PROFILES[profile_name]
+    config = yaml.safe_load(Path(profile['config_path']).read_text(encoding='utf-8'))
+    require(type(config) is dict, 'Expected config object')
+    slots_section = config.get('slots')
+    if slots_section is None:
+        return {'model': slot['model'], 'status': config.get('status'),
+                'capability_result': config.get('capability_result'), 'reason': None,
+                'evidence_attempt': config.get('successful_attempt'), 'evidence_path': None,
+                'evidence_sha256': None}
+    require(config.get('schema_version') == SLOT_CAPABILITY_SCHEMA,
+            'Unexpected per-slot capability schema version')
+    require(type(slots_section) is dict
+            and set(slots_section) == {s['logical_call_id'] for s in profile['slots']},
+            "Per-slot capability section must cover exactly the profile's declared slots")
+    entry = slots_section.get(slot['logical_call_id'])
+    fields(entry, ['model', 'status', 'capability_result', 'reason', 'evidence_attempt',
+                    'evidence_path', 'evidence_sha256'])
+    if entry['model'] != slot['model']:
+        # Recorded evidence belongs to a different candidate than the one now in this slot:
+        # never authorize a new/changed candidate by slot name alone.
+        return {'model': slot['model'], 'status': 'OPEN', 'capability_result': 'NOT_ASSESSED',
+                'reason': None, 'evidence_attempt': None, 'evidence_path': None, 'evidence_sha256': None}
+    return entry
 
 
 def request_body(bundle, slot, *, input_validator=None):
@@ -475,9 +517,16 @@ def archive(directory, result, key):
     return digest(payload)
 
 
-async def execute_probe(bundle, key, output_directory, *, client_factory=httpx.AsyncClient, slots=None):
+async def execute_probe(bundle, key, output_directory, *, client_factory=httpx.AsyncClient, slots=None,
+                        profile_name=None):
     slots = slots if slots is not None else SLOTS
     require(bundle['config']['status'] != 'CLOSED', 'Capability probe CLOSED/PASS; reopening requires adjudication')
+    if profile_name is not None:  # Per-slot reopening guard; skipped only for direct-bundle test callers.
+        for slot in slots:
+            capability = slot_capability(profile_name, slot)
+            require(capability['status'] != 'CLOSED',
+                    f'{slot["logical_call_id"]} ({slot["model"]}) capability already CLOSED/'
+                    f'{capability["capability_result"]}; reopening requires adjudication')
     require(bool(key.strip()), 'Execution requires OPENROUTER_API_KEY')
     require(source_commit(clean=True) == bundle['provenance']['source_commit'], 'Source changed since preflight')
     directory = Path(output_directory)
@@ -512,6 +561,9 @@ def main(argv=None):
     parser.add_argument('--confirm-spend', action='store_true', help='Acknowledge model charges; also requires --execute')
     parser.add_argument('--profile', choices=sorted(PROFILES), default='primary',
                         help='primary (CLOSED) or the predeclared fallback (Terra/Opus)')
+    parser.add_argument('--slot', choices=['G1', 'G2'], default=None,
+                        help='Restrict to one logical call from the selected profile; omit for the '
+                             'full profile (historical two-slot behavior, unchanged default)')
     parser.add_argument('--config', type=Path, default=None, help='Override the profile default config path')
     parser.add_argument('--output-directory', type=Path, help='New immutable attempt directory (execution only)')
     args = parser.parse_args(argv)
@@ -519,13 +571,17 @@ def main(argv=None):
         parser.error('Execution requires BOTH --execute AND --confirm-spend')
     profile = PROFILES[args.profile]
     config_path = args.config if args.config is not None else profile['config_path']
+    # load_bundle always validates against the FULL predeclared pair -- the config always declares
+    # both slots, regardless of which one is actually being requested/executed below.
     bundle = load_bundle(config_path, slots=profile['slots'], status=profile['status'],
                          capability_result=profile['capability_result'],
                          successful_attempt=profile['successful_attempt'],
                          execution_package=profile['execution_package'],
                          execution_compatibility=profile['execution_compatibility'])
+    active_slots = profile['slots'] if args.slot is None else [
+        s for s in profile['slots'] if s['logical_call_id'] == args.slot]
     if not args.execute:
-        print(json.dumps(preview(bundle, slots=profile['slots'], profile_name=args.profile.upper(),
+        print(json.dumps(preview(bundle, slots=active_slots, profile_name=args.profile.upper(),
                                  status=profile['preview_status'], execution_package=profile['execution_package'],
                                  execution_compatibility=profile['execution_compatibility'],
                                  successful_attempt=profile['successful_attempt']),
@@ -537,7 +593,7 @@ def main(argv=None):
     if not key.strip():
         parser.error('Execution requires OPENROUTER_API_KEY')
     output = args.output_directory or ROOT / bundle['config']['output_directory']
-    result = asyncio.run(execute_probe(bundle, key, output, slots=profile['slots']))
+    result = asyncio.run(execute_probe(bundle, key, output, slots=active_slots, profile_name=args.profile))
     return 0 if result['status'] == 'PASS' else 1
 
 

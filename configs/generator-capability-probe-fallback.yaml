@@ -1,7 +1,35 @@
+# schema_version marks the per-slot capability addition below (Sec. "Per-Slot Capability
+# Adjudication", docs/decisions.md). The unversioned fields above/below it are unchanged from the
+# original whole-profile-only shape; historical readers that predate `slots` simply ignore it.
+schema_version: generator-capability-probe-fallback-config/1.1.0
 status: OPEN
 capability_result: NOT_ASSESSED
 execution_package: UNDER_DEVELOPMENT
 execution_compatibility: UNVERIFIED
+# Per-slot capability adjudication (researcher-approved, read-only decision; see docs/decisions.md
+# "Fallback Per-Slot Capability Adjudication..."). This is authoritative capability evidence for the
+# EXACT candidate named in each entry's `model`; it does not change the whole-profile `status`/
+# `capability_result` above, which remains the attempt-level roll-up and stays OPEN/NOT_ASSESSED
+# because the profile did not pass as a whole. A slot whose `model` no longer matches the entry below
+# (e.g. after a second-level G2 candidate is later chosen) has no recorded evidence for that new
+# candidate, regardless of this file's history.
+slots:
+  G1:
+    model: openai/gpt-5.6-terra
+    status: CLOSED
+    capability_result: PASS
+    reason: null
+    evidence_attempt: attempt-03
+    evidence_path: results/generator-capability-probe/attempt-03
+    evidence_sha256: 96b3b1d4dcb31d2fdb0f3d545fb648d48c9d2969901721583ff5ac9d986c72b4
+  G2:
+    model: anthropic/claude-opus-5
+    status: CLOSED
+    capability_result: FAIL
+    reason: provider-policy refusal
+    evidence_attempt: attempt-03
+    evidence_path: results/generator-capability-probe/attempt-03
+    evidence_sha256: 96b3b1d4dcb31d2fdb0f3d545fb648d48c9d2969901721583ff5ac9d986c72b4
 parameter_semantics: HIDDEN_REASONING_EQUIVALENCE_NOT_CLAIMED
 generator_status: CANDIDATE
 execution_mode: standard
