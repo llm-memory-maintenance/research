@@ -14,7 +14,10 @@ and closed 2026-09-18: G1 `openai/gpt-5.6-sol` FAIL, G2
 `anthropic/claude-sonnet-5` FAIL (§10). Fallback Generator Qualification
 Attempt-02 (Terra, G1 only) has run and closed under historical Protocol v1:
 FAIL (§13). G2's fallback (Opus) remains capability CLOSED/FAIL, not
-qualification-eligible.
+qualification-eligible. All dispositions above are historical **Protocol v1**
+results. **Protocol v2 methodology is FROZEN (§14) but NOT yet implemented, and
+no Protocol-v2 re-adjudication has been performed**; v1 results are never
+overwritten.
 
 Generator diversity addresses dependence on one model family. Qualification
 uses absolute fidelity to fixed structured truth, not a relative ranking,
@@ -26,8 +29,8 @@ CLOSED and unchanged; they do not qualify construction generators.
 
 | Slot | Primary candidate | Predeclared corresponding fallback | Current status |
 | --- | --- | --- | --- |
-| G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | Primary FAIL (Attempt-01); fallback capability CLOSED/PASS (Capability Probe Attempt-03); Generator Qualification Attempt-02 CLOSED, Protocol-v1 FAIL (§13) |
-| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary FAIL (Attempt-01); fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03); second-level G2 selection required (§12) |
+| G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | Primary Protocol-v1 FAIL (Attempt-01); fallback capability CLOSED/PASS (Capability Probe Attempt-03); fallback Generator Qualification Attempt-02 CLOSED, Protocol-v1 FAIL (§13); Protocol-v2 dispositions of both pending (§14) |
+| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary Protocol-v1 FAIL (Attempt-01), Protocol-v2 disposition pending (§14); fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03), not re-adjudicated; second-level G2 selection criteria unchanged (§12) |
 
 **FROZEN:** use different OpenAI/Anthropic families/vendors to diversify
 naturalization provenance. Consider a fallback only if its corresponding primary
@@ -116,9 +119,9 @@ reaffirmation, changed versus unchanged state, Q/gold-answer consistency, and
 controlled entity/attribute/value preservation. Every fixture obeys the seven
 initial-unit, seven-update, two-Noop-opportunity structure and triplet controls.
 
-## 5. Absolute Qualification Gate
+## 5. Absolute Qualification Gate (Protocol v1; revised prospectively by §14)
 
-**FROZEN:** PASS/FAIL per model. QUALIFIED requires **all 12 triplets**, including
+**FROZEN (Protocol v1, `generator-qualification-procedure/1.0.0`):** PASS/FAIL per model. QUALIFIED requires **all 12 triplets**, including
 all three variants in each, to pass every required automated semantic/structural
 check and manual audit. Both primary generators independently meet the same
 contract. Do not average away a failure or rank generators that qualify.
@@ -143,6 +146,13 @@ The required checks are:
 - Correct machine-readable output schema and triplet separation.
 - Matched controls and exact deterministic message structure after assembly.
 - Natural, comprehensible English, confirmed by manual audit.
+
+Under Protocol v1 every item above, including natural English, is a
+candidate-level gate. **Protocol v2 (§14)** keeps every item above as a
+Level-1 hard gate except natural English, which it splits into
+*comprehensibility* (Level-1 hard gate) and *fluency* (Level-2 item-quality
+finding). The v1 text is retained unchanged as the historical rule under which
+Attempt-01 and Attempt-02 were adjudicated.
 
 Automated validation and manual audit are both required; a structural parser
 alone does not establish semantic fidelity. The runner, deterministic checks and
@@ -258,14 +268,14 @@ Qualification may record message/token lengths descriptively, but these numeric
 values are not final pass/fail gates without separate adjudication. Exact
 message-count requirements are independently frozen and must pass.
 
-**OPEN:** fallback qualification (`openai/gpt-5.6-terra`,
-`anthropic/claude-opus-5`) under the same frozen contract, assignment
-mechanism/seed, B0 calibration material/grid/budget, and Small Pilot
+**OPEN:** Protocol-v2 implementation and offline re-adjudication (§14),
+second-level G2 candidate selection (§12), handling of a final-CRST item with a
+Level-1 failure (§14), assignment mechanism/seed, B0 calibration material/grid/budget, and Small Pilot
 size/acceptance procedure. Final CRST N/R/minimum effect of interest and
 statistical procedures are not chosen here. Official Generator Qualification
-Attempt-01 has executed and closed (§10); no naturalized CRST dataset or final
-CRST experiment has been produced or executed, and completed qualifications
-(Attempt-01) are not reopened.
+Attempt-01 and Attempt-02 have executed and closed under Protocol v1 (§10,
+§13); no naturalized CRST dataset or final CRST experiment has been produced or
+executed, and their Protocol-v1 dispositions are never rewritten.
 
 ## 10. Offline Qualification Runner — Attempt-01 CLOSED; Per-Slot-Capable Implementation FROZEN
 
@@ -708,21 +718,185 @@ adjudication are recorded at
 and `results/generator-qualification/adjudication/v1/attempt-02.json`
 (`attempt-NN/` = immutable raw execution evidence; `manual-audit/v1/...` =
 completed historical v1 human audit; `adjudication/v1/...` = derived
-historical v1 disposition; legacy Attempt-01 paths are unversioned and remain
-where they are, not relocated).
+historical v1 disposition; Attempt-01's derived artifacts were moved to the
+same `v1/` layout by pathname-only normalization, byte-identical).
 **Final Protocol-v1 disposition: G1 (Terra) = FAIL.**
 
-**Protocol v2 status.** The comprehensibility/fluency split proposed as a
-possible Protocol v2 (methodological audit, separate from this
-implementation) is **only a proposal**: it is **not frozen** and **has not
-been applied** anywhere in Attempt-02's closure. The `procedure_version`
-recorded throughout Attempt-02's evidence and adjudication is
-`generator-qualification-procedure/1.0.0` (historical Protocol v1),
-unchanged. Any future Protocol-v2 re-adjudication would be a separate,
-explicitly versioned derived artifact and would not overwrite this v1 result.
+**Protocol v2 status.** At Attempt-02's closure Protocol v2 was only a
+proposal; it was **not applied** anywhere in that closure, and the
+`procedure_version` recorded throughout Attempt-02's evidence and adjudication
+is `generator-qualification-procedure/1.0.0` (historical Protocol v1),
+unchanged. Protocol v2's methodology has since been frozen (§14) but is not
+implemented, and no Protocol-v2 re-adjudication has occurred. Any future
+Protocol-v2 re-adjudication is a separate, explicitly versioned derived
+artifact and does not overwrite this v1 result.
 
 **Status:** Terra Generator Qualification Attempt-02 is CLOSED; Terra's
-Protocol-v1 disposition is FAIL, so Terra is **not** Generator-Qualified. No
-new G2 candidate has been selected. Opus remains capability CLOSED/FAIL
-(provider-policy refusal, §11/§12). Sol, Sonnet, Terra, and Opus all remain
-not Generator-Qualified.
+Protocol-v1 disposition is FAIL, so Terra is **not** Generator-Qualified under
+Protocol v1. No new G2 candidate has been selected. Opus remains capability
+CLOSED/FAIL (provider-policy refusal, §11/§12). As of this writing Sol, Sonnet,
+Terra, and Opus all remain not Generator-Qualified; Sol's, Sonnet's, and
+Terra's Protocol-v2 dispositions are undetermined until the §14 offline
+re-adjudication is implemented and performed.
+
+## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Not Implemented; Not Applied)
+
+**Status: PROTOCOL v2 METHODOLOGY FROZEN. IMPLEMENTATION: NOT YET DONE.
+RE-ADJUDICATION: NOT YET PERFORMED.** No Protocol-v1 result or artifact is
+changed by this section.
+
+**Versions.** Protocol v2: `generator-qualification-procedure/2.0.0`,
+`generator-manual-audit/2.0.0`. Protocol v1 remains
+`generator-qualification-procedure/1.0.0`, `generator-manual-audit/1.0.0`;
+every v1 artifact stays immutable and remains a valid historical record.
+
+**Rationale and disclosure.** Protocol v2 corrects a *level-of-analysis
+mismatch* in Protocol v1. Protocol v1 treats every natural-English defect both
+as a defect of the generated item and as a candidate-level disqualifying
+defect. The pre-existing CRST methodology (`crst-specification.md` §14)
+already requires the **final dataset** to undergo exhaustive manual review,
+including natural English, before dataset freeze. A purely surface-level
+fluency defect whose naturalized text still carries a clear, single meaning therefore
+does not threaten internal validity the way semantic corruption does: a missed
+semantic defect corrupts the gold label a memory policy is measured against,
+whereas a fluency defect affects realism and is already caught and resolved
+by final-item review. Protocol v2 keeps final-dataset naturalness strict and
+assigns each defect's consequence to the appropriate level. The revision is
+**not** motivated by rescuing any candidate, by model prestige, or by any
+expectation that particular models should pass. **Disclosure:** this is a
+post-hoc revision, introduced *after* Generator Qualification outcomes were
+observed (Attempt-01, Attempt-02), but *before* final CRST generation, final
+CRST dataset freeze, and any M1/M2/M3 experimental outcome.
+
+**Level 1 — candidate/generator suitability (hard gates, zero tolerance).**
+One applicable Level-1 failure fails the fixture, and one failed fixture fails
+the candidate. No numeric failure-rate threshold is introduced.
+
+- *Execution/contract:* parse failure; strict-schema violation; required empty
+  field; refusal; truncation; any other terminal call failure.
+- *Semantic/structural:* `entity_fidelity`, `attribute_fidelity`,
+  `current_value_fidelity`, `changed_vs_hypothetical_wording`,
+  `same_state_fidelity`, `superseded_value_leakage`,
+  `invented_information_or_state_change`, `merged_or_omitted_event`,
+  `q_intent_fidelity`, `answer_leakage`, `output_boundary` failures; Q wording
+  not identical across Low/Medium/High where identity is required; any
+  deterministic automated semantic FAIL.
+- *Comprehensibility:* naturalized text whose relevant meaning is not clear and
+  single-interpretation **from the text itself** (see the judgment basis below).
+
+**Level 2 — generated-item quality (recorded findings).** Protocol-v1
+`natural_english` is split into two distinct Protocol-v2 checks:
+
+- `comprehensibility` — Level 1, hard candidate gate;
+- `fluency` — Level 2, item-level quality finding (awkward, redundant,
+  unnatural, or unidiomatic wording whose meaning is nevertheless
+  comprehensible under the judgment basis below).
+
+**FROZEN comprehensibility judgment basis.** Comprehensibility is judged from
+the naturalized text as presented in the conversation context available to the
+experimental model -- never from what the generator probably intended. A PASS
+requires that the relevant entity, attribute, value/state, changed-state or
+same-state meaning, revision meaning, and (where applicable) question intent
+are each understandable clearly from that text, without multiple reasonable
+interpretations. Structured truth **may** be used by the reviewer as the
+reference for checking semantic fidelity (whether the clearly expressed
+meaning is the correct one); it **must not** be used to supply meaning the
+generated text itself fails to express clearly enough. Therefore:
+
+- awkward, redundant, or unidiomatic wording that has a single clear meaning in
+  context ⇒ `comprehensibility` may PASS; `fluency` may FAIL (Level 2);
+- wording with more than one reasonable semantic interpretation, missing
+  necessary meaning, or meaning recoverable only by consulting hidden
+  structured truth ⇒ `comprehensibility` FAIL (Level 1).
+
+A fluency FAIL alone does **not** fail the fixture or the candidate, must be
+recorded with notes, and does not permit an affected *final CRST* item to enter
+the frozen dataset without correction (below). Qualification fixtures are never
+corrected or regenerated; their fluency findings remain evidence of generator
+behavior.
+
+**Candidate qualification rule (v2).** A candidate is QUALIFIED only if all 12
+frozen fixtures have zero Level-1 failures, every applicable required manual
+cell is complete, every automated ambiguity finding is human-resolved, and no
+unresolved Level-1 ambiguity remains. Level-2 fluency findings are counted and
+reported descriptively only; they do not disqualify, and candidates are never
+ranked, scored, or placed on a leaderboard by them. Generator Qualification
+remains PASS/FAIL.
+
+**Final-CRST fluency-only correction rule (prospective).** If a final CRST item
+fails *fluency only*, a human reviewer may make a minimal surface edit to the
+affected event text. The edit must not add, remove, or change an entity,
+attribute, or value expression; alter current/superseded state meaning,
+changed-state vs same-state polarity, revision chronology, or Noop semantics;
+or alter Q intent or the gold answer. Required provenance: original generated
+text, corrected text, before/after hashes, reviewer identity, timestamp,
+correction reason, and the correction count attributable to the generator.
+After correction: rerun deterministic automated validation, manually re-review
+every applicable Level-1 check for the edited event, and re-review fluency; the
+item enters the frozen dataset only if all checks PASS. No model resampling or
+retry-until-pass is permitted for a fluency-only defect. A defect that cannot
+be repaired by a minimal surface edit without touching structured meaning is
+not fluency-only and is a Level-1 semantic/comprehensibility issue.
+
+**OPEN: final-dataset Level-1 failure policy.** Handling of a newly generated
+*final-CRST* item with a Level-1 semantic, structural, comprehensibility,
+schema, refusal, or truncation failure remains **OPEN** and must be frozen
+**before** final CRST generation begins. No regeneration policy is invented
+here. This OPEN item does not block offline v2 re-adjudication of archived
+qualification evidence.
+
+**Historical v1 → v2 mapping (offline).** Every v1 manual cell other than
+`natural_english` carries forward unchanged. v1 `natural_english = PASS` maps
+mechanically to `comprehensibility = PASS`, `fluency = PASS`. Each v1
+`natural_english = FAIL` must be reclassified by the human reviewer, with
+mandatory notes and under the comprehensibility judgment basis above, as
+exactly one of: (A) `comprehensibility = FAIL` (fluency not
+independently outcome-determining) ⇒ Level-1 failure; or (B)
+`comprehensibility = PASS`, `fluency = FAIL` ⇒ Level-2 finding only.
+Classification must never depend on candidate identity or desired outcome.
+Historical v1 reviewer notes stating that meaning "remained recoverable" are
+Protocol-v1 records, not Protocol-v2 comprehensibility judgments; every v1
+`natural_english` FAIL is reclassified afresh under the judgment basis above.
+
+**Symmetric offline re-adjudication.** Protocol v2 applies symmetrically to all
+archived Generator Qualification evidence: Sol (Attempt-01), Sonnet
+(Attempt-01), and Terra (Attempt-02). It is offline only, with no new
+generation calls. Protocol-v1 dispositions are reported alongside, never
+overwritten by, Protocol-v2 dispositions. Opus is not re-adjudicated: it failed
+at the capability stage and has no Generator Qualification evidence.
+
+**Primary precedence (frozen before any v2 re-adjudication).** Originally
+designated primaries retain precedence over their fallbacks. For G1 (primary
+`openai/gpt-5.6-sol`, fallback `openai/gpt-5.6-terra`): if both qualify under
+v2, Sol occupies G1 and Terra remains a qualified fallback; if Sol fails v2 and
+Terra qualifies, Terra occupies G1; if both fail, G1 remains unresolved. The
+choice is never made by fluency counts, subjective output quality, price,
+token usage, model prestige, downstream CRST performance, or any M1/M2/M3
+outcome. This rule exists specifically to prevent post-hoc candidate selection.
+
+**G2 status.** Sonnet is re-adjudicated offline under v2 from Attempt-01; its
+historical terminal strict-schema/nonempty-string failures remain Level-1
+failures unless archived evidence proves otherwise. Opus remains capability
+CLOSED/FAIL. G2 remains an Anthropic-family slot. No second-level G2 candidate
+is selected here, and the second-level selection criteria (§12) are unchanged.
+
+**Anti-bias safeguards (frozen).** Preserve every Protocol-v1 result and
+artifact; disclose that v2 was introduced after observing qualification
+outcomes; justify it solely by level-of-analysis alignment with the
+pre-existing final-dataset QC requirement; freeze v2 before any v2
+re-adjudication; apply v2 symmetrically to Sol, Sonnet, and Terra; make no new
+API calls for v2 re-adjudication; never repeat generation until a preferred
+candidate passes; never let an M1/M2/M3 outcome inform qualification; freeze
+primary precedence before re-adjudication; keep the final dataset subject to
+exhaustive QC regardless of candidate qualification; never rewrite a
+Protocol-v1 artifact to make v2 appear pre-specified.
+
+**Artifact layout.** Immutable execution evidence stays in
+`results/generator-qualification/attempt-NN/`. Historical v1 derived artifacts
+stay in `results/generator-qualification/manual-audit/v1/` and
+`results/generator-qualification/adjudication/v1/`. Future v2 derived
+artifacts go to `results/generator-qualification/manual-audit/v2/` and
+`results/generator-qualification/adjudication/v2/` (not yet created). v1
+artifacts are never overwritten. `generator-qualification-audit.md` §5
+describes the historical v1 audit contract and is superseded prospectively by
+this section for v2 audits only.

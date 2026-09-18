@@ -814,3 +814,74 @@ original execution; Attempt-01's historical v1 dispositions (G1/G2 FAIL) were
 reverified unaffected. Opus remains capability CLOSED/FAIL (provider-policy
 refusal). No new G2 candidate has been selected. Neither Terra nor Opus is
 Generator-Qualified.
+
+## Generator Qualification Protocol v2 — Methodology Frozen (Not Implemented, Not Applied)
+
+**PROTOCOL v2 METHODOLOGY: FROZEN. IMPLEMENTATION: NOT YET DONE.
+RE-ADJUDICATION: NOT YET PERFORMED.** Full specification:
+`generator-qualification.md` §14. Versions:
+`generator-qualification-procedure/2.0.0`, `generator-manual-audit/2.0.0`;
+Protocol v1 (`.../1.0.0`) and all its artifacts remain immutable historical
+records.
+
+**Rationale.** Protocol v1 treats every natural-English defect as both an item
+defect and a candidate-level disqualifying defect, although the pre-existing
+CRST methodology already requires exhaustive manual review of natural English
+in the final dataset before freeze. This is a level-of-analysis mismatch: a
+fluency defect whose naturalized text still carries a clear, single meaning does not
+threaten internal validity like semantic corruption. **Disclosed timing:** v2
+is a post-hoc revision introduced after Generator Qualification outcomes were
+observed, but before final CRST generation, dataset freeze, and any M1/M2/M3
+outcome. It is not motivated by rescuing any candidate.
+
+**Rules.** Level 1 (zero-tolerance hard gates; one failure fails the fixture
+and candidate): execution/contract failures (parse, strict schema, required
+empty field, refusal, truncation, other terminal failure); every semantic/
+structural manual check; cross-variant Q identity; any deterministic automated
+semantic FAIL; and **comprehensibility**, judged from the naturalized text as
+presented to the experimental model (every relevant entity, attribute,
+value/state, change-vs-same-state and revision meaning, and Q intent clear with
+a single reasonable interpretation; structured truth is a fidelity reference
+only and must never supply meaning the text fails to express; ambiguity,
+missing meaning, or meaning recoverable only from hidden structured truth is a
+Level-1 FAIL). Level 2: **fluency** — recorded with
+notes, counted descriptively, never disqualifying, never ranked. v1
+`natural_english` splits into `comprehensibility` (Level 1) and `fluency`
+(Level 2). Qualification fixtures are never corrected. A candidate qualifies
+only with zero Level-1 failures across all 12 fixtures, all applicable manual
+cells complete, and all ambiguities human-resolved.
+
+**Final-CRST fluency-only correction (prospective).** Minimal human surface
+edit only, never touching entity/attribute/value, state meaning, polarity,
+chronology, Noop semantics, Q intent, or gold answer; full provenance
+(original/corrected text, hashes, reviewer, timestamp, reason, per-generator
+count); automated re-validation plus manual re-review of all Level-1 checks and
+fluency; no resampling. A defect not repairable this way is Level 1.
+**OPEN:** handling of a final-CRST item with a Level-1 failure, to be frozen
+before final CRST generation; it does not block offline v2 re-adjudication.
+
+**v1 → v2 mapping.** Non-`natural_english` cells carry forward;
+`natural_english = PASS` ⇒ comprehensibility PASS, fluency PASS; each
+`natural_english = FAIL` is reclassified by the human reviewer, with notes, as
+under the same model-visible-text basis (v1 "recoverable meaning" notes are
+not v2 judgments), either comprehensibility FAIL (Level 1) or comprehensibility PASS + fluency
+FAIL (Level 2), independent of candidate identity or desired outcome.
+
+**Re-adjudication and precedence.** Offline only, symmetric across Sol and
+Sonnet (Attempt-01) and Terra (Attempt-02); no new API calls; v1 dispositions
+reported alongside, never overwritten. Opus is not re-adjudicated (capability
+CLOSED/FAIL; no qualification evidence). **Primary precedence, frozen before
+re-adjudication:** if Sol and Terra both qualify under v2, Sol occupies G1 and
+Terra is a qualified fallback; if only Terra qualifies, Terra occupies G1; if
+neither, G1 is unresolved — never decided by fluency counts, subjective
+quality, price, tokens, prestige, or any CRST/M1/M2/M3 outcome. Sonnet's
+terminal schema/nonempty-string failures remain Level 1 unless archived
+evidence proves otherwise. G2 remains Anthropic-family; no second-level G2
+candidate is selected; §12 criteria unchanged.
+
+**Safeguards and layout.** All v1 results preserved; timing disclosed; v2
+frozen before re-adjudication; symmetric application; no repeated generation;
+no M1/M2/M3 influence; final dataset still exhaustively QC'd; no v1 artifact
+rewritten. Future v2 derived artifacts go to
+`results/generator-qualification/manual-audit/v2/` and `.../adjudication/v2/`
+(not yet created); raw evidence stays in `attempt-NN/`.
