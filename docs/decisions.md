@@ -317,3 +317,31 @@ This pre-qualification capability correction does not invalidate Attempt-01.
 Attempt-02 is required before claiming compatibility; reasoning, schema,
 `max_tokens`, and observed routing remain VERIFY. Both generators remain
 CANDIDATE. See the [adjudication](generator-naturalization-contract.md#8-two-call-capability-probe-and-attempt-01-adjudication).
+
+
+## Generator Capability Probe Attempt-02 — CLOSED / PASS
+
+Attempt-02, source `a86ba717e419918765edcc056c8bd852ea94a13b`, passed execution
+compatibility on both first-party routes with one HTTP 200 attempt each, no
+retry/refusal/truncation, matching model/provider identities, and passed parse
+and schema checks. Result SHA-256:
+`b8982ac18e74fded527c3680e26082cf505fadbe33edf53ea103494b7ad57c8f`.
+Attempt-01 remains preserved VALID FAIL; Attempt-02 remains preserved PASS.
+See the [evidence and claim boundary](generator-naturalization-contract.md#9-attempt-02-closure--capability-compatibility-pass).
+
+Freeze for Generator Qualification and final CRST naturalization: STANDARD;
+`openai/gpt-5.6-sol` via `[openai]`, `anthropic/claude-sonnet-5` via `[anthropic]`;
+no fallback, require_parameters true; low reasoning mapped to `reasoning.effort`,
+16,384 output tokens mapped to `max_tokens`, exact strict JSON-schema envelope.
+Temperature/top_p remain removed. Prompt/input 1.1.0 and output schema 1.0.0 are
+unchanged. Freeze the reviewed 300-second total physical-attempt deadline,
+two infrastructure retries, 1s/2s backoff, HTTP 408/429/500/502/503/504 and
+established network/connect/read/write/pool timeout classes. Semantic/schema,
+refusal/truncation/provider mismatch failures do not trigger infrastructure retries.
+The reader timeout is unchanged. No next probe attempt is scheduled.
+
+This resolves the earlier execution VERIFY statements, not semantic qualification.
+Sol/Sonnet remain CANDIDATE; Generator Qualification has not executed. No hidden
+reasoning equivalence or cross-provider reasoning-token comparability is claimed;
+zero reasoning tokens does not imply disabled/ignored reasoning. Later changes
+require explicit adjudication and requalification as applicable.

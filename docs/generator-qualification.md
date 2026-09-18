@@ -174,14 +174,14 @@ Freeze intended first-party routing:
 
 Both use `allow_fallbacks = false` and `require_parameters = true`. Requested
 and observed model/provider identities are separate provenance fields; actual
-route acceptance/evidence remains to verify. Calls are stateless without
+route acceptance/evidence was verified by Attempt-02. Calls are stateless without
 carry-over, tools, web/search, or plugins, with one complete triplet per logical
 call and one shared semantic prompt/schema across both models.
 
-**PROPOSED / VERIFY BEFORE FREEZE:** `reasoning.effort = low`, strict JSON-schema response using the exact versioned
+**FROZEN after Capability Probe Attempt-02 PASS:** `reasoning.effort = low`, strict JSON-schema response using the exact versioned
 schema, and `max_output_tokens = 16384`. This is a ceiling, not a target length.
-Verify all parameters jointly, the strict-schema/API envelope, output-token
-parameter mapping, and reasoning/output accounting. Do not invent unsupported
+Attempt-02 verified joint request acceptance, the strict-schema/API envelope,
+and output-token mapping; hidden reasoning equivalence is not claimed. Do not invent unsupported
 parameters or silently alter a rejected parameter. The reader configuration is
 not a generator configuration.
 
@@ -189,25 +189,25 @@ Attempt-01 failed routing before inference. Its adjudication removes
 `temperature` and `top_p` from both candidates' execution packages because
 neither is advertised in the researcher-supplied catalog audit. No individual
 causal attribution is made. See the [preserved evidence and adjudication](generator-naturalization-contract.md#8-two-call-capability-probe-and-attempt-01-adjudication).
-The semantic versions are unchanged; Attempt-02 is required, and the remaining
-parameter package and observed routing are still VERIFY.
+The semantic versions are unchanged. Attempt-02 subsequently passed, verifying
+the package and observed routing; Generator Qualification has not executed.
 
-**RECOMMENDED / PENDING FREEZE after probe-implementation review:** a 300-second
+**FROZEN reviewed transport:** a 300-second
 total per-attempt deadline, at most two infrastructure retries, 1s/2s backoff,
 HTTP statuses 408/429/500/502/503/504 plus established network/transport timeout
 classes. Semantic/schema/truncation/refusal failures are not infrastructure
 retries. Do not continue an incomplete response or regenerate it into a pass.
 
-The [shared contract](generator-naturalization-contract.md) specifies a later
+The [shared contract](generator-naturalization-contract.md) records the completed
 **two-logical-call compatibility probe**, one per primary, with the exact prompt,
 schema, intended routes, and complete parameter combination. It is not Generator
 Qualification. Its output cannot enter qualification evidence or final CRST data.
 Parameter rejection requires STOP and adjudication. Nothing is probed here.
 
 Official qualification and full final naturalization require a predeclared,
-reproducible execution configuration. Verified parameter support, transport
-constants, physical input serialization, and any activated fallback's capabilities
-remain OPEN. Record actual supported settings, versions/hashes, source commit,
+reproducible execution configuration. The primary pair's execution package,
+transport constants, and physical input serialization are FROZEN after
+Attempt-02; any activated fallback's capabilities remain OPEN. Record actual supported settings, versions/hashes, source commit,
 requests, raw responses, routing evidence, validation/audit evidence, and physical
 versus logical accounting. A later execution-mode change requires explicit
 adjudication and qualification under the changed mode, not silent substitution.
@@ -234,8 +234,8 @@ Qualification may record message/token lengths descriptively, but these numeric
 values are not final pass/fail gates without separate adjudication. Exact
 message-count requirements are independently frozen and must pass.
 
-**OPEN:** fixture contents, validator/audit implementation, exact input serialization,
-verified execution settings, qualification outcomes, assignment mechanism/seed,
+**OPEN:** fixture contents, validator/audit implementation, fallback capabilities,
+qualification outcomes, assignment mechanism/seed,
 B0 calibration material/grid/budget, and Small Pilot size/acceptance procedure.
 Final CRST N/R/minimum effect of interest and statistical procedures are not
 chosen here. This plan generates no fixtures or dataset, performs no model/API

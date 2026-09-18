@@ -156,8 +156,10 @@ def test_default_preview_no_client_no_key_no_artifact(monkeypatch, tmp_path, cap
     output = tmp_path / 'must-not-exist'
     assert p.main(['--output-directory', str(output)]) == 0
     result = json.loads(capsys.readouterr().out)
-    assert result['status'] == 'OFFLINE_PREVIEW_READY'
-    assert result['output_directory'] == 'results/generator-capability-probe/attempt-02'
+    assert result['status'] == 'CAPABILITY_PROBE_CLOSED_PASS'
+    assert result['output_directory'] is None
+    assert result['successful_attempt'] == 'attempt-02'
+    assert result['execution_package'] == 'FROZEN'
     assert result['generation'] == {'reasoning_effort': 'low', 'max_output_tokens': 16384}
     assert result['expected_logical_calls'] == 2 and result['maximum_physical_inference_attempts'] == 6
     assert not output.exists()
@@ -299,7 +301,7 @@ def test_mock_run_sequential_stop_and_archive(bundle, monkeypatch, tmp_path, fai
         assert kwargs == {'trust_env': False, 'follow_redirects': False}
         return httpx.AsyncClient(transport=httpx.MockTransport(handler))
     out = tmp_path / 'mock-attempt'
-    result = asyncio.run(p.execute_probe(bundle, 'mock-secret', out, client_factory=factory))
+    result = asyncio.run(p.execute_probe(mock_open_bundle(bundle), 'mock-secret', out, client_factory=factory))
     assert seen == [s['model'] for s in p.SLOTS[:1 if fail_first else 2]]
     assert result['status'] == ('FAIL' if fail_first else 'PASS')
     assert result['logical_calls'][1]['status'] == ('BLOCKED' if fail_first else 'PASS')
@@ -308,7 +310,7 @@ def test_mock_run_sequential_stop_and_archive(bundle, monkeypatch, tmp_path, fai
     assert (out / 'SHA256SUMS').read_text().split()[0] == p.digest(raw)
     assert json.loads(raw)['provenance'] == bundle['provenance']
     with pytest.raises(FileExistsError):
-        asyncio.run(p.execute_probe(bundle, 'mock-secret', out, client_factory=lambda **kwargs: pytest.fail('Overwrite sent request')))
+        asyncio.run(p.execute_probe(mock_open_bundle(bundle), 'mock-secret', out, client_factory=lambda **kwargs: pytest.fail('Overwrite sent request')))
 
 
 def test_maximum_six_attempts(bundle, monkeypatch, tmp_path):
@@ -325,7 +327,7 @@ def test_maximum_six_attempts(bundle, monkeypatch, tmp_path):
         seen.append(json.loads(request.content)['model'])
         slot = next(s for s in p.SLOTS if s['model'] == seen[-1])
         return httpx.Response(200, json=envelope(slot)) if len(seen) % 3 == 0 else httpx.Response(503)
-    result = asyncio.run(p.execute_probe(bundle, 'mock-secret', tmp_path / 'attempt',
+    result = asyncio.run(p.execute_probe(mock_open_bundle(bundle), 'mock-secret', tmp_path / 'attempt',
                         client_factory=lambda **kwargs: httpx.AsyncClient(transport=httpx.MockTransport(handler))))
     assert result['status'] == 'PASS' and len(seen) == 6 and waits == [1, 2, 1, 2]
 
@@ -348,7 +350,7 @@ def test_dirty_worktree_refused_before_output(bundle, monkeypatch, tmp_path):
         return Result()
     monkeypatch.setattr(p.subprocess, 'run', git)
     with pytest.raises(ValueError, match='clean worktree'):
-        asyncio.run(p.execute_probe(bundle, 'mock-secret', tmp_path / 'attempt'))
+        asyncio.run(p.execute_probe(mock_open_bundle(bundle), 'mock-secret', tmp_path / 'attempt'))
     assert not (tmp_path / 'attempt').exists()
 
 
@@ -455,12 +457,12 @@ def test_real_git_cleanliness_before_directory_or_client(bundle, git_repo, tmp_p
         return httpx.AsyncClient(transport=httpx.MockTransport(handler))
     output = tmp_path / 'mock-result'
     if state in ('clean', 'ignored'):
-        result = asyncio.run(p.execute_probe(bundle, 'mock-secret', output, client_factory=factory))
+        result = asyncio.run(p.execute_probe(mock_open_bundle(bundle), 'mock-secret', output, client_factory=factory))
         assert result['status'] == 'PASS' and opened == [True] and len(requests) == 2
         assert result['provenance']['source_commit'] == git('rev-parse', 'HEAD')
     else:
         with pytest.raises(ValueError, match='clean worktree'):
-            asyncio.run(p.execute_probe(bundle, 'mock-secret', output, client_factory=factory))
+            asyncio.run(p.execute_probe(mock_open_bundle(bundle), 'mock-secret', output, client_factory=factory))
         assert not output.exists() and not opened and not requests
 
 
@@ -480,3 +482,33 @@ def test_removed_sampling_controls_rejected_in_config(bundle, tmp_path, removed_
     path.write_text(yaml.safe_dump(bundle['config']))
     with pytest.raises(ValueError, match='Unexpected probe setting: generation'):
         p.load_bundle(path)
+
+
+def mock_open_bundle(bundle):
+    """Exercise preserved execution machinery with mocks, never reopen the config."""
+    opened = deepcopy(bundle)
+    opened['config']['status'] = 'MOCK_ONLY'
+    return opened
+
+
+def test_closed_config_refuses_execution_before_side_effects(bundle, monkeypatch, tmp_path):
+    def forbidden(*args, **kwargs):
+        pytest.fail('Closed execution crossed boundary')
+    monkeypatch.setattr(p, 'source_commit', forbidden)
+    out = tmp_path / 'must-not-exist'
+    with pytest.raises(ValueError, match='CLOSED/PASS'):
+        asyncio.run(p.execute_probe(bundle, 'mock-secret', out, client_factory=forbidden))
+    assert not out.exists()
+
+
+def test_closed_cli_does_not_read_key_or_execute(monkeypatch, capsys):
+    class Environment(dict):
+        def get(self, key, default=None):
+            if key == 'OPENROUTER_API_KEY':
+                pytest.fail('Closed CLI read key')
+            return super().get(key, default)
+    monkeypatch.setattr(p.os, 'environ', Environment(p.os.environ))
+    with pytest.raises(SystemExit) as exc:
+        p.main(['--execute', '--confirm-spend'])
+    assert exc.value.code == 2
+    assert 'CLOSED/PASS' in capsys.readouterr().err

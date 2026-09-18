@@ -175,8 +175,10 @@ def load_bundle(config_path=CONFIG):
     require(type(config) is dict, 'Expected config object')
     expected = dict(execution_mode='standard', logical_calls=SLOTS, allow_fallbacks=False,
                     require_parameters=True, generation=GENERATION, transport=TRANSPORT,
-                    wire_mapping=MAPPING, status='PROBE-PENDING', generator_status='CANDIDATE',
-                    parameter_semantics='NOT_YET_VERIFIED', input_purpose='CAPABILITY-PROBE-ONLY',
+                    wire_mapping=MAPPING, status='CLOSED', capability_result='PASS',
+                    successful_attempt='attempt-02', execution_package='FROZEN',
+                    execution_compatibility='VERIFIED', output_directory=None, generator_status='CANDIDATE',
+                    parameter_semantics='HIDDEN_REASONING_EQUIVALENCE_NOT_CLAIMED', input_purpose='CAPABILITY-PROBE-ONLY',
                     input_domain='Software Configuration', **VERSIONS)
     for key, value in expected.items():
         require(canonical(config.get(key)) == canonical(value), f'Unexpected probe setting: {key}')
@@ -226,11 +228,13 @@ def request_body(bundle, slot):
 
 def preview(bundle):
     bodies = [request_body(bundle, slot) for slot in SLOTS]
-    return {'status': 'OFFLINE_PREVIEW_READY', **bundle['provenance'],
-            'execution_mode': 'standard', 'parameter_semantics': 'PROBE-PENDING',
+    return {'status': 'CAPABILITY_PROBE_CLOSED_PASS', **bundle['provenance'],
+            'execution_mode': 'standard', 'parameter_semantics': bundle['config']['parameter_semantics'],
+            'execution_package': 'FROZEN', 'execution_compatibility': 'VERIFIED',
+            'generator_status': 'CANDIDATE', 'successful_attempt': 'attempt-02',
             'output_directory': bundle['config']['output_directory'],
             'generation': bundle['config']['generation'], 'wire_mapping_under_test': MAPPING,
-            'transport_proposal': bundle['config']['transport'],
+            'transport': bundle['config']['transport'],
             'expected_logical_calls': 2, 'maximum_physical_inference_attempts': 6,
             'requests': [{'logical_call_id': slot['logical_call_id'], 'requested_model': body['model'],
                           'requested_provider_order': body['provider']['order'],
@@ -450,6 +454,7 @@ def archive(directory, result, key):
 
 
 async def execute_probe(bundle, key, output_directory, *, client_factory=httpx.AsyncClient):
+    require(bundle['config']['status'] != 'CLOSED', 'Capability probe CLOSED/PASS; reopening requires adjudication')
     require(bool(key.strip()), 'Execution requires OPENROUTER_API_KEY')
     require(source_commit(clean=True) == bundle['provenance']['source_commit'], 'Source changed since preflight')
     directory = Path(output_directory)
@@ -491,6 +496,8 @@ def main(argv=None):
     if not args.execute:
         print(json.dumps(preview(bundle), ensure_ascii=False, indent=2, allow_nan=False))
         return 0
+    if bundle['config']['status'] == 'CLOSED':
+        parser.error('Capability probe CLOSED/PASS; reopening requires adjudication')
     key = os.environ.get('OPENROUTER_API_KEY', '')  # Only read in explicitly gated execution.
     if not key.strip():
         parser.error('Execution requires OPENROUTER_API_KEY')

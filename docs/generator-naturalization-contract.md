@@ -4,7 +4,8 @@
 
 This contract prepares implementation under the researcher-adjudicated
 [Generator Qualification plan](generator-qualification.md). It does not execute
-qualification or certify provider capabilities. Both primary models remain
+qualification. Attempt-02 verified execution compatibility and closed the
+Capability Probe with PASS; the execution package is FROZEN. Both primary models remain
 CANDIDATE. No qualification fixtures or final CRST data are created here.
 
 - Shared semantic prompt: **crst-naturalization-prompt/1.1.0**.
@@ -12,8 +13,8 @@ CANDIDATE. No qualification fixtures or final CRST data are created here.
 - Input contract: **crst-naturalization-input/1.1.0**.
 
 The exact prompt text and JSON Schema below are the shared contract to use in
-both later capability-probe calls. These versions are specified, but API
-acceptance remains **VERIFY BEFORE FREEZE** for the complete execution package.
+Generator Qualification and final CRST naturalization. Attempt-02 accepted the
+complete request package on both intended first-party routes.
 Record versions and hashes outside model output. A material prompt/schema change
 requires a new version and the qualification plan's full requalification rule;
 do not silently make model-specific semantic edits.
@@ -40,7 +41,7 @@ not a current price quotation or methodological price threshold.
 Both requests must set `provider.allow_fallbacks = false` and
 `provider.require_parameters = true`. No provider fallback or batch model IDs
 are permitted. These are frozen intended routing identities; actual route and
-parameter acceptance must still be verified. Archive requested and returned model
+parameter acceptance were verified by Attempt-02. Archive requested and returned model
 identities separately, and requested routing separately from observed selected
 provider evidence. Do not infer observed routing merely from the request.
 
@@ -221,23 +222,21 @@ contract; this document does not implement the validator. Exact lexical-check
 coverage and manual recording forms remain implementation details to version
 before qualification. The 5%/2% length tolerances remain PROVISIONAL, not gates.
 
-## 7. Proposed Parameters and Transport: VERIFY BEFORE FREEZE
+## 7. Frozen Execution Package and Transport
 
-The complete proposed common parameter combination is:
+The common execution package is FROZEN for official Generator Qualification and
+final CRST naturalization unless later explicit adjudication requires requalification:
 
 - `reasoning.effort = low`; no `temperature` or `top_p` controls.
 - Strict JSON-schema response using the exact schema in Section 4.
 - `max_output_tokens = 16384` as a ceiling, not a target length.
 
-These remain **PROPOSED / VERIFY BEFORE FREEZE** on both intended provider paths.
-Verify exact structured-response envelope, strictness placement, API output-token
-parameter mapping, reasoning controls, and output/ reasoning-token
-limit semantics. Do not infer generator parameter support from the reader's
-`max_tokens` mapping or its `json_object` qualification requests. Do not silently
-omit unsupported schema features or parameters. No acknowledgement or experimental
-answer tokens belong in the naturalizer's intended response.
+Attempt-02 verified acceptance of this exact strict-schema envelope and
+`max_tokens` mapping on both intended routes. `temperature` and `top_p` remain
+removed. No acknowledgement or experimental answer tokens belong in the
+naturalizer's intended response. Hidden reasoning equivalence is not claimed.
 
-**RECOMMENDED, pending freeze after capability-probe implementation review:**
+**FROZEN transport:**
 300-second total per-attempt deadline; at most two infrastructure retries;
 backoffs of 1 second then 2 seconds; retryable HTTP statuses 408, 429, 500, 502,
 503, 504 plus the repository's established network and read/write/connect/pool
@@ -246,17 +245,16 @@ from a single transport timeout argument. No retry on semantic, schema,
 truncation, or refusal failures. No continuation request for an incomplete
 triplet. Each physical attempt is logged and does not add a logical case.
 
-STANDARD mode and intended provider routes are decided; their actual acceptance,
-all proposed common parameter semantics and the transport proposal remain to
-verify/finalize before official qualification. The guarded probe implementation
-tests the proposed constants and mappings without declaring them supported.
+STANDARD mode, first-party pins, package, canonical input serialization, and
+reviewed transport are frozen. Provider-reported accounting remains observational;
+request acceptance does not establish hidden reasoning equivalence.
 
 ## 8. Two-Call Capability Probe and Attempt-01 Adjudication
 
-After separate execution authorization and review, issue **exactly two logical
+The completed probe design specified **exactly two logical
 probe calls**: one representative complete-triplet input to G1 and the same input
 to G2. Use the exact prompt/schema versions above, intended STANDARD model IDs
-and provider pins, and the entire proposed parameter combination. Reuse the existing probe-only input; it must not be one of the 12 qualification fixtures,
+and provider pins, and the entire request package. Reuse the existing probe-only input; it must not be one of the 12 qualification fixtures,
 final CRST data, B0 material, or existing qualification fixtures.
 
 The probe is execution-compatibility/provenance verification, not semantic
@@ -304,7 +302,9 @@ canonical JSON rule above. No semantic prompt/schema change is introduced.
 `python experiments/probe_generators.py` performs offline preview only. Sending
 requires both `--execute` and `--confirm-spend`, an environment API key, and a clean
 committed working tree. Later results are exclusively created under an explicit
-attempt directory (next default `results/generator-capability-probe/attempt-02/`).
+attempt directory. The current config is CLOSED/PASS, preserves `attempt-02` as
+the successful attempt, and has no next output directory; execution is refused
+until a later explicit adjudication changes that closed status.
 Every physical attempt is bounded by an explicit 300-second asynchronous deadline.
 An unsuccessful logical call stops execution; the remaining slot is recorded as
 blocked. FAIL evidence is archived without trying alternative parameters. A probe
@@ -328,6 +328,51 @@ The evidence does not isolate which individual control caused the routing
 failure; only the original complete package is known to have failed.
 This is a pre-qualification execution correction, not a semantic contract change:
 prompt/input versions remain 1.1.0 and output-schema version remains 1.0.0.
-Attempt-02 must test the revised package before capability compatibility can be
-claimed. Reasoning, strict schema, `max_tokens`, and observed provider routing
-remain VERIFY; both generators remain CANDIDATE. Attempt-01 is not invalidated.
+At that adjudication, Attempt-02 was required before compatibility could be
+claimed; reasoning, strict schema, `max_tokens`, and observed routing remained
+VERIFY. The subsequent PASS below resolves execution compatibility only.
+Attempt-01 remains valid FAIL evidence; both generators remain CANDIDATE.
+
+
+## 9. Attempt-02 Closure — Capability Compatibility PASS
+
+**CLOSED — PASS**, source `a86ba717e419918765edcc056c8bd852ea94a13b`.
+The immutable [Attempt-02 result](../results/generator-capability-probe/attempt-02/probe.json)
+has SHA-256 `b8982ac18e74fded527c3680e26082cf505fadbe33edf53ea103494b7ad57c8f`.
+Its input-config SHA-256 was
+`2457dc995ea2955075f420eedc2ac37009a87bedac1849fb4fae09cc663d88bf`;
+the closure config updates status/provenance, not the successful request package.
+Both evidence files and SHA256SUMS are preserved without rewriting.
+
+| Evidence | G1 | G2 |
+| --- | --- | --- |
+| Requested and returned model | openai/gpt-5.6-sol | anthropic/claude-sonnet-5 |
+| Requested provider / observed selected provider | openai / OpenAI | anthropic / Anthropic |
+| HTTP / finish_reason | 200 / stop | 200 / stop |
+| native_finish_reason | completed | end_turn |
+| Refusal / incomplete or truncated | false / false | false / false |
+| Parse / schema | passed / passed | passed / passed |
+| Physical attempts | 1 | 1 |
+| prompt_tokens | 2458 | 4326 |
+| completion_tokens | 1075 | 1827 |
+| total_tokens | 3533 | 6153 |
+| reasoning_tokens | 0 | 14 |
+| cached_tokens | 0 | 0 |
+| Cost (USD) | 0.0168935 | 0.026922 |
+| Latency (seconds, approximately) | 12.0833 | 21.9106 |
+
+No retry occurred. Combined observed cost: **0.0438155 USD**. Immutable evidence
+retains the original numeric precision; cost is descriptive, not a selection gate.
+Both routes accepted the exact request including `reasoning.effort=low`,
+`max_tokens=16384`, and the exact strict JSON Schema; models/providers matched,
+and returned contents parsed and satisfied the schema without refusal/truncation.
+
+**EXECUTION COMPATIBILITY = VERIFIED.**
+**SEMANTIC GENERATOR QUALIFICATION = NOT YET EXECUTED.**
+**HIDDEN REASONING EQUIVALENCE = NOT CLAIMED.**
+Low effort does not imply identical hidden computation. Reasoning-token counts
+are not asserted comparable across providers; zero does not establish disabled
+or ignored reasoning. Sol/Sonnet remain CANDIDATE, not semantically QUALIFIED.
+No automatic Attempt-03 is scheduled. Qualification and final naturalization
+must use the frozen package; a later change requires explicit adjudication and
+requalification as applicable. The separate experimental reader timeout is unchanged.
