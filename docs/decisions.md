@@ -257,7 +257,9 @@ and per-domain balance (at most one difference for odd counts). Final N is a
 multiple of 12 but remains unselected; assignment mechanism/seed remains OPEN.
 Provider pins, reasoning controls, output limits, timeout/retry settings, and
 standard versus batch execution require verification before execution; intended
-zero-temperature/top_p=1/JSON-schema defaults are not verified capabilities.
+JSON-schema defaults are not verified capabilities. The initially proposed
+zero-temperature/top_p=1 controls were subsequently removed by the Attempt-01
+capability adjudication below.
 The 5%/2% length tolerances remain PROVISIONAL and are not qualification gates.
 No fixtures, qualification calls, or CRST data are created by these records.
 
@@ -282,9 +284,10 @@ validation/manual-audit boundaries. One response contains low/medium/high named
 user-text fields only. Deterministic code inserts `Noted.`; gold answers,
 experimental answers, and evaluator metadata are not requested outputs.
 
-Temperature 0, top-p 1, low reasoning effort, strict JSON-schema response, and
-16,384 maximum output tokens remain PROPOSED / VERIFY BEFORE FREEZE as a joint
-combination. A 300-second per-attempt deadline, two infrastructure retries,
+Low reasoning effort, strict JSON-schema response, and 16,384 maximum output
+tokens remain PROPOSED / VERIFY BEFORE FREEZE as a joint combination. Originally
+proposed temperature 0 and top-p 1 were removed by the Attempt-01 adjudication
+below. A 300-second per-attempt deadline, two infrastructure retries,
 1s/2s backoff, established retry statuses and transport classes are recommended
 pending probe-implementation review. Schema/semantic/truncation/refusal failures
 are not infrastructure retries.
@@ -294,3 +297,23 @@ pins once per primary model. It checks compatibility/provenance, not semantic
 qualification; parameter rejection requires STOP and adjudication. Probe output
 cannot become qualification evidence or final CRST data. No probe, fixture
 generation, qualification, or experiment is executed by this decision record.
+
+
+## Generator Capability Probe Attempt-01 — Sampling-Control Adjudication
+
+Attempt-01 (source `a1b03949c25846afed854e0d73e9612eda2bf138`) is valid FAIL
+evidence, preserved without modification under
+`results/generator-capability-probe/attempt-01/`; result SHA-256:
+`9a5f11f458f641914f5cb923a315cd81da9f2dcf6b6153aaa0b56b6d528d0cb9`.
+G1 failed HTTP 404 at routing `Filter by Parameters`, with no selected provider
+or completion; it did not reach inference. G2 was blocked by the STOP rule.
+
+The researcher-supplied subsequent non-inference catalog audit advertises neither
+`temperature` nor `top_p` for either candidate. Remove both symmetrically from
+the common execution package; the evidence does not establish either control
+as the individual cause. Keep low reasoning, 16,384 output-token ceiling, strict
+schema, intended provider pins, transport, and semantic versions unchanged.
+This pre-qualification capability correction does not invalidate Attempt-01.
+Attempt-02 is required before claiming compatibility; reasoning, schema,
+`max_tokens`, and observed routing remain VERIFY. Both generators remain
+CANDIDATE. See the [adjudication](generator-naturalization-contract.md#8-two-call-capability-probe-and-attempt-01-adjudication).

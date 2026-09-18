@@ -17,7 +17,7 @@ output_schema_version: crst-naturalization-triplet/1.0.0
 contract_path: configs/generator-naturalization-contract.json
 contract_sha256: 3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee
 contract_document_path: docs/generator-naturalization-contract.md
-contract_document_sha256: c9537677dd75d276ac605a1a1e59438231293089f4afb43025c3a18dcd810191
+contract_document_sha256: b610b04162696abadc01ec8aef763ce042665f64b9625d0f0a616fa8fdfeabed
 prompt_sha256: a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279
 output_schema_sha256: c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917
 input_path: data/generator-capability-probe/probe-input.json
@@ -28,8 +28,6 @@ input_domain: Software Configuration
 input_origin: Independently authored synthetic gateway configuration; no external evidence content.
 input_allocation_scope: Probe-local secondary allocation; not a general CRST freeze.
 generation:
-  temperature: 0
-  top_p: 1
   reasoning_effort: low
   max_output_tokens: 16384
 # These exact wire mappings are hypotheses under test, not verified capabilities.
@@ -44,4 +42,4 @@ transport:
   backoff_seconds: [1, 2]
   retryable_http_statuses: [408, 429, 500, 502, 503, 504]
 # No archive directory is created by import/help/default preview.
-output_directory: results/generator-capability-probe/attempt-01
+output_directory: results/generator-capability-probe/attempt-02

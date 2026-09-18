@@ -30,7 +30,7 @@ VERSIONS = {'prompt_version': 'crst-naturalization-prompt/1.1.0',
             'output_schema_version': 'crst-naturalization-triplet/1.0.0'}
 MAPPING = {'max_output_tokens': 'max_tokens', 'reasoning_effort': 'reasoning.effort',
            'output_schema': 'response_format.json_schema.schema', 'strict': 'response_format.json_schema.strict'}
-GENERATION = {'temperature': 0, 'top_p': 1, 'reasoning_effort': 'low', 'max_output_tokens': 16384}
+GENERATION = {'reasoning_effort': 'low', 'max_output_tokens': 16384}
 TRANSPORT = {'per_attempt_deadline_seconds': 300, 'max_infrastructure_retries': 2,
              'backoff_seconds': [1, 2], 'retryable_http_statuses': [408, 429, 500, 502, 503, 504]}
 
@@ -218,7 +218,7 @@ def request_body(bundle, slot):
             'provider': {'order': slot['provider_order'], 'allow_fallbacks': False, 'require_parameters': True},
             'messages': [{'role': 'system', 'content': bundle['contract']['prompt']},
                          {'role': 'user', 'content': canonical(bundle['input'])}],
-            'temperature': 0, 'top_p': 1, 'reasoning': {'effort': 'low'}, 'max_tokens': 16384,
+            'reasoning': {'effort': 'low'}, 'max_tokens': 16384,
             'response_format': {'type': 'json_schema', 'json_schema': {
                 'name': 'crst_naturalization_triplet_v1', 'strict': True,
                 'schema': bundle['contract']['output_schema']}}}
@@ -228,6 +228,7 @@ def preview(bundle):
     bodies = [request_body(bundle, slot) for slot in SLOTS]
     return {'status': 'OFFLINE_PREVIEW_READY', **bundle['provenance'],
             'execution_mode': 'standard', 'parameter_semantics': 'PROBE-PENDING',
+            'output_directory': bundle['config']['output_directory'],
             'generation': bundle['config']['generation'], 'wire_mapping_under_test': MAPPING,
             'transport_proposal': bundle['config']['transport'],
             'expected_logical_calls': 2, 'maximum_physical_inference_attempts': 6,

@@ -225,13 +225,13 @@ before qualification. The 5%/2% length tolerances remain PROVISIONAL, not gates.
 
 The complete proposed common parameter combination is:
 
-- `temperature = 0`; `top_p = 1`; `reasoning.effort = low`.
+- `reasoning.effort = low`; no `temperature` or `top_p` controls.
 - Strict JSON-schema response using the exact schema in Section 4.
 - `max_output_tokens = 16384` as a ceiling, not a target length.
 
 These remain **PROPOSED / VERIFY BEFORE FREEZE** on both intended provider paths.
 Verify exact structured-response envelope, strictness placement, API output-token
-parameter mapping, sampling/reasoning interactions, and output/ reasoning-token
+parameter mapping, reasoning controls, and output/ reasoning-token
 limit semantics. Do not infer generator parameter support from the reader's
 `max_tokens` mapping or its `json_object` qualification requests. Do not silently
 omit unsupported schema features or parameters. No acknowledgement or experimental
@@ -251,13 +251,12 @@ all proposed common parameter semantics and the transport proposal remain to
 verify/finalize before official qualification. The guarded probe implementation
 tests the proposed constants and mappings without declaring them supported.
 
-## 8. Later Two-Call Capability Probe: Specification Only
+## 8. Two-Call Capability Probe and Attempt-01 Adjudication
 
 After separate execution authorization and review, issue **exactly two logical
 probe calls**: one representative complete-triplet input to G1 and the same input
 to G2. Use the exact prompt/schema versions above, intended STANDARD model IDs
-and provider pins, and the entire proposed parameter combination. Prepare the
-probe input separately later; it must not be one of the 12 qualification fixtures,
+and provider pins, and the entire proposed parameter combination. Reuse the existing probe-only input; it must not be one of the 12 qualification fixtures,
 final CRST data, B0 material, or existing qualification fixtures.
 
 The probe is execution-compatibility/provenance verification, not semantic
@@ -273,7 +272,7 @@ Require and archive:
   confirming the requested path, not merely its request settings.
 - Acceptance of the exact strict-schema envelope and the complete parameter
   combination; parseable, schema-conforming output without truncation.
-- Reasoning/sampling and output-ceiling acceptance, including exposed metadata
+- Reasoning and output-ceiling acceptance, including exposed metadata
   and documented parameter semantics. HTTP success alone does not prove an
   unobservable parameter was honored; unresolved evidence remains VERIFY.
 - Input/output tokens and other usage/cost fields where exposed, leaving unknown
@@ -305,9 +304,30 @@ canonical JSON rule above. No semantic prompt/schema change is introduced.
 `python experiments/probe_generators.py` performs offline preview only. Sending
 requires both `--execute` and `--confirm-spend`, an environment API key, and a clean
 committed working tree. Later results are exclusively created under an explicit
-attempt directory (default `results/generator-capability-probe/attempt-01/`).
+attempt directory (next default `results/generator-capability-probe/attempt-02/`).
 Every physical attempt is bounded by an explicit 300-second asynchronous deadline.
 An unsuccessful logical call stops execution; the remaining slot is recorded as
 blocked. FAIL evidence is archived without trying alternative parameters. A probe
 PASS means observed execution/schema/provenance compatibility only; unobservable
-reasoning/sampling semantics remain VERIFY and generators remain CANDIDATE.
+reasoning semantics remain VERIFY and generators remain CANDIDATE.
+
+
+Attempt-01 is valid, preserved capability evidence: source commit
+`a1b03949c25846afed854e0d73e9612eda2bf138`, overall FAIL, archived at
+[attempt-01/probe.json](../results/generator-capability-probe/attempt-01/probe.json)
+with SHA-256 `9a5f11f458f641914f5cb923a315cd81da9f2dcf6b6153aaa0b56b6d528d0cb9`.
+G1 received HTTP 404: no endpoint could handle the requested parameter package;
+the failed routing step was `Filter by Parameters`. No provider was selected,
+G1 did not reach inference or produce a completion, semantic qualification was
+NOT_ASSESSED, and G2 was BLOCKED by stop-on-failure semantics.
+
+The subsequent non-inference catalog audit supplied by the researcher showed
+neither `temperature` nor `top_p` in either candidate's advertised
+`supported_parameters`. The researcher removed both controls symmetrically.
+The evidence does not isolate which individual control caused the routing
+failure; only the original complete package is known to have failed.
+This is a pre-qualification execution correction, not a semantic contract change:
+prompt/input versions remain 1.1.0 and output-schema version remains 1.0.0.
+Attempt-02 must test the revised package before capability compatibility can be
+claimed. Reasoning, strict schema, `max_tokens`, and observed provider routing
+remain VERIFY; both generators remain CANDIDATE. Attempt-01 is not invalidated.

@@ -74,7 +74,8 @@ def test_requests_and_schema(bundle):
         assert [m['role'] for m in body['messages']] == ['system', 'user']
         assert body['messages'][1]['content'] == p.canonical(bundle['input'])
         assert body['reasoning'] == {'effort': 'low'}
-        assert body['temperature'] == 0 and body['top_p'] == 1 and body['max_tokens'] == 16384
+        assert 'temperature' not in body and 'top_p' not in body
+        assert body['max_tokens'] == 16384
         assert not {'tools', 'plugins', 'search', 'max_output_tokens'} & body.keys()
     schema = a['response_format']['json_schema']['schema']
     assert a['response_format']['json_schema']['strict'] is True
@@ -156,6 +157,8 @@ def test_default_preview_no_client_no_key_no_artifact(monkeypatch, tmp_path, cap
     assert p.main(['--output-directory', str(output)]) == 0
     result = json.loads(capsys.readouterr().out)
     assert result['status'] == 'OFFLINE_PREVIEW_READY'
+    assert result['output_directory'] == 'results/generator-capability-probe/attempt-02'
+    assert result['generation'] == {'reasoning_effort': 'low', 'max_output_tokens': 16384}
     assert result['expected_logical_calls'] == 2 and result['maximum_physical_inference_attempts'] == 6
     assert not output.exists()
 
@@ -468,3 +471,12 @@ def test_runner_must_be_tracked_even_with_clean_tree(git_repo):
     assert git('status', '--porcelain') == ''
     with pytest.raises(subprocess.CalledProcessError):
         p.source_commit(clean=True)
+
+
+@pytest.mark.parametrize('removed_control,value', [('temperature', 0), ('top_p', 1)])
+def test_removed_sampling_controls_rejected_in_config(bundle, tmp_path, removed_control, value):
+    bundle['config']['generation'][removed_control] = value
+    path = tmp_path / 'config.yaml'
+    path.write_text(yaml.safe_dump(bundle['config']))
+    with pytest.raises(ValueError, match='Unexpected probe setting: generation'):
+        p.load_bundle(path)

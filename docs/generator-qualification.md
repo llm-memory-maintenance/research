@@ -178,13 +178,19 @@ route acceptance/evidence remains to verify. Calls are stateless without
 carry-over, tools, web/search, or plugins, with one complete triplet per logical
 call and one shared semantic prompt/schema across both models.
 
-**PROPOSED / VERIFY BEFORE FREEZE:** `temperature = 0`, `top_p = 1`,
-`reasoning.effort = low`, strict JSON-schema response using the exact versioned
+**PROPOSED / VERIFY BEFORE FREEZE:** `reasoning.effort = low`, strict JSON-schema response using the exact versioned
 schema, and `max_output_tokens = 16384`. This is a ceiling, not a target length.
 Verify all parameters jointly, the strict-schema/API envelope, output-token
 parameter mapping, and reasoning/output accounting. Do not invent unsupported
 parameters or silently alter a rejected parameter. The reader configuration is
 not a generator configuration.
+
+Attempt-01 failed routing before inference. Its adjudication removes
+`temperature` and `top_p` from both candidates' execution packages because
+neither is advertised in the researcher-supplied catalog audit. No individual
+causal attribution is made. See the [preserved evidence and adjudication](generator-naturalization-contract.md#8-two-call-capability-probe-and-attempt-01-adjudication).
+The semantic versions are unchanged; Attempt-02 is required, and the remaining
+parameter package and observed routing are still VERIFY.
 
 **RECOMMENDED / PENDING FREEZE after probe-implementation review:** a 300-second
 total per-attempt deadline, at most two infrastructure retries, 1s/2s backoff,
