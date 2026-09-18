@@ -424,3 +424,20 @@ The qualification implementation is NOT YET FROZEN. Live execution requires the
 reviewed implementation commit and a subsequent freeze record pinning that
 commit and the execution-critical source hashes. Generator Qualification has not
 run; Sol/Sonnet remain CANDIDATE.
+
+## Generator Qualification — Implementation Freeze
+
+**GENERATOR QUALIFICATION IMPLEMENTATION: FROZEN.** The reviewed runner
+implementation is pinned to implementation commit
+`e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e` (`feat: implement generator
+qualification runner`). `configs/generator-qualification-implementation-freeze.json`
+(schema `generator-qualification-implementation-freeze/1.0.0`) records that
+commit and the SHA-256 of the three execution-critical sources:
+`experiments/qualify_generators.py`, `experiments/probe_generators.py`, and
+`experiments/validate_generator_qualification_fixtures.py`. Live execution
+fails closed if the pinned commit, its recorded source hashes, or the current
+working-tree source bytes ever drift from one another.
+
+The fixture set, naturalization contract, output schema, and execution package
+remain separately frozen and unchanged by this record. Generator Qualification
+itself is still NOT EXECUTED; Sol/Sonnet remain CANDIDATE.

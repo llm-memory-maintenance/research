@@ -511,26 +511,86 @@ def test_offline_adjudication_cli_uses_separate_copy(inputs, tmp_path, monkeypat
         q.main(['--attempt', str(path), '--audit', str(completed), '--adjudication-output', str(output)])
 
 
-def test_implementation_provenance_and_freeze_gate(loaded, tmp_path, monkeypatch, capsys):
+def test_committed_freeze_record_reports_frozen(loaded, capsys):
+    """The real configs/generator-qualification-implementation-freeze.json, exercised as-is."""
     implementation = loaded['provenance']['implementation']
-    assert implementation['status'] == q.NOT_FROZEN and implementation['freeze_commit'] is None
-    assert implementation['source_sha256'] == {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}
+    expected_sources = {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}
+    assert implementation['source_sha256'] == expected_sources
+    assert implementation['status'] == q.FROZEN
+    assert q.re.fullmatch(r'[0-9a-f]{40}', implementation['freeze_commit'])
+    # The frozen commit's sources are byte-identical to the current working tree (nothing drifted).
+    for path in q.SOURCES:
+        assert q.git('show', f'{implementation["freeze_commit"]}:{path}') == (q.ROOT / path).read_bytes()
     assert q.main([]) == 0
     shown = json.loads(capsys.readouterr().out)
-    assert shown['qualification_implementation_status'] == 'NOT YET FROZEN FOR LIVE EXECUTION'
+    assert shown['qualification_implementation_status'] == q.FROZEN
+    assert shown['qualification_status'] == 'NOT EXECUTED' and shown['status'] == 'NETWORK_DISABLED'
     assert shown['planned_calls'][0] == '1:G1:gq-scheduling-01' and shown['planned_calls'][12] == '13:G2:gq-scheduling-01'
+
+
+def test_missing_freeze_record_is_not_frozen(loaded, tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(q, 'FREEZE_RECORD', tmp_path / 'absent-freeze.json')
+    implementation = q.implementation()
+    assert implementation['status'] == q.NOT_FROZEN and implementation['freeze_commit'] is None
+    assert implementation['source_sha256'] == loaded['provenance']['implementation']['source_sha256']
     monkeypatch.setenv('OPENROUTER_API_KEY', 'test-secret')
     output = tmp_path / 'absent'
     with pytest.raises(ValueError, match='NOT YET FROZEN'):
         q.main(['--execute', '--confirm-spend', '--output-directory', str(output)])
     assert not output.exists()
+
+
+@pytest.mark.parametrize('kind', ['malformed_schema', 'malformed_commit_shape'])
+def test_freeze_record_malformed_fails_closed(loaded, tmp_path, monkeypatch, kind):
     record = tmp_path / 'freeze.json'
     monkeypatch.setattr(q, 'FREEZE_RECORD', record)
-    for sources in (implementation['source_sha256'], {s: '0' * 64 for s in q.SOURCES}):
-        record.write_text(json.dumps({'schema_version': q.FREEZE_SCHEMA, 'implementation_commit': 'not-a-commit',
-                                      'source_sha256': sources}))
-        with pytest.raises(ValueError, match='freeze record'):
+    sources = loaded['provenance']['implementation']['source_sha256']
+    schema = q.FREEZE_SCHEMA if kind != 'malformed_schema' else 'wrong-schema/1.0.0'
+    commit = 'f' * 40 if kind != 'malformed_commit_shape' else 'not-a-commit'
+    record.write_text(json.dumps({'schema_version': schema, 'implementation_commit': commit,
+                                  'source_sha256': sources}))
+    with pytest.raises(ValueError, match='Malformed implementation freeze record'):
+        q.implementation()
+
+
+def test_freeze_record_wrong_source_hash_fails_closed(loaded, tmp_path, monkeypatch):
+    """A well-formed record naming the real reviewed commit, but a wrong pinned hash."""
+    record = tmp_path / 'freeze.json'
+    monkeypatch.setattr(q, 'FREEZE_RECORD', record)
+    real = loaded['provenance']['implementation']
+    for path, wrong in [(q.SOURCES[0], {**real['source_sha256'], q.SOURCES[0]: '0' * 64}),
+                        (q.SOURCES[1], {**real['source_sha256'], q.SOURCES[1]: '0' * 64})]:
+        record.write_text(json.dumps({'schema_version': q.FREEZE_SCHEMA,
+                                      'implementation_commit': real['freeze_commit'], 'source_sha256': wrong}))
+        with pytest.raises(ValueError, match='Implementation drift from freeze record'):
             q.implementation()
+
+
+def test_freeze_record_nonexistent_commit_fails_closed(loaded, tmp_path, monkeypatch):
+    """A well-formed 40-hex commit that is not an ancestor/object at all."""
+    record = tmp_path / 'freeze.json'
+    monkeypatch.setattr(q, 'FREEZE_RECORD', record)
+    record.write_text(json.dumps({'schema_version': q.FREEZE_SCHEMA, 'implementation_commit': 'a' * 40,
+                                  'source_sha256': loaded['provenance']['implementation']['source_sha256']}))
+    with pytest.raises((ValueError, subprocess.CalledProcessError)):
+        q.implementation()
+
+
+def test_freeze_record_source_drift_from_frozen_commit_fails_closed(loaded, tmp_path, monkeypatch):
+    """Record and current bytes agree, but the frozen commit's archived bytes differ (source edited post-freeze)."""
+    record = tmp_path / 'freeze.json'
+    monkeypatch.setattr(q, 'FREEZE_RECORD', record)
+    real = loaded['provenance']['implementation']
+    record.write_text(json.dumps({'schema_version': q.FREEZE_SCHEMA,
+                                  'implementation_commit': real['freeze_commit'], 'source_sha256': real['source_sha256']}))
+    original_git = q.git
+    def drifted(*args):
+        if args[:1] == ('show',) and args[1].endswith(q.SOURCES[0]):
+            return b'drifted content, does not match the frozen commit'
+        return original_git(*args)
+    monkeypatch.setattr(q, 'git', drifted)
+    with pytest.raises(ValueError, match='Implementation differs from frozen commit'):
+        q.implementation()
 
 
 def test_probe_default_behavior_unchanged(loaded, monkeypatch):

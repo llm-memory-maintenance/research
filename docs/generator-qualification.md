@@ -140,7 +140,8 @@ The required checks are:
 
 Automated validation and manual audit are both required; a structural parser
 alone does not establish semantic fidelity. The runner, deterministic checks and
-audit recording procedure are **IMPLEMENTED OFFLINE, NOT YET FROZEN** (§10).
+audit recording procedure are **IMPLEMENTED OFFLINE AND FROZEN** (§10).
+Generator Qualification itself remains NOT EXECUTED.
 The shared output schema
 is specified in the naturalization contract. CSA, SRR, MOA, downstream policy
 performance, and final statistical effects are not qualification criteria.
@@ -259,12 +260,15 @@ chosen here. Only structured qualification fixtures have been constructed; no
 naturalized dataset, model/API call or experiment has been produced or executed,
 and completed qualifications are not reopened.
 
-## 10. Offline Qualification Runner — Implemented, NOT FROZEN
+## 10. Offline Qualification Runner — Implementation FROZEN; Qualification NOT EXECUTED
 
-**QUALIFICATION IMPLEMENTATION IS NOT FROZEN UNTIL THE REVIEWED IMPLEMENTATION
-IS COMMITTED AND A SUBSEQUENT FREEZE RECORD PINS THAT REVIEWED COMMIT.** Live
-qualification must not occur before that freeze step. Generator Qualification
-is NOT EXECUTED; Sol/Sonnet remain CANDIDATE.
+**QUALIFICATION IMPLEMENTATION: FROZEN.** The reviewed implementation is
+committed at `e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e`, and
+`configs/generator-qualification-implementation-freeze.json` pins that commit
+and the three execution-critical source hashes. This makes the implementation
+technically eligible for a later researcher-approved official run; it is not
+itself that authorization, and no qualification call has been made under it.
+Generator Qualification is NOT EXECUTED; Sol/Sonnet remain CANDIDATE.
 
 `experiments/qualify_generators.py` (procedure
 `generator-qualification-procedure/1.0.0`) has three modes:
@@ -296,15 +300,16 @@ never reused.
 **Implementation provenance.** Every run records the SHA-256 of
 `experiments/qualify_generators.py`, `experiments/probe_generators.py` and
 `experiments/validate_generator_qualification_fixtures.py`, computed at run time
-(no hardcoded self-hash). The later freeze record
+(no hardcoded self-hash). The freeze record
 `configs/generator-qualification-implementation-freeze.json` (schema
-`generator-qualification-implementation-freeze/1.0.0`; not created yet) will
-name the reviewed implementation commit and these three hashes. The runner
-accepts it only if that commit is an ancestor of HEAD and each source is
-byte-identical to that commit and to the recorded hash. The record is a separate
-file, so pinning creates no circular self-hash. Without it, the status is
-`NOT YET FROZEN FOR LIVE EXECUTION` and execution is refused. These are software
-provenance hashes, not authorship metadata.
+`generator-qualification-implementation-freeze/1.0.0`) names the reviewed
+implementation commit `e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e` and these three
+hashes. The runner accepts it only because that commit is an ancestor of HEAD
+and each source is byte-identical to that commit and to the recorded hash. The
+record is a separate file, so pinning creates no circular self-hash. If commit
+or source identity ever drifts, the status reverts to
+`NOT YET FROZEN FOR LIVE EXECUTION` and execution is refused. These are
+software provenance hashes, not authorship metadata.
 
 **Continuation and invalidation.** Each candidate receives all 12 planned calls.
 A candidate's malformed, schema-invalid, refused, truncated or semantically
