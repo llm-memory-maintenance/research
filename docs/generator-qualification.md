@@ -11,7 +11,10 @@ designation. Capability Probe is CLOSED/PASS; 12 structured qualification-only
 fixtures are frozen after final researcher review. Official Generator
 Qualification Attempt-01 ran under the frozen implementation and fixture set
 and closed 2026-09-18: G1 `openai/gpt-5.6-sol` FAIL, G2
-`anthropic/claude-sonnet-5` FAIL (§10). Fallback qualification is pending.
+`anthropic/claude-sonnet-5` FAIL (§10). Fallback Generator Qualification
+Attempt-02 (Terra, G1 only) has run and closed under historical Protocol v1:
+FAIL (§13). G2's fallback (Opus) remains capability CLOSED/FAIL, not
+qualification-eligible.
 
 Generator diversity addresses dependence on one model family. Qualification
 uses absolute fidelity to fixed structured truth, not a relative ranking,
@@ -23,7 +26,7 @@ CLOSED and unchanged; they do not qualify construction generators.
 
 | Slot | Primary candidate | Predeclared corresponding fallback | Current status |
 | --- | --- | --- | --- |
-| G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | Primary FAIL (Attempt-01); fallback capability CLOSED/PASS (Capability Probe Attempt-03), not Generator-Qualified |
+| G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | Primary FAIL (Attempt-01); fallback capability CLOSED/PASS (Capability Probe Attempt-03); Generator Qualification Attempt-02 CLOSED, Protocol-v1 FAIL (§13) |
 | G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary FAIL (Attempt-01); fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03); second-level G2 selection required (§12) |
 
 **FROZEN:** use different OpenAI/Anthropic families/vendors to diversify
@@ -602,11 +605,14 @@ full 12-fixture Generator Qualification; (10) final CRST generator assignment
 (§8) remains blocked until both G1 and G2 slots each contain a
 Generator-Qualified candidate. Steps (3)-(10) have not occurred.
 
-## 13. Per-Slot Capability State and Single-Slot Execution — Implemented Offline, Not Yet Re-Frozen
+## 13. Per-Slot Capability State and Single-Slot Execution — Frozen; Terra Attempt-02 CLOSED (Protocol v1 FAIL)
 
-**Implemented offline, not executed, not yet reviewed/committed/re-frozen.**
-This section records the software representation of the §12 decisions and the
-single-slot execution support built to act on them.
+**Implemented offline, reviewed, committed, and re-frozen** (implementation
+commit `585b5e2844504fec703287f8dd4869668615671d`, freeze commit `7b28ea2`).
+This section records the software representation of the §12 decisions, the
+single-slot execution support built to act on them, and its first executed
+result: Terra Generator Qualification Attempt-02, CLOSED under historical
+Protocol v1.
 
 **Per-slot capability representation.** `configs/generator-capability-probe-
 fallback.yaml` gained a `schema_version` field and an additive `slots:`
@@ -686,6 +692,37 @@ Capability Probe Attempt-03, and Generator Qualification Attempt-01 (replay,
 completed audit, and adjudication: G1/G2 FAIL) all remain unchanged and were
 reverified after this freeze.
 
-**Status:** Terra Generator Qualification has **not executed**. No new G2
-candidate has been selected. Terra/Opus remain CANDIDATE, not Generator-
-Qualified.
+**Terra Generator Qualification Attempt-02 (result SHA-256
+`c15a6f2ab6e087c719e32c92f0f6268d4bf6a5728629a4ff8b1a033761560d5c`, preserved
+under `results/generator-qualification/attempt-02/`): CLOSED under
+historical Protocol v1.** All 12 logical calls completed for G1
+`openai/gpt-5.6-terra`; no infrastructure invalidation; 12/12 passed schema/
+execution. Automated result: 11 PASS, 1 MANUAL_REVIEW_REQUIRED (Task
+Assignment `q_attribute`, manually resolved PASS as a faithful paraphrase).
+`gq-purchase-order-01` failed the historical Protocol-v1 `natural_english`
+criterion at I2 and I3 in all three variants -- structured meaning remained
+recoverable and every semantic-fidelity check passed; this is a wording
+failure, not a truth-corruption failure. Completed human audit and offline
+adjudication are recorded at
+`results/generator-qualification/manual-audit/v1/attempt-02.completed.json`
+and `results/generator-qualification/adjudication/v1/attempt-02.json`
+(`attempt-NN/` = immutable raw execution evidence; `manual-audit/v1/...` =
+completed historical v1 human audit; `adjudication/v1/...` = derived
+historical v1 disposition; legacy Attempt-01 paths are unversioned and remain
+where they are, not relocated).
+**Final Protocol-v1 disposition: G1 (Terra) = FAIL.**
+
+**Protocol v2 status.** The comprehensibility/fluency split proposed as a
+possible Protocol v2 (methodological audit, separate from this
+implementation) is **only a proposal**: it is **not frozen** and **has not
+been applied** anywhere in Attempt-02's closure. The `procedure_version`
+recorded throughout Attempt-02's evidence and adjudication is
+`generator-qualification-procedure/1.0.0` (historical Protocol v1),
+unchanged. Any future Protocol-v2 re-adjudication would be a separate,
+explicitly versioned derived artifact and would not overwrite this v1 result.
+
+**Status:** Terra Generator Qualification Attempt-02 is CLOSED; Terra's
+Protocol-v1 disposition is FAIL, so Terra is **not** Generator-Qualified. No
+new G2 candidate has been selected. Opus remains capability CLOSED/FAIL
+(provider-policy refusal, §11/§12). Sol, Sonnet, Terra, and Opus all remain
+not Generator-Qualified.

@@ -1,0 +1,387 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"item_count\\\",\\\"meaning\\\":\\\"ordered number of empty storage sleeves\\\",\\\"units_or_interpretation\\\":\\\"sleeves\\\"},{\\\"attribute_id\\\":\\\"order_code\\\",\\\"meaning\\\":\\\"order identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"packaging\\\",\\\"meaning\\\":\\\"packaging style\\\",\\\"units_or_interpretation\\\":\\\"style label\\\"},{\\\"attribute_id\\\":\\\"delivery_point\\\",\\\"meaning\\\":\\\"delivery point\\\",\\\"units_or_interpretation\\\":\\\"synthetic location\\\"},{\\\"attribute_id\\\":\\\"label_format\\\",\\\"meaning\\\":\\\"package label format\\\",\\\"units_or_interpretation\\\":\\\"format label\\\"},{\\\"attribute_id\\\":\\\"dispatch_cycle\\\",\\\"meaning\\\":\\\"dispatch cycle\\\",\\\"units_or_interpretation\\\":\\\"synthetic calendar label\\\"}],\\\"domain\\\":\\\"Purchase & Order\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"name\\\":\\\"Order Kittiwake\\\"},{\\\"entity_id\\\":\\\"gq-purchase-order-01-distractor\\\",\\\"name\\\":\\\"Order Sandpiper\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_d\\\",\\\"I2\\\":\\\"k_target\\\",\\\"I3\\\":\\\"k_hard\\\",\\\"I4\\\":\\\"k_n2\\\",\\\"I5\\\":\\\"k_a\\\",\\\"I6\\\":\\\"k_b\\\",\\\"I7\\\":\\\"k_c\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"item_count\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current ordered number of empty storage sleeves of Order Kittiwake.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"item_count\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"120 sleeves\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"item_count\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-distractor\\\",\\\"initial_value\\\":\\\"330 sleeves\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"order_code\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"ORD-K8\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"packaging\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"flat packs\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"delivery_point\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"Dock Ranu\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"label_format\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"Label Aster\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"dispatch_cycle\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"Cycle Dori\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"Cycle Dori\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"120 sleeves\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"330 sleeves\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"flat packs\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Dock Ranu\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Label Aster\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"145 sleeves\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"170 sleeves\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"195 sleeves\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"220 sleeves\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"245 sleeves\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"270 sleeves\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"270 sleeves\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"295 sleeves\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"Cycle Dori\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"120 sleeves\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"330 sleeves\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"flat packs\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Dock Ranu\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Label Aster\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"355 sleeves\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Label Briar\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Cycle Evi\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"rolled packs\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Dock Selu\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Label Clover\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"120 sleeves\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"295 sleeves\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"Cycle Dori\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"120 sleeves\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"330 sleeves\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"flat packs\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Dock Ranu\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Label Aster\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"145 sleeves\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"355 sleeves\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"195 sleeves\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Cycle Evi\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"245 sleeves\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"rolled packs\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"245 sleeves\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"295 sleeves\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-terra\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "a767b64d16ef08e8f5d593d59b63a2bb6e8a1d81bbdff52a09353b278d0d8a1d",
+  "request_body": {
+    "model": "openai/gpt-5.6-terra",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"item_count\",\"meaning\":\"ordered number of empty storage sleeves\",\"units_or_interpretation\":\"sleeves\"},{\"attribute_id\":\"order_code\",\"meaning\":\"order identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"packaging\",\"meaning\":\"packaging style\",\"units_or_interpretation\":\"style label\"},{\"attribute_id\":\"delivery_point\",\"meaning\":\"delivery point\",\"units_or_interpretation\":\"synthetic location\"},{\"attribute_id\":\"label_format\",\"meaning\":\"package label format\",\"units_or_interpretation\":\"format label\"},{\"attribute_id\":\"dispatch_cycle\",\"meaning\":\"dispatch cycle\",\"units_or_interpretation\":\"synthetic calendar label\"}],\"domain\":\"Purchase & Order\",\"entities\":[{\"entity_id\":\"gq-purchase-order-01-primary\",\"name\":\"Order Kittiwake\"},{\"entity_id\":\"gq-purchase-order-01-distractor\",\"name\":\"Order Sandpiper\"}],\"initial_order\":{\"I1\":\"k_d\",\"I2\":\"k_target\",\"I3\":\"k_hard\",\"I4\":\"k_n2\",\"I5\":\"k_a\",\"I6\":\"k_b\",\"I7\":\"k_c\"},\"question_intent\":{\"attribute_id\":\"item_count\",\"entity_id\":\"gq-purchase-order-01-primary\",\"intent\":\"Ask only for the current ordered number of empty storage sleeves of Order Kittiwake.\"},\"state_keys\":[{\"attribute_id\":\"item_count\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"120 sleeves\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"item_count\",\"entity_id\":\"gq-purchase-order-01-distractor\",\"initial_value\":\"330 sleeves\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"order_code\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"ORD-K8\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"packaging\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"flat packs\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"delivery_point\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"Dock Ranu\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"label_format\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"Label Aster\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"dispatch_cycle\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"Cycle Dori\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"Cycle Dori\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"120 sleeves\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"330 sleeves\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"ORD-K8\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"flat packs\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Dock Ranu\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Label Aster\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"145 sleeves\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"170 sleeves\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"195 sleeves\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"220 sleeves\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"245 sleeves\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"270 sleeves\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"270 sleeves\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"295 sleeves\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"ORD-K8\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"Cycle Dori\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"120 sleeves\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"330 sleeves\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"ORD-K8\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"flat packs\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Dock Ranu\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Label Aster\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"355 sleeves\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Label Briar\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Cycle Evi\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"rolled packs\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Dock Selu\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"Label Clover\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"120 sleeves\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"295 sleeves\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"ORD-K8\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"Cycle Dori\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"120 sleeves\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"330 sleeves\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"ORD-K8\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"flat packs\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Dock Ranu\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Label Aster\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"145 sleeves\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"355 sleeves\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"195 sleeves\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Cycle Evi\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"245 sleeves\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"rolled packs\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"245 sleeves\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"295 sleeves\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"ORD-K8\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-18T16:38:15.073080+00:00",
+      "requested_model": "openai/gpt-5.6-terra",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-terra",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789749495-B8QVIK9CDXTbRlvgeCxX",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789749495-B8QVIK9CDXTbRlvgeCxX\",\"object\":\"chat.completion\",\"created\":1789749495,\"model\":\"openai/gpt-5.6-terra\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Order Kittiwake has dispatch cycle Cycle Dori.\\\",\\\"I2\\\":\\\"Order Kittiwake has an ordered number of 120 sleeves of empty storage sleeves.\\\",\\\"I3\\\":\\\"Order Sandpiper has an ordered number of 330 sleeves of empty storage sleeves.\\\",\\\"I4\\\":\\\"Order Kittiwake's order identifier is ORD-K8.\\\",\\\"I5\\\":\\\"Order Kittiwake uses flat packs packaging.\\\",\\\"I6\\\":\\\"Order Kittiwake's delivery point is Dock Ranu.\\\",\\\"I7\\\":\\\"Order Kittiwake uses package label format Label Aster.\\\",\\\"N1\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves is 270 sleeves.\\\",\\\"N2\\\":\\\"Order Kittiwake's order identifier is ORD-K8.\\\",\\\"Q\\\":\\\"What is the current ordered number of empty storage sleeves of Order Kittiwake?\\\",\\\"U1\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves has been updated to 145 sleeves.\\\",\\\"U2\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves is now 170 sleeves.\\\",\\\"U3\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves has changed to 195 sleeves.\\\",\\\"U4\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves is now 220 sleeves.\\\",\\\"U5\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves has been revised to 245 sleeves.\\\",\\\"U6\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves is now 270 sleeves.\\\",\\\"U7\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves has changed to 295 sleeves.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Order Kittiwake's dispatch cycle is Cycle Dori.\\\",\\\"I2\\\":\\\"Order Kittiwake has an ordered number of 120 sleeves of empty storage sleeves.\\\",\\\"I3\\\":\\\"Order Sandpiper has an ordered number of 330 sleeves of empty storage sleeves.\\\",\\\"I4\\\":\\\"The order identifier for Order Kittiwake is ORD-K8.\\\",\\\"I5\\\":\\\"Order Kittiwake uses flat packs packaging.\\\",\\\"I6\\\":\\\"Order Kittiwake's delivery point is Dock Ranu.\\\",\\\"I7\\\":\\\"Order Kittiwake's package label format is Label Aster.\\\",\\\"N1\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves is 120 sleeves.\\\",\\\"N2\\\":\\\"Order Kittiwake's order identifier is ORD-K8.\\\",\\\"Q\\\":\\\"What is the current ordered number of empty storage sleeves of Order Kittiwake?\\\",\\\"U1\\\":\\\"Order Sandpiper's ordered number of empty storage sleeves has been updated to 355 sleeves.\\\",\\\"U2\\\":\\\"Order Kittiwake's package label format has changed to Label Briar.\\\",\\\"U3\\\":\\\"Order Kittiwake's dispatch cycle is now Cycle Evi.\\\",\\\"U4\\\":\\\"Order Kittiwake's packaging has been updated to rolled packs.\\\",\\\"U5\\\":\\\"Order Kittiwake's delivery point has changed to Dock Selu.\\\",\\\"U6\\\":\\\"Order Kittiwake's package label format is now Label Clover.\\\",\\\"U7\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves has been updated to 295 sleeves.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"Order Kittiwake has dispatch cycle Cycle Dori.\\\",\\\"I2\\\":\\\"Order Kittiwake has an ordered number of 120 sleeves of empty storage sleeves.\\\",\\\"I3\\\":\\\"Order Sandpiper has an ordered number of 330 sleeves of empty storage sleeves.\\\",\\\"I4\\\":\\\"Order Kittiwake's order identifier is ORD-K8.\\\",\\\"I5\\\":\\\"Order Kittiwake uses flat packs packaging.\\\",\\\"I6\\\":\\\"Order Kittiwake's delivery point is Dock Ranu.\\\",\\\"I7\\\":\\\"Order Kittiwake uses package label format Label Aster.\\\",\\\"N1\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves remains 245 sleeves.\\\",\\\"N2\\\":\\\"Order Kittiwake's order identifier is ORD-K8.\\\",\\\"Q\\\":\\\"What is the current ordered number of empty storage sleeves of Order Kittiwake?\\\",\\\"U1\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves has changed to 145 sleeves.\\\",\\\"U2\\\":\\\"Order Sandpiper's ordered number of empty storage sleeves is now 355 sleeves.\\\",\\\"U3\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves has been updated to 195 sleeves.\\\",\\\"U4\\\":\\\"Order Kittiwake's dispatch cycle has changed to Cycle Evi.\\\",\\\"U5\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves is now 245 sleeves.\\\",\\\"U6\\\":\\\"Order Kittiwake's packaging has been updated to rolled packs.\\\",\\\"U7\\\":\\\"Order Kittiwake's ordered number of empty storage sleeves has changed to 295 sleeves.\\\"}}\",\"refusal\":null,\"reasoning\":null,\"reasoning_details\":[{\"type\":\"reasoning.encrypted\",\"data\":\"gAAAAABqrWj5cnT1VnsLiOjcAsU-qV1TzugJLAMw7d8GOsCRof2YIZ8BF_NgSLckuUc55mDZUSY1vXtvsedMJIH8r5sHr2hvrBp8oPeqeN3NxkSdPkyslZwaf_YBX_4a6IH8rvtFqJ-B4oCNOI1wBPjIlJ9sody1IoK0nnG55D7GHw93tQCd82SAQGq_eQ95rGcR1butWINN-8-AjiClSa7sf6_5Smyqsm4DAfmJIP6GxC6EYrPTntrjW14IppvlgeEefKp1cvjMEqr-5NAuYIgSvfKV3dU6iG_2NfFTwvG2K1j5cHTbW80kj-Nw8JYPRYjXrai1Jj6AdLQ4Vd-W5nSf63z1l28oW7XH0R4jxGApO3bh9n1o56wEgkwkMVOEJZBZgoozLqh9LPMnLn43cFFpwYq76vmGP51MPXZ9kRLg837IpgjM0ZDqdQ4yiBOJ5ZRgTDeJMz6_QnLzwyGDByXXnjT4CvDdjS4yfmWJnb8szuwFhSM88MwJD_xgtmZ120dc4woQWAtwz6CmprJ7r9-paXEAZVDiFB-HPvIDWZAwTzgbRomwqhyFycl1fn6yXKYozwQIzAfLb6h4nEkwzAmZ-8Jsahv1OiPdM9vRuG8m-fgm0KsHkpornEzgMCH6TJt19ztNVvxZOvYyqo6KSbOWb6ArFODU9MAIf2063NU92KuWPyta4sSR6LMkdGzNvvCHdf-JbfWuGWXT21kiFn5bSjZnza8YG6SHZyM3_YhZTl1XBEUumYxfFcqYVxrWgOC-OGfN0Mgh8YOJamlKsULIkwCvsjesUdvlpWiUbYYBYIrwkw9faEyyV1iDZsafdIlQvV82ejX9BVktSxgei7ATBqMWURBlgAMSGYXZh8Kb9_qT4H-OFv1qH_m8xJDdVFVJ-iKN40JfbXtGrh5-dMcQnw8h03vOXITd4Uk5fy6R9mxrCXWXuHTi0KAV9LLFWrAnbKOlr3ocFZRorT0cbqWkw9Zbonz-VqaFlC9f2Kaf7fsplV9fWiTkA4IhS1gwAjQuYDAdMUTcET7l_WT8bM31uR8QBNU-Ar8SBeB7cmTIRi7D8bToY79bUoFjhfCzU9RWcyvLDOwBM0yplgSnIot6e0FcGnmB_zy3LckdjC_nqMbaWhGSQZbxoGtGbI5MuvntN4-N8-7-P2AoGYr7o5ZkbOzv3mGmLixmyTmKJxj_6Uf542MduJizYC8YxM6k49tW0ck-CG6yKnCS-ilFTTAPB4cflcCKex0X4tfuY6k6cdFXFBizPmt90hx802zz1l9uSV6u8ifBQMLMSGuLhNfHhvhXnZIri1bznLsISp7ahXqecTTVTjBwli7jgRxenK5WW3FetENbtkyGodBWz2VKm13kJkX5wvaINkYJHVOjgK2LJs-ceIBPcT5OULRtsKl3fyVtpG9sIwSZEISK4Xw3cEpuR04zAiNbtpg8IIdaNedhcF075NXBJKxLSbHUCBoCC0MKFwpUKIGaKEYOIwcO2F169jSp3w==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtdGVycmEtMjAyNjA3MDl8b3BlbmFpIn0\",\"format\":\"openai-responses-v1\",\"id\":\"rs_0465da7c261b17ed016aad68f85a2087d1a1437213e809afa0\",\"index\":0}]}}],\"usage\":{\"prompt_tokens\":2518,\"completion_tokens\":1002,\"total_tokens\":3520,\"cost\":0.0183175,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2515,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0183175,\"upstream_inference_prompt_cost\":0.0062935,\"upstream_inference_completions_cost\":0.012024},\"completion_tokens_details\":{\"reasoning_tokens\":24,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-terra\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-terra-20260709\",\"selected\":true}]},\"generation_time\":10912}}",
+      "response_sha256_before_redaction": "79aa5fcf054e88a1d463af5b3e052eb811358c659961120dfd13e954ff9e93de",
+      "response_envelope": {
+        "id": "gen-1789749495-B8QVIK9CDXTbRlvgeCxX",
+        "object": "chat.completion",
+        "created": 1789749495,
+        "model": "openai/gpt-5.6-terra",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Order Kittiwake has dispatch cycle Cycle Dori.\",\"I2\":\"Order Kittiwake has an ordered number of 120 sleeves of empty storage sleeves.\",\"I3\":\"Order Sandpiper has an ordered number of 330 sleeves of empty storage sleeves.\",\"I4\":\"Order Kittiwake's order identifier is ORD-K8.\",\"I5\":\"Order Kittiwake uses flat packs packaging.\",\"I6\":\"Order Kittiwake's delivery point is Dock Ranu.\",\"I7\":\"Order Kittiwake uses package label format Label Aster.\",\"N1\":\"Order Kittiwake's ordered number of empty storage sleeves is 270 sleeves.\",\"N2\":\"Order Kittiwake's order identifier is ORD-K8.\",\"Q\":\"What is the current ordered number of empty storage sleeves of Order Kittiwake?\",\"U1\":\"Order Kittiwake's ordered number of empty storage sleeves has been updated to 145 sleeves.\",\"U2\":\"Order Kittiwake's ordered number of empty storage sleeves is now 170 sleeves.\",\"U3\":\"Order Kittiwake's ordered number of empty storage sleeves has changed to 195 sleeves.\",\"U4\":\"Order Kittiwake's ordered number of empty storage sleeves is now 220 sleeves.\",\"U5\":\"Order Kittiwake's ordered number of empty storage sleeves has been revised to 245 sleeves.\",\"U6\":\"Order Kittiwake's ordered number of empty storage sleeves is now 270 sleeves.\",\"U7\":\"Order Kittiwake's ordered number of empty storage sleeves has changed to 295 sleeves.\"},\"low\":{\"I1\":\"Order Kittiwake's dispatch cycle is Cycle Dori.\",\"I2\":\"Order Kittiwake has an ordered number of 120 sleeves of empty storage sleeves.\",\"I3\":\"Order Sandpiper has an ordered number of 330 sleeves of empty storage sleeves.\",\"I4\":\"The order identifier for Order Kittiwake is ORD-K8.\",\"I5\":\"Order Kittiwake uses flat packs packaging.\",\"I6\":\"Order Kittiwake's delivery point is Dock Ranu.\",\"I7\":\"Order Kittiwake's package label format is Label Aster.\",\"N1\":\"Order Kittiwake's ordered number of empty storage sleeves is 120 sleeves.\",\"N2\":\"Order Kittiwake's order identifier is ORD-K8.\",\"Q\":\"What is the current ordered number of empty storage sleeves of Order Kittiwake?\",\"U1\":\"Order Sandpiper's ordered number of empty storage sleeves has been updated to 355 sleeves.\",\"U2\":\"Order Kittiwake's package label format has changed to Label Briar.\",\"U3\":\"Order Kittiwake's dispatch cycle is now Cycle Evi.\",\"U4\":\"Order Kittiwake's packaging has been updated to rolled packs.\",\"U5\":\"Order Kittiwake's delivery point has changed to Dock Selu.\",\"U6\":\"Order Kittiwake's package label format is now Label Clover.\",\"U7\":\"Order Kittiwake's ordered number of empty storage sleeves has been updated to 295 sleeves.\"},\"medium\":{\"I1\":\"Order Kittiwake has dispatch cycle Cycle Dori.\",\"I2\":\"Order Kittiwake has an ordered number of 120 sleeves of empty storage sleeves.\",\"I3\":\"Order Sandpiper has an ordered number of 330 sleeves of empty storage sleeves.\",\"I4\":\"Order Kittiwake's order identifier is ORD-K8.\",\"I5\":\"Order Kittiwake uses flat packs packaging.\",\"I6\":\"Order Kittiwake's delivery point is Dock Ranu.\",\"I7\":\"Order Kittiwake uses package label format Label Aster.\",\"N1\":\"Order Kittiwake's ordered number of empty storage sleeves remains 245 sleeves.\",\"N2\":\"Order Kittiwake's order identifier is ORD-K8.\",\"Q\":\"What is the current ordered number of empty storage sleeves of Order Kittiwake?\",\"U1\":\"Order Kittiwake's ordered number of empty storage sleeves has changed to 145 sleeves.\",\"U2\":\"Order Sandpiper's ordered number of empty storage sleeves is now 355 sleeves.\",\"U3\":\"Order Kittiwake's ordered number of empty storage sleeves has been updated to 195 sleeves.\",\"U4\":\"Order Kittiwake's dispatch cycle has changed to Cycle Evi.\",\"U5\":\"Order Kittiwake's ordered number of empty storage sleeves is now 245 sleeves.\",\"U6\":\"Order Kittiwake's packaging has been updated to rolled packs.\",\"U7\":\"Order Kittiwake's ordered number of empty storage sleeves has changed to 295 sleeves.\"}}",
+              "refusal": null,
+              "reasoning": null,
+              "reasoning_details": [
+                {
+                  "type": "reasoning.encrypted",
+                  "data": "gAAAAABqrWj5cnT1VnsLiOjcAsU-qV1TzugJLAMw7d8GOsCRof2YIZ8BF_NgSLckuUc55mDZUSY1vXtvsedMJIH8r5sHr2hvrBp8oPeqeN3NxkSdPkyslZwaf_YBX_4a6IH8rvtFqJ-B4oCNOI1wBPjIlJ9sody1IoK0nnG55D7GHw93tQCd82SAQGq_eQ95rGcR1butWINN-8-AjiClSa7sf6_5Smyqsm4DAfmJIP6GxC6EYrPTntrjW14IppvlgeEefKp1cvjMEqr-5NAuYIgSvfKV3dU6iG_2NfFTwvG2K1j5cHTbW80kj-Nw8JYPRYjXrai1Jj6AdLQ4Vd-W5nSf63z1l28oW7XH0R4jxGApO3bh9n1o56wEgkwkMVOEJZBZgoozLqh9LPMnLn43cFFpwYq76vmGP51MPXZ9kRLg837IpgjM0ZDqdQ4yiBOJ5ZRgTDeJMz6_QnLzwyGDByXXnjT4CvDdjS4yfmWJnb8szuwFhSM88MwJD_xgtmZ120dc4woQWAtwz6CmprJ7r9-paXEAZVDiFB-HPvIDWZAwTzgbRomwqhyFycl1fn6yXKYozwQIzAfLb6h4nEkwzAmZ-8Jsahv1OiPdM9vRuG8m-fgm0KsHkpornEzgMCH6TJt19ztNVvxZOvYyqo6KSbOWb6ArFODU9MAIf2063NU92KuWPyta4sSR6LMkdGzNvvCHdf-JbfWuGWXT21kiFn5bSjZnza8YG6SHZyM3_YhZTl1XBEUumYxfFcqYVxrWgOC-OGfN0Mgh8YOJamlKsULIkwCvsjesUdvlpWiUbYYBYIrwkw9faEyyV1iDZsafdIlQvV82ejX9BVktSxgei7ATBqMWURBlgAMSGYXZh8Kb9_qT4H-OFv1qH_m8xJDdVFVJ-iKN40JfbXtGrh5-dMcQnw8h03vOXITd4Uk5fy6R9mxrCXWXuHTi0KAV9LLFWrAnbKOlr3ocFZRorT0cbqWkw9Zbonz-VqaFlC9f2Kaf7fsplV9fWiTkA4IhS1gwAjQuYDAdMUTcET7l_WT8bM31uR8QBNU-Ar8SBeB7cmTIRi7D8bToY79bUoFjhfCzU9RWcyvLDOwBM0yplgSnIot6e0FcGnmB_zy3LckdjC_nqMbaWhGSQZbxoGtGbI5MuvntN4-N8-7-P2AoGYr7o5ZkbOzv3mGmLixmyTmKJxj_6Uf542MduJizYC8YxM6k49tW0ck-CG6yKnCS-ilFTTAPB4cflcCKex0X4tfuY6k6cdFXFBizPmt90hx802zz1l9uSV6u8ifBQMLMSGuLhNfHhvhXnZIri1bznLsISp7ahXqecTTVTjBwli7jgRxenK5WW3FetENbtkyGodBWz2VKm13kJkX5wvaINkYJHVOjgK2LJs-ceIBPcT5OULRtsKl3fyVtpG9sIwSZEISK4Xw3cEpuR04zAiNbtpg8IIdaNedhcF075NXBJKxLSbHUCBoCC0MKFwpUKIGaKEYOIwcO2F169jSp3w==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtdGVycmEtMjAyNjA3MDl8b3BlbmFpIn0",
+                  "format": "openai-responses-v1",
+                  "id": "rs_0465da7c261b17ed016aad68f85a2087d1a1437213e809afa0",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2518,
+          "completion_tokens": 1002,
+          "total_tokens": 3520,
+          "cost": 0.0183175,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2515,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0183175,
+            "upstream_inference_prompt_cost": 0.0062935,
+            "upstream_inference_completions_cost": 0.012024
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 24,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-terra",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-terra-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 10912
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-terra",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-terra-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 10912
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Order Kittiwake has dispatch cycle Cycle Dori.",
+          "I2": "Order Kittiwake has an ordered number of 120 sleeves of empty storage sleeves.",
+          "I3": "Order Sandpiper has an ordered number of 330 sleeves of empty storage sleeves.",
+          "I4": "Order Kittiwake's order identifier is ORD-K8.",
+          "I5": "Order Kittiwake uses flat packs packaging.",
+          "I6": "Order Kittiwake's delivery point is Dock Ranu.",
+          "I7": "Order Kittiwake uses package label format Label Aster.",
+          "N1": "Order Kittiwake's ordered number of empty storage sleeves is 270 sleeves.",
+          "N2": "Order Kittiwake's order identifier is ORD-K8.",
+          "Q": "What is the current ordered number of empty storage sleeves of Order Kittiwake?",
+          "U1": "Order Kittiwake's ordered number of empty storage sleeves has been updated to 145 sleeves.",
+          "U2": "Order Kittiwake's ordered number of empty storage sleeves is now 170 sleeves.",
+          "U3": "Order Kittiwake's ordered number of empty storage sleeves has changed to 195 sleeves.",
+          "U4": "Order Kittiwake's ordered number of empty storage sleeves is now 220 sleeves.",
+          "U5": "Order Kittiwake's ordered number of empty storage sleeves has been revised to 245 sleeves.",
+          "U6": "Order Kittiwake's ordered number of empty storage sleeves is now 270 sleeves.",
+          "U7": "Order Kittiwake's ordered number of empty storage sleeves has changed to 295 sleeves."
+        },
+        "low": {
+          "I1": "Order Kittiwake's dispatch cycle is Cycle Dori.",
+          "I2": "Order Kittiwake has an ordered number of 120 sleeves of empty storage sleeves.",
+          "I3": "Order Sandpiper has an ordered number of 330 sleeves of empty storage sleeves.",
+          "I4": "The order identifier for Order Kittiwake is ORD-K8.",
+          "I5": "Order Kittiwake uses flat packs packaging.",
+          "I6": "Order Kittiwake's delivery point is Dock Ranu.",
+          "I7": "Order Kittiwake's package label format is Label Aster.",
+          "N1": "Order Kittiwake's ordered number of empty storage sleeves is 120 sleeves.",
+          "N2": "Order Kittiwake's order identifier is ORD-K8.",
+          "Q": "What is the current ordered number of empty storage sleeves of Order Kittiwake?",
+          "U1": "Order Sandpiper's ordered number of empty storage sleeves has been updated to 355 sleeves.",
+          "U2": "Order Kittiwake's package label format has changed to Label Briar.",
+          "U3": "Order Kittiwake's dispatch cycle is now Cycle Evi.",
+          "U4": "Order Kittiwake's packaging has been updated to rolled packs.",
+          "U5": "Order Kittiwake's delivery point has changed to Dock Selu.",
+          "U6": "Order Kittiwake's package label format is now Label Clover.",
+          "U7": "Order Kittiwake's ordered number of empty storage sleeves has been updated to 295 sleeves."
+        },
+        "medium": {
+          "I1": "Order Kittiwake has dispatch cycle Cycle Dori.",
+          "I2": "Order Kittiwake has an ordered number of 120 sleeves of empty storage sleeves.",
+          "I3": "Order Sandpiper has an ordered number of 330 sleeves of empty storage sleeves.",
+          "I4": "Order Kittiwake's order identifier is ORD-K8.",
+          "I5": "Order Kittiwake uses flat packs packaging.",
+          "I6": "Order Kittiwake's delivery point is Dock Ranu.",
+          "I7": "Order Kittiwake uses package label format Label Aster.",
+          "N1": "Order Kittiwake's ordered number of empty storage sleeves remains 245 sleeves.",
+          "N2": "Order Kittiwake's order identifier is ORD-K8.",
+          "Q": "What is the current ordered number of empty storage sleeves of Order Kittiwake?",
+          "U1": "Order Kittiwake's ordered number of empty storage sleeves has changed to 145 sleeves.",
+          "U2": "Order Sandpiper's ordered number of empty storage sleeves is now 355 sleeves.",
+          "U3": "Order Kittiwake's ordered number of empty storage sleeves has been updated to 195 sleeves.",
+          "U4": "Order Kittiwake's dispatch cycle has changed to Cycle Evi.",
+          "U5": "Order Kittiwake's ordered number of empty storage sleeves is now 245 sleeves.",
+          "U6": "Order Kittiwake's packaging has been updated to rolled packs.",
+          "U7": "Order Kittiwake's ordered number of empty storage sleeves has changed to 295 sleeves."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2518,
+        "completion_tokens": 1002,
+        "total_tokens": 3520,
+        "reasoning_tokens": 24,
+        "cached_tokens": 0,
+        "cost": 0.0183175
+      },
+      "latency_seconds": 11.040378567995504,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "gq-purchase-order-01",
+  "fixture_sha256": "8c88c4212a5db681e2bec23828a8d8006a225d2cdede2fffeb3f69cc6c2e6898",
+  "projection_sha256": "42cc082624b29b8fe97f34b397687ec354304b9ce7829a3da5659820dff63b72",
+  "logical_call_index": 7,
+  "provenance": {
+    "source_commit": "7b28ea23dcac316819cf2858e3bf26769b07b275",
+    "candidate_profile": "FALLBACK",
+    "selected_slot": "G1",
+    "fixture_set_commit": "683c0416c5bf47c83021408f26bc7a7ab5e8becc",
+    "fixture_manifest_sha256": "ecce7e579f02f64bb5578d8b18b9164483da1c5438544f21a89e17d7a2aaa1f9",
+    "execution_config_sha256": "1316b2b1f3a7f5f15f64d5b3b2ef379c60f96edddff8b5f62bf0e712d7099e1b",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "procedure_version": "generator-qualification-procedure/1.0.0",
+    "implementation": {
+      "status": "FROZEN FOR LIVE EXECUTION",
+      "freeze_commit": "585b5e2844504fec703287f8dd4869668615671d",
+      "source_sha256": {
+        "experiments/qualify_generators.py": "89f82fe9f617275d117d793f936ca1d81fd63aa2ed6f138a8bd8e5b4bc731258",
+        "experiments/probe_generators.py": "bf414f46d02400127ba60aa0af1bbcfd4f72c12acba0cdcc8718c9b34774c9cf",
+        "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+      }
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "automated": {
+    "status": "PASS",
+    "meaning": "No deterministic violation detected is not semantic qualification.",
+    "findings": []
+  },
+  "output_sha256": "42c54cbe5fd2e4c880ab650f503af9b80082099b8512c1ac34a9d6de68a77b6b"
+}

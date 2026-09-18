@@ -768,3 +768,49 @@ adjudication: G1/G2 FAIL) were all reverified byte-identical and unchanged
 after this freeze. Terra Generator Qualification has not executed. No new G2
 candidate has been selected. Terra/Opus remain CANDIDATE, not
 Generator-Qualified.
+
+## Terra Generator Qualification Attempt-02 — Protocol v1 Closed
+
+**TERRA GENERATOR QUALIFICATION ATTEMPT-02 — PROTOCOL v1 CLOSED.** Official
+single-slot Attempt-02 (candidate `openai/gpt-5.6-terra`, G1) completed
+2026-09-18/19 local time under the frozen per-slot-capable implementation
+(`585b5e2844504fec703287f8dd4869668615671d`, freeze commit
+`7b28ea2`), preserved without modification under
+`results/generator-qualification/attempt-02/`; result SHA-256
+`c15a6f2ab6e087c719e32c92f0f6268d4bf6a5728629a4ff8b1a033761560d5c`.
+
+All 12 logical calls completed; no infrastructure invalidation; 12/12 calls
+passed schema/execution (HTTP 200, matching model/provider, parse and strict
+schema passed on every call). Automated result: 11 PASS, 1
+MANUAL_REVIEW_REQUIRED (`gq-task-assignment-01`, `q_attribute` on Q across
+all three variants). The completed human manual audit and offline
+adjudication are recorded at
+`results/generator-qualification/manual-audit/v1/attempt-02.completed.json`
+and `results/generator-qualification/adjudication/v1/attempt-02.json`.
+
+The Task Assignment `q_attribute` ambiguity was manually resolved **PASS** as
+a faithful paraphrase of the assignee attribute ("Who is currently assigned
+to Task Vireo?"), preserving intended entity/attribute and not leaking the
+answer.
+
+`gq-purchase-order-01` failed the historical Protocol-v1 `natural_english`
+criterion at events I2 and I3, in all three variants (Low, Medium, High),
+for both the Kittiwake and Sandpiper constructions ("has an ordered number
+of \<N\> sleeves of empty storage sleeves"). Structured meaning remained
+recoverable, and every semantic-fidelity check on this fixture passed; this
+is a wording failure, not a truth-corruption failure. The adjudicator's
+recorded basis contains exactly **10** `manual_failures` entries for G1: the
+6 cell-level natural_english FAILs (I2 and I3, each in Low/Medium/High), the
+3 variant-level FAILs those cells produce (one per variant), and 1
+fixture-level FAIL for `gq-purchase-order-01` itself, recorded as its own
+list entry rather than represented separately.
+
+**Final Protocol-v1 candidate disposition: G1 (Terra) = FAIL.** No other
+fixture failed. **Protocol v2 (the proposed comprehensibility/fluency split)
+has NOT been frozen or applied anywhere in this closure**; the recorded
+`procedure_version` is `generator-qualification-procedure/1.0.0` throughout,
+unchanged. Attempt-02's archive remains immutable and byte-identical to its
+original execution; Attempt-01's historical v1 dispositions (G1/G2 FAIL) were
+reverified unaffected. Opus remains capability CLOSED/FAIL (provider-policy
+refusal). No new G2 candidate has been selected. Neither Terra nor Opus is
+Generator-Qualified.

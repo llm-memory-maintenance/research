@@ -1,0 +1,387 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"digest_schedule\\\",\\\"meaning\\\":\\\"digest delivery schedule\\\",\\\"units_or_interpretation\\\":\\\"named schedule\\\"},{\\\"attribute_id\\\":\\\"channel_code\\\",\\\"meaning\\\":\\\"channel identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"delivery_mode\\\",\\\"meaning\\\":\\\"digest delivery mode\\\",\\\"units_or_interpretation\\\":\\\"mode label\\\"},{\\\"attribute_id\\\":\\\"subject_prefix\\\",\\\"meaning\\\":\\\"digest subject prefix\\\",\\\"units_or_interpretation\\\":\\\"literal prefix\\\"},{\\\"attribute_id\\\":\\\"layout\\\",\\\"meaning\\\":\\\"digest layout\\\",\\\"units_or_interpretation\\\":\\\"layout label\\\"},{\\\"attribute_id\\\":\\\"recipient_group\\\",\\\"meaning\\\":\\\"digest recipient group\\\",\\\"units_or_interpretation\\\":\\\"synthetic group\\\"}],\\\"domain\\\":\\\"Communication\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gq-communication-01-primary\\\",\\\"name\\\":\\\"Channel Skylark\\\"},{\\\"entity_id\\\":\\\"gq-communication-01-distractor\\\",\\\"name\\\":\\\"Channel Starling\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_hard\\\",\\\"I2\\\":\\\"k_n2\\\",\\\"I3\\\":\\\"k_a\\\",\\\"I4\\\":\\\"k_b\\\",\\\"I5\\\":\\\"k_c\\\",\\\"I6\\\":\\\"k_d\\\",\\\"I7\\\":\\\"k_target\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"digest_schedule\\\",\\\"entity_id\\\":\\\"gq-communication-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current digest delivery schedule of Channel Skylark.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"digest_schedule\\\",\\\"entity_id\\\":\\\"gq-communication-01-primary\\\",\\\"initial_value\\\":\\\"daily at 08:00\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"digest_schedule\\\",\\\"entity_id\\\":\\\"gq-communication-01-distractor\\\",\\\"initial_value\\\":\\\"daily at 16:00\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"channel_code\\\",\\\"entity_id\\\":\\\"gq-communication-01-primary\\\",\\\"initial_value\\\":\\\"COM-S5\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"delivery_mode\\\",\\\"entity_id\\\":\\\"gq-communication-01-primary\\\",\\\"initial_value\\\":\\\"inbox delivery\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"subject_prefix\\\",\\\"entity_id\\\":\\\"gq-communication-01-primary\\\",\\\"initial_value\\\":\\\"DG-RU\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"layout\\\",\\\"entity_id\\\":\\\"gq-communication-01-primary\\\",\\\"initial_value\\\":\\\"compact cards\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"recipient_group\\\",\\\"entity_id\\\":\\\"gq-communication-01-primary\\\",\\\"initial_value\\\":\\\"Group Daru\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"daily at 16:00\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"COM-S5\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"inbox delivery\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"DG-RU\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"compact cards\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Group Daru\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"daily at 08:00\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 09:00\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 10:00\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 11:00\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 12:00\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 13:00\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 14:00\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 14:00\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 15:00\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"COM-S5\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"daily at 16:00\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"COM-S5\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"inbox delivery\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"DG-RU\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"compact cards\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Group Daru\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"daily at 08:00\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"DG-SE\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"expanded cards\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Group Efi\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"panel delivery\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"daily at 17:00\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"archive delivery\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"daily at 08:00\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 15:00\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"COM-S5\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"daily at 16:00\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"COM-S5\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"inbox delivery\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"DG-RU\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"compact cards\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Group Daru\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"daily at 08:00\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 09:00\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"expanded cards\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"daily at 11:00\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 17:00\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"daily at 13:00\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"DG-SE\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"daily at 13:00\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"daily at 15:00\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"COM-S5\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-terra\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "66f8e7c1166c4eaef9804e4c4dae506e63238f47ce46252652cfa21d36bab4dc",
+  "request_body": {
+    "model": "openai/gpt-5.6-terra",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"digest_schedule\",\"meaning\":\"digest delivery schedule\",\"units_or_interpretation\":\"named schedule\"},{\"attribute_id\":\"channel_code\",\"meaning\":\"channel identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"delivery_mode\",\"meaning\":\"digest delivery mode\",\"units_or_interpretation\":\"mode label\"},{\"attribute_id\":\"subject_prefix\",\"meaning\":\"digest subject prefix\",\"units_or_interpretation\":\"literal prefix\"},{\"attribute_id\":\"layout\",\"meaning\":\"digest layout\",\"units_or_interpretation\":\"layout label\"},{\"attribute_id\":\"recipient_group\",\"meaning\":\"digest recipient group\",\"units_or_interpretation\":\"synthetic group\"}],\"domain\":\"Communication\",\"entities\":[{\"entity_id\":\"gq-communication-01-primary\",\"name\":\"Channel Skylark\"},{\"entity_id\":\"gq-communication-01-distractor\",\"name\":\"Channel Starling\"}],\"initial_order\":{\"I1\":\"k_hard\",\"I2\":\"k_n2\",\"I3\":\"k_a\",\"I4\":\"k_b\",\"I5\":\"k_c\",\"I6\":\"k_d\",\"I7\":\"k_target\"},\"question_intent\":{\"attribute_id\":\"digest_schedule\",\"entity_id\":\"gq-communication-01-primary\",\"intent\":\"Ask only for the current digest delivery schedule of Channel Skylark.\"},\"state_keys\":[{\"attribute_id\":\"digest_schedule\",\"entity_id\":\"gq-communication-01-primary\",\"initial_value\":\"daily at 08:00\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"digest_schedule\",\"entity_id\":\"gq-communication-01-distractor\",\"initial_value\":\"daily at 16:00\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"channel_code\",\"entity_id\":\"gq-communication-01-primary\",\"initial_value\":\"COM-S5\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"delivery_mode\",\"entity_id\":\"gq-communication-01-primary\",\"initial_value\":\"inbox delivery\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"subject_prefix\",\"entity_id\":\"gq-communication-01-primary\",\"initial_value\":\"DG-RU\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"layout\",\"entity_id\":\"gq-communication-01-primary\",\"initial_value\":\"compact cards\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"recipient_group\",\"entity_id\":\"gq-communication-01-primary\",\"initial_value\":\"Group Daru\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"daily at 16:00\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"COM-S5\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"inbox delivery\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"DG-RU\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"compact cards\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Group Daru\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"daily at 08:00\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 09:00\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 10:00\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 11:00\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 12:00\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 13:00\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 14:00\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 14:00\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 15:00\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"COM-S5\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"daily at 16:00\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"COM-S5\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"inbox delivery\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"DG-RU\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"compact cards\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Group Daru\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"daily at 08:00\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"DG-SE\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"expanded cards\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Group Efi\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"panel delivery\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"daily at 17:00\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"archive delivery\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"daily at 08:00\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 15:00\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"COM-S5\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"daily at 16:00\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"COM-S5\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"inbox delivery\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"DG-RU\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"compact cards\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Group Daru\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"daily at 08:00\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 09:00\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"expanded cards\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"daily at 11:00\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 17:00\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"daily at 13:00\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"DG-SE\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"daily at 13:00\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"daily at 15:00\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"COM-S5\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-18T16:38:34.729715+00:00",
+      "requested_model": "openai/gpt-5.6-terra",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-terra",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789749514-qbsaN8A6IfQfd3hk1zsS",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789749514-qbsaN8A6IfQfd3hk1zsS\",\"object\":\"chat.completion\",\"created\":1789749514,\"model\":\"openai/gpt-5.6-terra\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Channel Starling's digest delivery schedule is daily at 16:00.\\\",\\\"I2\\\":\\\"Channel Skylark's channel code is COM-S5.\\\",\\\"I3\\\":\\\"Channel Skylark's digest delivery mode is inbox delivery.\\\",\\\"I4\\\":\\\"Channel Skylark's digest subject prefix is DG-RU.\\\",\\\"I5\\\":\\\"Channel Skylark's digest layout is compact cards.\\\",\\\"I6\\\":\\\"Channel Skylark's digest recipient group is Group Daru.\\\",\\\"I7\\\":\\\"Channel Skylark's digest delivery schedule is daily at 08:00.\\\",\\\"N1\\\":\\\"Channel Skylark's digest delivery schedule remains daily at 14:00.\\\",\\\"N2\\\":\\\"Channel Skylark's channel code is still COM-S5.\\\",\\\"Q\\\":\\\"What is the current digest delivery schedule of Channel Skylark?\\\",\\\"U1\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 09:00.\\\",\\\"U2\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 10:00.\\\",\\\"U3\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 11:00.\\\",\\\"U4\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 12:00.\\\",\\\"U5\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 13:00.\\\",\\\"U6\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 14:00.\\\",\\\"U7\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 15:00.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Channel Starling's digest delivery schedule is daily at 16:00.\\\",\\\"I2\\\":\\\"Channel Skylark's channel code is COM-S5.\\\",\\\"I3\\\":\\\"Channel Skylark's digest delivery mode is inbox delivery.\\\",\\\"I4\\\":\\\"Channel Skylark's digest subject prefix is DG-RU.\\\",\\\"I5\\\":\\\"Channel Skylark's digest layout is compact cards.\\\",\\\"I6\\\":\\\"Channel Skylark's digest recipient group is Group Daru.\\\",\\\"I7\\\":\\\"Channel Skylark's digest delivery schedule is daily at 08:00.\\\",\\\"N1\\\":\\\"Channel Skylark's digest delivery schedule remains daily at 08:00.\\\",\\\"N2\\\":\\\"Channel Skylark's channel code is still COM-S5.\\\",\\\"Q\\\":\\\"What is the current digest delivery schedule of Channel Skylark?\\\",\\\"U1\\\":\\\"Channel Skylark's digest subject prefix has been updated to DG-SE.\\\",\\\"U2\\\":\\\"Channel Skylark's digest layout has been updated to expanded cards.\\\",\\\"U3\\\":\\\"Channel Skylark's digest recipient group has been updated to Group Efi.\\\",\\\"U4\\\":\\\"Channel Skylark's digest delivery mode has been updated to panel delivery.\\\",\\\"U5\\\":\\\"Channel Starling's digest delivery schedule has been updated to daily at 17:00.\\\",\\\"U6\\\":\\\"Channel Skylark's digest delivery mode has been updated to archive delivery.\\\",\\\"U7\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 15:00.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"Channel Starling's digest delivery schedule is daily at 16:00.\\\",\\\"I2\\\":\\\"Channel Skylark's channel code is COM-S5.\\\",\\\"I3\\\":\\\"Channel Skylark's digest delivery mode is inbox delivery.\\\",\\\"I4\\\":\\\"Channel Skylark's digest subject prefix is DG-RU.\\\",\\\"I5\\\":\\\"Channel Skylark's digest layout is compact cards.\\\",\\\"I6\\\":\\\"Channel Skylark's digest recipient group is Group Daru.\\\",\\\"I7\\\":\\\"Channel Skylark's digest delivery schedule is daily at 08:00.\\\",\\\"N1\\\":\\\"Channel Skylark's digest delivery schedule remains daily at 13:00.\\\",\\\"N2\\\":\\\"Channel Skylark's channel code is still COM-S5.\\\",\\\"Q\\\":\\\"What is the current digest delivery schedule of Channel Skylark?\\\",\\\"U1\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 09:00.\\\",\\\"U2\\\":\\\"Channel Skylark's digest layout has been updated to expanded cards.\\\",\\\"U3\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 11:00.\\\",\\\"U4\\\":\\\"Channel Starling's digest delivery schedule has been updated to daily at 17:00.\\\",\\\"U5\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 13:00.\\\",\\\"U6\\\":\\\"Channel Skylark's digest subject prefix has been updated to DG-SE.\\\",\\\"U7\\\":\\\"Channel Skylark's digest delivery schedule has been updated to daily at 15:00.\\\"}}\",\"refusal\":null,\"reasoning\":null,\"reasoning_details\":[{\"type\":\"reasoning.encrypted\",\"data\":\"gAAAAABqrWkNC1rSf7M3-dIqgcw98DjVRs8UBgL1ngInFfKGak4NUHUh2XKsAczJq86ufV47r_MdY84Y6G89vv0D74LUvYgPeryxKaziy-Z3EqjKb6_vSI59QD6ZKij4OVIOhXfZYe-RmV13rxfEyjNGgkiWlOdiz4eqN3_FbEucyf2t6X_7GClNX1xd4_RdV01bPtYUgQrOCP57OX_LZizH5eQnbW4baOB_6uEXcC6YKZxkADsThJibRtXoTvpjLHvq6kPycpr4-zykN5-mFulKPax3T6K-f1-crV2pFcCDssLKQyGidTp5tVLKos4KhR4BvF-dOccTjstFjM7nBA27LNzZY5_XbBTX2RO-pxyTktL56i_2Anevb-5hAWo5VKEhbSCJbqQ065VV8HJKagCuNf14knMv2O2qmTWqYGPpT6sMbQ-comzhRpsH-pP6azZuxUzqKqX0Kk89dWcaCROxSJViN2Xzus7RSk9kl7aJxZmEmqyn_gbRCHLfyVrvaZSoQQpUDu8lskgBHoTrc7-mpu74Vhvklf8Tt-ZdOKSF3sbk4DuafvS6iJ6TYh0XiwVHdoHYOUIAzpnGkfqWhaCzU9GMXGsfETGQdT1yyIcV8RwFBg5hggBfSKernlslTdB4ZSI1CeS_yQY1wpTEkVtg8j1OdfNBd0T-XPBU6jk5fEixoCKR1dKmGkqUWDRjKtyCzOv6jZumzfMY_xU9FbRTfRuuAW536mSCaMT_i9zo1OUWaMYkTJilVyOC3bSANm8hbtWkE-idmbSLlsSwgsdKShx1cX9tg4Z1AGYUKhGyuW3Q8Gkn_5gSur6bm63vdCm5xq5XocIeeOAm0chiZ3oX8b9VQWxxPYkJLM-lPTWQAbpvDAZtmAG6zIqJ4BfAy37Kb4GfijTgOUTBg0FbjvSWZYcn8I7cAzA4g34mJnDB05Zjh_edqM6YJy4B2GY5OsU14J-wztoptn3zsJRRCd4ThG1hqMMgfN0UNaEUfm_h_1oPhRrf26ncrN5umxTbNnwrdIW9bjtYN-sfwki7ajHwvJPke0h7Z2bFRih5wxSiCCAPqTSjtFc9Oe0XaKAUDOEArnWNndwh8Rcjv991eE5LBCbDXUO8LS1_JSGXPlXs2jnBDoeq8ZRXcay93vlud0nhqHHnugFxZ-hGVGWMSfr639YFQVg-_7ZGGTXCQnnFRDhYyU-NoqQV7z2pKph83AQKEza11FMMq0_nx6Ty1lNrSx7WeiXxKsX1fnsW4Zsg29Ac46U3tmE_kMaerupDkb_Dyy7SEm-N6zbQgz48S9At2O-AuvieRyThTwZdnDA4UpTyXxboYO1b_-ffEIW-__5V47VxruC9nsC49KYaFPx1bxYj-aO2ktFxKnmxBybqWnMbPHp9u4yyhFFkPsHl0-xffysUF1y4W_U6S8j6UcxUNGNy34hK8VUQh2s3P8nBoQ_q1TFooSWujZCZTnEYfnOFqNBj8uo1.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtdGVycmEtMjAyNjA3MDl8b3BlbmFpIn0\",\"format\":\"openai-responses-v1\",\"id\":\"rs_0e411d1868110aa5016aad690c40d487d18c5391dcd2315e0d\",\"index\":0}]}}],\"usage\":{\"prompt_tokens\":2588,\"completion_tokens\":927,\"total_tokens\":3515,\"cost\":0.0175925,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2585,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0175925,\"upstream_inference_prompt_cost\":0.0064685,\"upstream_inference_completions_cost\":0.011124},\"completion_tokens_details\":{\"reasoning_tokens\":23,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-terra\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-terra-20260709\",\"selected\":true}]},\"generation_time\":10771}}",
+      "response_sha256_before_redaction": "9af6bc99b190b0b428df06264ff3186134968f64b3f35694db6486b6894c4bba",
+      "response_envelope": {
+        "id": "gen-1789749514-qbsaN8A6IfQfd3hk1zsS",
+        "object": "chat.completion",
+        "created": 1789749514,
+        "model": "openai/gpt-5.6-terra",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Channel Starling's digest delivery schedule is daily at 16:00.\",\"I2\":\"Channel Skylark's channel code is COM-S5.\",\"I3\":\"Channel Skylark's digest delivery mode is inbox delivery.\",\"I4\":\"Channel Skylark's digest subject prefix is DG-RU.\",\"I5\":\"Channel Skylark's digest layout is compact cards.\",\"I6\":\"Channel Skylark's digest recipient group is Group Daru.\",\"I7\":\"Channel Skylark's digest delivery schedule is daily at 08:00.\",\"N1\":\"Channel Skylark's digest delivery schedule remains daily at 14:00.\",\"N2\":\"Channel Skylark's channel code is still COM-S5.\",\"Q\":\"What is the current digest delivery schedule of Channel Skylark?\",\"U1\":\"Channel Skylark's digest delivery schedule has been updated to daily at 09:00.\",\"U2\":\"Channel Skylark's digest delivery schedule has been updated to daily at 10:00.\",\"U3\":\"Channel Skylark's digest delivery schedule has been updated to daily at 11:00.\",\"U4\":\"Channel Skylark's digest delivery schedule has been updated to daily at 12:00.\",\"U5\":\"Channel Skylark's digest delivery schedule has been updated to daily at 13:00.\",\"U6\":\"Channel Skylark's digest delivery schedule has been updated to daily at 14:00.\",\"U7\":\"Channel Skylark's digest delivery schedule has been updated to daily at 15:00.\"},\"low\":{\"I1\":\"Channel Starling's digest delivery schedule is daily at 16:00.\",\"I2\":\"Channel Skylark's channel code is COM-S5.\",\"I3\":\"Channel Skylark's digest delivery mode is inbox delivery.\",\"I4\":\"Channel Skylark's digest subject prefix is DG-RU.\",\"I5\":\"Channel Skylark's digest layout is compact cards.\",\"I6\":\"Channel Skylark's digest recipient group is Group Daru.\",\"I7\":\"Channel Skylark's digest delivery schedule is daily at 08:00.\",\"N1\":\"Channel Skylark's digest delivery schedule remains daily at 08:00.\",\"N2\":\"Channel Skylark's channel code is still COM-S5.\",\"Q\":\"What is the current digest delivery schedule of Channel Skylark?\",\"U1\":\"Channel Skylark's digest subject prefix has been updated to DG-SE.\",\"U2\":\"Channel Skylark's digest layout has been updated to expanded cards.\",\"U3\":\"Channel Skylark's digest recipient group has been updated to Group Efi.\",\"U4\":\"Channel Skylark's digest delivery mode has been updated to panel delivery.\",\"U5\":\"Channel Starling's digest delivery schedule has been updated to daily at 17:00.\",\"U6\":\"Channel Skylark's digest delivery mode has been updated to archive delivery.\",\"U7\":\"Channel Skylark's digest delivery schedule has been updated to daily at 15:00.\"},\"medium\":{\"I1\":\"Channel Starling's digest delivery schedule is daily at 16:00.\",\"I2\":\"Channel Skylark's channel code is COM-S5.\",\"I3\":\"Channel Skylark's digest delivery mode is inbox delivery.\",\"I4\":\"Channel Skylark's digest subject prefix is DG-RU.\",\"I5\":\"Channel Skylark's digest layout is compact cards.\",\"I6\":\"Channel Skylark's digest recipient group is Group Daru.\",\"I7\":\"Channel Skylark's digest delivery schedule is daily at 08:00.\",\"N1\":\"Channel Skylark's digest delivery schedule remains daily at 13:00.\",\"N2\":\"Channel Skylark's channel code is still COM-S5.\",\"Q\":\"What is the current digest delivery schedule of Channel Skylark?\",\"U1\":\"Channel Skylark's digest delivery schedule has been updated to daily at 09:00.\",\"U2\":\"Channel Skylark's digest layout has been updated to expanded cards.\",\"U3\":\"Channel Skylark's digest delivery schedule has been updated to daily at 11:00.\",\"U4\":\"Channel Starling's digest delivery schedule has been updated to daily at 17:00.\",\"U5\":\"Channel Skylark's digest delivery schedule has been updated to daily at 13:00.\",\"U6\":\"Channel Skylark's digest subject prefix has been updated to DG-SE.\",\"U7\":\"Channel Skylark's digest delivery schedule has been updated to daily at 15:00.\"}}",
+              "refusal": null,
+              "reasoning": null,
+              "reasoning_details": [
+                {
+                  "type": "reasoning.encrypted",
+                  "data": "gAAAAABqrWkNC1rSf7M3-dIqgcw98DjVRs8UBgL1ngInFfKGak4NUHUh2XKsAczJq86ufV47r_MdY84Y6G89vv0D74LUvYgPeryxKaziy-Z3EqjKb6_vSI59QD6ZKij4OVIOhXfZYe-RmV13rxfEyjNGgkiWlOdiz4eqN3_FbEucyf2t6X_7GClNX1xd4_RdV01bPtYUgQrOCP57OX_LZizH5eQnbW4baOB_6uEXcC6YKZxkADsThJibRtXoTvpjLHvq6kPycpr4-zykN5-mFulKPax3T6K-f1-crV2pFcCDssLKQyGidTp5tVLKos4KhR4BvF-dOccTjstFjM7nBA27LNzZY5_XbBTX2RO-pxyTktL56i_2Anevb-5hAWo5VKEhbSCJbqQ065VV8HJKagCuNf14knMv2O2qmTWqYGPpT6sMbQ-comzhRpsH-pP6azZuxUzqKqX0Kk89dWcaCROxSJViN2Xzus7RSk9kl7aJxZmEmqyn_gbRCHLfyVrvaZSoQQpUDu8lskgBHoTrc7-mpu74Vhvklf8Tt-ZdOKSF3sbk4DuafvS6iJ6TYh0XiwVHdoHYOUIAzpnGkfqWhaCzU9GMXGsfETGQdT1yyIcV8RwFBg5hggBfSKernlslTdB4ZSI1CeS_yQY1wpTEkVtg8j1OdfNBd0T-XPBU6jk5fEixoCKR1dKmGkqUWDRjKtyCzOv6jZumzfMY_xU9FbRTfRuuAW536mSCaMT_i9zo1OUWaMYkTJilVyOC3bSANm8hbtWkE-idmbSLlsSwgsdKShx1cX9tg4Z1AGYUKhGyuW3Q8Gkn_5gSur6bm63vdCm5xq5XocIeeOAm0chiZ3oX8b9VQWxxPYkJLM-lPTWQAbpvDAZtmAG6zIqJ4BfAy37Kb4GfijTgOUTBg0FbjvSWZYcn8I7cAzA4g34mJnDB05Zjh_edqM6YJy4B2GY5OsU14J-wztoptn3zsJRRCd4ThG1hqMMgfN0UNaEUfm_h_1oPhRrf26ncrN5umxTbNnwrdIW9bjtYN-sfwki7ajHwvJPke0h7Z2bFRih5wxSiCCAPqTSjtFc9Oe0XaKAUDOEArnWNndwh8Rcjv991eE5LBCbDXUO8LS1_JSGXPlXs2jnBDoeq8ZRXcay93vlud0nhqHHnugFxZ-hGVGWMSfr639YFQVg-_7ZGGTXCQnnFRDhYyU-NoqQV7z2pKph83AQKEza11FMMq0_nx6Ty1lNrSx7WeiXxKsX1fnsW4Zsg29Ac46U3tmE_kMaerupDkb_Dyy7SEm-N6zbQgz48S9At2O-AuvieRyThTwZdnDA4UpTyXxboYO1b_-ffEIW-__5V47VxruC9nsC49KYaFPx1bxYj-aO2ktFxKnmxBybqWnMbPHp9u4yyhFFkPsHl0-xffysUF1y4W_U6S8j6UcxUNGNy34hK8VUQh2s3P8nBoQ_q1TFooSWujZCZTnEYfnOFqNBj8uo1.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtdGVycmEtMjAyNjA3MDl8b3BlbmFpIn0",
+                  "format": "openai-responses-v1",
+                  "id": "rs_0e411d1868110aa5016aad690c40d487d18c5391dcd2315e0d",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2588,
+          "completion_tokens": 927,
+          "total_tokens": 3515,
+          "cost": 0.0175925,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2585,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0175925,
+            "upstream_inference_prompt_cost": 0.0064685,
+            "upstream_inference_completions_cost": 0.011124
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 23,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-terra",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-terra-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 10771
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-terra",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-terra-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 10771
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Channel Starling's digest delivery schedule is daily at 16:00.",
+          "I2": "Channel Skylark's channel code is COM-S5.",
+          "I3": "Channel Skylark's digest delivery mode is inbox delivery.",
+          "I4": "Channel Skylark's digest subject prefix is DG-RU.",
+          "I5": "Channel Skylark's digest layout is compact cards.",
+          "I6": "Channel Skylark's digest recipient group is Group Daru.",
+          "I7": "Channel Skylark's digest delivery schedule is daily at 08:00.",
+          "N1": "Channel Skylark's digest delivery schedule remains daily at 14:00.",
+          "N2": "Channel Skylark's channel code is still COM-S5.",
+          "Q": "What is the current digest delivery schedule of Channel Skylark?",
+          "U1": "Channel Skylark's digest delivery schedule has been updated to daily at 09:00.",
+          "U2": "Channel Skylark's digest delivery schedule has been updated to daily at 10:00.",
+          "U3": "Channel Skylark's digest delivery schedule has been updated to daily at 11:00.",
+          "U4": "Channel Skylark's digest delivery schedule has been updated to daily at 12:00.",
+          "U5": "Channel Skylark's digest delivery schedule has been updated to daily at 13:00.",
+          "U6": "Channel Skylark's digest delivery schedule has been updated to daily at 14:00.",
+          "U7": "Channel Skylark's digest delivery schedule has been updated to daily at 15:00."
+        },
+        "low": {
+          "I1": "Channel Starling's digest delivery schedule is daily at 16:00.",
+          "I2": "Channel Skylark's channel code is COM-S5.",
+          "I3": "Channel Skylark's digest delivery mode is inbox delivery.",
+          "I4": "Channel Skylark's digest subject prefix is DG-RU.",
+          "I5": "Channel Skylark's digest layout is compact cards.",
+          "I6": "Channel Skylark's digest recipient group is Group Daru.",
+          "I7": "Channel Skylark's digest delivery schedule is daily at 08:00.",
+          "N1": "Channel Skylark's digest delivery schedule remains daily at 08:00.",
+          "N2": "Channel Skylark's channel code is still COM-S5.",
+          "Q": "What is the current digest delivery schedule of Channel Skylark?",
+          "U1": "Channel Skylark's digest subject prefix has been updated to DG-SE.",
+          "U2": "Channel Skylark's digest layout has been updated to expanded cards.",
+          "U3": "Channel Skylark's digest recipient group has been updated to Group Efi.",
+          "U4": "Channel Skylark's digest delivery mode has been updated to panel delivery.",
+          "U5": "Channel Starling's digest delivery schedule has been updated to daily at 17:00.",
+          "U6": "Channel Skylark's digest delivery mode has been updated to archive delivery.",
+          "U7": "Channel Skylark's digest delivery schedule has been updated to daily at 15:00."
+        },
+        "medium": {
+          "I1": "Channel Starling's digest delivery schedule is daily at 16:00.",
+          "I2": "Channel Skylark's channel code is COM-S5.",
+          "I3": "Channel Skylark's digest delivery mode is inbox delivery.",
+          "I4": "Channel Skylark's digest subject prefix is DG-RU.",
+          "I5": "Channel Skylark's digest layout is compact cards.",
+          "I6": "Channel Skylark's digest recipient group is Group Daru.",
+          "I7": "Channel Skylark's digest delivery schedule is daily at 08:00.",
+          "N1": "Channel Skylark's digest delivery schedule remains daily at 13:00.",
+          "N2": "Channel Skylark's channel code is still COM-S5.",
+          "Q": "What is the current digest delivery schedule of Channel Skylark?",
+          "U1": "Channel Skylark's digest delivery schedule has been updated to daily at 09:00.",
+          "U2": "Channel Skylark's digest layout has been updated to expanded cards.",
+          "U3": "Channel Skylark's digest delivery schedule has been updated to daily at 11:00.",
+          "U4": "Channel Starling's digest delivery schedule has been updated to daily at 17:00.",
+          "U5": "Channel Skylark's digest delivery schedule has been updated to daily at 13:00.",
+          "U6": "Channel Skylark's digest subject prefix has been updated to DG-SE.",
+          "U7": "Channel Skylark's digest delivery schedule has been updated to daily at 15:00."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2588,
+        "completion_tokens": 927,
+        "total_tokens": 3515,
+        "reasoning_tokens": 23,
+        "cached_tokens": 0,
+        "cost": 0.0175925
+      },
+      "latency_seconds": 10.986587862993474,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "gq-communication-01",
+  "fixture_sha256": "fc2fc9e6fe12f3f998973ae44b761974014a7f9c12bdf1ba679fcac5a11509f2",
+  "projection_sha256": "c1e44df12fcd3157d75657d66a87526519510fbb4a4ddcc6b0bc1caa6b62f854",
+  "logical_call_index": 9,
+  "provenance": {
+    "source_commit": "7b28ea23dcac316819cf2858e3bf26769b07b275",
+    "candidate_profile": "FALLBACK",
+    "selected_slot": "G1",
+    "fixture_set_commit": "683c0416c5bf47c83021408f26bc7a7ab5e8becc",
+    "fixture_manifest_sha256": "ecce7e579f02f64bb5578d8b18b9164483da1c5438544f21a89e17d7a2aaa1f9",
+    "execution_config_sha256": "1316b2b1f3a7f5f15f64d5b3b2ef379c60f96edddff8b5f62bf0e712d7099e1b",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "procedure_version": "generator-qualification-procedure/1.0.0",
+    "implementation": {
+      "status": "FROZEN FOR LIVE EXECUTION",
+      "freeze_commit": "585b5e2844504fec703287f8dd4869668615671d",
+      "source_sha256": {
+        "experiments/qualify_generators.py": "89f82fe9f617275d117d793f936ca1d81fd63aa2ed6f138a8bd8e5b4bc731258",
+        "experiments/probe_generators.py": "bf414f46d02400127ba60aa0af1bbcfd4f72c12acba0cdcc8718c9b34774c9cf",
+        "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+      }
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "automated": {
+    "status": "PASS",
+    "meaning": "No deterministic violation detected is not semantic qualification.",
+    "findings": []
+  },
+  "output_sha256": "957867c6bca4dd6d5f86334f48f23f3794160041f872e5eb9ee8b77dbb4bf270"
+}
