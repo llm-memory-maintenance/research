@@ -264,18 +264,21 @@ Attempt-01 has executed and closed (§10); no naturalized CRST dataset or final
 CRST experiment has been produced or executed, and completed qualifications
 (Attempt-01) are not reopened.
 
-## 10. Offline Qualification Runner — Attempt-01 CLOSED; Fallback-Capable Implementation FROZEN
+## 10. Offline Qualification Runner — Attempt-01 CLOSED; Per-Slot-Capable Implementation FROZEN
 
 **QUALIFICATION IMPLEMENTATION: FROZEN.** The implementation first reviewed
 and committed at `e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e` was extended,
-offline only, to add the predeclared fallback candidate profile (§11). That
-extension was reviewed, committed at
-`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`, and
+offline only, to add the predeclared fallback candidate profile (§11), then
+extended again to add generic per-slot capability state and single-slot
+execution (§13). That second extension was reviewed and committed at
+`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`; the current reviewed
+implementation, adding per-slot/single-slot support, is committed at
+`585b5e2844504fec703287f8dd4869668615671d`, and
 `configs/generator-qualification-implementation-freeze.json` now pins that
 commit and its three execution-critical source hashes. From the
-implementation-identity perspective only, both profiles are technically
-eligible for live execution; this is not itself authorization for either, and
-neither has executed. This does not reinterpret Attempt-01's own
+implementation-identity perspective only, every profile/slot combination is
+technically eligible for live execution; this is not itself authorization for
+any of them, and none has executed. This does not reinterpret Attempt-01's own
 already-archived evidence: `replay()` verifies an archived attempt's
 implementation identity against the git history of the commit *it* records
 (the original `e5e9d500...`), not against the current live freeze record, so a
@@ -332,14 +335,16 @@ never reused.
 (no hardcoded self-hash). The freeze record
 `configs/generator-qualification-implementation-freeze.json` (schema
 `generator-qualification-implementation-freeze/1.0.0`) names the reviewed
-implementation commit `3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba` (the reviewed
-fallback-capable implementation) and these three hashes. The runner accepts it
-only because that commit is an ancestor of HEAD and each source is
-byte-identical to that commit and to the recorded hash. The record is a
-separate file, so pinning creates no circular self-hash. If commit or source
-identity ever drifts (as it did, correctly, between the first freeze and this
-one), the status reverts to `NOT YET FROZEN FOR LIVE EXECUTION` and execution
-is refused. These are software provenance hashes, not authorship metadata.
+implementation commit `585b5e2844504fec703287f8dd4869668615671d` (the
+reviewed per-slot-capable implementation; supersedes the prior
+`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba` fallback-capable freeze) and these
+three hashes. The runner accepts it only because that commit is an ancestor
+of HEAD and each source is byte-identical to that commit and to the recorded
+hash. The record is a separate file, so pinning creates no circular
+self-hash. If commit or source identity ever drifts (as it correctly has
+twice now, between successive freezes), the status reverts to
+`NOT YET FROZEN FOR LIVE EXECUTION` and execution is refused. These are
+software provenance hashes, not authorship metadata.
 
 **Continuation and invalidation.** Each candidate receives all 12 planned calls.
 A candidate's malformed, schema-invalid, refused, truncated or semantically
@@ -653,25 +658,33 @@ already-CLOSED candidate (either PASS or FAIL) when given `profile_name`,
 guarding against an accidental automatic Terra/Opus re-probe beyond the
 existing whole-profile CLOSED guard.
 
-**Result-path identity for single-slot attempts is OPEN, not invented.**
-Unlike the full two-slot profiles (`attempt-01` primary, `attempt-02`
-fallback), no sequential-attempt convention obviously covers a 12-call
-single-slot attempt. Preview without an explicit `--output-directory` shows
-the literal string `"OPEN: official single-slot result-path identity not yet
-decided"` rather than a real path; live single-slot execution refuses to
-proceed without an explicit `--output-directory`.
+**FROZEN: official Terra single-slot Generator Qualification path.**
+`results/generator-qualification/attempt-02`. Rationale (researcher-approved):
+Attempt-01 is the immutable CLOSED Sol/Sonnet primary qualification; attempt
+numbering is sequential within the same Generator Qualification result
+category; this is a new qualification attempt of the predeclared G1 fallback,
+not a rerun or repair of Attempt-01; it will contain only G1 Terra's 12
+planned calls, never Opus's. The runner does not hardcode this path as a
+default for `--slot` (no default result-path convention exists in general for
+an arbitrary single-slot attempt, and none is invented here); a researcher
+invoking a single-slot preview or execution passes it explicitly via
+`--output-directory results/generator-qualification/attempt-02`. Without an
+explicit `--output-directory`, preview still shows the literal placeholder
+`"OPEN: official single-slot result-path identity not yet decided"` for any
+*other*, not-yet-decided single-slot case (for example, a future single-slot
+G2 attempt) -- only the Terra/G1 path is frozen by this decision.
 
 **Historical compatibility.** Extending the implementation changed
 `experiments/qualify_generators.py` and `experiments/probe_generators.py`
-bytes again, so `configs/generator-qualification-implementation-freeze.json`
-(still pinning `3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`, §10) no longer
-matches; `qualification_implementation_status` correctly reports `NOT YET
-FROZEN FOR LIVE EXECUTION` again. Live execution of any profile/slot is
-refused until this implementation is reviewed, committed, and re-frozen.
-Primary Capability Probe Attempt-01/Attempt-02, fallback Capability Probe
-Attempt-03, and Generator Qualification Attempt-01 (replay, completed audit,
-and adjudication: G1/G2 FAIL) all remain unchanged and were reverified after
-this implementation.
+bytes again; after researcher review, commit, and a new freeze record pinning
+`585b5e2844504fec703287f8dd4869668615671d` (§10), the live implementation
+status is `FROZEN FOR LIVE EXECUTION` again. Live execution of any
+profile/slot remains gated on the additional checks in §10/§11 (clean
+worktree, capability gate, etc.); this freeze only restores implementation
+eligibility. Primary Capability Probe Attempt-01/Attempt-02, fallback
+Capability Probe Attempt-03, and Generator Qualification Attempt-01 (replay,
+completed audit, and adjudication: G1/G2 FAIL) all remain unchanged and were
+reverified after this freeze.
 
 **Status:** Terra Generator Qualification has **not executed**. No new G2
 candidate has been selected. Terra/Opus remain CANDIDATE, not Generator-

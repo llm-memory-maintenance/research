@@ -716,3 +716,55 @@ and Generator Qualification Attempt-01 (replay, completed audit, adjudication:
 G1/G2 FAIL) were all reverified unchanged after this implementation. Terra
 Generator Qualification has not executed. No new G2 candidate has been
 selected. Terra/Opus remain CANDIDATE, not Generator-Qualified.
+
+## Per-Slot Implementation Freeze and Official Terra Attempt-02 Path
+
+**PER-SLOT GENERATOR QUALIFICATION IMPLEMENTATION: FROZEN.** The reviewed
+per-slot-capable runner implementation (generic per-slot capability state and
+single-slot Capability Probe / Generator Qualification support, prior entry
+above) is committed at `585b5e2844504fec703287f8dd4869668615671d`
+(`feat: support per-slot generator qualification`).
+`configs/generator-qualification-implementation-freeze.json` (schema
+`generator-qualification-implementation-freeze/1.0.0`, unchanged, no parallel
+mechanism introduced) now pins that commit and the SHA-256 of the three
+execution-critical sources:
+
+- `experiments/qualify_generators.py`: `89f82fe9f617275d117d793f936ca1d81fd63aa2ed6f138a8bd8e5b4bc731258`
+- `experiments/probe_generators.py`: `bf414f46d02400127ba60aa0af1bbcfd4f72c12acba0cdcc8718c9b34774c9cf`
+- `experiments/validate_generator_qualification_fixtures.py`: `2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e`
+
+This replaces the prior freeze record (which pinned
+`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`, the fallback-capable
+implementation that produced no live evidence on its own) using the same
+established schema. Live execution fails closed if the pinned commit, its
+recorded source hashes, or current working-tree source bytes ever drift from
+one another.
+
+**FROZEN: official Terra single-slot Generator Qualification path =
+`results/generator-qualification/attempt-02`.** Rationale: Attempt-01 is the
+immutable CLOSED Sol/Sonnet primary qualification; attempt numbering is
+sequential within the Generator Qualification result category; this is a new
+qualification attempt of the predeclared G1 fallback, not a rerun or repair
+of Attempt-01; it will contain only G1 Terra's 12 planned calls, never
+Opus's. This freezes only the identity for this specific single-slot attempt;
+it does not invent a general default for every future single-slot case (for
+example, no G2-slot single-slot path is decided here).
+
+Reverified after this freeze: G1 Terra capability status = CLOSED/PASS
+(Attempt-03); G2 Opus capability status = CLOSED/FAIL, provider-policy
+refusal (Attempt-03); the per-slot Generator Qualification gate passes for
+Terra's exact identity and refuses for Opus's; primary evidence cannot
+satisfy the fallback gate; a hypothetical replaced G2 candidate has no
+recorded evidence. The G1-only Generator Qualification preview (with
+`--output-directory results/generator-qualification/attempt-02`) plans
+exactly 12 logical calls for `openai/gpt-5.6-terra` over the frozen 12
+fixtures in frozen manifest order, 12 distinct request hashes, no Opus calls,
+`qualification_implementation_status: FROZEN FOR LIVE EXECUTION`,
+`qualification_status: NOT EXECUTED`. `attempt-02` does not exist.
+
+Primary Capability Probe Attempt-01/Attempt-02, fallback Capability Probe
+Attempt-03, and Generator Qualification Attempt-01 (replay, completed audit,
+adjudication: G1/G2 FAIL) were all reverified byte-identical and unchanged
+after this freeze. Terra Generator Qualification has not executed. No new G2
+candidate has been selected. Terra/Opus remain CANDIDATE, not
+Generator-Qualified.

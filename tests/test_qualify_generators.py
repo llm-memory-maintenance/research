@@ -524,13 +524,12 @@ def test_offline_adjudication_cli_uses_separate_copy(inputs, tmp_path, monkeypat
 
 
 FROZEN_HISTORICAL_COMMIT = 'e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e'  # The first reviewed, committed freeze.
-CURRENT_FROZEN_COMMIT = '3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba'  # The current live freeze (fallback support).
+CURRENT_FROZEN_COMMIT = '585b5e2844504fec703287f8dd4869668615671d'  # The current live freeze (per-slot support).
 
 
-def test_real_freeze_record_drifted_again_reports_not_frozen(loaded, capsys):
-    """Per-slot capability/single-slot support (this task) edited sources past the last freeze
-    (CURRENT_FROZEN_COMMIT): NOT_FROZEN again, gracefully, not a raise. The committed record itself
-    is untouched and still authentically pins its own (now-superseded) commit.
+def test_real_freeze_record_matches_reports_frozen(loaded, capsys):
+    """The live freeze record has been reviewed and updated to pin the current (per-slot-capable)
+    implementation commit: current bytes match it exactly, so the runner reports FROZEN, not a raise.
     """
     implementation = loaded['provenance']['implementation']
     current_sources = {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}
@@ -538,11 +537,11 @@ def test_real_freeze_record_drifted_again_reports_not_frozen(loaded, capsys):
     assert q.FREEZE_RECORD.exists()
     committed = q.fixtures.read(q.FREEZE_RECORD)
     assert committed['implementation_commit'] == CURRENT_FROZEN_COMMIT
-    assert committed['source_sha256'] != current_sources  # Genuinely drifted again, not identical.
-    assert implementation['status'] == q.NOT_FROZEN and implementation['freeze_commit'] is None
+    assert committed['source_sha256'] == current_sources  # Reviewed and re-frozen: no drift.
+    assert implementation['status'] == q.FROZEN and implementation['freeze_commit'] == CURRENT_FROZEN_COMMIT
     assert q.main([]) == 0
     shown = json.loads(capsys.readouterr().out)
-    assert shown['qualification_implementation_status'] == q.NOT_FROZEN
+    assert shown['qualification_implementation_status'] == q.FROZEN
     assert shown['qualification_status'] == 'NOT EXECUTED' and shown['status'] == 'NETWORK_DISABLED'
     assert shown['planned_calls'][0] == '1:G1:gq-scheduling-01' and shown['planned_calls'][12] == '13:G2:gq-scheduling-01'
 
@@ -1025,11 +1024,12 @@ def test_real_attempt_01_replay_unaffected_by_fallback_support(loaded):
         '8decf4ba0177c7c5808050f846a61aad624073552c5d2f4a7e5b7db580ebede1'
 
 
-def test_implementation_not_falsely_frozen_during_per_slot_development(loaded):
-    """The runner must not report itself FROZEN while per-slot/single-slot support is implemented
-    but not yet reviewed, committed, and re-frozen (this task's own required end state)."""
+def test_implementation_frozen_after_per_slot_support_reviewed_and_refrozen(loaded):
+    """After researcher review, commit, and a new freeze record, the runner reports FROZEN -- not a
+    false claim, since the live freeze record now genuinely pins this exact reviewed commit/bytes.
+    """
     implementation = loaded['provenance']['implementation']
-    assert implementation['status'] == q.NOT_FROZEN
-    assert implementation['freeze_commit'] is None
-    # The stale record on disk is untouched and still names the SUPERSEDED reviewed commit.
+    assert implementation['status'] == q.FROZEN
+    assert implementation['freeze_commit'] == CURRENT_FROZEN_COMMIT
+    assert implementation['source_sha256'] == {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}
     assert q.fixtures.read(q.FREEZE_RECORD)['implementation_commit'] == CURRENT_FROZEN_COMMIT
