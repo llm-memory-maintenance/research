@@ -537,3 +537,46 @@ current live freeze record, so this update does not reinterpret Attempt-01 as
 Terra/Opus. Replay, completed human audit validation, and offline adjudication
 were reverified after this freeze and still yield G1 FAIL / G2 FAIL, no
 candidate QUALIFIED.
+
+## Fallback Capability Probe Attempt-03 — CLOSED / FAIL (Mixed Per-Candidate Outcome)
+
+**FALLBACK CAPABILITY PROBE ATTEMPT-03: CLOSED.** Official Attempt-03 executed
+2026-09-18 under the frozen fallback-capable implementation
+(`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`, freeze commit
+`d96db6d17b5283316216bca79250a5938fa99750`) and the approved fallback request
+package (Sec. 1, "Fallback Candidate Profile"), preserved without modification
+under `results/generator-capability-probe/attempt-03/`; result SHA-256:
+`96b3b1d4dcb31d2fdb0f3d545fb648d48c9d2969901721583ff5ac9d986c72b4`.
+
+Both logical calls executed; no infrastructure retry occurred on either. G1
+`openai/gpt-5.6-terra` call = **PASS** under the approved package: HTTP 200,
+matching requested/observed model and provider, no refusal or truncation,
+passed parse and strict-schema checks. G2 `anthropic/claude-opus-5` call =
+**FAIL**: HTTP 200 with matching model/provider identities, but the response
+was a provider/model refusal (`finish_reason: content_filter`,
+`native_finish_reason: refusal`) before any parse/schema check could run.
+Attempt-03 overall = **FAIL** under the shared all-or-nothing stop-on-first-
+non-PASS design; it was not infrastructure-invalidated.
+
+Terra's PASS demonstrates that the approved package is not universally
+incompatible across the fallback pair. This does not establish that the
+request package cannot interact with Opus's model-specific refusal behavior;
+that question is not resolved by this evidence and requires separate review.
+
+No fallback Generator Qualification call was made. Neither Terra nor Opus is
+QUALIFIED. The shared `configs/generator-capability-probe-fallback.yaml`
+config is left unchanged (`status: OPEN`, `capability_result: NOT_ASSESSED`):
+its existing schema represents one shared outcome for the profile as a whole
+and cannot represent a mixed per-candidate PASS/FAIL result without a schema
+change, which is out of scope for this closure. The authoritative per-candidate
+outcome is recorded here instead. Generator Qualification's fallback execution
+gate (`fallback_capability_gate()`) therefore continues to refuse live fallback
+qualification, correctly and as designed.
+
+No automatic re-probe of Opus is authorized by this closure. No identical
+rerun of Attempt-03 is authorized. No second-level fallback for the G2 slot is
+currently predeclared or frozen. What happens next for G2 -- whether Opus's
+refusal is adjudicated as reproducible/content-specific, and what (if
+anything) follows from that -- is a separate methodological decision, not
+made here. Primary Attempt-01 (G1/G2 FAIL) and the primary Capability Probe's
+own Attempt-01/Attempt-02 evidence remain unaffected and unchanged.

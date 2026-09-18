@@ -430,12 +430,13 @@ adjudicated:
 
 See the [reviewer convention](generator-qualification-audit.md#5-blank-manual-result-audit-format).
 
-## 11. Fallback Candidate Profile — Offline Design/Implementation Only
+## 11. Fallback Candidate Profile — Capability Probe Attempt-03 CLOSED/FAIL
 
-**Not executed.** This section records the offline implementation added to
-represent the predeclared fallback pair. No fallback Capability Probe call and
-no fallback Generator Qualification call has been made. Sol/Sonnet already
-CLOSED FAIL (§10); Terra/Opus remain CANDIDATE, not qualified.
+**Fallback Capability Probe Attempt-03: CLOSED, overall FAIL (mixed
+per-candidate outcome).** This section records the offline implementation
+added to represent the predeclared fallback pair, and its first executed
+evidence. No fallback Generator Qualification call has been made. Sol/Sonnet
+already CLOSED FAIL (§10); Terra/Opus remain CANDIDATE, not qualified.
 
 **Candidate-profile mechanism.** Both `experiments/probe_generators.py` and
 `experiments/qualify_generators.py` take an explicit `--profile {primary,fallback}`
@@ -503,9 +504,31 @@ substituted to replay the primary archive; every archived call's returned
 Sol/Sonnet identity mismatches the Terra/Opus slots at once.
 
 **Status:** the extended implementation is reviewed, committed
-(`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`), and frozen (§10) -- eligible for
-live execution from the implementation-identity perspective only. Remaining
-before any live fallback execution: an actual fallback Capability Probe run
-that closes CLOSED/PASS, which the qualification execution gate still requires
-and currently refuses. Neither the fallback Capability Probe nor fallback
-Generator Qualification has executed; Terra/Opus remain CANDIDATE.
+(`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`), and frozen (§10).
+
+**Fallback Capability Probe Attempt-03 (result SHA-256
+`96b3b1d4dcb31d2fdb0f3d545fb648d48c9d2969901721583ff5ac9d986c72b4`, preserved
+under `results/generator-capability-probe/attempt-03/`): CLOSED.** Both
+logical calls executed under the approved package, with no infrastructure
+retry. G1 `openai/gpt-5.6-terra` call = PASS (HTTP 200, matching model/provider,
+no refusal/truncation, parse and strict-schema checks passed). G2
+`anthropic/claude-opus-5` call = FAIL by refusal (HTTP 200,
+`finish_reason: content_filter`, `native_finish_reason: refusal`, before
+parse/schema ran). Attempt-03 overall = FAIL, not infrastructure-invalidated.
+Terra's PASS shows the approved package is not universally incompatible
+across the pair; it does not establish that the package is unrelated to
+Opus's refusal.
+
+The shared `configs/generator-capability-probe-fallback.yaml` remains
+`status: OPEN`, `capability_result: NOT_ASSESSED` -- it is **not** forced to
+CLOSED/PASS, because the profile did not pass as a whole and its schema
+represents one shared outcome, not a mixed per-candidate result. The
+authoritative per-candidate outcome is recorded in
+[decisions.md](decisions.md) ("Fallback Capability Probe Attempt-03") instead.
+**Fallback Generator Qualification therefore remains blocked**: its
+execution gate (§10) still refuses live execution because the fallback
+Capability Probe has not closed CLOSED/PASS. No automatic re-probe of Opus and
+no rerun of Attempt-03 are authorized by this closure; no second-level
+fallback for the G2 slot is predeclared or frozen. Further G2 fallback action
+requires separate researcher adjudication, not decided here. Terra/Opus
+remain CANDIDATE, not qualified.
