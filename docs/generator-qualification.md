@@ -23,8 +23,8 @@ CLOSED and unchanged; they do not qualify construction generators.
 
 | Slot | Primary candidate | Predeclared corresponding fallback | Current status |
 | --- | --- | --- | --- |
-| G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | FAIL (Attempt-01); fallback eligible, not yet qualified |
-| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | FAIL (Attempt-01); fallback eligible, not yet qualified |
+| G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | Primary FAIL (Attempt-01); fallback capability CLOSED/PASS (Capability Probe Attempt-03), not Generator-Qualified |
+| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary FAIL (Attempt-01); fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03); second-level G2 selection required (§12) |
 
 **FROZEN:** use different OpenAI/Anthropic families/vendors to diversify
 naturalization provenance. Consider a fallback only if its corresponding primary
@@ -532,3 +532,64 @@ no rerun of Attempt-03 are authorized by this closure; no second-level
 fallback for the G2 slot is predeclared or frozen. Further G2 fallback action
 requires separate researcher adjudication, not decided here. Terra/Opus
 remain CANDIDATE, not qualified.
+
+## 12. Per-Slot Capability Adjudication and Second-Level G2 Fallback (Frozen)
+
+**Researcher-approved methodological decision**, adjudicating the mixed
+Attempt-03 outcome without altering its evidence. Full rationale is recorded
+in [decisions.md](decisions.md) ("Fallback Per-Slot Capability Adjudication
+and Second-Level G2 Selection Principles — Frozen").
+
+**FROZEN: capability compatibility is adjudicated per candidate slot, not per
+attempt.** Attempt-03's attempt-level `FAIL` is an execution/archive roll-up
+(stop-on-first-non-PASS order across the profile's slots); it does not erase a
+valid, independently evaluated PASS for a different slot within the same
+attempt. Consequently, from Attempt-03 (§11):
+
+- **G1 fallback `openai/gpt-5.6-terra`: capability status = CLOSED / PASS.**
+  Capability-compatible only; **not** Generator-Qualified.
+- **G2 fallback `anthropic/claude-opus-5`: capability status = CLOSED / FAIL**
+  (provider-policy refusal). **Not eligible for Generator Qualification.**
+
+Attempt-03's own recorded overall status remains FAIL, unchanged. **No
+identical Opus re-probe is authorized**: refusal is terminal/non-retryable
+under the frozen transport policy, and the shared config
+`configs/generator-capability-probe-fallback.yaml` is unchanged (still
+`status: OPEN`, `capability_result: NOT_ASSESSED`) because its schema
+represents one shared profile outcome, not a mixed per-candidate result; this
+task does not redesign that schema.
+
+**FROZEN: the G2 slot remains an Anthropic-family slot.** Opus's capability
+FAIL does not relax the two-generator, vendor-family-diversified design (§2).
+Relaxing this requirement later needs its own separate, explicit
+methodological adjudication.
+
+**FROZEN: second-level G2 selection principles** (no candidate named or
+called). Before any replacement G2 candidate is named or called, it must:
+
+- belong to the Anthropic family;
+- be distinct from `anthropic/claude-sonnet-5` and `anthropic/claude-opus-5`;
+- be available through the intended OpenRouter route at selection time;
+- use the Anthropic first-party provider route;
+- be evaluated with the same capability request package, unless a separately
+  reviewed and versioned contract change is adopted first;
+- be named and frozen before observing any CRST or naturalization-quality
+  outcome from it;
+- never be chosen by retry-until-pass, post-hoc sample quality, or downstream
+  effectiveness;
+- preserve every failed probe/qualification attempt, as Attempt-01 and
+  Attempt-03 are preserved.
+
+An ordered backup list, if adopted, must itself be frozen in writing before
+the first candidate on it is probed.
+
+**Approved future procedural order** (none of these steps is executed here):
+(1) freeze these decisions; (2) implement generic per-slot capability state
+and single-slot probe/qualification support; (3) researcher review; (4)
+commit; (5) re-freeze the execution-critical implementation; (6) Generator
+Qualification of Terra may then run independently on the same frozen 12
+fixtures; (7) separately select the next G2 candidate using the frozen
+criteria above; (8) run that candidate's own Capability Probe; (9) only if
+capability closes PASS, run its full 12-fixture Generator Qualification; (10)
+final CRST generator assignment (§8) remains blocked until both G1 and G2
+slots each contain a Generator-Qualified candidate.

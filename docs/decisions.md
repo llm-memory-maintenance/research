@@ -580,3 +580,98 @@ refusal is adjudicated as reproducible/content-specific, and what (if
 anything) follows from that -- is a separate methodological decision, not
 made here. Primary Attempt-01 (G1/G2 FAIL) and the primary Capability Probe's
 own Attempt-01/Attempt-02 evidence remain unaffected and unchanged.
+
+## Fallback Per-Slot Capability Adjudication and Second-Level G2 Selection Principles — Frozen
+
+**Researcher-approved methodological decision, following read-only
+adjudication of the Attempt-03 mixed outcome.** Nothing in this entry reopens
+or alters Attempt-03 evidence, executes any probe or qualification call, or
+selects a replacement model.
+
+**1. Capability compatibility is adjudicated per candidate slot, not per
+attempt.** The attempt-level `PASS`/`FAIL` recorded by `execute_probe()` is an
+execution/archive roll-up (stop-on-first-non-PASS across the profile's slots
+in fixed order); it does not erase a valid, independently evaluated PASS
+result for a different slot. This was always the frozen intent of per-slot
+qualification (`generator-qualification.md` §5/§6: "Both primary generators
+independently meet the same contract"; "activate only the failed side's
+predeclared fallback"), now made explicit for capability probing as well.
+
+Therefore, from Fallback Capability Probe Attempt-03 evidence
+(`results/generator-capability-probe/attempt-03/`, result SHA-256
+`96b3b1d4dcb31d2fdb0f3d545fb648d48c9d2969901721583ff5ac9d986c72b4`, unchanged):
+
+- **G1 fallback `openai/gpt-5.6-terra`: capability status = CLOSED / PASS.**
+  HTTP 200, matching requested/returned model and provider, no refusal or
+  truncation, strict schema passed, exact approved package sent.
+- **G2 fallback `anthropic/claude-opus-5`: capability status = CLOSED / FAIL.**
+  Reason: provider-policy refusal (HTTP 200, `finish_reason: content_filter`,
+  `native_finish_reason: refusal`), not a schema, parameter, routing, or
+  infrastructure failure.
+
+Attempt-03's own recorded overall status remains **FAIL**, unchanged. Terra is
+**capability-compatible only** -- it is **not** Generator-Qualified; capability
+compatibility is a prerequisite for, not a substitute for, the absolute
+12-fixture qualification gate. Opus is **not eligible for Generator
+Qualification** on this evidence. **No identical Opus re-probe is
+authorized**: refusal is a terminal, non-retryable outcome under the frozen
+transport policy, and the naturalization contract prohibits turning a refusal
+into a pass through regeneration or continuation without an explicitly
+reviewed and versioned contract change, for which no defect evidence exists.
+
+**2. The G2 slot remains an Anthropic-family slot.** Opus's capability FAIL
+does not relax the frozen two-generator, vendor-family-diversified design
+(`generator-qualification.md` §2: "use different OpenAI/Anthropic
+families/vendors to diversify naturalization provenance"). Any later decision
+to relax this vendor-family requirement -- for example, if no further
+Anthropic-family candidate proves viable -- requires its own separate,
+explicit methodological adjudication and is not decided here.
+
+**3. Second-level G2 selection principles (frozen; no candidate named).**
+Before any replacement G2 candidate is named or called, its selection must
+satisfy all of the following, decided in advance of observing that
+candidate's behavior:
+
+- belongs to the Anthropic family;
+- is distinct from the already-failed `anthropic/claude-sonnet-5` (primary)
+  and `anthropic/claude-opus-5` (first fallback);
+- is available through the intended OpenRouter route at selection time;
+- uses the Anthropic first-party provider route (`provider.order=["anthropic"]`);
+- is evaluated using the same capability request package used for the primary
+  and first fallback pair, unless a separately reviewed and versioned contract
+  change is adopted first;
+- is named and frozen before any CRST or naturalization-quality outcome from
+  that candidate is observed;
+- is never chosen by retry-until-pass, post-hoc sample quality, or downstream
+  effectiveness;
+- has every failed probe/qualification attempt preserved, exactly as Attempt-01
+  and Attempt-03 are preserved.
+
+If an ordered list of backup candidates is later adopted, that ordering itself
+must be frozen, in writing, before the first candidate on it is probed --
+never assembled reactively after seeing a result.
+
+**4. Approved future procedural order (none of these steps is executed by
+this entry):**
+
+1. Freeze these methodological decisions (this entry).
+2. Implement generic per-slot capability state and single-slot probe/
+   qualification support (a code/config change, reviewed separately).
+3. Researcher review of that implementation.
+4. Commit.
+5. Re-freeze the execution-critical implementation (a new
+   `configs/generator-qualification-implementation-freeze.json` pinning the
+   reviewed commit).
+6. Generator Qualification of Terra may then run independently, on the same
+   frozen 12 fixtures, prompt, schema, and absolute gate.
+7. Separately select the next G2 candidate using the frozen criteria in item 3.
+8. Run that candidate's own Capability Probe.
+9. Only if capability closes PASS, run its full 12-fixture Generator
+   Qualification.
+10. Final CRST generator assignment (`generator-qualification.md` §8, "applicable
+    after both generator slots qualify") remains blocked until both G1 and G2
+    slots each contain a Generator-Qualified candidate.
+
+No step beyond (1) has been performed. Sol, Sonnet, and Opus remain
+disqualified/not-qualified as already recorded; Terra remains CANDIDATE for
+Generator Qualification, not qualified. No new G2 model has been selected.
