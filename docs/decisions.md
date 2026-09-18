@@ -399,3 +399,28 @@ adjudication and a new fixture-set version and freeze record. The manifest's
 construction-source commit remains the upstream base used to build the artifacts;
 it is not a circular claim about the commit that records this freeze. Generator
 Qualification has not run; Sol/Sonnet remain CANDIDATE.
+
+## Generator Qualification — Runner Procedural Adjudications
+
+Researcher review of the offline qualification runner design: PASS. Frozen
+procedural rules:
+
+1. **Infrastructure retry exhaustion:** a logical call that exhausts the bounded
+   retry policy (3 physical attempts, all retryable infrastructure failures)
+   makes the official attempt INVALIDATED. It is not a candidate qualification
+   FAIL. Collected evidence is preserved with the exact reason, no further calls
+   are issued, and nothing reruns automatically. Any approved rerun uses a new
+   attempt directory. Candidate semantic/output failures remain qualification
+   evidence and do not invalidate the attempt.
+2. **Manual-audit applicability:** changed-vs-hypothetical wording applies to
+   U1–U7; same-state fidelity to N1/N2; Q-intent fidelity and answer leakage to
+   Q only. Current-value fidelity is NA for Q. Superseded-value leakage is NA for
+   I1–I7. Output boundary applies to all 17 fields.
+3. **Reviewer convention:** `reviewer` is the human reviewer chosen by the
+   researcher, never auto-populated. `reviewed_at` is an RFC 3339 timestamp with
+   offset. Existing failure/ambiguity notes remain required.
+
+The qualification implementation is NOT YET FROZEN. Live execution requires the
+reviewed implementation commit and a subsequent freeze record pinning that
+commit and the execution-critical source hashes. Generator Qualification has not
+run; Sol/Sonnet remain CANDIDATE.

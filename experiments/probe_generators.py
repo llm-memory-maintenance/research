@@ -213,8 +213,8 @@ def load_bundle(config_path=CONFIG):
     return {'config': config, 'contract': contract, 'input': payload, 'provenance': provenance}
 
 
-def request_body(bundle, slot):
-    validate_input(bundle['input'])  # Also enforce at the public construction boundary.
+def request_body(bundle, slot, *, input_validator=None):
+    (input_validator or validate_input)(bundle['input'])  # Also enforce at the public construction boundary.
     require(slot in SLOTS, 'Unknown probe slot')
     return {'model': slot['model'],
             'provider': {'order': slot['provider_order'], 'allow_fallbacks': False, 'require_parameters': True},
@@ -356,8 +356,8 @@ async def post_with_deadline(client, wire, headers, seconds):
     return await asyncio.wait_for(client.post(URL, content=wire, headers=headers, timeout=seconds), timeout=seconds)
 
 
-async def probe_call(client, bundle, slot, key, *, sleep=asyncio.sleep):
-    body = request_body(bundle, slot)
+async def probe_call(client, bundle, slot, key, *, sleep=asyncio.sleep, request_factory=None):
+    body = (request_factory or request_body)(bundle, slot)
     wire = canonical(body).encode('utf-8')
     result = {'logical_call_id': slot['logical_call_id'], 'status': 'FAIL', 'failure_reason': None,
               'wire_request': wire.decode('utf-8'), 'wire_request_sha256': digest(wire),

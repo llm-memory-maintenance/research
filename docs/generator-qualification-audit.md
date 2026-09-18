@@ -193,8 +193,33 @@ For each event, record PASS/FAIL for each applicable check:
 | Answer leakage | Are answer hints/answers absent beyond required information events? |
 | Output boundary | Are acknowledgements, assistant messages and evaluator data absent? |
 
-Mark inapplicable checks explicitly with a reason (e.g. Q-intent check on I1);
-this never waives an applicable requirement. Also record variant-level
+**FROZEN (researcher adjudication):** the applicability rules below. Applicability is
+fixed, not chosen per review. The generated template
+pre-fills `NA` for every inapplicable (check, event) pair and records the table
+under `check_applicability`. Reviewers cannot overwrite an `NA`, and cannot
+mark an applicable check `NA`:
+
+| Check (template key) | Applicable events | Reason for NA elsewhere |
+| --- | --- | --- |
+| `changed_vs_hypothetical_wording` | U1–U7 | Only updates assert a state change. |
+| `same_state_fidelity` | N1, N2 | Only reaffirmations are same-state. |
+| `q_intent_fidelity`, `answer_leakage` | Q | Pre-Q added hints are reviewed under invented information. |
+| `current_value_fidelity` | I1–I7, U1–U7, N1, N2 | Q states no value. |
+| `superseded_value_leakage` | U1–U7, N1, N2, Q | Nothing is superseded during I1–I7. |
+| `natural_english`, `entity_fidelity`, `attribute_fidelity`, `invented_information_or_state_change`, `merged_or_omitted_event`, `output_boundary` | all 17 | — |
+
+A terminally failed call (no parsed, schema-valid output) has no event
+records. The candidate fails on that evidence without meaningless manual
+entries. This never waives an applicable requirement.
+
+**FROZEN reviewer convention:** `reviewer` identifies the human reviewer chosen
+by the researcher. The runner leaves it blank and it is never auto-populated
+with any software or tool identity. `reviewed_at` must be an RFC 3339
+timestamp with an explicit offset (format example only:
+`2026-09-18T21:30:00+07:00`). The adjudicator validates its format and calendar
+validity. Every manual value requires both fields. Every manual FAIL requires
+evidence notes, and every ambiguity resolution requires notes. The completed
+audit is a separate copy of the archived blank template. Also record variant-level
 completeness/order and shared-control checks. A separate per-model/per-fixture
 summary records **overall fixture PASS/FAIL**, reviewer notes and links to all
 three variants' event reviews. Any applicable failed automated/manual check makes
@@ -203,8 +228,11 @@ scores, rankings or policy outcome criteria are used. No LLM judge is used.
 
 ## 6. Remaining Review and Execution Boundaries
 
-The later qualification runner, automated naturalized-output fidelity checks, audit storage
-and reviewer/adjudication procedure must be finalized before execution. The 5%/2%
+The qualification runner, automated naturalized-output fidelity checks, audit
+storage and adjudication procedure are implemented offline but **NOT YET
+FROZEN**. See [Generator Qualification §10](generator-qualification.md#10-offline-qualification-runner--implemented-not-frozen).
+Live execution requires the reviewed implementation commit and a subsequent
+freeze record pinning it. The 5%/2%
 length tolerances remain PROVISIONAL and are not pass/fail gates here. Generator
 assignment mechanism/seed, final N/R/MOI/statistical details, B0 material/grid/budget
 and Small Pilot details remain unresolved in their respective workstreams.

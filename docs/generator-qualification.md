@@ -139,8 +139,9 @@ The required checks are:
 - Natural, comprehensible English, confirmed by manual audit.
 
 Automated validation and manual audit are both required; a structural parser
-alone does not establish semantic fidelity. **OPEN:** exact validator/audit
-implementation/recording procedure before execution. The shared output schema
+alone does not establish semantic fidelity. The runner, deterministic checks and
+audit recording procedure are **IMPLEMENTED OFFLINE, NOT YET FROZEN** (§10).
+The shared output schema
 is specified in the naturalization contract. CSA, SRR, MOA, downstream policy
 performance, and final statistical effects are not qualification criteria.
 
@@ -249,11 +250,147 @@ Qualification may record message/token lengths descriptively, but these numeric
 values are not final pass/fail gates without separate adjudication. Exact
 message-count requirements are independently frozen and must pass.
 
-**OPEN:** qualification runner,
-naturalized-output validator and manual-audit execution procedure, fallback capabilities,
+**OPEN:** researcher review and freeze of the offline qualification runner,
+naturalized-output validator and manual-audit procedure (§10), fallback capabilities,
 qualification outcomes, assignment mechanism/seed,
 B0 calibration material/grid/budget, and Small Pilot size/acceptance procedure.
 Final CRST N/R/minimum effect of interest and statistical procedures are not
 chosen here. Only structured qualification fixtures have been constructed; no
 naturalized dataset, model/API call or experiment has been produced or executed,
 and completed qualifications are not reopened.
+
+## 10. Offline Qualification Runner — Implemented, NOT FROZEN
+
+**QUALIFICATION IMPLEMENTATION IS NOT FROZEN UNTIL THE REVIEWED IMPLEMENTATION
+IS COMMITTED AND A SUBSEQUENT FREEZE RECORD PINS THAT REVIEWED COMMIT.** Live
+qualification must not occur before that freeze step. Generator Qualification
+is NOT EXECUTED; Sol/Sonnet remain CANDIDATE.
+
+`experiments/qualify_generators.py` (procedure
+`generator-qualification-procedure/1.0.0`) has three modes:
+
+| Mode | Invocation | Effect |
+| --- | --- | --- |
+| Preview (default) | no flags | Offline. Reports `NETWORK_DISABLED`, `CREDITS_NOT_SPENT`, the 24-call plan, frozen identities and the implementation status. Reads no API key and creates no directory. |
+| Collection | `--execute --confirm-spend` and `OPENROUTER_API_KEY` | Refused unless every execution guard below holds. |
+| Offline adjudication | `--attempt DIR --audit COPY --adjudication-output FILE` | Replays archived evidence, then adjudicates a completed audit copy. No network. |
+
+**Plan.** 24 logical calls in a fixed order: G1 over all 12 frozen fixtures in
+manifest order, then G2 over the same 12. Physical infrastructure retries
+(at most 72 physical attempts) follow the frozen transport policy and add no
+logical calls. Each request is built by the Capability Probe's frozen request
+constructor with the frozen prompt, schema and execution package. Only the
+model-facing input is swapped: the canonical fixture projection, checked by the
+qualification input validator.
+
+**Execution guards.** Execution requires both flags and a nonempty key. It also
+requires a clean worktree (staged, unstaged and untracked changes all count),
+tracked runner/probe/fixture-validator sources, and a valid implementation
+freeze record. Frozen identities are rechecked immediately before the result
+directory is reserved. These cover the execution package, semantic contract,
+prompt and output-schema hashes, manifest hash, validated fixture/projection
+hashes, and byte equality of every fixture file with fixture-set commit
+`683c0416c5bf47c83021408f26bc7a7ab5e8becc`. An existing result directory is
+never reused.
+
+**Implementation provenance.** Every run records the SHA-256 of
+`experiments/qualify_generators.py`, `experiments/probe_generators.py` and
+`experiments/validate_generator_qualification_fixtures.py`, computed at run time
+(no hardcoded self-hash). The later freeze record
+`configs/generator-qualification-implementation-freeze.json` (schema
+`generator-qualification-implementation-freeze/1.0.0`; not created yet) will
+name the reviewed implementation commit and these three hashes. The runner
+accepts it only if that commit is an ancestor of HEAD and each source is
+byte-identical to that commit and to the recorded hash. The record is a separate
+file, so pinning creates no circular self-hash. Without it, the status is
+`NOT YET FROZEN FOR LIVE EXECUTION` and execution is refused. These are software
+provenance hashes, not authorship metadata.
+
+**Continuation and invalidation.** Each candidate receives all 12 planned calls.
+A candidate's malformed, schema-invalid, refused, truncated or semantically
+failing output is preserved as evidence, and collection continues for both
+candidates. Such output never invalidates the attempt by itself. Nothing is
+regenerated, repaired or automatically rerun.
+
+**FROZEN (researcher adjudication): infrastructure retry exhaustion invalidates
+the attempt.** A logical call can exhaust the bounded retry policy: 3 physical
+attempts, each failing with a retryable HTTP status or transport timeout/network
+error. The official attempt then becomes `INVALIDATED` with kind
+`INFRASTRUCTURE_RETRY_EXHAUSTED`. The record names the candidate, fixture,
+logical-call index and last retry reason. This is not a candidate qualification
+FAIL, because infrastructure failure is not evidence of model capability.
+Evidence already collected is preserved and checksummed, no further calls are
+issued, and nothing reruns automatically. A later researcher-approved run must
+use a new attempt directory.
+
+The attempt is also `INVALIDATED`, with kind `EXECUTION_CONTRACT_FAILURE`, on
+any of these shared execution-contract defects:
+
+- a non-retryable non-200 response;
+- returned model or selected provider mismatch;
+- missing routing evidence;
+- malformed usage;
+- an API error envelope.
+
+A runner exception invalidates it with kind `RUNNER_EXCEPTION`. Replay requires
+the recorded invalidation to be exactly the one implied by the final archived
+call, with no invalidating call before it. A non-invalidated attempt must
+contain no call that should have invalidated it.
+
+**Evidence.** Each attempt directory archives one redacted per-call record
+`outputs/<g1|g2>/<fixture_id>.json`, `qualification.json`, a blank
+`manual-audit.json` generated from it, and `SHA256SUMS` covering every one of
+these files. The blank template is never edited in place. Reviewers complete a
+separate copy outside the attempt directory, and adjudication writes a new
+immutable file outside it, recording the completed copy's file hash.
+
+Replay (run before every adjudication) rejects the following:
+
+- malformed, unsafe (absolute, `..`, backslash) or duplicate checksum paths;
+- checksum mismatches, and unlisted or missing files;
+- a non-invalidated attempt without exactly 24 calls;
+- call order, index, fixture, projection or provenance mismatch;
+- attempts recorded without an implementation freeze, and archived provenance
+  that differs from the current frozen identities;
+- request drift;
+- a blank template that differs from its regeneration.
+
+For calls that passed, replay re-parses the archived raw response and re-runs
+the route, envelope, schema and deterministic semantic gates offline. A terminal
+failure must keep its fixed failure record and have no output hash, and any
+archived HTTP-200 response must still fail those gates. A terminal failure
+therefore cannot later become PASS.
+
+**Deterministic checks.** Normalized literal matching (NFKC, case-folded,
+whitespace-collapsed, word-bounded full expressions) records findings as `FAIL`
+or `MANUAL_REVIEW_REQUIRED`. The following are deterministic `FAIL`s:
+
+- an unambiguous known superseded or wrong value, or a foreign entity, in an event;
+- a Q naming a foreign entity or a wrong attribute;
+- a Q containing a target value;
+- Q wording that is not identical across variants.
+
+Absent literals (possible paraphrase) and lexical overlaps between values and
+names require manual resolution. No deterministic PASS is semantic
+qualification.
+
+**Candidate adjudication.**
+
+| Outcome | Condition |
+| --- | --- |
+| `INVALIDATED` | Attempt invalidated (retry exhaustion, execution-contract defect or runner exception). Applies to both candidates; never converted into candidate FAIL, even with a completed audit. |
+| `FAIL` | Any terminal failure. Machine-detectable ones need no manual records: call failure (malformed JSON, schema-invalid, refusal, truncation, other terminal logical-call failure) or a deterministic automated `FAIL`. Otherwise a completed manual `FAIL` (ambiguity resolution, applicable check, or variant/fixture disposition, each with evidence notes). |
+| `PENDING_MANUAL_AUDIT` | No terminal failure, but at least one applicable manual item is incomplete: an ambiguity resolution, an applicable check, or a variant, fixture or candidate disposition. |
+| `QUALIFIED` | All 12 calls valid, parsed and schema-conformant. Every deterministic gate passed or its ambiguity was manually resolved PASS with notes. Every applicable manual check, all variant and fixture dispositions, and the candidate disposition are PASS. |
+
+The following are all rejected as invalid audits rather than silently
+adjudicated:
+
+- a PASS disposition that contradicts a recorded failure;
+- a candidate `FAIL` with no recorded failure;
+- a manual `FAIL` without notes;
+- manual values without reviewer and `reviewed_at`;
+- a `reviewed_at` that is not an RFC 3339 timestamp with offset;
+- any value in an NA cell.
+
+See the [reviewer convention](generator-qualification-audit.md#5-blank-manual-result-audit-format).
