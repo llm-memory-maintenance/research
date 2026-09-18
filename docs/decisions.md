@@ -501,3 +501,39 @@ candidate QUALIFIED. Neither fallback Capability Probe nor fallback Generator
 Qualification has executed. Terra/Opus remain CANDIDATE. This implementation
 is NOT YET FROZEN; it requires researcher review, commit, and a new freeze
 record before any live execution.
+
+## Fallback-Capable Generator Qualification Implementation — Frozen
+
+**FALLBACK-CAPABLE GENERATOR QUALIFICATION IMPLEMENTATION: FROZEN.** The
+fallback-capable runner implementation (adding the predeclared Terra/Opus
+candidate profile, §"Fallback Candidate Profile" above) was reviewed and is
+committed at `3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`
+(`feat: support fallback generator qualification`).
+`configs/generator-qualification-implementation-freeze.json` (schema
+`generator-qualification-implementation-freeze/1.0.0`) now pins that commit
+and the SHA-256 of the three execution-critical sources:
+
+- `experiments/qualify_generators.py`: `df5cddae7385f02f5e283cc84523326297e1d147d5c5ff4288873e77132d9664`
+- `experiments/probe_generators.py`: `232be57f0fa527d792c9c0e7f1ad77970a3ebd563f5fe862902b603a40470e92`
+- `experiments/validate_generator_qualification_fixtures.py`: `2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e`
+
+This replaces the prior freeze record (which pinned `e5e9d500...`, the
+implementation that produced Attempt-01) using the same established,
+non-parallel freeze schema and gate mechanism -- no new schema was needed.
+Live execution fails closed if the pinned commit, its recorded source hashes,
+or current working-tree source bytes ever drift from one another.
+
+This freeze makes both candidate profiles technically eligible for live
+execution from the implementation-identity perspective only; it is not itself
+authorization, and no qualification call has been made under it. The fallback
+Capability Probe remains OPEN/NOT_ASSESSED and has not executed, so
+qualification's execution gate still refuses live fallback Generator
+Qualification. Terra/Opus remain CANDIDATE, not qualified.
+
+Attempt-01 remains unaffected and fully reproducible: `replay()` verifies an
+archived attempt's implementation identity against the git history of the
+commit *that attempt itself* records (`e5e9d500...`), independent of the
+current live freeze record, so this update does not reinterpret Attempt-01 as
+Terra/Opus. Replay, completed human audit validation, and offline adjudication
+were reverified after this freeze and still yield G1 FAIL / G2 FAIL, no
+candidate QUALIFIED.

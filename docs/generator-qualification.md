@@ -264,22 +264,23 @@ Attempt-01 has executed and closed (§10); no naturalized CRST dataset or final
 CRST experiment has been produced or executed, and completed qualifications
 (Attempt-01) are not reopened.
 
-## 10. Offline Qualification Runner — Attempt-01 CLOSED; Implementation Under Development for Fallback Support
+## 10. Offline Qualification Runner — Attempt-01 CLOSED; Fallback-Capable Implementation FROZEN
 
-**QUALIFICATION IMPLEMENTATION: NOT YET FROZEN (again).** The implementation
-reviewed and committed at `e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e` (pinned by
-`configs/generator-qualification-implementation-freeze.json`) was extended,
-offline only, to add the predeclared fallback candidate profile (§11). Those
-source edits mean current bytes no longer match that freeze record, so
-`qualification_implementation_status` correctly reports
-`NOT YET FROZEN FOR LIVE EXECUTION` again -- live execution (of either profile)
-is refused until the extended implementation is reviewed, committed, and a new
-freeze record pins the reviewed commit. This does not affect Attempt-01's own
+**QUALIFICATION IMPLEMENTATION: FROZEN.** The implementation first reviewed
+and committed at `e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e` was extended,
+offline only, to add the predeclared fallback candidate profile (§11). That
+extension was reviewed, committed at
+`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`, and
+`configs/generator-qualification-implementation-freeze.json` now pins that
+commit and its three execution-critical source hashes. From the
+implementation-identity perspective only, both profiles are technically
+eligible for live execution; this is not itself authorization for either, and
+neither has executed. This does not reinterpret Attempt-01's own
 already-archived evidence: `replay()` verifies an archived attempt's
-implementation identity against the git history of the commit *it* records,
-not against the current working tree, so a later, legitimately re-frozen
-implementation cannot break replay of an attempt collected under an earlier
-freeze.
+implementation identity against the git history of the commit *it* records
+(the original `e5e9d500...`), not against the current live freeze record, so a
+later, legitimately re-frozen implementation cannot break replay of an attempt
+collected under an earlier freeze.
 
 **ATTEMPT-01: CLOSED, both primaries FAIL.** The official attempt ran under
 this frozen implementation and fixture set, archived at
@@ -331,13 +332,14 @@ never reused.
 (no hardcoded self-hash). The freeze record
 `configs/generator-qualification-implementation-freeze.json` (schema
 `generator-qualification-implementation-freeze/1.0.0`) names the reviewed
-implementation commit `e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e` and these three
-hashes. The runner accepts it only because that commit is an ancestor of HEAD
-and each source is byte-identical to that commit and to the recorded hash. The
-record is a separate file, so pinning creates no circular self-hash. If commit
-or source identity ever drifts, the status reverts to
-`NOT YET FROZEN FOR LIVE EXECUTION` and execution is refused. These are
-software provenance hashes, not authorship metadata.
+implementation commit `3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba` (the reviewed
+fallback-capable implementation) and these three hashes. The runner accepts it
+only because that commit is an ancestor of HEAD and each source is
+byte-identical to that commit and to the recorded hash. The record is a
+separate file, so pinning creates no circular self-hash. If commit or source
+identity ever drifts (as it did, correctly, between the first freeze and this
+one), the status reverts to `NOT YET FROZEN FOR LIVE EXECUTION` and execution
+is refused. These are software provenance hashes, not authorship metadata.
 
 **Continuation and invalidation.** Each candidate receives all 12 planned calls.
 A candidate's malformed, schema-invalid, refused, truncated or semantically
@@ -489,18 +491,21 @@ by this gate; it does not appear on the primary path at all.
 
 **Historical replay compatibility.** Extending the implementation changed
 `experiments/qualify_generators.py` and `experiments/probe_generators.py`
-bytes, so `configs/generator-qualification-implementation-freeze.json` (still
-pinning `e5e9d500...`) no longer matches; the live implementation status is
-`NOT YET FROZEN FOR LIVE EXECUTION` again (§10). Attempt-01 remains fully
-replayable and its adjudication still yields G1/G2 FAIL: `replay()` verifies an
+bytes; after researcher review, commit, and a new freeze record pinning
+`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba` (§10), the live implementation
+status is `FROZEN FOR LIVE EXECUTION` again. Attempt-01 remains fully
+replayable and its adjudication still yields G1/G2 FAIL, unaffected by this
+re-freeze: `replay()` verifies an
 archived attempt's implementation claim against the git history of the commit
 *that attempt itself* records, independent of whatever the current working
 tree looks like mid-development. A fallback-profile `inputs` object cannot be
 substituted to replay the primary archive; every archived call's returned
 Sol/Sonnet identity mismatches the Terra/Opus slots at once.
 
-**Remaining before any live fallback execution:** researcher review of the
-extended implementation; commit it; a new implementation-freeze record pinning
-that reviewed commit (§10); then, separately, an actual fallback Capability
-Probe execution that closes CLOSED/PASS before fallback Generator Qualification
-can execute. None of these steps has occurred.
+**Status:** the extended implementation is reviewed, committed
+(`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`), and frozen (§10) -- eligible for
+live execution from the implementation-identity perspective only. Remaining
+before any live fallback execution: an actual fallback Capability Probe run
+that closes CLOSED/PASS, which the qualification execution gate still requires
+and currently refuses. Neither the fallback Capability Probe nor fallback
+Generator Qualification has executed; Terra/Opus remain CANDIDATE.
