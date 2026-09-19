@@ -1,0 +1,153 @@
+# Pre-main statistical power simulation machinery for the CRST factorial GLMM.
+# Nothing in this file is an empirical outcome. Final N, R, random-effects structure, H1 estimand, H1 uncertainty
+# method and H2 calibration method remain OPEN until the simulation study is run and audited. No value here is
+# derived from the Small Pilot.
+schema_version: crst-statistical-planning/0.1.0
+status: MACHINERY_ONLY_NOT_EXECUTED
+
+design:
+  policies: [M1, M2, M3]
+  revisions: [low, medium, high]
+  endpoints: [CSA, SRR]
+  planned_contrasts: [M2-M1, M3-M2]
+  independent_unit: base scenario
+  domains: 12
+  n_start: 120
+  n_step: 12
+  r_candidates: [1, 2, 3]
+  b0_in_glmm: false
+  domain_in_glmm: false
+
+# Explicit numeric contrasts shared by data generation and fitting. Orthonormal Helmert columns are centered,
+# orthogonal and have unit norm, and every factor level has the same row norm; see power_simulation.py.
+contrasts: orthonormal_helmert
+
+random_structures:
+  RE1: ['(Intercept)']
+  RE2: ['(Intercept)', P1, P2]
+  RE3: ['(Intercept)', P1, P2, V1, V2]
+  covariance: diagonal
+  hierarchy: [RE1, RE2, RE3]
+  selection_priority: [type_i_calibration, ci_coverage, convergence_stability, power, parsimony]
+  selection_rule: >-
+    A richer structure is justified only if the simpler one fails inferential calibration under relevant DGP
+    heterogeneity and the richer one repairs it without unacceptable instability. Not AIC-driven and never based on
+    main-result significance.
+
+# Logit-scale scenario-level standard deviations; sigma_policy applies to P1 and P2, sigma_revision to V1 and V2.
+het_profiles:
+  HET1: {sigma_intercept: 0.50, sigma_policy: 0.0, sigma_revision: 0.0, rho: 0.0}
+  HET2: {sigma_intercept: 0.75, sigma_policy: 0.35, sigma_revision: 0.0, rho: 0.0}
+  HET3: {sigma_intercept: 0.75, sigma_policy: 0.35, sigma_revision: 0.35, rho: 0.0}
+stress_profiles:
+  STRESS: {sigma_intercept: 1.00, sigma_policy: 0.50, sigma_revision: 0.50, rho: 0.30}
+
+baseline:
+  # Probability offsets applied to the reference probability at Low, Medium, High.
+  revision_profiles:
+    FLAT: {CSA: [0.0, 0.0, 0.0], SRR: [0.0, 0.0, 0.0]}
+    MODERATE: {CSA: [0.05, 0.0, -0.05], SRR: [-0.05, 0.0, 0.05]}
+
+# Pre-specified fractional nuisance design: one-factor-at-a-time around the central point P0, never the full
+# Cartesian crossing. Only these points determine primary N.
+nuisance_grid:
+  P0: {label: CENTRAL, references: {CSA: 0.75, SRR: 0.18}, revision_profile: MODERATE, het: HET2}
+  P1: {label: LOWER_PROBABILITY_BOUNDARY, references: {CSA: 0.60, SRR: 0.10}, revision_profile: MODERATE, het: HET2}
+  P2: {label: UPPER_PROBABILITY_BOUNDARY, references: {CSA: 0.85, SRR: 0.30}, revision_profile: MODERATE, het: HET2}
+  P3: {label: FLAT_REVISION, references: {CSA: 0.75, SRR: 0.18}, revision_profile: FLAT, het: HET2}
+  P4: {label: MINIMAL_SLOPE_HETEROGENEITY, references: {CSA: 0.75, SRR: 0.18}, revision_profile: MODERATE, het: HET1}
+  P5: {label: FULL_PLANNED_HETEROGENEITY, references: {CSA: 0.75, SRR: 0.18}, revision_profile: MODERATE, het: HET3}
+# Robustness only: never part of the primary grid and never determines primary N.
+robustness_grid:
+  S0: {label: STRESS, references: {CSA: 0.75, SRR: 0.18}, revision_profile: MODERATE, het: STRESS}
+
+alternatives:
+  moi: 0.05
+  h1_signs: [1, -1]
+  # PRIMARY H1 alternative: reduced fixed-effects model (interaction exactly zero) calibrated numerically so the
+  # equal-weighted ESTIMAND_B contrast is exactly +/- the MOI. Per-revision differences may vary slightly under the
+  # logit link, which is expected. SECONDARY sensitivity only: the cell construction forcing +/- the MOI at every
+  # revision level, which implies a nonzero logit interaction whenever baselines differ across revision.
+  h1_primary_construction: reduced_model_calibrated_on_estimand_b
+  h1_sensitivity_construction: constant_probability_difference_per_revision
+  h2_shapes:
+    LINEAR: [-0.025, 0.0, 0.025]
+    HIGH_STEP: [-0.0166666666666667, -0.0166666666666667, 0.0333333333333333]
+    MIDDLE_PEAK: [-0.0166666666666667, 0.0333333333333333, -0.0166666666666667]
+  h2_mirrored: true
+
+calibration:
+  # FROZEN: ESTIMAND_B (population-averaged, integrated over the fitted scenario random-effect distribution, then
+  # equal-weighted across revision) is the primary thesis estimand. ESTIMAND_A (fixed-effect prediction with the
+  # random effects at zero) is retained as an implementation diagnostic only.
+  primary_estimand: B
+  diagnostic_estimand: A
+  target_scales: [conditional, population_averaged]
+  primary_target_scale: population_averaged
+  integration: deterministic Gauss-Hermite quadrature, never emmeans bias.adjust
+  # FROZEN: the reference probability is the equal-weighted mean over policies, never an M1 baseline.
+  anchor: policy_averaged_reference_probability
+  tolerance: 0.001
+  gauss_hermite_nodes: 64
+
+inference:
+  alpha: 0.05
+  ci_level: 0.95
+  h1_method_candidate: delta_method_response_scale
+  # The delta-method SE for ESTIMAND_B conditions on the fitted variance components; their uncertainty is not
+  # propagated, so this candidate remains subject to simulation coverage validation.
+  h1_variance_component_uncertainty: ignored_pending_coverage_validation
+  h2_method_candidates: [asymptotic_chisq_lrt, parametric_bootstrap_lrt]
+  h2_interaction_df: 4
+  final_multiplicity: holm
+  planning_thresholds: {h1: 0.0125, h2: 0.025}
+  holm_families:
+    h1: [CSA/M2-M1, CSA/M3-M2, SRR/M2-M1, SRR/M3-M2]
+    h2: [CSA, SRR]
+    simple_contrasts: [CSA six, SRR six]
+
+# Staged execution. Nothing beyond stage A has been run.
+stages:
+  A: {name: real GLMM smoke, inferential: false, status: RUN}
+  B: {name: runtime reconnaissance, inferential: false, status: NOT_RUN}
+  C: {name: targeted screening, replications: 2000, inferential: true, status: NOT_RUN,
+      decisions: [CANDIDATE, CLEAR_FAILURE, INCONCLUSIVE]}
+  D: {name: final confirmation, inferential: true, status: NOT_RUN, decisions: [PASS, FAIL, INCONCLUSIVE]}
+# Screening resolution never yields a final PASS/FAIL for Type-I or coverage; final acceptance needs stage D.
+screening_decision_labels: {PASS: CANDIDATE, FAIL: CLEAR_FAILURE, INCONCLUSIVE: INCONCLUSIVE}
+
+monte_carlo:
+  master_seed: 20260920
+  seed_derivation: sha256(master_seed, canonical DGP cell id, replicate) -> first 8 bytes -> PCG64
+  screening_replications: 2000
+  final_replications: {type_i: 10000, coverage: 10000, power: 5000, power_escalation: 10000}
+  interval: {method: wilson_score, level: 0.90}
+
+acceptance:
+  primary:
+    usable_rate_min: 0.95
+    type_i_band: [0.04, 0.06]
+    coverage_band: [0.93, 0.97]
+    power_lower_bound_min: 0.80
+    unstable_boundary_rate: 0.20
+  stress:
+    usable_rate_min: 0.90
+    type_i_point_max: 0.065
+    convergence_pattern: researcher review
+
+search:
+  objective: minimize N * R
+  tie_break: [larger N, smaller R]
+
+fitting:
+  backend: R lme4::glmer
+  family: binomial(logit)
+  response: grouped binomial cbind(successes, R - successes)
+  nagq: 1
+  optimizer: bobyqa
+  maxfun: 200000
+  grad_tol: 0.002
+  singular_tol: 0.0001
+  lrt_negative_tolerance: 0.0001
+  rscript: Rscript
+  batch_size: 25
