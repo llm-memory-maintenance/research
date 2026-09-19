@@ -8,7 +8,7 @@
 > Protocol v2 methodology is defined in, and its
 > `generator-manual-audit/2.0.0` audit schema/implementation are specified
 > in, [generator-qualification.md §14](generator-qualification.md) (the
-> implementation freeze is pending its revision r2; under v2 the reviewer
+> implementation is frozen at revision r2; under v2 the reviewer
 > decides only cell-level checks and ambiguities, while variant, fixture and
 > candidate dispositions are derived by the adjudicator); no official
 > Protocol-v2 re-adjudication result is recorded. This document remains
