@@ -1,0 +1,378 @@
+{
+  "logical_call_id": "G2",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"notebook_style\\\",\\\"meaning\\\":\\\"preferred notebook cover style\\\",\\\"units_or_interpretation\\\":\\\"style label\\\"},{\\\"attribute_id\\\":\\\"member_code\\\",\\\"meaning\\\":\\\"preference record identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"binding\\\",\\\"meaning\\\":\\\"preferred notebook binding\\\",\\\"units_or_interpretation\\\":\\\"binding label\\\"},{\\\"attribute_id\\\":\\\"page_size\\\",\\\"meaning\\\":\\\"preferred page size\\\",\\\"units_or_interpretation\\\":\\\"synthetic size label\\\"},{\\\"attribute_id\\\":\\\"paper_finish\\\",\\\"meaning\\\":\\\"preferred paper finish\\\",\\\"units_or_interpretation\\\":\\\"finish label\\\"},{\\\"attribute_id\\\":\\\"ruling\\\",\\\"meaning\\\":\\\"preferred page ruling\\\",\\\"units_or_interpretation\\\":\\\"ruling label\\\"}],\\\"domain\\\":\\\"Personal Preference\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gq-personal-preference-01-primary\\\",\\\"name\\\":\\\"Person Fenli\\\"},{\\\"entity_id\\\":\\\"gq-personal-preference-01-distractor\\\",\\\"name\\\":\\\"Person Gavri\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_c\\\",\\\"I2\\\":\\\"k_d\\\",\\\"I3\\\":\\\"k_target\\\",\\\"I4\\\":\\\"k_hard\\\",\\\"I5\\\":\\\"k_n2\\\",\\\"I6\\\":\\\"k_a\\\",\\\"I7\\\":\\\"k_b\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"notebook_style\\\",\\\"entity_id\\\":\\\"gq-personal-preference-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current preferred notebook cover style of Person Fenli.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"notebook_style\\\",\\\"entity_id\\\":\\\"gq-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"woven cover\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"notebook_style\\\",\\\"entity_id\\\":\\\"gq-personal-preference-01-distractor\\\",\\\"initial_value\\\":\\\"star cover\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"member_code\\\",\\\"entity_id\\\":\\\"gq-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"PREF-F3\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"binding\\\",\\\"entity_id\\\":\\\"gq-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"sewn binding\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"page_size\\\",\\\"entity_id\\\":\\\"gq-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"Size N1\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"paper_finish\\\",\\\"entity_id\\\":\\\"gq-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"smooth finish\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"ruling\\\",\\\"entity_id\\\":\\\"gq-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"wide lines\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"smooth finish\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"wide lines\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"woven cover\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"star cover\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"PREF-F3\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"sewn binding\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Size N1\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"dotted cover\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"striped cover\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"grid cover\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"leaf cover\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"wave cover\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"spiral cover\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"spiral cover\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"plain cover\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PREF-F3\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"smooth finish\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"wide lines\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"woven cover\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"star cover\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"PREF-F3\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"sewn binding\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Size N1\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Size N2\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"ring cover\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Size N3\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"rough finish\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"narrow lines\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"glued binding\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"woven cover\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"plain cover\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PREF-F3\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"smooth finish\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"wide lines\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"woven cover\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"star cover\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"PREF-F3\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"sewn binding\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Size N1\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"dotted cover\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"narrow lines\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"grid cover\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"ring cover\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"wave cover\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"rough finish\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"wave cover\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"plain cover\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PREF-F3\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"anthropic/claude-fable-5.1\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"anthropic\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "d84058daeaa869a0139221792d35d7198be60493e2fe665997868598edcf0afe",
+  "request_body": {
+    "model": "anthropic/claude-fable-5.1",
+    "provider": {
+      "order": [
+        "anthropic"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"notebook_style\",\"meaning\":\"preferred notebook cover style\",\"units_or_interpretation\":\"style label\"},{\"attribute_id\":\"member_code\",\"meaning\":\"preference record identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"binding\",\"meaning\":\"preferred notebook binding\",\"units_or_interpretation\":\"binding label\"},{\"attribute_id\":\"page_size\",\"meaning\":\"preferred page size\",\"units_or_interpretation\":\"synthetic size label\"},{\"attribute_id\":\"paper_finish\",\"meaning\":\"preferred paper finish\",\"units_or_interpretation\":\"finish label\"},{\"attribute_id\":\"ruling\",\"meaning\":\"preferred page ruling\",\"units_or_interpretation\":\"ruling label\"}],\"domain\":\"Personal Preference\",\"entities\":[{\"entity_id\":\"gq-personal-preference-01-primary\",\"name\":\"Person Fenli\"},{\"entity_id\":\"gq-personal-preference-01-distractor\",\"name\":\"Person Gavri\"}],\"initial_order\":{\"I1\":\"k_c\",\"I2\":\"k_d\",\"I3\":\"k_target\",\"I4\":\"k_hard\",\"I5\":\"k_n2\",\"I6\":\"k_a\",\"I7\":\"k_b\"},\"question_intent\":{\"attribute_id\":\"notebook_style\",\"entity_id\":\"gq-personal-preference-01-primary\",\"intent\":\"Ask only for the current preferred notebook cover style of Person Fenli.\"},\"state_keys\":[{\"attribute_id\":\"notebook_style\",\"entity_id\":\"gq-personal-preference-01-primary\",\"initial_value\":\"woven cover\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"notebook_style\",\"entity_id\":\"gq-personal-preference-01-distractor\",\"initial_value\":\"star cover\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"member_code\",\"entity_id\":\"gq-personal-preference-01-primary\",\"initial_value\":\"PREF-F3\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"binding\",\"entity_id\":\"gq-personal-preference-01-primary\",\"initial_value\":\"sewn binding\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"page_size\",\"entity_id\":\"gq-personal-preference-01-primary\",\"initial_value\":\"Size N1\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"paper_finish\",\"entity_id\":\"gq-personal-preference-01-primary\",\"initial_value\":\"smooth finish\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"ruling\",\"entity_id\":\"gq-personal-preference-01-primary\",\"initial_value\":\"wide lines\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"smooth finish\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"wide lines\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"woven cover\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"star cover\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"PREF-F3\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"sewn binding\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Size N1\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"dotted cover\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"striped cover\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"grid cover\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"leaf cover\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"wave cover\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"spiral cover\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"spiral cover\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"plain cover\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PREF-F3\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"smooth finish\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"wide lines\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"woven cover\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"star cover\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"PREF-F3\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"sewn binding\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Size N1\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Size N2\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"ring cover\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Size N3\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"rough finish\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"narrow lines\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"glued binding\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"woven cover\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"plain cover\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PREF-F3\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"smooth finish\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"wide lines\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"woven cover\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"star cover\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"PREF-F3\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"sewn binding\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Size N1\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"dotted cover\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"narrow lines\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"grid cover\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"ring cover\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"wave cover\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"rough finish\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"wave cover\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"plain cover\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PREF-F3\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G2",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T08:07:19.220668+00:00",
+      "requested_model": "anthropic/claude-fable-5.1",
+      "requested_provider_order": [
+        "anthropic"
+      ],
+      "returned_model": "anthropic/claude-fable-5.1",
+      "observed_selected_provider": "Anthropic",
+      "request_id": null,
+      "response_id": "gen-1789805239-A8q7ERaOXurjm8CgUNIQ",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789805239-A8q7ERaOXurjm8CgUNIQ\",\"object\":\"chat.completion\",\"created\":1789805239,\"model\":\"anthropic/claude-fable-5.1\",\"provider\":\"Anthropic\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Person Fenli's preferred paper finish is smooth finish.\\\",\\\"I2\\\":\\\"Person Fenli prefers wide lines for page ruling.\\\",\\\"I3\\\":\\\"Person Fenli's preferred notebook cover style is woven cover.\\\",\\\"I4\\\":\\\"Person Gavri's preferred notebook cover style is star cover.\\\",\\\"I5\\\":\\\"Person Fenli's preference record identifier is PREF-F3.\\\",\\\"I6\\\":\\\"Person Fenli prefers sewn binding for notebooks.\\\",\\\"I7\\\":\\\"Person Fenli's preferred page size is Size N1.\\\",\\\"N1\\\":\\\"Just to reaffirm, Person Fenli's preferred notebook cover style is still spiral cover.\\\",\\\"N2\\\":\\\"Person Fenli's preference record identifier remains PREF-F3.\\\",\\\"Q\\\":\\\"What is Person Fenli's current preferred notebook cover style?\\\",\\\"U1\\\":\\\"Person Fenli's preferred notebook cover style has changed; it is now dotted cover.\\\",\\\"U2\\\":\\\"Update: Person Fenli's preferred notebook cover style is now striped cover.\\\",\\\"U3\\\":\\\"Person Fenli has switched preferred notebook cover style to grid cover.\\\",\\\"U4\\\":\\\"Person Fenli's preferred notebook cover style has been updated to leaf cover.\\\",\\\"U5\\\":\\\"Person Fenli now prefers wave cover as the notebook cover style.\\\",\\\"U6\\\":\\\"Person Fenli's preferred notebook cover style has changed to spiral cover.\\\",\\\"U7\\\":\\\"Person Fenli's preferred notebook cover style has been updated again; it is now plain cover.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Person Fenli's preferred paper finish is smooth finish.\\\",\\\"I2\\\":\\\"Person Fenli prefers wide lines for page ruling.\\\",\\\"I3\\\":\\\"Person Fenli's preferred notebook cover style is woven cover.\\\",\\\"I4\\\":\\\"Person Gavri's preferred notebook cover style is star cover.\\\",\\\"I5\\\":\\\"Person Fenli's preference record identifier is PREF-F3.\\\",\\\"I6\\\":\\\"Person Fenli prefers sewn binding for notebooks.\\\",\\\"I7\\\":\\\"Person Fenli's preferred page size is Size N1.\\\",\\\"N1\\\":\\\"Just to reaffirm, Person Fenli's preferred notebook cover style is still woven cover.\\\",\\\"N2\\\":\\\"Person Fenli's preference record identifier remains PREF-F3.\\\",\\\"Q\\\":\\\"What is Person Fenli's current preferred notebook cover style?\\\",\\\"U1\\\":\\\"Person Fenli's preferred page size has changed; it is now Size N2.\\\",\\\"U2\\\":\\\"Person Gavri's preferred notebook cover style has been updated to ring cover.\\\",\\\"U3\\\":\\\"Person Fenli's preferred page size has changed again and is now Size N3.\\\",\\\"U4\\\":\\\"Person Fenli now prefers rough finish for paper finish.\\\",\\\"U5\\\":\\\"Person Fenli's preferred page ruling has been updated to narrow lines.\\\",\\\"U6\\\":\\\"Person Fenli's preferred binding has changed; it is now glued binding.\\\",\\\"U7\\\":\\\"Person Fenli's preferred notebook cover style has been updated; it is now plain cover.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"Person Fenli's preferred paper finish is smooth finish.\\\",\\\"I2\\\":\\\"Person Fenli prefers wide lines for page ruling.\\\",\\\"I3\\\":\\\"Person Fenli's preferred notebook cover style is woven cover.\\\",\\\"I4\\\":\\\"Person Gavri's preferred notebook cover style is star cover.\\\",\\\"I5\\\":\\\"Person Fenli's preference record identifier is PREF-F3.\\\",\\\"I6\\\":\\\"Person Fenli prefers sewn binding for notebooks.\\\",\\\"I7\\\":\\\"Person Fenli's preferred page size is Size N1.\\\",\\\"N1\\\":\\\"Just to reaffirm, Person Fenli's preferred notebook cover style is still wave cover.\\\",\\\"N2\\\":\\\"Person Fenli's preference record identifier remains PREF-F3.\\\",\\\"Q\\\":\\\"What is Person Fenli's current preferred notebook cover style?\\\",\\\"U1\\\":\\\"Person Fenli's preferred notebook cover style has changed; it is now dotted cover.\\\",\\\"U2\\\":\\\"Person Fenli's preferred page ruling has been updated to narrow lines.\\\",\\\"U3\\\":\\\"Person Fenli now prefers grid cover as the notebook cover style.\\\",\\\"U4\\\":\\\"Person Gavri's preferred notebook cover style has changed to ring cover.\\\",\\\"U5\\\":\\\"Person Fenli's preferred notebook cover style has been updated to wave cover.\\\",\\\"U6\\\":\\\"Person Fenli's preferred paper finish has changed; it is now rough finish.\\\",\\\"U7\\\":\\\"Person Fenli's preferred notebook cover style has been updated again; it is now plain cover.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":4532,\"completion_tokens\":1465,\"total_tokens\":5997,\"cost\":0.11857,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.11857,\"upstream_inference_prompt_cost\":0.04532,\"upstream_inference_completions_cost\":0.07325},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"anthropic/claude-fable-5.1\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=Anthropic\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":4,\"available\":[{\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-fable-5.1-20260831\",\"selected\":true}]},\"generation_time\":15381}}",
+      "response_sha256_before_redaction": "455c391910b9cbd791e3c8153d1544b89fcf76929c0a5b3fe9bd952e986c5e29",
+      "response_envelope": {
+        "id": "gen-1789805239-A8q7ERaOXurjm8CgUNIQ",
+        "object": "chat.completion",
+        "created": 1789805239,
+        "model": "anthropic/claude-fable-5.1",
+        "provider": "Anthropic",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "end_turn",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Person Fenli's preferred paper finish is smooth finish.\",\"I2\":\"Person Fenli prefers wide lines for page ruling.\",\"I3\":\"Person Fenli's preferred notebook cover style is woven cover.\",\"I4\":\"Person Gavri's preferred notebook cover style is star cover.\",\"I5\":\"Person Fenli's preference record identifier is PREF-F3.\",\"I6\":\"Person Fenli prefers sewn binding for notebooks.\",\"I7\":\"Person Fenli's preferred page size is Size N1.\",\"N1\":\"Just to reaffirm, Person Fenli's preferred notebook cover style is still spiral cover.\",\"N2\":\"Person Fenli's preference record identifier remains PREF-F3.\",\"Q\":\"What is Person Fenli's current preferred notebook cover style?\",\"U1\":\"Person Fenli's preferred notebook cover style has changed; it is now dotted cover.\",\"U2\":\"Update: Person Fenli's preferred notebook cover style is now striped cover.\",\"U3\":\"Person Fenli has switched preferred notebook cover style to grid cover.\",\"U4\":\"Person Fenli's preferred notebook cover style has been updated to leaf cover.\",\"U5\":\"Person Fenli now prefers wave cover as the notebook cover style.\",\"U6\":\"Person Fenli's preferred notebook cover style has changed to spiral cover.\",\"U7\":\"Person Fenli's preferred notebook cover style has been updated again; it is now plain cover.\"},\"low\":{\"I1\":\"Person Fenli's preferred paper finish is smooth finish.\",\"I2\":\"Person Fenli prefers wide lines for page ruling.\",\"I3\":\"Person Fenli's preferred notebook cover style is woven cover.\",\"I4\":\"Person Gavri's preferred notebook cover style is star cover.\",\"I5\":\"Person Fenli's preference record identifier is PREF-F3.\",\"I6\":\"Person Fenli prefers sewn binding for notebooks.\",\"I7\":\"Person Fenli's preferred page size is Size N1.\",\"N1\":\"Just to reaffirm, Person Fenli's preferred notebook cover style is still woven cover.\",\"N2\":\"Person Fenli's preference record identifier remains PREF-F3.\",\"Q\":\"What is Person Fenli's current preferred notebook cover style?\",\"U1\":\"Person Fenli's preferred page size has changed; it is now Size N2.\",\"U2\":\"Person Gavri's preferred notebook cover style has been updated to ring cover.\",\"U3\":\"Person Fenli's preferred page size has changed again and is now Size N3.\",\"U4\":\"Person Fenli now prefers rough finish for paper finish.\",\"U5\":\"Person Fenli's preferred page ruling has been updated to narrow lines.\",\"U6\":\"Person Fenli's preferred binding has changed; it is now glued binding.\",\"U7\":\"Person Fenli's preferred notebook cover style has been updated; it is now plain cover.\"},\"medium\":{\"I1\":\"Person Fenli's preferred paper finish is smooth finish.\",\"I2\":\"Person Fenli prefers wide lines for page ruling.\",\"I3\":\"Person Fenli's preferred notebook cover style is woven cover.\",\"I4\":\"Person Gavri's preferred notebook cover style is star cover.\",\"I5\":\"Person Fenli's preference record identifier is PREF-F3.\",\"I6\":\"Person Fenli prefers sewn binding for notebooks.\",\"I7\":\"Person Fenli's preferred page size is Size N1.\",\"N1\":\"Just to reaffirm, Person Fenli's preferred notebook cover style is still wave cover.\",\"N2\":\"Person Fenli's preference record identifier remains PREF-F3.\",\"Q\":\"What is Person Fenli's current preferred notebook cover style?\",\"U1\":\"Person Fenli's preferred notebook cover style has changed; it is now dotted cover.\",\"U2\":\"Person Fenli's preferred page ruling has been updated to narrow lines.\",\"U3\":\"Person Fenli now prefers grid cover as the notebook cover style.\",\"U4\":\"Person Gavri's preferred notebook cover style has changed to ring cover.\",\"U5\":\"Person Fenli's preferred notebook cover style has been updated to wave cover.\",\"U6\":\"Person Fenli's preferred paper finish has changed; it is now rough finish.\",\"U7\":\"Person Fenli's preferred notebook cover style has been updated again; it is now plain cover.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 4532,
+          "completion_tokens": 1465,
+          "total_tokens": 5997,
+          "cost": 0.11857,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.11857,
+            "upstream_inference_prompt_cost": 0.04532,
+            "upstream_inference_completions_cost": 0.07325
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "anthropic/claude-fable-5.1",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=Anthropic",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 4,
+            "available": [
+              {
+                "provider": "Anthropic",
+                "model": "anthropic/claude-fable-5.1-20260831",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 15381
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "anthropic/claude-fable-5.1",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=Anthropic",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 4,
+          "available": [
+            {
+              "provider": "Anthropic",
+              "model": "anthropic/claude-fable-5.1-20260831",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 15381
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Person Fenli's preferred paper finish is smooth finish.",
+          "I2": "Person Fenli prefers wide lines for page ruling.",
+          "I3": "Person Fenli's preferred notebook cover style is woven cover.",
+          "I4": "Person Gavri's preferred notebook cover style is star cover.",
+          "I5": "Person Fenli's preference record identifier is PREF-F3.",
+          "I6": "Person Fenli prefers sewn binding for notebooks.",
+          "I7": "Person Fenli's preferred page size is Size N1.",
+          "N1": "Just to reaffirm, Person Fenli's preferred notebook cover style is still spiral cover.",
+          "N2": "Person Fenli's preference record identifier remains PREF-F3.",
+          "Q": "What is Person Fenli's current preferred notebook cover style?",
+          "U1": "Person Fenli's preferred notebook cover style has changed; it is now dotted cover.",
+          "U2": "Update: Person Fenli's preferred notebook cover style is now striped cover.",
+          "U3": "Person Fenli has switched preferred notebook cover style to grid cover.",
+          "U4": "Person Fenli's preferred notebook cover style has been updated to leaf cover.",
+          "U5": "Person Fenli now prefers wave cover as the notebook cover style.",
+          "U6": "Person Fenli's preferred notebook cover style has changed to spiral cover.",
+          "U7": "Person Fenli's preferred notebook cover style has been updated again; it is now plain cover."
+        },
+        "low": {
+          "I1": "Person Fenli's preferred paper finish is smooth finish.",
+          "I2": "Person Fenli prefers wide lines for page ruling.",
+          "I3": "Person Fenli's preferred notebook cover style is woven cover.",
+          "I4": "Person Gavri's preferred notebook cover style is star cover.",
+          "I5": "Person Fenli's preference record identifier is PREF-F3.",
+          "I6": "Person Fenli prefers sewn binding for notebooks.",
+          "I7": "Person Fenli's preferred page size is Size N1.",
+          "N1": "Just to reaffirm, Person Fenli's preferred notebook cover style is still woven cover.",
+          "N2": "Person Fenli's preference record identifier remains PREF-F3.",
+          "Q": "What is Person Fenli's current preferred notebook cover style?",
+          "U1": "Person Fenli's preferred page size has changed; it is now Size N2.",
+          "U2": "Person Gavri's preferred notebook cover style has been updated to ring cover.",
+          "U3": "Person Fenli's preferred page size has changed again and is now Size N3.",
+          "U4": "Person Fenli now prefers rough finish for paper finish.",
+          "U5": "Person Fenli's preferred page ruling has been updated to narrow lines.",
+          "U6": "Person Fenli's preferred binding has changed; it is now glued binding.",
+          "U7": "Person Fenli's preferred notebook cover style has been updated; it is now plain cover."
+        },
+        "medium": {
+          "I1": "Person Fenli's preferred paper finish is smooth finish.",
+          "I2": "Person Fenli prefers wide lines for page ruling.",
+          "I3": "Person Fenli's preferred notebook cover style is woven cover.",
+          "I4": "Person Gavri's preferred notebook cover style is star cover.",
+          "I5": "Person Fenli's preference record identifier is PREF-F3.",
+          "I6": "Person Fenli prefers sewn binding for notebooks.",
+          "I7": "Person Fenli's preferred page size is Size N1.",
+          "N1": "Just to reaffirm, Person Fenli's preferred notebook cover style is still wave cover.",
+          "N2": "Person Fenli's preference record identifier remains PREF-F3.",
+          "Q": "What is Person Fenli's current preferred notebook cover style?",
+          "U1": "Person Fenli's preferred notebook cover style has changed; it is now dotted cover.",
+          "U2": "Person Fenli's preferred page ruling has been updated to narrow lines.",
+          "U3": "Person Fenli now prefers grid cover as the notebook cover style.",
+          "U4": "Person Gavri's preferred notebook cover style has changed to ring cover.",
+          "U5": "Person Fenli's preferred notebook cover style has been updated to wave cover.",
+          "U6": "Person Fenli's preferred paper finish has changed; it is now rough finish.",
+          "U7": "Person Fenli's preferred notebook cover style has been updated again; it is now plain cover."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 4532,
+        "completion_tokens": 1465,
+        "total_tokens": 5997,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.11857
+      },
+      "latency_seconds": 15.553217398002744,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G2",
+  "fixture_id": "gq-personal-preference-01",
+  "fixture_sha256": "2f17186e61645a1551e945c2445b769f93edea9c86186b929341921aa59c451d",
+  "projection_sha256": "5c139475af49c4c46c69169d91224b3b60a0312fa0f0055a269b503cb270f371",
+  "logical_call_index": 6,
+  "provenance": {
+    "source_commit": "1d8fd5e49f1811ad515ff22954220e6dba3334e2",
+    "candidate_profile": "SECOND_LEVEL_G2",
+    "selected_slot": "G2",
+    "fixture_set_commit": "683c0416c5bf47c83021408f26bc7a7ab5e8becc",
+    "fixture_manifest_sha256": "ecce7e579f02f64bb5578d8b18b9164483da1c5438544f21a89e17d7a2aaa1f9",
+    "execution_config_sha256": "fb2c74eec9fea2ab49cee00e76cbe84ec7ce0fe2464e80bf84d157e82ec56180",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "procedure_version": "generator-qualification-procedure/2.0.0",
+    "implementation": {
+      "status": "FROZEN FOR LIVE EXECUTION",
+      "freeze_commit": "51c6c0ec62e5d716ed838120d2505bc8566c338b",
+      "source_sha256": {
+        "experiments/qualify_generators.py": "5652abb3df12b8f23ec05d58456568a5db986069862c5d93bcb869ae953abfba",
+        "experiments/probe_generators.py": "b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0",
+        "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+      }
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "automated": {
+    "status": "PASS",
+    "meaning": "No deterministic violation detected is not semantic qualification.",
+    "findings": []
+  },
+  "output_sha256": "eb688268b8a6e8e4a59dc5c4e3a740d58fde0c519299fd0344915fccc8c214ed"
+}

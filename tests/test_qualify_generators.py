@@ -1869,9 +1869,11 @@ def test_second_level_g2_shares_frozen_package_and_pins_first_party_route():
 
 
 def test_second_level_g2_live_execution_requires_explicit_output_directory_and_never_uses_existing_attempts(tmp_path):
+    attempts = q.ROOT / 'results/generator-qualification'
+    before = sorted(path.name for path in attempts.iterdir())
     with pytest.raises(SystemExit):  # No official result-path convention exists; none is invented.
         q.main(['--profile', 'second_level_g2', '--execute', '--confirm-spend', '--protocol-version', 'v2'])
-    assert not (q.ROOT / 'results/generator-qualification/attempt-03').exists()
+    assert sorted(path.name for path in attempts.iterdir()) == before  # The refused launch created nothing.
 
 
 def test_second_level_g2_capability_gate_permits_only_the_exact_closed_candidate():

@@ -1,0 +1,378 @@
+{
+  "logical_call_id": "G2",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"milestone\\\",\\\"meaning\\\":\\\"next planned milestone\\\",\\\"units_or_interpretation\\\":\\\"milestone label\\\"},{\\\"attribute_id\\\":\\\"project_code\\\",\\\"meaning\\\":\\\"project identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"owner\\\",\\\"meaning\\\":\\\"project owner\\\",\\\"units_or_interpretation\\\":\\\"synthetic team\\\"},{\\\"attribute_id\\\":\\\"delivery_cycle\\\",\\\"meaning\\\":\\\"delivery cycle\\\",\\\"units_or_interpretation\\\":\\\"synthetic calendar label\\\"},{\\\"attribute_id\\\":\\\"workstream\\\",\\\"meaning\\\":\\\"active workstream\\\",\\\"units_or_interpretation\\\":\\\"workstream label\\\"},{\\\"attribute_id\\\":\\\"priority\\\",\\\"meaning\\\":\\\"priority tier\\\",\\\"units_or_interpretation\\\":\\\"ordered tier label\\\"}],\\\"domain\\\":\\\"Project Planning\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"name\\\":\\\"Project Halcyon\\\"},{\\\"entity_id\\\":\\\"gq-project-planning-01-distractor\\\",\\\"name\\\":\\\"Project Petrel\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_n2\\\",\\\"I2\\\":\\\"k_a\\\",\\\"I3\\\":\\\"k_b\\\",\\\"I4\\\":\\\"k_c\\\",\\\"I5\\\":\\\"k_d\\\",\\\"I6\\\":\\\"k_target\\\",\\\"I7\\\":\\\"k_hard\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"milestone\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current next planned milestone of Project Halcyon.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"milestone\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"outline review\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"milestone\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-distractor\\\",\\\"initial_value\\\":\\\"inventory review\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"project_code\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"PRJ-H7\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"owner\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"Team Eru\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"delivery_cycle\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"Cycle Leris\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"workstream\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"layout drafting\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"priority\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"Tier P1\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Team Eru\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cycle Leris\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"layout drafting\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Tier P1\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"outline review\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"inventory review\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"sketch review\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"component review\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"layout review\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"integration review\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"rehearsal review\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"delivery review\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"delivery review\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"archive review\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Team Eru\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cycle Leris\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"layout drafting\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Tier P1\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"outline review\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"inventory review\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Tier P2\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Team Nalo\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cycle Meris\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"asset assembly\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"license review\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"package preparation\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"outline review\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"archive review\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Team Eru\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cycle Leris\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"layout drafting\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Tier P1\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"outline review\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"inventory review\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"sketch review\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Team Nalo\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"layout review\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"license review\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"rehearsal review\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Tier P2\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"rehearsal review\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"archive review\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"anthropic/claude-fable-5.1\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"anthropic\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "863893345a11c2f3393b7753b8a30acdbbf493f3e72ab0ec9c9be6c093ab0d62",
+  "request_body": {
+    "model": "anthropic/claude-fable-5.1",
+    "provider": {
+      "order": [
+        "anthropic"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"milestone\",\"meaning\":\"next planned milestone\",\"units_or_interpretation\":\"milestone label\"},{\"attribute_id\":\"project_code\",\"meaning\":\"project identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"owner\",\"meaning\":\"project owner\",\"units_or_interpretation\":\"synthetic team\"},{\"attribute_id\":\"delivery_cycle\",\"meaning\":\"delivery cycle\",\"units_or_interpretation\":\"synthetic calendar label\"},{\"attribute_id\":\"workstream\",\"meaning\":\"active workstream\",\"units_or_interpretation\":\"workstream label\"},{\"attribute_id\":\"priority\",\"meaning\":\"priority tier\",\"units_or_interpretation\":\"ordered tier label\"}],\"domain\":\"Project Planning\",\"entities\":[{\"entity_id\":\"gq-project-planning-01-primary\",\"name\":\"Project Halcyon\"},{\"entity_id\":\"gq-project-planning-01-distractor\",\"name\":\"Project Petrel\"}],\"initial_order\":{\"I1\":\"k_n2\",\"I2\":\"k_a\",\"I3\":\"k_b\",\"I4\":\"k_c\",\"I5\":\"k_d\",\"I6\":\"k_target\",\"I7\":\"k_hard\"},\"question_intent\":{\"attribute_id\":\"milestone\",\"entity_id\":\"gq-project-planning-01-primary\",\"intent\":\"Ask only for the current next planned milestone of Project Halcyon.\"},\"state_keys\":[{\"attribute_id\":\"milestone\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"outline review\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"milestone\",\"entity_id\":\"gq-project-planning-01-distractor\",\"initial_value\":\"inventory review\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"project_code\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"PRJ-H7\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"owner\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"Team Eru\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"delivery_cycle\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"Cycle Leris\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"workstream\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"layout drafting\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"priority\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"Tier P1\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"PRJ-H7\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Team Eru\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Cycle Leris\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"layout drafting\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Tier P1\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"outline review\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"inventory review\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"sketch review\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"component review\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"layout review\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"integration review\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"rehearsal review\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"delivery review\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"delivery review\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"archive review\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PRJ-H7\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"PRJ-H7\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Team Eru\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Cycle Leris\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"layout drafting\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Tier P1\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"outline review\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"inventory review\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"Tier P2\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Team Nalo\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Cycle Meris\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"asset assembly\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"license review\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"package preparation\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"outline review\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"archive review\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PRJ-H7\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"PRJ-H7\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Team Eru\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Cycle Leris\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"layout drafting\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Tier P1\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"outline review\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"inventory review\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"sketch review\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Team Nalo\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"layout review\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"license review\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"rehearsal review\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Tier P2\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"rehearsal review\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"archive review\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PRJ-H7\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G2",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T08:06:30.990661+00:00",
+      "requested_model": "anthropic/claude-fable-5.1",
+      "requested_provider_order": [
+        "anthropic"
+      ],
+      "returned_model": "anthropic/claude-fable-5.1",
+      "observed_selected_provider": "Anthropic",
+      "request_id": null,
+      "response_id": "gen-1789805191-JFRZV0T9Gik8MxZV6mzy",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789805191-JFRZV0T9Gik8MxZV6mzy\",\"object\":\"chat.completion\",\"created\":1789805191,\"model\":\"anthropic/claude-fable-5.1\",\"provider\":\"Anthropic\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"For Project Halcyon, the project code is PRJ-H7.\\\",\\\"I2\\\":\\\"Project Halcyon is owned by Team Eru.\\\",\\\"I3\\\":\\\"Project Halcyon's delivery cycle is Cycle Leris.\\\",\\\"I4\\\":\\\"The active workstream for Project Halcyon is layout drafting.\\\",\\\"I5\\\":\\\"Project Halcyon's priority tier is Tier P1.\\\",\\\"I6\\\":\\\"The next planned milestone for Project Halcyon is outline review.\\\",\\\"I7\\\":\\\"For Project Petrel, the next planned milestone is inventory review.\\\",\\\"N1\\\":\\\"Just confirming: Project Halcyon's next planned milestone is still delivery review.\\\",\\\"N2\\\":\\\"As a reminder, Project Halcyon's project code remains PRJ-H7.\\\",\\\"Q\\\":\\\"What is the current next planned milestone for Project Halcyon?\\\",\\\"U1\\\":\\\"Update on Project Halcyon: the next planned milestone has changed to sketch review.\\\",\\\"U2\\\":\\\"Project Halcyon's next planned milestone has been updated to component review.\\\",\\\"U3\\\":\\\"Another change for Project Halcyon: the next planned milestone is now layout review.\\\",\\\"U4\\\":\\\"The next planned milestone for Project Halcyon has been revised to integration review.\\\",\\\"U5\\\":\\\"Project Halcyon's next planned milestone has changed again; it's now rehearsal review.\\\",\\\"U6\\\":\\\"Heads up: the next planned milestone for Project Halcyon has been updated to delivery review.\\\",\\\"U7\\\":\\\"Project Halcyon's next planned milestone has changed and is now archive review.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"For Project Halcyon, the project code is PRJ-H7.\\\",\\\"I2\\\":\\\"Project Halcyon is owned by Team Eru.\\\",\\\"I3\\\":\\\"Project Halcyon's delivery cycle is Cycle Leris.\\\",\\\"I4\\\":\\\"The active workstream for Project Halcyon is layout drafting.\\\",\\\"I5\\\":\\\"Project Halcyon's priority tier is Tier P1.\\\",\\\"I6\\\":\\\"The next planned milestone for Project Halcyon is outline review.\\\",\\\"I7\\\":\\\"For Project Petrel, the next planned milestone is inventory review.\\\",\\\"N1\\\":\\\"Just confirming: Project Halcyon's next planned milestone is still outline review.\\\",\\\"N2\\\":\\\"As a reminder, Project Halcyon's project code remains PRJ-H7.\\\",\\\"Q\\\":\\\"What is the current next planned milestone for Project Halcyon?\\\",\\\"U1\\\":\\\"Update on Project Halcyon: the priority tier has changed to Tier P2.\\\",\\\"U2\\\":\\\"Project Halcyon's owner has been updated; it is now Team Nalo.\\\",\\\"U3\\\":\\\"The delivery cycle for Project Halcyon has changed to Cycle Meris.\\\",\\\"U4\\\":\\\"Project Halcyon's active workstream is now asset assembly.\\\",\\\"U5\\\":\\\"For Project Petrel, the next planned milestone has been updated to license review.\\\",\\\"U6\\\":\\\"Another change for Project Halcyon: the active workstream has moved to package preparation.\\\",\\\"U7\\\":\\\"Project Halcyon's next planned milestone has changed and is now archive review.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"For Project Halcyon, the project code is PRJ-H7.\\\",\\\"I2\\\":\\\"Project Halcyon is owned by Team Eru.\\\",\\\"I3\\\":\\\"Project Halcyon's delivery cycle is Cycle Leris.\\\",\\\"I4\\\":\\\"The active workstream for Project Halcyon is layout drafting.\\\",\\\"I5\\\":\\\"Project Halcyon's priority tier is Tier P1.\\\",\\\"I6\\\":\\\"The next planned milestone for Project Halcyon is outline review.\\\",\\\"I7\\\":\\\"For Project Petrel, the next planned milestone is inventory review.\\\",\\\"N1\\\":\\\"Just confirming: Project Halcyon's next planned milestone is still rehearsal review.\\\",\\\"N2\\\":\\\"As a reminder, Project Halcyon's project code remains PRJ-H7.\\\",\\\"Q\\\":\\\"What is the current next planned milestone for Project Halcyon?\\\",\\\"U1\\\":\\\"Update on Project Halcyon: the next planned milestone has changed to sketch review.\\\",\\\"U2\\\":\\\"Project Halcyon's owner has been updated; it is now Team Nalo.\\\",\\\"U3\\\":\\\"The next planned milestone for Project Halcyon has been revised to layout review.\\\",\\\"U4\\\":\\\"For Project Petrel, the next planned milestone has been updated to license review.\\\",\\\"U5\\\":\\\"Project Halcyon's next planned milestone has changed again; it's now rehearsal review.\\\",\\\"U6\\\":\\\"Heads up: Project Halcyon's priority tier has changed to Tier P2.\\\",\\\"U7\\\":\\\"Project Halcyon's next planned milestone has changed and is now archive review.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":4527,\"completion_tokens\":1446,\"total_tokens\":5973,\"cost\":0.11757,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.11757,\"upstream_inference_prompt_cost\":0.04527,\"upstream_inference_completions_cost\":0.0723},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"anthropic/claude-fable-5.1\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=Anthropic\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":4,\"available\":[{\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-fable-5.1-20260831\",\"selected\":true}]},\"generation_time\":15839}}",
+      "response_sha256_before_redaction": "3a4f318adf4e3637db657ce322833ce78f70e2ee588a9c7247f14f521d819f79",
+      "response_envelope": {
+        "id": "gen-1789805191-JFRZV0T9Gik8MxZV6mzy",
+        "object": "chat.completion",
+        "created": 1789805191,
+        "model": "anthropic/claude-fable-5.1",
+        "provider": "Anthropic",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "end_turn",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"For Project Halcyon, the project code is PRJ-H7.\",\"I2\":\"Project Halcyon is owned by Team Eru.\",\"I3\":\"Project Halcyon's delivery cycle is Cycle Leris.\",\"I4\":\"The active workstream for Project Halcyon is layout drafting.\",\"I5\":\"Project Halcyon's priority tier is Tier P1.\",\"I6\":\"The next planned milestone for Project Halcyon is outline review.\",\"I7\":\"For Project Petrel, the next planned milestone is inventory review.\",\"N1\":\"Just confirming: Project Halcyon's next planned milestone is still delivery review.\",\"N2\":\"As a reminder, Project Halcyon's project code remains PRJ-H7.\",\"Q\":\"What is the current next planned milestone for Project Halcyon?\",\"U1\":\"Update on Project Halcyon: the next planned milestone has changed to sketch review.\",\"U2\":\"Project Halcyon's next planned milestone has been updated to component review.\",\"U3\":\"Another change for Project Halcyon: the next planned milestone is now layout review.\",\"U4\":\"The next planned milestone for Project Halcyon has been revised to integration review.\",\"U5\":\"Project Halcyon's next planned milestone has changed again; it's now rehearsal review.\",\"U6\":\"Heads up: the next planned milestone for Project Halcyon has been updated to delivery review.\",\"U7\":\"Project Halcyon's next planned milestone has changed and is now archive review.\"},\"low\":{\"I1\":\"For Project Halcyon, the project code is PRJ-H7.\",\"I2\":\"Project Halcyon is owned by Team Eru.\",\"I3\":\"Project Halcyon's delivery cycle is Cycle Leris.\",\"I4\":\"The active workstream for Project Halcyon is layout drafting.\",\"I5\":\"Project Halcyon's priority tier is Tier P1.\",\"I6\":\"The next planned milestone for Project Halcyon is outline review.\",\"I7\":\"For Project Petrel, the next planned milestone is inventory review.\",\"N1\":\"Just confirming: Project Halcyon's next planned milestone is still outline review.\",\"N2\":\"As a reminder, Project Halcyon's project code remains PRJ-H7.\",\"Q\":\"What is the current next planned milestone for Project Halcyon?\",\"U1\":\"Update on Project Halcyon: the priority tier has changed to Tier P2.\",\"U2\":\"Project Halcyon's owner has been updated; it is now Team Nalo.\",\"U3\":\"The delivery cycle for Project Halcyon has changed to Cycle Meris.\",\"U4\":\"Project Halcyon's active workstream is now asset assembly.\",\"U5\":\"For Project Petrel, the next planned milestone has been updated to license review.\",\"U6\":\"Another change for Project Halcyon: the active workstream has moved to package preparation.\",\"U7\":\"Project Halcyon's next planned milestone has changed and is now archive review.\"},\"medium\":{\"I1\":\"For Project Halcyon, the project code is PRJ-H7.\",\"I2\":\"Project Halcyon is owned by Team Eru.\",\"I3\":\"Project Halcyon's delivery cycle is Cycle Leris.\",\"I4\":\"The active workstream for Project Halcyon is layout drafting.\",\"I5\":\"Project Halcyon's priority tier is Tier P1.\",\"I6\":\"The next planned milestone for Project Halcyon is outline review.\",\"I7\":\"For Project Petrel, the next planned milestone is inventory review.\",\"N1\":\"Just confirming: Project Halcyon's next planned milestone is still rehearsal review.\",\"N2\":\"As a reminder, Project Halcyon's project code remains PRJ-H7.\",\"Q\":\"What is the current next planned milestone for Project Halcyon?\",\"U1\":\"Update on Project Halcyon: the next planned milestone has changed to sketch review.\",\"U2\":\"Project Halcyon's owner has been updated; it is now Team Nalo.\",\"U3\":\"The next planned milestone for Project Halcyon has been revised to layout review.\",\"U4\":\"For Project Petrel, the next planned milestone has been updated to license review.\",\"U5\":\"Project Halcyon's next planned milestone has changed again; it's now rehearsal review.\",\"U6\":\"Heads up: Project Halcyon's priority tier has changed to Tier P2.\",\"U7\":\"Project Halcyon's next planned milestone has changed and is now archive review.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 4527,
+          "completion_tokens": 1446,
+          "total_tokens": 5973,
+          "cost": 0.11757,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.11757,
+            "upstream_inference_prompt_cost": 0.04527,
+            "upstream_inference_completions_cost": 0.0723
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "anthropic/claude-fable-5.1",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=Anthropic",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 4,
+            "available": [
+              {
+                "provider": "Anthropic",
+                "model": "anthropic/claude-fable-5.1-20260831",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 15839
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "anthropic/claude-fable-5.1",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=Anthropic",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 4,
+          "available": [
+            {
+              "provider": "Anthropic",
+              "model": "anthropic/claude-fable-5.1-20260831",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 15839
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "For Project Halcyon, the project code is PRJ-H7.",
+          "I2": "Project Halcyon is owned by Team Eru.",
+          "I3": "Project Halcyon's delivery cycle is Cycle Leris.",
+          "I4": "The active workstream for Project Halcyon is layout drafting.",
+          "I5": "Project Halcyon's priority tier is Tier P1.",
+          "I6": "The next planned milestone for Project Halcyon is outline review.",
+          "I7": "For Project Petrel, the next planned milestone is inventory review.",
+          "N1": "Just confirming: Project Halcyon's next planned milestone is still delivery review.",
+          "N2": "As a reminder, Project Halcyon's project code remains PRJ-H7.",
+          "Q": "What is the current next planned milestone for Project Halcyon?",
+          "U1": "Update on Project Halcyon: the next planned milestone has changed to sketch review.",
+          "U2": "Project Halcyon's next planned milestone has been updated to component review.",
+          "U3": "Another change for Project Halcyon: the next planned milestone is now layout review.",
+          "U4": "The next planned milestone for Project Halcyon has been revised to integration review.",
+          "U5": "Project Halcyon's next planned milestone has changed again; it's now rehearsal review.",
+          "U6": "Heads up: the next planned milestone for Project Halcyon has been updated to delivery review.",
+          "U7": "Project Halcyon's next planned milestone has changed and is now archive review."
+        },
+        "low": {
+          "I1": "For Project Halcyon, the project code is PRJ-H7.",
+          "I2": "Project Halcyon is owned by Team Eru.",
+          "I3": "Project Halcyon's delivery cycle is Cycle Leris.",
+          "I4": "The active workstream for Project Halcyon is layout drafting.",
+          "I5": "Project Halcyon's priority tier is Tier P1.",
+          "I6": "The next planned milestone for Project Halcyon is outline review.",
+          "I7": "For Project Petrel, the next planned milestone is inventory review.",
+          "N1": "Just confirming: Project Halcyon's next planned milestone is still outline review.",
+          "N2": "As a reminder, Project Halcyon's project code remains PRJ-H7.",
+          "Q": "What is the current next planned milestone for Project Halcyon?",
+          "U1": "Update on Project Halcyon: the priority tier has changed to Tier P2.",
+          "U2": "Project Halcyon's owner has been updated; it is now Team Nalo.",
+          "U3": "The delivery cycle for Project Halcyon has changed to Cycle Meris.",
+          "U4": "Project Halcyon's active workstream is now asset assembly.",
+          "U5": "For Project Petrel, the next planned milestone has been updated to license review.",
+          "U6": "Another change for Project Halcyon: the active workstream has moved to package preparation.",
+          "U7": "Project Halcyon's next planned milestone has changed and is now archive review."
+        },
+        "medium": {
+          "I1": "For Project Halcyon, the project code is PRJ-H7.",
+          "I2": "Project Halcyon is owned by Team Eru.",
+          "I3": "Project Halcyon's delivery cycle is Cycle Leris.",
+          "I4": "The active workstream for Project Halcyon is layout drafting.",
+          "I5": "Project Halcyon's priority tier is Tier P1.",
+          "I6": "The next planned milestone for Project Halcyon is outline review.",
+          "I7": "For Project Petrel, the next planned milestone is inventory review.",
+          "N1": "Just confirming: Project Halcyon's next planned milestone is still rehearsal review.",
+          "N2": "As a reminder, Project Halcyon's project code remains PRJ-H7.",
+          "Q": "What is the current next planned milestone for Project Halcyon?",
+          "U1": "Update on Project Halcyon: the next planned milestone has changed to sketch review.",
+          "U2": "Project Halcyon's owner has been updated; it is now Team Nalo.",
+          "U3": "The next planned milestone for Project Halcyon has been revised to layout review.",
+          "U4": "For Project Petrel, the next planned milestone has been updated to license review.",
+          "U5": "Project Halcyon's next planned milestone has changed again; it's now rehearsal review.",
+          "U6": "Heads up: Project Halcyon's priority tier has changed to Tier P2.",
+          "U7": "Project Halcyon's next planned milestone has changed and is now archive review."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 4527,
+        "completion_tokens": 1446,
+        "total_tokens": 5973,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.11757
+      },
+      "latency_seconds": 16.05850825100788,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G2",
+  "fixture_id": "gq-project-planning-01",
+  "fixture_sha256": "496047b143b471019fdd89f7ec5d9eba9ab1045a68bdfcdce0872eb55a01617f",
+  "projection_sha256": "d911a0ccc52f913e7cd9720497295eeae10073397fe4dee6094b85f623f5b770",
+  "logical_call_index": 3,
+  "provenance": {
+    "source_commit": "1d8fd5e49f1811ad515ff22954220e6dba3334e2",
+    "candidate_profile": "SECOND_LEVEL_G2",
+    "selected_slot": "G2",
+    "fixture_set_commit": "683c0416c5bf47c83021408f26bc7a7ab5e8becc",
+    "fixture_manifest_sha256": "ecce7e579f02f64bb5578d8b18b9164483da1c5438544f21a89e17d7a2aaa1f9",
+    "execution_config_sha256": "fb2c74eec9fea2ab49cee00e76cbe84ec7ce0fe2464e80bf84d157e82ec56180",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "procedure_version": "generator-qualification-procedure/2.0.0",
+    "implementation": {
+      "status": "FROZEN FOR LIVE EXECUTION",
+      "freeze_commit": "51c6c0ec62e5d716ed838120d2505bc8566c338b",
+      "source_sha256": {
+        "experiments/qualify_generators.py": "5652abb3df12b8f23ec05d58456568a5db986069862c5d93bcb869ae953abfba",
+        "experiments/probe_generators.py": "b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0",
+        "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+      }
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "automated": {
+    "status": "PASS",
+    "meaning": "No deterministic violation detected is not semantic qualification.",
+    "findings": []
+  },
+  "output_sha256": "fba521ebdd78dc59fd3b57eb586c9334f2a8827b899bdd91265b894292250aaf"
+}
