@@ -320,14 +320,15 @@ contract. See §11 for their offline-only design/implementation status.
 
 `experiments/qualify_generators.py` has four modes, each taking
 `--profile {primary,fallback}` (default `primary`; see §11) and
-`--protocol-version {v1,v2}` (default `v1`, so every historical invocation is
-unaffected; see §14):
+`--protocol-version {v1,v2}` (see §14). For collection and preview it defaults to
+`v1`; for offline adjudication it defaults to the protocol recorded in the archive, so
+historical invocations are unaffected:
 
 | Mode | Invocation | Effect |
 | --- | --- | --- |
 | Preview (default) | no flags | Offline. Reports `NETWORK_DISABLED`, `CREDITS_NOT_SPENT`, the 24-call plan, frozen identities, the implementation status, and the procedure version the collection below would use. Reads no API key and creates no directory. |
 | Collection | `--execute --confirm-spend` and `OPENROUTER_API_KEY` | Refused unless every execution guard below holds. Records the qualification procedure named by `--protocol-version`: `generator-qualification-procedure/1.0.0` (default) or, for a candidate not previously qualified under any protocol, `generator-qualification-procedure/2.0.0` with a native `generator-manual-audit/2.0.0` blank audit. Either way this is the SAME generation task -- identical frozen fixtures, prompt, input/output contract, and execution package; only the qualification/manual-audit interpretation differs (see §14, "Protocol v2 is also a direct qualification protocol"). |
-| Offline adjudication | `--attempt DIR --audit COPY --adjudication-output FILE` `[--protocol-version {v1,v2}]` | Replays archived evidence, then adjudicates a completed audit copy under the selected protocol's schema/rules. For a `--attempt` collected under Protocol v1 (every attempt so far), `--protocol-version v2` here means "adjudicate a completed, historically-mapped v2 audit" (see the offline mapping mode below), not "this archive was collected under v2". No network. |
+| Offline adjudication | `--attempt DIR --audit COPY --adjudication-output FILE` `[--protocol-version {v1,v2}]` | Replays archived evidence under the protocol recorded in its `qualification.json`, then adjudicates a completed audit copy. The audit rules default to that protocol, so a natively v2-collected attempt needs no flag. For a Protocol-v1 attempt, `--protocol-version v2` means "adjudicate a completed, historically-mapped v2 audit" (see the offline mapping mode below), not "this archive was collected under v2". No network. |
 | Offline v1→v2 mapping | `--attempt DIR --audit V1_COMPLETED_COPY --v2-mapping-output FILE` | Derives a Protocol-v2 audit template plus a `pending_reclassification` list from a completed Protocol-v1 audit, per the historical mapping rule below. HISTORICAL-EVIDENCE ONLY: refused for evidence collected natively under Protocol v2, which starts with its own native v2 audit template instead (see Collection above). Does not adjudicate. No network. |
 
 **Plan.** 24 logical calls in a fixed order: G1 over all 12 frozen fixtures in
@@ -650,8 +651,8 @@ supports the capability preview (`--profile second_level_g2`: one G2 call) and,
 should capability close PASS, native qualification (`--profile second_level_g2
 --slot G2 --protocol-version v2`: the same 12 frozen fixtures as 12 G2 calls, no
 G1 call), so a capability PASS needs no further source change. The implementation
-freeze for the profile support and the capability closure is revision r4 (§14).
-Live qualification additionally requires an explicit `--output-directory`. The closed results (Sol, Terra, Sonnet, Opus and all
+freeze covering this support is pending (§14, revision r5). Live qualification
+additionally requires an explicit `--output-directory`. The closed results (Sol, Terra, Sonnet, Opus and all
 Protocol-v1 and Protocol-v2 attempt artifacts) and the G1 resolution are not
 affected.
 
@@ -791,7 +792,7 @@ Terra, and Opus all remained not Generator-Qualified under Protocol v1; the
 later Protocol-v2 offline re-adjudication (§14) is recorded separately and
 does not alter this v1 closure.
 
-## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r4; Offline Re-adjudication Closed)
+## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r5 Pending; Offline Re-adjudication Closed)
 
 **Status.** The Protocol-v2 methodology is frozen. The offline re-adjudication of
 the archived evidence is closed (Sol and Terra qualified, Sonnet failed, G1 is
@@ -823,15 +824,23 @@ commit; it froze that implementation, and live execution was not performed under
 
 Recording the second-level candidate's capability closure then changed the package
 hash pinned in `experiments/qualify_generators.py`, so revision 3 is in turn
-historical provenance. The active freeze record is revision 4,
-`configs/generator-qualification-implementation-freeze-v2-r4.json`, which names the
+historical provenance. Revision 4,
+`configs/generator-qualification-implementation-freeze-v2-r4.json`, names the
 implementation commit that carries that change (`51c6c0ec62e5d716ed838120d2505bc8566c338b`,
-"results: close Fable capability probe") and pins the current sources.
-`implementation('v2')` reads only r4 and reports FROZEN, so live `--protocol-version
-v2 --execute` passes this gate, subject to every other execution guard (clean
-worktree, per-slot capability evidence, API key and, for single-slot profiles, an
-explicit output directory). No live execution has been performed under it. The
-revision suffix names the implementation freeze only; the procedure and audit versions remain
+"results: close Fable capability probe") and froze those sources.
+
+The first qualification collected natively under procedure 2.0.0 (Attempt-03, the
+second-level G2 candidate) then exposed a defect: `replay()` regenerated the blank
+audit template, and the offline adjudication CLI loaded inputs, under Protocol v1
+regardless of the archive. Both now use the protocol recorded in the archive's
+`qualification.json`, and the audit rules default to it. This changes
+`experiments/qualify_generators.py`, so revision 4 is in turn historical
+provenance. The active freeze record is revision 5,
+`configs/generator-qualification-implementation-freeze-v2-r5.json`, to be created
+against the implementation commit that carries the fix. Until it exists,
+`implementation('v2')` reports NOT_FROZEN and live `--protocol-version v2
+--execute` refuses before any network request. The revision suffix names the
+implementation freeze only; the procedure and audit versions remain
 `generator-qualification-procedure/2.0.0` and `generator-manual-audit/2.0.0`.
 
 **Implementation freeze records.** All records use the same protocol-agnostic schema
@@ -860,11 +869,13 @@ already existed when the record was created:
   `experiments/probe_generators.py` SHA-256
   `b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`).
 - `configs/generator-qualification-implementation-freeze-v2-r4.json` (revision 4):
-  the active record. It pins the implementation commit `51c6c0ec62e5d716ed838120d2505bc8566c338b`
+  pins the implementation commit `51c6c0ec62e5d716ed838120d2505bc8566c338b`
   (`experiments/qualify_generators.py` SHA-256
   `5652abb3df12b8f23ec05d58456568a5db986069862c5d93bcb869ae953abfba`;
   `experiments/probe_generators.py` SHA-256
   `b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`).
+- `configs/generator-qualification-implementation-freeze-v2-r5.json` (revision 5):
+  the active record; not yet created.
 
 `validate_generator_qualification_fixtures.py` is unchanged across all v2 revisions
 and `probe_generators.py` across revisions 1 and 2. `implementation('v1')` reads only the v1

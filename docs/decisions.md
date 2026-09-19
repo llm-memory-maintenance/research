@@ -815,11 +815,11 @@ reverified unaffected. Opus remains capability CLOSED/FAIL (provider-policy
 refusal). No new G2 candidate has been selected. Neither Terra nor Opus is
 Generator-Qualified.
 
-## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r4, Offline Re-adjudication Closed
+## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r5 Pending, Offline Re-adjudication Closed
 
 The methodology is frozen and the offline re-adjudication is closed (see the
-final entries of this section). The active implementation freeze is revision r4;
-revisions r1 to r3 are historical provenance. Full specification:
+final entries of this section). The active implementation freeze is revision r5,
+which is pending; revisions r1 to r4 are historical provenance. Full specification:
 `generator-qualification.md` §14.
 Versions: `generator-qualification-procedure/2.0.0`,
 `generator-manual-audit/2.0.0`; Protocol v1 (`.../1.0.0`) and all its
@@ -830,7 +830,8 @@ revision 1 (`...-freeze-v2.json`, Commit A); v2 revision 2 (`...-freeze-v2-r2.js
 Commit C `30d65102e618aa5713f0710964978f1eb46c4a15`); and v2 revision 3
 (`...-freeze-v2-r3.json`, commit `45f06ae8508485ff2f4d5a886fef89f01bf1b807`). Each
 was superseded when a later change altered the pinned sources; the active target is
-revision 4 (`...-freeze-v2-r4.json`, commit `51c6c0ec62e5d716ed838120d2505bc8566c338b`), the active record (see the final entries below).
+revision 4 (`...-freeze-v2-r4.json`, commit `51c6c0ec62e5d716ed838120d2505bc8566c338b`); the active target is revision 5
+(`...-freeze-v2-r5.json`), not yet created (see the final entries below).
 The methodology stays 2.0.0.
 
 **Two-commit freeze workflow, revision 1 (historical).** Commit A
@@ -1148,3 +1149,27 @@ Attempt-04, generator status CANDIDATE), so neither gate blocks native Protocol-
 qualification of that candidate. The qualification preview is unchanged: 12 G2 calls
 on the 12 frozen fixtures, no G1 call. Generator Qualification has not run, and G2
 remains unresolved.
+
+### Protocol-aware replay and offline adjudication; implementation freeze r5 pending (2026-09-19)
+
+The first qualification collected natively under procedure 2.0.0 (Attempt-03) showed
+that replay and the offline adjudication CLI assumed Protocol v1. `replay()`
+regenerated the blank audit template with the default protocol, so a v2 archive failed
+with "Archived blank audit template drift", and the CLI loaded qualification inputs
+under v1. The fix derives the protocol from the archive itself: `replay()` builds the
+blank template under the protocol named by the archive's recorded procedure version;
+the CLI loads inputs under that protocol and, unless `--protocol-version` is given,
+adjudicates with the same protocol's audit rules. An explicit `--protocol-version`
+still selects the audit rules (a Protocol-v1 archive adjudicated with a mapped v2
+audit), and a protocol that does not match the audit is rejected. Collection and
+preview keep their `v1` default. Protocol-v1 replay and adjudication are unchanged, and
+the v2 criteria, schemas, fixtures and results are not modified. The recorded
+Attempt-03 adjudication now reproduces byte for byte through the normal CLI.
+
+The change alters `experiments/qualify_generators.py`, so revision 4 (commit
+`51c6c0ec62e5d716ed838120d2505bc8566c338b`) is historical provenance and no longer freezes the current
+sources. The active v2 freeze target is revision 5,
+`configs/generator-qualification-implementation-freeze-v2-r5.json`, which does not
+exist yet; until it is created against the implementation commit, `implementation('v2')`
+reports NOT_FROZEN and live v2 execution refuses before any network request. The v1
+and r1 to r4 records are unmodified, and the methodology versions remain 2.0.0.

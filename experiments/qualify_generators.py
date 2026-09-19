@@ -42,10 +42,10 @@ SOURCES = ('experiments/qualify_generators.py', 'experiments/probe_generators.py
            'experiments/validate_generator_qualification_fixtures.py')
 FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze.json'
 # Implementation freeze records pin a commit and the SHA-256 of each file in SOURCES. FREEZE_RECORD covers
-# protocol v1. Protocol v2 uses revisioned records (-v2, -v2-r2, -v2-r3, ...): only the current revision,
+# protocol v1. Protocol v2 uses revisioned records (-v2, -v2-r2, ..., -v2-r5): only the current revision,
 # V2_FREEZE_RECORD, is consulted, and earlier revisions are kept as historical provenance. The revision
 # suffix is independent of the protocol version. implementation('v2') reports NOT_FROZEN until it exists.
-V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2-r4.json'
+V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2-r5.json'
 FREEZE_SCHEMA = 'generator-qualification-implementation-freeze/1.0.0'
 NOT_FROZEN = 'NOT YET FROZEN FOR LIVE EXECUTION'
 FROZEN = 'FROZEN FOR LIVE EXECUTION'
@@ -86,6 +86,21 @@ PROTOCOLS = {
            'applicability': APPLICABILITY_V2, 'checks': CHECKS_V2, 'level2': frozenset({'fluency'}),
            'derived_summaries': True},
 }
+
+
+def archive_protocol(procedure_version):
+    """Protocol key ('v1' or 'v2') for a recorded qualification procedure version."""
+    for key, spec in PROTOCOLS.items():
+        if spec['procedure'] == procedure_version:
+            return key
+    raise ValueError(f'Unknown attempt procedure: {procedure_version}')
+
+
+def archived_protocol(directory):
+    """Protocol under which the attempt in `directory` was collected, from its own qualification.json."""
+    return archive_protocol(fixtures.read(Path(directory) / 'qualification.json')['procedure_version'])
+
+
 TERMINAL_AUTOMATED = {'status': 'FAIL', 'findings': [], 'reason': 'Execution/parse/schema failed'}
 SUMS_LINE = re.compile(r'([0-9a-f]{64})  (\S.*)')
 # RFC 3339 with an explicit offset, e.g. 2026-09-18T21:30:00+07:00.
@@ -788,7 +803,8 @@ def replay(directory, inputs):
             else:
                 raise ValueError('Archived terminal failure now passes; evidence altered')
     require(fixtures.read(directory / 'manual-audit.json')
-            == audit_template(result, sums['qualification.json'], inputs['slots']),
+            == audit_template(result, sums['qualification.json'], inputs['slots'],
+                              archive_protocol(result['procedure_version'])),
             'Archived blank audit template drift')
     return result, sums['qualification.json']
 
@@ -808,11 +824,11 @@ def main(argv=None):
     parser.add_argument('--audit', type=Path, help='Completed copy of generated manual-audit.json '
                         '(a v1 audit for --v2-mapping-output; v1 or v2 per --protocol-version otherwise)')
     parser.add_argument('--adjudication-output', type=Path, help='New immutable offline adjudication JSON')
-    parser.add_argument('--protocol-version', choices=['v1', 'v2'], default='v1',
-                        help='For --execute/preview: which qualification procedure a NEW collection is '
-                             'recorded under (native execution; same generation task either way). For '
-                             '--audit/--adjudication-output: the manual-audit schema/adjudication rules '
-                             'for --audit. Default v1, so historical invocations are unaffected.')
+    parser.add_argument('--protocol-version', choices=['v1', 'v2'], default=None,
+                        help='For --execute/preview: the qualification procedure a NEW collection is recorded '
+                             'under (default v1; same generation task either way). For --audit/'
+                             '--adjudication-output: the manual-audit schema and adjudication rules for --audit '
+                             '(default: the protocol recorded in the archived attempt).')
     parser.add_argument('--v2-mapping-output', type=Path,
                         help='Derive an offline Protocol-v2 audit template from a COMPLETED v1 --audit '
                              '(docs/generator-qualification.md Sec. 14); writes here instead of adjudicating')
@@ -842,10 +858,9 @@ def main(argv=None):
         else:
             output_directory = DEFAULT_OUTPUT if args.profile == 'primary' else FALLBACK_DEFAULT_OUTPUT
     if args.attempt and args.v2_mapping_output:
-        # Historical mapping source evidence is always a Protocol-v1 collection (Sec. 14): inputs are
-        # loaded under v1 regardless of --protocol-version, which this mode does not consult at all.
-        inputs = load_inputs(profile=args.profile, slot=args.slot)
+        # The mapping source must be a v1 collection; a v2 archive is rejected by derive_v2_audit_template.
         attempt = args.attempt.resolve()
+        inputs = load_inputs(profile=args.profile, slot=args.slot, protocol=archived_protocol(attempt))
         for path in (args.audit, args.v2_mapping_output):
             require(not path.resolve().is_relative_to(attempt),
                     'Completed v1 audit and v2 mapping output must be separate copies outside the archived attempt')
@@ -856,26 +871,25 @@ def main(argv=None):
         print(json.dumps(output, indent=2))
         return 0
     if args.attempt and args.adjudication_output:
-        # --protocol-version here selects the manual-audit schema/adjudication rules for --audit, not
-        # the archived evidence's own collection identity: a mapped v2 audit is still adjudicated
-        # against a Protocol-v1-collected archive (Sec. 14, "Historical v1 -> v2 mapping"), so inputs
-        # are loaded under v1 exactly as replay() expects for every archive collected so far.
-        inputs = load_inputs(profile=args.profile, slot=args.slot)
+        # Inputs load under the protocol the attempt was collected with. The audit rules default to that
+        # protocol; --protocol-version overrides them (a v1 archive adjudicated with a mapped v2 audit).
         attempt = args.attempt.resolve()
+        archive = archived_protocol(attempt)
+        inputs = load_inputs(profile=args.profile, slot=args.slot, protocol=archive)
         for path in (args.audit, args.adjudication_output):
             require(not path.resolve().is_relative_to(attempt),
                     'Completed audit and adjudication must be separate copies outside the archived attempt')
         result, checksum = replay(attempt, inputs)
-        verdict = adjudicate(result, fixtures.read(args.audit), checksum, inputs['slots'], protocol=args.protocol_version)
+        verdict = adjudicate(result, fixtures.read(args.audit), checksum, inputs['slots'],
+                             protocol=args.protocol_version or archive)
         verdict['manual_audit_file_sha256'] = probe.file_hash(args.audit)
         publish(args.adjudication_output, verdict)
         print(json.dumps(verdict, indent=2))
         return 0
-    # Preview and (live or mocked) collection: --protocol-version selects which qualification
-    # procedure a NEW collection would be recorded under -- native Protocol-v1 or Protocol-v2
-    # execution of a candidate not previously qualified under any protocol (Sec. 14). It never
-    # changes the generation task itself (same frozen fixtures/prompt/contract/execution package).
-    inputs = load_inputs(profile=args.profile, slot=args.slot, protocol=args.protocol_version)
+    # Preview and collection: the protocol a new collection is recorded under. It does not change
+    # the generation task (same fixtures, prompt, contract and execution package).
+    protocol = args.protocol_version or 'v1'
+    inputs = load_inputs(profile=args.profile, slot=args.slot, protocol=protocol)
     if not args.execute:
         print(json.dumps(preview(inputs, output_directory), indent=2))
         return 0
@@ -883,7 +897,7 @@ def main(argv=None):
     require(bool(key.strip()), 'Execution requires OPENROUTER_API_KEY')
     require(inputs['provenance']['implementation']['status'] == FROZEN,
             f'Qualification implementation {NOT_FROZEN}; live execution refused')
-    result = asyncio.run(collect(inputs, key, output_directory, protocol=args.protocol_version))
+    result = asyncio.run(collect(inputs, key, output_directory, protocol=protocol))
     print(result['status'] + ': qualification requires completed manual adjudication')
     return 1 if result['status'] == 'INVALIDATED' else 0
 
