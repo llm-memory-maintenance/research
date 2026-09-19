@@ -815,23 +815,24 @@ reverified unaffected. Opus remains capability CLOSED/FAIL (provider-policy
 refusal). No new G2 candidate has been selected. Neither Terra nor Opus is
 Generator-Qualified.
 
-## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r5 Pending, Offline Re-adjudication Closed
+## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r5 Active, Offline Re-adjudication Closed
 
 The methodology is frozen and the offline re-adjudication is closed (see the
 final entries of this section). The active implementation freeze is revision r5,
-which is pending; revisions r1 to r4 are historical provenance. Full specification:
+which is frozen; revisions r1 to r4 are historical provenance. Full specification:
 `generator-qualification.md` §14.
 Versions: `generator-qualification-procedure/2.0.0`,
 `generator-manual-audit/2.0.0`; Protocol v1 (`.../1.0.0`) and all its
 artifacts remain immutable historical records.
 
-**Freeze lineage.** Four distinct immutable records: the historical v1 record; v2
+**Freeze lineage.** Six distinct immutable records: the historical v1 record; v2
 revision 1 (`...-freeze-v2.json`, Commit A); v2 revision 2 (`...-freeze-v2-r2.json`,
 Commit C `30d65102e618aa5713f0710964978f1eb46c4a15`); and v2 revision 3
-(`...-freeze-v2-r3.json`, commit `45f06ae8508485ff2f4d5a886fef89f01bf1b807`). Each
-was superseded when a later change altered the pinned sources; the active target is
-revision 4 (`...-freeze-v2-r4.json`, commit `51c6c0ec62e5d716ed838120d2505bc8566c338b`); the active target is revision 5
-(`...-freeze-v2-r5.json`), not yet created (see the final entries below).
+(`...-freeze-v2-r3.json`, commit `45f06ae8508485ff2f4d5a886fef89f01bf1b807`); v2
+revision 4 (`...-freeze-v2-r4.json`, commit `51c6c0ec62e5d716ed838120d2505bc8566c338b`);
+and v2 revision 5 (`...-freeze-v2-r5.json`, commit `b8aa5b70350a2d32590e7808d2a7396f83494299`).
+Each earlier record was superseded when a later change altered the pinned sources;
+r5 is the active record (see the final entries below).
 The methodology stays 2.0.0.
 
 **Two-commit freeze workflow, revision 1 (historical).** Commit A
@@ -1150,7 +1151,7 @@ qualification of that candidate. The qualification preview is unchanged: 12 G2 c
 on the 12 frozen fixtures, no G1 call. Generator Qualification has not run, and G2
 remains unresolved.
 
-### Protocol-aware replay and offline adjudication; implementation freeze r5 pending (2026-09-19)
+### Protocol-aware replay and offline adjudication (2026-09-19)
 
 The first qualification collected natively under procedure 2.0.0 (Attempt-03) showed
 that replay and the offline adjudication CLI assumed Protocol v1. `replay()`
@@ -1168,8 +1169,25 @@ Attempt-03 adjudication now reproduces byte for byte through the normal CLI.
 
 The change alters `experiments/qualify_generators.py`, so revision 4 (commit
 `51c6c0ec62e5d716ed838120d2505bc8566c338b`) is historical provenance and no longer freezes the current
-sources. The active v2 freeze target is revision 5,
-`configs/generator-qualification-implementation-freeze-v2-r5.json`, which does not
-exist yet; until it is created against the implementation commit, `implementation('v2')`
-reports NOT_FROZEN and live v2 execution refuses before any network request. The v1
-and r1 to r4 records are unmodified, and the methodology versions remain 2.0.0.
+sources. It is frozen by revision 5, recorded in the next entry. The v1 and r1 to r4
+records are unmodified, and the methodology versions remain 2.0.0.
+
+### Protocol-v2 implementation freeze revision r5 (2026-09-19)
+
+Revision 5, `configs/generator-qualification-implementation-freeze-v2-r5.json`,
+freezes the implementation that includes native-v2 replay and offline adjudication
+support. It uses the existing freeze schema, names implementation commit
+`b8aa5b70350a2d32590e7808d2a7396f83494299` ("fix: support native protocol v2
+replay"), and pins `experiments/qualify_generators.py`
+(`62d2796f804ae75556e0037355faadaf08757423b38401cef44f398c896d0c9f`),
+`experiments/probe_generators.py`
+(`b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`) and
+`experiments/validate_generator_qualification_fixtures.py`
+(`2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e`). The v1 and
+r1 to r4 records are unmodified and none can substitute for r5: with r5 hidden,
+`implementation('v2')` reports NOT_FROZEN even though the earlier records exist.
+
+With r5 present, `implementation('v2')` reports FROZEN. The Attempt-03 archive
+replays through the normal native-v2 path and its adjudication reproduces G2
+QUALIFIED with zero Level-1 failures and twelve Level-2 fluency findings. No
+result artifact, fixture, prompt, execution config or criterion is changed.
