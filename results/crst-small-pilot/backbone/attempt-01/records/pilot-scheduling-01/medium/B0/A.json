@@ -1,0 +1,111 @@
+{
+  "logical_id": "pilot-scheduling-01/medium/B0/A",
+  "policy": "B0",
+  "scenario_id": "pilot-scheduling-01",
+  "variant": "medium",
+  "event": "Q",
+  "request_body": {
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "provider": {
+      "order": [
+        "coreweave/bf16"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 2048,
+    "response_format": {
+      "type": "json_object"
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant. Use only the information provided in the context to answer the user's final question.\n\nReply with the answer only."
+      },
+      {
+        "role": "user",
+        "content": "The registration desk opening time for Seminar Brindle is now 10:55."
+      },
+      {
+        "role": "assistant",
+        "content": "Noted."
+      },
+      {
+        "role": "user",
+        "content": "Seminar Brindle's room code remains ROM-B47."
+      },
+      {
+        "role": "assistant",
+        "content": "Noted."
+      },
+      {
+        "role": "user",
+        "content": "Question:\nWhat is the current registration desk opening time of Seminar Brindle?\n\nReturn exactly one JSON object with exactly one key named \"answer\".\nThe value of \"answer\" must contain only the answer to the question, with no explanation or additional text.\nDo not return any other keys."
+      }
+    ]
+  },
+  "request_sha256": "17d8471188fd46fc4d252cb93af825e2872a81c98cf1c515efe4f5a53b31e5cc",
+  "model": "meta-llama/llama-3.1-8b-instruct",
+  "provider": "coreweave/bf16",
+  "request_status": "success",
+  "content": "{\n  \"answer\": \"10:55\"\n}",
+  "finish_reason": "stop",
+  "routing_ok": true,
+  "accounting_ok": true,
+  "usage": {
+    "prompt_tokens": 174,
+    "completion_tokens": 12,
+    "total_tokens": 186,
+    "cost": 4.092e-05,
+    "cached_tokens": 0
+  },
+  "latency_seconds": 0.49337100298726,
+  "cost": 4.092e-05,
+  "attempts": [
+    {
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T17:33:53.526860+00:00",
+      "http_status": 200,
+      "error_type": null,
+      "requested_model": "meta-llama/llama-3.1-8b-instruct",
+      "requested_provider_endpoint": "coreweave/bf16",
+      "returned_model": "meta-llama/llama-3.1-8b-instruct",
+      "openrouter_metadata": {
+        "requested": "meta-llama/llama-3.1-8b-instruct",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=CoreWeave",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 5,
+          "available": [
+            {
+              "provider": "CoreWeave",
+              "model": "meta-llama/llama-3.1-8b-instruct",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 345
+      },
+      "request_id": null,
+      "response_id": "gen-1789839233-fHuRlp3u4n02V0mvIfue",
+      "service_tier": null,
+      "finish_reason": "stop",
+      "raw_response": "{\"id\":\"gen-1789839233-fHuRlp3u4n02V0mvIfue\",\"object\":\"chat.completion\",\"created\":1789839233,\"model\":\"meta-llama/llama-3.1-8b-instruct\",\"provider\":\"CoreWeave\",\"system_fingerprint\":\"vllm-0.22.1.dev0+g0b3ba88f1.d20260529-25c7fbc0\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"answer\\\": \\\"10:55\\\"\\n}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":174,\"completion_tokens\":12,\"total_tokens\":186,\"cost\":0.00004092,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.00004092,\"upstream_inference_prompt_cost\":0.00003828,\"upstream_inference_completions_cost\":0.00000264},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"meta-llama/llama-3.1-8b-instruct\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=CoreWeave\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":5,\"available\":[{\"provider\":\"CoreWeave\",\"model\":\"meta-llama/llama-3.1-8b-instruct\",\"selected\":true}]},\"generation_time\":345}}",
+      "response_sha256": "4afe3a383f7897526fbbef3dfec6ab4ce83d6f48174d11039af45fe952fedc28",
+      "usage": {
+        "prompt_tokens": 174,
+        "completion_tokens": 12,
+        "total_tokens": 186,
+        "cost": 4.092e-05,
+        "cached_tokens": 0
+      },
+      "latency_seconds": 0.4933367790072225,
+      "will_retry": false
+    }
+  ]
+}

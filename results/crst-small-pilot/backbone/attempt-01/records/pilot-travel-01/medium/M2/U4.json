@@ -1,0 +1,95 @@
+{
+  "logical_id": "pilot-travel-01/medium/M2/U4",
+  "policy": "M2",
+  "scenario_id": "pilot-travel-01",
+  "variant": "medium",
+  "event": "U4",
+  "request_body": {
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "provider": {
+      "order": [
+        "coreweave/bf16"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 2048,
+    "response_format": {
+      "type": "json_object"
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You maintain a memory of facts. Each active memory entry is one line that begins with its memory_id. You are given the active memory and one candidate fact. Choose exactly one operation for the candidate.\n\nAvailable operations:\n- Update: an active entry already records the same entity and the same attribute as the candidate.\n- Add: no active entry records the same entity and the same attribute as the candidate.\n\nReply with a JSON object that has exactly the keys \"operation\" and \"target_id\" and no other keys. For Update, target_id is the memory_id of the entry to replace. For every other operation, target_id is null."
+      },
+      {
+        "role": "user",
+        "content": "Active memory:\n[memory_id=mem_0001; created=2000-01-01T00:01:00Z; updated=2000-01-01T00:01:00Z] For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms.\n[memory_id=mem_0004; created=2000-01-01T00:04:00Z; updated=2000-01-01T00:04:00Z] For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38.\n[memory_id=mem_0005; created=2000-01-01T00:05:00Z; updated=2000-01-01T00:05:00Z] For Ferry crossing Wrenfield, the cabin class is class Harbor.\n[memory_id=mem_0006; created=2000-01-01T00:06:00Z; updated=2000-01-01T00:06:00Z] For Ferry crossing Wrenfield, the passenger deck level is Deck 2.\n[memory_id=mem_0007; created=2000-01-01T00:07:00Z; updated=2000-01-01T00:07:00Z] For Ferry crossing Wrenfield, the onboard meal plan is plan pantry.\n[memory_id=mem_0003; created=2000-01-01T00:03:00Z; updated=2000-01-01T00:09:00Z] For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere.\n[memory_id=mem_0002; created=2000-01-01T00:02:00Z; updated=2000-01-01T00:10:00Z] For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere.\n\nCandidate:\nFor Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+      }
+    ]
+  },
+  "request_sha256": "049bbea6a94e93e691c27e547879f6e80a871c9205b9a3be71bfaffe178739df",
+  "model": "meta-llama/llama-3.1-8b-instruct",
+  "provider": "coreweave/bf16",
+  "request_status": "success",
+  "content": "{\n  \"operation\": \"Update\",\n  \"target_id\": \"mem_0001\"\n}",
+  "finish_reason": "stop",
+  "routing_ok": true,
+  "accounting_ok": true,
+  "usage": {
+    "prompt_tokens": 584,
+    "completion_tokens": 21,
+    "total_tokens": 605,
+    "cost": 0.0001331,
+    "cached_tokens": 64
+  },
+  "latency_seconds": 0.5069847360136919,
+  "cost": 0.0001331,
+  "attempts": [
+    {
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T17:34:28.434887+00:00",
+      "http_status": 200,
+      "error_type": null,
+      "requested_model": "meta-llama/llama-3.1-8b-instruct",
+      "requested_provider_endpoint": "coreweave/bf16",
+      "returned_model": "meta-llama/llama-3.1-8b-instruct",
+      "openrouter_metadata": {
+        "requested": "meta-llama/llama-3.1-8b-instruct",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=CoreWeave",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 5,
+          "available": [
+            {
+              "provider": "CoreWeave",
+              "model": "meta-llama/llama-3.1-8b-instruct",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 401
+      },
+      "request_id": null,
+      "response_id": "gen-1789839268-gzmwcv6OHuMmpWgkzdnm",
+      "service_tier": null,
+      "finish_reason": "stop",
+      "raw_response": "{\"id\":\"gen-1789839268-gzmwcv6OHuMmpWgkzdnm\",\"object\":\"chat.completion\",\"created\":1789839268,\"model\":\"meta-llama/llama-3.1-8b-instruct\",\"provider\":\"CoreWeave\",\"system_fingerprint\":\"vllm-0.22.1.dev0+g0b3ba88f1.d20260529-25c7fbc0\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"operation\\\": \\\"Update\\\",\\n  \\\"target_id\\\": \\\"mem_0001\\\"\\n}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":584,\"completion_tokens\":21,\"total_tokens\":605,\"cost\":0.0001331,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":64,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0001331,\"upstream_inference_prompt_cost\":0.00012848,\"upstream_inference_completions_cost\":0.00000462},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"meta-llama/llama-3.1-8b-instruct\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=CoreWeave\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":5,\"available\":[{\"provider\":\"CoreWeave\",\"model\":\"meta-llama/llama-3.1-8b-instruct\",\"selected\":true}]},\"generation_time\":401}}",
+      "response_sha256": "1804cdf9b66ecf0bf32ea1f2e29353392dee0d9f831d3e71a33feec81db239a1",
+      "usage": {
+        "prompt_tokens": 584,
+        "completion_tokens": 21,
+        "total_tokens": 605,
+        "cost": 0.0001331,
+        "cached_tokens": 64
+      },
+      "latency_seconds": 0.5069609209895134,
+      "will_retry": false
+    }
+  ]
+}

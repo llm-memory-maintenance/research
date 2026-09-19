@@ -1,0 +1,343 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"phase_label\\\",\\\"meaning\\\":\\\"current project phase\\\",\\\"units_or_interpretation\\\":\\\"phase label\\\"},{\\\"attribute_id\\\":\\\"ledger_code\\\",\\\"meaning\\\":\\\"initiative ledger identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"sponsor\\\",\\\"meaning\\\":\\\"initiative sponsor\\\",\\\"units_or_interpretation\\\":\\\"synthetic team\\\"},{\\\"attribute_id\\\":\\\"checkpoint\\\",\\\"meaning\\\":\\\"next checkpoint\\\",\\\"units_or_interpretation\\\":\\\"checkpoint label\\\"},{\\\"attribute_id\\\":\\\"budget_band\\\",\\\"meaning\\\":\\\"budget band\\\",\\\"units_or_interpretation\\\":\\\"band label\\\"},{\\\"attribute_id\\\":\\\"risk_rating\\\",\\\"meaning\\\":\\\"risk rating\\\",\\\"units_or_interpretation\\\":\\\"rating label\\\"}],\\\"domain\\\":\\\"Project Planning\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"b0cal-project-planning-01-primary\\\",\\\"name\\\":\\\"Initiative Quillon\\\"},{\\\"entity_id\\\":\\\"b0cal-project-planning-01-distractor\\\",\\\"name\\\":\\\"Initiative Bramwell\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_c\\\",\\\"I2\\\":\\\"k_d\\\",\\\"I3\\\":\\\"k_target\\\",\\\"I4\\\":\\\"k_hard\\\",\\\"I5\\\":\\\"k_n2\\\",\\\"I6\\\":\\\"k_a\\\",\\\"I7\\\":\\\"k_b\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"phase_label\\\",\\\"entity_id\\\":\\\"b0cal-project-planning-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current project phase of Initiative Quillon.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"phase_label\\\",\\\"entity_id\\\":\\\"b0cal-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"scoping phase\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"phase_label\\\",\\\"entity_id\\\":\\\"b0cal-project-planning-01-distractor\\\",\\\"initial_value\\\":\\\"audit phase\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"ledger_code\\\",\\\"entity_id\\\":\\\"b0cal-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"LDG-Q31\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"sponsor\\\",\\\"entity_id\\\":\\\"b0cal-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"Team Orchard\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"checkpoint\\\",\\\"entity_id\\\":\\\"b0cal-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"Checkpoint Ridgeline\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"budget_band\\\",\\\"entity_id\\\":\\\"b0cal-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"Band Silver\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"risk_rating\\\",\\\"entity_id\\\":\\\"b0cal-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"low risk\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"Band Silver\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"low risk\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"scoping phase\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"audit phase\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"LDG-Q31\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Team Orchard\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Checkpoint Ridgeline\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"sourcing phase\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"drafting phase\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"prototyping phase\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"piloting phase\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"tuning phase\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"hardening phase\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"hardening phase\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"wrap-up phase\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"LDG-Q31\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"Band Silver\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"low risk\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"scoping phase\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"audit phase\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"LDG-Q31\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Team Orchard\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Checkpoint Ridgeline\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Checkpoint Millrace\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"budgeting phase\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Checkpoint Tidewater\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Band Copper\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"moderate risk\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Team Beacon\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"scoping phase\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"wrap-up phase\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"LDG-Q31\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"Band Silver\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"low risk\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"scoping phase\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"audit phase\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"LDG-Q31\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Team Orchard\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Checkpoint Ridgeline\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"sourcing phase\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"moderate risk\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"prototyping phase\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"budgeting phase\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"tuning phase\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Band Copper\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"tuning phase\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"wrap-up phase\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"LDG-Q31\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-sol\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "bbb2e5ee893e1e4d0875dc9ad82eefc6ee2ede8254e4491e3d97b890bd3ac41c",
+  "request_body": {
+    "model": "openai/gpt-5.6-sol",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"phase_label\",\"meaning\":\"current project phase\",\"units_or_interpretation\":\"phase label\"},{\"attribute_id\":\"ledger_code\",\"meaning\":\"initiative ledger identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"sponsor\",\"meaning\":\"initiative sponsor\",\"units_or_interpretation\":\"synthetic team\"},{\"attribute_id\":\"checkpoint\",\"meaning\":\"next checkpoint\",\"units_or_interpretation\":\"checkpoint label\"},{\"attribute_id\":\"budget_band\",\"meaning\":\"budget band\",\"units_or_interpretation\":\"band label\"},{\"attribute_id\":\"risk_rating\",\"meaning\":\"risk rating\",\"units_or_interpretation\":\"rating label\"}],\"domain\":\"Project Planning\",\"entities\":[{\"entity_id\":\"b0cal-project-planning-01-primary\",\"name\":\"Initiative Quillon\"},{\"entity_id\":\"b0cal-project-planning-01-distractor\",\"name\":\"Initiative Bramwell\"}],\"initial_order\":{\"I1\":\"k_c\",\"I2\":\"k_d\",\"I3\":\"k_target\",\"I4\":\"k_hard\",\"I5\":\"k_n2\",\"I6\":\"k_a\",\"I7\":\"k_b\"},\"question_intent\":{\"attribute_id\":\"phase_label\",\"entity_id\":\"b0cal-project-planning-01-primary\",\"intent\":\"Ask only for the current project phase of Initiative Quillon.\"},\"state_keys\":[{\"attribute_id\":\"phase_label\",\"entity_id\":\"b0cal-project-planning-01-primary\",\"initial_value\":\"scoping phase\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"phase_label\",\"entity_id\":\"b0cal-project-planning-01-distractor\",\"initial_value\":\"audit phase\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"ledger_code\",\"entity_id\":\"b0cal-project-planning-01-primary\",\"initial_value\":\"LDG-Q31\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"sponsor\",\"entity_id\":\"b0cal-project-planning-01-primary\",\"initial_value\":\"Team Orchard\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"checkpoint\",\"entity_id\":\"b0cal-project-planning-01-primary\",\"initial_value\":\"Checkpoint Ridgeline\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"budget_band\",\"entity_id\":\"b0cal-project-planning-01-primary\",\"initial_value\":\"Band Silver\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"risk_rating\",\"entity_id\":\"b0cal-project-planning-01-primary\",\"initial_value\":\"low risk\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"Band Silver\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"low risk\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"scoping phase\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"audit phase\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"LDG-Q31\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Team Orchard\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Checkpoint Ridgeline\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"sourcing phase\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"drafting phase\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"prototyping phase\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"piloting phase\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"tuning phase\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"hardening phase\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"hardening phase\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"wrap-up phase\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"LDG-Q31\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"Band Silver\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"low risk\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"scoping phase\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"audit phase\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"LDG-Q31\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Team Orchard\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Checkpoint Ridgeline\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Checkpoint Millrace\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"budgeting phase\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Checkpoint Tidewater\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"Band Copper\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"moderate risk\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Team Beacon\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"scoping phase\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"wrap-up phase\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"LDG-Q31\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"Band Silver\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"low risk\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"scoping phase\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"audit phase\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"LDG-Q31\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Team Orchard\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Checkpoint Ridgeline\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"sourcing phase\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"moderate risk\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"prototyping phase\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"budgeting phase\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"tuning phase\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Band Copper\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"tuning phase\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"wrap-up phase\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"LDG-Q31\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T11:51:30.643555+00:00",
+      "requested_model": "openai/gpt-5.6-sol",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-sol",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789818690-hRekKnsWI4WihVS978mH",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n{\"id\":\"gen-1789818690-hRekKnsWI4WihVS978mH\",\"object\":\"chat.completion\",\"created\":1789818690,\"model\":\"openai/gpt-5.6-sol\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Initiative Quillon's budget band is Band Silver.\\\",\\\"I2\\\":\\\"Initiative Quillon's risk rating is low risk.\\\",\\\"I3\\\":\\\"Initiative Quillon's current project phase is scoping phase.\\\",\\\"I4\\\":\\\"Initiative Bramwell's current project phase is audit phase.\\\",\\\"I5\\\":\\\"Initiative Quillon's ledger code is LDG-Q31.\\\",\\\"I6\\\":\\\"Initiative Quillon's sponsor is Team Orchard.\\\",\\\"I7\\\":\\\"Initiative Quillon's next checkpoint is Checkpoint Ridgeline.\\\",\\\"N1\\\":\\\"Initiative Quillon remains in hardening phase.\\\",\\\"N2\\\":\\\"Initiative Quillon's ledger code remains LDG-Q31.\\\",\\\"Q\\\":\\\"What is the current project phase of Initiative Quillon?\\\",\\\"U1\\\":\\\"Initiative Quillon is now in sourcing phase.\\\",\\\"U2\\\":\\\"Initiative Quillon has moved to drafting phase.\\\",\\\"U3\\\":\\\"Initiative Quillon's project phase is now prototyping phase.\\\",\\\"U4\\\":\\\"Initiative Quillon has changed to piloting phase.\\\",\\\"U5\\\":\\\"Initiative Quillon is now in tuning phase.\\\",\\\"U6\\\":\\\"Initiative Quillon's project phase has been updated to hardening phase.\\\",\\\"U7\\\":\\\"Initiative Quillon is now in wrap-up phase.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Initiative Quillon has a budget band of Band Silver.\\\",\\\"I2\\\":\\\"Initiative Quillon has a risk rating of low risk.\\\",\\\"I3\\\":\\\"The current project phase of Initiative Quillon is scoping phase.\\\",\\\"I4\\\":\\\"The current project phase of Initiative Bramwell is audit phase.\\\",\\\"I5\\\":\\\"The ledger code for Initiative Quillon is LDG-Q31.\\\",\\\"I6\\\":\\\"The sponsor of Initiative Quillon is Team Orchard.\\\",\\\"I7\\\":\\\"The next checkpoint for Initiative Quillon is Checkpoint Ridgeline.\\\",\\\"N1\\\":\\\"Initiative Quillon is still in scoping phase.\\\",\\\"N2\\\":\\\"The ledger code for Initiative Quillon is still LDG-Q31.\\\",\\\"Q\\\":\\\"What is the current project phase of Initiative Quillon?\\\",\\\"U1\\\":\\\"Initiative Quillon's next checkpoint is now Checkpoint Millrace.\\\",\\\"U2\\\":\\\"Initiative Bramwell's project phase has changed to budgeting phase.\\\",\\\"U3\\\":\\\"Initiative Quillon's next checkpoint has been updated to Checkpoint Tidewater.\\\",\\\"U4\\\":\\\"Initiative Quillon's budget band is now Band Copper.\\\",\\\"U5\\\":\\\"Initiative Quillon's risk rating has changed to moderate risk.\\\",\\\"U6\\\":\\\"Initiative Quillon's sponsor is now Team Beacon.\\\",\\\"U7\\\":\\\"Initiative Quillon's project phase has changed to wrap-up phase.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"The budget band for Initiative Quillon is Band Silver.\\\",\\\"I2\\\":\\\"The risk rating for Initiative Quillon is low risk.\\\",\\\"I3\\\":\\\"Initiative Quillon is currently in scoping phase.\\\",\\\"I4\\\":\\\"Initiative Bramwell is currently in audit phase.\\\",\\\"I5\\\":\\\"Initiative Quillon uses ledger code LDG-Q31.\\\",\\\"I6\\\":\\\"Initiative Quillon is sponsored by Team Orchard.\\\",\\\"I7\\\":\\\"Initiative Quillon's next checkpoint is Checkpoint Ridgeline.\\\",\\\"N1\\\":\\\"Initiative Quillon's project phase remains tuning phase.\\\",\\\"N2\\\":\\\"Initiative Quillon continues to have ledger code LDG-Q31.\\\",\\\"Q\\\":\\\"What is the current project phase of Initiative Quillon?\\\",\\\"U1\\\":\\\"Initiative Quillon's project phase has changed to sourcing phase.\\\",\\\"U2\\\":\\\"Initiative Quillon's risk rating is now moderate risk.\\\",\\\"U3\\\":\\\"Initiative Quillon has moved to prototyping phase.\\\",\\\"U4\\\":\\\"Initiative Bramwell is now in budgeting phase.\\\",\\\"U5\\\":\\\"Initiative Quillon's project phase has been updated to tuning phase.\\\",\\\"U6\\\":\\\"Initiative Quillon's budget band has changed to Band Copper.\\\",\\\"U7\\\":\\\"Initiative Quillon has now moved to wrap-up phase.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":2539,\"completion_tokens\":791,\"total_tokens\":3330,\"cost\":0.014256,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2536,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.014256,\"upstream_inference_prompt_cost\":0.006346,\"upstream_inference_completions_cost\":0.00791},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-sol\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-sol-20260709\",\"selected\":true}]},\"generation_time\":7484}}",
+      "response_sha256_before_redaction": "4a82f6f5e1855fd5e7fae7fe3689e5e363a3eaa34735d926840814a96b209b2e",
+      "response_envelope": {
+        "id": "gen-1789818690-hRekKnsWI4WihVS978mH",
+        "object": "chat.completion",
+        "created": 1789818690,
+        "model": "openai/gpt-5.6-sol",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Initiative Quillon's budget band is Band Silver.\",\"I2\":\"Initiative Quillon's risk rating is low risk.\",\"I3\":\"Initiative Quillon's current project phase is scoping phase.\",\"I4\":\"Initiative Bramwell's current project phase is audit phase.\",\"I5\":\"Initiative Quillon's ledger code is LDG-Q31.\",\"I6\":\"Initiative Quillon's sponsor is Team Orchard.\",\"I7\":\"Initiative Quillon's next checkpoint is Checkpoint Ridgeline.\",\"N1\":\"Initiative Quillon remains in hardening phase.\",\"N2\":\"Initiative Quillon's ledger code remains LDG-Q31.\",\"Q\":\"What is the current project phase of Initiative Quillon?\",\"U1\":\"Initiative Quillon is now in sourcing phase.\",\"U2\":\"Initiative Quillon has moved to drafting phase.\",\"U3\":\"Initiative Quillon's project phase is now prototyping phase.\",\"U4\":\"Initiative Quillon has changed to piloting phase.\",\"U5\":\"Initiative Quillon is now in tuning phase.\",\"U6\":\"Initiative Quillon's project phase has been updated to hardening phase.\",\"U7\":\"Initiative Quillon is now in wrap-up phase.\"},\"low\":{\"I1\":\"Initiative Quillon has a budget band of Band Silver.\",\"I2\":\"Initiative Quillon has a risk rating of low risk.\",\"I3\":\"The current project phase of Initiative Quillon is scoping phase.\",\"I4\":\"The current project phase of Initiative Bramwell is audit phase.\",\"I5\":\"The ledger code for Initiative Quillon is LDG-Q31.\",\"I6\":\"The sponsor of Initiative Quillon is Team Orchard.\",\"I7\":\"The next checkpoint for Initiative Quillon is Checkpoint Ridgeline.\",\"N1\":\"Initiative Quillon is still in scoping phase.\",\"N2\":\"The ledger code for Initiative Quillon is still LDG-Q31.\",\"Q\":\"What is the current project phase of Initiative Quillon?\",\"U1\":\"Initiative Quillon's next checkpoint is now Checkpoint Millrace.\",\"U2\":\"Initiative Bramwell's project phase has changed to budgeting phase.\",\"U3\":\"Initiative Quillon's next checkpoint has been updated to Checkpoint Tidewater.\",\"U4\":\"Initiative Quillon's budget band is now Band Copper.\",\"U5\":\"Initiative Quillon's risk rating has changed to moderate risk.\",\"U6\":\"Initiative Quillon's sponsor is now Team Beacon.\",\"U7\":\"Initiative Quillon's project phase has changed to wrap-up phase.\"},\"medium\":{\"I1\":\"The budget band for Initiative Quillon is Band Silver.\",\"I2\":\"The risk rating for Initiative Quillon is low risk.\",\"I3\":\"Initiative Quillon is currently in scoping phase.\",\"I4\":\"Initiative Bramwell is currently in audit phase.\",\"I5\":\"Initiative Quillon uses ledger code LDG-Q31.\",\"I6\":\"Initiative Quillon is sponsored by Team Orchard.\",\"I7\":\"Initiative Quillon's next checkpoint is Checkpoint Ridgeline.\",\"N1\":\"Initiative Quillon's project phase remains tuning phase.\",\"N2\":\"Initiative Quillon continues to have ledger code LDG-Q31.\",\"Q\":\"What is the current project phase of Initiative Quillon?\",\"U1\":\"Initiative Quillon's project phase has changed to sourcing phase.\",\"U2\":\"Initiative Quillon's risk rating is now moderate risk.\",\"U3\":\"Initiative Quillon has moved to prototyping phase.\",\"U4\":\"Initiative Bramwell is now in budgeting phase.\",\"U5\":\"Initiative Quillon's project phase has been updated to tuning phase.\",\"U6\":\"Initiative Quillon's budget band has changed to Band Copper.\",\"U7\":\"Initiative Quillon has now moved to wrap-up phase.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2539,
+          "completion_tokens": 791,
+          "total_tokens": 3330,
+          "cost": 0.014256,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2536,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.014256,
+            "upstream_inference_prompt_cost": 0.006346,
+            "upstream_inference_completions_cost": 0.00791
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-sol",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-sol-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 7484
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-sol",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-sol-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 7484
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Initiative Quillon's budget band is Band Silver.",
+          "I2": "Initiative Quillon's risk rating is low risk.",
+          "I3": "Initiative Quillon's current project phase is scoping phase.",
+          "I4": "Initiative Bramwell's current project phase is audit phase.",
+          "I5": "Initiative Quillon's ledger code is LDG-Q31.",
+          "I6": "Initiative Quillon's sponsor is Team Orchard.",
+          "I7": "Initiative Quillon's next checkpoint is Checkpoint Ridgeline.",
+          "N1": "Initiative Quillon remains in hardening phase.",
+          "N2": "Initiative Quillon's ledger code remains LDG-Q31.",
+          "Q": "What is the current project phase of Initiative Quillon?",
+          "U1": "Initiative Quillon is now in sourcing phase.",
+          "U2": "Initiative Quillon has moved to drafting phase.",
+          "U3": "Initiative Quillon's project phase is now prototyping phase.",
+          "U4": "Initiative Quillon has changed to piloting phase.",
+          "U5": "Initiative Quillon is now in tuning phase.",
+          "U6": "Initiative Quillon's project phase has been updated to hardening phase.",
+          "U7": "Initiative Quillon is now in wrap-up phase."
+        },
+        "low": {
+          "I1": "Initiative Quillon has a budget band of Band Silver.",
+          "I2": "Initiative Quillon has a risk rating of low risk.",
+          "I3": "The current project phase of Initiative Quillon is scoping phase.",
+          "I4": "The current project phase of Initiative Bramwell is audit phase.",
+          "I5": "The ledger code for Initiative Quillon is LDG-Q31.",
+          "I6": "The sponsor of Initiative Quillon is Team Orchard.",
+          "I7": "The next checkpoint for Initiative Quillon is Checkpoint Ridgeline.",
+          "N1": "Initiative Quillon is still in scoping phase.",
+          "N2": "The ledger code for Initiative Quillon is still LDG-Q31.",
+          "Q": "What is the current project phase of Initiative Quillon?",
+          "U1": "Initiative Quillon's next checkpoint is now Checkpoint Millrace.",
+          "U2": "Initiative Bramwell's project phase has changed to budgeting phase.",
+          "U3": "Initiative Quillon's next checkpoint has been updated to Checkpoint Tidewater.",
+          "U4": "Initiative Quillon's budget band is now Band Copper.",
+          "U5": "Initiative Quillon's risk rating has changed to moderate risk.",
+          "U6": "Initiative Quillon's sponsor is now Team Beacon.",
+          "U7": "Initiative Quillon's project phase has changed to wrap-up phase."
+        },
+        "medium": {
+          "I1": "The budget band for Initiative Quillon is Band Silver.",
+          "I2": "The risk rating for Initiative Quillon is low risk.",
+          "I3": "Initiative Quillon is currently in scoping phase.",
+          "I4": "Initiative Bramwell is currently in audit phase.",
+          "I5": "Initiative Quillon uses ledger code LDG-Q31.",
+          "I6": "Initiative Quillon is sponsored by Team Orchard.",
+          "I7": "Initiative Quillon's next checkpoint is Checkpoint Ridgeline.",
+          "N1": "Initiative Quillon's project phase remains tuning phase.",
+          "N2": "Initiative Quillon continues to have ledger code LDG-Q31.",
+          "Q": "What is the current project phase of Initiative Quillon?",
+          "U1": "Initiative Quillon's project phase has changed to sourcing phase.",
+          "U2": "Initiative Quillon's risk rating is now moderate risk.",
+          "U3": "Initiative Quillon has moved to prototyping phase.",
+          "U4": "Initiative Bramwell is now in budgeting phase.",
+          "U5": "Initiative Quillon's project phase has been updated to tuning phase.",
+          "U6": "Initiative Quillon's budget band has changed to Band Copper.",
+          "U7": "Initiative Quillon has now moved to wrap-up phase."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2539,
+        "completion_tokens": 791,
+        "total_tokens": 3330,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.014256
+      },
+      "latency_seconds": 7.568483707000269,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "b0cal-project-planning-01",
+  "projection_sha256": "9c464dbfa24aa344a397c1bbfebbfcd17e3281220c0d6586e075305c0c4c9365",
+  "logical_call_index": 3,
+  "attempt": "attempt-02",
+  "output_sha256": "dfe7fe595ba3fc61379b62c94abc585e501c45d2abdcad142544a066ea66b6e5"
+}

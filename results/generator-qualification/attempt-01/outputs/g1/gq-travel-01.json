@@ -1,0 +1,376 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"destination\\\",\\\"meaning\\\":\\\"designated voyage destination\\\",\\\"units_or_interpretation\\\":\\\"fictional location name\\\"},{\\\"attribute_id\\\":\\\"booking_code\\\",\\\"meaning\\\":\\\"voyage booking identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"departure\\\",\\\"meaning\\\":\\\"departure calendar label\\\",\\\"units_or_interpretation\\\":\\\"synthetic calendar label\\\"},{\\\"attribute_id\\\":\\\"cabin\\\",\\\"meaning\\\":\\\"assigned cabin\\\",\\\"units_or_interpretation\\\":\\\"cabin label\\\"},{\\\"attribute_id\\\":\\\"bag_count\\\",\\\"meaning\\\":\\\"reserved baggage count\\\",\\\"units_or_interpretation\\\":\\\"bags\\\"},{\\\"attribute_id\\\":\\\"boarding_gate\\\",\\\"meaning\\\":\\\"boarding gate\\\",\\\"units_or_interpretation\\\":\\\"gate label\\\"}],\\\"domain\\\":\\\"Travel\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gq-travel-01-primary\\\",\\\"name\\\":\\\"Voyage Pavo\\\"},{\\\"entity_id\\\":\\\"gq-travel-01-distractor\\\",\\\"name\\\":\\\"Voyage Grus\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_hard\\\",\\\"I2\\\":\\\"k_n2\\\",\\\"I3\\\":\\\"k_a\\\",\\\"I4\\\":\\\"k_b\\\",\\\"I5\\\":\\\"k_c\\\",\\\"I6\\\":\\\"k_d\\\",\\\"I7\\\":\\\"k_target\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"destination\\\",\\\"entity_id\\\":\\\"gq-travel-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current designated voyage destination of Voyage Pavo.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"destination\\\",\\\"entity_id\\\":\\\"gq-travel-01-primary\\\",\\\"initial_value\\\":\\\"Islet Azuri\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"destination\\\",\\\"entity_id\\\":\\\"gq-travel-01-distractor\\\",\\\"initial_value\\\":\\\"Islet Irovi\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"booking_code\\\",\\\"entity_id\\\":\\\"gq-travel-01-primary\\\",\\\"initial_value\\\":\\\"VYG-P4\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"departure\\\",\\\"entity_id\\\":\\\"gq-travel-01-primary\\\",\\\"initial_value\\\":\\\"Cycle Tavi\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"cabin\\\",\\\"entity_id\\\":\\\"gq-travel-01-primary\\\",\\\"initial_value\\\":\\\"Cabin E1\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"bag_count\\\",\\\"entity_id\\\":\\\"gq-travel-01-primary\\\",\\\"initial_value\\\":\\\"2 bags\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"boarding_gate\\\",\\\"entity_id\\\":\\\"gq-travel-01-primary\\\",\\\"initial_value\\\":\\\"Gate J1\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"Islet Irovi\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"VYG-P4\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Cycle Tavi\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cabin E1\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"2 bags\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Gate J1\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Islet Azuri\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Belori\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Cedari\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Doruni\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Esari\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Feluni\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Garuni\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Garuni\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Hesari\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"VYG-P4\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"Islet Irovi\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"VYG-P4\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Cycle Tavi\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cabin E1\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"2 bags\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Gate J1\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Islet Azuri\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Cabin E2\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"3 bags\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Gate J2\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Cycle Ulen\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cabin E3\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Islet Jeruni\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Islet Azuri\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Hesari\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"VYG-P4\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"Islet Irovi\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"VYG-P4\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Cycle Tavi\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cabin E1\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"2 bags\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Gate J1\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Islet Azuri\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Belori\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"3 bags\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Islet Doruni\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Gate J2\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Islet Feluni\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Jeruni\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Islet Feluni\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Islet Hesari\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"VYG-P4\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-sol\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "c42f97721503da64b0ba2103cca6e2172bfe7b30ba16131887c5ac390a836d15",
+  "request_body": {
+    "model": "openai/gpt-5.6-sol",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"destination\",\"meaning\":\"designated voyage destination\",\"units_or_interpretation\":\"fictional location name\"},{\"attribute_id\":\"booking_code\",\"meaning\":\"voyage booking identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"departure\",\"meaning\":\"departure calendar label\",\"units_or_interpretation\":\"synthetic calendar label\"},{\"attribute_id\":\"cabin\",\"meaning\":\"assigned cabin\",\"units_or_interpretation\":\"cabin label\"},{\"attribute_id\":\"bag_count\",\"meaning\":\"reserved baggage count\",\"units_or_interpretation\":\"bags\"},{\"attribute_id\":\"boarding_gate\",\"meaning\":\"boarding gate\",\"units_or_interpretation\":\"gate label\"}],\"domain\":\"Travel\",\"entities\":[{\"entity_id\":\"gq-travel-01-primary\",\"name\":\"Voyage Pavo\"},{\"entity_id\":\"gq-travel-01-distractor\",\"name\":\"Voyage Grus\"}],\"initial_order\":{\"I1\":\"k_hard\",\"I2\":\"k_n2\",\"I3\":\"k_a\",\"I4\":\"k_b\",\"I5\":\"k_c\",\"I6\":\"k_d\",\"I7\":\"k_target\"},\"question_intent\":{\"attribute_id\":\"destination\",\"entity_id\":\"gq-travel-01-primary\",\"intent\":\"Ask only for the current designated voyage destination of Voyage Pavo.\"},\"state_keys\":[{\"attribute_id\":\"destination\",\"entity_id\":\"gq-travel-01-primary\",\"initial_value\":\"Islet Azuri\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"destination\",\"entity_id\":\"gq-travel-01-distractor\",\"initial_value\":\"Islet Irovi\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"booking_code\",\"entity_id\":\"gq-travel-01-primary\",\"initial_value\":\"VYG-P4\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"departure\",\"entity_id\":\"gq-travel-01-primary\",\"initial_value\":\"Cycle Tavi\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"cabin\",\"entity_id\":\"gq-travel-01-primary\",\"initial_value\":\"Cabin E1\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"bag_count\",\"entity_id\":\"gq-travel-01-primary\",\"initial_value\":\"2 bags\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"boarding_gate\",\"entity_id\":\"gq-travel-01-primary\",\"initial_value\":\"Gate J1\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"Islet Irovi\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"VYG-P4\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Cycle Tavi\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Cabin E1\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"2 bags\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Gate J1\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Islet Azuri\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Belori\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Cedari\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Doruni\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Esari\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Feluni\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Garuni\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Garuni\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Hesari\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"VYG-P4\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"Islet Irovi\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"VYG-P4\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Cycle Tavi\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Cabin E1\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"2 bags\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Gate J1\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Islet Azuri\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Cabin E2\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"3 bags\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Gate J2\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Cycle Ulen\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Cabin E3\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"Islet Jeruni\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Islet Azuri\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Hesari\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"VYG-P4\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"Islet Irovi\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"VYG-P4\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Cycle Tavi\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Cabin E1\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"2 bags\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Gate J1\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Islet Azuri\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Belori\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"3 bags\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Islet Doruni\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Gate J2\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Islet Feluni\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Jeruni\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Islet Feluni\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Islet Hesari\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"VYG-P4\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-18T12:05:13.134357+00:00",
+      "requested_model": "openai/gpt-5.6-sol",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-sol",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789733113-Ch4MUNTYh5JfcZo3GABA",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789733113-Ch4MUNTYh5JfcZo3GABA\",\"object\":\"chat.completion\",\"created\":1789733113,\"model\":\"openai/gpt-5.6-sol\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"The designated voyage destination of Voyage Grus is Islet Irovi.\\\",\\\"I2\\\":\\\"The booking code for Voyage Pavo is VYG-P4.\\\",\\\"I3\\\":\\\"Voyage Pavo departs on Cycle Tavi.\\\",\\\"I4\\\":\\\"Voyage Pavo is assigned to Cabin E1.\\\",\\\"I5\\\":\\\"Voyage Pavo has 2 bags reserved.\\\",\\\"I6\\\":\\\"The boarding gate for Voyage Pavo is Gate J1.\\\",\\\"I7\\\":\\\"The designated voyage destination of Voyage Pavo is Islet Azuri.\\\",\\\"N1\\\":\\\"The current designated voyage destination of Voyage Pavo remains Islet Garuni.\\\",\\\"N2\\\":\\\"The booking code for Voyage Pavo remains VYG-P4.\\\",\\\"Q\\\":\\\"What is the current designated voyage destination of Voyage Pavo?\\\",\\\"U1\\\":\\\"The designated voyage destination of Voyage Pavo has changed to Islet Belori.\\\",\\\"U2\\\":\\\"The designated voyage destination of Voyage Pavo is now Islet Cedari.\\\",\\\"U3\\\":\\\"The designated voyage destination of Voyage Pavo has been updated to Islet Doruni.\\\",\\\"U4\\\":\\\"Voyage Pavo's designated voyage destination is now Islet Esari.\\\",\\\"U5\\\":\\\"The designated voyage destination of Voyage Pavo has changed to Islet Feluni.\\\",\\\"U6\\\":\\\"Voyage Pavo's designated voyage destination has been updated to Islet Garuni.\\\",\\\"U7\\\":\\\"The designated voyage destination of Voyage Pavo is now Islet Hesari.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Voyage Grus has Islet Irovi as its designated voyage destination.\\\",\\\"I2\\\":\\\"Voyage Pavo's booking code is VYG-P4.\\\",\\\"I3\\\":\\\"The departure for Voyage Pavo is Cycle Tavi.\\\",\\\"I4\\\":\\\"The assigned cabin for Voyage Pavo is Cabin E1.\\\",\\\"I5\\\":\\\"The reserved baggage count for Voyage Pavo is 2 bags.\\\",\\\"I6\\\":\\\"Voyage Pavo boards at Gate J1.\\\",\\\"I7\\\":\\\"Voyage Pavo has Islet Azuri as its designated voyage destination.\\\",\\\"N1\\\":\\\"Voyage Pavo's designated voyage destination remains Islet Azuri.\\\",\\\"N2\\\":\\\"Voyage Pavo's booking code remains VYG-P4.\\\",\\\"Q\\\":\\\"What is the current designated voyage destination of Voyage Pavo?\\\",\\\"U1\\\":\\\"Voyage Pavo's assigned cabin has changed to Cabin E2.\\\",\\\"U2\\\":\\\"The reserved baggage count for Voyage Pavo is now 3 bags.\\\",\\\"U3\\\":\\\"Voyage Pavo's boarding gate has been updated to Gate J2.\\\",\\\"U4\\\":\\\"The departure for Voyage Pavo is now Cycle Ulen.\\\",\\\"U5\\\":\\\"Voyage Pavo's assigned cabin has changed to Cabin E3.\\\",\\\"U6\\\":\\\"The designated voyage destination of Voyage Grus is now Islet Jeruni.\\\",\\\"U7\\\":\\\"Voyage Pavo's designated voyage destination has changed to Islet Hesari.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"The designated voyage destination for Voyage Grus is Islet Irovi.\\\",\\\"I2\\\":\\\"The voyage booking identifier for Voyage Pavo is VYG-P4.\\\",\\\"I3\\\":\\\"Voyage Pavo's departure is Cycle Tavi.\\\",\\\"I4\\\":\\\"Voyage Pavo's assigned cabin is Cabin E1.\\\",\\\"I5\\\":\\\"Voyage Pavo's reserved baggage count is 2 bags.\\\",\\\"I6\\\":\\\"Voyage Pavo's boarding gate is Gate J1.\\\",\\\"I7\\\":\\\"The designated voyage destination for Voyage Pavo is Islet Azuri.\\\",\\\"N1\\\":\\\"The designated voyage destination for Voyage Pavo remains Islet Feluni.\\\",\\\"N2\\\":\\\"The voyage booking identifier for Voyage Pavo remains VYG-P4.\\\",\\\"Q\\\":\\\"What is the current designated voyage destination of Voyage Pavo?\\\",\\\"U1\\\":\\\"The designated voyage destination for Voyage Pavo is now Islet Belori.\\\",\\\"U2\\\":\\\"Voyage Pavo's reserved baggage count has changed to 3 bags.\\\",\\\"U3\\\":\\\"Voyage Pavo's designated voyage destination has been updated to Islet Doruni.\\\",\\\"U4\\\":\\\"The boarding gate for Voyage Pavo is now Gate J2.\\\",\\\"U5\\\":\\\"The designated voyage destination for Voyage Pavo has changed to Islet Feluni.\\\",\\\"U6\\\":\\\"Voyage Grus now has Islet Jeruni as its designated voyage destination.\\\",\\\"U7\\\":\\\"Voyage Pavo's designated voyage destination is now Islet Hesari.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":2562,\"completion_tokens\":882,\"total_tokens\":3444,\"cost\":0.0152235,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2559,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0152235,\"upstream_inference_prompt_cost\":0.0064035,\"upstream_inference_completions_cost\":0.00882},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-sol\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-sol-20260709\",\"selected\":true}]},\"generation_time\":16305}}",
+      "response_sha256_before_redaction": "8acff8398cfd940dbf557032aa02302f62659edec6dff45f0a6bd56ed6535ee1",
+      "response_envelope": {
+        "id": "gen-1789733113-Ch4MUNTYh5JfcZo3GABA",
+        "object": "chat.completion",
+        "created": 1789733113,
+        "model": "openai/gpt-5.6-sol",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"The designated voyage destination of Voyage Grus is Islet Irovi.\",\"I2\":\"The booking code for Voyage Pavo is VYG-P4.\",\"I3\":\"Voyage Pavo departs on Cycle Tavi.\",\"I4\":\"Voyage Pavo is assigned to Cabin E1.\",\"I5\":\"Voyage Pavo has 2 bags reserved.\",\"I6\":\"The boarding gate for Voyage Pavo is Gate J1.\",\"I7\":\"The designated voyage destination of Voyage Pavo is Islet Azuri.\",\"N1\":\"The current designated voyage destination of Voyage Pavo remains Islet Garuni.\",\"N2\":\"The booking code for Voyage Pavo remains VYG-P4.\",\"Q\":\"What is the current designated voyage destination of Voyage Pavo?\",\"U1\":\"The designated voyage destination of Voyage Pavo has changed to Islet Belori.\",\"U2\":\"The designated voyage destination of Voyage Pavo is now Islet Cedari.\",\"U3\":\"The designated voyage destination of Voyage Pavo has been updated to Islet Doruni.\",\"U4\":\"Voyage Pavo's designated voyage destination is now Islet Esari.\",\"U5\":\"The designated voyage destination of Voyage Pavo has changed to Islet Feluni.\",\"U6\":\"Voyage Pavo's designated voyage destination has been updated to Islet Garuni.\",\"U7\":\"The designated voyage destination of Voyage Pavo is now Islet Hesari.\"},\"low\":{\"I1\":\"Voyage Grus has Islet Irovi as its designated voyage destination.\",\"I2\":\"Voyage Pavo's booking code is VYG-P4.\",\"I3\":\"The departure for Voyage Pavo is Cycle Tavi.\",\"I4\":\"The assigned cabin for Voyage Pavo is Cabin E1.\",\"I5\":\"The reserved baggage count for Voyage Pavo is 2 bags.\",\"I6\":\"Voyage Pavo boards at Gate J1.\",\"I7\":\"Voyage Pavo has Islet Azuri as its designated voyage destination.\",\"N1\":\"Voyage Pavo's designated voyage destination remains Islet Azuri.\",\"N2\":\"Voyage Pavo's booking code remains VYG-P4.\",\"Q\":\"What is the current designated voyage destination of Voyage Pavo?\",\"U1\":\"Voyage Pavo's assigned cabin has changed to Cabin E2.\",\"U2\":\"The reserved baggage count for Voyage Pavo is now 3 bags.\",\"U3\":\"Voyage Pavo's boarding gate has been updated to Gate J2.\",\"U4\":\"The departure for Voyage Pavo is now Cycle Ulen.\",\"U5\":\"Voyage Pavo's assigned cabin has changed to Cabin E3.\",\"U6\":\"The designated voyage destination of Voyage Grus is now Islet Jeruni.\",\"U7\":\"Voyage Pavo's designated voyage destination has changed to Islet Hesari.\"},\"medium\":{\"I1\":\"The designated voyage destination for Voyage Grus is Islet Irovi.\",\"I2\":\"The voyage booking identifier for Voyage Pavo is VYG-P4.\",\"I3\":\"Voyage Pavo's departure is Cycle Tavi.\",\"I4\":\"Voyage Pavo's assigned cabin is Cabin E1.\",\"I5\":\"Voyage Pavo's reserved baggage count is 2 bags.\",\"I6\":\"Voyage Pavo's boarding gate is Gate J1.\",\"I7\":\"The designated voyage destination for Voyage Pavo is Islet Azuri.\",\"N1\":\"The designated voyage destination for Voyage Pavo remains Islet Feluni.\",\"N2\":\"The voyage booking identifier for Voyage Pavo remains VYG-P4.\",\"Q\":\"What is the current designated voyage destination of Voyage Pavo?\",\"U1\":\"The designated voyage destination for Voyage Pavo is now Islet Belori.\",\"U2\":\"Voyage Pavo's reserved baggage count has changed to 3 bags.\",\"U3\":\"Voyage Pavo's designated voyage destination has been updated to Islet Doruni.\",\"U4\":\"The boarding gate for Voyage Pavo is now Gate J2.\",\"U5\":\"The designated voyage destination for Voyage Pavo has changed to Islet Feluni.\",\"U6\":\"Voyage Grus now has Islet Jeruni as its designated voyage destination.\",\"U7\":\"Voyage Pavo's designated voyage destination is now Islet Hesari.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2562,
+          "completion_tokens": 882,
+          "total_tokens": 3444,
+          "cost": 0.0152235,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2559,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0152235,
+            "upstream_inference_prompt_cost": 0.0064035,
+            "upstream_inference_completions_cost": 0.00882
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-sol",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-sol-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 16305
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-sol",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-sol-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 16305
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "The designated voyage destination of Voyage Grus is Islet Irovi.",
+          "I2": "The booking code for Voyage Pavo is VYG-P4.",
+          "I3": "Voyage Pavo departs on Cycle Tavi.",
+          "I4": "Voyage Pavo is assigned to Cabin E1.",
+          "I5": "Voyage Pavo has 2 bags reserved.",
+          "I6": "The boarding gate for Voyage Pavo is Gate J1.",
+          "I7": "The designated voyage destination of Voyage Pavo is Islet Azuri.",
+          "N1": "The current designated voyage destination of Voyage Pavo remains Islet Garuni.",
+          "N2": "The booking code for Voyage Pavo remains VYG-P4.",
+          "Q": "What is the current designated voyage destination of Voyage Pavo?",
+          "U1": "The designated voyage destination of Voyage Pavo has changed to Islet Belori.",
+          "U2": "The designated voyage destination of Voyage Pavo is now Islet Cedari.",
+          "U3": "The designated voyage destination of Voyage Pavo has been updated to Islet Doruni.",
+          "U4": "Voyage Pavo's designated voyage destination is now Islet Esari.",
+          "U5": "The designated voyage destination of Voyage Pavo has changed to Islet Feluni.",
+          "U6": "Voyage Pavo's designated voyage destination has been updated to Islet Garuni.",
+          "U7": "The designated voyage destination of Voyage Pavo is now Islet Hesari."
+        },
+        "low": {
+          "I1": "Voyage Grus has Islet Irovi as its designated voyage destination.",
+          "I2": "Voyage Pavo's booking code is VYG-P4.",
+          "I3": "The departure for Voyage Pavo is Cycle Tavi.",
+          "I4": "The assigned cabin for Voyage Pavo is Cabin E1.",
+          "I5": "The reserved baggage count for Voyage Pavo is 2 bags.",
+          "I6": "Voyage Pavo boards at Gate J1.",
+          "I7": "Voyage Pavo has Islet Azuri as its designated voyage destination.",
+          "N1": "Voyage Pavo's designated voyage destination remains Islet Azuri.",
+          "N2": "Voyage Pavo's booking code remains VYG-P4.",
+          "Q": "What is the current designated voyage destination of Voyage Pavo?",
+          "U1": "Voyage Pavo's assigned cabin has changed to Cabin E2.",
+          "U2": "The reserved baggage count for Voyage Pavo is now 3 bags.",
+          "U3": "Voyage Pavo's boarding gate has been updated to Gate J2.",
+          "U4": "The departure for Voyage Pavo is now Cycle Ulen.",
+          "U5": "Voyage Pavo's assigned cabin has changed to Cabin E3.",
+          "U6": "The designated voyage destination of Voyage Grus is now Islet Jeruni.",
+          "U7": "Voyage Pavo's designated voyage destination has changed to Islet Hesari."
+        },
+        "medium": {
+          "I1": "The designated voyage destination for Voyage Grus is Islet Irovi.",
+          "I2": "The voyage booking identifier for Voyage Pavo is VYG-P4.",
+          "I3": "Voyage Pavo's departure is Cycle Tavi.",
+          "I4": "Voyage Pavo's assigned cabin is Cabin E1.",
+          "I5": "Voyage Pavo's reserved baggage count is 2 bags.",
+          "I6": "Voyage Pavo's boarding gate is Gate J1.",
+          "I7": "The designated voyage destination for Voyage Pavo is Islet Azuri.",
+          "N1": "The designated voyage destination for Voyage Pavo remains Islet Feluni.",
+          "N2": "The voyage booking identifier for Voyage Pavo remains VYG-P4.",
+          "Q": "What is the current designated voyage destination of Voyage Pavo?",
+          "U1": "The designated voyage destination for Voyage Pavo is now Islet Belori.",
+          "U2": "Voyage Pavo's reserved baggage count has changed to 3 bags.",
+          "U3": "Voyage Pavo's designated voyage destination has been updated to Islet Doruni.",
+          "U4": "The boarding gate for Voyage Pavo is now Gate J2.",
+          "U5": "The designated voyage destination for Voyage Pavo has changed to Islet Feluni.",
+          "U6": "Voyage Grus now has Islet Jeruni as its designated voyage destination.",
+          "U7": "Voyage Pavo's designated voyage destination is now Islet Hesari."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2562,
+        "completion_tokens": 882,
+        "total_tokens": 3444,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.0152235
+      },
+      "latency_seconds": 16.465760753999348,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "gq-travel-01",
+  "fixture_sha256": "b8f0fa2c5fed843bb50fbb47b61a33c85d6c6fd53f0acb07e618e49df2e5262d",
+  "projection_sha256": "5a3c1b89b863eef3f5bad1a07e49eb06b8088b1e5c9cf7a6c5a55533ced54493",
+  "logical_call_index": 2,
+  "provenance": {
+    "source_commit": "0f4873615101dde22bced8f857523f475cee2604",
+    "fixture_set_commit": "683c0416c5bf47c83021408f26bc7a7ab5e8becc",
+    "fixture_manifest_sha256": "ecce7e579f02f64bb5578d8b18b9164483da1c5438544f21a89e17d7a2aaa1f9",
+    "execution_config_sha256": "848ca0219ff1d24adcf2f12d0789ebeb8e7a86427336672173b91e034dca6b62",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "procedure_version": "generator-qualification-procedure/1.0.0",
+    "implementation": {
+      "status": "FROZEN FOR LIVE EXECUTION",
+      "freeze_commit": "e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e",
+      "source_sha256": {
+        "experiments/qualify_generators.py": "5884cdaf9b2781d69acc733e7d8556766669f002bd175d78dcf935c1059e043e",
+        "experiments/probe_generators.py": "f1604e415ff1a359454161b8c94c6504706335419770989358557ff2314cecdf",
+        "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+      }
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "automated": {
+    "status": "PASS",
+    "meaning": "No deterministic violation detected is not semantic qualification.",
+    "findings": []
+  },
+  "output_sha256": "2ed2dafe1f687dbdfa1858812d5b75999d86bfaf84fe8a177e8d2773286b5f02"
+}

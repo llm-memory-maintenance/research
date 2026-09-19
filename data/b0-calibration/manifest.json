@@ -1,0 +1,1116 @@
+{
+  "schema_version": "b0-calibration-manifest/1.0.0",
+  "status": "FROZEN",
+  "total_scenarios": 12,
+  "purpose": "B0-CALIBRATION-ONLY",
+  "versions": {
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0"
+  },
+  "construction_source_commit": "ef9b0323427cff8af164cca8104591b1420169f7",
+  "reference_schema_sha256": "df74043ee95fcd5954f92ee46493a4f738fdadab471d7f8198e2eb5945c1f553",
+  "allocation_rule": "Qualification allocation rule evaluated at domain index i + 3, for the secondary-update allocation and for the rotation of the initial-event key order. Calibration-only; not a final CRST allocation decision.",
+  "same_set_for": [
+    "G1",
+    "G2"
+  ],
+  "prohibited_uses": [
+    "final confirmatory CRST cases",
+    "Generator Qualification fixtures",
+    "Model Qualification fixtures",
+    "LongMemEval-S material",
+    "capability probe material"
+  ],
+  "not_final_crst_data": true,
+  "not_generator_qualification_data": true,
+  "origin": "Independently authored synthetic structured truth; no external corpus content, qualification fixture content or model naturalization.",
+  "reserved_exclusions": {
+    "scenario_ids": [
+      "b0cal-communication-01",
+      "b0cal-location-logistics-01",
+      "b0cal-personal-preference-01",
+      "b0cal-project-planning-01",
+      "b0cal-purchase-order-01",
+      "b0cal-quantitative-planning-01",
+      "b0cal-scheduling-01",
+      "b0cal-service-subscription-01",
+      "b0cal-software-configuration-01",
+      "b0cal-study-planning-01",
+      "b0cal-task-assignment-01",
+      "b0cal-travel-01"
+    ],
+    "entity_ids": [
+      "b0cal-communication-01-distractor",
+      "b0cal-communication-01-primary",
+      "b0cal-location-logistics-01-distractor",
+      "b0cal-location-logistics-01-primary",
+      "b0cal-personal-preference-01-distractor",
+      "b0cal-personal-preference-01-primary",
+      "b0cal-project-planning-01-distractor",
+      "b0cal-project-planning-01-primary",
+      "b0cal-purchase-order-01-distractor",
+      "b0cal-purchase-order-01-primary",
+      "b0cal-quantitative-planning-01-distractor",
+      "b0cal-quantitative-planning-01-primary",
+      "b0cal-scheduling-01-distractor",
+      "b0cal-scheduling-01-primary",
+      "b0cal-service-subscription-01-distractor",
+      "b0cal-service-subscription-01-primary",
+      "b0cal-software-configuration-01-distractor",
+      "b0cal-software-configuration-01-primary",
+      "b0cal-study-planning-01-distractor",
+      "b0cal-study-planning-01-primary",
+      "b0cal-task-assignment-01-distractor",
+      "b0cal-task-assignment-01-primary",
+      "b0cal-travel-01-distractor",
+      "b0cal-travel-01-primary"
+    ],
+    "entity_names": [
+      "Batch Cobalt",
+      "Batch Pinnacle",
+      "Cedar workshop",
+      "Coach tour Foxglove",
+      "Coach tour Larkspur",
+      "Deploy target Sable",
+      "Deploy target Umber",
+      "Freight lot Halyard",
+      "Freight lot Keelson",
+      "Guest Odessa Kray",
+      "Guest Perrin Tallis",
+      "Initiative Bramwell",
+      "Initiative Quillon",
+      "Mailing list Ember",
+      "Mailing list Garnet",
+      "Membership Lodestar",
+      "Membership Zephyrine",
+      "Purchase Alcove",
+      "Purchase Bastion",
+      "Reading circle Bracken",
+      "Reading circle Thistle",
+      "Ticket Marrow",
+      "Ticket Tallow",
+      "Willow workshop"
+    ],
+    "attribute_ids": [
+      "aisle",
+      "approver",
+      "attachment",
+      "batch_code",
+      "batch_yield",
+      "billing_period",
+      "break_length",
+      "brew_time",
+      "budget_band",
+      "cache_policy",
+      "capacity",
+      "carrier",
+      "chapter_range",
+      "checkpoint",
+      "circle_code",
+      "circle_host",
+      "crate_type",
+      "cup_style",
+      "deploy_code",
+      "device_limit",
+      "due_stamp",
+      "fill_rate",
+      "finish",
+      "focus_text",
+      "footer",
+      "forklift",
+      "guest_code",
+      "guide_style",
+      "hall_code",
+      "inspector",
+      "invoice_terms",
+      "kickoff_time",
+      "lead",
+      "ledger_code",
+      "list_code",
+      "loading_dock",
+      "log_sink",
+      "lot_code",
+      "luggage_limit",
+      "material_set",
+      "membership_code",
+      "membership_tier",
+      "note_format",
+      "overnight_stop",
+      "pallet_count",
+      "payment_method",
+      "phase_label",
+      "pickup_stop",
+      "po_code",
+      "pool_size",
+      "region_tag",
+      "reply_alias",
+      "request_timeout",
+      "risk_rating",
+      "sample_size",
+      "seat_row",
+      "send_window",
+      "sender_name",
+      "serving_temp",
+      "session_slot",
+      "shift_length",
+      "sponsor",
+      "storage_quota",
+      "sweetener",
+      "tea_blend",
+      "ticket_code",
+      "ticket_owner",
+      "ticket_ref",
+      "tile_quantity",
+      "tone",
+      "urgency",
+      "vat_count"
+    ],
+    "state_values": [
+      "07:20",
+      "07:55",
+      "08:25",
+      "09:15",
+      "09:50",
+      "1 month",
+      "10 hours",
+      "10 minutes",
+      "1000 gigabytes",
+      "107 tiles",
+      "10:25",
+      "11 samples",
+      "11:05",
+      "11:40",
+      "12 liters per minute",
+      "12 months",
+      "12 seconds",
+      "128 tiles",
+      "136 tiles",
+      "14 pallets",
+      "14 participants",
+      "14:10",
+      "14:45",
+      "15 kilograms",
+      "15 minutes",
+      "150 tiles",
+      "15:20",
+      "18 liters per minute",
+      "18 participants",
+      "2 devices",
+      "20 kilograms",
+      "20 minutes",
+      "200 gigabytes",
+      "21 pallets",
+      "22 participants",
+      "24 liters per minute",
+      "25 kilograms",
+      "3 minutes",
+      "3 months",
+      "3 workers",
+      "30 seconds",
+      "340 liters",
+      "36 tiles",
+      "365 liters",
+      "390 liters",
+      "4 devices",
+      "4 minutes",
+      "4 vats",
+      "415 liters",
+      "44 tiles",
+      "445 liters",
+      "45 seconds",
+      "470 liters",
+      "5 samples",
+      "5 workers",
+      "50 gigabytes",
+      "505 liters",
+      "52 tiles",
+      "530 liters",
+      "6 devices",
+      "6 hours",
+      "6 minutes",
+      "6 vats",
+      "60 degrees",
+      "61 tiles",
+      "610 liters",
+      "640 liters",
+      "675 liters",
+      "7 samples",
+      "70 degrees",
+      "73 tiles",
+      "8 hours",
+      "8 pallets",
+      "80 degrees",
+      "88 tiles",
+      "9 vats",
+      "9 workers",
+      "94 tiles",
+      "A Grammar of Tides",
+      "Aisle 3B",
+      "Aisle 5D",
+      "Aisle 7F",
+      "Atlas of Small Rivers",
+      "BCH-P73",
+      "Band Copper",
+      "Band Silver",
+      "Band Zinc",
+      "Bram Tolliver",
+      "Brenmar",
+      "Carrier Northgate",
+      "Carrier Redoak",
+      "Carrier Silverline",
+      "Checkpoint Millrace",
+      "Checkpoint Ridgeline",
+      "Checkpoint Tidewater",
+      "Coldwick",
+      "Corin Ashby",
+      "Cyrus Delaine",
+      "DEP-S72",
+      "Day Harrow",
+      "Day Ilbeck",
+      "Day Jessup",
+      "Dock Aldermere",
+      "Dock Brackwater",
+      "Dock Cindermoor",
+      "Dock Duskfield",
+      "Dock Emberwick",
+      "Dock Frostlea",
+      "Dock Gladehurst",
+      "Dock Hartsgill",
+      "Dock Ironvale",
+      "Dock Juniperton",
+      "Dock Kingsmarch",
+      "Dunhollow",
+      "Emeric Sayle",
+      "Eskerby",
+      "FRL-H29",
+      "Fennimore",
+      "Field Guide to Echoes",
+      "Friday 12:00",
+      "GST-P16",
+      "Garrowick",
+      "HAL-C52",
+      "Halden Voss",
+      "Hesper Haskett",
+      "Hollinmere",
+      "Ilse Quorn",
+      "Ines Calder",
+      "Inspector Dunmore Kade",
+      "Inspector Tarn Osei",
+      "Inspector Yarrow Finch",
+      "Ivelstone",
+      "Jaspermoor",
+      "Jovan Pellam",
+      "Kettlewynd",
+      "LDG-Q31",
+      "Ledger of Moths",
+      "Lennox Farrow",
+      "Lift F11",
+      "Lift F12",
+      "Lift F13",
+      "Lorimere",
+      "MEM-L64",
+      "MLS-E92",
+      "Marek Ollin",
+      "Marginalia of Rain",
+      "Marisol Teague",
+      "Monday 07:00",
+      "Monday 16:40",
+      "Notes on Lanterns",
+      "Odalys Prewitt",
+      "Ottoline Grey",
+      "PUR-A47",
+      "Petra Vance",
+      "RDC-T85",
+      "Rilan Moss",
+      "Row 12",
+      "Row 4",
+      "Row 9",
+      "Sabine Orrin",
+      "Saturday 13:30",
+      "Saturday 20:10",
+      "Sender Delphine Ward",
+      "Sender Osric Lane",
+      "Sender Ruskin Hall",
+      "Slot Dawn",
+      "Slot Dusk",
+      "Slot Noon",
+      "Stop Anvil Lane",
+      "Stop Bell Court",
+      "Stop Cobb Way",
+      "Sunday 15:15",
+      "TIC-M83",
+      "TKT-L58",
+      "Talin Rusk",
+      "Tamsin Verda",
+      "Team Beacon",
+      "Team Ferrous",
+      "Team Orchard",
+      "The Copper Almanac",
+      "The Glass Cartographer",
+      "The Quiet Foundry",
+      "The Salt Orchard",
+      "Thursday 10:45",
+      "Thursday 19:05",
+      "Tier Basalt",
+      "Tier Chalk",
+      "Tier Flint",
+      "Tier Granite",
+      "Tier Jasper",
+      "Tier Marble",
+      "Tier Obsidian",
+      "Tier Onyx",
+      "Tier Pumice",
+      "Tier Quartzite",
+      "Tier Slate",
+      "Tuesday 08:30",
+      "Tuesday 18:20",
+      "Verity Holm",
+      "Wednesday 09:15",
+      "Winter Inventory",
+      "alias front-line",
+      "alias help-desk",
+      "alias night-shift",
+      "audit phase",
+      "budgeting phase",
+      "bypass-all",
+      "cane syrup",
+      "cardamom root",
+      "chapters 1 to 3",
+      "chapters 4 to 6",
+      "chapters 7 to 9",
+      "chart attachment",
+      "citrus bark",
+      "clay set",
+      "closeout phase",
+      "concise tone",
+      "drafting phase",
+      "dry hibiscus",
+      "edge-only",
+      "elevated risk",
+      "felt set",
+      "folded crate",
+      "footer legal",
+      "footer plain",
+      "footer seasonal",
+      "formal tone",
+      "friendly tone",
+      "ginger chip",
+      "gloss finish",
+      "hardening phase",
+      "honey drop",
+      "index cards",
+      "low risk",
+      "malted oat",
+      "margin notes",
+      "matte finish",
+      "method card-alpha",
+      "method transfer-beta",
+      "method voucher-gamma",
+      "mint stem",
+      "moderate risk",
+      "narrow glass",
+      "net 15",
+      "net 30",
+      "net 45",
+      "no sweetener",
+      "no-cache",
+      "photo attachment",
+      "piloting phase",
+      "pinned-hard",
+      "pinned-soft",
+      "plain leaf",
+      "prototyping phase",
+      "region-delta",
+      "region-fjord",
+      "region-mesa",
+      "rose husk",
+      "satin finish",
+      "scenic guide",
+      "scoping phase",
+      "sheet attachment",
+      "sink-harbor",
+      "sink-lantern",
+      "sink-quarry",
+      "slatted crate",
+      "sliding-30",
+      "sliding-60",
+      "sliding-90",
+      "smoky pine",
+      "solid crate",
+      "sourcing phase",
+      "storytelling guide",
+      "summary sheet",
+      "tall mug",
+      "technical guide",
+      "toasted barley",
+      "ttl-long",
+      "ttl-medium",
+      "ttl-short",
+      "tuning phase",
+      "urgency critical",
+      "urgency elevated",
+      "urgency routine",
+      "wide bowl",
+      "wild fennel",
+      "wire set",
+      "wrap-up phase"
+    ]
+  },
+  "coverage_summary": [
+    "assignments",
+    "categorical_values",
+    "communication_settings",
+    "configuration_values",
+    "locations",
+    "logistics",
+    "numeric_values",
+    "ordering",
+    "planning",
+    "preferences",
+    "quantities",
+    "scheduling",
+    "study_planning",
+    "subscription_state",
+    "times",
+    "travel"
+  ],
+  "scenarios": [
+    {
+      "fixture_id": "b0cal-scheduling-01",
+      "domain": "Scheduling",
+      "fixture_path": "fixtures/scheduling.json",
+      "sha256": "4fd56501a1242ebbb67364b36953ff8e4ba1f6a23f7e3d8bb68f5e8d5e5fc317",
+      "projection_sha256": "7c78eff865f3e6cab3fb9f3d2d867c6d9ee469ca6ba28b80e3f42c69c934cb72",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_b",
+          "U2": "k_c",
+          "U3": "k_d",
+          "U4": "k_hard",
+          "U5": "k_d",
+          "U6": "k_a"
+        },
+        "medium": {
+          "U2": "k_hard",
+          "U4": "k_a",
+          "U6": "k_b"
+        },
+        "high": {}
+      },
+      "final_target_value": "11:40",
+      "coverage": [
+        "times",
+        "scheduling",
+        "numeric_values"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    },
+    {
+      "fixture_id": "b0cal-travel-01",
+      "domain": "Travel",
+      "fixture_path": "fixtures/travel.json",
+      "sha256": "861c98851b2ac5ccfba3642e63c71ccdc3e426b234d40f15a33444607f560aae",
+      "projection_sha256": "9103307cf60d1a22e3b109a58ad447034056a87ff9e1a63851402ff51ee87d23",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_d",
+          "U2": "k_a",
+          "U3": "k_hard",
+          "U4": "k_a",
+          "U5": "k_b",
+          "U6": "k_c"
+        },
+        "medium": {
+          "U2": "k_b",
+          "U4": "k_c",
+          "U6": "k_hard"
+        },
+        "high": {}
+      },
+      "final_target_value": "Ivelstone",
+      "coverage": [
+        "locations",
+        "travel",
+        "quantities"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    },
+    {
+      "fixture_id": "b0cal-project-planning-01",
+      "domain": "Project Planning",
+      "fixture_path": "fixtures/project-planning.json",
+      "sha256": "08d8d4938f78109dd65cff5ef603036c1953cd2730df3e68c06455d83d780c17",
+      "projection_sha256": "9c464dbfa24aa344a397c1bbfebbfcd17e3281220c0d6586e075305c0c4c9365",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_b",
+          "U2": "k_hard",
+          "U3": "k_b",
+          "U4": "k_c",
+          "U5": "k_d",
+          "U6": "k_a"
+        },
+        "medium": {
+          "U2": "k_d",
+          "U4": "k_hard",
+          "U6": "k_c"
+        },
+        "high": {}
+      },
+      "final_target_value": "wrap-up phase",
+      "coverage": [
+        "planning",
+        "categorical_values",
+        "assignments"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    },
+    {
+      "fixture_id": "b0cal-task-assignment-01",
+      "domain": "Task Assignment",
+      "fixture_path": "fixtures/task-assignment.json",
+      "sha256": "b7eb6e4cffbeb1d871c8a1e667666bf771ce2b1998e3fad4232bce9cdfb44bce",
+      "projection_sha256": "e83679ba5f56ce569963409f0793b86d9413fb5b31f52115d38ef96634baf227",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_hard",
+          "U2": "k_c",
+          "U3": "k_d",
+          "U4": "k_a",
+          "U5": "k_b",
+          "U6": "k_c"
+        },
+        "medium": {
+          "U2": "k_hard",
+          "U4": "k_d",
+          "U6": "k_a"
+        },
+        "high": {}
+      },
+      "final_target_value": "Cyrus Delaine",
+      "coverage": [
+        "assignments",
+        "categorical_values",
+        "planning"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    },
+    {
+      "fixture_id": "b0cal-software-configuration-01",
+      "domain": "Software Configuration",
+      "fixture_path": "fixtures/software-configuration.json",
+      "sha256": "c9e97c4c292eb9a2d78c0649edaf76fa6a8710899334610b0d0a920740416f47",
+      "projection_sha256": "7937bb14f2368fb13bd61ef3f3cecf8a30fcfc995fc2557cc3704cb80a459f77",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_d",
+          "U2": "k_a",
+          "U3": "k_b",
+          "U4": "k_c",
+          "U5": "k_d",
+          "U6": "k_hard"
+        },
+        "medium": {
+          "U2": "k_a",
+          "U4": "k_b",
+          "U6": "k_hard"
+        },
+        "high": {}
+      },
+      "final_target_value": "pinned-hard",
+      "coverage": [
+        "configuration_values",
+        "numeric_values",
+        "categorical_values"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    },
+    {
+      "fixture_id": "b0cal-personal-preference-01",
+      "domain": "Personal Preference",
+      "fixture_path": "fixtures/personal-preference.json",
+      "sha256": "2d88c7a0777f86ca671be8eab8ec6d30a3c98682816f75c78b77b638444499d2",
+      "projection_sha256": "638df528fb50f3291d945f2d07eb2f75dec650a1ee9411cdce6a9fee7aa9ca1b",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_b",
+          "U2": "k_c",
+          "U3": "k_d",
+          "U4": "k_a",
+          "U5": "k_hard",
+          "U6": "k_a"
+        },
+        "medium": {
+          "U2": "k_c",
+          "U4": "k_hard",
+          "U6": "k_b"
+        },
+        "high": {}
+      },
+      "final_target_value": "cardamom root",
+      "coverage": [
+        "preferences",
+        "categorical_values",
+        "numeric_values"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    },
+    {
+      "fixture_id": "b0cal-purchase-order-01",
+      "domain": "Purchase & Order",
+      "fixture_path": "fixtures/purchase-order.json",
+      "sha256": "7ca4f0a9b7c155b9fd8e382f0e427b107b877950e1d865008e700352d622d30c",
+      "projection_sha256": "c686451004e7b41566f4367084b3e5daf0313ba6bf0599f4c256d83ea5913afe",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_d",
+          "U2": "k_a",
+          "U3": "k_b",
+          "U4": "k_hard",
+          "U5": "k_b",
+          "U6": "k_c"
+        },
+        "medium": {
+          "U2": "k_hard",
+          "U4": "k_c",
+          "U6": "k_d"
+        },
+        "high": {}
+      },
+      "final_target_value": "107 tiles",
+      "coverage": [
+        "ordering",
+        "quantities",
+        "numeric_values"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    },
+    {
+      "fixture_id": "b0cal-study-planning-01",
+      "domain": "Study Planning",
+      "fixture_path": "fixtures/study-planning.json",
+      "sha256": "cbb3af8e96ab01baabcda890e3a024136d112118a20b9458cc96eaa95fd0a52a",
+      "projection_sha256": "d15ca6152ab36ce22c35efd441295b06ec6c55d0c97ed952ea5896c6ee042a1c",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_b",
+          "U2": "k_c",
+          "U3": "k_hard",
+          "U4": "k_c",
+          "U5": "k_d",
+          "U6": "k_a"
+        },
+        "medium": {
+          "U2": "k_d",
+          "U4": "k_a",
+          "U6": "k_hard"
+        },
+        "high": {}
+      },
+      "final_target_value": "Winter Inventory",
+      "coverage": [
+        "study_planning",
+        "categorical_values",
+        "assignments"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    },
+    {
+      "fixture_id": "b0cal-communication-01",
+      "domain": "Communication",
+      "fixture_path": "fixtures/communication.json",
+      "sha256": "ec3f359b1d837733d269bcdaea09eb67fab36140adff09519d55c45267069d52",
+      "projection_sha256": "07278dd3b0d7e9fdd4e6e2e5fc000425d97ff8aff3cbc746da137eb75f8cb43e",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_d",
+          "U2": "k_hard",
+          "U3": "k_d",
+          "U4": "k_a",
+          "U5": "k_b",
+          "U6": "k_c"
+        },
+        "medium": {
+          "U2": "k_b",
+          "U4": "k_hard",
+          "U6": "k_a"
+        },
+        "high": {}
+      },
+      "final_target_value": "Monday 16:40",
+      "coverage": [
+        "communication_settings",
+        "times",
+        "categorical_values"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    },
+    {
+      "fixture_id": "b0cal-service-subscription-01",
+      "domain": "Service & Subscription",
+      "fixture_path": "fixtures/service-subscription.json",
+      "sha256": "d16d245e1115f54664e1ede2dbc43912ef9b48a81de75dd64d6da05a7ddb0b8a",
+      "projection_sha256": "0d3bdc3ba7dbac2149bf342bb63bbc2f8b578e6eb354675dec5c00c26d3535a3",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_hard",
+          "U2": "k_a",
+          "U3": "k_b",
+          "U4": "k_c",
+          "U5": "k_d",
+          "U6": "k_a"
+        },
+        "medium": {
+          "U2": "k_hard",
+          "U4": "k_b",
+          "U6": "k_c"
+        },
+        "high": {}
+      },
+      "final_target_value": "Tier Onyx",
+      "coverage": [
+        "subscription_state",
+        "categorical_values",
+        "quantities"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    },
+    {
+      "fixture_id": "b0cal-location-logistics-01",
+      "domain": "Location & Logistics",
+      "fixture_path": "fixtures/location-logistics.json",
+      "sha256": "e6b820565360b339ae07b55d05e10a7c9c8df9c96d05e3d7b557b4219ef6eb54",
+      "projection_sha256": "097a0b0a591659900bf4b9149d126313481ec296b02228f9fb00fefab0503838",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_b",
+          "U2": "k_c",
+          "U3": "k_d",
+          "U4": "k_a",
+          "U5": "k_b",
+          "U6": "k_hard"
+        },
+        "medium": {
+          "U2": "k_c",
+          "U4": "k_d",
+          "U6": "k_hard"
+        },
+        "high": {}
+      },
+      "final_target_value": "Dock Hartsgill",
+      "coverage": [
+        "locations",
+        "logistics",
+        "assignments"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    },
+    {
+      "fixture_id": "b0cal-quantitative-planning-01",
+      "domain": "Quantitative Planning",
+      "fixture_path": "fixtures/quantitative-planning.json",
+      "sha256": "fab669243fff27f5cc300eaac068cc2c3a465bbffccfdc1e1b3d9a863213f63a",
+      "projection_sha256": "c21ae96535e4fdb9e22a3d9961df5d5ca6b1b1e850ba13098e14a61d48f13fb9",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_d",
+          "U2": "k_a",
+          "U3": "k_b",
+          "U4": "k_c",
+          "U5": "k_hard",
+          "U6": "k_c"
+        },
+        "medium": {
+          "U2": "k_a",
+          "U4": "k_hard",
+          "U6": "k_d"
+        },
+        "high": {}
+      },
+      "final_target_value": "530 liters",
+      "coverage": [
+        "quantities",
+        "numeric_values",
+        "planning"
+      ],
+      "purpose": "B0-CALIBRATION-ONLY"
+    }
+  ]
+}

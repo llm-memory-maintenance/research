@@ -1,0 +1,31 @@
+{
+  "procedure_version": "generator-qualification-procedure/1.0.0",
+  "qualification_sha256": "5ac79eaf1600fa62e8944357cf7fd931ad7dd6cbb5e24e1228ae33b3e9308c4d",
+  "manual_audit_sha256": "bfd4daa3ff767ad5b14e5b4be392e3ec8e27922b420f44c60d01499d9f1d3a7f",
+  "candidates": {
+    "G1": "FAIL",
+    "G2": "FAIL"
+  },
+  "basis": {
+    "G1": {
+      "terminal_failures": [],
+      "manual_failures": [
+        "gq-study-planning-01/low/I6: natural_english FAIL",
+        "gq-study-planning-01/low: variant FAIL",
+        "gq-study-planning-01: fixture FAIL"
+      ],
+      "pending_manual_items": 0
+    },
+    "G2": {
+      "terminal_failures": [
+        "gq-project-planning-01: terminal logical-call failure: Expected nonempty string",
+        "gq-task-assignment-01: terminal logical-call failure: Expected nonempty string",
+        "gq-personal-preference-01: terminal logical-call failure: Expected nonempty string",
+        "gq-service-subscription-01: terminal logical-call failure: Expected nonempty string"
+      ],
+      "manual_failures": [],
+      "pending_manual_items": 3373
+    }
+  },
+  "manual_audit_file_sha256": "a3514783cc8566fff2f427c9875d6c3fe55edf6cb02a3401ca3f09f2c5aa6d2c"
+}

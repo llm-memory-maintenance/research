@@ -1,0 +1,343 @@
+{
+  "logical_call_id": "G2",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"kickoff_time\\\",\\\"meaning\\\":\\\"scheduled workshop kickoff time\\\",\\\"units_or_interpretation\\\":\\\"24-hour local clock; one synthetic day\\\"},{\\\"attribute_id\\\":\\\"hall_code\\\",\\\"meaning\\\":\\\"workshop hall identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"lead\\\",\\\"meaning\\\":\\\"workshop lead\\\",\\\"units_or_interpretation\\\":\\\"synthetic person\\\"},{\\\"attribute_id\\\":\\\"capacity\\\",\\\"meaning\\\":\\\"workshop capacity\\\",\\\"units_or_interpretation\\\":\\\"participants\\\"},{\\\"attribute_id\\\":\\\"material_set\\\",\\\"meaning\\\":\\\"workshop material set\\\",\\\"units_or_interpretation\\\":\\\"material label\\\"},{\\\"attribute_id\\\":\\\"break_length\\\",\\\"meaning\\\":\\\"scheduled break length\\\",\\\"units_or_interpretation\\\":\\\"minutes\\\"}],\\\"domain\\\":\\\"Scheduling\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"name\\\":\\\"Cedar workshop\\\"},{\\\"entity_id\\\":\\\"b0cal-scheduling-01-distractor\\\",\\\"name\\\":\\\"Willow workshop\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_a\\\",\\\"I2\\\":\\\"k_b\\\",\\\"I3\\\":\\\"k_c\\\",\\\"I4\\\":\\\"k_d\\\",\\\"I5\\\":\\\"k_target\\\",\\\"I6\\\":\\\"k_hard\\\",\\\"I7\\\":\\\"k_n2\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"kickoff_time\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current scheduled workshop kickoff time of Cedar workshop.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"kickoff_time\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"07:20\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"kickoff_time\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-distractor\\\",\\\"initial_value\\\":\\\"14:10\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"hall_code\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"HAL-C52\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"lead\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"Marek Ollin\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"capacity\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"14 participants\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"material_set\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"clay set\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"break_length\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"10 minutes\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"Marek Ollin\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"14 participants\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"clay set\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"10 minutes\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"07:20\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"14:10\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"HAL-C52\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"07:55\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"08:25\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"09:15\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"09:50\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"10:25\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"11:05\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"11:05\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"11:40\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"HAL-C52\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"Marek Ollin\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"14 participants\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"clay set\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"10 minutes\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"07:20\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"14:10\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"HAL-C52\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"18 participants\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"felt set\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"15 minutes\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"14:45\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"20 minutes\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Tamsin Verda\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"07:20\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"11:40\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"HAL-C52\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"Marek Ollin\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"14 participants\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"clay set\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"10 minutes\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"07:20\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"14:10\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"HAL-C52\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"07:55\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"14:45\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"09:15\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Tamsin Verda\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"10:25\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"18 participants\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"10:25\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"11:40\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"HAL-C52\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"anthropic/claude-fable-5.1\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"anthropic\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "0326e6bdf693245a915bba71d04542d9cee1c225c4b6f19fbaedb2422593e967",
+  "request_body": {
+    "model": "anthropic/claude-fable-5.1",
+    "provider": {
+      "order": [
+        "anthropic"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"kickoff_time\",\"meaning\":\"scheduled workshop kickoff time\",\"units_or_interpretation\":\"24-hour local clock; one synthetic day\"},{\"attribute_id\":\"hall_code\",\"meaning\":\"workshop hall identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"lead\",\"meaning\":\"workshop lead\",\"units_or_interpretation\":\"synthetic person\"},{\"attribute_id\":\"capacity\",\"meaning\":\"workshop capacity\",\"units_or_interpretation\":\"participants\"},{\"attribute_id\":\"material_set\",\"meaning\":\"workshop material set\",\"units_or_interpretation\":\"material label\"},{\"attribute_id\":\"break_length\",\"meaning\":\"scheduled break length\",\"units_or_interpretation\":\"minutes\"}],\"domain\":\"Scheduling\",\"entities\":[{\"entity_id\":\"b0cal-scheduling-01-primary\",\"name\":\"Cedar workshop\"},{\"entity_id\":\"b0cal-scheduling-01-distractor\",\"name\":\"Willow workshop\"}],\"initial_order\":{\"I1\":\"k_a\",\"I2\":\"k_b\",\"I3\":\"k_c\",\"I4\":\"k_d\",\"I5\":\"k_target\",\"I6\":\"k_hard\",\"I7\":\"k_n2\"},\"question_intent\":{\"attribute_id\":\"kickoff_time\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"intent\":\"Ask only for the current scheduled workshop kickoff time of Cedar workshop.\"},\"state_keys\":[{\"attribute_id\":\"kickoff_time\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"initial_value\":\"07:20\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"kickoff_time\",\"entity_id\":\"b0cal-scheduling-01-distractor\",\"initial_value\":\"14:10\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"hall_code\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"initial_value\":\"HAL-C52\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"lead\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"initial_value\":\"Marek Ollin\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"capacity\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"initial_value\":\"14 participants\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"material_set\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"initial_value\":\"clay set\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"break_length\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"initial_value\":\"10 minutes\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"Marek Ollin\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"14 participants\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"clay set\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"10 minutes\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"07:20\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"14:10\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"HAL-C52\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"07:55\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"08:25\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"09:15\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"09:50\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"10:25\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"11:05\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"11:05\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"11:40\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"HAL-C52\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"Marek Ollin\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"14 participants\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"clay set\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"10 minutes\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"07:20\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"14:10\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"HAL-C52\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"18 participants\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"felt set\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"15 minutes\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"14:45\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"20 minutes\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Tamsin Verda\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"07:20\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"11:40\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"HAL-C52\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"Marek Ollin\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"14 participants\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"clay set\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"10 minutes\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"07:20\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"14:10\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"HAL-C52\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"07:55\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"14:45\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"09:15\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Tamsin Verda\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"10:25\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"18 participants\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"10:25\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"11:40\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"HAL-C52\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G2",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T11:52:52.260698+00:00",
+      "requested_model": "anthropic/claude-fable-5.1",
+      "requested_provider_order": [
+        "anthropic"
+      ],
+      "returned_model": "anthropic/claude-fable-5.1",
+      "observed_selected_provider": "Anthropic",
+      "request_id": null,
+      "response_id": "gen-1789818772-3ANLTeIXBHFGeoGfLfpv",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789818772-3ANLTeIXBHFGeoGfLfpv\",\"object\":\"chat.completion\",\"created\":1789818772,\"model\":\"anthropic/claude-fable-5.1\",\"provider\":\"Anthropic\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"The Cedar workshop's lead is Marek Ollin.\\\",\\\"I2\\\":\\\"The Cedar workshop has a capacity of 14 participants.\\\",\\\"I3\\\":\\\"The material set for the Cedar workshop is the clay set.\\\",\\\"I4\\\":\\\"The scheduled break length for the Cedar workshop is 10 minutes.\\\",\\\"I5\\\":\\\"The Cedar workshop's kickoff time is scheduled for 07:20.\\\",\\\"I6\\\":\\\"The Willow workshop's kickoff time is scheduled for 14:10.\\\",\\\"I7\\\":\\\"The Cedar workshop is assigned hall code HAL-C52.\\\",\\\"N1\\\":\\\"Just to reaffirm, the Cedar workshop's kickoff time is still 11:05.\\\",\\\"N2\\\":\\\"The Cedar workshop's hall code remains HAL-C52.\\\",\\\"Q\\\":\\\"What is the current scheduled kickoff time of the Cedar workshop?\\\",\\\"U1\\\":\\\"The Cedar workshop's kickoff time has changed; it is now scheduled for 07:55.\\\",\\\"U2\\\":\\\"Update: the Cedar workshop's kickoff time has moved to 08:25.\\\",\\\"U3\\\":\\\"The kickoff time for the Cedar workshop has been revised to 09:15.\\\",\\\"U4\\\":\\\"Another change: the Cedar workshop now kicks off at 09:50.\\\",\\\"U5\\\":\\\"The Cedar workshop's kickoff time has been updated to 10:25.\\\",\\\"U6\\\":\\\"The Cedar workshop's kickoff time has shifted again and is now 11:05.\\\",\\\"U7\\\":\\\"The Cedar workshop's kickoff time has changed once more; it is now 11:40.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Marek Ollin is the lead for the Cedar workshop.\\\",\\\"I2\\\":\\\"Capacity for the Cedar workshop is 14 participants.\\\",\\\"I3\\\":\\\"The Cedar workshop uses the clay set as its material set.\\\",\\\"I4\\\":\\\"The Cedar workshop's scheduled break length is 10 minutes.\\\",\\\"I5\\\":\\\"The Cedar workshop is scheduled to kick off at 07:20.\\\",\\\"I6\\\":\\\"The Willow workshop is scheduled to kick off at 14:10.\\\",\\\"I7\\\":\\\"The hall code for the Cedar workshop is HAL-C52.\\\",\\\"N1\\\":\\\"To confirm, the Cedar workshop's kickoff time is still 07:20.\\\",\\\"N2\\\":\\\"The Cedar workshop's hall code is still HAL-C52.\\\",\\\"Q\\\":\\\"What is the current scheduled kickoff time of the Cedar workshop?\\\",\\\"U1\\\":\\\"The Cedar workshop's capacity has been updated to 18 participants.\\\",\\\"U2\\\":\\\"The material set for the Cedar workshop has changed to the felt set.\\\",\\\"U3\\\":\\\"The Cedar workshop's break length has been revised to 15 minutes.\\\",\\\"U4\\\":\\\"The Willow workshop's kickoff time has changed; it is now 14:45.\\\",\\\"U5\\\":\\\"The Cedar workshop's break length has been updated again and is now 20 minutes.\\\",\\\"U6\\\":\\\"The Cedar workshop's lead has changed to Tamsin Verda.\\\",\\\"U7\\\":\\\"The Cedar workshop's kickoff time has been moved; it is now scheduled for 11:40.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"The lead of the Cedar workshop is Marek Ollin.\\\",\\\"I2\\\":\\\"The Cedar workshop's capacity is 14 participants.\\\",\\\"I3\\\":\\\"The Cedar workshop's material set is the clay set.\\\",\\\"I4\\\":\\\"The break length scheduled for the Cedar workshop is 10 minutes.\\\",\\\"I5\\\":\\\"Kickoff time for the Cedar workshop is scheduled at 07:20.\\\",\\\"I6\\\":\\\"Kickoff time for the Willow workshop is scheduled at 14:10.\\\",\\\"I7\\\":\\\"The Cedar workshop has been assigned hall code HAL-C52.\\\",\\\"N1\\\":\\\"Confirming that the Cedar workshop's kickoff time is still 10:25.\\\",\\\"N2\\\":\\\"The hall code for the Cedar workshop remains HAL-C52.\\\",\\\"Q\\\":\\\"What is the current scheduled kickoff time of the Cedar workshop?\\\",\\\"U1\\\":\\\"The Cedar workshop's kickoff time has been updated to 07:55.\\\",\\\"U2\\\":\\\"The Willow workshop's kickoff time has changed and is now 14:45.\\\",\\\"U3\\\":\\\"The Cedar workshop's kickoff time has moved again; it is now 09:15.\\\",\\\"U4\\\":\\\"The Cedar workshop's lead has been changed to Tamsin Verda.\\\",\\\"U5\\\":\\\"The kickoff time for the Cedar workshop has been revised to 10:25.\\\",\\\"U6\\\":\\\"The Cedar workshop's capacity has been updated to 18 participants.\\\",\\\"U7\\\":\\\"The Cedar workshop's kickoff time has changed; it is now scheduled for 11:40.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":4541,\"completion_tokens\":1484,\"total_tokens\":6025,\"cost\":0.11961,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.11961,\"upstream_inference_prompt_cost\":0.04541,\"upstream_inference_completions_cost\":0.0742},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"anthropic/claude-fable-5.1\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=Anthropic\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":4,\"available\":[{\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-fable-5.1-20260831\",\"selected\":true}]},\"generation_time\":16257}}",
+      "response_sha256_before_redaction": "f6867ef091928783c7f9d52f0eba8f218c7c0f60afdeecc560d4d6eb412f8392",
+      "response_envelope": {
+        "id": "gen-1789818772-3ANLTeIXBHFGeoGfLfpv",
+        "object": "chat.completion",
+        "created": 1789818772,
+        "model": "anthropic/claude-fable-5.1",
+        "provider": "Anthropic",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "end_turn",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"The Cedar workshop's lead is Marek Ollin.\",\"I2\":\"The Cedar workshop has a capacity of 14 participants.\",\"I3\":\"The material set for the Cedar workshop is the clay set.\",\"I4\":\"The scheduled break length for the Cedar workshop is 10 minutes.\",\"I5\":\"The Cedar workshop's kickoff time is scheduled for 07:20.\",\"I6\":\"The Willow workshop's kickoff time is scheduled for 14:10.\",\"I7\":\"The Cedar workshop is assigned hall code HAL-C52.\",\"N1\":\"Just to reaffirm, the Cedar workshop's kickoff time is still 11:05.\",\"N2\":\"The Cedar workshop's hall code remains HAL-C52.\",\"Q\":\"What is the current scheduled kickoff time of the Cedar workshop?\",\"U1\":\"The Cedar workshop's kickoff time has changed; it is now scheduled for 07:55.\",\"U2\":\"Update: the Cedar workshop's kickoff time has moved to 08:25.\",\"U3\":\"The kickoff time for the Cedar workshop has been revised to 09:15.\",\"U4\":\"Another change: the Cedar workshop now kicks off at 09:50.\",\"U5\":\"The Cedar workshop's kickoff time has been updated to 10:25.\",\"U6\":\"The Cedar workshop's kickoff time has shifted again and is now 11:05.\",\"U7\":\"The Cedar workshop's kickoff time has changed once more; it is now 11:40.\"},\"low\":{\"I1\":\"Marek Ollin is the lead for the Cedar workshop.\",\"I2\":\"Capacity for the Cedar workshop is 14 participants.\",\"I3\":\"The Cedar workshop uses the clay set as its material set.\",\"I4\":\"The Cedar workshop's scheduled break length is 10 minutes.\",\"I5\":\"The Cedar workshop is scheduled to kick off at 07:20.\",\"I6\":\"The Willow workshop is scheduled to kick off at 14:10.\",\"I7\":\"The hall code for the Cedar workshop is HAL-C52.\",\"N1\":\"To confirm, the Cedar workshop's kickoff time is still 07:20.\",\"N2\":\"The Cedar workshop's hall code is still HAL-C52.\",\"Q\":\"What is the current scheduled kickoff time of the Cedar workshop?\",\"U1\":\"The Cedar workshop's capacity has been updated to 18 participants.\",\"U2\":\"The material set for the Cedar workshop has changed to the felt set.\",\"U3\":\"The Cedar workshop's break length has been revised to 15 minutes.\",\"U4\":\"The Willow workshop's kickoff time has changed; it is now 14:45.\",\"U5\":\"The Cedar workshop's break length has been updated again and is now 20 minutes.\",\"U6\":\"The Cedar workshop's lead has changed to Tamsin Verda.\",\"U7\":\"The Cedar workshop's kickoff time has been moved; it is now scheduled for 11:40.\"},\"medium\":{\"I1\":\"The lead of the Cedar workshop is Marek Ollin.\",\"I2\":\"The Cedar workshop's capacity is 14 participants.\",\"I3\":\"The Cedar workshop's material set is the clay set.\",\"I4\":\"The break length scheduled for the Cedar workshop is 10 minutes.\",\"I5\":\"Kickoff time for the Cedar workshop is scheduled at 07:20.\",\"I6\":\"Kickoff time for the Willow workshop is scheduled at 14:10.\",\"I7\":\"The Cedar workshop has been assigned hall code HAL-C52.\",\"N1\":\"Confirming that the Cedar workshop's kickoff time is still 10:25.\",\"N2\":\"The hall code for the Cedar workshop remains HAL-C52.\",\"Q\":\"What is the current scheduled kickoff time of the Cedar workshop?\",\"U1\":\"The Cedar workshop's kickoff time has been updated to 07:55.\",\"U2\":\"The Willow workshop's kickoff time has changed and is now 14:45.\",\"U3\":\"The Cedar workshop's kickoff time has moved again; it is now 09:15.\",\"U4\":\"The Cedar workshop's lead has been changed to Tamsin Verda.\",\"U5\":\"The kickoff time for the Cedar workshop has been revised to 10:25.\",\"U6\":\"The Cedar workshop's capacity has been updated to 18 participants.\",\"U7\":\"The Cedar workshop's kickoff time has changed; it is now scheduled for 11:40.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 4541,
+          "completion_tokens": 1484,
+          "total_tokens": 6025,
+          "cost": 0.11961,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.11961,
+            "upstream_inference_prompt_cost": 0.04541,
+            "upstream_inference_completions_cost": 0.0742
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "anthropic/claude-fable-5.1",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=Anthropic",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 4,
+            "available": [
+              {
+                "provider": "Anthropic",
+                "model": "anthropic/claude-fable-5.1-20260831",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 16257
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "anthropic/claude-fable-5.1",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=Anthropic",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 4,
+          "available": [
+            {
+              "provider": "Anthropic",
+              "model": "anthropic/claude-fable-5.1-20260831",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 16257
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "The Cedar workshop's lead is Marek Ollin.",
+          "I2": "The Cedar workshop has a capacity of 14 participants.",
+          "I3": "The material set for the Cedar workshop is the clay set.",
+          "I4": "The scheduled break length for the Cedar workshop is 10 minutes.",
+          "I5": "The Cedar workshop's kickoff time is scheduled for 07:20.",
+          "I6": "The Willow workshop's kickoff time is scheduled for 14:10.",
+          "I7": "The Cedar workshop is assigned hall code HAL-C52.",
+          "N1": "Just to reaffirm, the Cedar workshop's kickoff time is still 11:05.",
+          "N2": "The Cedar workshop's hall code remains HAL-C52.",
+          "Q": "What is the current scheduled kickoff time of the Cedar workshop?",
+          "U1": "The Cedar workshop's kickoff time has changed; it is now scheduled for 07:55.",
+          "U2": "Update: the Cedar workshop's kickoff time has moved to 08:25.",
+          "U3": "The kickoff time for the Cedar workshop has been revised to 09:15.",
+          "U4": "Another change: the Cedar workshop now kicks off at 09:50.",
+          "U5": "The Cedar workshop's kickoff time has been updated to 10:25.",
+          "U6": "The Cedar workshop's kickoff time has shifted again and is now 11:05.",
+          "U7": "The Cedar workshop's kickoff time has changed once more; it is now 11:40."
+        },
+        "low": {
+          "I1": "Marek Ollin is the lead for the Cedar workshop.",
+          "I2": "Capacity for the Cedar workshop is 14 participants.",
+          "I3": "The Cedar workshop uses the clay set as its material set.",
+          "I4": "The Cedar workshop's scheduled break length is 10 minutes.",
+          "I5": "The Cedar workshop is scheduled to kick off at 07:20.",
+          "I6": "The Willow workshop is scheduled to kick off at 14:10.",
+          "I7": "The hall code for the Cedar workshop is HAL-C52.",
+          "N1": "To confirm, the Cedar workshop's kickoff time is still 07:20.",
+          "N2": "The Cedar workshop's hall code is still HAL-C52.",
+          "Q": "What is the current scheduled kickoff time of the Cedar workshop?",
+          "U1": "The Cedar workshop's capacity has been updated to 18 participants.",
+          "U2": "The material set for the Cedar workshop has changed to the felt set.",
+          "U3": "The Cedar workshop's break length has been revised to 15 minutes.",
+          "U4": "The Willow workshop's kickoff time has changed; it is now 14:45.",
+          "U5": "The Cedar workshop's break length has been updated again and is now 20 minutes.",
+          "U6": "The Cedar workshop's lead has changed to Tamsin Verda.",
+          "U7": "The Cedar workshop's kickoff time has been moved; it is now scheduled for 11:40."
+        },
+        "medium": {
+          "I1": "The lead of the Cedar workshop is Marek Ollin.",
+          "I2": "The Cedar workshop's capacity is 14 participants.",
+          "I3": "The Cedar workshop's material set is the clay set.",
+          "I4": "The break length scheduled for the Cedar workshop is 10 minutes.",
+          "I5": "Kickoff time for the Cedar workshop is scheduled at 07:20.",
+          "I6": "Kickoff time for the Willow workshop is scheduled at 14:10.",
+          "I7": "The Cedar workshop has been assigned hall code HAL-C52.",
+          "N1": "Confirming that the Cedar workshop's kickoff time is still 10:25.",
+          "N2": "The hall code for the Cedar workshop remains HAL-C52.",
+          "Q": "What is the current scheduled kickoff time of the Cedar workshop?",
+          "U1": "The Cedar workshop's kickoff time has been updated to 07:55.",
+          "U2": "The Willow workshop's kickoff time has changed and is now 14:45.",
+          "U3": "The Cedar workshop's kickoff time has moved again; it is now 09:15.",
+          "U4": "The Cedar workshop's lead has been changed to Tamsin Verda.",
+          "U5": "The kickoff time for the Cedar workshop has been revised to 10:25.",
+          "U6": "The Cedar workshop's capacity has been updated to 18 participants.",
+          "U7": "The Cedar workshop's kickoff time has changed; it is now scheduled for 11:40."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 4541,
+        "completion_tokens": 1484,
+        "total_tokens": 6025,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.11961
+      },
+      "latency_seconds": 16.370098195009632,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G2",
+  "fixture_id": "b0cal-scheduling-01",
+  "projection_sha256": "7c78eff865f3e6cab3fb9f3d2d867c6d9ee469ca6ba28b80e3f42c69c934cb72",
+  "logical_call_index": 13,
+  "attempt": "attempt-02",
+  "output_sha256": "f2eb604015317ea389d3b51a95c352242f0026aa1e9f68f6280b656c86137b8b"
+}

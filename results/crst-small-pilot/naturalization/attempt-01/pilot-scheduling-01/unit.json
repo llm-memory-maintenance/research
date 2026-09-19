@@ -1,0 +1,10 @@
+{
+  "scenario_id": "pilot-scheduling-01",
+  "generator": "openai/gpt-5.6-sol",
+  "outcomes": [
+    "EVALUABLE_PASS"
+  ],
+  "decision": "ACCEPT",
+  "accepted_attempt": 1,
+  "logical_attempts": 1
+}

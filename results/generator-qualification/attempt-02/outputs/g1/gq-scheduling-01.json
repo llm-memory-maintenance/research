@@ -1,0 +1,393 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"start_time\\\",\\\"meaning\\\":\\\"scheduled rehearsal start time\\\",\\\"units_or_interpretation\\\":\\\"24-hour local clock; one synthetic day\\\"},{\\\"attribute_id\\\":\\\"session_code\\\",\\\"meaning\\\":\\\"rehearsal identification code\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"room\\\",\\\"meaning\\\":\\\"rehearsal room\\\",\\\"units_or_interpretation\\\":\\\"room label\\\"},{\\\"attribute_id\\\":\\\"duration\\\",\\\"meaning\\\":\\\"rehearsal duration\\\",\\\"units_or_interpretation\\\":\\\"minutes\\\"},{\\\"attribute_id\\\":\\\"facilitator\\\",\\\"meaning\\\":\\\"rehearsal facilitator\\\",\\\"units_or_interpretation\\\":\\\"synthetic person\\\"},{\\\"attribute_id\\\":\\\"agenda\\\",\\\"meaning\\\":\\\"rehearsal agenda\\\",\\\"units_or_interpretation\\\":\\\"agenda label\\\"}],\\\"domain\\\":\\\"Scheduling\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gq-scheduling-01-primary\\\",\\\"name\\\":\\\"Tern rehearsal\\\"},{\\\"entity_id\\\":\\\"gq-scheduling-01-distractor\\\",\\\"name\\\":\\\"Gull rehearsal\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_target\\\",\\\"I2\\\":\\\"k_hard\\\",\\\"I3\\\":\\\"k_n2\\\",\\\"I4\\\":\\\"k_a\\\",\\\"I5\\\":\\\"k_b\\\",\\\"I6\\\":\\\"k_c\\\",\\\"I7\\\":\\\"k_d\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"start_time\\\",\\\"entity_id\\\":\\\"gq-scheduling-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current scheduled rehearsal start time of Tern rehearsal.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"start_time\\\",\\\"entity_id\\\":\\\"gq-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"08:10\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"start_time\\\",\\\"entity_id\\\":\\\"gq-scheduling-01-distractor\\\",\\\"initial_value\\\":\\\"13:20\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"session_code\\\",\\\"entity_id\\\":\\\"gq-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"TRN-X4\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"room\\\",\\\"entity_id\\\":\\\"gq-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"Room Vela\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"duration\\\",\\\"entity_id\\\":\\\"gq-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"35 minutes\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"facilitator\\\",\\\"entity_id\\\":\\\"gq-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"Person Zerin\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"agenda\\\",\\\"entity_id\\\":\\\"gq-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"opening practice\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"08:10\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"13:20\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"TRN-X4\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Room Vela\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"35 minutes\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Person Zerin\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"opening practice\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"08:35\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"09:05\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"09:40\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"10:15\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"10:50\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"11:25\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"11:25\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"12:05\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"TRN-X4\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"08:10\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"13:20\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"TRN-X4\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Room Vela\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"35 minutes\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Person Zerin\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"opening practice\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"13:55\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Room Lyra\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"45 minutes\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Person Odel\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"ensemble practice\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Room Ara\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"08:10\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"12:05\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"TRN-X4\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"08:10\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"13:20\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"TRN-X4\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Room Vela\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"35 minutes\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Person Zerin\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"opening practice\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"08:35\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"13:55\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"09:40\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"45 minutes\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"10:50\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Person Odel\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"10:50\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"12:05\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"TRN-X4\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-terra\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "45615a8b900e72096bff75aeec4e977a390ec7a30c72b314828f93add5f95791",
+  "request_body": {
+    "model": "openai/gpt-5.6-terra",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"start_time\",\"meaning\":\"scheduled rehearsal start time\",\"units_or_interpretation\":\"24-hour local clock; one synthetic day\"},{\"attribute_id\":\"session_code\",\"meaning\":\"rehearsal identification code\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"room\",\"meaning\":\"rehearsal room\",\"units_or_interpretation\":\"room label\"},{\"attribute_id\":\"duration\",\"meaning\":\"rehearsal duration\",\"units_or_interpretation\":\"minutes\"},{\"attribute_id\":\"facilitator\",\"meaning\":\"rehearsal facilitator\",\"units_or_interpretation\":\"synthetic person\"},{\"attribute_id\":\"agenda\",\"meaning\":\"rehearsal agenda\",\"units_or_interpretation\":\"agenda label\"}],\"domain\":\"Scheduling\",\"entities\":[{\"entity_id\":\"gq-scheduling-01-primary\",\"name\":\"Tern rehearsal\"},{\"entity_id\":\"gq-scheduling-01-distractor\",\"name\":\"Gull rehearsal\"}],\"initial_order\":{\"I1\":\"k_target\",\"I2\":\"k_hard\",\"I3\":\"k_n2\",\"I4\":\"k_a\",\"I5\":\"k_b\",\"I6\":\"k_c\",\"I7\":\"k_d\"},\"question_intent\":{\"attribute_id\":\"start_time\",\"entity_id\":\"gq-scheduling-01-primary\",\"intent\":\"Ask only for the current scheduled rehearsal start time of Tern rehearsal.\"},\"state_keys\":[{\"attribute_id\":\"start_time\",\"entity_id\":\"gq-scheduling-01-primary\",\"initial_value\":\"08:10\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"start_time\",\"entity_id\":\"gq-scheduling-01-distractor\",\"initial_value\":\"13:20\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"session_code\",\"entity_id\":\"gq-scheduling-01-primary\",\"initial_value\":\"TRN-X4\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"room\",\"entity_id\":\"gq-scheduling-01-primary\",\"initial_value\":\"Room Vela\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"duration\",\"entity_id\":\"gq-scheduling-01-primary\",\"initial_value\":\"35 minutes\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"facilitator\",\"entity_id\":\"gq-scheduling-01-primary\",\"initial_value\":\"Person Zerin\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"agenda\",\"entity_id\":\"gq-scheduling-01-primary\",\"initial_value\":\"opening practice\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"08:10\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"13:20\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"TRN-X4\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Room Vela\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"35 minutes\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Person Zerin\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"opening practice\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"08:35\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"09:05\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"09:40\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"10:15\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"10:50\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"11:25\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"11:25\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"12:05\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"TRN-X4\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"08:10\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"13:20\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"TRN-X4\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Room Vela\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"35 minutes\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Person Zerin\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"opening practice\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"13:55\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Room Lyra\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"45 minutes\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"Person Odel\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"ensemble practice\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Room Ara\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"08:10\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"12:05\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"TRN-X4\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"08:10\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"13:20\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"TRN-X4\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Room Vela\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"35 minutes\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Person Zerin\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"opening practice\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"08:35\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"13:55\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"09:40\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"45 minutes\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"10:50\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Person Odel\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"10:50\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"12:05\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"TRN-X4\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-18T16:37:16.127120+00:00",
+      "requested_model": "openai/gpt-5.6-terra",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-terra",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789749436-dxyI8KD86nQD9ViF1j2o",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n{\"id\":\"gen-1789749436-dxyI8KD86nQD9ViF1j2o\",\"object\":\"chat.completion\",\"created\":1789749436,\"model\":\"openai/gpt-5.6-terra\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Tern rehearsal is scheduled to start at 08:10.\\\",\\\"I2\\\":\\\"Gull rehearsal is scheduled to start at 13:20.\\\",\\\"I3\\\":\\\"Tern rehearsal has session code TRN-X4.\\\",\\\"I4\\\":\\\"Tern rehearsal is in Room Vela.\\\",\\\"I5\\\":\\\"Tern rehearsal lasts 35 minutes.\\\",\\\"I6\\\":\\\"Tern rehearsal is facilitated by Person Zerin.\\\",\\\"I7\\\":\\\"Tern rehearsal's agenda is opening practice.\\\",\\\"N1\\\":\\\"Tern rehearsal's scheduled start time is 11:25.\\\",\\\"N2\\\":\\\"Tern rehearsal's session code is TRN-X4.\\\",\\\"Q\\\":\\\"What is the current scheduled rehearsal start time of Tern rehearsal?\\\",\\\"U1\\\":\\\"Tern rehearsal's scheduled start time has changed to 08:35.\\\",\\\"U2\\\":\\\"Tern rehearsal's scheduled start time has changed to 09:05.\\\",\\\"U3\\\":\\\"Tern rehearsal's scheduled start time has changed to 09:40.\\\",\\\"U4\\\":\\\"Tern rehearsal's scheduled start time has changed to 10:15.\\\",\\\"U5\\\":\\\"Tern rehearsal's scheduled start time has changed to 10:50.\\\",\\\"U6\\\":\\\"Tern rehearsal's scheduled start time has changed to 11:25.\\\",\\\"U7\\\":\\\"Tern rehearsal's scheduled start time has changed to 12:05.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Tern rehearsal is scheduled to start at 08:10.\\\",\\\"I2\\\":\\\"Gull rehearsal is scheduled to start at 13:20.\\\",\\\"I3\\\":\\\"Tern rehearsal has session code TRN-X4.\\\",\\\"I4\\\":\\\"Tern rehearsal is in Room Vela.\\\",\\\"I5\\\":\\\"Tern rehearsal lasts 35 minutes.\\\",\\\"I6\\\":\\\"Tern rehearsal is facilitated by Person Zerin.\\\",\\\"I7\\\":\\\"Tern rehearsal's agenda is opening practice.\\\",\\\"N1\\\":\\\"Tern rehearsal's scheduled start time is 08:10.\\\",\\\"N2\\\":\\\"Tern rehearsal's session code is TRN-X4.\\\",\\\"Q\\\":\\\"What is the current scheduled rehearsal start time of Tern rehearsal?\\\",\\\"U1\\\":\\\"Gull rehearsal's scheduled start time has changed to 13:55.\\\",\\\"U2\\\":\\\"Tern rehearsal's room has changed to Room Lyra.\\\",\\\"U3\\\":\\\"Tern rehearsal's duration has changed to 45 minutes.\\\",\\\"U4\\\":\\\"Tern rehearsal's facilitator has changed to Person Odel.\\\",\\\"U5\\\":\\\"Tern rehearsal's agenda has changed to ensemble practice.\\\",\\\"U6\\\":\\\"Tern rehearsal's room has changed to Room Ara.\\\",\\\"U7\\\":\\\"Tern rehearsal's scheduled start time has changed to 12:05.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"Tern rehearsal is scheduled to start at 08:10.\\\",\\\"I2\\\":\\\"Gull rehearsal is scheduled to start at 13:20.\\\",\\\"I3\\\":\\\"Tern rehearsal has session code TRN-X4.\\\",\\\"I4\\\":\\\"Tern rehearsal is in Room Vela.\\\",\\\"I5\\\":\\\"Tern rehearsal lasts 35 minutes.\\\",\\\"I6\\\":\\\"Tern rehearsal is facilitated by Person Zerin.\\\",\\\"I7\\\":\\\"Tern rehearsal's agenda is opening practice.\\\",\\\"N1\\\":\\\"Tern rehearsal's scheduled start time is 10:50.\\\",\\\"N2\\\":\\\"Tern rehearsal's session code is TRN-X4.\\\",\\\"Q\\\":\\\"What is the current scheduled rehearsal start time of Tern rehearsal?\\\",\\\"U1\\\":\\\"Tern rehearsal's scheduled start time has changed to 08:35.\\\",\\\"U2\\\":\\\"Gull rehearsal's scheduled start time has changed to 13:55.\\\",\\\"U3\\\":\\\"Tern rehearsal's scheduled start time has changed to 09:40.\\\",\\\"U4\\\":\\\"Tern rehearsal's duration has changed to 45 minutes.\\\",\\\"U5\\\":\\\"Tern rehearsal's scheduled start time has changed to 10:50.\\\",\\\"U6\\\":\\\"Tern rehearsal's facilitator has changed to Person Odel.\\\",\\\"U7\\\":\\\"Tern rehearsal's scheduled start time has changed to 12:05.\\\"}}\",\"refusal\":null,\"reasoning\":\"**Clarifying JSON requirements**\\n\\nI need to ensure that all fields in the JSON are exact strings. The wording should be consistent throughout. For the query, it should focus on a low target only for U7. I think it’s best to state clearly, “The scheduled start time for ... has changed to,” just to avoid any ambiguity in the future. It’s important to communicate this straightforwardly to prevent any confusion.\",\"reasoning_details\":[{\"type\":\"reasoning.summary\",\"summary\":\"**Clarifying JSON requirements**\\n\\nI need to ensure that all fields in the JSON are exact strings. The wording should be consistent throughout. For the query, it should focus on a low target only for U7. I think it’s best to state clearly, “The scheduled start time for ... has changed to,” just to avoid any ambiguity in the future. It’s important to communicate this straightforwardly to prevent any confusion.\",\"format\":\"openai-responses-v1\",\"index\":0},{\"type\":\"reasoning.encrypted\",\"data\":\"gAAAAABqrWi_af2metj4co_1Of8COiVQbxJp5LrdQURiOSOJKI3Whhf4Kmw-AtuaF718zUdwBC1RMgjYBb_4tKzoiMDNlMVbhPuiWrIMJx3nD0CsaXGOyWLQJWO0CGvekdTsSoMjGv-rFzekCCec-ZsSeYpYj2Lu0QgHlRmNG690FwxrI9_DUQ9wYp-dwwpMXb8jat7r3bscVrdpdt1VohbzE8LyWjZbhd1kUzHVwAOOxDgcB0042OQUY26vSZ18wmLKJ6EaD3mwPzE-QgNWmdtiuTO79ABw13-QSkxqID_R9Cl5kp_IeSZ3ErTfMpanmqgKRPra5fFhe1lT0_L1-EIaQ9FX9uXk9PDtFSD7_OjzX69GMj-UWQDV13N0IsR_67C6kc-XIeN6G-1lhmnNeCZ1Pl9VPKR0PHvMQTsEaMEq2X_GmNKpIMsKjwuj0H6vvj564FSIH2VBGoUisY-HmugzPMoec8CUy61bF0a-Gq1SOP_KXmnpPPA0jww3u06IxPkaD5c6CXhhCW_hgn5cf7dbvHojZwkBdKInRPCyV8zGnGAD89i6G3EEPLmtKEF4VNSxogWG5EiIVYcLRUaBHSXWJEWOYzY0RXLwydTR7VFzfyA5FiPcn-6Qz87HD2FXpiCob1bvIXQlVHrvbXQwVXDhH78AyJ0BaWmizGycj_6sMV5tUqK-_lX6ZUrm2mVqE9SIG5VVhuGYaZV4KmW8HfWMsqEHXpt2Ui2cRCaitWCtHrTT9EVZSnOyzb4FnZ0ZGmBR9tKA_zCG8Rtp0j8TuQ3Ls5GcvSakWbrWwYiyWjz_K1y4PJwIy7rBywpeHvstq-pGFo4WbfupTNfJ_Em_Vi6JccNzALk8f46ZCVOFYbna9u2H-jmfGQ81dc5_gDGgFGT8QupoBphZRBdMi3yD3xS1Ocfz7LvnlpNqoYG5GYUri0yP5IuInnMX_OFeoEOU9a4uz7Xhp71q7_QBX80d_MUytMzcH3b3udorV1WwlF08WzyYTusmMEXwBq_DcThpqwyv7h0fBxoE-N5mWjJYhQPBR-AIFBci5VqDzvPzd_HMFolGWdumvI2BUlBM4P17K1odrs2LVmJMGOrOKwPt0MxB74rKxBGtQPTYs6kCFoi7OzzeVRnFOtVgIALQdmTl-AfVBCot_b87IT4QVoSfyB1M3tCpk1Bb0KUhvo-nV1TGmQsX2eaV-G7Llb_XwCWmcXsuGBV1qc-6rEetIcBpwMkXnjWpXHrzwVW9e-tpUHIi4hHAE8a096FhPWCxVLMsdRtMIBjjR_8TU5XbrcCdIZ5iI9GDsm3zOGbqnRSHwSil6qwM1G8p_7JaRraJ-lD3GE3UCgQg_DGlqdbxBTuORMedN_UqbibbSt4ypITuJN-sx_lSqA0B7vNMp7LzkPj9iyiP75x5CWgdd29m3CCIDTorlRmmdWNSeXohWbykTdGwz60bYghg-Njg9plPvTXnefvImQRz4V6xmaRT_zYfE1hCVwysT3txwBIj3ZWprvVflzrSpDzdPZ1IhB77HhsjNKaSHM672QI3X4GVAZn-U8sE0Q9pzarB1g==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtdGVycmEtMjAyNjA3MDl8b3BlbmFpIn0\",\"format\":\"openai-responses-v1\",\"id\":\"rs_022e5a14e46fdc79016aad68bdc16c87d199eadcd504e76097\",\"index\":1}]}}],\"usage\":{\"prompt_tokens\":2536,\"completion_tokens\":845,\"total_tokens\":3381,\"cost\":0.0164785,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2533,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0164785,\"upstream_inference_prompt_cost\":0.0063385,\"upstream_inference_completions_cost\":0.01014},\"completion_tokens_details\":{\"reasoning_tokens\":40,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-terra\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-terra-20260709\",\"selected\":true}]},\"generation_time\":8772}}",
+      "response_sha256_before_redaction": "901a475ccc6553705b3b589caf76c525c8629421400cdb554ec12e0515f24d91",
+      "response_envelope": {
+        "id": "gen-1789749436-dxyI8KD86nQD9ViF1j2o",
+        "object": "chat.completion",
+        "created": 1789749436,
+        "model": "openai/gpt-5.6-terra",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Tern rehearsal is scheduled to start at 08:10.\",\"I2\":\"Gull rehearsal is scheduled to start at 13:20.\",\"I3\":\"Tern rehearsal has session code TRN-X4.\",\"I4\":\"Tern rehearsal is in Room Vela.\",\"I5\":\"Tern rehearsal lasts 35 minutes.\",\"I6\":\"Tern rehearsal is facilitated by Person Zerin.\",\"I7\":\"Tern rehearsal's agenda is opening practice.\",\"N1\":\"Tern rehearsal's scheduled start time is 11:25.\",\"N2\":\"Tern rehearsal's session code is TRN-X4.\",\"Q\":\"What is the current scheduled rehearsal start time of Tern rehearsal?\",\"U1\":\"Tern rehearsal's scheduled start time has changed to 08:35.\",\"U2\":\"Tern rehearsal's scheduled start time has changed to 09:05.\",\"U3\":\"Tern rehearsal's scheduled start time has changed to 09:40.\",\"U4\":\"Tern rehearsal's scheduled start time has changed to 10:15.\",\"U5\":\"Tern rehearsal's scheduled start time has changed to 10:50.\",\"U6\":\"Tern rehearsal's scheduled start time has changed to 11:25.\",\"U7\":\"Tern rehearsal's scheduled start time has changed to 12:05.\"},\"low\":{\"I1\":\"Tern rehearsal is scheduled to start at 08:10.\",\"I2\":\"Gull rehearsal is scheduled to start at 13:20.\",\"I3\":\"Tern rehearsal has session code TRN-X4.\",\"I4\":\"Tern rehearsal is in Room Vela.\",\"I5\":\"Tern rehearsal lasts 35 minutes.\",\"I6\":\"Tern rehearsal is facilitated by Person Zerin.\",\"I7\":\"Tern rehearsal's agenda is opening practice.\",\"N1\":\"Tern rehearsal's scheduled start time is 08:10.\",\"N2\":\"Tern rehearsal's session code is TRN-X4.\",\"Q\":\"What is the current scheduled rehearsal start time of Tern rehearsal?\",\"U1\":\"Gull rehearsal's scheduled start time has changed to 13:55.\",\"U2\":\"Tern rehearsal's room has changed to Room Lyra.\",\"U3\":\"Tern rehearsal's duration has changed to 45 minutes.\",\"U4\":\"Tern rehearsal's facilitator has changed to Person Odel.\",\"U5\":\"Tern rehearsal's agenda has changed to ensemble practice.\",\"U6\":\"Tern rehearsal's room has changed to Room Ara.\",\"U7\":\"Tern rehearsal's scheduled start time has changed to 12:05.\"},\"medium\":{\"I1\":\"Tern rehearsal is scheduled to start at 08:10.\",\"I2\":\"Gull rehearsal is scheduled to start at 13:20.\",\"I3\":\"Tern rehearsal has session code TRN-X4.\",\"I4\":\"Tern rehearsal is in Room Vela.\",\"I5\":\"Tern rehearsal lasts 35 minutes.\",\"I6\":\"Tern rehearsal is facilitated by Person Zerin.\",\"I7\":\"Tern rehearsal's agenda is opening practice.\",\"N1\":\"Tern rehearsal's scheduled start time is 10:50.\",\"N2\":\"Tern rehearsal's session code is TRN-X4.\",\"Q\":\"What is the current scheduled rehearsal start time of Tern rehearsal?\",\"U1\":\"Tern rehearsal's scheduled start time has changed to 08:35.\",\"U2\":\"Gull rehearsal's scheduled start time has changed to 13:55.\",\"U3\":\"Tern rehearsal's scheduled start time has changed to 09:40.\",\"U4\":\"Tern rehearsal's duration has changed to 45 minutes.\",\"U5\":\"Tern rehearsal's scheduled start time has changed to 10:50.\",\"U6\":\"Tern rehearsal's facilitator has changed to Person Odel.\",\"U7\":\"Tern rehearsal's scheduled start time has changed to 12:05.\"}}",
+              "refusal": null,
+              "reasoning": "**Clarifying JSON requirements**\n\nI need to ensure that all fields in the JSON are exact strings. The wording should be consistent throughout. For the query, it should focus on a low target only for U7. I think it’s best to state clearly, “The scheduled start time for ... has changed to,” just to avoid any ambiguity in the future. It’s important to communicate this straightforwardly to prevent any confusion.",
+              "reasoning_details": [
+                {
+                  "type": "reasoning.summary",
+                  "summary": "**Clarifying JSON requirements**\n\nI need to ensure that all fields in the JSON are exact strings. The wording should be consistent throughout. For the query, it should focus on a low target only for U7. I think it’s best to state clearly, “The scheduled start time for ... has changed to,” just to avoid any ambiguity in the future. It’s important to communicate this straightforwardly to prevent any confusion.",
+                  "format": "openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.encrypted",
+                  "data": "gAAAAABqrWi_af2metj4co_1Of8COiVQbxJp5LrdQURiOSOJKI3Whhf4Kmw-AtuaF718zUdwBC1RMgjYBb_4tKzoiMDNlMVbhPuiWrIMJx3nD0CsaXGOyWLQJWO0CGvekdTsSoMjGv-rFzekCCec-ZsSeYpYj2Lu0QgHlRmNG690FwxrI9_DUQ9wYp-dwwpMXb8jat7r3bscVrdpdt1VohbzE8LyWjZbhd1kUzHVwAOOxDgcB0042OQUY26vSZ18wmLKJ6EaD3mwPzE-QgNWmdtiuTO79ABw13-QSkxqID_R9Cl5kp_IeSZ3ErTfMpanmqgKRPra5fFhe1lT0_L1-EIaQ9FX9uXk9PDtFSD7_OjzX69GMj-UWQDV13N0IsR_67C6kc-XIeN6G-1lhmnNeCZ1Pl9VPKR0PHvMQTsEaMEq2X_GmNKpIMsKjwuj0H6vvj564FSIH2VBGoUisY-HmugzPMoec8CUy61bF0a-Gq1SOP_KXmnpPPA0jww3u06IxPkaD5c6CXhhCW_hgn5cf7dbvHojZwkBdKInRPCyV8zGnGAD89i6G3EEPLmtKEF4VNSxogWG5EiIVYcLRUaBHSXWJEWOYzY0RXLwydTR7VFzfyA5FiPcn-6Qz87HD2FXpiCob1bvIXQlVHrvbXQwVXDhH78AyJ0BaWmizGycj_6sMV5tUqK-_lX6ZUrm2mVqE9SIG5VVhuGYaZV4KmW8HfWMsqEHXpt2Ui2cRCaitWCtHrTT9EVZSnOyzb4FnZ0ZGmBR9tKA_zCG8Rtp0j8TuQ3Ls5GcvSakWbrWwYiyWjz_K1y4PJwIy7rBywpeHvstq-pGFo4WbfupTNfJ_Em_Vi6JccNzALk8f46ZCVOFYbna9u2H-jmfGQ81dc5_gDGgFGT8QupoBphZRBdMi3yD3xS1Ocfz7LvnlpNqoYG5GYUri0yP5IuInnMX_OFeoEOU9a4uz7Xhp71q7_QBX80d_MUytMzcH3b3udorV1WwlF08WzyYTusmMEXwBq_DcThpqwyv7h0fBxoE-N5mWjJYhQPBR-AIFBci5VqDzvPzd_HMFolGWdumvI2BUlBM4P17K1odrs2LVmJMGOrOKwPt0MxB74rKxBGtQPTYs6kCFoi7OzzeVRnFOtVgIALQdmTl-AfVBCot_b87IT4QVoSfyB1M3tCpk1Bb0KUhvo-nV1TGmQsX2eaV-G7Llb_XwCWmcXsuGBV1qc-6rEetIcBpwMkXnjWpXHrzwVW9e-tpUHIi4hHAE8a096FhPWCxVLMsdRtMIBjjR_8TU5XbrcCdIZ5iI9GDsm3zOGbqnRSHwSil6qwM1G8p_7JaRraJ-lD3GE3UCgQg_DGlqdbxBTuORMedN_UqbibbSt4ypITuJN-sx_lSqA0B7vNMp7LzkPj9iyiP75x5CWgdd29m3CCIDTorlRmmdWNSeXohWbykTdGwz60bYghg-Njg9plPvTXnefvImQRz4V6xmaRT_zYfE1hCVwysT3txwBIj3ZWprvVflzrSpDzdPZ1IhB77HhsjNKaSHM672QI3X4GVAZn-U8sE0Q9pzarB1g==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtdGVycmEtMjAyNjA3MDl8b3BlbmFpIn0",
+                  "format": "openai-responses-v1",
+                  "id": "rs_022e5a14e46fdc79016aad68bdc16c87d199eadcd504e76097",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2536,
+          "completion_tokens": 845,
+          "total_tokens": 3381,
+          "cost": 0.0164785,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2533,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0164785,
+            "upstream_inference_prompt_cost": 0.0063385,
+            "upstream_inference_completions_cost": 0.01014
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 40,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-terra",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-terra-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 8772
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-terra",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-terra-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 8772
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Tern rehearsal is scheduled to start at 08:10.",
+          "I2": "Gull rehearsal is scheduled to start at 13:20.",
+          "I3": "Tern rehearsal has session code TRN-X4.",
+          "I4": "Tern rehearsal is in Room Vela.",
+          "I5": "Tern rehearsal lasts 35 minutes.",
+          "I6": "Tern rehearsal is facilitated by Person Zerin.",
+          "I7": "Tern rehearsal's agenda is opening practice.",
+          "N1": "Tern rehearsal's scheduled start time is 11:25.",
+          "N2": "Tern rehearsal's session code is TRN-X4.",
+          "Q": "What is the current scheduled rehearsal start time of Tern rehearsal?",
+          "U1": "Tern rehearsal's scheduled start time has changed to 08:35.",
+          "U2": "Tern rehearsal's scheduled start time has changed to 09:05.",
+          "U3": "Tern rehearsal's scheduled start time has changed to 09:40.",
+          "U4": "Tern rehearsal's scheduled start time has changed to 10:15.",
+          "U5": "Tern rehearsal's scheduled start time has changed to 10:50.",
+          "U6": "Tern rehearsal's scheduled start time has changed to 11:25.",
+          "U7": "Tern rehearsal's scheduled start time has changed to 12:05."
+        },
+        "low": {
+          "I1": "Tern rehearsal is scheduled to start at 08:10.",
+          "I2": "Gull rehearsal is scheduled to start at 13:20.",
+          "I3": "Tern rehearsal has session code TRN-X4.",
+          "I4": "Tern rehearsal is in Room Vela.",
+          "I5": "Tern rehearsal lasts 35 minutes.",
+          "I6": "Tern rehearsal is facilitated by Person Zerin.",
+          "I7": "Tern rehearsal's agenda is opening practice.",
+          "N1": "Tern rehearsal's scheduled start time is 08:10.",
+          "N2": "Tern rehearsal's session code is TRN-X4.",
+          "Q": "What is the current scheduled rehearsal start time of Tern rehearsal?",
+          "U1": "Gull rehearsal's scheduled start time has changed to 13:55.",
+          "U2": "Tern rehearsal's room has changed to Room Lyra.",
+          "U3": "Tern rehearsal's duration has changed to 45 minutes.",
+          "U4": "Tern rehearsal's facilitator has changed to Person Odel.",
+          "U5": "Tern rehearsal's agenda has changed to ensemble practice.",
+          "U6": "Tern rehearsal's room has changed to Room Ara.",
+          "U7": "Tern rehearsal's scheduled start time has changed to 12:05."
+        },
+        "medium": {
+          "I1": "Tern rehearsal is scheduled to start at 08:10.",
+          "I2": "Gull rehearsal is scheduled to start at 13:20.",
+          "I3": "Tern rehearsal has session code TRN-X4.",
+          "I4": "Tern rehearsal is in Room Vela.",
+          "I5": "Tern rehearsal lasts 35 minutes.",
+          "I6": "Tern rehearsal is facilitated by Person Zerin.",
+          "I7": "Tern rehearsal's agenda is opening practice.",
+          "N1": "Tern rehearsal's scheduled start time is 10:50.",
+          "N2": "Tern rehearsal's session code is TRN-X4.",
+          "Q": "What is the current scheduled rehearsal start time of Tern rehearsal?",
+          "U1": "Tern rehearsal's scheduled start time has changed to 08:35.",
+          "U2": "Gull rehearsal's scheduled start time has changed to 13:55.",
+          "U3": "Tern rehearsal's scheduled start time has changed to 09:40.",
+          "U4": "Tern rehearsal's duration has changed to 45 minutes.",
+          "U5": "Tern rehearsal's scheduled start time has changed to 10:50.",
+          "U6": "Tern rehearsal's facilitator has changed to Person Odel.",
+          "U7": "Tern rehearsal's scheduled start time has changed to 12:05."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2536,
+        "completion_tokens": 845,
+        "total_tokens": 3381,
+        "reasoning_tokens": 40,
+        "cached_tokens": 0,
+        "cost": 0.0164785
+      },
+      "latency_seconds": 9.460000118007883,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "gq-scheduling-01",
+  "fixture_sha256": "5d7894e20138319c26fde6227231add0ab5d17a4a1d44f91f30d35c0e66240ea",
+  "projection_sha256": "e457345a3567be0e77659009363ef58b95dc309b51f8125016909a740167d648",
+  "logical_call_index": 1,
+  "provenance": {
+    "source_commit": "7b28ea23dcac316819cf2858e3bf26769b07b275",
+    "candidate_profile": "FALLBACK",
+    "selected_slot": "G1",
+    "fixture_set_commit": "683c0416c5bf47c83021408f26bc7a7ab5e8becc",
+    "fixture_manifest_sha256": "ecce7e579f02f64bb5578d8b18b9164483da1c5438544f21a89e17d7a2aaa1f9",
+    "execution_config_sha256": "1316b2b1f3a7f5f15f64d5b3b2ef379c60f96edddff8b5f62bf0e712d7099e1b",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "procedure_version": "generator-qualification-procedure/1.0.0",
+    "implementation": {
+      "status": "FROZEN FOR LIVE EXECUTION",
+      "freeze_commit": "585b5e2844504fec703287f8dd4869668615671d",
+      "source_sha256": {
+        "experiments/qualify_generators.py": "89f82fe9f617275d117d793f936ca1d81fd63aa2ed6f138a8bd8e5b4bc731258",
+        "experiments/probe_generators.py": "bf414f46d02400127ba60aa0af1bbcfd4f72c12acba0cdcc8718c9b34774c9cf",
+        "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+      }
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "automated": {
+    "status": "PASS",
+    "meaning": "No deterministic violation detected is not semantic qualification.",
+    "findings": []
+  },
+  "output_sha256": "e639c6e13c49c36d7cd673c89ee97c282e05a699535e568a6a9cc67519da16dc"
+}

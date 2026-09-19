@@ -1,0 +1,114 @@
+{
+  "schema_version": "crst-pilot-scoring-review/1.0.0",
+  "reviewer": "Muhammad Rafly Ash Shiddiqi",
+  "review_date": "2026-09-20",
+  "decision": "APPROVED",
+  "backbone_collection_sha256": "ee18a9d719a02054ecc782f9ec1f74f726ce1894b5d2dc31dcac2af7e0e4af6f",
+  "backbone_sha256sums_sha256": "80d2187033731e5518815fbdb306311f79e04ed2ed41261ee68a3c63942b8625",
+  "naturalization_audit_sha256": "0ff0962bef5b5a3714bab049831ff5a135e308bcc8f8625a91de0fb0cd172f48",
+  "rows_reviewed": 24,
+  "classifications_confirmed": 24,
+  "disagreements": 0,
+  "reviewed_rows": [
+    {
+      "run_id": "pilot-scheduling-01/low/M1",
+      "classification": "STALE_ERROR"
+    },
+    {
+      "run_id": "pilot-scheduling-01/low/B0",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-scheduling-01/low/M2",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-scheduling-01/low/M3",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M1",
+      "classification": "STALE_ERROR"
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/B0",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M2",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-scheduling-01/high/M1",
+      "classification": "STALE_ERROR"
+    },
+    {
+      "run_id": "pilot-scheduling-01/high/B0",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-scheduling-01/high/M2",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-scheduling-01/high/M3",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-travel-01/low/M1",
+      "classification": "STALE_ERROR"
+    },
+    {
+      "run_id": "pilot-travel-01/low/B0",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-travel-01/low/M2",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-travel-01/low/M3",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "classification": "STALE_ERROR"
+    },
+    {
+      "run_id": "pilot-travel-01/medium/B0",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M2",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M3",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-travel-01/high/M1",
+      "classification": "STALE_ERROR"
+    },
+    {
+      "run_id": "pilot-travel-01/high/B0",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-travel-01/high/M2",
+      "classification": "CURRENT_CORRECT"
+    },
+    {
+      "run_id": "pilot-travel-01/high/M3",
+      "classification": "CURRENT_CORRECT"
+    }
+  ],
+  "reviewed_rows_sha256": "84d1d7324e62adc2c988ef939447b98a7c358949bb503688c286715d6ec0dca7",
+  "checklist_item": "SCR-03",
+  "scr_03": "PASS_RESEARCHER_REVIEW",
+  "scope": "Mechanical cross-check of each final-answer classification against the deterministic scorer. No policy interpretation, ranking, effect estimate or power-analysis input is recorded or implied."
+}

@@ -1,0 +1,266 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. For each variant it gives exactly two facts to realize: the final target revision, named U7, and the dedicated same-state reaffirmation, named N2. Return all three variants in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each of the two named events, U7 and N2. Do not add, delete, omit, merge, split, or reorder them, and do not produce any other event or field. Each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, and the supplied value. Use the supplied names and value expressions rather than inventing aliases or alternative values. Do not add state-changing facts, implications, qualifications, or conditions, and do not introduce any value that is not supplied.\\n\\nU7 has changed_state semantics. It must clearly communicate an actual revision and state its supplied current value for its entity and attribute. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken the change into a possibility, a plan contingent on a condition, a hypothetical, or a same-state reaffirmation. Do not state or imply any previous or superseded value: none is supplied and none may be invented.\\n\\nN2 has same_state semantics. It must state or reaffirm only its supplied still-current value for its entity and attribute, without introducing a change, a revision cue, or a historical value. Do not exchange changed-state and same-state meanings. N2 concerns the dedicated N2 state supplied in the input. It must not repeat, revise, or otherwise alter U7.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, or questions. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"kickoff_time\\\",\\\"meaning\\\":\\\"scheduled workshop kickoff time\\\",\\\"units_or_interpretation\\\":\\\"24-hour local clock; one synthetic day\\\"},{\\\"attribute_id\\\":\\\"hall_code\\\",\\\"meaning\\\":\\\"workshop hall identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"}],\\\"domain\\\":\\\"Scheduling\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"name\\\":\\\"Cedar workshop\\\"}],\\\"scenario_id\\\":\\\"b0cal-scheduling-01\\\",\\\"variants\\\":{\\\"high\\\":{\\\"N2\\\":{\\\"attribute_id\\\":\\\"hall_code\\\",\\\"current_value\\\":\\\"HAL-C52\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"semantics\\\":\\\"same_state\\\"},\\\"U7\\\":{\\\"attribute_id\\\":\\\"kickoff_time\\\",\\\"current_value\\\":\\\"11:40\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"semantics\\\":\\\"changed_state\\\"}},\\\"low\\\":{\\\"N2\\\":{\\\"attribute_id\\\":\\\"hall_code\\\",\\\"current_value\\\":\\\"HAL-C52\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"semantics\\\":\\\"same_state\\\"},\\\"U7\\\":{\\\"attribute_id\\\":\\\"kickoff_time\\\",\\\"current_value\\\":\\\"11:40\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"semantics\\\":\\\"changed_state\\\"}},\\\"medium\\\":{\\\"N2\\\":{\\\"attribute_id\\\":\\\"hall_code\\\",\\\"current_value\\\":\\\"HAL-C52\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"semantics\\\":\\\"same_state\\\"},\\\"U7\\\":{\\\"attribute_id\\\":\\\"kickoff_time\\\",\\\"current_value\\\":\\\"11:40\\\",\\\"entity_id\\\":\\\"b0cal-scheduling-01-primary\\\",\\\"semantics\\\":\\\"changed_state\\\"}}}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-sol\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"b0_suffix_naturalization_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"N2\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"U7\",\"N2\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "77419a3de10266ba50952eea87322a1a64079fc55ec6bdfd5c163cb1ba095bb9",
+  "request_body": {
+    "model": "openai/gpt-5.6-sol",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. For each variant it gives exactly two facts to realize: the final target revision, named U7, and the dedicated same-state reaffirmation, named N2. Return all three variants in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each of the two named events, U7 and N2. Do not add, delete, omit, merge, split, or reorder them, and do not produce any other event or field. Each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, and the supplied value. Use the supplied names and value expressions rather than inventing aliases or alternative values. Do not add state-changing facts, implications, qualifications, or conditions, and do not introduce any value that is not supplied.\n\nU7 has changed_state semantics. It must clearly communicate an actual revision and state its supplied current value for its entity and attribute. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken the change into a possibility, a plan contingent on a condition, a hypothetical, or a same-state reaffirmation. Do not state or imply any previous or superseded value: none is supplied and none may be invented.\n\nN2 has same_state semantics. It must state or reaffirm only its supplied still-current value for its entity and attribute, without introducing a change, a revision cue, or a historical value. Do not exchange changed-state and same-state meanings. N2 concerns the dedicated N2 state supplied in the input. It must not repeat, revise, or otherwise alter U7.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, or questions. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"kickoff_time\",\"meaning\":\"scheduled workshop kickoff time\",\"units_or_interpretation\":\"24-hour local clock; one synthetic day\"},{\"attribute_id\":\"hall_code\",\"meaning\":\"workshop hall identifier\",\"units_or_interpretation\":\"opaque code\"}],\"domain\":\"Scheduling\",\"entities\":[{\"entity_id\":\"b0cal-scheduling-01-primary\",\"name\":\"Cedar workshop\"}],\"scenario_id\":\"b0cal-scheduling-01\",\"variants\":{\"high\":{\"N2\":{\"attribute_id\":\"hall_code\",\"current_value\":\"HAL-C52\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"semantics\":\"same_state\"},\"U7\":{\"attribute_id\":\"kickoff_time\",\"current_value\":\"11:40\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"semantics\":\"changed_state\"}},\"low\":{\"N2\":{\"attribute_id\":\"hall_code\",\"current_value\":\"HAL-C52\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"semantics\":\"same_state\"},\"U7\":{\"attribute_id\":\"kickoff_time\",\"current_value\":\"11:40\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"semantics\":\"changed_state\"}},\"medium\":{\"N2\":{\"attribute_id\":\"hall_code\",\"current_value\":\"HAL-C52\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"semantics\":\"same_state\"},\"U7\":{\"attribute_id\":\"kickoff_time\",\"current_value\":\"11:40\",\"entity_id\":\"b0cal-scheduling-01-primary\",\"semantics\":\"changed_state\"}}}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "b0_suffix_naturalization_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "U7",
+                "N2"
+              ],
+              "properties": {
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T13:00:26.789826+00:00",
+      "requested_model": "openai/gpt-5.6-sol",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-sol",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789822827-vETHdM6mYBTPXqueNLVm",
+      "http_status": 200,
+      "raw_response": "\n         \n{\"id\":\"gen-1789822827-vETHdM6mYBTPXqueNLVm\",\"object\":\"chat.completion\",\"created\":1789822827,\"model\":\"openai/gpt-5.6-sol\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"N2\\\":\\\"The Cedar workshop hall code remains HAL-C52.\\\",\\\"U7\\\":\\\"The Cedar workshop's scheduled kickoff time has been updated to 11:40.\\\"},\\\"low\\\":{\\\"N2\\\":\\\"The Cedar workshop hall code is HAL-C52.\\\",\\\"U7\\\":\\\"The Cedar workshop kickoff time is now 11:40.\\\"},\\\"medium\\\":{\\\"N2\\\":\\\"The hall code for the Cedar workshop is still HAL-C52.\\\",\\\"U7\\\":\\\"The scheduled kickoff time for the Cedar workshop has changed to 11:40.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":874,\"completion_tokens\":119,\"total_tokens\":993,\"cost\":0.002938,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002938,\"upstream_inference_prompt_cost\":0.001748,\"upstream_inference_completions_cost\":0.00119},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-sol\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-sol-20260709\",\"selected\":true}]},\"generation_time\":2277}}",
+      "response_sha256_before_redaction": "0954824568659e34ddd61a34f459e595e5219ac7481784aeb9dd910e688df5e5",
+      "response_envelope": {
+        "id": "gen-1789822827-vETHdM6mYBTPXqueNLVm",
+        "object": "chat.completion",
+        "created": 1789822827,
+        "model": "openai/gpt-5.6-sol",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"N2\":\"The Cedar workshop hall code remains HAL-C52.\",\"U7\":\"The Cedar workshop's scheduled kickoff time has been updated to 11:40.\"},\"low\":{\"N2\":\"The Cedar workshop hall code is HAL-C52.\",\"U7\":\"The Cedar workshop kickoff time is now 11:40.\"},\"medium\":{\"N2\":\"The hall code for the Cedar workshop is still HAL-C52.\",\"U7\":\"The scheduled kickoff time for the Cedar workshop has changed to 11:40.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 874,
+          "completion_tokens": 119,
+          "total_tokens": 993,
+          "cost": 0.002938,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.002938,
+            "upstream_inference_prompt_cost": 0.001748,
+            "upstream_inference_completions_cost": 0.00119
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-sol",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-sol-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 2277
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-sol",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-sol-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 2277
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "N2": "The Cedar workshop hall code remains HAL-C52.",
+          "U7": "The Cedar workshop's scheduled kickoff time has been updated to 11:40."
+        },
+        "low": {
+          "N2": "The Cedar workshop hall code is HAL-C52.",
+          "U7": "The Cedar workshop kickoff time is now 11:40."
+        },
+        "medium": {
+          "N2": "The hall code for the Cedar workshop is still HAL-C52.",
+          "U7": "The scheduled kickoff time for the Cedar workshop has changed to 11:40."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 874,
+        "completion_tokens": 119,
+        "total_tokens": 993,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.002938
+      },
+      "latency_seconds": 2.8781782320002094,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "b0cal-scheduling-01",
+  "projection_sha256": "e44f2665e65f7661ba1a7e82adf41687901dc7ad1b6acc9d2c8fcb7df06a3a69",
+  "logical_call_index": 1,
+  "attempt": "attempt-01",
+  "procedure_version": "b0-suffix-collection/1.0.0",
+  "output_sha256": "fb10333bf39822dc8add769cb0d8893361e66ee2755a1e1682cca6590ec76664",
+  "automated": {
+    "status": "PASS",
+    "checks": {
+      "low": {
+        "U7": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_superseded_value": "PASS"
+        },
+        "N2": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_historical_or_superseded_value": "PASS"
+        }
+      },
+      "medium": {
+        "U7": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_superseded_value": "PASS"
+        },
+        "N2": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_historical_or_superseded_value": "PASS"
+        }
+      },
+      "high": {
+        "U7": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_superseded_value": "PASS"
+        },
+        "N2": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_historical_or_superseded_value": "PASS"
+        }
+      }
+    },
+    "meaning": "Deterministic Level-1 checks; they never stop collection and are not semantic qualification."
+  }
+}

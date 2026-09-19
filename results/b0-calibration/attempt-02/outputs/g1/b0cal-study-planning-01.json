@@ -1,0 +1,343 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"focus_text\\\",\\\"meaning\\\":\\\"current focus text\\\",\\\"units_or_interpretation\\\":\\\"fictional text title\\\"},{\\\"attribute_id\\\":\\\"circle_code\\\",\\\"meaning\\\":\\\"reading circle identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"session_slot\\\",\\\"meaning\\\":\\\"circle session slot\\\",\\\"units_or_interpretation\\\":\\\"slot label\\\"},{\\\"attribute_id\\\":\\\"chapter_range\\\",\\\"meaning\\\":\\\"assigned chapter range\\\",\\\"units_or_interpretation\\\":\\\"chapters\\\"},{\\\"attribute_id\\\":\\\"circle_host\\\",\\\"meaning\\\":\\\"circle host\\\",\\\"units_or_interpretation\\\":\\\"synthetic person\\\"},{\\\"attribute_id\\\":\\\"note_format\\\",\\\"meaning\\\":\\\"note format\\\",\\\"units_or_interpretation\\\":\\\"format label\\\"}],\\\"domain\\\":\\\"Study Planning\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"b0cal-study-planning-01-primary\\\",\\\"name\\\":\\\"Reading circle Thistle\\\"},{\\\"entity_id\\\":\\\"b0cal-study-planning-01-distractor\\\",\\\"name\\\":\\\"Reading circle Bracken\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_a\\\",\\\"I2\\\":\\\"k_b\\\",\\\"I3\\\":\\\"k_c\\\",\\\"I4\\\":\\\"k_d\\\",\\\"I5\\\":\\\"k_target\\\",\\\"I6\\\":\\\"k_hard\\\",\\\"I7\\\":\\\"k_n2\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"focus_text\\\",\\\"entity_id\\\":\\\"b0cal-study-planning-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current focus text of Reading circle Thistle.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"focus_text\\\",\\\"entity_id\\\":\\\"b0cal-study-planning-01-primary\\\",\\\"initial_value\\\":\\\"Ledger of Moths\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"focus_text\\\",\\\"entity_id\\\":\\\"b0cal-study-planning-01-distractor\\\",\\\"initial_value\\\":\\\"The Quiet Foundry\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"circle_code\\\",\\\"entity_id\\\":\\\"b0cal-study-planning-01-primary\\\",\\\"initial_value\\\":\\\"RDC-T85\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"session_slot\\\",\\\"entity_id\\\":\\\"b0cal-study-planning-01-primary\\\",\\\"initial_value\\\":\\\"Slot Dawn\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"chapter_range\\\",\\\"entity_id\\\":\\\"b0cal-study-planning-01-primary\\\",\\\"initial_value\\\":\\\"chapters 1 to 3\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"circle_host\\\",\\\"entity_id\\\":\\\"b0cal-study-planning-01-primary\\\",\\\"initial_value\\\":\\\"Halden Voss\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"note_format\\\",\\\"entity_id\\\":\\\"b0cal-study-planning-01-primary\\\",\\\"initial_value\\\":\\\"margin notes\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"Slot Dawn\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"chapters 1 to 3\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Halden Voss\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"margin notes\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Ledger of Moths\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"The Quiet Foundry\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"RDC-T85\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"The Salt Orchard\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Notes on Lanterns\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"A Grammar of Tides\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"The Copper Almanac\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Field Guide to Echoes\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"The Glass Cartographer\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"The Glass Cartographer\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Winter Inventory\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"RDC-T85\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"Slot Dawn\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"chapters 1 to 3\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Halden Voss\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"margin notes\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Ledger of Moths\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"The Quiet Foundry\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"RDC-T85\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"chapters 4 to 6\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Marisol Teague\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Atlas of Small Rivers\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Corin Ashby\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"index cards\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Slot Noon\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Ledger of Moths\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Winter Inventory\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"RDC-T85\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"Slot Dawn\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"chapters 1 to 3\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Halden Voss\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"margin notes\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Ledger of Moths\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"The Quiet Foundry\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"RDC-T85\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"The Salt Orchard\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"index cards\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"A Grammar of Tides\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Slot Noon\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Field Guide to Echoes\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Atlas of Small Rivers\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Field Guide to Echoes\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Winter Inventory\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"RDC-T85\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-sol\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "811ffbaa0f89eef9fb3c776988fc8f9ac4227a777f210cf92cab9e5baabf391d",
+  "request_body": {
+    "model": "openai/gpt-5.6-sol",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"focus_text\",\"meaning\":\"current focus text\",\"units_or_interpretation\":\"fictional text title\"},{\"attribute_id\":\"circle_code\",\"meaning\":\"reading circle identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"session_slot\",\"meaning\":\"circle session slot\",\"units_or_interpretation\":\"slot label\"},{\"attribute_id\":\"chapter_range\",\"meaning\":\"assigned chapter range\",\"units_or_interpretation\":\"chapters\"},{\"attribute_id\":\"circle_host\",\"meaning\":\"circle host\",\"units_or_interpretation\":\"synthetic person\"},{\"attribute_id\":\"note_format\",\"meaning\":\"note format\",\"units_or_interpretation\":\"format label\"}],\"domain\":\"Study Planning\",\"entities\":[{\"entity_id\":\"b0cal-study-planning-01-primary\",\"name\":\"Reading circle Thistle\"},{\"entity_id\":\"b0cal-study-planning-01-distractor\",\"name\":\"Reading circle Bracken\"}],\"initial_order\":{\"I1\":\"k_a\",\"I2\":\"k_b\",\"I3\":\"k_c\",\"I4\":\"k_d\",\"I5\":\"k_target\",\"I6\":\"k_hard\",\"I7\":\"k_n2\"},\"question_intent\":{\"attribute_id\":\"focus_text\",\"entity_id\":\"b0cal-study-planning-01-primary\",\"intent\":\"Ask only for the current focus text of Reading circle Thistle.\"},\"state_keys\":[{\"attribute_id\":\"focus_text\",\"entity_id\":\"b0cal-study-planning-01-primary\",\"initial_value\":\"Ledger of Moths\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"focus_text\",\"entity_id\":\"b0cal-study-planning-01-distractor\",\"initial_value\":\"The Quiet Foundry\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"circle_code\",\"entity_id\":\"b0cal-study-planning-01-primary\",\"initial_value\":\"RDC-T85\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"session_slot\",\"entity_id\":\"b0cal-study-planning-01-primary\",\"initial_value\":\"Slot Dawn\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"chapter_range\",\"entity_id\":\"b0cal-study-planning-01-primary\",\"initial_value\":\"chapters 1 to 3\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"circle_host\",\"entity_id\":\"b0cal-study-planning-01-primary\",\"initial_value\":\"Halden Voss\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"note_format\",\"entity_id\":\"b0cal-study-planning-01-primary\",\"initial_value\":\"margin notes\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"Slot Dawn\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"chapters 1 to 3\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Halden Voss\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"margin notes\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Ledger of Moths\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"The Quiet Foundry\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"RDC-T85\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"The Salt Orchard\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Notes on Lanterns\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"A Grammar of Tides\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"The Copper Almanac\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Field Guide to Echoes\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"The Glass Cartographer\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"The Glass Cartographer\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Winter Inventory\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"RDC-T85\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"Slot Dawn\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"chapters 1 to 3\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Halden Voss\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"margin notes\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Ledger of Moths\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"The Quiet Foundry\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"RDC-T85\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"chapters 4 to 6\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"Marisol Teague\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Atlas of Small Rivers\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Corin Ashby\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"index cards\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Slot Noon\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Ledger of Moths\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Winter Inventory\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"RDC-T85\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"Slot Dawn\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"chapters 1 to 3\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Halden Voss\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"margin notes\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Ledger of Moths\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"The Quiet Foundry\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"RDC-T85\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"The Salt Orchard\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"index cards\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"A Grammar of Tides\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Slot Noon\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Field Guide to Echoes\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Atlas of Small Rivers\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Field Guide to Echoes\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Winter Inventory\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"RDC-T85\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T11:52:10.481881+00:00",
+      "requested_model": "openai/gpt-5.6-sol",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-sol",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789818730-K5jdD1ohFSpT0NaB1DUJ",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n{\"id\":\"gen-1789818730-K5jdD1ohFSpT0NaB1DUJ\",\"object\":\"chat.completion\",\"created\":1789818730,\"model\":\"openai/gpt-5.6-sol\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Reading circle Thistle's session slot is Slot Dawn.\\\",\\\"I2\\\":\\\"Reading circle Thistle's assigned chapter range is chapters 1 to 3.\\\",\\\"I3\\\":\\\"The host of Reading circle Thistle is Halden Voss.\\\",\\\"I4\\\":\\\"Reading circle Thistle uses margin notes as its note format.\\\",\\\"I5\\\":\\\"The focus text of Reading circle Thistle is Ledger of Moths.\\\",\\\"I6\\\":\\\"The focus text of Reading circle Bracken is The Quiet Foundry.\\\",\\\"I7\\\":\\\"Reading circle Thistle's circle code is RDC-T85.\\\",\\\"N1\\\":\\\"Reading circle Thistle's focus text remains The Glass Cartographer.\\\",\\\"N2\\\":\\\"Reading circle Thistle's circle code remains RDC-T85.\\\",\\\"Q\\\":\\\"What is the current focus text of Reading circle Thistle?\\\",\\\"U1\\\":\\\"Reading circle Thistle's focus text has changed to The Salt Orchard.\\\",\\\"U2\\\":\\\"Reading circle Thistle's focus text is now Notes on Lanterns.\\\",\\\"U3\\\":\\\"The focus text of Reading circle Thistle has been updated to A Grammar of Tides.\\\",\\\"U4\\\":\\\"Reading circle Thistle's focus text has changed to The Copper Almanac.\\\",\\\"U5\\\":\\\"The focus text of Reading circle Thistle is now Field Guide to Echoes.\\\",\\\"U6\\\":\\\"Reading circle Thistle's focus text has been updated to The Glass Cartographer.\\\",\\\"U7\\\":\\\"Reading circle Thistle's focus text is now Winter Inventory.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"The session slot for Reading circle Thistle is Slot Dawn.\\\",\\\"I2\\\":\\\"Reading circle Thistle is assigned chapters 1 to 3.\\\",\\\"I3\\\":\\\"Reading circle Thistle's host is Halden Voss.\\\",\\\"I4\\\":\\\"The note format for Reading circle Thistle is margin notes.\\\",\\\"I5\\\":\\\"Reading circle Thistle's focus text is Ledger of Moths.\\\",\\\"I6\\\":\\\"Reading circle Bracken's focus text is The Quiet Foundry.\\\",\\\"I7\\\":\\\"The circle code for Reading circle Thistle is RDC-T85.\\\",\\\"N1\\\":\\\"The focus text of Reading circle Thistle remains Ledger of Moths.\\\",\\\"N2\\\":\\\"The circle code for Reading circle Thistle remains RDC-T85.\\\",\\\"Q\\\":\\\"What is the current focus text of Reading circle Thistle?\\\",\\\"U1\\\":\\\"Reading circle Thistle's assigned chapter range has changed to chapters 4 to 6.\\\",\\\"U2\\\":\\\"The host of Reading circle Thistle is now Marisol Teague.\\\",\\\"U3\\\":\\\"Reading circle Bracken's focus text has been updated to Atlas of Small Rivers.\\\",\\\"U4\\\":\\\"Reading circle Thistle's host has changed to Corin Ashby.\\\",\\\"U5\\\":\\\"The note format for Reading circle Thistle is now index cards.\\\",\\\"U6\\\":\\\"Reading circle Thistle's session slot has been updated to Slot Noon.\\\",\\\"U7\\\":\\\"Reading circle Thistle's focus text has changed to Winter Inventory.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"Reading circle Thistle has the session slot Slot Dawn.\\\",\\\"I2\\\":\\\"The assigned chapter range for Reading circle Thistle is chapters 1 to 3.\\\",\\\"I3\\\":\\\"Halden Voss is the host of Reading circle Thistle.\\\",\\\"I4\\\":\\\"The note format used by Reading circle Thistle is margin notes.\\\",\\\"I5\\\":\\\"Ledger of Moths is the focus text of Reading circle Thistle.\\\",\\\"I6\\\":\\\"The Quiet Foundry is the focus text of Reading circle Bracken.\\\",\\\"I7\\\":\\\"Reading circle Thistle has the circle code RDC-T85.\\\",\\\"N1\\\":\\\"The current focus text of Reading circle Thistle is still Field Guide to Echoes.\\\",\\\"N2\\\":\\\"Reading circle Thistle's circle code is still RDC-T85.\\\",\\\"Q\\\":\\\"What is the current focus text of Reading circle Thistle?\\\",\\\"U1\\\":\\\"The focus text of Reading circle Thistle is now The Salt Orchard.\\\",\\\"U2\\\":\\\"Reading circle Thistle's note format has changed to index cards.\\\",\\\"U3\\\":\\\"Reading circle Thistle's focus text has been updated to A Grammar of Tides.\\\",\\\"U4\\\":\\\"The session slot for Reading circle Thistle is now Slot Noon.\\\",\\\"U5\\\":\\\"Reading circle Thistle's focus text has changed to Field Guide to Echoes.\\\",\\\"U6\\\":\\\"The focus text of Reading circle Bracken is now Atlas of Small Rivers.\\\",\\\"U7\\\":\\\"The focus text of Reading circle Thistle has been updated to Winter Inventory.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":2593,\"completion_tokens\":880,\"total_tokens\":3473,\"cost\":0.015281,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2590,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.015281,\"upstream_inference_prompt_cost\":0.006481,\"upstream_inference_completions_cost\":0.0088},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-sol\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-sol-20260709\",\"selected\":true}]},\"generation_time\":7938}}",
+      "response_sha256_before_redaction": "6ab949a3ea04e427334eb25283e386f8a1a1a328798b2ba76cb8157bf41235ba",
+      "response_envelope": {
+        "id": "gen-1789818730-K5jdD1ohFSpT0NaB1DUJ",
+        "object": "chat.completion",
+        "created": 1789818730,
+        "model": "openai/gpt-5.6-sol",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Reading circle Thistle's session slot is Slot Dawn.\",\"I2\":\"Reading circle Thistle's assigned chapter range is chapters 1 to 3.\",\"I3\":\"The host of Reading circle Thistle is Halden Voss.\",\"I4\":\"Reading circle Thistle uses margin notes as its note format.\",\"I5\":\"The focus text of Reading circle Thistle is Ledger of Moths.\",\"I6\":\"The focus text of Reading circle Bracken is The Quiet Foundry.\",\"I7\":\"Reading circle Thistle's circle code is RDC-T85.\",\"N1\":\"Reading circle Thistle's focus text remains The Glass Cartographer.\",\"N2\":\"Reading circle Thistle's circle code remains RDC-T85.\",\"Q\":\"What is the current focus text of Reading circle Thistle?\",\"U1\":\"Reading circle Thistle's focus text has changed to The Salt Orchard.\",\"U2\":\"Reading circle Thistle's focus text is now Notes on Lanterns.\",\"U3\":\"The focus text of Reading circle Thistle has been updated to A Grammar of Tides.\",\"U4\":\"Reading circle Thistle's focus text has changed to The Copper Almanac.\",\"U5\":\"The focus text of Reading circle Thistle is now Field Guide to Echoes.\",\"U6\":\"Reading circle Thistle's focus text has been updated to The Glass Cartographer.\",\"U7\":\"Reading circle Thistle's focus text is now Winter Inventory.\"},\"low\":{\"I1\":\"The session slot for Reading circle Thistle is Slot Dawn.\",\"I2\":\"Reading circle Thistle is assigned chapters 1 to 3.\",\"I3\":\"Reading circle Thistle's host is Halden Voss.\",\"I4\":\"The note format for Reading circle Thistle is margin notes.\",\"I5\":\"Reading circle Thistle's focus text is Ledger of Moths.\",\"I6\":\"Reading circle Bracken's focus text is The Quiet Foundry.\",\"I7\":\"The circle code for Reading circle Thistle is RDC-T85.\",\"N1\":\"The focus text of Reading circle Thistle remains Ledger of Moths.\",\"N2\":\"The circle code for Reading circle Thistle remains RDC-T85.\",\"Q\":\"What is the current focus text of Reading circle Thistle?\",\"U1\":\"Reading circle Thistle's assigned chapter range has changed to chapters 4 to 6.\",\"U2\":\"The host of Reading circle Thistle is now Marisol Teague.\",\"U3\":\"Reading circle Bracken's focus text has been updated to Atlas of Small Rivers.\",\"U4\":\"Reading circle Thistle's host has changed to Corin Ashby.\",\"U5\":\"The note format for Reading circle Thistle is now index cards.\",\"U6\":\"Reading circle Thistle's session slot has been updated to Slot Noon.\",\"U7\":\"Reading circle Thistle's focus text has changed to Winter Inventory.\"},\"medium\":{\"I1\":\"Reading circle Thistle has the session slot Slot Dawn.\",\"I2\":\"The assigned chapter range for Reading circle Thistle is chapters 1 to 3.\",\"I3\":\"Halden Voss is the host of Reading circle Thistle.\",\"I4\":\"The note format used by Reading circle Thistle is margin notes.\",\"I5\":\"Ledger of Moths is the focus text of Reading circle Thistle.\",\"I6\":\"The Quiet Foundry is the focus text of Reading circle Bracken.\",\"I7\":\"Reading circle Thistle has the circle code RDC-T85.\",\"N1\":\"The current focus text of Reading circle Thistle is still Field Guide to Echoes.\",\"N2\":\"Reading circle Thistle's circle code is still RDC-T85.\",\"Q\":\"What is the current focus text of Reading circle Thistle?\",\"U1\":\"The focus text of Reading circle Thistle is now The Salt Orchard.\",\"U2\":\"Reading circle Thistle's note format has changed to index cards.\",\"U3\":\"Reading circle Thistle's focus text has been updated to A Grammar of Tides.\",\"U4\":\"The session slot for Reading circle Thistle is now Slot Noon.\",\"U5\":\"Reading circle Thistle's focus text has changed to Field Guide to Echoes.\",\"U6\":\"The focus text of Reading circle Bracken is now Atlas of Small Rivers.\",\"U7\":\"The focus text of Reading circle Thistle has been updated to Winter Inventory.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2593,
+          "completion_tokens": 880,
+          "total_tokens": 3473,
+          "cost": 0.015281,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2590,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.015281,
+            "upstream_inference_prompt_cost": 0.006481,
+            "upstream_inference_completions_cost": 0.0088
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-sol",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-sol-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 7938
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-sol",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-sol-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 7938
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Reading circle Thistle's session slot is Slot Dawn.",
+          "I2": "Reading circle Thistle's assigned chapter range is chapters 1 to 3.",
+          "I3": "The host of Reading circle Thistle is Halden Voss.",
+          "I4": "Reading circle Thistle uses margin notes as its note format.",
+          "I5": "The focus text of Reading circle Thistle is Ledger of Moths.",
+          "I6": "The focus text of Reading circle Bracken is The Quiet Foundry.",
+          "I7": "Reading circle Thistle's circle code is RDC-T85.",
+          "N1": "Reading circle Thistle's focus text remains The Glass Cartographer.",
+          "N2": "Reading circle Thistle's circle code remains RDC-T85.",
+          "Q": "What is the current focus text of Reading circle Thistle?",
+          "U1": "Reading circle Thistle's focus text has changed to The Salt Orchard.",
+          "U2": "Reading circle Thistle's focus text is now Notes on Lanterns.",
+          "U3": "The focus text of Reading circle Thistle has been updated to A Grammar of Tides.",
+          "U4": "Reading circle Thistle's focus text has changed to The Copper Almanac.",
+          "U5": "The focus text of Reading circle Thistle is now Field Guide to Echoes.",
+          "U6": "Reading circle Thistle's focus text has been updated to The Glass Cartographer.",
+          "U7": "Reading circle Thistle's focus text is now Winter Inventory."
+        },
+        "low": {
+          "I1": "The session slot for Reading circle Thistle is Slot Dawn.",
+          "I2": "Reading circle Thistle is assigned chapters 1 to 3.",
+          "I3": "Reading circle Thistle's host is Halden Voss.",
+          "I4": "The note format for Reading circle Thistle is margin notes.",
+          "I5": "Reading circle Thistle's focus text is Ledger of Moths.",
+          "I6": "Reading circle Bracken's focus text is The Quiet Foundry.",
+          "I7": "The circle code for Reading circle Thistle is RDC-T85.",
+          "N1": "The focus text of Reading circle Thistle remains Ledger of Moths.",
+          "N2": "The circle code for Reading circle Thistle remains RDC-T85.",
+          "Q": "What is the current focus text of Reading circle Thistle?",
+          "U1": "Reading circle Thistle's assigned chapter range has changed to chapters 4 to 6.",
+          "U2": "The host of Reading circle Thistle is now Marisol Teague.",
+          "U3": "Reading circle Bracken's focus text has been updated to Atlas of Small Rivers.",
+          "U4": "Reading circle Thistle's host has changed to Corin Ashby.",
+          "U5": "The note format for Reading circle Thistle is now index cards.",
+          "U6": "Reading circle Thistle's session slot has been updated to Slot Noon.",
+          "U7": "Reading circle Thistle's focus text has changed to Winter Inventory."
+        },
+        "medium": {
+          "I1": "Reading circle Thistle has the session slot Slot Dawn.",
+          "I2": "The assigned chapter range for Reading circle Thistle is chapters 1 to 3.",
+          "I3": "Halden Voss is the host of Reading circle Thistle.",
+          "I4": "The note format used by Reading circle Thistle is margin notes.",
+          "I5": "Ledger of Moths is the focus text of Reading circle Thistle.",
+          "I6": "The Quiet Foundry is the focus text of Reading circle Bracken.",
+          "I7": "Reading circle Thistle has the circle code RDC-T85.",
+          "N1": "The current focus text of Reading circle Thistle is still Field Guide to Echoes.",
+          "N2": "Reading circle Thistle's circle code is still RDC-T85.",
+          "Q": "What is the current focus text of Reading circle Thistle?",
+          "U1": "The focus text of Reading circle Thistle is now The Salt Orchard.",
+          "U2": "Reading circle Thistle's note format has changed to index cards.",
+          "U3": "Reading circle Thistle's focus text has been updated to A Grammar of Tides.",
+          "U4": "The session slot for Reading circle Thistle is now Slot Noon.",
+          "U5": "Reading circle Thistle's focus text has changed to Field Guide to Echoes.",
+          "U6": "The focus text of Reading circle Bracken is now Atlas of Small Rivers.",
+          "U7": "The focus text of Reading circle Thistle has been updated to Winter Inventory."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2593,
+        "completion_tokens": 880,
+        "total_tokens": 3473,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.015281
+      },
+      "latency_seconds": 8.276028435997432,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "b0cal-study-planning-01",
+  "projection_sha256": "d15ca6152ab36ce22c35efd441295b06ec6c55d0c97ed952ea5896c6ee042a1c",
+  "logical_call_index": 8,
+  "attempt": "attempt-02",
+  "output_sha256": "d5fb65a665fd1160fa0b858f6a492fc1d977dd218a2107739f8773a2ff713ad0"
+}

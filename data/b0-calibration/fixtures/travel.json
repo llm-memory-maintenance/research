@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-travel-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Travel",
+    "entities": [
+      {
+        "entity_id": "b0cal-travel-01-primary",
+        "name": "Coach tour Larkspur"
+      },
+      {
+        "entity_id": "b0cal-travel-01-distractor",
+        "name": "Coach tour Foxglove"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "overnight_stop",
+        "meaning": "planned overnight stopover",
+        "units_or_interpretation": "fictional town name"
+      },
+      {
+        "attribute_id": "ticket_code",
+        "meaning": "tour ticket identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "seat_row",
+        "meaning": "assigned seat row",
+        "units_or_interpretation": "row label"
+      },
+      {
+        "attribute_id": "pickup_stop",
+        "meaning": "pickup stop",
+        "units_or_interpretation": "stop label"
+      },
+      {
+        "attribute_id": "luggage_limit",
+        "meaning": "luggage allowance",
+        "units_or_interpretation": "kilograms"
+      },
+      {
+        "attribute_id": "guide_style",
+        "meaning": "guide style",
+        "units_or_interpretation": "style label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-travel-01-primary",
+        "attribute_id": "overnight_stop",
+        "initial_value": "Brenmar",
+        "role": "target",
+        "value_inventory": [
+          "Brenmar",
+          "Coldwick",
+          "Dunhollow",
+          "Eskerby",
+          "Fennimore",
+          "Garrowick",
+          "Hollinmere",
+          "Ivelstone"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-travel-01-distractor",
+        "attribute_id": "overnight_stop",
+        "initial_value": "Jaspermoor",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "Jaspermoor",
+          "Kettlewynd",
+          "Lorimere"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-travel-01-primary",
+        "attribute_id": "ticket_code",
+        "initial_value": "TKT-L58",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "TKT-L58"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-travel-01-primary",
+        "attribute_id": "seat_row",
+        "initial_value": "Row 4",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Row 4",
+          "Row 9",
+          "Row 12"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-travel-01-primary",
+        "attribute_id": "pickup_stop",
+        "initial_value": "Stop Anvil Lane",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Stop Anvil Lane",
+          "Stop Bell Court",
+          "Stop Cobb Way"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-travel-01-primary",
+        "attribute_id": "luggage_limit",
+        "initial_value": "15 kilograms",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "15 kilograms",
+          "20 kilograms",
+          "25 kilograms"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-travel-01-primary",
+        "attribute_id": "guide_style",
+        "initial_value": "storytelling guide",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "storytelling guide",
+          "technical guide",
+          "scenic guide"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_b",
+      "I2": "k_c",
+      "I3": "k_d",
+      "I4": "k_target",
+      "I5": "k_hard",
+      "I6": "k_n2",
+      "I7": "k_a"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-travel-01-primary",
+      "attribute_id": "overnight_stop",
+      "intent": "Ask only for the current planned overnight stopover of Coach tour Larkspur."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Ivelstone",
+    "coverage": [
+      "locations",
+      "travel",
+      "quantities"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "Stop Anvil Lane",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "15 kilograms",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "storytelling guide",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "Brenmar",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "Jaspermoor",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar",
+              "k_hard": "Jaspermoor"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "TKT-L58",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "Row 4",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_d",
+            "current_value": "technical guide",
+            "semantics": "changed_state",
+            "previous_value": "storytelling guide",
+            "superseded_values": [
+              "storytelling guide"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "technical guide",
+              "k_target": "Brenmar",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "Row 9",
+            "semantics": "changed_state",
+            "previous_value": "Row 4",
+            "superseded_values": [
+              "Row 4"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "technical guide",
+              "k_target": "Brenmar",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 9"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_hard",
+            "current_value": "Kettlewynd",
+            "semantics": "changed_state",
+            "previous_value": "Jaspermoor",
+            "superseded_values": [
+              "Jaspermoor"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "technical guide",
+              "k_target": "Brenmar",
+              "k_hard": "Kettlewynd",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 9"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "Row 12",
+            "semantics": "changed_state",
+            "previous_value": "Row 9",
+            "superseded_values": [
+              "Row 4",
+              "Row 9"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "technical guide",
+              "k_target": "Brenmar",
+              "k_hard": "Kettlewynd",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 12"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_b",
+            "current_value": "Stop Bell Court",
+            "semantics": "changed_state",
+            "previous_value": "Stop Anvil Lane",
+            "superseded_values": [
+              "Stop Anvil Lane"
+            ],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "15 kilograms",
+              "k_d": "technical guide",
+              "k_target": "Brenmar",
+              "k_hard": "Kettlewynd",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 12"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "20 kilograms",
+            "semantics": "changed_state",
+            "previous_value": "15 kilograms",
+            "superseded_values": [
+              "15 kilograms"
+            ],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "20 kilograms",
+              "k_d": "technical guide",
+              "k_target": "Brenmar",
+              "k_hard": "Kettlewynd",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 12"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Brenmar",
+            "semantics": "same_state",
+            "previous_value": "Brenmar",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "20 kilograms",
+              "k_d": "technical guide",
+              "k_target": "Brenmar",
+              "k_hard": "Kettlewynd",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 12"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Ivelstone",
+            "semantics": "changed_state",
+            "previous_value": "Brenmar",
+            "superseded_values": [
+              "Brenmar"
+            ],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "20 kilograms",
+              "k_d": "technical guide",
+              "k_target": "Ivelstone",
+              "k_hard": "Kettlewynd",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 12"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TKT-L58",
+            "semantics": "same_state",
+            "previous_value": "TKT-L58",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "20 kilograms",
+              "k_d": "technical guide",
+              "k_target": "Ivelstone",
+              "k_hard": "Kettlewynd",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 12"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "Stop Bell Court",
+          "k_c": "20 kilograms",
+          "k_d": "technical guide",
+          "k_target": "Ivelstone",
+          "k_hard": "Kettlewynd",
+          "k_n2": "TKT-L58",
+          "k_a": "Row 12"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "Stop Anvil Lane",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "15 kilograms",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "storytelling guide",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "Brenmar",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "Jaspermoor",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar",
+              "k_hard": "Jaspermoor"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "TKT-L58",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "Row 4",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Coldwick",
+            "semantics": "changed_state",
+            "previous_value": "Brenmar",
+            "superseded_values": [
+              "Brenmar"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Coldwick",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_b",
+            "current_value": "Stop Bell Court",
+            "semantics": "changed_state",
+            "previous_value": "Stop Anvil Lane",
+            "superseded_values": [
+              "Stop Anvil Lane"
+            ],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Coldwick",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Eskerby",
+            "semantics": "changed_state",
+            "previous_value": "Coldwick",
+            "superseded_values": [
+              "Brenmar",
+              "Coldwick"
+            ],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Eskerby",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "20 kilograms",
+            "semantics": "changed_state",
+            "previous_value": "15 kilograms",
+            "superseded_values": [
+              "15 kilograms"
+            ],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "20 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Eskerby",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Garrowick",
+            "semantics": "changed_state",
+            "previous_value": "Eskerby",
+            "superseded_values": [
+              "Brenmar",
+              "Coldwick",
+              "Eskerby"
+            ],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "20 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Garrowick",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "Kettlewynd",
+            "semantics": "changed_state",
+            "previous_value": "Jaspermoor",
+            "superseded_values": [
+              "Jaspermoor"
+            ],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "20 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Garrowick",
+              "k_hard": "Kettlewynd",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Garrowick",
+            "semantics": "same_state",
+            "previous_value": "Garrowick",
+            "superseded_values": [
+              "Brenmar",
+              "Coldwick",
+              "Eskerby"
+            ],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "20 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Garrowick",
+              "k_hard": "Kettlewynd",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Ivelstone",
+            "semantics": "changed_state",
+            "previous_value": "Garrowick",
+            "superseded_values": [
+              "Brenmar",
+              "Coldwick",
+              "Eskerby",
+              "Garrowick"
+            ],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "20 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Ivelstone",
+              "k_hard": "Kettlewynd",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TKT-L58",
+            "semantics": "same_state",
+            "previous_value": "TKT-L58",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Bell Court",
+              "k_c": "20 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Ivelstone",
+              "k_hard": "Kettlewynd",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "Stop Bell Court",
+          "k_c": "20 kilograms",
+          "k_d": "storytelling guide",
+          "k_target": "Ivelstone",
+          "k_hard": "Kettlewynd",
+          "k_n2": "TKT-L58",
+          "k_a": "Row 4"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "Stop Anvil Lane",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "15 kilograms",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "storytelling guide",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "Brenmar",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "Jaspermoor",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar",
+              "k_hard": "Jaspermoor"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "TKT-L58",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "Row 4",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Brenmar",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Coldwick",
+            "semantics": "changed_state",
+            "previous_value": "Brenmar",
+            "superseded_values": [
+              "Brenmar"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Coldwick",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Dunhollow",
+            "semantics": "changed_state",
+            "previous_value": "Coldwick",
+            "superseded_values": [
+              "Brenmar",
+              "Coldwick"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Dunhollow",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Eskerby",
+            "semantics": "changed_state",
+            "previous_value": "Dunhollow",
+            "superseded_values": [
+              "Brenmar",
+              "Coldwick",
+              "Dunhollow"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Eskerby",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "Fennimore",
+            "semantics": "changed_state",
+            "previous_value": "Eskerby",
+            "superseded_values": [
+              "Brenmar",
+              "Coldwick",
+              "Dunhollow",
+              "Eskerby"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Fennimore",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Garrowick",
+            "semantics": "changed_state",
+            "previous_value": "Fennimore",
+            "superseded_values": [
+              "Brenmar",
+              "Coldwick",
+              "Dunhollow",
+              "Eskerby",
+              "Fennimore"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Garrowick",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "Hollinmere",
+            "semantics": "changed_state",
+            "previous_value": "Garrowick",
+            "superseded_values": [
+              "Brenmar",
+              "Coldwick",
+              "Dunhollow",
+              "Eskerby",
+              "Fennimore",
+              "Garrowick"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Hollinmere",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Hollinmere",
+            "semantics": "same_state",
+            "previous_value": "Hollinmere",
+            "superseded_values": [
+              "Brenmar",
+              "Coldwick",
+              "Dunhollow",
+              "Eskerby",
+              "Fennimore",
+              "Garrowick"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Hollinmere",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Ivelstone",
+            "semantics": "changed_state",
+            "previous_value": "Hollinmere",
+            "superseded_values": [
+              "Brenmar",
+              "Coldwick",
+              "Dunhollow",
+              "Eskerby",
+              "Fennimore",
+              "Garrowick",
+              "Hollinmere"
+            ],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Ivelstone",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TKT-L58",
+            "semantics": "same_state",
+            "previous_value": "TKT-L58",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "Stop Anvil Lane",
+              "k_c": "15 kilograms",
+              "k_d": "storytelling guide",
+              "k_target": "Ivelstone",
+              "k_hard": "Jaspermoor",
+              "k_n2": "TKT-L58",
+              "k_a": "Row 4"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "Stop Anvil Lane",
+          "k_c": "15 kilograms",
+          "k_d": "storytelling guide",
+          "k_target": "Ivelstone",
+          "k_hard": "Jaspermoor",
+          "k_n2": "TKT-L58",
+          "k_a": "Row 4"
+        }
+      }
+    }
+  }
+}

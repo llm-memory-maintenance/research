@@ -1,0 +1,266 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. For each variant it gives exactly two facts to realize: the final target revision, named U7, and the dedicated same-state reaffirmation, named N2. Return all three variants in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each of the two named events, U7 and N2. Do not add, delete, omit, merge, split, or reorder them, and do not produce any other event or field. Each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, and the supplied value. Use the supplied names and value expressions rather than inventing aliases or alternative values. Do not add state-changing facts, implications, qualifications, or conditions, and do not introduce any value that is not supplied.\\n\\nU7 has changed_state semantics. It must clearly communicate an actual revision and state its supplied current value for its entity and attribute. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken the change into a possibility, a plan contingent on a condition, a hypothetical, or a same-state reaffirmation. Do not state or imply any previous or superseded value: none is supplied and none may be invented.\\n\\nN2 has same_state semantics. It must state or reaffirm only its supplied still-current value for its entity and attribute, without introducing a change, a revision cue, or a historical value. Do not exchange changed-state and same-state meanings. N2 concerns the dedicated N2 state supplied in the input. It must not repeat, revise, or otherwise alter U7.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, or questions. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"send_window\\\",\\\"meaning\\\":\\\"weekly send window\\\",\\\"units_or_interpretation\\\":\\\"named window\\\"},{\\\"attribute_id\\\":\\\"list_code\\\",\\\"meaning\\\":\\\"mailing list identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"}],\\\"domain\\\":\\\"Communication\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"name\\\":\\\"Mailing list Ember\\\"}],\\\"scenario_id\\\":\\\"b0cal-communication-01\\\",\\\"variants\\\":{\\\"high\\\":{\\\"N2\\\":{\\\"attribute_id\\\":\\\"list_code\\\",\\\"current_value\\\":\\\"MLS-E92\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"semantics\\\":\\\"same_state\\\"},\\\"U7\\\":{\\\"attribute_id\\\":\\\"send_window\\\",\\\"current_value\\\":\\\"Monday 16:40\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"semantics\\\":\\\"changed_state\\\"}},\\\"low\\\":{\\\"N2\\\":{\\\"attribute_id\\\":\\\"list_code\\\",\\\"current_value\\\":\\\"MLS-E92\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"semantics\\\":\\\"same_state\\\"},\\\"U7\\\":{\\\"attribute_id\\\":\\\"send_window\\\",\\\"current_value\\\":\\\"Monday 16:40\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"semantics\\\":\\\"changed_state\\\"}},\\\"medium\\\":{\\\"N2\\\":{\\\"attribute_id\\\":\\\"list_code\\\",\\\"current_value\\\":\\\"MLS-E92\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"semantics\\\":\\\"same_state\\\"},\\\"U7\\\":{\\\"attribute_id\\\":\\\"send_window\\\",\\\"current_value\\\":\\\"Monday 16:40\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"semantics\\\":\\\"changed_state\\\"}}}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-sol\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"b0_suffix_naturalization_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"N2\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"U7\",\"N2\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "67750e45b2aab221dae60b341ba427c439518832b315856cad011e89bd5c966c",
+  "request_body": {
+    "model": "openai/gpt-5.6-sol",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. For each variant it gives exactly two facts to realize: the final target revision, named U7, and the dedicated same-state reaffirmation, named N2. Return all three variants in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each of the two named events, U7 and N2. Do not add, delete, omit, merge, split, or reorder them, and do not produce any other event or field. Each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, and the supplied value. Use the supplied names and value expressions rather than inventing aliases or alternative values. Do not add state-changing facts, implications, qualifications, or conditions, and do not introduce any value that is not supplied.\n\nU7 has changed_state semantics. It must clearly communicate an actual revision and state its supplied current value for its entity and attribute. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken the change into a possibility, a plan contingent on a condition, a hypothetical, or a same-state reaffirmation. Do not state or imply any previous or superseded value: none is supplied and none may be invented.\n\nN2 has same_state semantics. It must state or reaffirm only its supplied still-current value for its entity and attribute, without introducing a change, a revision cue, or a historical value. Do not exchange changed-state and same-state meanings. N2 concerns the dedicated N2 state supplied in the input. It must not repeat, revise, or otherwise alter U7.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, or questions. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"send_window\",\"meaning\":\"weekly send window\",\"units_or_interpretation\":\"named window\"},{\"attribute_id\":\"list_code\",\"meaning\":\"mailing list identifier\",\"units_or_interpretation\":\"opaque code\"}],\"domain\":\"Communication\",\"entities\":[{\"entity_id\":\"b0cal-communication-01-primary\",\"name\":\"Mailing list Ember\"}],\"scenario_id\":\"b0cal-communication-01\",\"variants\":{\"high\":{\"N2\":{\"attribute_id\":\"list_code\",\"current_value\":\"MLS-E92\",\"entity_id\":\"b0cal-communication-01-primary\",\"semantics\":\"same_state\"},\"U7\":{\"attribute_id\":\"send_window\",\"current_value\":\"Monday 16:40\",\"entity_id\":\"b0cal-communication-01-primary\",\"semantics\":\"changed_state\"}},\"low\":{\"N2\":{\"attribute_id\":\"list_code\",\"current_value\":\"MLS-E92\",\"entity_id\":\"b0cal-communication-01-primary\",\"semantics\":\"same_state\"},\"U7\":{\"attribute_id\":\"send_window\",\"current_value\":\"Monday 16:40\",\"entity_id\":\"b0cal-communication-01-primary\",\"semantics\":\"changed_state\"}},\"medium\":{\"N2\":{\"attribute_id\":\"list_code\",\"current_value\":\"MLS-E92\",\"entity_id\":\"b0cal-communication-01-primary\",\"semantics\":\"same_state\"},\"U7\":{\"attribute_id\":\"send_window\",\"current_value\":\"Monday 16:40\",\"entity_id\":\"b0cal-communication-01-primary\",\"semantics\":\"changed_state\"}}}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "b0_suffix_naturalization_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "U7",
+                "N2"
+              ],
+              "properties": {
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T13:00:46.241202+00:00",
+      "requested_model": "openai/gpt-5.6-sol",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-sol",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789822846-ZysJI4gSA2LKsqzs1tNc",
+      "http_status": 200,
+      "raw_response": "\n         \n{\"id\":\"gen-1789822846-ZysJI4gSA2LKsqzs1tNc\",\"object\":\"chat.completion\",\"created\":1789822846,\"model\":\"openai/gpt-5.6-sol\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"N2\\\":\\\"Mailing list Ember's mailing list identifier remains MLS-E92.\\\",\\\"U7\\\":\\\"The weekly send window for Mailing list Ember has been updated to Monday 16:40.\\\"},\\\"low\\\":{\\\"N2\\\":\\\"Mailing list Ember's mailing list identifier is MLS-E92.\\\",\\\"U7\\\":\\\"Mailing list Ember's weekly send window is now Monday 16:40.\\\"},\\\"medium\\\":{\\\"N2\\\":\\\"For Mailing list Ember, the mailing list identifier is still MLS-E92.\\\",\\\"U7\\\":\\\"The weekly send window for Mailing list Ember has changed to Monday 16:40.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":870,\"completion_tokens\":134,\"total_tokens\":1004,\"cost\":0.00308,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.00308,\"upstream_inference_prompt_cost\":0.00174,\"upstream_inference_completions_cost\":0.00134},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-sol\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-sol-20260709\",\"selected\":true}]},\"generation_time\":2105}}",
+      "response_sha256_before_redaction": "6fac4b8d556f421d5bcbe6148d6dca8f700ebd4d4a1edb82f6cb16f8a40d50f4",
+      "response_envelope": {
+        "id": "gen-1789822846-ZysJI4gSA2LKsqzs1tNc",
+        "object": "chat.completion",
+        "created": 1789822846,
+        "model": "openai/gpt-5.6-sol",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"N2\":\"Mailing list Ember's mailing list identifier remains MLS-E92.\",\"U7\":\"The weekly send window for Mailing list Ember has been updated to Monday 16:40.\"},\"low\":{\"N2\":\"Mailing list Ember's mailing list identifier is MLS-E92.\",\"U7\":\"Mailing list Ember's weekly send window is now Monday 16:40.\"},\"medium\":{\"N2\":\"For Mailing list Ember, the mailing list identifier is still MLS-E92.\",\"U7\":\"The weekly send window for Mailing list Ember has changed to Monday 16:40.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 870,
+          "completion_tokens": 134,
+          "total_tokens": 1004,
+          "cost": 0.00308,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.00308,
+            "upstream_inference_prompt_cost": 0.00174,
+            "upstream_inference_completions_cost": 0.00134
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-sol",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-sol-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 2105
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-sol",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-sol-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 2105
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "N2": "Mailing list Ember's mailing list identifier remains MLS-E92.",
+          "U7": "The weekly send window for Mailing list Ember has been updated to Monday 16:40."
+        },
+        "low": {
+          "N2": "Mailing list Ember's mailing list identifier is MLS-E92.",
+          "U7": "Mailing list Ember's weekly send window is now Monday 16:40."
+        },
+        "medium": {
+          "N2": "For Mailing list Ember, the mailing list identifier is still MLS-E92.",
+          "U7": "The weekly send window for Mailing list Ember has changed to Monday 16:40."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 870,
+        "completion_tokens": 134,
+        "total_tokens": 1004,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.00308
+      },
+      "latency_seconds": 2.2676459919894114,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "b0cal-communication-01",
+  "projection_sha256": "71f25175a29eaa5433d676533216d767c776bfb2582033f4a79b2414eb50b9f7",
+  "logical_call_index": 9,
+  "attempt": "attempt-01",
+  "procedure_version": "b0-suffix-collection/1.0.0",
+  "output_sha256": "5524d973a10eaedec5794606905dcdb8c1902bb5de2996bc55209cf0cba46c8c",
+  "automated": {
+    "status": "PASS",
+    "checks": {
+      "low": {
+        "U7": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_superseded_value": "PASS"
+        },
+        "N2": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_historical_or_superseded_value": "PASS"
+        }
+      },
+      "medium": {
+        "U7": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_superseded_value": "PASS"
+        },
+        "N2": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_historical_or_superseded_value": "PASS"
+        }
+      },
+      "high": {
+        "U7": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_superseded_value": "PASS"
+        },
+        "N2": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_historical_or_superseded_value": "PASS"
+        }
+      }
+    },
+    "meaning": "Deterministic Level-1 checks; they never stop collection and are not semantic qualification."
+  }
+}

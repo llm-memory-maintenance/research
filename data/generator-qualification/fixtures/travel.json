@@ -1,0 +1,1039 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-travel-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Travel",
+    "entities": [
+      {
+        "entity_id": "gq-travel-01-primary",
+        "name": "Voyage Pavo"
+      },
+      {
+        "entity_id": "gq-travel-01-distractor",
+        "name": "Voyage Grus"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "destination",
+        "meaning": "designated voyage destination",
+        "units_or_interpretation": "fictional location name"
+      },
+      {
+        "attribute_id": "booking_code",
+        "meaning": "voyage booking identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "departure",
+        "meaning": "departure calendar label",
+        "units_or_interpretation": "synthetic calendar label"
+      },
+      {
+        "attribute_id": "cabin",
+        "meaning": "assigned cabin",
+        "units_or_interpretation": "cabin label"
+      },
+      {
+        "attribute_id": "bag_count",
+        "meaning": "reserved baggage count",
+        "units_or_interpretation": "bags"
+      },
+      {
+        "attribute_id": "boarding_gate",
+        "meaning": "boarding gate",
+        "units_or_interpretation": "gate label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-travel-01-primary",
+        "attribute_id": "destination",
+        "initial_value": "Islet Azuri",
+        "role": "target",
+        "value_inventory": [
+          "Islet Azuri",
+          "Islet Belori",
+          "Islet Cedari",
+          "Islet Doruni",
+          "Islet Esari",
+          "Islet Feluni",
+          "Islet Garuni",
+          "Islet Hesari"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-travel-01-distractor",
+        "attribute_id": "destination",
+        "initial_value": "Islet Irovi",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "Islet Irovi",
+          "Islet Jeruni",
+          "Islet Kelari"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-travel-01-primary",
+        "attribute_id": "booking_code",
+        "initial_value": "VYG-P4",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "VYG-P4"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-travel-01-primary",
+        "attribute_id": "departure",
+        "initial_value": "Cycle Tavi",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Cycle Tavi",
+          "Cycle Ulen",
+          "Cycle Vori"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-travel-01-primary",
+        "attribute_id": "cabin",
+        "initial_value": "Cabin E1",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Cabin E1",
+          "Cabin E2",
+          "Cabin E3"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-travel-01-primary",
+        "attribute_id": "bag_count",
+        "initial_value": "2 bags",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "2 bags",
+          "3 bags",
+          "4 bags"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-travel-01-primary",
+        "attribute_id": "boarding_gate",
+        "initial_value": "Gate J1",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Gate J1",
+          "Gate J2",
+          "Gate J3"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_hard",
+      "I2": "k_n2",
+      "I3": "k_a",
+      "I4": "k_b",
+      "I5": "k_c",
+      "I6": "k_d",
+      "I7": "k_target"
+    },
+    "question_intent": {
+      "entity_id": "gq-travel-01-primary",
+      "attribute_id": "destination",
+      "intent": "Ask only for the current designated voyage destination of Voyage Pavo."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Islet Hesari",
+    "coverage": [
+      "locations",
+      "synthetic_calendar_labels",
+      "travel",
+      "quantities"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_hard",
+            "current_value": "Islet Irovi",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_n2",
+            "current_value": "VYG-P4",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_a",
+            "current_value": "Cycle Tavi",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_b",
+            "current_value": "Cabin E1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_c",
+            "current_value": "2 bags",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_d",
+            "current_value": "Gate J1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_target",
+            "current_value": "Islet Azuri",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Azuri"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_b",
+            "current_value": "Cabin E2",
+            "semantics": "changed_state",
+            "previous_value": "Cabin E1",
+            "superseded_values": [
+              "Cabin E1"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E2",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Azuri"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "3 bags",
+            "semantics": "changed_state",
+            "previous_value": "2 bags",
+            "superseded_values": [
+              "2 bags"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E2",
+              "k_c": "3 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Azuri"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_d",
+            "current_value": "Gate J2",
+            "semantics": "changed_state",
+            "previous_value": "Gate J1",
+            "superseded_values": [
+              "Gate J1"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E2",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Azuri"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "Cycle Ulen",
+            "semantics": "changed_state",
+            "previous_value": "Cycle Tavi",
+            "superseded_values": [
+              "Cycle Tavi"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Ulen",
+              "k_b": "Cabin E2",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Azuri"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_b",
+            "current_value": "Cabin E3",
+            "semantics": "changed_state",
+            "previous_value": "Cabin E2",
+            "superseded_values": [
+              "Cabin E1",
+              "Cabin E2"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Ulen",
+              "k_b": "Cabin E3",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Azuri"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "Islet Jeruni",
+            "semantics": "changed_state",
+            "previous_value": "Islet Irovi",
+            "superseded_values": [
+              "Islet Irovi"
+            ],
+            "state_after": {
+              "k_hard": "Islet Jeruni",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Ulen",
+              "k_b": "Cabin E3",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Azuri"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Islet Azuri",
+            "semantics": "same_state",
+            "previous_value": "Islet Azuri",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Jeruni",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Ulen",
+              "k_b": "Cabin E3",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Azuri"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Islet Hesari",
+            "semantics": "changed_state",
+            "previous_value": "Islet Azuri",
+            "superseded_values": [
+              "Islet Azuri"
+            ],
+            "state_after": {
+              "k_hard": "Islet Jeruni",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Ulen",
+              "k_b": "Cabin E3",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Hesari"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "VYG-P4",
+            "semantics": "same_state",
+            "previous_value": "VYG-P4",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Jeruni",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Ulen",
+              "k_b": "Cabin E3",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Hesari"
+            }
+          }
+        ],
+        "final_state": {
+          "k_hard": "Islet Jeruni",
+          "k_n2": "VYG-P4",
+          "k_a": "Cycle Ulen",
+          "k_b": "Cabin E3",
+          "k_c": "3 bags",
+          "k_d": "Gate J2",
+          "k_target": "Islet Hesari"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_hard",
+            "current_value": "Islet Irovi",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_n2",
+            "current_value": "VYG-P4",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_a",
+            "current_value": "Cycle Tavi",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_b",
+            "current_value": "Cabin E1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_c",
+            "current_value": "2 bags",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_d",
+            "current_value": "Gate J1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_target",
+            "current_value": "Islet Azuri",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Azuri"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Islet Belori",
+            "semantics": "changed_state",
+            "previous_value": "Islet Azuri",
+            "superseded_values": [
+              "Islet Azuri"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Belori"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "3 bags",
+            "semantics": "changed_state",
+            "previous_value": "2 bags",
+            "superseded_values": [
+              "2 bags"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "3 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Belori"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Islet Doruni",
+            "semantics": "changed_state",
+            "previous_value": "Islet Belori",
+            "superseded_values": [
+              "Islet Azuri",
+              "Islet Belori"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "3 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Doruni"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_d",
+            "current_value": "Gate J2",
+            "semantics": "changed_state",
+            "previous_value": "Gate J1",
+            "superseded_values": [
+              "Gate J1"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Doruni"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Islet Feluni",
+            "semantics": "changed_state",
+            "previous_value": "Islet Doruni",
+            "superseded_values": [
+              "Islet Azuri",
+              "Islet Belori",
+              "Islet Doruni"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Feluni"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "Islet Jeruni",
+            "semantics": "changed_state",
+            "previous_value": "Islet Irovi",
+            "superseded_values": [
+              "Islet Irovi"
+            ],
+            "state_after": {
+              "k_hard": "Islet Jeruni",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Feluni"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Islet Feluni",
+            "semantics": "same_state",
+            "previous_value": "Islet Feluni",
+            "superseded_values": [
+              "Islet Azuri",
+              "Islet Belori",
+              "Islet Doruni"
+            ],
+            "state_after": {
+              "k_hard": "Islet Jeruni",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Feluni"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Islet Hesari",
+            "semantics": "changed_state",
+            "previous_value": "Islet Feluni",
+            "superseded_values": [
+              "Islet Azuri",
+              "Islet Belori",
+              "Islet Doruni",
+              "Islet Feluni"
+            ],
+            "state_after": {
+              "k_hard": "Islet Jeruni",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Hesari"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "VYG-P4",
+            "semantics": "same_state",
+            "previous_value": "VYG-P4",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Jeruni",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "3 bags",
+              "k_d": "Gate J2",
+              "k_target": "Islet Hesari"
+            }
+          }
+        ],
+        "final_state": {
+          "k_hard": "Islet Jeruni",
+          "k_n2": "VYG-P4",
+          "k_a": "Cycle Tavi",
+          "k_b": "Cabin E1",
+          "k_c": "3 bags",
+          "k_d": "Gate J2",
+          "k_target": "Islet Hesari"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_hard",
+            "current_value": "Islet Irovi",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_n2",
+            "current_value": "VYG-P4",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_a",
+            "current_value": "Cycle Tavi",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_b",
+            "current_value": "Cabin E1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_c",
+            "current_value": "2 bags",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_d",
+            "current_value": "Gate J1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_target",
+            "current_value": "Islet Azuri",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Azuri"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Islet Belori",
+            "semantics": "changed_state",
+            "previous_value": "Islet Azuri",
+            "superseded_values": [
+              "Islet Azuri"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Belori"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Islet Cedari",
+            "semantics": "changed_state",
+            "previous_value": "Islet Belori",
+            "superseded_values": [
+              "Islet Azuri",
+              "Islet Belori"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Cedari"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Islet Doruni",
+            "semantics": "changed_state",
+            "previous_value": "Islet Cedari",
+            "superseded_values": [
+              "Islet Azuri",
+              "Islet Belori",
+              "Islet Cedari"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Doruni"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "Islet Esari",
+            "semantics": "changed_state",
+            "previous_value": "Islet Doruni",
+            "superseded_values": [
+              "Islet Azuri",
+              "Islet Belori",
+              "Islet Cedari",
+              "Islet Doruni"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Esari"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Islet Feluni",
+            "semantics": "changed_state",
+            "previous_value": "Islet Esari",
+            "superseded_values": [
+              "Islet Azuri",
+              "Islet Belori",
+              "Islet Cedari",
+              "Islet Doruni",
+              "Islet Esari"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Feluni"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "Islet Garuni",
+            "semantics": "changed_state",
+            "previous_value": "Islet Feluni",
+            "superseded_values": [
+              "Islet Azuri",
+              "Islet Belori",
+              "Islet Cedari",
+              "Islet Doruni",
+              "Islet Esari",
+              "Islet Feluni"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Garuni"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Islet Garuni",
+            "semantics": "same_state",
+            "previous_value": "Islet Garuni",
+            "superseded_values": [
+              "Islet Azuri",
+              "Islet Belori",
+              "Islet Cedari",
+              "Islet Doruni",
+              "Islet Esari",
+              "Islet Feluni"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Garuni"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Islet Hesari",
+            "semantics": "changed_state",
+            "previous_value": "Islet Garuni",
+            "superseded_values": [
+              "Islet Azuri",
+              "Islet Belori",
+              "Islet Cedari",
+              "Islet Doruni",
+              "Islet Esari",
+              "Islet Feluni",
+              "Islet Garuni"
+            ],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Hesari"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "VYG-P4",
+            "semantics": "same_state",
+            "previous_value": "VYG-P4",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "Islet Irovi",
+              "k_n2": "VYG-P4",
+              "k_a": "Cycle Tavi",
+              "k_b": "Cabin E1",
+              "k_c": "2 bags",
+              "k_d": "Gate J1",
+              "k_target": "Islet Hesari"
+            }
+          }
+        ],
+        "final_state": {
+          "k_hard": "Islet Irovi",
+          "k_n2": "VYG-P4",
+          "k_a": "Cycle Tavi",
+          "k_b": "Cabin E1",
+          "k_c": "2 bags",
+          "k_d": "Gate J1",
+          "k_target": "Islet Hesari"
+        }
+      }
+    }
+  }
+}

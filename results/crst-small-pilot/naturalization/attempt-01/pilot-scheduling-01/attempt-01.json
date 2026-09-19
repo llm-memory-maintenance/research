@@ -1,0 +1,346 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"desk_opening\\\",\\\"meaning\\\":\\\"registration desk opening time\\\",\\\"units_or_interpretation\\\":\\\"24-hour local clock; one synthetic day\\\"},{\\\"attribute_id\\\":\\\"room_code\\\",\\\"meaning\\\":\\\"seminar room identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"moderator\\\",\\\"meaning\\\":\\\"seminar moderator\\\",\\\"units_or_interpretation\\\":\\\"synthetic person\\\"},{\\\"attribute_id\\\":\\\"hall_capacity\\\",\\\"meaning\\\":\\\"seating capacity\\\",\\\"units_or_interpretation\\\":\\\"seats\\\"},{\\\"attribute_id\\\":\\\"handout\\\",\\\"meaning\\\":\\\"handout format\\\",\\\"units_or_interpretation\\\":\\\"format label\\\"},{\\\"attribute_id\\\":\\\"coffee_break\\\",\\\"meaning\\\":\\\"coffee break length\\\",\\\"units_or_interpretation\\\":\\\"minutes\\\"}],\\\"domain\\\":\\\"Scheduling\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"pilot-scheduling-01-primary\\\",\\\"name\\\":\\\"Seminar Brindle\\\"},{\\\"entity_id\\\":\\\"pilot-scheduling-01-distractor\\\",\\\"name\\\":\\\"Seminar Kestrel\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_c\\\",\\\"I2\\\":\\\"k_d\\\",\\\"I3\\\":\\\"k_target\\\",\\\"I4\\\":\\\"k_hard\\\",\\\"I5\\\":\\\"k_n2\\\",\\\"I6\\\":\\\"k_a\\\",\\\"I7\\\":\\\"k_b\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"desk_opening\\\",\\\"entity_id\\\":\\\"pilot-scheduling-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current registration desk opening time of Seminar Brindle.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"desk_opening\\\",\\\"entity_id\\\":\\\"pilot-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"06:35\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"desk_opening\\\",\\\"entity_id\\\":\\\"pilot-scheduling-01-distractor\\\",\\\"initial_value\\\":\\\"12:25\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"room_code\\\",\\\"entity_id\\\":\\\"pilot-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"ROM-B47\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"moderator\\\",\\\"entity_id\\\":\\\"pilot-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"Ansel Wickham\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"hall_capacity\\\",\\\"entity_id\\\":\\\"pilot-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"40 seats\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"handout\\\",\\\"entity_id\\\":\\\"pilot-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"stapled packet\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"coffee_break\\\",\\\"entity_id\\\":\\\"pilot-scheduling-01-primary\\\",\\\"initial_value\\\":\\\"22 minutes\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"stapled packet\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"22 minutes\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"06:35\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"12:25\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"ROM-B47\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Ansel Wickham\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"40 seats\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"06:50\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"07:35\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"08:05\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"08:40\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"09:20\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"10:05\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"10:05\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"10:55\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"ROM-B47\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"stapled packet\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"22 minutes\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"06:35\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"12:25\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"ROM-B47\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Ansel Wickham\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"40 seats\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"55 seats\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"12:55\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"72 seats\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"folded card\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"33 minutes\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Perpetua Drune\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"06:35\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"10:55\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"ROM-B47\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"stapled packet\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"22 minutes\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"06:35\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"12:25\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"ROM-B47\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Ansel Wickham\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"40 seats\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"06:50\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"33 minutes\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"08:05\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"12:55\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"09:20\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"folded card\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"09:20\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"10:55\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"ROM-B47\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-sol\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "4e4e68ca703f22f83fbe7374a57b9191791d7326b24f6672040df38e8c4dd453",
+  "request_body": {
+    "model": "openai/gpt-5.6-sol",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"desk_opening\",\"meaning\":\"registration desk opening time\",\"units_or_interpretation\":\"24-hour local clock; one synthetic day\"},{\"attribute_id\":\"room_code\",\"meaning\":\"seminar room identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"moderator\",\"meaning\":\"seminar moderator\",\"units_or_interpretation\":\"synthetic person\"},{\"attribute_id\":\"hall_capacity\",\"meaning\":\"seating capacity\",\"units_or_interpretation\":\"seats\"},{\"attribute_id\":\"handout\",\"meaning\":\"handout format\",\"units_or_interpretation\":\"format label\"},{\"attribute_id\":\"coffee_break\",\"meaning\":\"coffee break length\",\"units_or_interpretation\":\"minutes\"}],\"domain\":\"Scheduling\",\"entities\":[{\"entity_id\":\"pilot-scheduling-01-primary\",\"name\":\"Seminar Brindle\"},{\"entity_id\":\"pilot-scheduling-01-distractor\",\"name\":\"Seminar Kestrel\"}],\"initial_order\":{\"I1\":\"k_c\",\"I2\":\"k_d\",\"I3\":\"k_target\",\"I4\":\"k_hard\",\"I5\":\"k_n2\",\"I6\":\"k_a\",\"I7\":\"k_b\"},\"question_intent\":{\"attribute_id\":\"desk_opening\",\"entity_id\":\"pilot-scheduling-01-primary\",\"intent\":\"Ask only for the current registration desk opening time of Seminar Brindle.\"},\"state_keys\":[{\"attribute_id\":\"desk_opening\",\"entity_id\":\"pilot-scheduling-01-primary\",\"initial_value\":\"06:35\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"desk_opening\",\"entity_id\":\"pilot-scheduling-01-distractor\",\"initial_value\":\"12:25\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"room_code\",\"entity_id\":\"pilot-scheduling-01-primary\",\"initial_value\":\"ROM-B47\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"moderator\",\"entity_id\":\"pilot-scheduling-01-primary\",\"initial_value\":\"Ansel Wickham\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"hall_capacity\",\"entity_id\":\"pilot-scheduling-01-primary\",\"initial_value\":\"40 seats\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"handout\",\"entity_id\":\"pilot-scheduling-01-primary\",\"initial_value\":\"stapled packet\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"coffee_break\",\"entity_id\":\"pilot-scheduling-01-primary\",\"initial_value\":\"22 minutes\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"stapled packet\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"22 minutes\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"06:35\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"12:25\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"ROM-B47\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Ansel Wickham\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"40 seats\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"06:50\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"07:35\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"08:05\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"08:40\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"09:20\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"10:05\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"10:05\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"10:55\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"ROM-B47\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"stapled packet\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"22 minutes\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"06:35\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"12:25\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"ROM-B47\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Ansel Wickham\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"40 seats\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"55 seats\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"12:55\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"72 seats\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"folded card\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"33 minutes\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Perpetua Drune\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"06:35\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"10:55\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"ROM-B47\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"stapled packet\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"22 minutes\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"06:35\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"12:25\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"ROM-B47\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Ansel Wickham\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"40 seats\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"06:50\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"33 minutes\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"08:05\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"12:55\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"09:20\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"folded card\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"09:20\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"10:55\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"ROM-B47\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T17:17:28.930227+00:00",
+      "requested_model": "openai/gpt-5.6-sol",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-sol",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789838249-knDe8X3VCzotveWVqLMv",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n{\"id\":\"gen-1789838249-knDe8X3VCzotveWVqLMv\",\"object\":\"chat.completion\",\"created\":1789838249,\"model\":\"openai/gpt-5.6-sol\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Seminar Brindle's handout format is stapled packet.\\\",\\\"I2\\\":\\\"Seminar Brindle's coffee break is 22 minutes long.\\\",\\\"I3\\\":\\\"Seminar Brindle's registration desk opens at 06:35.\\\",\\\"I4\\\":\\\"Seminar Kestrel's registration desk opens at 12:25.\\\",\\\"I5\\\":\\\"Seminar Brindle's room code is ROM-B47.\\\",\\\"I6\\\":\\\"The moderator of Seminar Brindle is Ansel Wickham.\\\",\\\"I7\\\":\\\"Seminar Brindle's hall capacity is 40 seats.\\\",\\\"N1\\\":\\\"Seminar Brindle's registration desk opening time remains 10:05.\\\",\\\"N2\\\":\\\"Seminar Brindle's room code is still ROM-B47.\\\",\\\"Q\\\":\\\"What is the current registration desk opening time of Seminar Brindle?\\\",\\\"U1\\\":\\\"Seminar Brindle's registration desk opening time has changed to 06:50.\\\",\\\"U2\\\":\\\"Seminar Brindle's registration desk now opens at 07:35.\\\",\\\"U3\\\":\\\"The registration desk opening time for Seminar Brindle has been updated to 08:05.\\\",\\\"U4\\\":\\\"Seminar Brindle's registration desk opening time is now 08:40.\\\",\\\"U5\\\":\\\"The registration desk for Seminar Brindle now opens at 09:20.\\\",\\\"U6\\\":\\\"Seminar Brindle's registration desk opening time has changed to 10:05.\\\",\\\"U7\\\":\\\"Seminar Brindle's registration desk now opens at 10:55.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"The handout format for Seminar Brindle is stapled packet.\\\",\\\"I2\\\":\\\"Seminar Brindle has a 22 minutes coffee break.\\\",\\\"I3\\\":\\\"The registration desk for Seminar Brindle opens at 06:35.\\\",\\\"I4\\\":\\\"The registration desk for Seminar Kestrel opens at 12:25.\\\",\\\"I5\\\":\\\"The room code for Seminar Brindle is ROM-B47.\\\",\\\"I6\\\":\\\"Seminar Brindle's moderator is Ansel Wickham.\\\",\\\"I7\\\":\\\"The hall capacity for Seminar Brindle is 40 seats.\\\",\\\"N1\\\":\\\"Seminar Brindle's registration desk still opens at 06:35.\\\",\\\"N2\\\":\\\"The room code for Seminar Brindle remains ROM-B47.\\\",\\\"Q\\\":\\\"What is the current registration desk opening time of Seminar Brindle?\\\",\\\"U1\\\":\\\"Seminar Brindle's hall capacity has been updated to 55 seats.\\\",\\\"U2\\\":\\\"Seminar Kestrel's registration desk opening time is now 12:55.\\\",\\\"U3\\\":\\\"The hall capacity for Seminar Brindle has changed to 72 seats.\\\",\\\"U4\\\":\\\"Seminar Brindle's handout format is now folded card.\\\",\\\"U5\\\":\\\"The coffee break for Seminar Brindle has been updated to 33 minutes.\\\",\\\"U6\\\":\\\"The moderator of Seminar Brindle is now Perpetua Drune.\\\",\\\"U7\\\":\\\"Seminar Brindle's registration desk opening time has changed to 10:55.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"Seminar Brindle uses the handout format stapled packet.\\\",\\\"I2\\\":\\\"The coffee break for Seminar Brindle lasts 22 minutes.\\\",\\\"I3\\\":\\\"Seminar Brindle's registration desk opening time is 06:35.\\\",\\\"I4\\\":\\\"Seminar Kestrel's registration desk opening time is 12:25.\\\",\\\"I5\\\":\\\"Seminar Brindle has the room code ROM-B47.\\\",\\\"I6\\\":\\\"Ansel Wickham is the moderator for Seminar Brindle.\\\",\\\"I7\\\":\\\"The hall at Seminar Brindle has a capacity of 40 seats.\\\",\\\"N1\\\":\\\"The registration desk opening time for Seminar Brindle remains 09:20.\\\",\\\"N2\\\":\\\"Seminar Brindle's room code remains ROM-B47.\\\",\\\"Q\\\":\\\"What is the current registration desk opening time of Seminar Brindle?\\\",\\\"U1\\\":\\\"The registration desk for Seminar Brindle now opens at 06:50.\\\",\\\"U2\\\":\\\"Seminar Brindle's coffee break length has changed to 33 minutes.\\\",\\\"U3\\\":\\\"Seminar Brindle's registration desk opening time has been updated to 08:05.\\\",\\\"U4\\\":\\\"The registration desk for Seminar Kestrel now opens at 12:55.\\\",\\\"U5\\\":\\\"Seminar Brindle's registration desk now opens at 09:20.\\\",\\\"U6\\\":\\\"The handout format for Seminar Brindle has changed to folded card.\\\",\\\"U7\\\":\\\"The registration desk opening time for Seminar Brindle is now 10:55.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":2530,\"completion_tokens\":901,\"total_tokens\":3431,\"cost\":0.0153335,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2527,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0153335,\"upstream_inference_prompt_cost\":0.0063235,\"upstream_inference_completions_cost\":0.00901},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-sol\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-sol-20260709\",\"selected\":true}]},\"generation_time\":8217}}",
+      "response_sha256_before_redaction": "3d9c8261c06678b825e78a8735e0e5d451d66114c272ae96045d518b91c05993",
+      "response_envelope": {
+        "id": "gen-1789838249-knDe8X3VCzotveWVqLMv",
+        "object": "chat.completion",
+        "created": 1789838249,
+        "model": "openai/gpt-5.6-sol",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Seminar Brindle's handout format is stapled packet.\",\"I2\":\"Seminar Brindle's coffee break is 22 minutes long.\",\"I3\":\"Seminar Brindle's registration desk opens at 06:35.\",\"I4\":\"Seminar Kestrel's registration desk opens at 12:25.\",\"I5\":\"Seminar Brindle's room code is ROM-B47.\",\"I6\":\"The moderator of Seminar Brindle is Ansel Wickham.\",\"I7\":\"Seminar Brindle's hall capacity is 40 seats.\",\"N1\":\"Seminar Brindle's registration desk opening time remains 10:05.\",\"N2\":\"Seminar Brindle's room code is still ROM-B47.\",\"Q\":\"What is the current registration desk opening time of Seminar Brindle?\",\"U1\":\"Seminar Brindle's registration desk opening time has changed to 06:50.\",\"U2\":\"Seminar Brindle's registration desk now opens at 07:35.\",\"U3\":\"The registration desk opening time for Seminar Brindle has been updated to 08:05.\",\"U4\":\"Seminar Brindle's registration desk opening time is now 08:40.\",\"U5\":\"The registration desk for Seminar Brindle now opens at 09:20.\",\"U6\":\"Seminar Brindle's registration desk opening time has changed to 10:05.\",\"U7\":\"Seminar Brindle's registration desk now opens at 10:55.\"},\"low\":{\"I1\":\"The handout format for Seminar Brindle is stapled packet.\",\"I2\":\"Seminar Brindle has a 22 minutes coffee break.\",\"I3\":\"The registration desk for Seminar Brindle opens at 06:35.\",\"I4\":\"The registration desk for Seminar Kestrel opens at 12:25.\",\"I5\":\"The room code for Seminar Brindle is ROM-B47.\",\"I6\":\"Seminar Brindle's moderator is Ansel Wickham.\",\"I7\":\"The hall capacity for Seminar Brindle is 40 seats.\",\"N1\":\"Seminar Brindle's registration desk still opens at 06:35.\",\"N2\":\"The room code for Seminar Brindle remains ROM-B47.\",\"Q\":\"What is the current registration desk opening time of Seminar Brindle?\",\"U1\":\"Seminar Brindle's hall capacity has been updated to 55 seats.\",\"U2\":\"Seminar Kestrel's registration desk opening time is now 12:55.\",\"U3\":\"The hall capacity for Seminar Brindle has changed to 72 seats.\",\"U4\":\"Seminar Brindle's handout format is now folded card.\",\"U5\":\"The coffee break for Seminar Brindle has been updated to 33 minutes.\",\"U6\":\"The moderator of Seminar Brindle is now Perpetua Drune.\",\"U7\":\"Seminar Brindle's registration desk opening time has changed to 10:55.\"},\"medium\":{\"I1\":\"Seminar Brindle uses the handout format stapled packet.\",\"I2\":\"The coffee break for Seminar Brindle lasts 22 minutes.\",\"I3\":\"Seminar Brindle's registration desk opening time is 06:35.\",\"I4\":\"Seminar Kestrel's registration desk opening time is 12:25.\",\"I5\":\"Seminar Brindle has the room code ROM-B47.\",\"I6\":\"Ansel Wickham is the moderator for Seminar Brindle.\",\"I7\":\"The hall at Seminar Brindle has a capacity of 40 seats.\",\"N1\":\"The registration desk opening time for Seminar Brindle remains 09:20.\",\"N2\":\"Seminar Brindle's room code remains ROM-B47.\",\"Q\":\"What is the current registration desk opening time of Seminar Brindle?\",\"U1\":\"The registration desk for Seminar Brindle now opens at 06:50.\",\"U2\":\"Seminar Brindle's coffee break length has changed to 33 minutes.\",\"U3\":\"Seminar Brindle's registration desk opening time has been updated to 08:05.\",\"U4\":\"The registration desk for Seminar Kestrel now opens at 12:55.\",\"U5\":\"Seminar Brindle's registration desk now opens at 09:20.\",\"U6\":\"The handout format for Seminar Brindle has changed to folded card.\",\"U7\":\"The registration desk opening time for Seminar Brindle is now 10:55.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2530,
+          "completion_tokens": 901,
+          "total_tokens": 3431,
+          "cost": 0.0153335,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2527,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0153335,
+            "upstream_inference_prompt_cost": 0.0063235,
+            "upstream_inference_completions_cost": 0.00901
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-sol",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-sol-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 8217
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-sol",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-sol-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 8217
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Seminar Brindle's handout format is stapled packet.",
+          "I2": "Seminar Brindle's coffee break is 22 minutes long.",
+          "I3": "Seminar Brindle's registration desk opens at 06:35.",
+          "I4": "Seminar Kestrel's registration desk opens at 12:25.",
+          "I5": "Seminar Brindle's room code is ROM-B47.",
+          "I6": "The moderator of Seminar Brindle is Ansel Wickham.",
+          "I7": "Seminar Brindle's hall capacity is 40 seats.",
+          "N1": "Seminar Brindle's registration desk opening time remains 10:05.",
+          "N2": "Seminar Brindle's room code is still ROM-B47.",
+          "Q": "What is the current registration desk opening time of Seminar Brindle?",
+          "U1": "Seminar Brindle's registration desk opening time has changed to 06:50.",
+          "U2": "Seminar Brindle's registration desk now opens at 07:35.",
+          "U3": "The registration desk opening time for Seminar Brindle has been updated to 08:05.",
+          "U4": "Seminar Brindle's registration desk opening time is now 08:40.",
+          "U5": "The registration desk for Seminar Brindle now opens at 09:20.",
+          "U6": "Seminar Brindle's registration desk opening time has changed to 10:05.",
+          "U7": "Seminar Brindle's registration desk now opens at 10:55."
+        },
+        "low": {
+          "I1": "The handout format for Seminar Brindle is stapled packet.",
+          "I2": "Seminar Brindle has a 22 minutes coffee break.",
+          "I3": "The registration desk for Seminar Brindle opens at 06:35.",
+          "I4": "The registration desk for Seminar Kestrel opens at 12:25.",
+          "I5": "The room code for Seminar Brindle is ROM-B47.",
+          "I6": "Seminar Brindle's moderator is Ansel Wickham.",
+          "I7": "The hall capacity for Seminar Brindle is 40 seats.",
+          "N1": "Seminar Brindle's registration desk still opens at 06:35.",
+          "N2": "The room code for Seminar Brindle remains ROM-B47.",
+          "Q": "What is the current registration desk opening time of Seminar Brindle?",
+          "U1": "Seminar Brindle's hall capacity has been updated to 55 seats.",
+          "U2": "Seminar Kestrel's registration desk opening time is now 12:55.",
+          "U3": "The hall capacity for Seminar Brindle has changed to 72 seats.",
+          "U4": "Seminar Brindle's handout format is now folded card.",
+          "U5": "The coffee break for Seminar Brindle has been updated to 33 minutes.",
+          "U6": "The moderator of Seminar Brindle is now Perpetua Drune.",
+          "U7": "Seminar Brindle's registration desk opening time has changed to 10:55."
+        },
+        "medium": {
+          "I1": "Seminar Brindle uses the handout format stapled packet.",
+          "I2": "The coffee break for Seminar Brindle lasts 22 minutes.",
+          "I3": "Seminar Brindle's registration desk opening time is 06:35.",
+          "I4": "Seminar Kestrel's registration desk opening time is 12:25.",
+          "I5": "Seminar Brindle has the room code ROM-B47.",
+          "I6": "Ansel Wickham is the moderator for Seminar Brindle.",
+          "I7": "The hall at Seminar Brindle has a capacity of 40 seats.",
+          "N1": "The registration desk opening time for Seminar Brindle remains 09:20.",
+          "N2": "Seminar Brindle's room code remains ROM-B47.",
+          "Q": "What is the current registration desk opening time of Seminar Brindle?",
+          "U1": "The registration desk for Seminar Brindle now opens at 06:50.",
+          "U2": "Seminar Brindle's coffee break length has changed to 33 minutes.",
+          "U3": "Seminar Brindle's registration desk opening time has been updated to 08:05.",
+          "U4": "The registration desk for Seminar Kestrel now opens at 12:55.",
+          "U5": "Seminar Brindle's registration desk now opens at 09:20.",
+          "U6": "The handout format for Seminar Brindle has changed to folded card.",
+          "U7": "The registration desk opening time for Seminar Brindle is now 10:55."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2530,
+        "completion_tokens": 901,
+        "total_tokens": 3431,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.0153335
+      },
+      "latency_seconds": 8.911186176002957,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "scenario_id": "pilot-scheduling-01",
+  "unit_attempt": 1,
+  "outcome": "EVALUABLE_PASS",
+  "semantic_check": {
+    "status": "PASS",
+    "meaning": "No deterministic violation detected is not semantic qualification.",
+    "findings": []
+  },
+  "output_sha256": "72139677b3288b941555592465f0f63846e68c4a60de7b855753b38a4ce5d0fa"
+}

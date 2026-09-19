@@ -1,0 +1,95 @@
+{
+  "logical_id": "pilot-scheduling-01/high/M3/A",
+  "policy": "M3",
+  "scenario_id": "pilot-scheduling-01",
+  "variant": "high",
+  "event": "Q",
+  "request_body": {
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "provider": {
+      "order": [
+        "coreweave/bf16"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 2048,
+    "response_format": {
+      "type": "json_object"
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a helpful assistant. Use only the information provided in the context to answer the user's final question.\n\nReply with the answer only."
+      },
+      {
+        "role": "user",
+        "content": "Context:\n[memory_id=mem_0001; created=2000-01-01T00:01:00Z; updated=2000-01-01T00:01:00Z] For Seminar Brindle, the handout format is stapled packet.\n[memory_id=mem_0002; created=2000-01-01T00:02:00Z; updated=2000-01-01T00:02:00Z] For Seminar Brindle, the coffee break length is 22 minutes.\n[memory_id=mem_0004; created=2000-01-01T00:04:00Z; updated=2000-01-01T00:04:00Z] For Seminar Kestrel, the registration desk opening time is 12:25.\n[memory_id=mem_0005; created=2000-01-01T00:05:00Z; updated=2000-01-01T00:05:00Z] For Seminar Brindle, the seminar room identifier is ROM-B47.\n[memory_id=mem_0006; created=2000-01-01T00:06:00Z; updated=2000-01-01T00:06:00Z] For Seminar Brindle, the seminar moderator is Ansel Wickham.\n[memory_id=mem_0007; created=2000-01-01T00:07:00Z; updated=2000-01-01T00:07:00Z] For Seminar Brindle, the seating capacity is 40 seats.\n[memory_id=mem_0003; created=2000-01-01T00:03:00Z; updated=2000-01-01T00:15:00Z] For Seminar Brindle, the registration desk opening time is 10:55.\n\nQuestion:\nWhat is the current registration desk opening time of Seminar Brindle?\n\nReturn exactly one JSON object with exactly one key named \"answer\".\nThe value of \"answer\" must contain only the answer to the question, with no explanation or additional text.\nDo not return any other keys."
+      }
+    ]
+  },
+  "request_sha256": "cbea78d48d8a89943df6894e0729a1ce34f35ab1f679eff0983abf527aa08a59",
+  "model": "meta-llama/llama-3.1-8b-instruct",
+  "provider": "coreweave/bf16",
+  "request_status": "success",
+  "content": "{\"answer\": \"10:55\"}",
+  "finish_reason": "stop",
+  "routing_ok": true,
+  "accounting_ok": true,
+  "usage": {
+    "prompt_tokens": 511,
+    "completion_tokens": 9,
+    "total_tokens": 520,
+    "cost": 0.0001144,
+    "cached_tokens": 0
+  },
+  "latency_seconds": 0.39960617799079046,
+  "cost": 0.0001144,
+  "attempts": [
+    {
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T17:34:14.715308+00:00",
+      "http_status": 200,
+      "error_type": null,
+      "requested_model": "meta-llama/llama-3.1-8b-instruct",
+      "requested_provider_endpoint": "coreweave/bf16",
+      "returned_model": "meta-llama/llama-3.1-8b-instruct",
+      "openrouter_metadata": {
+        "requested": "meta-llama/llama-3.1-8b-instruct",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=CoreWeave",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 5,
+          "available": [
+            {
+              "provider": "CoreWeave",
+              "model": "meta-llama/llama-3.1-8b-instruct",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 329
+      },
+      "request_id": null,
+      "response_id": "gen-1789839254-gtVxQZ9Ah1GxyUIIqIAX",
+      "service_tier": null,
+      "finish_reason": "stop",
+      "raw_response": "{\"id\":\"gen-1789839254-gtVxQZ9Ah1GxyUIIqIAX\",\"object\":\"chat.completion\",\"created\":1789839254,\"model\":\"meta-llama/llama-3.1-8b-instruct\",\"provider\":\"CoreWeave\",\"system_fingerprint\":\"vllm-0.22.1.dev0+g0b3ba88f1.d20260529-25c7fbc0\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"answer\\\": \\\"10:55\\\"}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":511,\"completion_tokens\":9,\"total_tokens\":520,\"cost\":0.0001144,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0001144,\"upstream_inference_prompt_cost\":0.00011242,\"upstream_inference_completions_cost\":0.00000198},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"meta-llama/llama-3.1-8b-instruct\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=CoreWeave\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":5,\"available\":[{\"provider\":\"CoreWeave\",\"model\":\"meta-llama/llama-3.1-8b-instruct\",\"selected\":true}]},\"generation_time\":329}}",
+      "response_sha256": "9b17fa61016ad42c6b499b032295a4bf8bc423b5ac21881e208167172bc22120",
+      "usage": {
+        "prompt_tokens": 511,
+        "completion_tokens": 9,
+        "total_tokens": 520,
+        "cost": 0.0001144,
+        "cached_tokens": 0
+      },
+      "latency_seconds": 0.3995750400063116,
+      "will_retry": false
+    }
+  ]
+}

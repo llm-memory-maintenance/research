@@ -1,0 +1,385 @@
+{
+  "logical_call_id": "G2",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"item_count\\\",\\\"meaning\\\":\\\"ordered number of empty storage sleeves\\\",\\\"units_or_interpretation\\\":\\\"sleeves\\\"},{\\\"attribute_id\\\":\\\"order_code\\\",\\\"meaning\\\":\\\"order identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"packaging\\\",\\\"meaning\\\":\\\"packaging style\\\",\\\"units_or_interpretation\\\":\\\"style label\\\"},{\\\"attribute_id\\\":\\\"delivery_point\\\",\\\"meaning\\\":\\\"delivery point\\\",\\\"units_or_interpretation\\\":\\\"synthetic location\\\"},{\\\"attribute_id\\\":\\\"label_format\\\",\\\"meaning\\\":\\\"package label format\\\",\\\"units_or_interpretation\\\":\\\"format label\\\"},{\\\"attribute_id\\\":\\\"dispatch_cycle\\\",\\\"meaning\\\":\\\"dispatch cycle\\\",\\\"units_or_interpretation\\\":\\\"synthetic calendar label\\\"}],\\\"domain\\\":\\\"Purchase & Order\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"name\\\":\\\"Order Kittiwake\\\"},{\\\"entity_id\\\":\\\"gq-purchase-order-01-distractor\\\",\\\"name\\\":\\\"Order Sandpiper\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_d\\\",\\\"I2\\\":\\\"k_target\\\",\\\"I3\\\":\\\"k_hard\\\",\\\"I4\\\":\\\"k_n2\\\",\\\"I5\\\":\\\"k_a\\\",\\\"I6\\\":\\\"k_b\\\",\\\"I7\\\":\\\"k_c\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"item_count\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current ordered number of empty storage sleeves of Order Kittiwake.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"item_count\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"120 sleeves\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"item_count\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-distractor\\\",\\\"initial_value\\\":\\\"330 sleeves\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"order_code\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"ORD-K8\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"packaging\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"flat packs\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"delivery_point\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"Dock Ranu\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"label_format\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"Label Aster\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"dispatch_cycle\\\",\\\"entity_id\\\":\\\"gq-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"Cycle Dori\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"Cycle Dori\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"120 sleeves\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"330 sleeves\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"flat packs\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Dock Ranu\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Label Aster\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"145 sleeves\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"170 sleeves\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"195 sleeves\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"220 sleeves\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"245 sleeves\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"270 sleeves\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"270 sleeves\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"295 sleeves\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"Cycle Dori\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"120 sleeves\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"330 sleeves\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"flat packs\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Dock Ranu\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Label Aster\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"355 sleeves\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Label Briar\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Cycle Evi\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"rolled packs\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Dock Selu\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Label Clover\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"120 sleeves\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"295 sleeves\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"Cycle Dori\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"120 sleeves\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"330 sleeves\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"flat packs\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Dock Ranu\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Label Aster\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"145 sleeves\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"355 sleeves\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"195 sleeves\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Cycle Evi\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"245 sleeves\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"rolled packs\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"245 sleeves\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"295 sleeves\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"ORD-K8\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"anthropic/claude-sonnet-5\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"anthropic\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "c430d4cbfdbe02df832cde3131ba34c327f9ba9a497f16792f7911ab608ffb36",
+  "request_body": {
+    "model": "anthropic/claude-sonnet-5",
+    "provider": {
+      "order": [
+        "anthropic"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"item_count\",\"meaning\":\"ordered number of empty storage sleeves\",\"units_or_interpretation\":\"sleeves\"},{\"attribute_id\":\"order_code\",\"meaning\":\"order identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"packaging\",\"meaning\":\"packaging style\",\"units_or_interpretation\":\"style label\"},{\"attribute_id\":\"delivery_point\",\"meaning\":\"delivery point\",\"units_or_interpretation\":\"synthetic location\"},{\"attribute_id\":\"label_format\",\"meaning\":\"package label format\",\"units_or_interpretation\":\"format label\"},{\"attribute_id\":\"dispatch_cycle\",\"meaning\":\"dispatch cycle\",\"units_or_interpretation\":\"synthetic calendar label\"}],\"domain\":\"Purchase & Order\",\"entities\":[{\"entity_id\":\"gq-purchase-order-01-primary\",\"name\":\"Order Kittiwake\"},{\"entity_id\":\"gq-purchase-order-01-distractor\",\"name\":\"Order Sandpiper\"}],\"initial_order\":{\"I1\":\"k_d\",\"I2\":\"k_target\",\"I3\":\"k_hard\",\"I4\":\"k_n2\",\"I5\":\"k_a\",\"I6\":\"k_b\",\"I7\":\"k_c\"},\"question_intent\":{\"attribute_id\":\"item_count\",\"entity_id\":\"gq-purchase-order-01-primary\",\"intent\":\"Ask only for the current ordered number of empty storage sleeves of Order Kittiwake.\"},\"state_keys\":[{\"attribute_id\":\"item_count\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"120 sleeves\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"item_count\",\"entity_id\":\"gq-purchase-order-01-distractor\",\"initial_value\":\"330 sleeves\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"order_code\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"ORD-K8\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"packaging\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"flat packs\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"delivery_point\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"Dock Ranu\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"label_format\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"Label Aster\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"dispatch_cycle\",\"entity_id\":\"gq-purchase-order-01-primary\",\"initial_value\":\"Cycle Dori\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"Cycle Dori\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"120 sleeves\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"330 sleeves\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"ORD-K8\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"flat packs\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Dock Ranu\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Label Aster\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"145 sleeves\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"170 sleeves\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"195 sleeves\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"220 sleeves\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"245 sleeves\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"270 sleeves\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"270 sleeves\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"295 sleeves\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"ORD-K8\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"Cycle Dori\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"120 sleeves\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"330 sleeves\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"ORD-K8\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"flat packs\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Dock Ranu\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Label Aster\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"355 sleeves\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Label Briar\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Cycle Evi\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"rolled packs\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Dock Selu\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"Label Clover\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"120 sleeves\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"295 sleeves\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"ORD-K8\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"Cycle Dori\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"120 sleeves\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"330 sleeves\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"ORD-K8\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"flat packs\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Dock Ranu\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Label Aster\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"145 sleeves\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"355 sleeves\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"195 sleeves\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Cycle Evi\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"245 sleeves\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"rolled packs\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"245 sleeves\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"295 sleeves\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"ORD-K8\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G2",
+      "physical_attempt": 1,
+      "started_at": "2026-09-18T12:09:27.185829+00:00",
+      "requested_model": "anthropic/claude-sonnet-5",
+      "requested_provider_order": [
+        "anthropic"
+      ],
+      "returned_model": "anthropic/claude-sonnet-5",
+      "observed_selected_provider": "Anthropic",
+      "request_id": null,
+      "response_id": "gen-1789733367-eZJdGMJBYB1Bp9CE4tir",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789733367-eZJdGMJBYB1Bp9CE4tir\",\"object\":\"chat.completion\",\"created\":1789733367,\"model\":\"anthropic/claude-sonnet-5\",\"provider\":\"Anthropic\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"For Order Kittiwake, the dispatch cycle is currently set to Cycle Dori.\\\",\\\"I2\\\":\\\"For Order Kittiwake, the ordered number of empty storage sleeves is 120 sleeves.\\\",\\\"I3\\\":\\\"For Order Sandpiper, the ordered number of empty storage sleeves is 330 sleeves.\\\",\\\"I4\\\":\\\"For Order Kittiwake, the order code is ORD-K8.\\\",\\\"I5\\\":\\\"For Order Kittiwake, the packaging style is flat packs.\\\",\\\"I6\\\":\\\"For Order Kittiwake, the delivery point is Dock Ranu.\\\",\\\"I7\\\":\\\"For Order Kittiwake, the package label format is Label Aster.\\\",\\\"N1\\\":\\\"Just to reaffirm, the ordered number of empty storage sleeves for Order Kittiwake is still 270 sleeves.\\\",\\\"N2\\\":\\\"Just to reaffirm, the order code for Order Kittiwake is still ORD-K8.\\\",\\\"Q\\\":\\\"What is the current ordered number of empty storage sleeves for Order Kittiwake?\\\",\\\"U1\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake has been updated to 145 sleeves.\\\",\\\"U2\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake has changed again, now 170 sleeves.\\\",\\\"U3\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake is now 195 sleeves.\\\",\\\"U4\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake has been revised to 220 sleeves.\\\",\\\"U5\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake has changed to 245 sleeves.\\\",\\\"U6\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake is now 270 sleeves.\\\",\\\"U7\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake has been updated once more to 295 sleeves.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"For Order Kittiwake, the dispatch cycle is currently set to Cycle Dori.\\\",\\\"I2\\\":\\\"For Order Kittiwake, the ordered number of empty storage sleeves is 120 sleeves.\\\",\\\"I3\\\":\\\"For Order Sandpiper, the ordered number of empty storage sleeves is 330 sleeves.\\\",\\\"I4\\\":\\\"For Order Kittiwake, the order code is ORD-K8.\\\",\\\"I5\\\":\\\"For Order Kittiwake, the packaging style is flat packs.\\\",\\\"I6\\\":\\\"For Order Kittiwake, the delivery point is Dock Ranu.\\\",\\\"I7\\\":\\\"For Order Kittiwake, the package label format is Label Aster.\\\",\\\"N1\\\":\\\"Just to reaffirm, the ordered number of empty storage sleeves for Order Kittiwake is still 120 sleeves.\\\",\\\"N2\\\":\\\"Just to reaffirm, the order code for Order Kittiwake is still ORD-K8.\\\",\\\"Q\\\":\\\"What is the current ordered number of empty storage sleeves for Order Kittiwake?\\\",\\\"U1\\\":\\\"The ordered number of empty storage sleeves for Order Sandpiper has been updated to 355 sleeves.\\\",\\\"U2\\\":\\\"The package label format for Order Kittiwake has been changed to Label Briar.\\\",\\\"U3\\\":\\\"The dispatch cycle for Order Kittiwake has been updated to Cycle Evi.\\\",\\\"U4\\\":\\\"The packaging style for Order Kittiwake has changed to rolled packs.\\\",\\\"U5\\\":\\\"The delivery point for Order Kittiwake has been updated to Dock Selu.\\\",\\\"U6\\\":\\\"The package label format for Order Kittiwake has changed again, now Label Clover.\\\",\\\"U7\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake has been updated to 295 sleeves.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"For Order Kittiwake, the dispatch cycle is currently set to Cycle Dori.\\\",\\\"I2\\\":\\\"For Order Kittiwake, the ordered number of empty storage sleeves is 120 sleeves.\\\",\\\"I3\\\":\\\"For Order Sandpiper, the ordered number of empty storage sleeves is 330 sleeves.\\\",\\\"I4\\\":\\\"For Order Kittiwake, the order code is ORD-K8.\\\",\\\"I5\\\":\\\"For Order Kittiwake, the packaging style is flat packs.\\\",\\\"I6\\\":\\\"For Order Kittiwake, the delivery point is Dock Ranu.\\\",\\\"I7\\\":\\\"For Order Kittiwake, the package label format is Label Aster.\\\",\\\"N1\\\":\\\"Just to reaffirm, the ordered number of empty storage sleeves for Order Kittiwake is still 245 sleeves.\\\",\\\"N2\\\":\\\"Just to reaffirm, the order code for Order Kittiwake is still ORD-K8.\\\",\\\"Q\\\":\\\"What is the current ordered number of empty storage sleeves for Order Kittiwake?\\\",\\\"U1\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake has been updated to 145 sleeves.\\\",\\\"U2\\\":\\\"The ordered number of empty storage sleeves for Order Sandpiper has been updated to 355 sleeves.\\\",\\\"U3\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake is now 195 sleeves.\\\",\\\"U4\\\":\\\"The dispatch cycle for Order Kittiwake has been updated to Cycle Evi.\\\",\\\"U5\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake has changed to 245 sleeves.\\\",\\\"U6\\\":\\\"The packaging style for Order Kittiwake has changed to rolled packs.\\\",\\\"U7\\\":\\\"The ordered number of empty storage sleeves for Order Kittiwake has been updated once more to 295 sleeves.\\\"}}\",\"refusal\":null,\"reasoning\":\"I'm drafting each variant's text, keeping the core question consistent — asking for the current ordered number of empty storage sleeves for Order Kittiwake.\\n\\n\",\"reasoning_details\":[{\"type\":\"reasoning.text\",\"text\":\"I'm drafting each variant's text, keeping the core question consistent — asking for the current ordered number of empty storage sleeves for Order Kittiwake.\\n\\n\",\"format\":\"anthropic-claude-v1\",\"index\":0,\"signature\":\"EqEDCrABCBEYAipA96ku67F5xZjIb7cTwktvMuzJUUUGttSN367BwZpR+rb5A/JVZt+ydcFgjyb+HYI7AyA79LXBSl53ZgW/EME8VTIPY2xhdWRlLXNvbm5ldC01OABCCHRoaW5raW5nWiQwZDk4M2YzZi00OWZhLTRhNDYtODI1NC1iMWJiMjQ5MWEyYTl6HnVwcm9mXzAxMUNlZlp1azdZcUtuQUZSZ3MzMURlRqgB+9O01QYSDCNGlrq+JzntjP13uBoMDuO/Jyvn0QkTZwhmIjBJmE/zeVtvnoqOuZ4YTIVLFoDB7cPPiqPAb/twpsAh5RTC7WkeCxYbSx+zxkzDtioqnQE8zNwMkJjgSyfm/D6DPO6I4FQk46pf4BFzokWhzgR1n+amK+itk6yQTFQQicAXr+JBUHzfcnaiWgrDeuA+u95dZxvFZF8KozARJ21VHv5DbOH5gOicyK99KG6LawCFw9COVq3o+RBYB4dIsM9joXDvEgxOGd8jcRfcmu2FqKRSv0yHAXSU8yAMc3OXA6I+jeZEiBs0q12NAUkrtinHGAE=\"}]}}],\"usage\":{\"prompt_tokens\":4620,\"completion_tokens\":1853,\"total_tokens\":6473,\"cost\":0.02777,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.02777,\"upstream_inference_prompt_cost\":0.00924,\"upstream_inference_completions_cost\":0.01853},\"completion_tokens_details\":{\"reasoning_tokens\":48,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"anthropic/claude-sonnet-5\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=Anthropic\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":10,\"available\":[{\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-sonnet-5-20260630\",\"selected\":true}]},\"generation_time\":13743}}",
+      "response_sha256_before_redaction": "9634af2081f08dad67fdfe9af681fcbd74695ed8c7f115f1058948ecb5bad64d",
+      "response_envelope": {
+        "id": "gen-1789733367-eZJdGMJBYB1Bp9CE4tir",
+        "object": "chat.completion",
+        "created": 1789733367,
+        "model": "anthropic/claude-sonnet-5",
+        "provider": "Anthropic",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "end_turn",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"For Order Kittiwake, the dispatch cycle is currently set to Cycle Dori.\",\"I2\":\"For Order Kittiwake, the ordered number of empty storage sleeves is 120 sleeves.\",\"I3\":\"For Order Sandpiper, the ordered number of empty storage sleeves is 330 sleeves.\",\"I4\":\"For Order Kittiwake, the order code is ORD-K8.\",\"I5\":\"For Order Kittiwake, the packaging style is flat packs.\",\"I6\":\"For Order Kittiwake, the delivery point is Dock Ranu.\",\"I7\":\"For Order Kittiwake, the package label format is Label Aster.\",\"N1\":\"Just to reaffirm, the ordered number of empty storage sleeves for Order Kittiwake is still 270 sleeves.\",\"N2\":\"Just to reaffirm, the order code for Order Kittiwake is still ORD-K8.\",\"Q\":\"What is the current ordered number of empty storage sleeves for Order Kittiwake?\",\"U1\":\"The ordered number of empty storage sleeves for Order Kittiwake has been updated to 145 sleeves.\",\"U2\":\"The ordered number of empty storage sleeves for Order Kittiwake has changed again, now 170 sleeves.\",\"U3\":\"The ordered number of empty storage sleeves for Order Kittiwake is now 195 sleeves.\",\"U4\":\"The ordered number of empty storage sleeves for Order Kittiwake has been revised to 220 sleeves.\",\"U5\":\"The ordered number of empty storage sleeves for Order Kittiwake has changed to 245 sleeves.\",\"U6\":\"The ordered number of empty storage sleeves for Order Kittiwake is now 270 sleeves.\",\"U7\":\"The ordered number of empty storage sleeves for Order Kittiwake has been updated once more to 295 sleeves.\"},\"low\":{\"I1\":\"For Order Kittiwake, the dispatch cycle is currently set to Cycle Dori.\",\"I2\":\"For Order Kittiwake, the ordered number of empty storage sleeves is 120 sleeves.\",\"I3\":\"For Order Sandpiper, the ordered number of empty storage sleeves is 330 sleeves.\",\"I4\":\"For Order Kittiwake, the order code is ORD-K8.\",\"I5\":\"For Order Kittiwake, the packaging style is flat packs.\",\"I6\":\"For Order Kittiwake, the delivery point is Dock Ranu.\",\"I7\":\"For Order Kittiwake, the package label format is Label Aster.\",\"N1\":\"Just to reaffirm, the ordered number of empty storage sleeves for Order Kittiwake is still 120 sleeves.\",\"N2\":\"Just to reaffirm, the order code for Order Kittiwake is still ORD-K8.\",\"Q\":\"What is the current ordered number of empty storage sleeves for Order Kittiwake?\",\"U1\":\"The ordered number of empty storage sleeves for Order Sandpiper has been updated to 355 sleeves.\",\"U2\":\"The package label format for Order Kittiwake has been changed to Label Briar.\",\"U3\":\"The dispatch cycle for Order Kittiwake has been updated to Cycle Evi.\",\"U4\":\"The packaging style for Order Kittiwake has changed to rolled packs.\",\"U5\":\"The delivery point for Order Kittiwake has been updated to Dock Selu.\",\"U6\":\"The package label format for Order Kittiwake has changed again, now Label Clover.\",\"U7\":\"The ordered number of empty storage sleeves for Order Kittiwake has been updated to 295 sleeves.\"},\"medium\":{\"I1\":\"For Order Kittiwake, the dispatch cycle is currently set to Cycle Dori.\",\"I2\":\"For Order Kittiwake, the ordered number of empty storage sleeves is 120 sleeves.\",\"I3\":\"For Order Sandpiper, the ordered number of empty storage sleeves is 330 sleeves.\",\"I4\":\"For Order Kittiwake, the order code is ORD-K8.\",\"I5\":\"For Order Kittiwake, the packaging style is flat packs.\",\"I6\":\"For Order Kittiwake, the delivery point is Dock Ranu.\",\"I7\":\"For Order Kittiwake, the package label format is Label Aster.\",\"N1\":\"Just to reaffirm, the ordered number of empty storage sleeves for Order Kittiwake is still 245 sleeves.\",\"N2\":\"Just to reaffirm, the order code for Order Kittiwake is still ORD-K8.\",\"Q\":\"What is the current ordered number of empty storage sleeves for Order Kittiwake?\",\"U1\":\"The ordered number of empty storage sleeves for Order Kittiwake has been updated to 145 sleeves.\",\"U2\":\"The ordered number of empty storage sleeves for Order Sandpiper has been updated to 355 sleeves.\",\"U3\":\"The ordered number of empty storage sleeves for Order Kittiwake is now 195 sleeves.\",\"U4\":\"The dispatch cycle for Order Kittiwake has been updated to Cycle Evi.\",\"U5\":\"The ordered number of empty storage sleeves for Order Kittiwake has changed to 245 sleeves.\",\"U6\":\"The packaging style for Order Kittiwake has changed to rolled packs.\",\"U7\":\"The ordered number of empty storage sleeves for Order Kittiwake has been updated once more to 295 sleeves.\"}}",
+              "refusal": null,
+              "reasoning": "I'm drafting each variant's text, keeping the core question consistent — asking for the current ordered number of empty storage sleeves for Order Kittiwake.\n\n",
+              "reasoning_details": [
+                {
+                  "type": "reasoning.text",
+                  "text": "I'm drafting each variant's text, keeping the core question consistent — asking for the current ordered number of empty storage sleeves for Order Kittiwake.\n\n",
+                  "format": "anthropic-claude-v1",
+                  "index": 0,
+                  "signature": "EqEDCrABCBEYAipA96ku67F5xZjIb7cTwktvMuzJUUUGttSN367BwZpR+rb5A/JVZt+ydcFgjyb+HYI7AyA79LXBSl53ZgW/EME8VTIPY2xhdWRlLXNvbm5ldC01OABCCHRoaW5raW5nWiQwZDk4M2YzZi00OWZhLTRhNDYtODI1NC1iMWJiMjQ5MWEyYTl6HnVwcm9mXzAxMUNlZlp1azdZcUtuQUZSZ3MzMURlRqgB+9O01QYSDCNGlrq+JzntjP13uBoMDuO/Jyvn0QkTZwhmIjBJmE/zeVtvnoqOuZ4YTIVLFoDB7cPPiqPAb/twpsAh5RTC7WkeCxYbSx+zxkzDtioqnQE8zNwMkJjgSyfm/D6DPO6I4FQk46pf4BFzokWhzgR1n+amK+itk6yQTFQQicAXr+JBUHzfcnaiWgrDeuA+u95dZxvFZF8KozARJ21VHv5DbOH5gOicyK99KG6LawCFw9COVq3o+RBYB4dIsM9joXDvEgxOGd8jcRfcmu2FqKRSv0yHAXSU8yAMc3OXA6I+jeZEiBs0q12NAUkrtinHGAE="
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 4620,
+          "completion_tokens": 1853,
+          "total_tokens": 6473,
+          "cost": 0.02777,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.02777,
+            "upstream_inference_prompt_cost": 0.00924,
+            "upstream_inference_completions_cost": 0.01853
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 48,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "anthropic/claude-sonnet-5",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=Anthropic",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 10,
+            "available": [
+              {
+                "provider": "Anthropic",
+                "model": "anthropic/claude-sonnet-5-20260630",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 13743
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "anthropic/claude-sonnet-5",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=Anthropic",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 10,
+          "available": [
+            {
+              "provider": "Anthropic",
+              "model": "anthropic/claude-sonnet-5-20260630",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 13743
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "For Order Kittiwake, the dispatch cycle is currently set to Cycle Dori.",
+          "I2": "For Order Kittiwake, the ordered number of empty storage sleeves is 120 sleeves.",
+          "I3": "For Order Sandpiper, the ordered number of empty storage sleeves is 330 sleeves.",
+          "I4": "For Order Kittiwake, the order code is ORD-K8.",
+          "I5": "For Order Kittiwake, the packaging style is flat packs.",
+          "I6": "For Order Kittiwake, the delivery point is Dock Ranu.",
+          "I7": "For Order Kittiwake, the package label format is Label Aster.",
+          "N1": "Just to reaffirm, the ordered number of empty storage sleeves for Order Kittiwake is still 270 sleeves.",
+          "N2": "Just to reaffirm, the order code for Order Kittiwake is still ORD-K8.",
+          "Q": "What is the current ordered number of empty storage sleeves for Order Kittiwake?",
+          "U1": "The ordered number of empty storage sleeves for Order Kittiwake has been updated to 145 sleeves.",
+          "U2": "The ordered number of empty storage sleeves for Order Kittiwake has changed again, now 170 sleeves.",
+          "U3": "The ordered number of empty storage sleeves for Order Kittiwake is now 195 sleeves.",
+          "U4": "The ordered number of empty storage sleeves for Order Kittiwake has been revised to 220 sleeves.",
+          "U5": "The ordered number of empty storage sleeves for Order Kittiwake has changed to 245 sleeves.",
+          "U6": "The ordered number of empty storage sleeves for Order Kittiwake is now 270 sleeves.",
+          "U7": "The ordered number of empty storage sleeves for Order Kittiwake has been updated once more to 295 sleeves."
+        },
+        "low": {
+          "I1": "For Order Kittiwake, the dispatch cycle is currently set to Cycle Dori.",
+          "I2": "For Order Kittiwake, the ordered number of empty storage sleeves is 120 sleeves.",
+          "I3": "For Order Sandpiper, the ordered number of empty storage sleeves is 330 sleeves.",
+          "I4": "For Order Kittiwake, the order code is ORD-K8.",
+          "I5": "For Order Kittiwake, the packaging style is flat packs.",
+          "I6": "For Order Kittiwake, the delivery point is Dock Ranu.",
+          "I7": "For Order Kittiwake, the package label format is Label Aster.",
+          "N1": "Just to reaffirm, the ordered number of empty storage sleeves for Order Kittiwake is still 120 sleeves.",
+          "N2": "Just to reaffirm, the order code for Order Kittiwake is still ORD-K8.",
+          "Q": "What is the current ordered number of empty storage sleeves for Order Kittiwake?",
+          "U1": "The ordered number of empty storage sleeves for Order Sandpiper has been updated to 355 sleeves.",
+          "U2": "The package label format for Order Kittiwake has been changed to Label Briar.",
+          "U3": "The dispatch cycle for Order Kittiwake has been updated to Cycle Evi.",
+          "U4": "The packaging style for Order Kittiwake has changed to rolled packs.",
+          "U5": "The delivery point for Order Kittiwake has been updated to Dock Selu.",
+          "U6": "The package label format for Order Kittiwake has changed again, now Label Clover.",
+          "U7": "The ordered number of empty storage sleeves for Order Kittiwake has been updated to 295 sleeves."
+        },
+        "medium": {
+          "I1": "For Order Kittiwake, the dispatch cycle is currently set to Cycle Dori.",
+          "I2": "For Order Kittiwake, the ordered number of empty storage sleeves is 120 sleeves.",
+          "I3": "For Order Sandpiper, the ordered number of empty storage sleeves is 330 sleeves.",
+          "I4": "For Order Kittiwake, the order code is ORD-K8.",
+          "I5": "For Order Kittiwake, the packaging style is flat packs.",
+          "I6": "For Order Kittiwake, the delivery point is Dock Ranu.",
+          "I7": "For Order Kittiwake, the package label format is Label Aster.",
+          "N1": "Just to reaffirm, the ordered number of empty storage sleeves for Order Kittiwake is still 245 sleeves.",
+          "N2": "Just to reaffirm, the order code for Order Kittiwake is still ORD-K8.",
+          "Q": "What is the current ordered number of empty storage sleeves for Order Kittiwake?",
+          "U1": "The ordered number of empty storage sleeves for Order Kittiwake has been updated to 145 sleeves.",
+          "U2": "The ordered number of empty storage sleeves for Order Sandpiper has been updated to 355 sleeves.",
+          "U3": "The ordered number of empty storage sleeves for Order Kittiwake is now 195 sleeves.",
+          "U4": "The dispatch cycle for Order Kittiwake has been updated to Cycle Evi.",
+          "U5": "The ordered number of empty storage sleeves for Order Kittiwake has changed to 245 sleeves.",
+          "U6": "The packaging style for Order Kittiwake has changed to rolled packs.",
+          "U7": "The ordered number of empty storage sleeves for Order Kittiwake has been updated once more to 295 sleeves."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 4620,
+        "completion_tokens": 1853,
+        "total_tokens": 6473,
+        "reasoning_tokens": 48,
+        "cached_tokens": 0,
+        "cost": 0.02777
+      },
+      "latency_seconds": 13.914248945991858,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G2",
+  "fixture_id": "gq-purchase-order-01",
+  "fixture_sha256": "8c88c4212a5db681e2bec23828a8d8006a225d2cdede2fffeb3f69cc6c2e6898",
+  "projection_sha256": "42cc082624b29b8fe97f34b397687ec354304b9ce7829a3da5659820dff63b72",
+  "logical_call_index": 19,
+  "provenance": {
+    "source_commit": "0f4873615101dde22bced8f857523f475cee2604",
+    "fixture_set_commit": "683c0416c5bf47c83021408f26bc7a7ab5e8becc",
+    "fixture_manifest_sha256": "ecce7e579f02f64bb5578d8b18b9164483da1c5438544f21a89e17d7a2aaa1f9",
+    "execution_config_sha256": "848ca0219ff1d24adcf2f12d0789ebeb8e7a86427336672173b91e034dca6b62",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "procedure_version": "generator-qualification-procedure/1.0.0",
+    "implementation": {
+      "status": "FROZEN FOR LIVE EXECUTION",
+      "freeze_commit": "e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e",
+      "source_sha256": {
+        "experiments/qualify_generators.py": "5884cdaf9b2781d69acc733e7d8556766669f002bd175d78dcf935c1059e043e",
+        "experiments/probe_generators.py": "f1604e415ff1a359454161b8c94c6504706335419770989358557ff2314cecdf",
+        "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+      }
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "automated": {
+    "status": "PASS",
+    "meaning": "No deterministic violation detected is not semantic qualification.",
+    "findings": []
+  },
+  "output_sha256": "ff1ff97850a9bc05f4ae838e26e89cd659210dac76cdb595a4112809fff18977"
+}

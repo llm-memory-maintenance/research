@@ -1,0 +1,124 @@
+{
+  "procedure_version": "crst-pilot-backbone-collection/1.0.0",
+  "status": "COMPLETE",
+  "provenance": {
+    "source_commit": "f794afd0933d374cc7a9150efd18a0704c4d50d1",
+    "config_sha256": "d90bc862249da2bb3f146d6ef03d1dab5a09cef0ba7eed887ed95d74ebb666ee",
+    "model_config_sha256": "e9dfac8cd6d3a2ffe763ad6efd32b5ef814a3eec07887f7a3bd6d9561cee509e",
+    "material_manifest_sha256": "e3ef466a872f29da86eb2dc7ce5caf02ec07a514acb69542614c4edee72af11c",
+    "prompt_identities": {
+      "provider_response_mode": {
+        "response_format": {
+          "type": "json_object"
+        }
+      },
+      "answer_system": {
+        "version": "crst-pilot-answer/1.0.0",
+        "sha256": "8a6abc2b52c63340aa483023a823c6ff9d8142ab9749b3ae7d6d2f216da5e71e"
+      },
+      "answer_schema": {
+        "version": "crst-pilot-answer-schema/1.0.0",
+        "sha256": "ee52628cf2b7d10e8d9cd8b9a96eb2468b541a9eabb05aef91693a3ed4abba64"
+      },
+      "answer_request": {
+        "version": "crst-pilot-answer-request/1.1.0",
+        "superseded": {
+          "version": "crst-pilot-answer-request/1.0.0",
+          "sha256": "458e0a8e8a53ed92620386f4211606a2dac6735dd173782a966047e55cf54f2a"
+        },
+        "memory_policies_sha256": "69296d0d2a01454e3de81a8f6dc2d6f19d1ac73e053bdf784e70df32f6aa9a9c",
+        "b0_final_user_sha256": "83343904909a383a4e3fef3fb1e94d414b604d277569dfaeaed46a9f9c798a66",
+        "format_instruction_sha256": "2f791e001065a37ce680cc67c67b7853dec20daca7f8d71d980283f189e5ffb7"
+      },
+      "maintenance_m2_system": {
+        "version": "crst-pilot-maintenance-m2/1.0.0",
+        "sha256": "b71c30935771918348d346b58ae32ccf3f0cc9fe836c6382480c6e956721f626"
+      },
+      "maintenance_m2_schema": {
+        "version": "crst-pilot-maintenance-m2-schema/1.0.0",
+        "sha256": "00fe3cab18d4c25a26e4c04a962822009852568cdc72b77c51bab19ae28cae87"
+      },
+      "maintenance_m3_system": {
+        "version": "crst-pilot-maintenance-m3/1.0.0",
+        "sha256": "7027ca9804f5bdf0bca370aa124312d9b4e5d2702e093816a20f19f33a356a75"
+      },
+      "maintenance_m3_schema": {
+        "version": "crst-pilot-maintenance-m3-schema/1.0.0",
+        "sha256": "5d1b47e125e8732e926e66365f43b62607a8df91556a9a15fe327f8e965c8832"
+      },
+      "maintenance_user_template": {
+        "sha256": "09c0006cd2de916d6be52d258681b04ea3a4c64a901d28db43da83c018fd99be"
+      }
+    },
+    "eligibility_status": "ELIGIBLE",
+    "naturalization_audit_sha256": "0ff0962bef5b5a3714bab049831ff5a135e308bcc8f8625a91de0fb0cd172f48",
+    "naturalization_collection_sha256": "54880ced8042c8972c9dc5d1033c76e03edb9a72e9ce0e64ae655e31314f5001",
+    "implementation": {
+      "experiments/naturalize_crst_pilot.py": "60ea6d37d77e75b532e2c0269bb4ad016ac168de49c17071bfea0587e4997da8",
+      "experiments/run_crst_pilot.py": "81d9e4f5adf26143ae20bde3e5f46b1ab9a105334954339db2c994015b894e0b",
+      "experiments/crst_policies.py": "a02c58a271d8c2a202b294053f822ccb5bf314724202eca39427d235935b2aa0",
+      "experiments/crst_prompts.py": "4ab6df397c8d6e36cbe6ab73a9c238e0aa1aff0b6b31ee08ed61e2f68d7848f4",
+      "experiments/crst_scoring.py": "9fc97fdc8725d880c410b890b748d300418db1f785d79508d8845fa305cdc318",
+      "experiments/validate_crst_pilot_material.py": "2567a80da2d643ef16dba6d6a4eb134fc63b40d773b7f0a03cbcced903a8ffe3",
+      "configs/crst-small-pilot.yaml": "d90bc862249da2bb3f146d6ef03d1dab5a09cef0ba7eed887ed95d74ebb666ee",
+      "experiments/execute_crst_pilot.py": "9fec38f162ed320004b276698fbc5ced80d82e1710c6c194d3811a5e28f9de27",
+      "experiments/crst_transport.py": "916068712a9979b56c9caeadb8fd31eb822079dea03286a75fad909b4da5f2c5",
+      "configs/model.yaml": "e9dfac8cd6d3a2ffe763ad6efd32b5ef814a3eec07887f7a3bd6d9561cee509e"
+    },
+    "tokenizer": {
+      "repository_id": "meta-llama/Llama-3.1-8B-Instruct",
+      "revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+      "source": "configs/retrieval.yaml reader_tokenizer",
+      "artifact_sha256": {
+        "tokenizer.json": "79e3e522635f3171300913bb421464a87de6222182a0570b9b2ccba2a964b2b4",
+        "tokenizer_config.json": "177c7b61e616fecb84c17ce0591acb92c6c4d60e9ac5ababfb940ff23bbcd424",
+        "special_tokens_map.json": "6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec",
+        "config.json": "29e4c210b0d6ac178b16b2a255a568bdb23b581e50ca1ef6a6d071dd85704e6e"
+      },
+      "tokenizer_class": "PreTrainedTokenizerFast",
+      "use_fast": true,
+      "add_special_tokens": false,
+      "directory_is_portable_identity": false
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    },
+    "planned": {
+      "runs": 24,
+      "backbone_calls": 132
+    }
+  },
+  "planned_runs": 24,
+  "planned_backbone_calls": 132,
+  "failure_reason": null,
+  "runs": [
+    "pilot-scheduling-01/low/M1",
+    "pilot-scheduling-01/low/B0",
+    "pilot-scheduling-01/low/M2",
+    "pilot-scheduling-01/low/M3",
+    "pilot-scheduling-01/medium/M1",
+    "pilot-scheduling-01/medium/B0",
+    "pilot-scheduling-01/medium/M2",
+    "pilot-scheduling-01/medium/M3",
+    "pilot-scheduling-01/high/M1",
+    "pilot-scheduling-01/high/B0",
+    "pilot-scheduling-01/high/M2",
+    "pilot-scheduling-01/high/M3",
+    "pilot-travel-01/low/M1",
+    "pilot-travel-01/low/B0",
+    "pilot-travel-01/low/M2",
+    "pilot-travel-01/low/M3",
+    "pilot-travel-01/medium/M1",
+    "pilot-travel-01/medium/B0",
+    "pilot-travel-01/medium/M2",
+    "pilot-travel-01/medium/M3",
+    "pilot-travel-01/high/M1",
+    "pilot-travel-01/high/B0",
+    "pilot-travel-01/high/M2",
+    "pilot-travel-01/high/M3"
+  ],
+  "interpretation": "OFFLINE_REPLAY_THEN_RESEARCHER_REVIEW"
+}

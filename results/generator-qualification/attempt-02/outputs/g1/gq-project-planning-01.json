@@ -1,0 +1,393 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"milestone\\\",\\\"meaning\\\":\\\"next planned milestone\\\",\\\"units_or_interpretation\\\":\\\"milestone label\\\"},{\\\"attribute_id\\\":\\\"project_code\\\",\\\"meaning\\\":\\\"project identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"owner\\\",\\\"meaning\\\":\\\"project owner\\\",\\\"units_or_interpretation\\\":\\\"synthetic team\\\"},{\\\"attribute_id\\\":\\\"delivery_cycle\\\",\\\"meaning\\\":\\\"delivery cycle\\\",\\\"units_or_interpretation\\\":\\\"synthetic calendar label\\\"},{\\\"attribute_id\\\":\\\"workstream\\\",\\\"meaning\\\":\\\"active workstream\\\",\\\"units_or_interpretation\\\":\\\"workstream label\\\"},{\\\"attribute_id\\\":\\\"priority\\\",\\\"meaning\\\":\\\"priority tier\\\",\\\"units_or_interpretation\\\":\\\"ordered tier label\\\"}],\\\"domain\\\":\\\"Project Planning\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"name\\\":\\\"Project Halcyon\\\"},{\\\"entity_id\\\":\\\"gq-project-planning-01-distractor\\\",\\\"name\\\":\\\"Project Petrel\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_n2\\\",\\\"I2\\\":\\\"k_a\\\",\\\"I3\\\":\\\"k_b\\\",\\\"I4\\\":\\\"k_c\\\",\\\"I5\\\":\\\"k_d\\\",\\\"I6\\\":\\\"k_target\\\",\\\"I7\\\":\\\"k_hard\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"milestone\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current next planned milestone of Project Halcyon.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"milestone\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"outline review\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"milestone\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-distractor\\\",\\\"initial_value\\\":\\\"inventory review\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"project_code\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"PRJ-H7\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"owner\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"Team Eru\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"delivery_cycle\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"Cycle Leris\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"workstream\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"layout drafting\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"priority\\\",\\\"entity_id\\\":\\\"gq-project-planning-01-primary\\\",\\\"initial_value\\\":\\\"Tier P1\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Team Eru\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cycle Leris\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"layout drafting\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Tier P1\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"outline review\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"inventory review\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"sketch review\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"component review\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"layout review\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"integration review\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"rehearsal review\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"delivery review\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"delivery review\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"archive review\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Team Eru\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cycle Leris\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"layout drafting\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Tier P1\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"outline review\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"inventory review\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Tier P2\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Team Nalo\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cycle Meris\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"asset assembly\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"license review\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"package preparation\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"outline review\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"archive review\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Team Eru\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Cycle Leris\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"layout drafting\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Tier P1\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"outline review\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"inventory review\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"sketch review\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Team Nalo\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"layout review\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"license review\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"rehearsal review\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Tier P2\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"rehearsal review\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"archive review\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PRJ-H7\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-terra\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "302e5e31efc708ddc9adb524128940cd315798174e5f6a46ae91b3a0da603926",
+  "request_body": {
+    "model": "openai/gpt-5.6-terra",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"milestone\",\"meaning\":\"next planned milestone\",\"units_or_interpretation\":\"milestone label\"},{\"attribute_id\":\"project_code\",\"meaning\":\"project identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"owner\",\"meaning\":\"project owner\",\"units_or_interpretation\":\"synthetic team\"},{\"attribute_id\":\"delivery_cycle\",\"meaning\":\"delivery cycle\",\"units_or_interpretation\":\"synthetic calendar label\"},{\"attribute_id\":\"workstream\",\"meaning\":\"active workstream\",\"units_or_interpretation\":\"workstream label\"},{\"attribute_id\":\"priority\",\"meaning\":\"priority tier\",\"units_or_interpretation\":\"ordered tier label\"}],\"domain\":\"Project Planning\",\"entities\":[{\"entity_id\":\"gq-project-planning-01-primary\",\"name\":\"Project Halcyon\"},{\"entity_id\":\"gq-project-planning-01-distractor\",\"name\":\"Project Petrel\"}],\"initial_order\":{\"I1\":\"k_n2\",\"I2\":\"k_a\",\"I3\":\"k_b\",\"I4\":\"k_c\",\"I5\":\"k_d\",\"I6\":\"k_target\",\"I7\":\"k_hard\"},\"question_intent\":{\"attribute_id\":\"milestone\",\"entity_id\":\"gq-project-planning-01-primary\",\"intent\":\"Ask only for the current next planned milestone of Project Halcyon.\"},\"state_keys\":[{\"attribute_id\":\"milestone\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"outline review\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"milestone\",\"entity_id\":\"gq-project-planning-01-distractor\",\"initial_value\":\"inventory review\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"project_code\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"PRJ-H7\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"owner\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"Team Eru\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"delivery_cycle\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"Cycle Leris\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"workstream\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"layout drafting\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"priority\",\"entity_id\":\"gq-project-planning-01-primary\",\"initial_value\":\"Tier P1\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"PRJ-H7\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Team Eru\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Cycle Leris\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"layout drafting\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Tier P1\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"outline review\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"inventory review\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"sketch review\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"component review\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"layout review\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"integration review\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"rehearsal review\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"delivery review\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"delivery review\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"archive review\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PRJ-H7\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"PRJ-H7\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Team Eru\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Cycle Leris\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"layout drafting\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Tier P1\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"outline review\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"inventory review\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"Tier P2\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Team Nalo\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Cycle Meris\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"asset assembly\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"license review\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"package preparation\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"outline review\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"archive review\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PRJ-H7\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"PRJ-H7\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Team Eru\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Cycle Leris\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"layout drafting\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Tier P1\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"outline review\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"inventory review\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"sketch review\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Team Nalo\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"layout review\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"license review\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"rehearsal review\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Tier P2\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"rehearsal review\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"archive review\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PRJ-H7\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-18T16:37:34.814789+00:00",
+      "requested_model": "openai/gpt-5.6-terra",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-terra",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789749454-jMu9pGsX9CxnFaEVgK8J",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n{\"id\":\"gen-1789749454-jMu9pGsX9CxnFaEVgK8J\",\"object\":\"chat.completion\",\"created\":1789749454,\"model\":\"openai/gpt-5.6-terra\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Project Halcyon's project code is PRJ-H7.\\\",\\\"I2\\\":\\\"Project Halcyon is owned by Team Eru.\\\",\\\"I3\\\":\\\"Project Halcyon is in Cycle Leris.\\\",\\\"I4\\\":\\\"Project Halcyon's active workstream is layout drafting.\\\",\\\"I5\\\":\\\"Project Halcyon has priority Tier P1.\\\",\\\"I6\\\":\\\"Project Halcyon's next planned milestone is outline review.\\\",\\\"I7\\\":\\\"Project Petrel's next planned milestone is inventory review.\\\",\\\"N1\\\":\\\"Project Halcyon's next planned milestone remains delivery review.\\\",\\\"N2\\\":\\\"Project Halcyon's project code is PRJ-H7.\\\",\\\"Q\\\":\\\"What is the current next planned milestone of Project Halcyon?\\\",\\\"U1\\\":\\\"Project Halcyon's next planned milestone has changed to sketch review.\\\",\\\"U2\\\":\\\"Project Halcyon's next planned milestone has been updated to component review.\\\",\\\"U3\\\":\\\"Project Halcyon's next planned milestone is now layout review.\\\",\\\"U4\\\":\\\"Project Halcyon's next planned milestone has changed to integration review.\\\",\\\"U5\\\":\\\"Project Halcyon's next planned milestone has been updated to rehearsal review.\\\",\\\"U6\\\":\\\"Project Halcyon's next planned milestone is now delivery review.\\\",\\\"U7\\\":\\\"Project Halcyon's next planned milestone has changed to archive review.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Project Halcyon's project code is PRJ-H7.\\\",\\\"I2\\\":\\\"Project Halcyon is owned by Team Eru.\\\",\\\"I3\\\":\\\"Project Halcyon is in Cycle Leris.\\\",\\\"I4\\\":\\\"Project Halcyon's active workstream is layout drafting.\\\",\\\"I5\\\":\\\"Project Halcyon has priority Tier P1.\\\",\\\"I6\\\":\\\"Project Halcyon's next planned milestone is outline review.\\\",\\\"I7\\\":\\\"Project Petrel's next planned milestone is inventory review.\\\",\\\"N1\\\":\\\"Project Halcyon's next planned milestone remains outline review.\\\",\\\"N2\\\":\\\"Project Halcyon's project code is PRJ-H7.\\\",\\\"Q\\\":\\\"What is the current next planned milestone of Project Halcyon?\\\",\\\"U1\\\":\\\"Project Halcyon's priority has changed to Tier P2.\\\",\\\"U2\\\":\\\"Project Halcyon's owner has been updated to Team Nalo.\\\",\\\"U3\\\":\\\"Project Halcyon's delivery cycle is now Cycle Meris.\\\",\\\"U4\\\":\\\"Project Halcyon's active workstream has changed to asset assembly.\\\",\\\"U5\\\":\\\"Project Petrel's next planned milestone has been updated to license review.\\\",\\\"U6\\\":\\\"Project Halcyon's active workstream is now package preparation.\\\",\\\"U7\\\":\\\"Project Halcyon's next planned milestone has changed to archive review.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"Project Halcyon's project code is PRJ-H7.\\\",\\\"I2\\\":\\\"Project Halcyon is owned by Team Eru.\\\",\\\"I3\\\":\\\"Project Halcyon is in Cycle Leris.\\\",\\\"I4\\\":\\\"Project Halcyon's active workstream is layout drafting.\\\",\\\"I5\\\":\\\"Project Halcyon has priority Tier P1.\\\",\\\"I6\\\":\\\"Project Halcyon's next planned milestone is outline review.\\\",\\\"I7\\\":\\\"Project Petrel's next planned milestone is inventory review.\\\",\\\"N1\\\":\\\"Project Halcyon's next planned milestone remains rehearsal review.\\\",\\\"N2\\\":\\\"Project Halcyon's project code is PRJ-H7.\\\",\\\"Q\\\":\\\"What is the current next planned milestone of Project Halcyon?\\\",\\\"U1\\\":\\\"Project Halcyon's next planned milestone has changed to sketch review.\\\",\\\"U2\\\":\\\"Project Halcyon's owner has been updated to Team Nalo.\\\",\\\"U3\\\":\\\"Project Halcyon's next planned milestone is now layout review.\\\",\\\"U4\\\":\\\"Project Petrel's next planned milestone has changed to license review.\\\",\\\"U5\\\":\\\"Project Halcyon's next planned milestone has been updated to rehearsal review.\\\",\\\"U6\\\":\\\"Project Halcyon's priority is now Tier P2.\\\",\\\"U7\\\":\\\"Project Halcyon's next planned milestone has changed to archive review.\\\"}}\",\"refusal\":null,\"reasoning\":\"**Creating a map schema**\\n\\nI think we need to establish an exact schema for all the common strings. It's essential to ensure that events are covered properly. I want to make sure that we're on the right path with this, so using a clear and organized schema will help us track everything. I'm curious about how best to outline these common strings and how they’ll interact within the events we’re considering. Let's get this figured out!\",\"reasoning_details\":[{\"type\":\"reasoning.summary\",\"summary\":\"**Creating a map schema**\\n\\nI think we need to establish an exact schema for all the common strings. It's essential to ensure that events are covered properly. I want to make sure that we're on the right path with this, so using a clear and organized schema will help us track everything. I'm curious about how best to outline these common strings and how they’ll interact within the events we’re considering. Let's get this figured out!\",\"format\":\"openai-responses-v1\",\"index\":0},{\"type\":\"reasoning.encrypted\",\"data\":\"gAAAAABqrWjSxNW1Y0oRZf-MMPZfgHpwZEIT-pkd4zKS4QCX91oWbqLgkfSUIHzoNQzL-8AtROBrWKxFYUk6hmlBhi58fYLr5WS6aa7wYm77mMd4nwYjV1V_IMipTGXNqg5gtI6nJj9GQ_JjGfOLZRMFjIHzf9f6kO_cRv1j3tSkJD4ugLMSiUsA2j3nWV34oS-okDp9yIhoeGvdMu_VfDGF3UOwSg3NT0TzxjeQfH4S1Dv8l4qJPj1vB9TrX3rz04CBRjzzUp0W0IF344Li4wOwA0gONzSyCjq__PSaPP5BkLioB3N6f9RH0JJZRF7sXb02_aobjBNM96QlUoXqzbH73R_P5ADYoY6qk8JaketQa0DbX7MzAr3FHlL1bJUhZiVtlwUGiiDgLpd_2TipwRCm41yg1KIfKZohQSQt5DwCO7p8AIBe3opVFCYS6p1W8wTwGs5Gb--KMSctFjN8SSx59AqxMjSBR17bDHk8MH2IJYXAwIvW7rWS1NM5jfg99y9hlWo1FhDfA_fFVl74-95Qs4b1G631CLAn6NxLPXyi5HQo_0mp1emA4Zs7fHmXLHSlBRV6EeR8aczbJ8ohcIGUkxcOSSp9-3FRpf_paN5EBzKDbbnN5JXqiUwqU5Q_SYwxvu1Uct1F3DKP3MYfVFNazpOAp1zh8iRsyhyVsLAeIr3fGEAlazmoYhHXJuk9J_J1hJTLjgllmZX5wRcsjzhbrFrP49EpFk_giSCZSEr1PBLqWvSnShHMsbBQMSvufzJ7-C2iVPT3LfhwzA2ek8HgvIIJkb918EH_YYTG28TTnwaw8KwkdENq4X9Ufv5LXZv-taA64OtRvVuTMO8CnCF4TYvy9yjyfSuoAf5Mz7t8fKnJSJk4uSUrWtb6StkW2Db6fHReTU_N-qnri-CPqQIbuvzSAdRucSOFboTeYWz-NAyKafhXaNxahOVpBMfahyCTkl1iKjgVlThtQJw7SzEROuzZSYIU6tXsVj5mxli70t-ywjau2G6ZJ7GBOrqpYSH9ziyrNC7Sjgz9SLnXluwld7oZlwOcrVuEunZjiboeUJUiT88Cmp6kpG1xppecGU2cAGa6qZeU0hwscKLDOZbGbzKNOns3IIInNYhBlAyQ9euA7HD2B1AhITuuQlLbPnaUjO6wIJVrgOtKmIzsPqkJSiW8Ej0vblu3jvTCNgnTPjA904jH2LFGcGCjRvS3dMjBi9vXAwWJfTTJgf-bpB04Ih-vpPkm6IrJlPDAHOPBF248IP-VVU1KxvvBC1QfAFyl11SiOun3npA8tsjh_T_80qT9BCB0DZlqyIuWL1Y4Xyv2PixpSFfxks8mkB1UP6jABWSSN5yDB6ekQ8Kr3kqNNobFjdD3__ttSEY7bv28iJBkTLVKlHqAJB3Bc1ozAzFT3PPkN18ye3VWtImdadRqrBZYU8dwng==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtdGVycmEtMjAyNjA3MDl8b3BlbmFpIn0\",\"format\":\"openai-responses-v1\",\"id\":\"rs_0abedbe4d9a13e78016aad68d0b2c487d1be052f61acf48cc9\",\"index\":1}]}}],\"usage\":{\"prompt_tokens\":2524,\"completion_tokens\":803,\"total_tokens\":3327,\"cost\":0.0159445,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2521,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0159445,\"upstream_inference_prompt_cost\":0.0063085,\"upstream_inference_completions_cost\":0.009636},\"completion_tokens_details\":{\"reasoning_tokens\":18,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-terra\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-terra-20260709\",\"selected\":true}]},\"generation_time\":8874}}",
+      "response_sha256_before_redaction": "980c26fb24d408985a71f0466429319aaaaab885943a64a3422b396f35d2537b",
+      "response_envelope": {
+        "id": "gen-1789749454-jMu9pGsX9CxnFaEVgK8J",
+        "object": "chat.completion",
+        "created": 1789749454,
+        "model": "openai/gpt-5.6-terra",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Project Halcyon's project code is PRJ-H7.\",\"I2\":\"Project Halcyon is owned by Team Eru.\",\"I3\":\"Project Halcyon is in Cycle Leris.\",\"I4\":\"Project Halcyon's active workstream is layout drafting.\",\"I5\":\"Project Halcyon has priority Tier P1.\",\"I6\":\"Project Halcyon's next planned milestone is outline review.\",\"I7\":\"Project Petrel's next planned milestone is inventory review.\",\"N1\":\"Project Halcyon's next planned milestone remains delivery review.\",\"N2\":\"Project Halcyon's project code is PRJ-H7.\",\"Q\":\"What is the current next planned milestone of Project Halcyon?\",\"U1\":\"Project Halcyon's next planned milestone has changed to sketch review.\",\"U2\":\"Project Halcyon's next planned milestone has been updated to component review.\",\"U3\":\"Project Halcyon's next planned milestone is now layout review.\",\"U4\":\"Project Halcyon's next planned milestone has changed to integration review.\",\"U5\":\"Project Halcyon's next planned milestone has been updated to rehearsal review.\",\"U6\":\"Project Halcyon's next planned milestone is now delivery review.\",\"U7\":\"Project Halcyon's next planned milestone has changed to archive review.\"},\"low\":{\"I1\":\"Project Halcyon's project code is PRJ-H7.\",\"I2\":\"Project Halcyon is owned by Team Eru.\",\"I3\":\"Project Halcyon is in Cycle Leris.\",\"I4\":\"Project Halcyon's active workstream is layout drafting.\",\"I5\":\"Project Halcyon has priority Tier P1.\",\"I6\":\"Project Halcyon's next planned milestone is outline review.\",\"I7\":\"Project Petrel's next planned milestone is inventory review.\",\"N1\":\"Project Halcyon's next planned milestone remains outline review.\",\"N2\":\"Project Halcyon's project code is PRJ-H7.\",\"Q\":\"What is the current next planned milestone of Project Halcyon?\",\"U1\":\"Project Halcyon's priority has changed to Tier P2.\",\"U2\":\"Project Halcyon's owner has been updated to Team Nalo.\",\"U3\":\"Project Halcyon's delivery cycle is now Cycle Meris.\",\"U4\":\"Project Halcyon's active workstream has changed to asset assembly.\",\"U5\":\"Project Petrel's next planned milestone has been updated to license review.\",\"U6\":\"Project Halcyon's active workstream is now package preparation.\",\"U7\":\"Project Halcyon's next planned milestone has changed to archive review.\"},\"medium\":{\"I1\":\"Project Halcyon's project code is PRJ-H7.\",\"I2\":\"Project Halcyon is owned by Team Eru.\",\"I3\":\"Project Halcyon is in Cycle Leris.\",\"I4\":\"Project Halcyon's active workstream is layout drafting.\",\"I5\":\"Project Halcyon has priority Tier P1.\",\"I6\":\"Project Halcyon's next planned milestone is outline review.\",\"I7\":\"Project Petrel's next planned milestone is inventory review.\",\"N1\":\"Project Halcyon's next planned milestone remains rehearsal review.\",\"N2\":\"Project Halcyon's project code is PRJ-H7.\",\"Q\":\"What is the current next planned milestone of Project Halcyon?\",\"U1\":\"Project Halcyon's next planned milestone has changed to sketch review.\",\"U2\":\"Project Halcyon's owner has been updated to Team Nalo.\",\"U3\":\"Project Halcyon's next planned milestone is now layout review.\",\"U4\":\"Project Petrel's next planned milestone has changed to license review.\",\"U5\":\"Project Halcyon's next planned milestone has been updated to rehearsal review.\",\"U6\":\"Project Halcyon's priority is now Tier P2.\",\"U7\":\"Project Halcyon's next planned milestone has changed to archive review.\"}}",
+              "refusal": null,
+              "reasoning": "**Creating a map schema**\n\nI think we need to establish an exact schema for all the common strings. It's essential to ensure that events are covered properly. I want to make sure that we're on the right path with this, so using a clear and organized schema will help us track everything. I'm curious about how best to outline these common strings and how they’ll interact within the events we’re considering. Let's get this figured out!",
+              "reasoning_details": [
+                {
+                  "type": "reasoning.summary",
+                  "summary": "**Creating a map schema**\n\nI think we need to establish an exact schema for all the common strings. It's essential to ensure that events are covered properly. I want to make sure that we're on the right path with this, so using a clear and organized schema will help us track everything. I'm curious about how best to outline these common strings and how they’ll interact within the events we’re considering. Let's get this figured out!",
+                  "format": "openai-responses-v1",
+                  "index": 0
+                },
+                {
+                  "type": "reasoning.encrypted",
+                  "data": "gAAAAABqrWjSxNW1Y0oRZf-MMPZfgHpwZEIT-pkd4zKS4QCX91oWbqLgkfSUIHzoNQzL-8AtROBrWKxFYUk6hmlBhi58fYLr5WS6aa7wYm77mMd4nwYjV1V_IMipTGXNqg5gtI6nJj9GQ_JjGfOLZRMFjIHzf9f6kO_cRv1j3tSkJD4ugLMSiUsA2j3nWV34oS-okDp9yIhoeGvdMu_VfDGF3UOwSg3NT0TzxjeQfH4S1Dv8l4qJPj1vB9TrX3rz04CBRjzzUp0W0IF344Li4wOwA0gONzSyCjq__PSaPP5BkLioB3N6f9RH0JJZRF7sXb02_aobjBNM96QlUoXqzbH73R_P5ADYoY6qk8JaketQa0DbX7MzAr3FHlL1bJUhZiVtlwUGiiDgLpd_2TipwRCm41yg1KIfKZohQSQt5DwCO7p8AIBe3opVFCYS6p1W8wTwGs5Gb--KMSctFjN8SSx59AqxMjSBR17bDHk8MH2IJYXAwIvW7rWS1NM5jfg99y9hlWo1FhDfA_fFVl74-95Qs4b1G631CLAn6NxLPXyi5HQo_0mp1emA4Zs7fHmXLHSlBRV6EeR8aczbJ8ohcIGUkxcOSSp9-3FRpf_paN5EBzKDbbnN5JXqiUwqU5Q_SYwxvu1Uct1F3DKP3MYfVFNazpOAp1zh8iRsyhyVsLAeIr3fGEAlazmoYhHXJuk9J_J1hJTLjgllmZX5wRcsjzhbrFrP49EpFk_giSCZSEr1PBLqWvSnShHMsbBQMSvufzJ7-C2iVPT3LfhwzA2ek8HgvIIJkb918EH_YYTG28TTnwaw8KwkdENq4X9Ufv5LXZv-taA64OtRvVuTMO8CnCF4TYvy9yjyfSuoAf5Mz7t8fKnJSJk4uSUrWtb6StkW2Db6fHReTU_N-qnri-CPqQIbuvzSAdRucSOFboTeYWz-NAyKafhXaNxahOVpBMfahyCTkl1iKjgVlThtQJw7SzEROuzZSYIU6tXsVj5mxli70t-ywjau2G6ZJ7GBOrqpYSH9ziyrNC7Sjgz9SLnXluwld7oZlwOcrVuEunZjiboeUJUiT88Cmp6kpG1xppecGU2cAGa6qZeU0hwscKLDOZbGbzKNOns3IIInNYhBlAyQ9euA7HD2B1AhITuuQlLbPnaUjO6wIJVrgOtKmIzsPqkJSiW8Ej0vblu3jvTCNgnTPjA904jH2LFGcGCjRvS3dMjBi9vXAwWJfTTJgf-bpB04Ih-vpPkm6IrJlPDAHOPBF248IP-VVU1KxvvBC1QfAFyl11SiOun3npA8tsjh_T_80qT9BCB0DZlqyIuWL1Y4Xyv2PixpSFfxks8mkB1UP6jABWSSN5yDB6ekQ8Kr3kqNNobFjdD3__ttSEY7bv28iJBkTLVKlHqAJB3Bc1ozAzFT3PPkN18ye3VWtImdadRqrBZYU8dwng==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtdGVycmEtMjAyNjA3MDl8b3BlbmFpIn0",
+                  "format": "openai-responses-v1",
+                  "id": "rs_0abedbe4d9a13e78016aad68d0b2c487d1be052f61acf48cc9",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2524,
+          "completion_tokens": 803,
+          "total_tokens": 3327,
+          "cost": 0.0159445,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2521,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0159445,
+            "upstream_inference_prompt_cost": 0.0063085,
+            "upstream_inference_completions_cost": 0.009636
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 18,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-terra",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-terra-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 8874
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-terra",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-terra-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 8874
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Project Halcyon's project code is PRJ-H7.",
+          "I2": "Project Halcyon is owned by Team Eru.",
+          "I3": "Project Halcyon is in Cycle Leris.",
+          "I4": "Project Halcyon's active workstream is layout drafting.",
+          "I5": "Project Halcyon has priority Tier P1.",
+          "I6": "Project Halcyon's next planned milestone is outline review.",
+          "I7": "Project Petrel's next planned milestone is inventory review.",
+          "N1": "Project Halcyon's next planned milestone remains delivery review.",
+          "N2": "Project Halcyon's project code is PRJ-H7.",
+          "Q": "What is the current next planned milestone of Project Halcyon?",
+          "U1": "Project Halcyon's next planned milestone has changed to sketch review.",
+          "U2": "Project Halcyon's next planned milestone has been updated to component review.",
+          "U3": "Project Halcyon's next planned milestone is now layout review.",
+          "U4": "Project Halcyon's next planned milestone has changed to integration review.",
+          "U5": "Project Halcyon's next planned milestone has been updated to rehearsal review.",
+          "U6": "Project Halcyon's next planned milestone is now delivery review.",
+          "U7": "Project Halcyon's next planned milestone has changed to archive review."
+        },
+        "low": {
+          "I1": "Project Halcyon's project code is PRJ-H7.",
+          "I2": "Project Halcyon is owned by Team Eru.",
+          "I3": "Project Halcyon is in Cycle Leris.",
+          "I4": "Project Halcyon's active workstream is layout drafting.",
+          "I5": "Project Halcyon has priority Tier P1.",
+          "I6": "Project Halcyon's next planned milestone is outline review.",
+          "I7": "Project Petrel's next planned milestone is inventory review.",
+          "N1": "Project Halcyon's next planned milestone remains outline review.",
+          "N2": "Project Halcyon's project code is PRJ-H7.",
+          "Q": "What is the current next planned milestone of Project Halcyon?",
+          "U1": "Project Halcyon's priority has changed to Tier P2.",
+          "U2": "Project Halcyon's owner has been updated to Team Nalo.",
+          "U3": "Project Halcyon's delivery cycle is now Cycle Meris.",
+          "U4": "Project Halcyon's active workstream has changed to asset assembly.",
+          "U5": "Project Petrel's next planned milestone has been updated to license review.",
+          "U6": "Project Halcyon's active workstream is now package preparation.",
+          "U7": "Project Halcyon's next planned milestone has changed to archive review."
+        },
+        "medium": {
+          "I1": "Project Halcyon's project code is PRJ-H7.",
+          "I2": "Project Halcyon is owned by Team Eru.",
+          "I3": "Project Halcyon is in Cycle Leris.",
+          "I4": "Project Halcyon's active workstream is layout drafting.",
+          "I5": "Project Halcyon has priority Tier P1.",
+          "I6": "Project Halcyon's next planned milestone is outline review.",
+          "I7": "Project Petrel's next planned milestone is inventory review.",
+          "N1": "Project Halcyon's next planned milestone remains rehearsal review.",
+          "N2": "Project Halcyon's project code is PRJ-H7.",
+          "Q": "What is the current next planned milestone of Project Halcyon?",
+          "U1": "Project Halcyon's next planned milestone has changed to sketch review.",
+          "U2": "Project Halcyon's owner has been updated to Team Nalo.",
+          "U3": "Project Halcyon's next planned milestone is now layout review.",
+          "U4": "Project Petrel's next planned milestone has changed to license review.",
+          "U5": "Project Halcyon's next planned milestone has been updated to rehearsal review.",
+          "U6": "Project Halcyon's priority is now Tier P2.",
+          "U7": "Project Halcyon's next planned milestone has changed to archive review."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2524,
+        "completion_tokens": 803,
+        "total_tokens": 3327,
+        "reasoning_tokens": 18,
+        "cached_tokens": 0,
+        "cost": 0.0159445
+      },
+      "latency_seconds": 9.005926251003984,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "gq-project-planning-01",
+  "fixture_sha256": "496047b143b471019fdd89f7ec5d9eba9ab1045a68bdfcdce0872eb55a01617f",
+  "projection_sha256": "d911a0ccc52f913e7cd9720497295eeae10073397fe4dee6094b85f623f5b770",
+  "logical_call_index": 3,
+  "provenance": {
+    "source_commit": "7b28ea23dcac316819cf2858e3bf26769b07b275",
+    "candidate_profile": "FALLBACK",
+    "selected_slot": "G1",
+    "fixture_set_commit": "683c0416c5bf47c83021408f26bc7a7ab5e8becc",
+    "fixture_manifest_sha256": "ecce7e579f02f64bb5578d8b18b9164483da1c5438544f21a89e17d7a2aaa1f9",
+    "execution_config_sha256": "1316b2b1f3a7f5f15f64d5b3b2ef379c60f96edddff8b5f62bf0e712d7099e1b",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "procedure_version": "generator-qualification-procedure/1.0.0",
+    "implementation": {
+      "status": "FROZEN FOR LIVE EXECUTION",
+      "freeze_commit": "585b5e2844504fec703287f8dd4869668615671d",
+      "source_sha256": {
+        "experiments/qualify_generators.py": "89f82fe9f617275d117d793f936ca1d81fd63aa2ed6f138a8bd8e5b4bc731258",
+        "experiments/probe_generators.py": "bf414f46d02400127ba60aa0af1bbcfd4f72c12acba0cdcc8718c9b34774c9cf",
+        "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+      }
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "automated": {
+    "status": "PASS",
+    "meaning": "No deterministic violation detected is not semantic qualification.",
+    "findings": []
+  },
+  "output_sha256": "b209341b4a1b399035d77006fd10beef9709aa00e3d561ce2bdab72e6f342e6c"
+}

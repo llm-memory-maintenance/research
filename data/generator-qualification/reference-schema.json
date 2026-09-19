@@ -1,0 +1,517 @@
+{
+  "$defs": {
+    "Attribute": {
+      "additionalProperties": false,
+      "properties": {
+        "attribute_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Attribute Id",
+          "type": "string"
+        },
+        "meaning": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Meaning",
+          "type": "string"
+        },
+        "units_or_interpretation": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Units Or Interpretation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "attribute_id",
+        "meaning",
+        "units_or_interpretation"
+      ],
+      "title": "Attribute",
+      "type": "object"
+    },
+    "Entity": {
+      "additionalProperties": false,
+      "properties": {
+        "entity_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entity_id",
+        "name"
+      ],
+      "title": "Entity",
+      "type": "object"
+    },
+    "Question": {
+      "additionalProperties": false,
+      "properties": {
+        "entity_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "attribute_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Attribute Id",
+          "type": "string"
+        },
+        "intent": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Intent",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entity_id",
+        "attribute_id",
+        "intent"
+      ],
+      "title": "Question",
+      "type": "object"
+    },
+    "Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "domain": {
+          "enum": [
+            "Scheduling",
+            "Travel",
+            "Project Planning",
+            "Task Assignment",
+            "Software Configuration",
+            "Personal Preference",
+            "Purchase & Order",
+            "Study Planning",
+            "Communication",
+            "Service & Subscription",
+            "Location & Logistics",
+            "Quantitative Planning"
+          ],
+          "title": "Domain",
+          "type": "string"
+        },
+        "entities": {
+          "items": {
+            "$ref": "#/$defs/Entity"
+          },
+          "title": "Entities",
+          "type": "array"
+        },
+        "attributes": {
+          "items": {
+            "$ref": "#/$defs/Attribute"
+          },
+          "title": "Attributes",
+          "type": "array"
+        },
+        "state_keys": {
+          "items": {
+            "$ref": "#/$defs/ReferenceKey"
+          },
+          "maxItems": 7,
+          "minItems": 7,
+          "title": "State Keys",
+          "type": "array"
+        },
+        "initial_order": {
+          "additionalProperties": {
+            "enum": [
+              "k_target",
+              "k_hard",
+              "k_n2",
+              "k_a",
+              "k_b",
+              "k_c",
+              "k_d"
+            ],
+            "type": "string"
+          },
+          "propertyNames": {
+            "enum": [
+              "I1",
+              "I2",
+              "I3",
+              "I4",
+              "I5",
+              "I6",
+              "I7"
+            ]
+          },
+          "title": "Initial Order",
+          "type": "object"
+        },
+        "question_intent": {
+          "$ref": "#/$defs/Question"
+        },
+        "variants": {
+          "$ref": "#/$defs/ReferenceVariants"
+        },
+        "target_state_key": {
+          "enum": [
+            "k_target",
+            "k_hard",
+            "k_n2",
+            "k_a",
+            "k_b",
+            "k_c",
+            "k_d"
+          ],
+          "title": "Target State Key",
+          "type": "string"
+        },
+        "hard_distractor_key": {
+          "enum": [
+            "k_target",
+            "k_hard",
+            "k_n2",
+            "k_a",
+            "k_b",
+            "k_c",
+            "k_d"
+          ],
+          "title": "Hard Distractor Key",
+          "type": "string"
+        },
+        "dedicated_n2_secondary_key": {
+          "enum": [
+            "k_target",
+            "k_hard",
+            "k_n2",
+            "k_a",
+            "k_b",
+            "k_c",
+            "k_d"
+          ],
+          "title": "Dedicated N2 Secondary Key",
+          "type": "string"
+        },
+        "q_target": {
+          "enum": [
+            "k_target",
+            "k_hard",
+            "k_n2",
+            "k_a",
+            "k_b",
+            "k_c",
+            "k_d"
+          ],
+          "title": "Q Target",
+          "type": "string"
+        },
+        "gold_current_value": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Gold Current Value",
+          "type": "string"
+        },
+        "coverage": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Coverage",
+          "type": "array"
+        }
+      },
+      "required": [
+        "domain",
+        "entities",
+        "attributes",
+        "state_keys",
+        "initial_order",
+        "question_intent",
+        "variants",
+        "target_state_key",
+        "hard_distractor_key",
+        "dedicated_n2_secondary_key",
+        "q_target",
+        "gold_current_value",
+        "coverage"
+      ],
+      "title": "Reference",
+      "type": "object"
+    },
+    "ReferenceEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "event": {
+          "enum": [
+            "I1",
+            "I2",
+            "I3",
+            "I4",
+            "I5",
+            "I6",
+            "I7",
+            "U1",
+            "U2",
+            "U3",
+            "U4",
+            "U5",
+            "U6",
+            "N1",
+            "U7",
+            "N2"
+          ],
+          "title": "Event",
+          "type": "string"
+        },
+        "state_key": {
+          "enum": [
+            "k_target",
+            "k_hard",
+            "k_n2",
+            "k_a",
+            "k_b",
+            "k_c",
+            "k_d"
+          ],
+          "title": "State Key",
+          "type": "string"
+        },
+        "current_value": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Current Value",
+          "type": "string"
+        },
+        "semantics": {
+          "enum": [
+            "initial",
+            "changed_state",
+            "same_state"
+          ],
+          "title": "Semantics",
+          "type": "string"
+        },
+        "previous_value": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "\\S",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Previous Value"
+        },
+        "superseded_values": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Superseded Values",
+          "type": "array"
+        },
+        "state_after": {
+          "additionalProperties": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "propertyNames": {
+            "enum": [
+              "k_target",
+              "k_hard",
+              "k_n2",
+              "k_a",
+              "k_b",
+              "k_c",
+              "k_d"
+            ]
+          },
+          "title": "State After",
+          "type": "object"
+        }
+      },
+      "required": [
+        "event",
+        "state_key",
+        "current_value",
+        "semantics",
+        "previous_value",
+        "superseded_values",
+        "state_after"
+      ],
+      "title": "ReferenceEvent",
+      "type": "object"
+    },
+    "ReferenceKey": {
+      "additionalProperties": false,
+      "properties": {
+        "state_key": {
+          "enum": [
+            "k_target",
+            "k_hard",
+            "k_n2",
+            "k_a",
+            "k_b",
+            "k_c",
+            "k_d"
+          ],
+          "title": "State Key",
+          "type": "string"
+        },
+        "entity_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "attribute_id": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Attribute Id",
+          "type": "string"
+        },
+        "initial_value": {
+          "minLength": 1,
+          "pattern": "\\S",
+          "title": "Initial Value",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "target",
+            "hard_distractor",
+            "dedicated_n2_secondary",
+            "updateable_secondary"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "value_inventory": {
+          "items": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "title": "Value Inventory",
+          "type": "array"
+        }
+      },
+      "required": [
+        "state_key",
+        "entity_id",
+        "attribute_id",
+        "initial_value",
+        "role",
+        "value_inventory"
+      ],
+      "title": "ReferenceKey",
+      "type": "object"
+    },
+    "ReferenceVariant": {
+      "additionalProperties": false,
+      "properties": {
+        "events": {
+          "items": {
+            "$ref": "#/$defs/ReferenceEvent"
+          },
+          "maxItems": 16,
+          "minItems": 16,
+          "title": "Events",
+          "type": "array"
+        },
+        "final_state": {
+          "additionalProperties": {
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "propertyNames": {
+            "enum": [
+              "k_target",
+              "k_hard",
+              "k_n2",
+              "k_a",
+              "k_b",
+              "k_c",
+              "k_d"
+            ]
+          },
+          "title": "Final State",
+          "type": "object"
+        }
+      },
+      "required": [
+        "events",
+        "final_state"
+      ],
+      "title": "ReferenceVariant",
+      "type": "object"
+    },
+    "ReferenceVariants": {
+      "additionalProperties": false,
+      "properties": {
+        "low": {
+          "$ref": "#/$defs/ReferenceVariant"
+        },
+        "medium": {
+          "$ref": "#/$defs/ReferenceVariant"
+        },
+        "high": {
+          "$ref": "#/$defs/ReferenceVariant"
+        }
+      },
+      "required": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "title": "ReferenceVariants",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "generator-qualification-reference/1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "fixture_id": {
+      "minLength": 1,
+      "pattern": "\\S",
+      "title": "Fixture Id",
+      "type": "string"
+    },
+    "purpose": {
+      "const": "GENERATOR-QUALIFICATION-ONLY",
+      "title": "Purpose",
+      "type": "string"
+    },
+    "reference": {
+      "$ref": "#/$defs/Reference"
+    }
+  },
+  "required": [
+    "schema_version",
+    "fixture_id",
+    "purpose",
+    "reference"
+  ],
+  "title": "Fixture",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:crst:generator-qualification-reference:1.0.0",
+  "description": "Reference-only truth. Model-facing input is derived by projection. Identifier uniqueness, trajectories and cross-file constraints require the validator. State maps and initial_order allow only the enumerated keys with string values; state_after contains just keys initialized by that event."
+}

@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-personal-preference-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Personal Preference",
+    "entities": [
+      {
+        "entity_id": "b0cal-personal-preference-01-primary",
+        "name": "Guest Perrin Tallis"
+      },
+      {
+        "entity_id": "b0cal-personal-preference-01-distractor",
+        "name": "Guest Odessa Kray"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "tea_blend",
+        "meaning": "preferred tea blend",
+        "units_or_interpretation": "blend label"
+      },
+      {
+        "attribute_id": "guest_code",
+        "meaning": "guest preference record identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "sweetener",
+        "meaning": "preferred sweetener",
+        "units_or_interpretation": "sweetener label"
+      },
+      {
+        "attribute_id": "cup_style",
+        "meaning": "preferred cup style",
+        "units_or_interpretation": "style label"
+      },
+      {
+        "attribute_id": "serving_temp",
+        "meaning": "preferred serving temperature",
+        "units_or_interpretation": "degrees Celsius"
+      },
+      {
+        "attribute_id": "brew_time",
+        "meaning": "preferred brew time",
+        "units_or_interpretation": "minutes"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-personal-preference-01-primary",
+        "attribute_id": "tea_blend",
+        "initial_value": "smoky pine",
+        "role": "target",
+        "value_inventory": [
+          "smoky pine",
+          "malted oat",
+          "citrus bark",
+          "wild fennel",
+          "dry hibiscus",
+          "rose husk",
+          "toasted barley",
+          "cardamom root"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-personal-preference-01-distractor",
+        "attribute_id": "tea_blend",
+        "initial_value": "mint stem",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "mint stem",
+          "plain leaf",
+          "ginger chip"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-personal-preference-01-primary",
+        "attribute_id": "guest_code",
+        "initial_value": "GST-P16",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "GST-P16"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-personal-preference-01-primary",
+        "attribute_id": "sweetener",
+        "initial_value": "honey drop",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "honey drop",
+          "cane syrup",
+          "no sweetener"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-personal-preference-01-primary",
+        "attribute_id": "cup_style",
+        "initial_value": "tall mug",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "tall mug",
+          "wide bowl",
+          "narrow glass"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-personal-preference-01-primary",
+        "attribute_id": "serving_temp",
+        "initial_value": "60 degrees",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "60 degrees",
+          "70 degrees",
+          "80 degrees"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-personal-preference-01-primary",
+        "attribute_id": "brew_time",
+        "initial_value": "3 minutes",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "3 minutes",
+          "4 minutes",
+          "6 minutes"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_hard",
+      "I2": "k_n2",
+      "I3": "k_a",
+      "I4": "k_b",
+      "I5": "k_c",
+      "I6": "k_d",
+      "I7": "k_target"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-personal-preference-01-primary",
+      "attribute_id": "tea_blend",
+      "intent": "Ask only for the current preferred tea blend of Guest Perrin Tallis."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "cardamom root",
+    "coverage": [
+      "preferences",
+      "categorical_values",
+      "numeric_values"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_hard",
+            "current_value": "mint stem",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_n2",
+            "current_value": "GST-P16",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_a",
+            "current_value": "honey drop",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_b",
+            "current_value": "tall mug",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_c",
+            "current_value": "60 degrees",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_d",
+            "current_value": "3 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_target",
+            "current_value": "smoky pine",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "smoky pine"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_b",
+            "current_value": "wide bowl",
+            "semantics": "changed_state",
+            "previous_value": "tall mug",
+            "superseded_values": [
+              "tall mug"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "wide bowl",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "smoky pine"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "70 degrees",
+            "semantics": "changed_state",
+            "previous_value": "60 degrees",
+            "superseded_values": [
+              "60 degrees"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "3 minutes",
+              "k_target": "smoky pine"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_d",
+            "current_value": "4 minutes",
+            "semantics": "changed_state",
+            "previous_value": "3 minutes",
+            "superseded_values": [
+              "3 minutes"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "4 minutes",
+              "k_target": "smoky pine"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "cane syrup",
+            "semantics": "changed_state",
+            "previous_value": "honey drop",
+            "superseded_values": [
+              "honey drop"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "cane syrup",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "4 minutes",
+              "k_target": "smoky pine"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_hard",
+            "current_value": "plain leaf",
+            "semantics": "changed_state",
+            "previous_value": "mint stem",
+            "superseded_values": [
+              "mint stem"
+            ],
+            "state_after": {
+              "k_hard": "plain leaf",
+              "k_n2": "GST-P16",
+              "k_a": "cane syrup",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "4 minutes",
+              "k_target": "smoky pine"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "no sweetener",
+            "semantics": "changed_state",
+            "previous_value": "cane syrup",
+            "superseded_values": [
+              "honey drop",
+              "cane syrup"
+            ],
+            "state_after": {
+              "k_hard": "plain leaf",
+              "k_n2": "GST-P16",
+              "k_a": "no sweetener",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "4 minutes",
+              "k_target": "smoky pine"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "smoky pine",
+            "semantics": "same_state",
+            "previous_value": "smoky pine",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "plain leaf",
+              "k_n2": "GST-P16",
+              "k_a": "no sweetener",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "4 minutes",
+              "k_target": "smoky pine"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "cardamom root",
+            "semantics": "changed_state",
+            "previous_value": "smoky pine",
+            "superseded_values": [
+              "smoky pine"
+            ],
+            "state_after": {
+              "k_hard": "plain leaf",
+              "k_n2": "GST-P16",
+              "k_a": "no sweetener",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "4 minutes",
+              "k_target": "cardamom root"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "GST-P16",
+            "semantics": "same_state",
+            "previous_value": "GST-P16",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "plain leaf",
+              "k_n2": "GST-P16",
+              "k_a": "no sweetener",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "4 minutes",
+              "k_target": "cardamom root"
+            }
+          }
+        ],
+        "final_state": {
+          "k_hard": "plain leaf",
+          "k_n2": "GST-P16",
+          "k_a": "no sweetener",
+          "k_b": "wide bowl",
+          "k_c": "70 degrees",
+          "k_d": "4 minutes",
+          "k_target": "cardamom root"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_hard",
+            "current_value": "mint stem",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_n2",
+            "current_value": "GST-P16",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_a",
+            "current_value": "honey drop",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_b",
+            "current_value": "tall mug",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_c",
+            "current_value": "60 degrees",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_d",
+            "current_value": "3 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_target",
+            "current_value": "smoky pine",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "smoky pine"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "malted oat",
+            "semantics": "changed_state",
+            "previous_value": "smoky pine",
+            "superseded_values": [
+              "smoky pine"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "malted oat"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "70 degrees",
+            "semantics": "changed_state",
+            "previous_value": "60 degrees",
+            "superseded_values": [
+              "60 degrees"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "70 degrees",
+              "k_d": "3 minutes",
+              "k_target": "malted oat"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "wild fennel",
+            "semantics": "changed_state",
+            "previous_value": "malted oat",
+            "superseded_values": [
+              "smoky pine",
+              "malted oat"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "70 degrees",
+              "k_d": "3 minutes",
+              "k_target": "wild fennel"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "plain leaf",
+            "semantics": "changed_state",
+            "previous_value": "mint stem",
+            "superseded_values": [
+              "mint stem"
+            ],
+            "state_after": {
+              "k_hard": "plain leaf",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "70 degrees",
+              "k_d": "3 minutes",
+              "k_target": "wild fennel"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "rose husk",
+            "semantics": "changed_state",
+            "previous_value": "wild fennel",
+            "superseded_values": [
+              "smoky pine",
+              "malted oat",
+              "wild fennel"
+            ],
+            "state_after": {
+              "k_hard": "plain leaf",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "70 degrees",
+              "k_d": "3 minutes",
+              "k_target": "rose husk"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_b",
+            "current_value": "wide bowl",
+            "semantics": "changed_state",
+            "previous_value": "tall mug",
+            "superseded_values": [
+              "tall mug"
+            ],
+            "state_after": {
+              "k_hard": "plain leaf",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "3 minutes",
+              "k_target": "rose husk"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "rose husk",
+            "semantics": "same_state",
+            "previous_value": "rose husk",
+            "superseded_values": [
+              "smoky pine",
+              "malted oat",
+              "wild fennel"
+            ],
+            "state_after": {
+              "k_hard": "plain leaf",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "3 minutes",
+              "k_target": "rose husk"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "cardamom root",
+            "semantics": "changed_state",
+            "previous_value": "rose husk",
+            "superseded_values": [
+              "smoky pine",
+              "malted oat",
+              "wild fennel",
+              "rose husk"
+            ],
+            "state_after": {
+              "k_hard": "plain leaf",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "3 minutes",
+              "k_target": "cardamom root"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "GST-P16",
+            "semantics": "same_state",
+            "previous_value": "GST-P16",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "plain leaf",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "wide bowl",
+              "k_c": "70 degrees",
+              "k_d": "3 minutes",
+              "k_target": "cardamom root"
+            }
+          }
+        ],
+        "final_state": {
+          "k_hard": "plain leaf",
+          "k_n2": "GST-P16",
+          "k_a": "honey drop",
+          "k_b": "wide bowl",
+          "k_c": "70 degrees",
+          "k_d": "3 minutes",
+          "k_target": "cardamom root"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_hard",
+            "current_value": "mint stem",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_n2",
+            "current_value": "GST-P16",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_a",
+            "current_value": "honey drop",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_b",
+            "current_value": "tall mug",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_c",
+            "current_value": "60 degrees",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_d",
+            "current_value": "3 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_target",
+            "current_value": "smoky pine",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "smoky pine"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "malted oat",
+            "semantics": "changed_state",
+            "previous_value": "smoky pine",
+            "superseded_values": [
+              "smoky pine"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "malted oat"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "citrus bark",
+            "semantics": "changed_state",
+            "previous_value": "malted oat",
+            "superseded_values": [
+              "smoky pine",
+              "malted oat"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "citrus bark"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "wild fennel",
+            "semantics": "changed_state",
+            "previous_value": "citrus bark",
+            "superseded_values": [
+              "smoky pine",
+              "malted oat",
+              "citrus bark"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "wild fennel"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "dry hibiscus",
+            "semantics": "changed_state",
+            "previous_value": "wild fennel",
+            "superseded_values": [
+              "smoky pine",
+              "malted oat",
+              "citrus bark",
+              "wild fennel"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "dry hibiscus"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "rose husk",
+            "semantics": "changed_state",
+            "previous_value": "dry hibiscus",
+            "superseded_values": [
+              "smoky pine",
+              "malted oat",
+              "citrus bark",
+              "wild fennel",
+              "dry hibiscus"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "rose husk"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "toasted barley",
+            "semantics": "changed_state",
+            "previous_value": "rose husk",
+            "superseded_values": [
+              "smoky pine",
+              "malted oat",
+              "citrus bark",
+              "wild fennel",
+              "dry hibiscus",
+              "rose husk"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "toasted barley"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "toasted barley",
+            "semantics": "same_state",
+            "previous_value": "toasted barley",
+            "superseded_values": [
+              "smoky pine",
+              "malted oat",
+              "citrus bark",
+              "wild fennel",
+              "dry hibiscus",
+              "rose husk"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "toasted barley"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "cardamom root",
+            "semantics": "changed_state",
+            "previous_value": "toasted barley",
+            "superseded_values": [
+              "smoky pine",
+              "malted oat",
+              "citrus bark",
+              "wild fennel",
+              "dry hibiscus",
+              "rose husk",
+              "toasted barley"
+            ],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "cardamom root"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "GST-P16",
+            "semantics": "same_state",
+            "previous_value": "GST-P16",
+            "superseded_values": [],
+            "state_after": {
+              "k_hard": "mint stem",
+              "k_n2": "GST-P16",
+              "k_a": "honey drop",
+              "k_b": "tall mug",
+              "k_c": "60 degrees",
+              "k_d": "3 minutes",
+              "k_target": "cardamom root"
+            }
+          }
+        ],
+        "final_state": {
+          "k_hard": "mint stem",
+          "k_n2": "GST-P16",
+          "k_a": "honey drop",
+          "k_b": "tall mug",
+          "k_c": "60 degrees",
+          "k_d": "3 minutes",
+          "k_target": "cardamom root"
+        }
+      }
+    }
+  }
+}

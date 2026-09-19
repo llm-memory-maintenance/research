@@ -1,0 +1,49 @@
+status: CLOSED
+capability_result: PASS
+successful_attempt: attempt-02
+execution_package: FROZEN
+execution_compatibility: VERIFIED
+parameter_semantics: HIDDEN_REASONING_EQUIVALENCE_NOT_CLAIMED
+generator_status: CANDIDATE
+execution_mode: standard
+logical_calls:
+  - logical_call_id: G1
+    model: openai/gpt-5.6-sol
+    provider_order: [openai]
+  - logical_call_id: G2
+    model: anthropic/claude-sonnet-5
+    provider_order: [anthropic]
+allow_fallbacks: false
+require_parameters: true
+prompt_version: crst-naturalization-prompt/1.1.0
+input_contract_version: crst-naturalization-input/1.1.0
+output_schema_version: crst-naturalization-triplet/1.0.0
+contract_path: configs/generator-naturalization-contract.json
+contract_sha256: 3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee
+contract_document_path: docs/generator-naturalization-contract.md
+contract_document_sha256: 0bdf2ec4e042e3e75645eb364b7ae87512d00511750c9e98ab27810404f99250
+prompt_sha256: a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279
+output_schema_sha256: c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917
+input_path: data/generator-capability-probe/probe-input.json
+input_sha256: da0e7e3e420e84d6c6ac9f0ccf702df09f29fa441c96660c2efe71634442d4b4
+input_identity: generator-capability-probe-only-v1
+input_purpose: CAPABILITY-PROBE-ONLY
+input_domain: Software Configuration
+input_origin: Independently authored synthetic gateway configuration; no external evidence content.
+input_allocation_scope: Probe-local secondary allocation; not a general CRST freeze.
+generation:
+  reasoning_effort: low
+  max_output_tokens: 16384
+# Exact request mappings accepted in Attempt-02; hidden reasoning is not inferred.
+wire_mapping:
+  max_output_tokens: max_tokens
+  reasoning_effort: reasoning.effort
+  output_schema: response_format.json_schema.schema
+  strict: response_format.json_schema.strict
+transport:
+  per_attempt_deadline_seconds: 300
+  max_infrastructure_retries: 2
+  backoff_seconds: [1, 2]
+  retryable_http_statuses: [408, 429, 500, 502, 503, 504]
+# No archive directory is created by import/help/default preview.
+output_directory: null  # Closed: no next attempt is scheduled.

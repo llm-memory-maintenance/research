@@ -1,0 +1,686 @@
+{
+  "schema_version": "generator-qualification-manifest/1.0.0",
+  "status": "FROZEN",
+  "total_fixtures": 12,
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "versions": {
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0"
+  },
+  "construction_source_commit": "e6a1115591a60706c5559a5b8132917875bb5ff8",
+  "execution_package_reference": {
+    "config_path": "configs/generator-capability-probe.yaml",
+    "capability_evidence_path": "results/generator-capability-probe/attempt-02/probe.json",
+    "capability_evidence_sha256": "b8982ac18e74fded527c3680e26082cf505fadbe33edf53ea103494b7ad57c8f",
+    "status": "FROZEN"
+  },
+  "reference_schema_sha256": "b609b07e3cc3222960902349940eaf5b632b0fb2115e082a2210b621182fe20c",
+  "allocation_rule": "Zero-based domain index i: rotate [k_a,k_b,k_c,k_d] left by i mod 4. Low: rotate [k_hard,*rotated_four,rotated_four[0]] left by i mod 6 and assign to U1..U6. Medium: rotate [k_hard,rotated_four[1],rotated_four[2]] left by i mod 3 and assign to U2,U4,U6. High: none. Qualification-only; not a final CRST allocation decision.",
+  "same_set_for": [
+    "G1",
+    "G2"
+  ],
+  "not_final_crst_data": true,
+  "origin": "Independently authored synthetic structured truth; no external corpus content or model naturalization.",
+  "coverage_summary": [
+    "assignments",
+    "categorical_values",
+    "communication_settings",
+    "configuration_values",
+    "locations",
+    "logistics",
+    "numeric_values",
+    "ordering",
+    "planning",
+    "preferences",
+    "quantities",
+    "scheduling",
+    "study_planning",
+    "subscription_state",
+    "synthetic_calendar_labels",
+    "times",
+    "travel"
+  ],
+  "fixtures": [
+    {
+      "fixture_id": "gq-scheduling-01",
+      "domain": "Scheduling",
+      "fixture_path": "fixtures/scheduling.json",
+      "sha256": "5d7894e20138319c26fde6227231add0ab5d17a4a1d44f91f30d35c0e66240ea",
+      "projection_sha256": "e457345a3567be0e77659009363ef58b95dc309b51f8125016909a740167d648",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_hard",
+          "U2": "k_a",
+          "U3": "k_b",
+          "U4": "k_c",
+          "U5": "k_d",
+          "U6": "k_a"
+        },
+        "medium": {
+          "U2": "k_hard",
+          "U4": "k_b",
+          "U6": "k_c"
+        },
+        "high": {}
+      },
+      "final_target_value": "12:05",
+      "coverage": [
+        "times",
+        "scheduling",
+        "locations"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    },
+    {
+      "fixture_id": "gq-travel-01",
+      "domain": "Travel",
+      "fixture_path": "fixtures/travel.json",
+      "sha256": "b8f0fa2c5fed843bb50fbb47b61a33c85d6c6fd53f0acb07e618e49df2e5262d",
+      "projection_sha256": "5a3c1b89b863eef3f5bad1a07e49eb06b8088b1e5c9cf7a6c5a55533ced54493",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_b",
+          "U2": "k_c",
+          "U3": "k_d",
+          "U4": "k_a",
+          "U5": "k_b",
+          "U6": "k_hard"
+        },
+        "medium": {
+          "U2": "k_c",
+          "U4": "k_d",
+          "U6": "k_hard"
+        },
+        "high": {}
+      },
+      "final_target_value": "Islet Hesari",
+      "coverage": [
+        "locations",
+        "synthetic_calendar_labels",
+        "travel",
+        "quantities"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    },
+    {
+      "fixture_id": "gq-project-planning-01",
+      "domain": "Project Planning",
+      "fixture_path": "fixtures/project-planning.json",
+      "sha256": "496047b143b471019fdd89f7ec5d9eba9ab1045a68bdfcdce0872eb55a01617f",
+      "projection_sha256": "d911a0ccc52f913e7cd9720497295eeae10073397fe4dee6094b85f623f5b770",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_d",
+          "U2": "k_a",
+          "U3": "k_b",
+          "U4": "k_c",
+          "U5": "k_hard",
+          "U6": "k_c"
+        },
+        "medium": {
+          "U2": "k_a",
+          "U4": "k_hard",
+          "U6": "k_d"
+        },
+        "high": {}
+      },
+      "final_target_value": "archive review",
+      "coverage": [
+        "planning",
+        "categorical_values",
+        "assignments",
+        "synthetic_calendar_labels"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    },
+    {
+      "fixture_id": "gq-task-assignment-01",
+      "domain": "Task Assignment",
+      "fixture_path": "fixtures/task-assignment.json",
+      "sha256": "ca58daf228327d13c9155ed863fae361d6c6c0f2a5a59e2f2824c77d68406371",
+      "projection_sha256": "27456542fd1ab80ea480375f6ad099f35bba4450dfcd59106d35dd8fa0c3ee30",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_b",
+          "U2": "k_c",
+          "U3": "k_d",
+          "U4": "k_hard",
+          "U5": "k_d",
+          "U6": "k_a"
+        },
+        "medium": {
+          "U2": "k_hard",
+          "U4": "k_a",
+          "U6": "k_b"
+        },
+        "high": {}
+      },
+      "final_target_value": "Person Haru",
+      "coverage": [
+        "assignments",
+        "categorical_values",
+        "planning"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    },
+    {
+      "fixture_id": "gq-software-configuration-01",
+      "domain": "Software Configuration",
+      "fixture_path": "fixtures/software-configuration.json",
+      "sha256": "008fd535a3bc405531287c343bda830c8155003107092c1f8a37c345227fc3ff",
+      "projection_sha256": "65923aa6a422945f80fb31cfd14b3959aea0b59269d026dc376cb81e997f0734",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_d",
+          "U2": "k_a",
+          "U3": "k_hard",
+          "U4": "k_a",
+          "U5": "k_b",
+          "U6": "k_c"
+        },
+        "medium": {
+          "U2": "k_b",
+          "U4": "k_c",
+          "U6": "k_hard"
+        },
+        "high": {}
+      },
+      "final_target_value": "FMT-QH",
+      "coverage": [
+        "configuration_values",
+        "numeric_values",
+        "categorical_values"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    },
+    {
+      "fixture_id": "gq-personal-preference-01",
+      "domain": "Personal Preference",
+      "fixture_path": "fixtures/personal-preference.json",
+      "sha256": "2f17186e61645a1551e945c2445b769f93edea9c86186b929341921aa59c451d",
+      "projection_sha256": "5c139475af49c4c46c69169d91224b3b60a0312fa0f0055a269b503cb270f371",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_b",
+          "U2": "k_hard",
+          "U3": "k_b",
+          "U4": "k_c",
+          "U5": "k_d",
+          "U6": "k_a"
+        },
+        "medium": {
+          "U2": "k_d",
+          "U4": "k_hard",
+          "U6": "k_c"
+        },
+        "high": {}
+      },
+      "final_target_value": "plain cover",
+      "coverage": [
+        "preferences",
+        "categorical_values"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    },
+    {
+      "fixture_id": "gq-purchase-order-01",
+      "domain": "Purchase & Order",
+      "fixture_path": "fixtures/purchase-order.json",
+      "sha256": "8c88c4212a5db681e2bec23828a8d8006a225d2cdede2fffeb3f69cc6c2e6898",
+      "projection_sha256": "42cc082624b29b8fe97f34b397687ec354304b9ce7829a3da5659820dff63b72",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_hard",
+          "U2": "k_c",
+          "U3": "k_d",
+          "U4": "k_a",
+          "U5": "k_b",
+          "U6": "k_c"
+        },
+        "medium": {
+          "U2": "k_hard",
+          "U4": "k_d",
+          "U6": "k_a"
+        },
+        "high": {}
+      },
+      "final_target_value": "295 sleeves",
+      "coverage": [
+        "ordering",
+        "quantities",
+        "numeric_values",
+        "locations"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    },
+    {
+      "fixture_id": "gq-study-planning-01",
+      "domain": "Study Planning",
+      "fixture_path": "fixtures/study-planning.json",
+      "sha256": "20167d440f12e923ef308a4fb6cc7cac3163dc54dcf7b5c622f582c96def2256",
+      "projection_sha256": "f004160a9092609cf4f1f2c8a7507fea30886df23a7085e5e6814d424eb46f48",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_d",
+          "U2": "k_a",
+          "U3": "k_b",
+          "U4": "k_c",
+          "U5": "k_d",
+          "U6": "k_hard"
+        },
+        "medium": {
+          "U2": "k_a",
+          "U4": "k_b",
+          "U6": "k_hard"
+        },
+        "high": {}
+      },
+      "final_target_value": "Course Lavi",
+      "coverage": [
+        "study_planning",
+        "categorical_values",
+        "numeric_values"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    },
+    {
+      "fixture_id": "gq-communication-01",
+      "domain": "Communication",
+      "fixture_path": "fixtures/communication.json",
+      "sha256": "fc2fc9e6fe12f3f998973ae44b761974014a7f9c12bdf1ba679fcac5a11509f2",
+      "projection_sha256": "c1e44df12fcd3157d75657d66a87526519510fbb4a4ddcc6b0bc1caa6b62f854",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_b",
+          "U2": "k_c",
+          "U3": "k_d",
+          "U4": "k_a",
+          "U5": "k_hard",
+          "U6": "k_a"
+        },
+        "medium": {
+          "U2": "k_c",
+          "U4": "k_hard",
+          "U6": "k_b"
+        },
+        "high": {}
+      },
+      "final_target_value": "daily at 15:00",
+      "coverage": [
+        "communication_settings",
+        "categorical_values",
+        "assignments",
+        "times"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    },
+    {
+      "fixture_id": "gq-service-subscription-01",
+      "domain": "Service & Subscription",
+      "fixture_path": "fixtures/service-subscription.json",
+      "sha256": "3b5c56291a2e5eae71337ab10568c60b435762235b7cd281138f29d3d546dc17",
+      "projection_sha256": "d964131a9e382d9c15dc0d711590add092a15addbc39cec280911b59c469ff4f",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_d",
+          "U2": "k_a",
+          "U3": "k_b",
+          "U4": "k_hard",
+          "U5": "k_b",
+          "U6": "k_c"
+        },
+        "medium": {
+          "U2": "k_hard",
+          "U4": "k_c",
+          "U6": "k_d"
+        },
+        "high": {}
+      },
+      "final_target_value": "Plan Ulin",
+      "coverage": [
+        "subscription_state",
+        "categorical_values",
+        "quantities"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    },
+    {
+      "fixture_id": "gq-location-logistics-01",
+      "domain": "Location & Logistics",
+      "fixture_path": "fixtures/location-logistics.json",
+      "sha256": "5ba26ae74065488cf65425f39e880aeb97c11859c93b17c291a1622021dc908a",
+      "projection_sha256": "f33fd7da6ccf254518dac47f27cb0f77da16796a7a9994b75d74b8f8d2905240",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_b",
+          "U2": "k_c",
+          "U3": "k_hard",
+          "U4": "k_c",
+          "U5": "k_d",
+          "U6": "k_a"
+        },
+        "medium": {
+          "U2": "k_d",
+          "U4": "k_a",
+          "U6": "k_hard"
+        },
+        "high": {}
+      },
+      "final_target_value": "Bay Halen",
+      "coverage": [
+        "locations",
+        "logistics",
+        "assignments"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    },
+    {
+      "fixture_id": "gq-quantitative-planning-01",
+      "domain": "Quantitative Planning",
+      "fixture_path": "fixtures/quantitative-planning.json",
+      "sha256": "c48692540bfc426234cb09cfeb190c5117b4d0ddf9c57acb4951ce13a7a7ed45",
+      "projection_sha256": "3ac0273d2b680ed9e5ffc3e160251507a940a4e4f4991c87d6f3b94681e38957",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_d",
+          "U2": "k_hard",
+          "U3": "k_d",
+          "U4": "k_a",
+          "U5": "k_b",
+          "U6": "k_c"
+        },
+        "medium": {
+          "U2": "k_b",
+          "U4": "k_hard",
+          "U6": "k_a"
+        },
+        "high": {}
+      },
+      "final_target_value": "630 sheets",
+      "coverage": [
+        "quantities",
+        "numeric_values",
+        "planning"
+      ],
+      "purpose": "GENERATOR-QUALIFICATION-ONLY"
+    }
+  ]
+}

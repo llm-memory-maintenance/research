@@ -1,0 +1,27 @@
+{
+  "procedure_version": "generator-qualification-procedure/1.0.0",
+  "qualification_sha256": "c15a6f2ab6e087c719e32c92f0f6268d4bf6a5728629a4ff8b1a033761560d5c",
+  "manual_audit_sha256": "2e95125914d885ef7216edecf3fadd6c29961810c54e1d280d8cff2f38363369",
+  "candidates": {
+    "G1": "FAIL"
+  },
+  "basis": {
+    "G1": {
+      "terminal_failures": [],
+      "manual_failures": [
+        "gq-purchase-order-01/low/I2: natural_english FAIL",
+        "gq-purchase-order-01/low/I3: natural_english FAIL",
+        "gq-purchase-order-01/low: variant FAIL",
+        "gq-purchase-order-01/medium/I2: natural_english FAIL",
+        "gq-purchase-order-01/medium/I3: natural_english FAIL",
+        "gq-purchase-order-01/medium: variant FAIL",
+        "gq-purchase-order-01/high/I2: natural_english FAIL",
+        "gq-purchase-order-01/high/I3: natural_english FAIL",
+        "gq-purchase-order-01/high: variant FAIL",
+        "gq-purchase-order-01: fixture FAIL"
+      ],
+      "pending_manual_items": 0
+    }
+  },
+  "manual_audit_file_sha256": "7ef281cb5253a697b723bf58398bce5d2fc224348ec1310d9e6e137f3634d2dc"
+}

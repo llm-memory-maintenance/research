@@ -1,0 +1,384 @@
+{
+  "logical_call_id": "G2",
+  "status": "FAIL",
+  "failure_reason": "Expected nonempty string",
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"plan\\\",\\\"meaning\\\":\\\"selected fictional service plan\\\",\\\"units_or_interpretation\\\":\\\"plan label\\\"},{\\\"attribute_id\\\":\\\"account_code\\\",\\\"meaning\\\":\\\"service account identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"renewal_cycle\\\",\\\"meaning\\\":\\\"renewal cycle\\\",\\\"units_or_interpretation\\\":\\\"synthetic calendar label\\\"},{\\\"attribute_id\\\":\\\"report_mode\\\",\\\"meaning\\\":\\\"usage report mode\\\",\\\"units_or_interpretation\\\":\\\"mode label\\\"},{\\\"attribute_id\\\":\\\"seat_count\\\",\\\"meaning\\\":\\\"account seat count\\\",\\\"units_or_interpretation\\\":\\\"seats\\\"},{\\\"attribute_id\\\":\\\"support_channel\\\",\\\"meaning\\\":\\\"support contact channel\\\",\\\"units_or_interpretation\\\":\\\"channel label\\\"}],\\\"domain\\\":\\\"Service & Subscription\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gq-service-subscription-01-primary\\\",\\\"name\\\":\\\"Service account Curlew\\\"},{\\\"entity_id\\\":\\\"gq-service-subscription-01-distractor\\\",\\\"name\\\":\\\"Service account Avocet\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_n2\\\",\\\"I2\\\":\\\"k_a\\\",\\\"I3\\\":\\\"k_b\\\",\\\"I4\\\":\\\"k_c\\\",\\\"I5\\\":\\\"k_d\\\",\\\"I6\\\":\\\"k_target\\\",\\\"I7\\\":\\\"k_hard\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"plan\\\",\\\"entity_id\\\":\\\"gq-service-subscription-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current selected fictional service plan of Service account Curlew.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"plan\\\",\\\"entity_id\\\":\\\"gq-service-subscription-01-primary\\\",\\\"initial_value\\\":\\\"Plan Navo\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"plan\\\",\\\"entity_id\\\":\\\"gq-service-subscription-01-distractor\\\",\\\"initial_value\\\":\\\"Plan Vena\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"account_code\\\",\\\"entity_id\\\":\\\"gq-service-subscription-01-primary\\\",\\\"initial_value\\\":\\\"SVC-C6\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"renewal_cycle\\\",\\\"entity_id\\\":\\\"gq-service-subscription-01-primary\\\",\\\"initial_value\\\":\\\"Cycle Javi\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"report_mode\\\",\\\"entity_id\\\":\\\"gq-service-subscription-01-primary\\\",\\\"initial_value\\\":\\\"brief report\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"seat_count\\\",\\\"entity_id\\\":\\\"gq-service-subscription-01-primary\\\",\\\"initial_value\\\":\\\"6 seats\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"support_channel\\\",\\\"entity_id\\\":\\\"gq-service-subscription-01-primary\\\",\\\"initial_value\\\":\\\"Channel Ash\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"SVC-C6\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Cycle Javi\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"brief report\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"6 seats\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Channel Ash\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Plan Navo\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Vena\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Plan Orel\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Peli\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Qari\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Renu\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Savi\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Tero\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Tero\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Ulin\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"SVC-C6\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"SVC-C6\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Cycle Javi\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"brief report\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"6 seats\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Channel Ash\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Plan Navo\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Vena\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Channel Beech\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Cycle Kelo\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"detailed report\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Plan Weri\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"tabular report\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"8 seats\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Plan Navo\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Ulin\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"SVC-C6\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"SVC-C6\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Cycle Javi\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"brief report\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"6 seats\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Channel Ash\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Plan Navo\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Vena\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Plan Orel\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Weri\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Plan Qari\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"8 seats\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Plan Savi\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Channel Beech\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Plan Savi\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Plan Ulin\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"SVC-C6\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"anthropic/claude-sonnet-5\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"anthropic\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "1fe317b162b030ab932c4f0a91163f8e3237580248ae7253a683495631f3e797",
+  "request_body": {
+    "model": "anthropic/claude-sonnet-5",
+    "provider": {
+      "order": [
+        "anthropic"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"plan\",\"meaning\":\"selected fictional service plan\",\"units_or_interpretation\":\"plan label\"},{\"attribute_id\":\"account_code\",\"meaning\":\"service account identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"renewal_cycle\",\"meaning\":\"renewal cycle\",\"units_or_interpretation\":\"synthetic calendar label\"},{\"attribute_id\":\"report_mode\",\"meaning\":\"usage report mode\",\"units_or_interpretation\":\"mode label\"},{\"attribute_id\":\"seat_count\",\"meaning\":\"account seat count\",\"units_or_interpretation\":\"seats\"},{\"attribute_id\":\"support_channel\",\"meaning\":\"support contact channel\",\"units_or_interpretation\":\"channel label\"}],\"domain\":\"Service & Subscription\",\"entities\":[{\"entity_id\":\"gq-service-subscription-01-primary\",\"name\":\"Service account Curlew\"},{\"entity_id\":\"gq-service-subscription-01-distractor\",\"name\":\"Service account Avocet\"}],\"initial_order\":{\"I1\":\"k_n2\",\"I2\":\"k_a\",\"I3\":\"k_b\",\"I4\":\"k_c\",\"I5\":\"k_d\",\"I6\":\"k_target\",\"I7\":\"k_hard\"},\"question_intent\":{\"attribute_id\":\"plan\",\"entity_id\":\"gq-service-subscription-01-primary\",\"intent\":\"Ask only for the current selected fictional service plan of Service account Curlew.\"},\"state_keys\":[{\"attribute_id\":\"plan\",\"entity_id\":\"gq-service-subscription-01-primary\",\"initial_value\":\"Plan Navo\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"plan\",\"entity_id\":\"gq-service-subscription-01-distractor\",\"initial_value\":\"Plan Vena\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"account_code\",\"entity_id\":\"gq-service-subscription-01-primary\",\"initial_value\":\"SVC-C6\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"renewal_cycle\",\"entity_id\":\"gq-service-subscription-01-primary\",\"initial_value\":\"Cycle Javi\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"report_mode\",\"entity_id\":\"gq-service-subscription-01-primary\",\"initial_value\":\"brief report\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"seat_count\",\"entity_id\":\"gq-service-subscription-01-primary\",\"initial_value\":\"6 seats\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"support_channel\",\"entity_id\":\"gq-service-subscription-01-primary\",\"initial_value\":\"Channel Ash\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"SVC-C6\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Cycle Javi\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"brief report\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"6 seats\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Channel Ash\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Plan Navo\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Vena\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"Plan Orel\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Peli\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Qari\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Renu\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Savi\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Tero\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Tero\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Ulin\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"SVC-C6\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"SVC-C6\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Cycle Javi\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"brief report\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"6 seats\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Channel Ash\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Plan Navo\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Vena\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"Channel Beech\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Cycle Kelo\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"detailed report\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"Plan Weri\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"tabular report\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"8 seats\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Plan Navo\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Ulin\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"SVC-C6\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"SVC-C6\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Cycle Javi\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"brief report\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"6 seats\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Channel Ash\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Plan Navo\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Vena\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"Plan Orel\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Weri\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Plan Qari\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"8 seats\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Plan Savi\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Channel Beech\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Plan Savi\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Plan Ulin\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"SVC-C6\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G2",
+      "physical_attempt": 1,
+      "started_at": "2026-09-18T12:10:08.258784+00:00",
+      "requested_model": "anthropic/claude-sonnet-5",
+      "requested_provider_order": [
+        "anthropic"
+      ],
+      "returned_model": "anthropic/claude-sonnet-5",
+      "observed_selected_provider": "Anthropic",
+      "request_id": null,
+      "response_id": "gen-1789733408-nFy3J5hvNHEfzmUMgdbN",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789733408-nFy3J5hvNHEfzmUMgdbN\",\"object\":\"chat.completion\",\"created\":1789733408,\"model\":\"anthropic/claude-sonnet-5\",\"provider\":\"Anthropic\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"For Service account Curlew, the account code is SVC-C6.\\\",\\\"I2\\\":\\\"Service account Curlew is currently on renewal cycle Cycle Javi.\\\",\\\"I3\\\":\\\"Service account Curlew's usage report mode is set to brief report.\\\",\\\"I4\\\":\\\"Service account Curlew has 6 seats.\\\",\\\"I5\\\":\\\"Service account Curlew's support channel is Channel Ash.\\\",\\\"I6\\\":\\\"Service account Curlew is on Plan Navo.\\\",\\\"I7\\\":\\\"For reference, Service account Avocet is on Plan Vena.\\\",\\\"N1\\\":\\\"\\\", \\\"N2\\\":\\\"\\\", \\\"Q\\\":\\\"\\\",\\\"U1\\\":\\\"The plan for Service account Curlew has been updated to Plan Orel.\\\",\\\"U2\\\":\\\"Service account Curlew's plan has changed again, now it is Plan Peli.\\\",\\\"U3\\\":\\\"Service account Curlew's plan is now Plan Qari.\\\",\\\"U4\\\":\\\"The plan on Service account Curlew has been updated to Plan Renu.\\\",\\\"U5\\\":\\\"Service account Curlew's plan has now changed to Plan Savi.\\\",\\\"U6\\\":\\\"Service account Curlew's plan is now Plan Tero.\\\",\\\"U7\\\":\\\"Service account Curlew's plan has been updated to Plan Ulin.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"For Service account Curlew, the account code is SVC-C6.\\\",\\\"I2\\\":\\\"Service account Curlew is currently on renewal cycle Cycle Javi.\\\",\\\"I3\\\":\\\"Service account Curlew's usage report mode is set to brief report.\\\",\\\"I4\\\":\\\"Service account Curlew has 6 seats.\\\",\\\"I5\\\":\\\"Service account Curlew's support channel is Channel Ash.\\\",\\\"I6\\\":\\\"Service account Curlew is on Plan Navo.\\\",\\\"I7\\\":\\\"For reference, Service account Avocet is on Plan Vena.\\\",\\\"N1\\\":\\\"\\\",\\\"N2\\\":\\\"\\\",\\\"Q\\\":\\\"\\\",\\\"U1\\\":\\\"Service account Curlew's support channel has been updated to Channel Beech.\\\",\\\"U2\\\":\\\"Service account Curlew's renewal cycle has changed to Cycle Kelo.\\\",\\\"U3\\\":\\\"Service account Curlew's usage report mode has been updated to detailed report.\\\",\\\"U4\\\":\\\"Service account Avocet's plan has changed to Plan Weri.\\\",\\\"U5\\\":\\\"Service account Curlew's usage report mode is now tabular report.\\\",\\\"U6\\\":\\\"Service account Curlew now has 8 seats.\\\",\\\"U7\\\":\\\"Service account Curlew's plan has been updated to Plan Ulin.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"For Service account Curlew, the account code is SVC-C6.\\\",\\\"I2\\\":\\\"Service account Curlew is currently on renewal cycle Cycle Javi.\\\",\\\"I3\\\":\\\"Service account Curlew's usage report mode is set to brief report.\\\",\\\"I4\\\":\\\"Service account Curlew has 6 seats.\\\",\\\"I5\\\":\\\"Service account Curlew's support channel is Channel Ash.\\\",\\\"I6\\\":\\\"Service account Curlew is on Plan Navo.\\\",\\\"I7\\\":\\\"For reference, Service account Avocet is on Plan Vena.\\\",\\\"N1\\\":\\\"\\\",\\\"N2\\\":\\\"\\\",\\\"Q\\\":\\\"\\\",\\\"U1\\\":\\\"Service account Curlew's plan has been updated to Plan Orel.\\\",\\\"U2\\\":\\\"Service account Avocet's plan has changed to Plan Weri.\\\",\\\"U3\\\":\\\"Service account Curlew's plan is now Plan Qari.\\\",\\\"U4\\\":\\\"Service account Curlew now has 8 seats.\\\",\\\"U5\\\":\\\"Service account Curlew's plan has changed to Plan Savi.\\\",\\\"U6\\\":\\\"Service account Curlew's support channel has been updated to Channel Beech.\\\",\\\"U7\\\":\\\"Service account Curlew's plan has been updated to Plan Ulin.\\\"}}\",\"refusal\":null,\"reasoning\":\"I'm working out the low sequence variant, laying out each item and update in order to see how the values change across the sequence.\\n\\nFor the medium variant, I keep the same initial items but vary how the target updates play out, tracking which plan value persists through the later checks.\\n\\nFor the high variant, I set up the target field to change with nearly every update this time, watching which plan ultimately survives to the final query.\\n\\n\",\"reasoning_details\":[{\"type\":\"reasoning.text\",\"text\":\"I'm working out the low sequence variant, laying out each item and update in order to see how the values change across the sequence.\\n\\nFor the medium variant, I keep the same initial items but vary how the target updates play out, tracking which plan value persists through the later checks.\\n\\nFor the high variant, I set up the target field to change with nearly every update this time, watching which plan ultimately survives to the final query.\\n\\n\",\"format\":\"anthropic-claude-v1\",\"index\":0,\"signature\":\"EvsICrABCBEYAipAXvCc3F6EOJYBiajoAR1PAv+uaGjef9xWjYfmkZF0ARaWKWGBA5NzHtPlIQNIfgnIFrTe/0TleWbK6Y4n8PInFDIPY2xhdWRlLXNvbm5ldC01OABCCHRoaW5raW5nWiQwZDk4M2YzZi00OWZhLTRhNDYtODI1NC1iMWJiMjQ5MWEyYTl6HnVwcm9mXzAxMUNlZlp1azdZcUtuQUZSZ3MzMURlRqgBq9S01QYSDKT/gRD+KFH7yK9X3hoMH5gPB7iukr9FV+0kIjDBOBGjD+E7adwiW7416yU2Jh2q6DXtH+lkNqcQW/C0DpR5lbofwrPTKqb3uBP35Eoq9wb+CXe6P6URPxczEtXx4DGzQ3ElU8Ba9QOhcyYPLe+mqcOO/Qdhq9j5KCxgGRelouoho07RS/TZkWAyQBS1RiiLGRyOx+a3zGDOPc/Zy/o5C4BUdmhwv52my/nq9l2Xyd3KC43s6xjdbXfIKNb9ms1A98jUzjiFRzGmbax/AElBdVrRvTcelrKzz1SXW6crZ3y8LYoujfiBAa7oZKQVoWnHwOWGd17WENBVbVDSJfPbZQI+AJck03AuWLPxm1OWlTiU89W1npomnehM2BY+RJbEOFMA+tYvkR7k4iRsaqbLc4s8VwNkWSnCgg9ziEjmWytpKOPOX2WlSulpNFTNyYa2LZK3ZqCAhFthy4n17+/Tf24gBNzUDRn3kJmbYVHRw1QyRTuG0I/EwGDJ/gTCyKoZUo97NXePp3Fjs5QjNv9xO2upzjWi7WtE6cUqiHlw7R7d++mG7nzF4HZ52NjHEvkkNUfFH+SMwDyP48kc6rq3MBMMdg/lnc4HEBJxTjEMc7nzcJY2r7rG1/DqJaY3cQy2eoAE6F4W5249pjTrV1tSk+61R+af9hpCw7zimQ/ktOdAX/tWh+pwjYpdex7xVOna7Jt9Syt1IlLU+rUDXfD4oREbD/D6IxsvVLQ8MIl4gsu8HIDyb+WuY1eYXNp6jbien/c2GnSCKq83+0TsqoXsj2YZcDE8FdXQe5DWI6pFMzJLN97orViQR9YVRgSGjyi7qwB5XUtOJEdMoiGVhwmrKU4wTb/yKllV4zI/YCeLi1qLfXEesnjydyMp/S4u2V0JmGRU7cQjmtuDCMb4DJeZuqapZxXOVnWL8uUj4JFvv5cBGSUgsxie21hqiVtVkJY1N3KG04tHourTfr0QoD/lnybxoNWhSP3WDJ0lj341jal83l375Zvq2OUQmS1d/e1dwAFOfkmeYWwZfCnK39RQbPOHmWxrPzYIKo5WJ66P0ywk3qt5xSvgBv+0Er97N03AOVBSy5kM9HKyUresbJRx0p9LdbeoUuYMmzPyY+Y2OzNryp8hX/5GY33KcdxBZtQfiGFxlLRda42RMuQW5NTEjHgyAVqWrNYqE9Wh/eXRfa68l/7ITuVz6icodq8zlkZzY2mpP3l3Zp4qMWQN8bSGmki4Qgt/qU+qX16gUi0XeBnaQxh+sZ4sdN99HkfgJph4AzIUjxmc8xgB\"}]}}],\"usage\":{\"prompt_tokens\":4591,\"completion_tokens\":1609,\"total_tokens\":6200,\"cost\":0.025272,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.025272,\"upstream_inference_prompt_cost\":0.009182,\"upstream_inference_completions_cost\":0.01609},\"completion_tokens_details\":{\"reasoning_tokens\":466,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"anthropic/claude-sonnet-5\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=Anthropic\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":10,\"available\":[{\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-sonnet-5-20260630\",\"selected\":true}]},\"generation_time\":18211}}",
+      "response_sha256_before_redaction": "8b0e3e29af29bf58a3694456462678a539f4fcec7d0de13d23741b79c207e038",
+      "response_envelope": {
+        "id": "gen-1789733408-nFy3J5hvNHEfzmUMgdbN",
+        "object": "chat.completion",
+        "created": 1789733408,
+        "model": "anthropic/claude-sonnet-5",
+        "provider": "Anthropic",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "end_turn",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"For Service account Curlew, the account code is SVC-C6.\",\"I2\":\"Service account Curlew is currently on renewal cycle Cycle Javi.\",\"I3\":\"Service account Curlew's usage report mode is set to brief report.\",\"I4\":\"Service account Curlew has 6 seats.\",\"I5\":\"Service account Curlew's support channel is Channel Ash.\",\"I6\":\"Service account Curlew is on Plan Navo.\",\"I7\":\"For reference, Service account Avocet is on Plan Vena.\",\"N1\":\"\", \"N2\":\"\", \"Q\":\"\",\"U1\":\"The plan for Service account Curlew has been updated to Plan Orel.\",\"U2\":\"Service account Curlew's plan has changed again, now it is Plan Peli.\",\"U3\":\"Service account Curlew's plan is now Plan Qari.\",\"U4\":\"The plan on Service account Curlew has been updated to Plan Renu.\",\"U5\":\"Service account Curlew's plan has now changed to Plan Savi.\",\"U6\":\"Service account Curlew's plan is now Plan Tero.\",\"U7\":\"Service account Curlew's plan has been updated to Plan Ulin.\"},\"low\":{\"I1\":\"For Service account Curlew, the account code is SVC-C6.\",\"I2\":\"Service account Curlew is currently on renewal cycle Cycle Javi.\",\"I3\":\"Service account Curlew's usage report mode is set to brief report.\",\"I4\":\"Service account Curlew has 6 seats.\",\"I5\":\"Service account Curlew's support channel is Channel Ash.\",\"I6\":\"Service account Curlew is on Plan Navo.\",\"I7\":\"For reference, Service account Avocet is on Plan Vena.\",\"N1\":\"\",\"N2\":\"\",\"Q\":\"\",\"U1\":\"Service account Curlew's support channel has been updated to Channel Beech.\",\"U2\":\"Service account Curlew's renewal cycle has changed to Cycle Kelo.\",\"U3\":\"Service account Curlew's usage report mode has been updated to detailed report.\",\"U4\":\"Service account Avocet's plan has changed to Plan Weri.\",\"U5\":\"Service account Curlew's usage report mode is now tabular report.\",\"U6\":\"Service account Curlew now has 8 seats.\",\"U7\":\"Service account Curlew's plan has been updated to Plan Ulin.\"},\"medium\":{\"I1\":\"For Service account Curlew, the account code is SVC-C6.\",\"I2\":\"Service account Curlew is currently on renewal cycle Cycle Javi.\",\"I3\":\"Service account Curlew's usage report mode is set to brief report.\",\"I4\":\"Service account Curlew has 6 seats.\",\"I5\":\"Service account Curlew's support channel is Channel Ash.\",\"I6\":\"Service account Curlew is on Plan Navo.\",\"I7\":\"For reference, Service account Avocet is on Plan Vena.\",\"N1\":\"\",\"N2\":\"\",\"Q\":\"\",\"U1\":\"Service account Curlew's plan has been updated to Plan Orel.\",\"U2\":\"Service account Avocet's plan has changed to Plan Weri.\",\"U3\":\"Service account Curlew's plan is now Plan Qari.\",\"U4\":\"Service account Curlew now has 8 seats.\",\"U5\":\"Service account Curlew's plan has changed to Plan Savi.\",\"U6\":\"Service account Curlew's support channel has been updated to Channel Beech.\",\"U7\":\"Service account Curlew's plan has been updated to Plan Ulin.\"}}",
+              "refusal": null,
+              "reasoning": "I'm working out the low sequence variant, laying out each item and update in order to see how the values change across the sequence.\n\nFor the medium variant, I keep the same initial items but vary how the target updates play out, tracking which plan value persists through the later checks.\n\nFor the high variant, I set up the target field to change with nearly every update this time, watching which plan ultimately survives to the final query.\n\n",
+              "reasoning_details": [
+                {
+                  "type": "reasoning.text",
+                  "text": "I'm working out the low sequence variant, laying out each item and update in order to see how the values change across the sequence.\n\nFor the medium variant, I keep the same initial items but vary how the target updates play out, tracking which plan value persists through the later checks.\n\nFor the high variant, I set up the target field to change with nearly every update this time, watching which plan ultimately survives to the final query.\n\n",
+                  "format": "anthropic-claude-v1",
+                  "index": 0,
+                  "signature": "EvsICrABCBEYAipAXvCc3F6EOJYBiajoAR1PAv+uaGjef9xWjYfmkZF0ARaWKWGBA5NzHtPlIQNIfgnIFrTe/0TleWbK6Y4n8PInFDIPY2xhdWRlLXNvbm5ldC01OABCCHRoaW5raW5nWiQwZDk4M2YzZi00OWZhLTRhNDYtODI1NC1iMWJiMjQ5MWEyYTl6HnVwcm9mXzAxMUNlZlp1azdZcUtuQUZSZ3MzMURlRqgBq9S01QYSDKT/gRD+KFH7yK9X3hoMH5gPB7iukr9FV+0kIjDBOBGjD+E7adwiW7416yU2Jh2q6DXtH+lkNqcQW/C0DpR5lbofwrPTKqb3uBP35Eoq9wb+CXe6P6URPxczEtXx4DGzQ3ElU8Ba9QOhcyYPLe+mqcOO/Qdhq9j5KCxgGRelouoho07RS/TZkWAyQBS1RiiLGRyOx+a3zGDOPc/Zy/o5C4BUdmhwv52my/nq9l2Xyd3KC43s6xjdbXfIKNb9ms1A98jUzjiFRzGmbax/AElBdVrRvTcelrKzz1SXW6crZ3y8LYoujfiBAa7oZKQVoWnHwOWGd17WENBVbVDSJfPbZQI+AJck03AuWLPxm1OWlTiU89W1npomnehM2BY+RJbEOFMA+tYvkR7k4iRsaqbLc4s8VwNkWSnCgg9ziEjmWytpKOPOX2WlSulpNFTNyYa2LZK3ZqCAhFthy4n17+/Tf24gBNzUDRn3kJmbYVHRw1QyRTuG0I/EwGDJ/gTCyKoZUo97NXePp3Fjs5QjNv9xO2upzjWi7WtE6cUqiHlw7R7d++mG7nzF4HZ52NjHEvkkNUfFH+SMwDyP48kc6rq3MBMMdg/lnc4HEBJxTjEMc7nzcJY2r7rG1/DqJaY3cQy2eoAE6F4W5249pjTrV1tSk+61R+af9hpCw7zimQ/ktOdAX/tWh+pwjYpdex7xVOna7Jt9Syt1IlLU+rUDXfD4oREbD/D6IxsvVLQ8MIl4gsu8HIDyb+WuY1eYXNp6jbien/c2GnSCKq83+0TsqoXsj2YZcDE8FdXQe5DWI6pFMzJLN97orViQR9YVRgSGjyi7qwB5XUtOJEdMoiGVhwmrKU4wTb/yKllV4zI/YCeLi1qLfXEesnjydyMp/S4u2V0JmGRU7cQjmtuDCMb4DJeZuqapZxXOVnWL8uUj4JFvv5cBGSUgsxie21hqiVtVkJY1N3KG04tHourTfr0QoD/lnybxoNWhSP3WDJ0lj341jal83l375Zvq2OUQmS1d/e1dwAFOfkmeYWwZfCnK39RQbPOHmWxrPzYIKo5WJ66P0ywk3qt5xSvgBv+0Er97N03AOVBSy5kM9HKyUresbJRx0p9LdbeoUuYMmzPyY+Y2OzNryp8hX/5GY33KcdxBZtQfiGFxlLRda42RMuQW5NTEjHgyAVqWrNYqE9Wh/eXRfa68l/7ITuVz6icodq8zlkZzY2mpP3l3Zp4qMWQN8bSGmki4Qgt/qU+qX16gUi0XeBnaQxh+sZ4sdN99HkfgJph4AzIUjxmc8xgB"
+                }
+              ]
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 4591,
+          "completion_tokens": 1609,
+          "total_tokens": 6200,
+          "cost": 0.025272,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.025272,
+            "upstream_inference_prompt_cost": 0.009182,
+            "upstream_inference_completions_cost": 0.01609
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 466,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "anthropic/claude-sonnet-5",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=Anthropic",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 10,
+            "available": [
+              {
+                "provider": "Anthropic",
+                "model": "anthropic/claude-sonnet-5-20260630",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 18211
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "anthropic/claude-sonnet-5",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=Anthropic",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 10,
+          "available": [
+            {
+              "provider": "Anthropic",
+              "model": "anthropic/claude-sonnet-5-20260630",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 18211
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "For Service account Curlew, the account code is SVC-C6.",
+          "I2": "Service account Curlew is currently on renewal cycle Cycle Javi.",
+          "I3": "Service account Curlew's usage report mode is set to brief report.",
+          "I4": "Service account Curlew has 6 seats.",
+          "I5": "Service account Curlew's support channel is Channel Ash.",
+          "I6": "Service account Curlew is on Plan Navo.",
+          "I7": "For reference, Service account Avocet is on Plan Vena.",
+          "N1": "",
+          "N2": "",
+          "Q": "",
+          "U1": "The plan for Service account Curlew has been updated to Plan Orel.",
+          "U2": "Service account Curlew's plan has changed again, now it is Plan Peli.",
+          "U3": "Service account Curlew's plan is now Plan Qari.",
+          "U4": "The plan on Service account Curlew has been updated to Plan Renu.",
+          "U5": "Service account Curlew's plan has now changed to Plan Savi.",
+          "U6": "Service account Curlew's plan is now Plan Tero.",
+          "U7": "Service account Curlew's plan has been updated to Plan Ulin."
+        },
+        "low": {
+          "I1": "For Service account Curlew, the account code is SVC-C6.",
+          "I2": "Service account Curlew is currently on renewal cycle Cycle Javi.",
+          "I3": "Service account Curlew's usage report mode is set to brief report.",
+          "I4": "Service account Curlew has 6 seats.",
+          "I5": "Service account Curlew's support channel is Channel Ash.",
+          "I6": "Service account Curlew is on Plan Navo.",
+          "I7": "For reference, Service account Avocet is on Plan Vena.",
+          "N1": "",
+          "N2": "",
+          "Q": "",
+          "U1": "Service account Curlew's support channel has been updated to Channel Beech.",
+          "U2": "Service account Curlew's renewal cycle has changed to Cycle Kelo.",
+          "U3": "Service account Curlew's usage report mode has been updated to detailed report.",
+          "U4": "Service account Avocet's plan has changed to Plan Weri.",
+          "U5": "Service account Curlew's usage report mode is now tabular report.",
+          "U6": "Service account Curlew now has 8 seats.",
+          "U7": "Service account Curlew's plan has been updated to Plan Ulin."
+        },
+        "medium": {
+          "I1": "For Service account Curlew, the account code is SVC-C6.",
+          "I2": "Service account Curlew is currently on renewal cycle Cycle Javi.",
+          "I3": "Service account Curlew's usage report mode is set to brief report.",
+          "I4": "Service account Curlew has 6 seats.",
+          "I5": "Service account Curlew's support channel is Channel Ash.",
+          "I6": "Service account Curlew is on Plan Navo.",
+          "I7": "For reference, Service account Avocet is on Plan Vena.",
+          "N1": "",
+          "N2": "",
+          "Q": "",
+          "U1": "Service account Curlew's plan has been updated to Plan Orel.",
+          "U2": "Service account Avocet's plan has changed to Plan Weri.",
+          "U3": "Service account Curlew's plan is now Plan Qari.",
+          "U4": "Service account Curlew now has 8 seats.",
+          "U5": "Service account Curlew's plan has changed to Plan Savi.",
+          "U6": "Service account Curlew's support channel has been updated to Channel Beech.",
+          "U7": "Service account Curlew's plan has been updated to Plan Ulin."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "failed",
+      "usage": {
+        "prompt_tokens": 4591,
+        "completion_tokens": 1609,
+        "total_tokens": 6200,
+        "reasoning_tokens": 466,
+        "cached_tokens": 0,
+        "cost": 0.025272
+      },
+      "latency_seconds": 18.41053061198909,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": "Expected nonempty string"
+    }
+  ],
+  "candidate": "G2",
+  "fixture_id": "gq-service-subscription-01",
+  "fixture_sha256": "3b5c56291a2e5eae71337ab10568c60b435762235b7cd281138f29d3d546dc17",
+  "projection_sha256": "d964131a9e382d9c15dc0d711590add092a15addbc39cec280911b59c469ff4f",
+  "logical_call_index": 22,
+  "provenance": {
+    "source_commit": "0f4873615101dde22bced8f857523f475cee2604",
+    "fixture_set_commit": "683c0416c5bf47c83021408f26bc7a7ab5e8becc",
+    "fixture_manifest_sha256": "ecce7e579f02f64bb5578d8b18b9164483da1c5438544f21a89e17d7a2aaa1f9",
+    "execution_config_sha256": "848ca0219ff1d24adcf2f12d0789ebeb8e7a86427336672173b91e034dca6b62",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "procedure_version": "generator-qualification-procedure/1.0.0",
+    "implementation": {
+      "status": "FROZEN FOR LIVE EXECUTION",
+      "freeze_commit": "e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e",
+      "source_sha256": {
+        "experiments/qualify_generators.py": "5884cdaf9b2781d69acc733e7d8556766669f002bd175d78dcf935c1059e043e",
+        "experiments/probe_generators.py": "f1604e415ff1a359454161b8c94c6504706335419770989358557ff2314cecdf",
+        "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+      }
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "automated": {
+    "status": "FAIL",
+    "findings": [],
+    "reason": "Execution/parse/schema failed"
+  }
+}

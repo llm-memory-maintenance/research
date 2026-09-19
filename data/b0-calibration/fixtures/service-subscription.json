@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-service-subscription-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Service & Subscription",
+    "entities": [
+      {
+        "entity_id": "b0cal-service-subscription-01-primary",
+        "name": "Membership Lodestar"
+      },
+      {
+        "entity_id": "b0cal-service-subscription-01-distractor",
+        "name": "Membership Zephyrine"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "membership_tier",
+        "meaning": "selected membership tier",
+        "units_or_interpretation": "tier label"
+      },
+      {
+        "attribute_id": "membership_code",
+        "meaning": "membership identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "billing_period",
+        "meaning": "billing period",
+        "units_or_interpretation": "months"
+      },
+      {
+        "attribute_id": "device_limit",
+        "meaning": "device limit",
+        "units_or_interpretation": "devices"
+      },
+      {
+        "attribute_id": "storage_quota",
+        "meaning": "storage quota",
+        "units_or_interpretation": "gigabytes"
+      },
+      {
+        "attribute_id": "payment_method",
+        "meaning": "payment method",
+        "units_or_interpretation": "method label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-service-subscription-01-primary",
+        "attribute_id": "membership_tier",
+        "initial_value": "Tier Basalt",
+        "role": "target",
+        "value_inventory": [
+          "Tier Basalt",
+          "Tier Granite",
+          "Tier Slate",
+          "Tier Marble",
+          "Tier Obsidian",
+          "Tier Quartzite",
+          "Tier Jasper",
+          "Tier Onyx"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-service-subscription-01-distractor",
+        "attribute_id": "membership_tier",
+        "initial_value": "Tier Pumice",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "Tier Pumice",
+          "Tier Chalk",
+          "Tier Flint"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-service-subscription-01-primary",
+        "attribute_id": "membership_code",
+        "initial_value": "MEM-L64",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "MEM-L64"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-service-subscription-01-primary",
+        "attribute_id": "billing_period",
+        "initial_value": "1 month",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "1 month",
+          "3 months",
+          "12 months"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-service-subscription-01-primary",
+        "attribute_id": "device_limit",
+        "initial_value": "2 devices",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "2 devices",
+          "4 devices",
+          "6 devices"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-service-subscription-01-primary",
+        "attribute_id": "storage_quota",
+        "initial_value": "50 gigabytes",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "50 gigabytes",
+          "200 gigabytes",
+          "1000 gigabytes"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-service-subscription-01-primary",
+        "attribute_id": "payment_method",
+        "initial_value": "method card-alpha",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "method card-alpha",
+          "method transfer-beta",
+          "method voucher-gamma"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_c",
+      "I2": "k_d",
+      "I3": "k_target",
+      "I4": "k_hard",
+      "I5": "k_n2",
+      "I6": "k_a",
+      "I7": "k_b"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-service-subscription-01-primary",
+      "attribute_id": "membership_tier",
+      "intent": "Ask only for the current selected membership tier of Membership Lodestar."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Tier Onyx",
+    "coverage": [
+      "subscription_state",
+      "categorical_values",
+      "quantities"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "50 gigabytes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "method card-alpha",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "Tier Basalt",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "Tier Pumice",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "MEM-L64",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "1 month",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "2 devices",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_hard",
+            "current_value": "Tier Chalk",
+            "semantics": "changed_state",
+            "previous_value": "Tier Pumice",
+            "superseded_values": [
+              "Tier Pumice"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "3 months",
+            "semantics": "changed_state",
+            "previous_value": "1 month",
+            "superseded_values": [
+              "1 month"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "3 months",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_b",
+            "current_value": "4 devices",
+            "semantics": "changed_state",
+            "previous_value": "2 devices",
+            "superseded_values": [
+              "2 devices"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "3 months",
+              "k_b": "4 devices"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "200 gigabytes",
+            "semantics": "changed_state",
+            "previous_value": "50 gigabytes",
+            "superseded_values": [
+              "50 gigabytes"
+            ],
+            "state_after": {
+              "k_c": "200 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "3 months",
+              "k_b": "4 devices"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_d",
+            "current_value": "method transfer-beta",
+            "semantics": "changed_state",
+            "previous_value": "method card-alpha",
+            "superseded_values": [
+              "method card-alpha"
+            ],
+            "state_after": {
+              "k_c": "200 gigabytes",
+              "k_d": "method transfer-beta",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "3 months",
+              "k_b": "4 devices"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "12 months",
+            "semantics": "changed_state",
+            "previous_value": "3 months",
+            "superseded_values": [
+              "1 month",
+              "3 months"
+            ],
+            "state_after": {
+              "k_c": "200 gigabytes",
+              "k_d": "method transfer-beta",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "12 months",
+              "k_b": "4 devices"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Tier Basalt",
+            "semantics": "same_state",
+            "previous_value": "Tier Basalt",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "200 gigabytes",
+              "k_d": "method transfer-beta",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "12 months",
+              "k_b": "4 devices"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Tier Onyx",
+            "semantics": "changed_state",
+            "previous_value": "Tier Basalt",
+            "superseded_values": [
+              "Tier Basalt"
+            ],
+            "state_after": {
+              "k_c": "200 gigabytes",
+              "k_d": "method transfer-beta",
+              "k_target": "Tier Onyx",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "12 months",
+              "k_b": "4 devices"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "MEM-L64",
+            "semantics": "same_state",
+            "previous_value": "MEM-L64",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "200 gigabytes",
+              "k_d": "method transfer-beta",
+              "k_target": "Tier Onyx",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "12 months",
+              "k_b": "4 devices"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "200 gigabytes",
+          "k_d": "method transfer-beta",
+          "k_target": "Tier Onyx",
+          "k_hard": "Tier Chalk",
+          "k_n2": "MEM-L64",
+          "k_a": "12 months",
+          "k_b": "4 devices"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "50 gigabytes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "method card-alpha",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "Tier Basalt",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "Tier Pumice",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "MEM-L64",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "1 month",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "2 devices",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Tier Granite",
+            "semantics": "changed_state",
+            "previous_value": "Tier Basalt",
+            "superseded_values": [
+              "Tier Basalt"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Granite",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "Tier Chalk",
+            "semantics": "changed_state",
+            "previous_value": "Tier Pumice",
+            "superseded_values": [
+              "Tier Pumice"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Granite",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Tier Marble",
+            "semantics": "changed_state",
+            "previous_value": "Tier Granite",
+            "superseded_values": [
+              "Tier Basalt",
+              "Tier Granite"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Marble",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_b",
+            "current_value": "4 devices",
+            "semantics": "changed_state",
+            "previous_value": "2 devices",
+            "superseded_values": [
+              "2 devices"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Marble",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "4 devices"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Tier Quartzite",
+            "semantics": "changed_state",
+            "previous_value": "Tier Marble",
+            "superseded_values": [
+              "Tier Basalt",
+              "Tier Granite",
+              "Tier Marble"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Quartzite",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "4 devices"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "200 gigabytes",
+            "semantics": "changed_state",
+            "previous_value": "50 gigabytes",
+            "superseded_values": [
+              "50 gigabytes"
+            ],
+            "state_after": {
+              "k_c": "200 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Quartzite",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "4 devices"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Tier Quartzite",
+            "semantics": "same_state",
+            "previous_value": "Tier Quartzite",
+            "superseded_values": [
+              "Tier Basalt",
+              "Tier Granite",
+              "Tier Marble"
+            ],
+            "state_after": {
+              "k_c": "200 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Quartzite",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "4 devices"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Tier Onyx",
+            "semantics": "changed_state",
+            "previous_value": "Tier Quartzite",
+            "superseded_values": [
+              "Tier Basalt",
+              "Tier Granite",
+              "Tier Marble",
+              "Tier Quartzite"
+            ],
+            "state_after": {
+              "k_c": "200 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Onyx",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "4 devices"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "MEM-L64",
+            "semantics": "same_state",
+            "previous_value": "MEM-L64",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "200 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Onyx",
+              "k_hard": "Tier Chalk",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "4 devices"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "200 gigabytes",
+          "k_d": "method card-alpha",
+          "k_target": "Tier Onyx",
+          "k_hard": "Tier Chalk",
+          "k_n2": "MEM-L64",
+          "k_a": "1 month",
+          "k_b": "4 devices"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "50 gigabytes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "method card-alpha",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "Tier Basalt",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "Tier Pumice",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "MEM-L64",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "1 month",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "2 devices",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Basalt",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Tier Granite",
+            "semantics": "changed_state",
+            "previous_value": "Tier Basalt",
+            "superseded_values": [
+              "Tier Basalt"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Granite",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Tier Slate",
+            "semantics": "changed_state",
+            "previous_value": "Tier Granite",
+            "superseded_values": [
+              "Tier Basalt",
+              "Tier Granite"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Slate",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Tier Marble",
+            "semantics": "changed_state",
+            "previous_value": "Tier Slate",
+            "superseded_values": [
+              "Tier Basalt",
+              "Tier Granite",
+              "Tier Slate"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Marble",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "Tier Obsidian",
+            "semantics": "changed_state",
+            "previous_value": "Tier Marble",
+            "superseded_values": [
+              "Tier Basalt",
+              "Tier Granite",
+              "Tier Slate",
+              "Tier Marble"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Obsidian",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Tier Quartzite",
+            "semantics": "changed_state",
+            "previous_value": "Tier Obsidian",
+            "superseded_values": [
+              "Tier Basalt",
+              "Tier Granite",
+              "Tier Slate",
+              "Tier Marble",
+              "Tier Obsidian"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Quartzite",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "Tier Jasper",
+            "semantics": "changed_state",
+            "previous_value": "Tier Quartzite",
+            "superseded_values": [
+              "Tier Basalt",
+              "Tier Granite",
+              "Tier Slate",
+              "Tier Marble",
+              "Tier Obsidian",
+              "Tier Quartzite"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Jasper",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Tier Jasper",
+            "semantics": "same_state",
+            "previous_value": "Tier Jasper",
+            "superseded_values": [
+              "Tier Basalt",
+              "Tier Granite",
+              "Tier Slate",
+              "Tier Marble",
+              "Tier Obsidian",
+              "Tier Quartzite"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Jasper",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Tier Onyx",
+            "semantics": "changed_state",
+            "previous_value": "Tier Jasper",
+            "superseded_values": [
+              "Tier Basalt",
+              "Tier Granite",
+              "Tier Slate",
+              "Tier Marble",
+              "Tier Obsidian",
+              "Tier Quartzite",
+              "Tier Jasper"
+            ],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Onyx",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "MEM-L64",
+            "semantics": "same_state",
+            "previous_value": "MEM-L64",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "50 gigabytes",
+              "k_d": "method card-alpha",
+              "k_target": "Tier Onyx",
+              "k_hard": "Tier Pumice",
+              "k_n2": "MEM-L64",
+              "k_a": "1 month",
+              "k_b": "2 devices"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "50 gigabytes",
+          "k_d": "method card-alpha",
+          "k_target": "Tier Onyx",
+          "k_hard": "Tier Pumice",
+          "k_n2": "MEM-L64",
+          "k_a": "1 month",
+          "k_b": "2 devices"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,376 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"export_format\\\",\\\"meaning\\\":\\\"selected export file format\\\",\\\"units_or_interpretation\\\":\\\"format label\\\"},{\\\"attribute_id\\\":\\\"profile_code\\\",\\\"meaning\\\":\\\"render profile identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"tile_size\\\",\\\"meaning\\\":\\\"output tile size\\\",\\\"units_or_interpretation\\\":\\\"pixels per side\\\"},{\\\"attribute_id\\\":\\\"compression\\\",\\\"meaning\\\":\\\"compression preset\\\",\\\"units_or_interpretation\\\":\\\"preset label\\\"},{\\\"attribute_id\\\":\\\"output_folder\\\",\\\"meaning\\\":\\\"export folder\\\",\\\"units_or_interpretation\\\":\\\"synthetic folder label\\\"},{\\\"attribute_id\\\":\\\"render_scale\\\",\\\"meaning\\\":\\\"render scale\\\",\\\"units_or_interpretation\\\":\\\"percent\\\"}],\\\"domain\\\":\\\"Software Configuration\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gq-software-configuration-01-primary\\\",\\\"name\\\":\\\"Render profile Ibis\\\"},{\\\"entity_id\\\":\\\"gq-software-configuration-01-distractor\\\",\\\"name\\\":\\\"Render profile Egret\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_b\\\",\\\"I2\\\":\\\"k_c\\\",\\\"I3\\\":\\\"k_d\\\",\\\"I4\\\":\\\"k_target\\\",\\\"I5\\\":\\\"k_hard\\\",\\\"I6\\\":\\\"k_n2\\\",\\\"I7\\\":\\\"k_a\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"export_format\\\",\\\"entity_id\\\":\\\"gq-software-configuration-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current selected export file format of Render profile Ibis.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"export_format\\\",\\\"entity_id\\\":\\\"gq-software-configuration-01-primary\\\",\\\"initial_value\\\":\\\"FMT-QA\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"export_format\\\",\\\"entity_id\\\":\\\"gq-software-configuration-01-distractor\\\",\\\"initial_value\\\":\\\"FMT-QJ\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"profile_code\\\",\\\"entity_id\\\":\\\"gq-software-configuration-01-primary\\\",\\\"initial_value\\\":\\\"RND-I9\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"tile_size\\\",\\\"entity_id\\\":\\\"gq-software-configuration-01-primary\\\",\\\"initial_value\\\":\\\"240 pixels\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"compression\\\",\\\"entity_id\\\":\\\"gq-software-configuration-01-primary\\\",\\\"initial_value\\\":\\\"CMP-R1\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"output_folder\\\",\\\"entity_id\\\":\\\"gq-software-configuration-01-primary\\\",\\\"initial_value\\\":\\\"Folder Nacre\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"render_scale\\\",\\\"entity_id\\\":\\\"gq-software-configuration-01-primary\\\",\\\"initial_value\\\":\\\"60 percent\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"CMP-R1\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Folder Nacre\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"60 percent\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"FMT-QA\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QJ\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"RND-I9\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"240 pixels\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"FMT-QB\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QC\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QD\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QE\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QF\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QG\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QG\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QH\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"RND-I9\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"CMP-R1\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Folder Nacre\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"60 percent\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"FMT-QA\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QJ\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"RND-I9\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"240 pixels\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"80 percent\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"320 pixels\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"FMT-QK\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"400 pixels\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"CMP-R2\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Folder Opal\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"FMT-QA\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QH\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"RND-I9\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"CMP-R1\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Folder Nacre\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"60 percent\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"FMT-QA\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QJ\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"RND-I9\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"240 pixels\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"FMT-QB\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"CMP-R2\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"FMT-QD\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Folder Opal\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"FMT-QF\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QK\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"FMT-QF\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"FMT-QH\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"RND-I9\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-sol\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "b5d3a50d0665ba4a9e9cba317d21bbdfec7880e44dfd5fb9cf0540a2c075ee5e",
+  "request_body": {
+    "model": "openai/gpt-5.6-sol",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"export_format\",\"meaning\":\"selected export file format\",\"units_or_interpretation\":\"format label\"},{\"attribute_id\":\"profile_code\",\"meaning\":\"render profile identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"tile_size\",\"meaning\":\"output tile size\",\"units_or_interpretation\":\"pixels per side\"},{\"attribute_id\":\"compression\",\"meaning\":\"compression preset\",\"units_or_interpretation\":\"preset label\"},{\"attribute_id\":\"output_folder\",\"meaning\":\"export folder\",\"units_or_interpretation\":\"synthetic folder label\"},{\"attribute_id\":\"render_scale\",\"meaning\":\"render scale\",\"units_or_interpretation\":\"percent\"}],\"domain\":\"Software Configuration\",\"entities\":[{\"entity_id\":\"gq-software-configuration-01-primary\",\"name\":\"Render profile Ibis\"},{\"entity_id\":\"gq-software-configuration-01-distractor\",\"name\":\"Render profile Egret\"}],\"initial_order\":{\"I1\":\"k_b\",\"I2\":\"k_c\",\"I3\":\"k_d\",\"I4\":\"k_target\",\"I5\":\"k_hard\",\"I6\":\"k_n2\",\"I7\":\"k_a\"},\"question_intent\":{\"attribute_id\":\"export_format\",\"entity_id\":\"gq-software-configuration-01-primary\",\"intent\":\"Ask only for the current selected export file format of Render profile Ibis.\"},\"state_keys\":[{\"attribute_id\":\"export_format\",\"entity_id\":\"gq-software-configuration-01-primary\",\"initial_value\":\"FMT-QA\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"export_format\",\"entity_id\":\"gq-software-configuration-01-distractor\",\"initial_value\":\"FMT-QJ\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"profile_code\",\"entity_id\":\"gq-software-configuration-01-primary\",\"initial_value\":\"RND-I9\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"tile_size\",\"entity_id\":\"gq-software-configuration-01-primary\",\"initial_value\":\"240 pixels\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"compression\",\"entity_id\":\"gq-software-configuration-01-primary\",\"initial_value\":\"CMP-R1\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"output_folder\",\"entity_id\":\"gq-software-configuration-01-primary\",\"initial_value\":\"Folder Nacre\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"render_scale\",\"entity_id\":\"gq-software-configuration-01-primary\",\"initial_value\":\"60 percent\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"CMP-R1\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Folder Nacre\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"60 percent\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"FMT-QA\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QJ\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"RND-I9\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"240 pixels\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"FMT-QB\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QC\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QD\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QE\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QF\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QG\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QG\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QH\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"RND-I9\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"CMP-R1\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Folder Nacre\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"60 percent\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"FMT-QA\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QJ\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"RND-I9\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"240 pixels\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"80 percent\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"320 pixels\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"FMT-QK\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"400 pixels\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"CMP-R2\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"Folder Opal\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"FMT-QA\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QH\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"RND-I9\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"CMP-R1\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"Folder Nacre\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"60 percent\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"FMT-QA\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QJ\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"RND-I9\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"240 pixels\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"FMT-QB\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"CMP-R2\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"FMT-QD\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Folder Opal\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"FMT-QF\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QK\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"FMT-QF\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"FMT-QH\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"RND-I9\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-18T12:05:58.509836+00:00",
+      "requested_model": "openai/gpt-5.6-sol",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-sol",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789733158-rH4yX2olbdE9BiwnTNGX",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789733158-rH4yX2olbdE9BiwnTNGX\",\"object\":\"chat.completion\",\"created\":1789733158,\"model\":\"openai/gpt-5.6-sol\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Render profile Ibis has the compression preset CMP-R1.\\\",\\\"I2\\\":\\\"Render profile Ibis uses the output folder Folder Nacre.\\\",\\\"I3\\\":\\\"The render scale for Render profile Ibis is 60 percent.\\\",\\\"I4\\\":\\\"The selected export file format for Render profile Ibis is FMT-QA.\\\",\\\"I5\\\":\\\"The selected export file format for Render profile Egret is FMT-QJ.\\\",\\\"I6\\\":\\\"Render profile Ibis has the profile code RND-I9.\\\",\\\"I7\\\":\\\"The tile size for Render profile Ibis is 240 pixels.\\\",\\\"N1\\\":\\\"The selected export file format for Render profile Ibis remains FMT-QG.\\\",\\\"N2\\\":\\\"The profile code for Render profile Ibis remains RND-I9.\\\",\\\"Q\\\":\\\"What is the current selected export file format of Render profile Ibis?\\\",\\\"U1\\\":\\\"The selected export file format for Render profile Ibis has changed to FMT-QB.\\\",\\\"U2\\\":\\\"The selected export file format for Render profile Ibis is now FMT-QC.\\\",\\\"U3\\\":\\\"Render profile Ibis's selected export file format has been updated to FMT-QD.\\\",\\\"U4\\\":\\\"The selected export file format for Render profile Ibis has changed to FMT-QE.\\\",\\\"U5\\\":\\\"The selected export file format for Render profile Ibis is now FMT-QF.\\\",\\\"U6\\\":\\\"Render profile Ibis's selected export file format has been updated to FMT-QG.\\\",\\\"U7\\\":\\\"The selected export file format for Render profile Ibis has changed to FMT-QH.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"The compression preset for Render profile Ibis is CMP-R1.\\\",\\\"I2\\\":\\\"The output folder for Render profile Ibis is Folder Nacre.\\\",\\\"I3\\\":\\\"Render profile Ibis has a render scale of 60 percent.\\\",\\\"I4\\\":\\\"Render profile Ibis has FMT-QA selected as its export file format.\\\",\\\"I5\\\":\\\"Render profile Egret has FMT-QJ selected as its export file format.\\\",\\\"I6\\\":\\\"The profile code for Render profile Ibis is RND-I9.\\\",\\\"I7\\\":\\\"Render profile Ibis has a tile size of 240 pixels.\\\",\\\"N1\\\":\\\"The selected export file format for Render profile Ibis is still FMT-QA.\\\",\\\"N2\\\":\\\"The profile code for Render profile Ibis is still RND-I9.\\\",\\\"Q\\\":\\\"What is the current selected export file format of Render profile Ibis?\\\",\\\"U1\\\":\\\"The render scale for Render profile Ibis has changed to 80 percent.\\\",\\\"U2\\\":\\\"The tile size for Render profile Ibis is now 320 pixels.\\\",\\\"U3\\\":\\\"The selected export file format for Render profile Egret has been updated to FMT-QK.\\\",\\\"U4\\\":\\\"Render profile Ibis's tile size has changed to 400 pixels.\\\",\\\"U5\\\":\\\"The compression preset for Render profile Ibis is now CMP-R2.\\\",\\\"U6\\\":\\\"Render profile Ibis's output folder has been updated to Folder Opal.\\\",\\\"U7\\\":\\\"The selected export file format for Render profile Ibis has changed to FMT-QH.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"Render profile Ibis uses the compression preset CMP-R1.\\\",\\\"I2\\\":\\\"Render profile Ibis has the output folder Folder Nacre.\\\",\\\"I3\\\":\\\"The render scale of Render profile Ibis is 60 percent.\\\",\\\"I4\\\":\\\"The selected export file format of Render profile Ibis is FMT-QA.\\\",\\\"I5\\\":\\\"The selected export file format of Render profile Egret is FMT-QJ.\\\",\\\"I6\\\":\\\"The profile code of Render profile Ibis is RND-I9.\\\",\\\"I7\\\":\\\"The tile size of Render profile Ibis is 240 pixels.\\\",\\\"N1\\\":\\\"The selected export file format of Render profile Ibis remains FMT-QF.\\\",\\\"N2\\\":\\\"The profile code of Render profile Ibis remains RND-I9.\\\",\\\"Q\\\":\\\"What is the current selected export file format of Render profile Ibis?\\\",\\\"U1\\\":\\\"The selected export file format of Render profile Ibis has changed to FMT-QB.\\\",\\\"U2\\\":\\\"Render profile Ibis's compression preset is now CMP-R2.\\\",\\\"U3\\\":\\\"The selected export file format of Render profile Ibis has been updated to FMT-QD.\\\",\\\"U4\\\":\\\"The output folder of Render profile Ibis has changed to Folder Opal.\\\",\\\"U5\\\":\\\"Render profile Ibis now has FMT-QF selected as its export file format.\\\",\\\"U6\\\":\\\"The selected export file format of Render profile Egret has changed to FMT-QK.\\\",\\\"U7\\\":\\\"The selected export file format of Render profile Ibis has been updated to FMT-QH.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":2545,\"completion_tokens\":953,\"total_tokens\":3498,\"cost\":0.015891,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2542,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.015891,\"upstream_inference_prompt_cost\":0.006361,\"upstream_inference_completions_cost\":0.00953},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-sol\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-sol-20260709\",\"selected\":true}]},\"generation_time\":15781}}",
+      "response_sha256_before_redaction": "2ec85130d7513ff7f9f66655c2e71c9e4c55699a8619e096364188b9123311d9",
+      "response_envelope": {
+        "id": "gen-1789733158-rH4yX2olbdE9BiwnTNGX",
+        "object": "chat.completion",
+        "created": 1789733158,
+        "model": "openai/gpt-5.6-sol",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Render profile Ibis has the compression preset CMP-R1.\",\"I2\":\"Render profile Ibis uses the output folder Folder Nacre.\",\"I3\":\"The render scale for Render profile Ibis is 60 percent.\",\"I4\":\"The selected export file format for Render profile Ibis is FMT-QA.\",\"I5\":\"The selected export file format for Render profile Egret is FMT-QJ.\",\"I6\":\"Render profile Ibis has the profile code RND-I9.\",\"I7\":\"The tile size for Render profile Ibis is 240 pixels.\",\"N1\":\"The selected export file format for Render profile Ibis remains FMT-QG.\",\"N2\":\"The profile code for Render profile Ibis remains RND-I9.\",\"Q\":\"What is the current selected export file format of Render profile Ibis?\",\"U1\":\"The selected export file format for Render profile Ibis has changed to FMT-QB.\",\"U2\":\"The selected export file format for Render profile Ibis is now FMT-QC.\",\"U3\":\"Render profile Ibis's selected export file format has been updated to FMT-QD.\",\"U4\":\"The selected export file format for Render profile Ibis has changed to FMT-QE.\",\"U5\":\"The selected export file format for Render profile Ibis is now FMT-QF.\",\"U6\":\"Render profile Ibis's selected export file format has been updated to FMT-QG.\",\"U7\":\"The selected export file format for Render profile Ibis has changed to FMT-QH.\"},\"low\":{\"I1\":\"The compression preset for Render profile Ibis is CMP-R1.\",\"I2\":\"The output folder for Render profile Ibis is Folder Nacre.\",\"I3\":\"Render profile Ibis has a render scale of 60 percent.\",\"I4\":\"Render profile Ibis has FMT-QA selected as its export file format.\",\"I5\":\"Render profile Egret has FMT-QJ selected as its export file format.\",\"I6\":\"The profile code for Render profile Ibis is RND-I9.\",\"I7\":\"Render profile Ibis has a tile size of 240 pixels.\",\"N1\":\"The selected export file format for Render profile Ibis is still FMT-QA.\",\"N2\":\"The profile code for Render profile Ibis is still RND-I9.\",\"Q\":\"What is the current selected export file format of Render profile Ibis?\",\"U1\":\"The render scale for Render profile Ibis has changed to 80 percent.\",\"U2\":\"The tile size for Render profile Ibis is now 320 pixels.\",\"U3\":\"The selected export file format for Render profile Egret has been updated to FMT-QK.\",\"U4\":\"Render profile Ibis's tile size has changed to 400 pixels.\",\"U5\":\"The compression preset for Render profile Ibis is now CMP-R2.\",\"U6\":\"Render profile Ibis's output folder has been updated to Folder Opal.\",\"U7\":\"The selected export file format for Render profile Ibis has changed to FMT-QH.\"},\"medium\":{\"I1\":\"Render profile Ibis uses the compression preset CMP-R1.\",\"I2\":\"Render profile Ibis has the output folder Folder Nacre.\",\"I3\":\"The render scale of Render profile Ibis is 60 percent.\",\"I4\":\"The selected export file format of Render profile Ibis is FMT-QA.\",\"I5\":\"The selected export file format of Render profile Egret is FMT-QJ.\",\"I6\":\"The profile code of Render profile Ibis is RND-I9.\",\"I7\":\"The tile size of Render profile Ibis is 240 pixels.\",\"N1\":\"The selected export file format of Render profile Ibis remains FMT-QF.\",\"N2\":\"The profile code of Render profile Ibis remains RND-I9.\",\"Q\":\"What is the current selected export file format of Render profile Ibis?\",\"U1\":\"The selected export file format of Render profile Ibis has changed to FMT-QB.\",\"U2\":\"Render profile Ibis's compression preset is now CMP-R2.\",\"U3\":\"The selected export file format of Render profile Ibis has been updated to FMT-QD.\",\"U4\":\"The output folder of Render profile Ibis has changed to Folder Opal.\",\"U5\":\"Render profile Ibis now has FMT-QF selected as its export file format.\",\"U6\":\"The selected export file format of Render profile Egret has changed to FMT-QK.\",\"U7\":\"The selected export file format of Render profile Ibis has been updated to FMT-QH.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2545,
+          "completion_tokens": 953,
+          "total_tokens": 3498,
+          "cost": 0.015891,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2542,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.015891,
+            "upstream_inference_prompt_cost": 0.006361,
+            "upstream_inference_completions_cost": 0.00953
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-sol",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-sol-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 15781
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-sol",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-sol-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 15781
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Render profile Ibis has the compression preset CMP-R1.",
+          "I2": "Render profile Ibis uses the output folder Folder Nacre.",
+          "I3": "The render scale for Render profile Ibis is 60 percent.",
+          "I4": "The selected export file format for Render profile Ibis is FMT-QA.",
+          "I5": "The selected export file format for Render profile Egret is FMT-QJ.",
+          "I6": "Render profile Ibis has the profile code RND-I9.",
+          "I7": "The tile size for Render profile Ibis is 240 pixels.",
+          "N1": "The selected export file format for Render profile Ibis remains FMT-QG.",
+          "N2": "The profile code for Render profile Ibis remains RND-I9.",
+          "Q": "What is the current selected export file format of Render profile Ibis?",
+          "U1": "The selected export file format for Render profile Ibis has changed to FMT-QB.",
+          "U2": "The selected export file format for Render profile Ibis is now FMT-QC.",
+          "U3": "Render profile Ibis's selected export file format has been updated to FMT-QD.",
+          "U4": "The selected export file format for Render profile Ibis has changed to FMT-QE.",
+          "U5": "The selected export file format for Render profile Ibis is now FMT-QF.",
+          "U6": "Render profile Ibis's selected export file format has been updated to FMT-QG.",
+          "U7": "The selected export file format for Render profile Ibis has changed to FMT-QH."
+        },
+        "low": {
+          "I1": "The compression preset for Render profile Ibis is CMP-R1.",
+          "I2": "The output folder for Render profile Ibis is Folder Nacre.",
+          "I3": "Render profile Ibis has a render scale of 60 percent.",
+          "I4": "Render profile Ibis has FMT-QA selected as its export file format.",
+          "I5": "Render profile Egret has FMT-QJ selected as its export file format.",
+          "I6": "The profile code for Render profile Ibis is RND-I9.",
+          "I7": "Render profile Ibis has a tile size of 240 pixels.",
+          "N1": "The selected export file format for Render profile Ibis is still FMT-QA.",
+          "N2": "The profile code for Render profile Ibis is still RND-I9.",
+          "Q": "What is the current selected export file format of Render profile Ibis?",
+          "U1": "The render scale for Render profile Ibis has changed to 80 percent.",
+          "U2": "The tile size for Render profile Ibis is now 320 pixels.",
+          "U3": "The selected export file format for Render profile Egret has been updated to FMT-QK.",
+          "U4": "Render profile Ibis's tile size has changed to 400 pixels.",
+          "U5": "The compression preset for Render profile Ibis is now CMP-R2.",
+          "U6": "Render profile Ibis's output folder has been updated to Folder Opal.",
+          "U7": "The selected export file format for Render profile Ibis has changed to FMT-QH."
+        },
+        "medium": {
+          "I1": "Render profile Ibis uses the compression preset CMP-R1.",
+          "I2": "Render profile Ibis has the output folder Folder Nacre.",
+          "I3": "The render scale of Render profile Ibis is 60 percent.",
+          "I4": "The selected export file format of Render profile Ibis is FMT-QA.",
+          "I5": "The selected export file format of Render profile Egret is FMT-QJ.",
+          "I6": "The profile code of Render profile Ibis is RND-I9.",
+          "I7": "The tile size of Render profile Ibis is 240 pixels.",
+          "N1": "The selected export file format of Render profile Ibis remains FMT-QF.",
+          "N2": "The profile code of Render profile Ibis remains RND-I9.",
+          "Q": "What is the current selected export file format of Render profile Ibis?",
+          "U1": "The selected export file format of Render profile Ibis has changed to FMT-QB.",
+          "U2": "Render profile Ibis's compression preset is now CMP-R2.",
+          "U3": "The selected export file format of Render profile Ibis has been updated to FMT-QD.",
+          "U4": "The output folder of Render profile Ibis has changed to Folder Opal.",
+          "U5": "Render profile Ibis now has FMT-QF selected as its export file format.",
+          "U6": "The selected export file format of Render profile Egret has changed to FMT-QK.",
+          "U7": "The selected export file format of Render profile Ibis has been updated to FMT-QH."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2545,
+        "completion_tokens": 953,
+        "total_tokens": 3498,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.015891
+      },
+      "latency_seconds": 15.94560000000638,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "gq-software-configuration-01",
+  "fixture_sha256": "008fd535a3bc405531287c343bda830c8155003107092c1f8a37c345227fc3ff",
+  "projection_sha256": "65923aa6a422945f80fb31cfd14b3959aea0b59269d026dc376cb81e997f0734",
+  "logical_call_index": 5,
+  "provenance": {
+    "source_commit": "0f4873615101dde22bced8f857523f475cee2604",
+    "fixture_set_commit": "683c0416c5bf47c83021408f26bc7a7ab5e8becc",
+    "fixture_manifest_sha256": "ecce7e579f02f64bb5578d8b18b9164483da1c5438544f21a89e17d7a2aaa1f9",
+    "execution_config_sha256": "848ca0219ff1d24adcf2f12d0789ebeb8e7a86427336672173b91e034dca6b62",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "procedure_version": "generator-qualification-procedure/1.0.0",
+    "implementation": {
+      "status": "FROZEN FOR LIVE EXECUTION",
+      "freeze_commit": "e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e",
+      "source_sha256": {
+        "experiments/qualify_generators.py": "5884cdaf9b2781d69acc733e7d8556766669f002bd175d78dcf935c1059e043e",
+        "experiments/probe_generators.py": "f1604e415ff1a359454161b8c94c6504706335419770989358557ff2314cecdf",
+        "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+      }
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "automated": {
+    "status": "PASS",
+    "meaning": "No deterministic violation detected is not semantic qualification.",
+    "findings": []
+  },
+  "output_sha256": "57bfb6573520e8e62b2668cdb00cd9c0922833636161eae5b796a566ab24725a"
+}

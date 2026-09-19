@@ -1,0 +1,1038 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-software-configuration-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Software Configuration",
+    "entities": [
+      {
+        "entity_id": "gq-software-configuration-01-primary",
+        "name": "Render profile Ibis"
+      },
+      {
+        "entity_id": "gq-software-configuration-01-distractor",
+        "name": "Render profile Egret"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "export_format",
+        "meaning": "selected export file format",
+        "units_or_interpretation": "format label"
+      },
+      {
+        "attribute_id": "profile_code",
+        "meaning": "render profile identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "tile_size",
+        "meaning": "output tile size",
+        "units_or_interpretation": "pixels per side"
+      },
+      {
+        "attribute_id": "compression",
+        "meaning": "compression preset",
+        "units_or_interpretation": "preset label"
+      },
+      {
+        "attribute_id": "output_folder",
+        "meaning": "export folder",
+        "units_or_interpretation": "synthetic folder label"
+      },
+      {
+        "attribute_id": "render_scale",
+        "meaning": "render scale",
+        "units_or_interpretation": "percent"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-software-configuration-01-primary",
+        "attribute_id": "export_format",
+        "initial_value": "FMT-QA",
+        "role": "target",
+        "value_inventory": [
+          "FMT-QA",
+          "FMT-QB",
+          "FMT-QC",
+          "FMT-QD",
+          "FMT-QE",
+          "FMT-QF",
+          "FMT-QG",
+          "FMT-QH"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-software-configuration-01-distractor",
+        "attribute_id": "export_format",
+        "initial_value": "FMT-QJ",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "FMT-QJ",
+          "FMT-QK",
+          "FMT-QL"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-software-configuration-01-primary",
+        "attribute_id": "profile_code",
+        "initial_value": "RND-I9",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "RND-I9"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-software-configuration-01-primary",
+        "attribute_id": "tile_size",
+        "initial_value": "240 pixels",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "240 pixels",
+          "320 pixels",
+          "400 pixels"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-software-configuration-01-primary",
+        "attribute_id": "compression",
+        "initial_value": "CMP-R1",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "CMP-R1",
+          "CMP-R2",
+          "CMP-R3"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-software-configuration-01-primary",
+        "attribute_id": "output_folder",
+        "initial_value": "Folder Nacre",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Folder Nacre",
+          "Folder Opal",
+          "Folder Quartz"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-software-configuration-01-primary",
+        "attribute_id": "render_scale",
+        "initial_value": "60 percent",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "60 percent",
+          "80 percent",
+          "100 percent"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_b",
+      "I2": "k_c",
+      "I3": "k_d",
+      "I4": "k_target",
+      "I5": "k_hard",
+      "I6": "k_n2",
+      "I7": "k_a"
+    },
+    "question_intent": {
+      "entity_id": "gq-software-configuration-01-primary",
+      "attribute_id": "export_format",
+      "intent": "Ask only for the current selected export file format of Render profile Ibis."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "FMT-QH",
+    "coverage": [
+      "configuration_values",
+      "numeric_values",
+      "categorical_values"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "CMP-R1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "Folder Nacre",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "60 percent",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "FMT-QA",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "FMT-QJ",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QJ"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "RND-I9",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "240 pixels",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_d",
+            "current_value": "80 percent",
+            "semantics": "changed_state",
+            "previous_value": "60 percent",
+            "superseded_values": [
+              "60 percent"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "80 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "320 pixels",
+            "semantics": "changed_state",
+            "previous_value": "240 pixels",
+            "superseded_values": [
+              "240 pixels"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "80 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "320 pixels"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_hard",
+            "current_value": "FMT-QK",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QJ",
+            "superseded_values": [
+              "FMT-QJ"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "80 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QK",
+              "k_n2": "RND-I9",
+              "k_a": "320 pixels"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "400 pixels",
+            "semantics": "changed_state",
+            "previous_value": "320 pixels",
+            "superseded_values": [
+              "240 pixels",
+              "320 pixels"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "80 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QK",
+              "k_n2": "RND-I9",
+              "k_a": "400 pixels"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_b",
+            "current_value": "CMP-R2",
+            "semantics": "changed_state",
+            "previous_value": "CMP-R1",
+            "superseded_values": [
+              "CMP-R1"
+            ],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Nacre",
+              "k_d": "80 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QK",
+              "k_n2": "RND-I9",
+              "k_a": "400 pixels"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "Folder Opal",
+            "semantics": "changed_state",
+            "previous_value": "Folder Nacre",
+            "superseded_values": [
+              "Folder Nacre"
+            ],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Opal",
+              "k_d": "80 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QK",
+              "k_n2": "RND-I9",
+              "k_a": "400 pixels"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "FMT-QA",
+            "semantics": "same_state",
+            "previous_value": "FMT-QA",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Opal",
+              "k_d": "80 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QK",
+              "k_n2": "RND-I9",
+              "k_a": "400 pixels"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "FMT-QH",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QA",
+            "superseded_values": [
+              "FMT-QA"
+            ],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Opal",
+              "k_d": "80 percent",
+              "k_target": "FMT-QH",
+              "k_hard": "FMT-QK",
+              "k_n2": "RND-I9",
+              "k_a": "400 pixels"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "RND-I9",
+            "semantics": "same_state",
+            "previous_value": "RND-I9",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Opal",
+              "k_d": "80 percent",
+              "k_target": "FMT-QH",
+              "k_hard": "FMT-QK",
+              "k_n2": "RND-I9",
+              "k_a": "400 pixels"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "CMP-R2",
+          "k_c": "Folder Opal",
+          "k_d": "80 percent",
+          "k_target": "FMT-QH",
+          "k_hard": "FMT-QK",
+          "k_n2": "RND-I9",
+          "k_a": "400 pixels"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "CMP-R1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "Folder Nacre",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "60 percent",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "FMT-QA",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "FMT-QJ",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QJ"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "RND-I9",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "240 pixels",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "FMT-QB",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QA",
+            "superseded_values": [
+              "FMT-QA"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QB",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_b",
+            "current_value": "CMP-R2",
+            "semantics": "changed_state",
+            "previous_value": "CMP-R1",
+            "superseded_values": [
+              "CMP-R1"
+            ],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QB",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "FMT-QD",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QB",
+            "superseded_values": [
+              "FMT-QA",
+              "FMT-QB"
+            ],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QD",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "Folder Opal",
+            "semantics": "changed_state",
+            "previous_value": "Folder Nacre",
+            "superseded_values": [
+              "Folder Nacre"
+            ],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Opal",
+              "k_d": "60 percent",
+              "k_target": "FMT-QD",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "FMT-QF",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QD",
+            "superseded_values": [
+              "FMT-QA",
+              "FMT-QB",
+              "FMT-QD"
+            ],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Opal",
+              "k_d": "60 percent",
+              "k_target": "FMT-QF",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "FMT-QK",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QJ",
+            "superseded_values": [
+              "FMT-QJ"
+            ],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Opal",
+              "k_d": "60 percent",
+              "k_target": "FMT-QF",
+              "k_hard": "FMT-QK",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "FMT-QF",
+            "semantics": "same_state",
+            "previous_value": "FMT-QF",
+            "superseded_values": [
+              "FMT-QA",
+              "FMT-QB",
+              "FMT-QD"
+            ],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Opal",
+              "k_d": "60 percent",
+              "k_target": "FMT-QF",
+              "k_hard": "FMT-QK",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "FMT-QH",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QF",
+            "superseded_values": [
+              "FMT-QA",
+              "FMT-QB",
+              "FMT-QD",
+              "FMT-QF"
+            ],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Opal",
+              "k_d": "60 percent",
+              "k_target": "FMT-QH",
+              "k_hard": "FMT-QK",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "RND-I9",
+            "semantics": "same_state",
+            "previous_value": "RND-I9",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R2",
+              "k_c": "Folder Opal",
+              "k_d": "60 percent",
+              "k_target": "FMT-QH",
+              "k_hard": "FMT-QK",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "CMP-R2",
+          "k_c": "Folder Opal",
+          "k_d": "60 percent",
+          "k_target": "FMT-QH",
+          "k_hard": "FMT-QK",
+          "k_n2": "RND-I9",
+          "k_a": "240 pixels"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "CMP-R1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "Folder Nacre",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "60 percent",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "FMT-QA",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "FMT-QJ",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QJ"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "RND-I9",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "240 pixels",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QA",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "FMT-QB",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QA",
+            "superseded_values": [
+              "FMT-QA"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QB",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "FMT-QC",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QB",
+            "superseded_values": [
+              "FMT-QA",
+              "FMT-QB"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QC",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "FMT-QD",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QC",
+            "superseded_values": [
+              "FMT-QA",
+              "FMT-QB",
+              "FMT-QC"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QD",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "FMT-QE",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QD",
+            "superseded_values": [
+              "FMT-QA",
+              "FMT-QB",
+              "FMT-QC",
+              "FMT-QD"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QE",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "FMT-QF",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QE",
+            "superseded_values": [
+              "FMT-QA",
+              "FMT-QB",
+              "FMT-QC",
+              "FMT-QD",
+              "FMT-QE"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QF",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "FMT-QG",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QF",
+            "superseded_values": [
+              "FMT-QA",
+              "FMT-QB",
+              "FMT-QC",
+              "FMT-QD",
+              "FMT-QE",
+              "FMT-QF"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QG",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "FMT-QG",
+            "semantics": "same_state",
+            "previous_value": "FMT-QG",
+            "superseded_values": [
+              "FMT-QA",
+              "FMT-QB",
+              "FMT-QC",
+              "FMT-QD",
+              "FMT-QE",
+              "FMT-QF"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QG",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "FMT-QH",
+            "semantics": "changed_state",
+            "previous_value": "FMT-QG",
+            "superseded_values": [
+              "FMT-QA",
+              "FMT-QB",
+              "FMT-QC",
+              "FMT-QD",
+              "FMT-QE",
+              "FMT-QF",
+              "FMT-QG"
+            ],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QH",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "RND-I9",
+            "semantics": "same_state",
+            "previous_value": "RND-I9",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "CMP-R1",
+              "k_c": "Folder Nacre",
+              "k_d": "60 percent",
+              "k_target": "FMT-QH",
+              "k_hard": "FMT-QJ",
+              "k_n2": "RND-I9",
+              "k_a": "240 pixels"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "CMP-R1",
+          "k_c": "Folder Nacre",
+          "k_d": "60 percent",
+          "k_target": "FMT-QH",
+          "k_hard": "FMT-QJ",
+          "k_n2": "RND-I9",
+          "k_a": "240 pixels"
+        }
+      }
+    }
+  }
+}

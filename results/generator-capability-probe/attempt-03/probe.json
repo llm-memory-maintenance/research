@@ -1,0 +1,1121 @@
+{
+  "status": "FAIL",
+  "purpose": "CAPABILITY-PROBE-ONLY",
+  "failure_reason": "G2: Refusal; STOP FOR ADJUDICATION",
+  "parameter_semantics": "UNOBSERVABLE_SEMANTICS_REMAIN_VERIFY",
+  "generator_status": "CANDIDATE",
+  "provenance": {
+    "source_commit": "d96db6d17b5283316216bca79250a5938fa99750",
+    "config_path": "/home/einrafh/Workspace/Projects/llm-memory-maintenance/research/configs/generator-capability-probe-fallback.yaml",
+    "config_sha256": "e1d4972704d92ffe3de5989a2a84fcaf1945d84fbfdef7ae68a0365ce00642a6",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "contract_document_sha256": "0bdf2ec4e042e3e75645eb364b7ae87512d00511750c9e98ab27810404f99250",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "probe_input_sha256": "da0e7e3e420e84d6c6ac9f0ccf702df09f29fa441c96660c2efe71634442d4b4",
+    "model_facing_input_sha256": "5ce94e8e64b810c39f2edb064c9ab846f9377ccece7efd26b5ea77ccd0226a7d",
+    "probe_input_identity": "generator-capability-probe-only-v1",
+    "input_purpose": "CAPABILITY-PROBE-ONLY",
+    "input_domain": "Software Configuration",
+    "input_origin": "Independently authored synthetic gateway configuration; no external evidence content.",
+    "input_allocation_scope": "Probe-local secondary allocation; not a general CRST freeze."
+  },
+  "config": {
+    "status": "OPEN",
+    "capability_result": "NOT_ASSESSED",
+    "execution_package": "UNDER_DEVELOPMENT",
+    "execution_compatibility": "UNVERIFIED",
+    "parameter_semantics": "HIDDEN_REASONING_EQUIVALENCE_NOT_CLAIMED",
+    "generator_status": "CANDIDATE",
+    "execution_mode": "standard",
+    "logical_calls": [
+      {
+        "logical_call_id": "G1",
+        "model": "openai/gpt-5.6-terra",
+        "provider_order": [
+          "openai"
+        ]
+      },
+      {
+        "logical_call_id": "G2",
+        "model": "anthropic/claude-opus-5",
+        "provider_order": [
+          "anthropic"
+        ]
+      }
+    ],
+    "allow_fallbacks": false,
+    "require_parameters": true,
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "contract_path": "configs/generator-naturalization-contract.json",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "contract_document_path": "docs/generator-naturalization-contract.md",
+    "contract_document_sha256": "0bdf2ec4e042e3e75645eb364b7ae87512d00511750c9e98ab27810404f99250",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "input_path": "data/generator-capability-probe/probe-input.json",
+    "input_sha256": "da0e7e3e420e84d6c6ac9f0ccf702df09f29fa441c96660c2efe71634442d4b4",
+    "input_identity": "generator-capability-probe-only-v1",
+    "input_purpose": "CAPABILITY-PROBE-ONLY",
+    "input_domain": "Software Configuration",
+    "input_origin": "Independently authored synthetic gateway configuration; no external evidence content.",
+    "input_allocation_scope": "Probe-local secondary allocation; not a general CRST freeze.",
+    "generation": {
+      "reasoning_effort": "low",
+      "max_output_tokens": 16384
+    },
+    "wire_mapping": {
+      "max_output_tokens": "max_tokens",
+      "reasoning_effort": "reasoning.effort",
+      "output_schema": "response_format.json_schema.schema",
+      "strict": "response_format.json_schema.strict"
+    },
+    "transport": {
+      "per_attempt_deadline_seconds": 300,
+      "max_infrastructure_retries": 2,
+      "backoff_seconds": [
+        1,
+        2
+      ],
+      "retryable_http_statuses": [
+        408,
+        429,
+        500,
+        502,
+        503,
+        504
+      ]
+    },
+    "output_directory": null
+  },
+  "wire_mapping_under_test": {
+    "max_output_tokens": "max_tokens",
+    "reasoning_effort": "reasoning.effort",
+    "output_schema": "response_format.json_schema.schema",
+    "strict": "response_format.json_schema.strict"
+  },
+  "probe_input": {
+    "domain": "Software Configuration",
+    "entities": [
+      {
+        "entity_id": "gateway_q8",
+        "name": "Kestrel-Q8 test gateway"
+      },
+      {
+        "entity_id": "gateway_r6",
+        "name": "Peregrine-R6 test gateway"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "listener_port",
+        "meaning": "TCP listener port",
+        "units_or_interpretation": "integer TCP port number"
+      },
+      {
+        "attribute_id": "logging_format",
+        "meaning": "log record encoding",
+        "units_or_interpretation": "encoding name"
+      },
+      {
+        "attribute_id": "read_timeout",
+        "meaning": "read timeout",
+        "units_or_interpretation": "seconds"
+      },
+      {
+        "attribute_id": "worker_count",
+        "meaning": "worker process count",
+        "units_or_interpretation": "integer workers"
+      },
+      {
+        "attribute_id": "queue_capacity",
+        "meaning": "request queue capacity",
+        "units_or_interpretation": "integer requests"
+      },
+      {
+        "attribute_id": "cache_limit",
+        "meaning": "cache capacity",
+        "units_or_interpretation": "MiB"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "key_01",
+        "entity_id": "gateway_q8",
+        "attribute_id": "listener_port",
+        "initial_value": "18801",
+        "role": "target"
+      },
+      {
+        "state_key": "key_02",
+        "entity_id": "gateway_r6",
+        "attribute_id": "listener_port",
+        "initial_value": "18990",
+        "role": "hard_distractor"
+      },
+      {
+        "state_key": "key_03",
+        "entity_id": "gateway_q8",
+        "attribute_id": "logging_format",
+        "initial_value": "JSON Lines",
+        "role": "dedicated_n2_secondary"
+      },
+      {
+        "state_key": "key_04",
+        "entity_id": "gateway_q8",
+        "attribute_id": "read_timeout",
+        "initial_value": "20",
+        "role": "updateable_secondary"
+      },
+      {
+        "state_key": "key_05",
+        "entity_id": "gateway_q8",
+        "attribute_id": "worker_count",
+        "initial_value": "2",
+        "role": "updateable_secondary"
+      },
+      {
+        "state_key": "key_06",
+        "entity_id": "gateway_q8",
+        "attribute_id": "queue_capacity",
+        "initial_value": "100",
+        "role": "updateable_secondary"
+      },
+      {
+        "state_key": "key_07",
+        "entity_id": "gateway_q8",
+        "attribute_id": "cache_limit",
+        "initial_value": "64",
+        "role": "updateable_secondary"
+      }
+    ],
+    "initial_order": {
+      "I1": "key_01",
+      "I2": "key_02",
+      "I3": "key_03",
+      "I4": "key_04",
+      "I5": "key_05",
+      "I6": "key_06",
+      "I7": "key_07"
+    },
+    "question_intent": {
+      "entity_id": "gateway_q8",
+      "attribute_id": "listener_port",
+      "intent": "Ask for the current TCP listener port of the identified test gateway."
+    },
+    "variants": {
+      "low": [
+        {
+          "event": "I1",
+          "state_key": "key_01",
+          "current_value": "18801",
+          "semantics": "initial"
+        },
+        {
+          "event": "I2",
+          "state_key": "key_02",
+          "current_value": "18990",
+          "semantics": "initial"
+        },
+        {
+          "event": "I3",
+          "state_key": "key_03",
+          "current_value": "JSON Lines",
+          "semantics": "initial"
+        },
+        {
+          "event": "I4",
+          "state_key": "key_04",
+          "current_value": "20",
+          "semantics": "initial"
+        },
+        {
+          "event": "I5",
+          "state_key": "key_05",
+          "current_value": "2",
+          "semantics": "initial"
+        },
+        {
+          "event": "I6",
+          "state_key": "key_06",
+          "current_value": "100",
+          "semantics": "initial"
+        },
+        {
+          "event": "I7",
+          "state_key": "key_07",
+          "current_value": "64",
+          "semantics": "initial"
+        },
+        {
+          "event": "U1",
+          "state_key": "key_04",
+          "current_value": "25",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U2",
+          "state_key": "key_05",
+          "current_value": "3",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U3",
+          "state_key": "key_06",
+          "current_value": "125",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U4",
+          "state_key": "key_07",
+          "current_value": "96",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U5",
+          "state_key": "key_04",
+          "current_value": "30",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U6",
+          "state_key": "key_05",
+          "current_value": "4",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "N1",
+          "state_key": "key_01",
+          "current_value": "18801",
+          "semantics": "same_state"
+        },
+        {
+          "event": "U7",
+          "state_key": "key_01",
+          "current_value": "18808",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "N2",
+          "state_key": "key_03",
+          "current_value": "JSON Lines",
+          "semantics": "same_state"
+        }
+      ],
+      "medium": [
+        {
+          "event": "I1",
+          "state_key": "key_01",
+          "current_value": "18801",
+          "semantics": "initial"
+        },
+        {
+          "event": "I2",
+          "state_key": "key_02",
+          "current_value": "18990",
+          "semantics": "initial"
+        },
+        {
+          "event": "I3",
+          "state_key": "key_03",
+          "current_value": "JSON Lines",
+          "semantics": "initial"
+        },
+        {
+          "event": "I4",
+          "state_key": "key_04",
+          "current_value": "20",
+          "semantics": "initial"
+        },
+        {
+          "event": "I5",
+          "state_key": "key_05",
+          "current_value": "2",
+          "semantics": "initial"
+        },
+        {
+          "event": "I6",
+          "state_key": "key_06",
+          "current_value": "100",
+          "semantics": "initial"
+        },
+        {
+          "event": "I7",
+          "state_key": "key_07",
+          "current_value": "64",
+          "semantics": "initial"
+        },
+        {
+          "event": "U1",
+          "state_key": "key_01",
+          "current_value": "18802",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U2",
+          "state_key": "key_04",
+          "current_value": "25",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U3",
+          "state_key": "key_01",
+          "current_value": "18804",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U4",
+          "state_key": "key_05",
+          "current_value": "3",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U5",
+          "state_key": "key_01",
+          "current_value": "18806",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U6",
+          "state_key": "key_06",
+          "current_value": "125",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "N1",
+          "state_key": "key_01",
+          "current_value": "18806",
+          "semantics": "same_state"
+        },
+        {
+          "event": "U7",
+          "state_key": "key_01",
+          "current_value": "18808",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "N2",
+          "state_key": "key_03",
+          "current_value": "JSON Lines",
+          "semantics": "same_state"
+        }
+      ],
+      "high": [
+        {
+          "event": "I1",
+          "state_key": "key_01",
+          "current_value": "18801",
+          "semantics": "initial"
+        },
+        {
+          "event": "I2",
+          "state_key": "key_02",
+          "current_value": "18990",
+          "semantics": "initial"
+        },
+        {
+          "event": "I3",
+          "state_key": "key_03",
+          "current_value": "JSON Lines",
+          "semantics": "initial"
+        },
+        {
+          "event": "I4",
+          "state_key": "key_04",
+          "current_value": "20",
+          "semantics": "initial"
+        },
+        {
+          "event": "I5",
+          "state_key": "key_05",
+          "current_value": "2",
+          "semantics": "initial"
+        },
+        {
+          "event": "I6",
+          "state_key": "key_06",
+          "current_value": "100",
+          "semantics": "initial"
+        },
+        {
+          "event": "I7",
+          "state_key": "key_07",
+          "current_value": "64",
+          "semantics": "initial"
+        },
+        {
+          "event": "U1",
+          "state_key": "key_01",
+          "current_value": "18802",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U2",
+          "state_key": "key_01",
+          "current_value": "18803",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U3",
+          "state_key": "key_01",
+          "current_value": "18804",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U4",
+          "state_key": "key_01",
+          "current_value": "18805",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U5",
+          "state_key": "key_01",
+          "current_value": "18806",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "U6",
+          "state_key": "key_01",
+          "current_value": "18807",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "N1",
+          "state_key": "key_01",
+          "current_value": "18807",
+          "semantics": "same_state"
+        },
+        {
+          "event": "U7",
+          "state_key": "key_01",
+          "current_value": "18808",
+          "semantics": "changed_state"
+        },
+        {
+          "event": "N2",
+          "state_key": "key_03",
+          "current_value": "JSON Lines",
+          "semantics": "same_state"
+        }
+      ]
+    }
+  },
+  "expected_logical_calls": 2,
+  "logical_calls": [
+    {
+      "logical_call_id": "G1",
+      "status": "PASS",
+      "failure_reason": null,
+      "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"listener_port\\\",\\\"meaning\\\":\\\"TCP listener port\\\",\\\"units_or_interpretation\\\":\\\"integer TCP port number\\\"},{\\\"attribute_id\\\":\\\"logging_format\\\",\\\"meaning\\\":\\\"log record encoding\\\",\\\"units_or_interpretation\\\":\\\"encoding name\\\"},{\\\"attribute_id\\\":\\\"read_timeout\\\",\\\"meaning\\\":\\\"read timeout\\\",\\\"units_or_interpretation\\\":\\\"seconds\\\"},{\\\"attribute_id\\\":\\\"worker_count\\\",\\\"meaning\\\":\\\"worker process count\\\",\\\"units_or_interpretation\\\":\\\"integer workers\\\"},{\\\"attribute_id\\\":\\\"queue_capacity\\\",\\\"meaning\\\":\\\"request queue capacity\\\",\\\"units_or_interpretation\\\":\\\"integer requests\\\"},{\\\"attribute_id\\\":\\\"cache_limit\\\",\\\"meaning\\\":\\\"cache capacity\\\",\\\"units_or_interpretation\\\":\\\"MiB\\\"}],\\\"domain\\\":\\\"Software Configuration\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"name\\\":\\\"Kestrel-Q8 test gateway\\\"},{\\\"entity_id\\\":\\\"gateway_r6\\\",\\\"name\\\":\\\"Peregrine-R6 test gateway\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"key_01\\\",\\\"I2\\\":\\\"key_02\\\",\\\"I3\\\":\\\"key_03\\\",\\\"I4\\\":\\\"key_04\\\",\\\"I5\\\":\\\"key_05\\\",\\\"I6\\\":\\\"key_06\\\",\\\"I7\\\":\\\"key_07\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"listener_port\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"intent\\\":\\\"Ask for the current TCP listener port of the identified test gateway.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"listener_port\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"18801\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"attribute_id\\\":\\\"listener_port\\\",\\\"entity_id\\\":\\\"gateway_r6\\\",\\\"initial_value\\\":\\\"18990\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"key_02\\\"},{\\\"attribute_id\\\":\\\"logging_format\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"JSON Lines\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"key_03\\\"},{\\\"attribute_id\\\":\\\"read_timeout\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"20\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"attribute_id\\\":\\\"worker_count\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"2\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"attribute_id\\\":\\\"queue_capacity\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"100\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"attribute_id\\\":\\\"cache_limit\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"64\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"key_07\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"18801\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18990\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_02\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_03\\\"},{\\\"current_value\\\":\\\"20\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"2\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"100\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"current_value\\\":\\\"64\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_07\\\"},{\\\"current_value\\\":\\\"18802\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18803\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18804\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18805\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18806\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18807\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18807\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18808\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_03\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"18801\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18990\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_02\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_03\\\"},{\\\"current_value\\\":\\\"20\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"2\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"100\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"current_value\\\":\\\"64\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_07\\\"},{\\\"current_value\\\":\\\"25\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"3\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"125\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"current_value\\\":\\\"96\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_07\\\"},{\\\"current_value\\\":\\\"30\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"4\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"18801\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18808\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_03\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"18801\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18990\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_02\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_03\\\"},{\\\"current_value\\\":\\\"20\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"2\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"100\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"current_value\\\":\\\"64\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_07\\\"},{\\\"current_value\\\":\\\"18802\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"25\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"18804\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"3\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"18806\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"125\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"current_value\\\":\\\"18806\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18808\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_03\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-terra\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+      "wire_request_sha256": "5fff9c6c20af611f7a0c0de6ad5011dd93e8c41c09fff3e897c622715056dc6a",
+      "request_body": {
+        "model": "openai/gpt-5.6-terra",
+        "provider": {
+          "order": [
+            "openai"
+          ],
+          "allow_fallbacks": false,
+          "require_parameters": true
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+          },
+          {
+            "role": "user",
+            "content": "{\"attributes\":[{\"attribute_id\":\"listener_port\",\"meaning\":\"TCP listener port\",\"units_or_interpretation\":\"integer TCP port number\"},{\"attribute_id\":\"logging_format\",\"meaning\":\"log record encoding\",\"units_or_interpretation\":\"encoding name\"},{\"attribute_id\":\"read_timeout\",\"meaning\":\"read timeout\",\"units_or_interpretation\":\"seconds\"},{\"attribute_id\":\"worker_count\",\"meaning\":\"worker process count\",\"units_or_interpretation\":\"integer workers\"},{\"attribute_id\":\"queue_capacity\",\"meaning\":\"request queue capacity\",\"units_or_interpretation\":\"integer requests\"},{\"attribute_id\":\"cache_limit\",\"meaning\":\"cache capacity\",\"units_or_interpretation\":\"MiB\"}],\"domain\":\"Software Configuration\",\"entities\":[{\"entity_id\":\"gateway_q8\",\"name\":\"Kestrel-Q8 test gateway\"},{\"entity_id\":\"gateway_r6\",\"name\":\"Peregrine-R6 test gateway\"}],\"initial_order\":{\"I1\":\"key_01\",\"I2\":\"key_02\",\"I3\":\"key_03\",\"I4\":\"key_04\",\"I5\":\"key_05\",\"I6\":\"key_06\",\"I7\":\"key_07\"},\"question_intent\":{\"attribute_id\":\"listener_port\",\"entity_id\":\"gateway_q8\",\"intent\":\"Ask for the current TCP listener port of the identified test gateway.\"},\"state_keys\":[{\"attribute_id\":\"listener_port\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"18801\",\"role\":\"target\",\"state_key\":\"key_01\"},{\"attribute_id\":\"listener_port\",\"entity_id\":\"gateway_r6\",\"initial_value\":\"18990\",\"role\":\"hard_distractor\",\"state_key\":\"key_02\"},{\"attribute_id\":\"logging_format\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"JSON Lines\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"key_03\"},{\"attribute_id\":\"read_timeout\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"20\",\"role\":\"updateable_secondary\",\"state_key\":\"key_04\"},{\"attribute_id\":\"worker_count\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"2\",\"role\":\"updateable_secondary\",\"state_key\":\"key_05\"},{\"attribute_id\":\"queue_capacity\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"100\",\"role\":\"updateable_secondary\",\"state_key\":\"key_06\"},{\"attribute_id\":\"cache_limit\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"64\",\"role\":\"updateable_secondary\",\"state_key\":\"key_07\"}],\"variants\":{\"high\":[{\"current_value\":\"18801\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"key_01\"},{\"current_value\":\"18990\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"key_02\"},{\"current_value\":\"JSON Lines\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"key_03\"},{\"current_value\":\"20\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"key_04\"},{\"current_value\":\"2\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"key_05\"},{\"current_value\":\"100\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"key_06\"},{\"current_value\":\"64\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"key_07\"},{\"current_value\":\"18802\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18803\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18804\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18805\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18806\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18807\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18807\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18808\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"JSON Lines\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"key_03\"}],\"low\":[{\"current_value\":\"18801\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"key_01\"},{\"current_value\":\"18990\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"key_02\"},{\"current_value\":\"JSON Lines\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"key_03\"},{\"current_value\":\"20\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"key_04\"},{\"current_value\":\"2\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"key_05\"},{\"current_value\":\"100\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"key_06\"},{\"current_value\":\"64\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"key_07\"},{\"current_value\":\"25\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"key_04\"},{\"current_value\":\"3\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"key_05\"},{\"current_value\":\"125\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"key_06\"},{\"current_value\":\"96\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"key_07\"},{\"current_value\":\"30\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"key_04\"},{\"current_value\":\"4\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"key_05\"},{\"current_value\":\"18801\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18808\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"JSON Lines\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"key_03\"}],\"medium\":[{\"current_value\":\"18801\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"key_01\"},{\"current_value\":\"18990\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"key_02\"},{\"current_value\":\"JSON Lines\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"key_03\"},{\"current_value\":\"20\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"key_04\"},{\"current_value\":\"2\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"key_05\"},{\"current_value\":\"100\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"key_06\"},{\"current_value\":\"64\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"key_07\"},{\"current_value\":\"18802\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"25\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"key_04\"},{\"current_value\":\"18804\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"3\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"key_05\"},{\"current_value\":\"18806\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"125\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"key_06\"},{\"current_value\":\"18806\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18808\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"JSON Lines\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"key_03\"}]}}"
+          }
+        ],
+        "reasoning": {
+          "effort": "low"
+        },
+        "max_tokens": 16384,
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "crst_naturalization_triplet_v1",
+            "strict": true,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "properties": {
+                "low": {
+                  "$ref": "#/$defs/variant"
+                },
+                "medium": {
+                  "$ref": "#/$defs/variant"
+                },
+                "high": {
+                  "$ref": "#/$defs/variant"
+                }
+              },
+              "$defs": {
+                "variant": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "I1",
+                    "I2",
+                    "I3",
+                    "I4",
+                    "I5",
+                    "I6",
+                    "I7",
+                    "U1",
+                    "U2",
+                    "U3",
+                    "U4",
+                    "U5",
+                    "U6",
+                    "N1",
+                    "U7",
+                    "N2",
+                    "Q"
+                  ],
+                  "properties": {
+                    "I1": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I2": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I3": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I4": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I5": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I6": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I7": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U1": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U2": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U3": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U4": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U5": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U6": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "N1": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U7": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "N2": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "Q": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "attempts": [
+        {
+          "logical_call_id": "G1",
+          "physical_attempt": 1,
+          "started_at": "2026-09-18T14:48:02.214529+00:00",
+          "requested_model": "openai/gpt-5.6-terra",
+          "requested_provider_order": [
+            "openai"
+          ],
+          "returned_model": "openai/gpt-5.6-terra",
+          "observed_selected_provider": "OpenAI",
+          "request_id": null,
+          "response_id": "gen-1789742882-HpZWowCcdljv5SQD7y4d",
+          "http_status": 200,
+          "raw_response": "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789742882-HpZWowCcdljv5SQD7y4d\",\"object\":\"chat.completion\",\"created\":1789742882,\"model\":\"openai/gpt-5.6-terra\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway is 18801.\\\",\\\"I2\\\":\\\"The TCP listener port for Peregrine-R6 test gateway is 18990.\\\",\\\"I3\\\":\\\"Kestrel-Q8 test gateway uses JSON Lines for its log record encoding.\\\",\\\"I4\\\":\\\"Kestrel-Q8 test gateway has a read timeout of 20 seconds.\\\",\\\"I5\\\":\\\"Kestrel-Q8 test gateway has 2 worker processes.\\\",\\\"I6\\\":\\\"Kestrel-Q8 test gateway has a request queue capacity of 100 requests.\\\",\\\"I7\\\":\\\"Kestrel-Q8 test gateway has a cache capacity of 64 MiB.\\\",\\\"N1\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway remains 18807.\\\",\\\"N2\\\":\\\"Kestrel-Q8 test gateway's log record encoding is still JSON Lines.\\\",\\\"Q\\\":\\\"What is the current TCP listener port of Kestrel-Q8 test gateway?\\\",\\\"U1\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway has been updated to 18802.\\\",\\\"U2\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway is now 18803.\\\",\\\"U3\\\":\\\"Kestrel-Q8 test gateway's TCP listener port has changed to 18804.\\\",\\\"U4\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway has been revised to 18805.\\\",\\\"U5\\\":\\\"Kestrel-Q8 test gateway now uses TCP listener port 18806.\\\",\\\"U6\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway has changed to 18807.\\\",\\\"U7\\\":\\\"Kestrel-Q8 test gateway's TCP listener port is now 18808.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway is 18801.\\\",\\\"I2\\\":\\\"The TCP listener port for Peregrine-R6 test gateway is 18990.\\\",\\\"I3\\\":\\\"Kestrel-Q8 test gateway uses JSON Lines for its log record encoding.\\\",\\\"I4\\\":\\\"Kestrel-Q8 test gateway has a read timeout of 20 seconds.\\\",\\\"I5\\\":\\\"Kestrel-Q8 test gateway has 2 worker processes.\\\",\\\"I6\\\":\\\"Kestrel-Q8 test gateway has a request queue capacity of 100 requests.\\\",\\\"I7\\\":\\\"Kestrel-Q8 test gateway has a cache capacity of 64 MiB.\\\",\\\"N1\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway remains 18801.\\\",\\\"N2\\\":\\\"Kestrel-Q8 test gateway's log record encoding is still JSON Lines.\\\",\\\"Q\\\":\\\"What is the current TCP listener port of Kestrel-Q8 test gateway?\\\",\\\"U1\\\":\\\"Kestrel-Q8 test gateway's read timeout has been updated to 25 seconds.\\\",\\\"U2\\\":\\\"Kestrel-Q8 test gateway now has 3 worker processes.\\\",\\\"U3\\\":\\\"The request queue capacity for Kestrel-Q8 test gateway has changed to 125 requests.\\\",\\\"U4\\\":\\\"Kestrel-Q8 test gateway's cache capacity is now 96 MiB.\\\",\\\"U5\\\":\\\"The read timeout for Kestrel-Q8 test gateway has been revised to 30 seconds.\\\",\\\"U6\\\":\\\"Kestrel-Q8 test gateway now has 4 worker processes.\\\",\\\"U7\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway has changed to 18808.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway is 18801.\\\",\\\"I2\\\":\\\"The TCP listener port for Peregrine-R6 test gateway is 18990.\\\",\\\"I3\\\":\\\"Kestrel-Q8 test gateway uses JSON Lines for its log record encoding.\\\",\\\"I4\\\":\\\"Kestrel-Q8 test gateway has a read timeout of 20 seconds.\\\",\\\"I5\\\":\\\"Kestrel-Q8 test gateway has 2 worker processes.\\\",\\\"I6\\\":\\\"Kestrel-Q8 test gateway has a request queue capacity of 100 requests.\\\",\\\"I7\\\":\\\"Kestrel-Q8 test gateway has a cache capacity of 64 MiB.\\\",\\\"N1\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway remains 18806.\\\",\\\"N2\\\":\\\"Kestrel-Q8 test gateway's log record encoding is still JSON Lines.\\\",\\\"Q\\\":\\\"What is the current TCP listener port of Kestrel-Q8 test gateway?\\\",\\\"U1\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway has been updated to 18802.\\\",\\\"U2\\\":\\\"Kestrel-Q8 test gateway's read timeout is now 25 seconds.\\\",\\\"U3\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway has changed to 18804.\\\",\\\"U4\\\":\\\"Kestrel-Q8 test gateway now has 3 worker processes.\\\",\\\"U5\\\":\\\"Kestrel-Q8 test gateway's TCP listener port has been revised to 18806.\\\",\\\"U6\\\":\\\"The request queue capacity for Kestrel-Q8 test gateway has changed to 125 requests.\\\",\\\"U7\\\":\\\"The TCP listener port for Kestrel-Q8 test gateway is now 18808.\\\"}}\",\"refusal\":null,\"reasoning\":\"**Aligning JSON fields**\\n\\nI’m focusing on ensuring we have all fields in the JSON format with the initial units clearly defined. I need to keep the questions exactly the same while ensuring I hit the high target of seven revisions across U1 to U7. I want to make sure that the changes to the secondary units are minimal but correct. It's all about getting this well-organized and aligned for the best results!\",\"reasoning_details\":[{\"type\":\"reasoning.summary\",\"summary\":\"**Aligning JSON fields**\\n\\nI’m focusing on ensuring we have all fields in the JSON format with the initial units clearly defined. I need to keep the questions exactly the same while ensuring I hit the high target of seven revisions across U1 to U7. I want to make sure that the changes to the secondary units are minimal but correct. It's all about getting this well-organized and aligned for the best results!\",\"format\":\"openai-responses-v1\",\"index\":0},{\"type\":\"reasoning.encrypted\",\"data\":\"gAAAAABqrU8m1d0kgvcO1TD5zACMyLOg7xfjCxzYbehzippsooMKbj8AZW6MrV8EoQlGg5v9Xs5rVCkhC3Kqx-mNes0aVJAEP85d0DAhRF1WFXWh0_RnDcZto_wLPIGFWv6BqsLTDvwUd38OkQR1YF1ts_s7Xol-Teh7G_qTwbveTfsgoDMO5PFZ8AtNOtRz5s3Trw872HsYGHa8OoFV7nT4RP8VpIakgb4xpgc2Y0b0cBgLy7TZEbEqL5d82vN-6UwgEzcuVlKknPdTHXE1AqtZ3Hl9NlWcXukZQujytJu9seTf8-GrwWAuOVNApMYvOfVaSodF1a1i87P7H2BBtb4ZqkX7vwWh6U1_3HZZzjPWPtUA5lxXo14WJBbUQP4D4KsXE_MmJdneXxHinl1DewtKtCV3BCaYdA3rdeZCwEIju_-rSSnE96UJJHlobIVUDc1RDE8A8aA3zzMaj95N5cqdX19zPWiB87kv4STDUtOVgRrRtBHZLfeO_ziEJrN87F4SdZxE165a98EH-2g6BcLDsOafJRlaIlIo5qXja0_GzseQGiYrNJOb6zXwV1FM4rnCIjgkZwycFyUZBX99pyr0nLOnGBpic8f-vp8SUkC6lsF2bHnAnhEyRa4rr5igXUwYGXzUphWV8TnszRFvxSzvFO8-3BjlSIoy5jYgWuPiy5HPx71PV3bHyhRCe1CVQm5IEr9xHzfjz-8i7TFhujuSQ-p2N-75i-CxmGPtzymQIAgjRlLzCZRvPvh2Ioto45iZx3x4yQqdyhDo3PYOUMYqP-mvIza-nB3mldYZpZDXkRlHoEwcS2qrdmhWaWfA4KQfSFLGPWej1YPicDbrr8r24yE_lMnBGtVNZ8gBnz9dgzJZgqwIQR1c8tReWwUrEh2M8OPARdYTabGUyj4VV05Jh1ap9j3cyH4gtk2qYFkAJbRnxkDgybPeMK68nO5Xo-1oIma7y_irKiCOU3ctgqkygl0-Fda4H4xBGg2MbYfOnAhwUkYbiuQI7Q6PUcwfaspyhCDBP4SpQ6jGnJJgv2w_9nh55He6-KbJ1y2DrdC_hS3hC3FzBiGts9UGhvSybjFhh9OpqPLTF_IbNimVWkuM_YN5CY8FqVxixwZQEe1x3o5QApge1cKCALmHBP5iUU7MvXhBuyrCFpiUHS-n9hnURxzB9k_hiDx2McMyQRBkuxsuNcyUsSxOVPmvY9dUvW0QjzaWz3dwj2O1HSssEfOXq3wya9Qtp9YpAdpPauvYXj0KBmHY4tW2d61g7_5bkLk_p0ksII8NKT9e9HlDixaXYB5KJCiifoWZs0fqryjaqIG3e67y4ZPKv8Rsix9D6Aaa09P4Ji6NBFjik6UMxkwCXWFVzAxNeEcGC64KOhhz8XH2ZiLJnv7PU3ztQmzHieKeh7Ki4XjEYNyFf4MWE5MxLSM9f4bQ9tnZqP9uIpGoV6NCXYHr6jDMI0fyfMGdBf6vP0AWiRD_U2mjb9YQPsJ8AZWdaqbADSxJF3MOk5up7e9GG6Ae4XE=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtdGVycmEtMjAyNjA3MDl8b3BlbmFpIn0\",\"format\":\"openai-responses-v1\",\"id\":\"rs_0cbca44cdc642520016aad4f23beb887d1bf4b5cd42dfbbd60\",\"index\":1}]}}],\"usage\":{\"prompt_tokens\":2458,\"completion_tokens\":1075,\"total_tokens\":3533,\"cost\":0.0190435,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2455,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0190435,\"upstream_inference_prompt_cost\":0.0061435,\"upstream_inference_completions_cost\":0.0129},\"completion_tokens_details\":{\"reasoning_tokens\":36,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-terra\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-terra-20260709\",\"selected\":true}]},\"generation_time\":12345}}",
+          "response_sha256_before_redaction": "d5c975e1e213355491f4398be0216a370abb9071ac35d91cf6d49d33a2b9c57f",
+          "response_envelope": {
+            "id": "gen-1789742882-HpZWowCcdljv5SQD7y4d",
+            "object": "chat.completion",
+            "created": 1789742882,
+            "model": "openai/gpt-5.6-terra",
+            "provider": "OpenAI",
+            "system_fingerprint": null,
+            "service_tier": "default",
+            "choices": [
+              {
+                "index": 0,
+                "logprobs": null,
+                "finish_reason": "stop",
+                "native_finish_reason": "completed",
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"high\":{\"I1\":\"The TCP listener port for Kestrel-Q8 test gateway is 18801.\",\"I2\":\"The TCP listener port for Peregrine-R6 test gateway is 18990.\",\"I3\":\"Kestrel-Q8 test gateway uses JSON Lines for its log record encoding.\",\"I4\":\"Kestrel-Q8 test gateway has a read timeout of 20 seconds.\",\"I5\":\"Kestrel-Q8 test gateway has 2 worker processes.\",\"I6\":\"Kestrel-Q8 test gateway has a request queue capacity of 100 requests.\",\"I7\":\"Kestrel-Q8 test gateway has a cache capacity of 64 MiB.\",\"N1\":\"The TCP listener port for Kestrel-Q8 test gateway remains 18807.\",\"N2\":\"Kestrel-Q8 test gateway's log record encoding is still JSON Lines.\",\"Q\":\"What is the current TCP listener port of Kestrel-Q8 test gateway?\",\"U1\":\"The TCP listener port for Kestrel-Q8 test gateway has been updated to 18802.\",\"U2\":\"The TCP listener port for Kestrel-Q8 test gateway is now 18803.\",\"U3\":\"Kestrel-Q8 test gateway's TCP listener port has changed to 18804.\",\"U4\":\"The TCP listener port for Kestrel-Q8 test gateway has been revised to 18805.\",\"U5\":\"Kestrel-Q8 test gateway now uses TCP listener port 18806.\",\"U6\":\"The TCP listener port for Kestrel-Q8 test gateway has changed to 18807.\",\"U7\":\"Kestrel-Q8 test gateway's TCP listener port is now 18808.\"},\"low\":{\"I1\":\"The TCP listener port for Kestrel-Q8 test gateway is 18801.\",\"I2\":\"The TCP listener port for Peregrine-R6 test gateway is 18990.\",\"I3\":\"Kestrel-Q8 test gateway uses JSON Lines for its log record encoding.\",\"I4\":\"Kestrel-Q8 test gateway has a read timeout of 20 seconds.\",\"I5\":\"Kestrel-Q8 test gateway has 2 worker processes.\",\"I6\":\"Kestrel-Q8 test gateway has a request queue capacity of 100 requests.\",\"I7\":\"Kestrel-Q8 test gateway has a cache capacity of 64 MiB.\",\"N1\":\"The TCP listener port for Kestrel-Q8 test gateway remains 18801.\",\"N2\":\"Kestrel-Q8 test gateway's log record encoding is still JSON Lines.\",\"Q\":\"What is the current TCP listener port of Kestrel-Q8 test gateway?\",\"U1\":\"Kestrel-Q8 test gateway's read timeout has been updated to 25 seconds.\",\"U2\":\"Kestrel-Q8 test gateway now has 3 worker processes.\",\"U3\":\"The request queue capacity for Kestrel-Q8 test gateway has changed to 125 requests.\",\"U4\":\"Kestrel-Q8 test gateway's cache capacity is now 96 MiB.\",\"U5\":\"The read timeout for Kestrel-Q8 test gateway has been revised to 30 seconds.\",\"U6\":\"Kestrel-Q8 test gateway now has 4 worker processes.\",\"U7\":\"The TCP listener port for Kestrel-Q8 test gateway has changed to 18808.\"},\"medium\":{\"I1\":\"The TCP listener port for Kestrel-Q8 test gateway is 18801.\",\"I2\":\"The TCP listener port for Peregrine-R6 test gateway is 18990.\",\"I3\":\"Kestrel-Q8 test gateway uses JSON Lines for its log record encoding.\",\"I4\":\"Kestrel-Q8 test gateway has a read timeout of 20 seconds.\",\"I5\":\"Kestrel-Q8 test gateway has 2 worker processes.\",\"I6\":\"Kestrel-Q8 test gateway has a request queue capacity of 100 requests.\",\"I7\":\"Kestrel-Q8 test gateway has a cache capacity of 64 MiB.\",\"N1\":\"The TCP listener port for Kestrel-Q8 test gateway remains 18806.\",\"N2\":\"Kestrel-Q8 test gateway's log record encoding is still JSON Lines.\",\"Q\":\"What is the current TCP listener port of Kestrel-Q8 test gateway?\",\"U1\":\"The TCP listener port for Kestrel-Q8 test gateway has been updated to 18802.\",\"U2\":\"Kestrel-Q8 test gateway's read timeout is now 25 seconds.\",\"U3\":\"The TCP listener port for Kestrel-Q8 test gateway has changed to 18804.\",\"U4\":\"Kestrel-Q8 test gateway now has 3 worker processes.\",\"U5\":\"Kestrel-Q8 test gateway's TCP listener port has been revised to 18806.\",\"U6\":\"The request queue capacity for Kestrel-Q8 test gateway has changed to 125 requests.\",\"U7\":\"The TCP listener port for Kestrel-Q8 test gateway is now 18808.\"}}",
+                  "refusal": null,
+                  "reasoning": "**Aligning JSON fields**\n\nI’m focusing on ensuring we have all fields in the JSON format with the initial units clearly defined. I need to keep the questions exactly the same while ensuring I hit the high target of seven revisions across U1 to U7. I want to make sure that the changes to the secondary units are minimal but correct. It's all about getting this well-organized and aligned for the best results!",
+                  "reasoning_details": [
+                    {
+                      "type": "reasoning.summary",
+                      "summary": "**Aligning JSON fields**\n\nI’m focusing on ensuring we have all fields in the JSON format with the initial units clearly defined. I need to keep the questions exactly the same while ensuring I hit the high target of seven revisions across U1 to U7. I want to make sure that the changes to the secondary units are minimal but correct. It's all about getting this well-organized and aligned for the best results!",
+                      "format": "openai-responses-v1",
+                      "index": 0
+                    },
+                    {
+                      "type": "reasoning.encrypted",
+                      "data": "gAAAAABqrU8m1d0kgvcO1TD5zACMyLOg7xfjCxzYbehzippsooMKbj8AZW6MrV8EoQlGg5v9Xs5rVCkhC3Kqx-mNes0aVJAEP85d0DAhRF1WFXWh0_RnDcZto_wLPIGFWv6BqsLTDvwUd38OkQR1YF1ts_s7Xol-Teh7G_qTwbveTfsgoDMO5PFZ8AtNOtRz5s3Trw872HsYGHa8OoFV7nT4RP8VpIakgb4xpgc2Y0b0cBgLy7TZEbEqL5d82vN-6UwgEzcuVlKknPdTHXE1AqtZ3Hl9NlWcXukZQujytJu9seTf8-GrwWAuOVNApMYvOfVaSodF1a1i87P7H2BBtb4ZqkX7vwWh6U1_3HZZzjPWPtUA5lxXo14WJBbUQP4D4KsXE_MmJdneXxHinl1DewtKtCV3BCaYdA3rdeZCwEIju_-rSSnE96UJJHlobIVUDc1RDE8A8aA3zzMaj95N5cqdX19zPWiB87kv4STDUtOVgRrRtBHZLfeO_ziEJrN87F4SdZxE165a98EH-2g6BcLDsOafJRlaIlIo5qXja0_GzseQGiYrNJOb6zXwV1FM4rnCIjgkZwycFyUZBX99pyr0nLOnGBpic8f-vp8SUkC6lsF2bHnAnhEyRa4rr5igXUwYGXzUphWV8TnszRFvxSzvFO8-3BjlSIoy5jYgWuPiy5HPx71PV3bHyhRCe1CVQm5IEr9xHzfjz-8i7TFhujuSQ-p2N-75i-CxmGPtzymQIAgjRlLzCZRvPvh2Ioto45iZx3x4yQqdyhDo3PYOUMYqP-mvIza-nB3mldYZpZDXkRlHoEwcS2qrdmhWaWfA4KQfSFLGPWej1YPicDbrr8r24yE_lMnBGtVNZ8gBnz9dgzJZgqwIQR1c8tReWwUrEh2M8OPARdYTabGUyj4VV05Jh1ap9j3cyH4gtk2qYFkAJbRnxkDgybPeMK68nO5Xo-1oIma7y_irKiCOU3ctgqkygl0-Fda4H4xBGg2MbYfOnAhwUkYbiuQI7Q6PUcwfaspyhCDBP4SpQ6jGnJJgv2w_9nh55He6-KbJ1y2DrdC_hS3hC3FzBiGts9UGhvSybjFhh9OpqPLTF_IbNimVWkuM_YN5CY8FqVxixwZQEe1x3o5QApge1cKCALmHBP5iUU7MvXhBuyrCFpiUHS-n9hnURxzB9k_hiDx2McMyQRBkuxsuNcyUsSxOVPmvY9dUvW0QjzaWz3dwj2O1HSssEfOXq3wya9Qtp9YpAdpPauvYXj0KBmHY4tW2d61g7_5bkLk_p0ksII8NKT9e9HlDixaXYB5KJCiifoWZs0fqryjaqIG3e67y4ZPKv8Rsix9D6Aaa09P4Ji6NBFjik6UMxkwCXWFVzAxNeEcGC64KOhhz8XH2ZiLJnv7PU3ztQmzHieKeh7Ki4XjEYNyFf4MWE5MxLSM9f4bQ9tnZqP9uIpGoV6NCXYHr6jDMI0fyfMGdBf6vP0AWiRD_U2mjb9YQPsJ8AZWdaqbADSxJF3MOk5up7e9GG6Ae4XE=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtdGVycmEtMjAyNjA3MDl8b3BlbmFpIn0",
+                      "format": "openai-responses-v1",
+                      "id": "rs_0cbca44cdc642520016aad4f23beb887d1bf4b5cd42dfbbd60",
+                      "index": 1
+                    }
+                  ]
+                }
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 2458,
+              "completion_tokens": 1075,
+              "total_tokens": 3533,
+              "cost": 0.0190435,
+              "is_byok": false,
+              "prompt_tokens_details": {
+                "cached_tokens": 0,
+                "cache_write_tokens": 2455,
+                "audio_tokens": 0,
+                "video_tokens": 0
+              },
+              "cost_details": {
+                "upstream_inference_cost": 0.0190435,
+                "upstream_inference_prompt_cost": 0.0061435,
+                "upstream_inference_completions_cost": 0.0129
+              },
+              "completion_tokens_details": {
+                "reasoning_tokens": 36,
+                "image_tokens": 0,
+                "audio_tokens": 0
+              }
+            },
+            "openrouter_metadata": {
+              "requested": "openai/gpt-5.6-terra",
+              "strategy": "direct",
+              "region": "CGK",
+              "summary": "available=1, selected=OpenAI",
+              "attempt": 1,
+              "is_byok": false,
+              "endpoints": {
+                "total": 7,
+                "available": [
+                  {
+                    "provider": "OpenAI",
+                    "model": "openai/gpt-5.6-terra-20260709",
+                    "selected": true
+                  }
+                ]
+              },
+              "generation_time": 12345
+            }
+          },
+          "envelope_parse_status": "passed",
+          "openrouter_metadata": {
+            "requested": "openai/gpt-5.6-terra",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1, selected=OpenAI",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 7,
+              "available": [
+                {
+                  "provider": "OpenAI",
+                  "model": "openai/gpt-5.6-terra-20260709",
+                  "selected": true
+                }
+              ]
+            },
+            "generation_time": 12345
+          },
+          "service_tier": "default",
+          "finish_reason": "stop",
+          "native_finish_reason": "completed",
+          "refusal": false,
+          "incomplete_or_truncated": false,
+          "parsed_structured_response": {
+            "high": {
+              "I1": "The TCP listener port for Kestrel-Q8 test gateway is 18801.",
+              "I2": "The TCP listener port for Peregrine-R6 test gateway is 18990.",
+              "I3": "Kestrel-Q8 test gateway uses JSON Lines for its log record encoding.",
+              "I4": "Kestrel-Q8 test gateway has a read timeout of 20 seconds.",
+              "I5": "Kestrel-Q8 test gateway has 2 worker processes.",
+              "I6": "Kestrel-Q8 test gateway has a request queue capacity of 100 requests.",
+              "I7": "Kestrel-Q8 test gateway has a cache capacity of 64 MiB.",
+              "N1": "The TCP listener port for Kestrel-Q8 test gateway remains 18807.",
+              "N2": "Kestrel-Q8 test gateway's log record encoding is still JSON Lines.",
+              "Q": "What is the current TCP listener port of Kestrel-Q8 test gateway?",
+              "U1": "The TCP listener port for Kestrel-Q8 test gateway has been updated to 18802.",
+              "U2": "The TCP listener port for Kestrel-Q8 test gateway is now 18803.",
+              "U3": "Kestrel-Q8 test gateway's TCP listener port has changed to 18804.",
+              "U4": "The TCP listener port for Kestrel-Q8 test gateway has been revised to 18805.",
+              "U5": "Kestrel-Q8 test gateway now uses TCP listener port 18806.",
+              "U6": "The TCP listener port for Kestrel-Q8 test gateway has changed to 18807.",
+              "U7": "Kestrel-Q8 test gateway's TCP listener port is now 18808."
+            },
+            "low": {
+              "I1": "The TCP listener port for Kestrel-Q8 test gateway is 18801.",
+              "I2": "The TCP listener port for Peregrine-R6 test gateway is 18990.",
+              "I3": "Kestrel-Q8 test gateway uses JSON Lines for its log record encoding.",
+              "I4": "Kestrel-Q8 test gateway has a read timeout of 20 seconds.",
+              "I5": "Kestrel-Q8 test gateway has 2 worker processes.",
+              "I6": "Kestrel-Q8 test gateway has a request queue capacity of 100 requests.",
+              "I7": "Kestrel-Q8 test gateway has a cache capacity of 64 MiB.",
+              "N1": "The TCP listener port for Kestrel-Q8 test gateway remains 18801.",
+              "N2": "Kestrel-Q8 test gateway's log record encoding is still JSON Lines.",
+              "Q": "What is the current TCP listener port of Kestrel-Q8 test gateway?",
+              "U1": "Kestrel-Q8 test gateway's read timeout has been updated to 25 seconds.",
+              "U2": "Kestrel-Q8 test gateway now has 3 worker processes.",
+              "U3": "The request queue capacity for Kestrel-Q8 test gateway has changed to 125 requests.",
+              "U4": "Kestrel-Q8 test gateway's cache capacity is now 96 MiB.",
+              "U5": "The read timeout for Kestrel-Q8 test gateway has been revised to 30 seconds.",
+              "U6": "Kestrel-Q8 test gateway now has 4 worker processes.",
+              "U7": "The TCP listener port for Kestrel-Q8 test gateway has changed to 18808."
+            },
+            "medium": {
+              "I1": "The TCP listener port for Kestrel-Q8 test gateway is 18801.",
+              "I2": "The TCP listener port for Peregrine-R6 test gateway is 18990.",
+              "I3": "Kestrel-Q8 test gateway uses JSON Lines for its log record encoding.",
+              "I4": "Kestrel-Q8 test gateway has a read timeout of 20 seconds.",
+              "I5": "Kestrel-Q8 test gateway has 2 worker processes.",
+              "I6": "Kestrel-Q8 test gateway has a request queue capacity of 100 requests.",
+              "I7": "Kestrel-Q8 test gateway has a cache capacity of 64 MiB.",
+              "N1": "The TCP listener port for Kestrel-Q8 test gateway remains 18806.",
+              "N2": "Kestrel-Q8 test gateway's log record encoding is still JSON Lines.",
+              "Q": "What is the current TCP listener port of Kestrel-Q8 test gateway?",
+              "U1": "The TCP listener port for Kestrel-Q8 test gateway has been updated to 18802.",
+              "U2": "Kestrel-Q8 test gateway's read timeout is now 25 seconds.",
+              "U3": "The TCP listener port for Kestrel-Q8 test gateway has changed to 18804.",
+              "U4": "Kestrel-Q8 test gateway now has 3 worker processes.",
+              "U5": "Kestrel-Q8 test gateway's TCP listener port has been revised to 18806.",
+              "U6": "The request queue capacity for Kestrel-Q8 test gateway has changed to 125 requests.",
+              "U7": "The TCP listener port for Kestrel-Q8 test gateway is now 18808."
+            }
+          },
+          "parse_status": "passed",
+          "schema_status": "passed",
+          "usage": {
+            "prompt_tokens": 2458,
+            "completion_tokens": 1075,
+            "total_tokens": 3533,
+            "reasoning_tokens": 36,
+            "cached_tokens": 0,
+            "cost": 0.0190435
+          },
+          "latency_seconds": 13.027463563994388,
+          "retry_reason": null,
+          "will_retry": false,
+          "processing_or_charge_uncertain": false,
+          "error_type": null,
+          "failure_reason": null
+        }
+      ],
+      "semantic_qualification": "NOT_ASSESSED"
+    },
+    {
+      "logical_call_id": "G2",
+      "status": "FAIL",
+      "failure_reason": "Refusal",
+      "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"listener_port\\\",\\\"meaning\\\":\\\"TCP listener port\\\",\\\"units_or_interpretation\\\":\\\"integer TCP port number\\\"},{\\\"attribute_id\\\":\\\"logging_format\\\",\\\"meaning\\\":\\\"log record encoding\\\",\\\"units_or_interpretation\\\":\\\"encoding name\\\"},{\\\"attribute_id\\\":\\\"read_timeout\\\",\\\"meaning\\\":\\\"read timeout\\\",\\\"units_or_interpretation\\\":\\\"seconds\\\"},{\\\"attribute_id\\\":\\\"worker_count\\\",\\\"meaning\\\":\\\"worker process count\\\",\\\"units_or_interpretation\\\":\\\"integer workers\\\"},{\\\"attribute_id\\\":\\\"queue_capacity\\\",\\\"meaning\\\":\\\"request queue capacity\\\",\\\"units_or_interpretation\\\":\\\"integer requests\\\"},{\\\"attribute_id\\\":\\\"cache_limit\\\",\\\"meaning\\\":\\\"cache capacity\\\",\\\"units_or_interpretation\\\":\\\"MiB\\\"}],\\\"domain\\\":\\\"Software Configuration\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"name\\\":\\\"Kestrel-Q8 test gateway\\\"},{\\\"entity_id\\\":\\\"gateway_r6\\\",\\\"name\\\":\\\"Peregrine-R6 test gateway\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"key_01\\\",\\\"I2\\\":\\\"key_02\\\",\\\"I3\\\":\\\"key_03\\\",\\\"I4\\\":\\\"key_04\\\",\\\"I5\\\":\\\"key_05\\\",\\\"I6\\\":\\\"key_06\\\",\\\"I7\\\":\\\"key_07\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"listener_port\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"intent\\\":\\\"Ask for the current TCP listener port of the identified test gateway.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"listener_port\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"18801\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"attribute_id\\\":\\\"listener_port\\\",\\\"entity_id\\\":\\\"gateway_r6\\\",\\\"initial_value\\\":\\\"18990\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"key_02\\\"},{\\\"attribute_id\\\":\\\"logging_format\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"JSON Lines\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"key_03\\\"},{\\\"attribute_id\\\":\\\"read_timeout\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"20\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"attribute_id\\\":\\\"worker_count\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"2\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"attribute_id\\\":\\\"queue_capacity\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"100\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"attribute_id\\\":\\\"cache_limit\\\",\\\"entity_id\\\":\\\"gateway_q8\\\",\\\"initial_value\\\":\\\"64\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"key_07\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"18801\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18990\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_02\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_03\\\"},{\\\"current_value\\\":\\\"20\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"2\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"100\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"current_value\\\":\\\"64\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_07\\\"},{\\\"current_value\\\":\\\"18802\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18803\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18804\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18805\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18806\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18807\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18807\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18808\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_03\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"18801\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18990\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_02\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_03\\\"},{\\\"current_value\\\":\\\"20\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"2\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"100\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"current_value\\\":\\\"64\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_07\\\"},{\\\"current_value\\\":\\\"25\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"3\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"125\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"current_value\\\":\\\"96\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_07\\\"},{\\\"current_value\\\":\\\"30\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"4\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"18801\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18808\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_03\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"18801\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18990\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_02\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_03\\\"},{\\\"current_value\\\":\\\"20\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"2\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"100\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"current_value\\\":\\\"64\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"key_07\\\"},{\\\"current_value\\\":\\\"18802\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"25\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_04\\\"},{\\\"current_value\\\":\\\"18804\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"3\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_05\\\"},{\\\"current_value\\\":\\\"18806\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"125\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_06\\\"},{\\\"current_value\\\":\\\"18806\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"18808\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"key_01\\\"},{\\\"current_value\\\":\\\"JSON Lines\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"key_03\\\"}]}}\",\"role\":\"user\"}],\"model\":\"anthropic/claude-opus-5\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"anthropic\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+      "wire_request_sha256": "49739bc54b7f9ebf5c0b3d4b887e24fb1f1d81a4c3b0ca0e7d16400e7a156382",
+      "request_body": {
+        "model": "anthropic/claude-opus-5",
+        "provider": {
+          "order": [
+            "anthropic"
+          ],
+          "allow_fallbacks": false,
+          "require_parameters": true
+        },
+        "messages": [
+          {
+            "role": "system",
+            "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+          },
+          {
+            "role": "user",
+            "content": "{\"attributes\":[{\"attribute_id\":\"listener_port\",\"meaning\":\"TCP listener port\",\"units_or_interpretation\":\"integer TCP port number\"},{\"attribute_id\":\"logging_format\",\"meaning\":\"log record encoding\",\"units_or_interpretation\":\"encoding name\"},{\"attribute_id\":\"read_timeout\",\"meaning\":\"read timeout\",\"units_or_interpretation\":\"seconds\"},{\"attribute_id\":\"worker_count\",\"meaning\":\"worker process count\",\"units_or_interpretation\":\"integer workers\"},{\"attribute_id\":\"queue_capacity\",\"meaning\":\"request queue capacity\",\"units_or_interpretation\":\"integer requests\"},{\"attribute_id\":\"cache_limit\",\"meaning\":\"cache capacity\",\"units_or_interpretation\":\"MiB\"}],\"domain\":\"Software Configuration\",\"entities\":[{\"entity_id\":\"gateway_q8\",\"name\":\"Kestrel-Q8 test gateway\"},{\"entity_id\":\"gateway_r6\",\"name\":\"Peregrine-R6 test gateway\"}],\"initial_order\":{\"I1\":\"key_01\",\"I2\":\"key_02\",\"I3\":\"key_03\",\"I4\":\"key_04\",\"I5\":\"key_05\",\"I6\":\"key_06\",\"I7\":\"key_07\"},\"question_intent\":{\"attribute_id\":\"listener_port\",\"entity_id\":\"gateway_q8\",\"intent\":\"Ask for the current TCP listener port of the identified test gateway.\"},\"state_keys\":[{\"attribute_id\":\"listener_port\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"18801\",\"role\":\"target\",\"state_key\":\"key_01\"},{\"attribute_id\":\"listener_port\",\"entity_id\":\"gateway_r6\",\"initial_value\":\"18990\",\"role\":\"hard_distractor\",\"state_key\":\"key_02\"},{\"attribute_id\":\"logging_format\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"JSON Lines\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"key_03\"},{\"attribute_id\":\"read_timeout\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"20\",\"role\":\"updateable_secondary\",\"state_key\":\"key_04\"},{\"attribute_id\":\"worker_count\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"2\",\"role\":\"updateable_secondary\",\"state_key\":\"key_05\"},{\"attribute_id\":\"queue_capacity\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"100\",\"role\":\"updateable_secondary\",\"state_key\":\"key_06\"},{\"attribute_id\":\"cache_limit\",\"entity_id\":\"gateway_q8\",\"initial_value\":\"64\",\"role\":\"updateable_secondary\",\"state_key\":\"key_07\"}],\"variants\":{\"high\":[{\"current_value\":\"18801\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"key_01\"},{\"current_value\":\"18990\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"key_02\"},{\"current_value\":\"JSON Lines\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"key_03\"},{\"current_value\":\"20\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"key_04\"},{\"current_value\":\"2\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"key_05\"},{\"current_value\":\"100\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"key_06\"},{\"current_value\":\"64\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"key_07\"},{\"current_value\":\"18802\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18803\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18804\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18805\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18806\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18807\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18807\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18808\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"JSON Lines\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"key_03\"}],\"low\":[{\"current_value\":\"18801\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"key_01\"},{\"current_value\":\"18990\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"key_02\"},{\"current_value\":\"JSON Lines\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"key_03\"},{\"current_value\":\"20\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"key_04\"},{\"current_value\":\"2\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"key_05\"},{\"current_value\":\"100\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"key_06\"},{\"current_value\":\"64\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"key_07\"},{\"current_value\":\"25\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"key_04\"},{\"current_value\":\"3\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"key_05\"},{\"current_value\":\"125\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"key_06\"},{\"current_value\":\"96\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"key_07\"},{\"current_value\":\"30\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"key_04\"},{\"current_value\":\"4\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"key_05\"},{\"current_value\":\"18801\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18808\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"JSON Lines\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"key_03\"}],\"medium\":[{\"current_value\":\"18801\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"key_01\"},{\"current_value\":\"18990\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"key_02\"},{\"current_value\":\"JSON Lines\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"key_03\"},{\"current_value\":\"20\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"key_04\"},{\"current_value\":\"2\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"key_05\"},{\"current_value\":\"100\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"key_06\"},{\"current_value\":\"64\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"key_07\"},{\"current_value\":\"18802\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"25\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"key_04\"},{\"current_value\":\"18804\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"3\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"key_05\"},{\"current_value\":\"18806\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"125\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"key_06\"},{\"current_value\":\"18806\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"key_01\"},{\"current_value\":\"18808\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"key_01\"},{\"current_value\":\"JSON Lines\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"key_03\"}]}}"
+          }
+        ],
+        "reasoning": {
+          "effort": "low"
+        },
+        "max_tokens": 16384,
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "crst_naturalization_triplet_v1",
+            "strict": true,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "properties": {
+                "low": {
+                  "$ref": "#/$defs/variant"
+                },
+                "medium": {
+                  "$ref": "#/$defs/variant"
+                },
+                "high": {
+                  "$ref": "#/$defs/variant"
+                }
+              },
+              "$defs": {
+                "variant": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "I1",
+                    "I2",
+                    "I3",
+                    "I4",
+                    "I5",
+                    "I6",
+                    "I7",
+                    "U1",
+                    "U2",
+                    "U3",
+                    "U4",
+                    "U5",
+                    "U6",
+                    "N1",
+                    "U7",
+                    "N2",
+                    "Q"
+                  ],
+                  "properties": {
+                    "I1": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I2": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I3": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I4": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I5": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I6": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "I7": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U1": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U2": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U3": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U4": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U5": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U6": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "N1": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "U7": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "N2": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "Q": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "attempts": [
+        {
+          "logical_call_id": "G2",
+          "physical_attempt": 1,
+          "started_at": "2026-09-18T14:48:15.242492+00:00",
+          "requested_model": "anthropic/claude-opus-5",
+          "requested_provider_order": [
+            "anthropic"
+          ],
+          "returned_model": "anthropic/claude-opus-5",
+          "observed_selected_provider": "Anthropic",
+          "request_id": null,
+          "response_id": "gen-1789742895-pjHtNqNaep5DlqtW3c7j",
+          "http_status": 200,
+          "raw_response": "\n         \n{\"id\":\"gen-1789742895-pjHtNqNaep5DlqtW3c7j\",\"object\":\"chat.completion\",\"created\":1789742895,\"model\":\"anthropic/claude-opus-5\",\"provider\":\"Anthropic\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"content_filter\",\"native_finish_reason\":\"refusal\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":\"This request was blocked as it seems to violate Anthropic's Terms of Service restrictions on reverse engineering or duplicating model outputs. To learn more, visit https://www.anthropic.com/legal/commercial-terms. API integrators: you can reduce refusals for your users by configuring a fallback model — see https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback\",\"reasoning\":null}}],\"openrouter_metadata\":{\"requested\":\"anthropic/claude-opus-5\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=Anthropic\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":11,\"available\":[{\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-opus-5-20260723\",\"selected\":true}]},\"generation_time\":1391}}",
+          "response_sha256_before_redaction": "a18ffdd08dd6be7253c7e9668c2fdf31f75f79ac30ab80652d709dc2e4314f65",
+          "response_envelope": {
+            "id": "gen-1789742895-pjHtNqNaep5DlqtW3c7j",
+            "object": "chat.completion",
+            "created": 1789742895,
+            "model": "anthropic/claude-opus-5",
+            "provider": "Anthropic",
+            "system_fingerprint": null,
+            "service_tier": null,
+            "choices": [
+              {
+                "index": 0,
+                "logprobs": null,
+                "finish_reason": "content_filter",
+                "native_finish_reason": "refusal",
+                "message": {
+                  "role": "assistant",
+                  "content": null,
+                  "refusal": "This request was blocked as it seems to violate Anthropic's Terms of Service restrictions on reverse engineering or duplicating model outputs. To learn more, visit https://www.anthropic.com/legal/commercial-terms. API integrators: you can reduce refusals for your users by configuring a fallback model — see https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback",
+                  "reasoning": null
+                }
+              }
+            ],
+            "openrouter_metadata": {
+              "requested": "anthropic/claude-opus-5",
+              "strategy": "direct",
+              "region": "CGK",
+              "summary": "available=1, selected=Anthropic",
+              "attempt": 1,
+              "is_byok": false,
+              "endpoints": {
+                "total": 11,
+                "available": [
+                  {
+                    "provider": "Anthropic",
+                    "model": "anthropic/claude-opus-5-20260723",
+                    "selected": true
+                  }
+                ]
+              },
+              "generation_time": 1391
+            }
+          },
+          "envelope_parse_status": "passed",
+          "openrouter_metadata": {
+            "requested": "anthropic/claude-opus-5",
+            "strategy": "direct",
+            "region": "CGK",
+            "summary": "available=1, selected=Anthropic",
+            "attempt": 1,
+            "is_byok": false,
+            "endpoints": {
+              "total": 11,
+              "available": [
+                {
+                  "provider": "Anthropic",
+                  "model": "anthropic/claude-opus-5-20260723",
+                  "selected": true
+                }
+              ]
+            },
+            "generation_time": 1391
+          },
+          "service_tier": null,
+          "finish_reason": "content_filter",
+          "native_finish_reason": "refusal",
+          "refusal": true,
+          "incomplete_or_truncated": false,
+          "parsed_structured_response": null,
+          "parse_status": "not_run",
+          "schema_status": "not_run",
+          "usage": {
+            "prompt_tokens": null,
+            "completion_tokens": null,
+            "total_tokens": null,
+            "reasoning_tokens": null,
+            "cached_tokens": null,
+            "cost": null
+          },
+          "latency_seconds": 1.530394602988963,
+          "retry_reason": null,
+          "will_retry": false,
+          "processing_or_charge_uncertain": false,
+          "error_type": null,
+          "failure_reason": "Refusal"
+        }
+      ],
+      "semantic_qualification": "NOT_ASSESSED"
+    }
+  ]
+}

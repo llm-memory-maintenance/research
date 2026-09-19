@@ -1,0 +1,355 @@
+{
+  "logical_call_id": "G2",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. For each variant it gives exactly two facts to realize: the final target revision, named U7, and the dedicated same-state reaffirmation, named N2. Return all three variants in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each of the two named events, U7 and N2. Do not add, delete, omit, merge, split, or reorder them, and do not produce any other event or field. Each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, and the supplied value. Use the supplied names and value expressions rather than inventing aliases or alternative values. Do not add state-changing facts, implications, qualifications, or conditions, and do not introduce any value that is not supplied.\\n\\nU7 has changed_state semantics. It must clearly communicate an actual revision and state its supplied current value for its entity and attribute. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken the change into a possibility, a plan contingent on a condition, a hypothetical, or a same-state reaffirmation. Do not state or imply any previous or superseded value: none is supplied and none may be invented.\\n\\nN2 has same_state semantics. It must state or reaffirm only its supplied still-current value for its entity and attribute, without introducing a change, a revision cue, or a historical value. Do not exchange changed-state and same-state meanings. N2 concerns the dedicated N2 state supplied in the input. It must not repeat, revise, or otherwise alter U7.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, or questions. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"overnight_stop\\\",\\\"meaning\\\":\\\"planned overnight stopover\\\",\\\"units_or_interpretation\\\":\\\"fictional town name\\\"},{\\\"attribute_id\\\":\\\"ticket_code\\\",\\\"meaning\\\":\\\"tour ticket identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"}],\\\"domain\\\":\\\"Travel\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"name\\\":\\\"Coach tour Larkspur\\\"}],\\\"scenario_id\\\":\\\"b0cal-travel-01\\\",\\\"variants\\\":{\\\"high\\\":{\\\"N2\\\":{\\\"attribute_id\\\":\\\"ticket_code\\\",\\\"current_value\\\":\\\"TKT-L58\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"semantics\\\":\\\"same_state\\\"},\\\"U7\\\":{\\\"attribute_id\\\":\\\"overnight_stop\\\",\\\"current_value\\\":\\\"Ivelstone\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"semantics\\\":\\\"changed_state\\\"}},\\\"low\\\":{\\\"N2\\\":{\\\"attribute_id\\\":\\\"ticket_code\\\",\\\"current_value\\\":\\\"TKT-L58\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"semantics\\\":\\\"same_state\\\"},\\\"U7\\\":{\\\"attribute_id\\\":\\\"overnight_stop\\\",\\\"current_value\\\":\\\"Ivelstone\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"semantics\\\":\\\"changed_state\\\"}},\\\"medium\\\":{\\\"N2\\\":{\\\"attribute_id\\\":\\\"ticket_code\\\",\\\"current_value\\\":\\\"TKT-L58\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"semantics\\\":\\\"same_state\\\"},\\\"U7\\\":{\\\"attribute_id\\\":\\\"overnight_stop\\\",\\\"current_value\\\":\\\"Ivelstone\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"semantics\\\":\\\"changed_state\\\"}}}}\",\"role\":\"user\"}],\"model\":\"anthropic/claude-fable-5.1\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"anthropic\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"b0_suffix_naturalization_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"N2\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"U7\",\"N2\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "890893b98fca1c8566694c6070280e3ae464317ee47447c217187f817404587a",
+  "request_body": {
+    "model": "anthropic/claude-fable-5.1",
+    "provider": {
+      "order": [
+        "anthropic"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. For each variant it gives exactly two facts to realize: the final target revision, named U7, and the dedicated same-state reaffirmation, named N2. Return all three variants in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each of the two named events, U7 and N2. Do not add, delete, omit, merge, split, or reorder them, and do not produce any other event or field. Each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, and the supplied value. Use the supplied names and value expressions rather than inventing aliases or alternative values. Do not add state-changing facts, implications, qualifications, or conditions, and do not introduce any value that is not supplied.\n\nU7 has changed_state semantics. It must clearly communicate an actual revision and state its supplied current value for its entity and attribute. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken the change into a possibility, a plan contingent on a condition, a hypothetical, or a same-state reaffirmation. Do not state or imply any previous or superseded value: none is supplied and none may be invented.\n\nN2 has same_state semantics. It must state or reaffirm only its supplied still-current value for its entity and attribute, without introducing a change, a revision cue, or a historical value. Do not exchange changed-state and same-state meanings. N2 concerns the dedicated N2 state supplied in the input. It must not repeat, revise, or otherwise alter U7.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, or questions. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"overnight_stop\",\"meaning\":\"planned overnight stopover\",\"units_or_interpretation\":\"fictional town name\"},{\"attribute_id\":\"ticket_code\",\"meaning\":\"tour ticket identifier\",\"units_or_interpretation\":\"opaque code\"}],\"domain\":\"Travel\",\"entities\":[{\"entity_id\":\"b0cal-travel-01-primary\",\"name\":\"Coach tour Larkspur\"}],\"scenario_id\":\"b0cal-travel-01\",\"variants\":{\"high\":{\"N2\":{\"attribute_id\":\"ticket_code\",\"current_value\":\"TKT-L58\",\"entity_id\":\"b0cal-travel-01-primary\",\"semantics\":\"same_state\"},\"U7\":{\"attribute_id\":\"overnight_stop\",\"current_value\":\"Ivelstone\",\"entity_id\":\"b0cal-travel-01-primary\",\"semantics\":\"changed_state\"}},\"low\":{\"N2\":{\"attribute_id\":\"ticket_code\",\"current_value\":\"TKT-L58\",\"entity_id\":\"b0cal-travel-01-primary\",\"semantics\":\"same_state\"},\"U7\":{\"attribute_id\":\"overnight_stop\",\"current_value\":\"Ivelstone\",\"entity_id\":\"b0cal-travel-01-primary\",\"semantics\":\"changed_state\"}},\"medium\":{\"N2\":{\"attribute_id\":\"ticket_code\",\"current_value\":\"TKT-L58\",\"entity_id\":\"b0cal-travel-01-primary\",\"semantics\":\"same_state\"},\"U7\":{\"attribute_id\":\"overnight_stop\",\"current_value\":\"Ivelstone\",\"entity_id\":\"b0cal-travel-01-primary\",\"semantics\":\"changed_state\"}}}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "b0_suffix_naturalization_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "U7",
+                "N2"
+              ],
+              "properties": {
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G2",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T13:01:02.235844+00:00",
+      "requested_model": "anthropic/claude-fable-5.1",
+      "requested_provider_order": [
+        "anthropic"
+      ],
+      "returned_model": null,
+      "observed_selected_provider": null,
+      "request_id": null,
+      "response_id": null,
+      "http_status": 429,
+      "raw_response": "{\"error\":{\"message\":\"OpenRouter could not verify available credits for this request in time. Retry shortly.\",\"code\":429,\"metadata\":{\"limit_source\":\"openrouter_admission_control\",\"remedy_hint\":\"Slow down the request rate for this account, then retry after the reset (see X-RateLimit-Reset).\",\"headers\":{\"Retry-After\":\"10\"},\"provider_name\":null}},\"openrouter_metadata\":{\"requested\":\"anthropic/claude-fable-5.1\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1\",\"attempt\":0,\"is_byok\":false,\"endpoints\":{\"total\":4,\"available\":[{\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-fable-5.1-20260831\",\"selected\":false}]}}}",
+      "response_sha256_before_redaction": "e5da4658734ada6dc86e9545276f71dd84a4bdcc90b47eee9fc14cc073dafd74",
+      "response_envelope": {
+        "error": {
+          "message": "OpenRouter could not verify available credits for this request in time. Retry shortly.",
+          "code": 429,
+          "metadata": {
+            "limit_source": "openrouter_admission_control",
+            "remedy_hint": "Slow down the request rate for this account, then retry after the reset (see X-RateLimit-Reset).",
+            "headers": {
+              "Retry-After": "10"
+            },
+            "provider_name": null
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "anthropic/claude-fable-5.1",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1",
+          "attempt": 0,
+          "is_byok": false,
+          "endpoints": {
+            "total": 4,
+            "available": [
+              {
+                "provider": "Anthropic",
+                "model": "anthropic/claude-fable-5.1-20260831",
+                "selected": false
+              }
+            ]
+          }
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "anthropic/claude-fable-5.1",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1",
+        "attempt": 0,
+        "is_byok": false,
+        "endpoints": {
+          "total": 4,
+          "available": [
+            {
+              "provider": "Anthropic",
+              "model": "anthropic/claude-fable-5.1-20260831",
+              "selected": false
+            }
+          ]
+        }
+      },
+      "service_tier": null,
+      "finish_reason": null,
+      "native_finish_reason": null,
+      "refusal": null,
+      "incomplete_or_truncated": null,
+      "parsed_structured_response": null,
+      "parse_status": "not_run",
+      "schema_status": "not_run",
+      "usage": {
+        "prompt_tokens": null,
+        "completion_tokens": null,
+        "total_tokens": null,
+        "reasoning_tokens": null,
+        "cached_tokens": null,
+        "cost": null
+      },
+      "latency_seconds": 1.8359714550024364,
+      "retry_reason": "HTTP 429",
+      "will_retry": true,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    },
+    {
+      "logical_call_id": "G2",
+      "physical_attempt": 2,
+      "started_at": "2026-09-19T13:01:05.073363+00:00",
+      "requested_model": "anthropic/claude-fable-5.1",
+      "requested_provider_order": [
+        "anthropic"
+      ],
+      "returned_model": "anthropic/claude-fable-5.1",
+      "observed_selected_provider": "Anthropic",
+      "request_id": null,
+      "response_id": "gen-1789822865-JNzS7iVhVRwKlJd8o7QL",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n{\"id\":\"gen-1789822865-JNzS7iVhVRwKlJd8o7QL\",\"object\":\"chat.completion\",\"created\":1789822865,\"model\":\"anthropic/claude-fable-5.1\",\"provider\":\"Anthropic\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"N2\\\":\\\"Just to reaffirm, the tour ticket identifier for Coach tour Larkspur is still TKT-L58.\\\",\\\"U7\\\":\\\"The planned overnight stopover for Coach tour Larkspur has been updated and is now Ivelstone.\\\"},\\\"low\\\":{\\\"N2\\\":\\\"For Coach tour Larkspur, the ticket code remains TKT-L58.\\\",\\\"U7\\\":\\\"The overnight stop for Coach tour Larkspur has changed; it is now Ivelstone.\\\"},\\\"medium\\\":{\\\"N2\\\":\\\"Confirming that the ticket code for Coach tour Larkspur is still TKT-L58, no change there.\\\",\\\"U7\\\":\\\"Update on Coach tour Larkspur: the planned overnight stopover is now Ivelstone.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":1692,\"completion_tokens\":245,\"total_tokens\":1937,\"cost\":0.02917,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.02917,\"upstream_inference_prompt_cost\":0.01692,\"upstream_inference_completions_cost\":0.01225},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"anthropic/claude-fable-5.1\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=Anthropic\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":4,\"available\":[{\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-fable-5.1-20260831\",\"selected\":true}]},\"generation_time\":6729}}",
+      "response_sha256_before_redaction": "90215d79be4c1e2ec5086cc889f08eb4632616ad7050929ac8dafc825030c95a",
+      "response_envelope": {
+        "id": "gen-1789822865-JNzS7iVhVRwKlJd8o7QL",
+        "object": "chat.completion",
+        "created": 1789822865,
+        "model": "anthropic/claude-fable-5.1",
+        "provider": "Anthropic",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "end_turn",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"N2\":\"Just to reaffirm, the tour ticket identifier for Coach tour Larkspur is still TKT-L58.\",\"U7\":\"The planned overnight stopover for Coach tour Larkspur has been updated and is now Ivelstone.\"},\"low\":{\"N2\":\"For Coach tour Larkspur, the ticket code remains TKT-L58.\",\"U7\":\"The overnight stop for Coach tour Larkspur has changed; it is now Ivelstone.\"},\"medium\":{\"N2\":\"Confirming that the ticket code for Coach tour Larkspur is still TKT-L58, no change there.\",\"U7\":\"Update on Coach tour Larkspur: the planned overnight stopover is now Ivelstone.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1692,
+          "completion_tokens": 245,
+          "total_tokens": 1937,
+          "cost": 0.02917,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.02917,
+            "upstream_inference_prompt_cost": 0.01692,
+            "upstream_inference_completions_cost": 0.01225
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "anthropic/claude-fable-5.1",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=Anthropic",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 4,
+            "available": [
+              {
+                "provider": "Anthropic",
+                "model": "anthropic/claude-fable-5.1-20260831",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 6729
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "anthropic/claude-fable-5.1",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=Anthropic",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 4,
+          "available": [
+            {
+              "provider": "Anthropic",
+              "model": "anthropic/claude-fable-5.1-20260831",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 6729
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "N2": "Just to reaffirm, the tour ticket identifier for Coach tour Larkspur is still TKT-L58.",
+          "U7": "The planned overnight stopover for Coach tour Larkspur has been updated and is now Ivelstone."
+        },
+        "low": {
+          "N2": "For Coach tour Larkspur, the ticket code remains TKT-L58.",
+          "U7": "The overnight stop for Coach tour Larkspur has changed; it is now Ivelstone."
+        },
+        "medium": {
+          "N2": "Confirming that the ticket code for Coach tour Larkspur is still TKT-L58, no change there.",
+          "U7": "Update on Coach tour Larkspur: the planned overnight stopover is now Ivelstone."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 1692,
+        "completion_tokens": 245,
+        "total_tokens": 1937,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.02917
+      },
+      "latency_seconds": 6.886388844985049,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G2",
+  "fixture_id": "b0cal-travel-01",
+  "projection_sha256": "ae1894a704db50a6e973a390689e33dbb4ef268055d33bcd92822e5c92ba897f",
+  "logical_call_index": 14,
+  "attempt": "attempt-01",
+  "procedure_version": "b0-suffix-collection/1.0.0",
+  "output_sha256": "6e94481473e2036194cd82c8d0097ca8c8f9fb152fba9e2e002a528cd2fad200",
+  "automated": {
+    "status": "PASS",
+    "checks": {
+      "low": {
+        "U7": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_superseded_value": "PASS"
+        },
+        "N2": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_historical_or_superseded_value": "PASS"
+        }
+      },
+      "medium": {
+        "U7": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_superseded_value": "PASS"
+        },
+        "N2": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_historical_or_superseded_value": "PASS"
+        }
+      },
+      "high": {
+        "U7": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_superseded_value": "PASS"
+        },
+        "N2": {
+          "entity_fidelity": "PASS",
+          "current_value_fidelity": "PASS",
+          "no_historical_or_superseded_value": "PASS"
+        }
+      }
+    },
+    "meaning": "Deterministic Level-1 checks; they never stop collection and are not semantic qualification."
+  }
+}

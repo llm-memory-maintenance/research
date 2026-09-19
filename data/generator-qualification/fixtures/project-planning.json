@@ -1,0 +1,1039 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-project-planning-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Project Planning",
+    "entities": [
+      {
+        "entity_id": "gq-project-planning-01-primary",
+        "name": "Project Halcyon"
+      },
+      {
+        "entity_id": "gq-project-planning-01-distractor",
+        "name": "Project Petrel"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "milestone",
+        "meaning": "next planned milestone",
+        "units_or_interpretation": "milestone label"
+      },
+      {
+        "attribute_id": "project_code",
+        "meaning": "project identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "owner",
+        "meaning": "project owner",
+        "units_or_interpretation": "synthetic team"
+      },
+      {
+        "attribute_id": "delivery_cycle",
+        "meaning": "delivery cycle",
+        "units_or_interpretation": "synthetic calendar label"
+      },
+      {
+        "attribute_id": "workstream",
+        "meaning": "active workstream",
+        "units_or_interpretation": "workstream label"
+      },
+      {
+        "attribute_id": "priority",
+        "meaning": "priority tier",
+        "units_or_interpretation": "ordered tier label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-project-planning-01-primary",
+        "attribute_id": "milestone",
+        "initial_value": "outline review",
+        "role": "target",
+        "value_inventory": [
+          "outline review",
+          "sketch review",
+          "component review",
+          "layout review",
+          "integration review",
+          "rehearsal review",
+          "delivery review",
+          "archive review"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-project-planning-01-distractor",
+        "attribute_id": "milestone",
+        "initial_value": "inventory review",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "inventory review",
+          "license review",
+          "handover review"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-project-planning-01-primary",
+        "attribute_id": "project_code",
+        "initial_value": "PRJ-H7",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "PRJ-H7"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-project-planning-01-primary",
+        "attribute_id": "owner",
+        "initial_value": "Team Eru",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Team Eru",
+          "Team Nalo",
+          "Team Suri"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-project-planning-01-primary",
+        "attribute_id": "delivery_cycle",
+        "initial_value": "Cycle Leris",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Cycle Leris",
+          "Cycle Meris",
+          "Cycle Neris"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-project-planning-01-primary",
+        "attribute_id": "workstream",
+        "initial_value": "layout drafting",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "layout drafting",
+          "asset assembly",
+          "package preparation"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-project-planning-01-primary",
+        "attribute_id": "priority",
+        "initial_value": "Tier P1",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Tier P1",
+          "Tier P2",
+          "Tier P3"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_n2",
+      "I2": "k_a",
+      "I3": "k_b",
+      "I4": "k_c",
+      "I5": "k_d",
+      "I6": "k_target",
+      "I7": "k_hard"
+    },
+    "question_intent": {
+      "entity_id": "gq-project-planning-01-primary",
+      "attribute_id": "milestone",
+      "intent": "Ask only for the current next planned milestone of Project Halcyon."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "archive review",
+    "coverage": [
+      "planning",
+      "categorical_values",
+      "assignments",
+      "synthetic_calendar_labels"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_n2",
+            "current_value": "PRJ-H7",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_a",
+            "current_value": "Team Eru",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_b",
+            "current_value": "Cycle Leris",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_c",
+            "current_value": "layout drafting",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_d",
+            "current_value": "Tier P1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_target",
+            "current_value": "outline review",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "outline review"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_hard",
+            "current_value": "inventory review",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "outline review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_d",
+            "current_value": "Tier P2",
+            "semantics": "changed_state",
+            "previous_value": "Tier P1",
+            "superseded_values": [
+              "Tier P1"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P2",
+              "k_target": "outline review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "Team Nalo",
+            "semantics": "changed_state",
+            "previous_value": "Team Eru",
+            "superseded_values": [
+              "Team Eru"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P2",
+              "k_target": "outline review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_b",
+            "current_value": "Cycle Meris",
+            "semantics": "changed_state",
+            "previous_value": "Cycle Leris",
+            "superseded_values": [
+              "Cycle Leris"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Meris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P2",
+              "k_target": "outline review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "asset assembly",
+            "semantics": "changed_state",
+            "previous_value": "layout drafting",
+            "superseded_values": [
+              "layout drafting"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Meris",
+              "k_c": "asset assembly",
+              "k_d": "Tier P2",
+              "k_target": "outline review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_hard",
+            "current_value": "license review",
+            "semantics": "changed_state",
+            "previous_value": "inventory review",
+            "superseded_values": [
+              "inventory review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Meris",
+              "k_c": "asset assembly",
+              "k_d": "Tier P2",
+              "k_target": "outline review",
+              "k_hard": "license review"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "package preparation",
+            "semantics": "changed_state",
+            "previous_value": "asset assembly",
+            "superseded_values": [
+              "layout drafting",
+              "asset assembly"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Meris",
+              "k_c": "package preparation",
+              "k_d": "Tier P2",
+              "k_target": "outline review",
+              "k_hard": "license review"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "outline review",
+            "semantics": "same_state",
+            "previous_value": "outline review",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Meris",
+              "k_c": "package preparation",
+              "k_d": "Tier P2",
+              "k_target": "outline review",
+              "k_hard": "license review"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "archive review",
+            "semantics": "changed_state",
+            "previous_value": "outline review",
+            "superseded_values": [
+              "outline review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Meris",
+              "k_c": "package preparation",
+              "k_d": "Tier P2",
+              "k_target": "archive review",
+              "k_hard": "license review"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "PRJ-H7",
+            "semantics": "same_state",
+            "previous_value": "PRJ-H7",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Meris",
+              "k_c": "package preparation",
+              "k_d": "Tier P2",
+              "k_target": "archive review",
+              "k_hard": "license review"
+            }
+          }
+        ],
+        "final_state": {
+          "k_n2": "PRJ-H7",
+          "k_a": "Team Nalo",
+          "k_b": "Cycle Meris",
+          "k_c": "package preparation",
+          "k_d": "Tier P2",
+          "k_target": "archive review",
+          "k_hard": "license review"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_n2",
+            "current_value": "PRJ-H7",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_a",
+            "current_value": "Team Eru",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_b",
+            "current_value": "Cycle Leris",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_c",
+            "current_value": "layout drafting",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_d",
+            "current_value": "Tier P1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_target",
+            "current_value": "outline review",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "outline review"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_hard",
+            "current_value": "inventory review",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "outline review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "sketch review",
+            "semantics": "changed_state",
+            "previous_value": "outline review",
+            "superseded_values": [
+              "outline review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "sketch review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "Team Nalo",
+            "semantics": "changed_state",
+            "previous_value": "Team Eru",
+            "superseded_values": [
+              "Team Eru"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "sketch review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "layout review",
+            "semantics": "changed_state",
+            "previous_value": "sketch review",
+            "superseded_values": [
+              "outline review",
+              "sketch review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "layout review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "license review",
+            "semantics": "changed_state",
+            "previous_value": "inventory review",
+            "superseded_values": [
+              "inventory review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "layout review",
+              "k_hard": "license review"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "rehearsal review",
+            "semantics": "changed_state",
+            "previous_value": "layout review",
+            "superseded_values": [
+              "outline review",
+              "sketch review",
+              "layout review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "rehearsal review",
+              "k_hard": "license review"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_d",
+            "current_value": "Tier P2",
+            "semantics": "changed_state",
+            "previous_value": "Tier P1",
+            "superseded_values": [
+              "Tier P1"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P2",
+              "k_target": "rehearsal review",
+              "k_hard": "license review"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "rehearsal review",
+            "semantics": "same_state",
+            "previous_value": "rehearsal review",
+            "superseded_values": [
+              "outline review",
+              "sketch review",
+              "layout review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P2",
+              "k_target": "rehearsal review",
+              "k_hard": "license review"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "archive review",
+            "semantics": "changed_state",
+            "previous_value": "rehearsal review",
+            "superseded_values": [
+              "outline review",
+              "sketch review",
+              "layout review",
+              "rehearsal review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P2",
+              "k_target": "archive review",
+              "k_hard": "license review"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "PRJ-H7",
+            "semantics": "same_state",
+            "previous_value": "PRJ-H7",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Nalo",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P2",
+              "k_target": "archive review",
+              "k_hard": "license review"
+            }
+          }
+        ],
+        "final_state": {
+          "k_n2": "PRJ-H7",
+          "k_a": "Team Nalo",
+          "k_b": "Cycle Leris",
+          "k_c": "layout drafting",
+          "k_d": "Tier P2",
+          "k_target": "archive review",
+          "k_hard": "license review"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_n2",
+            "current_value": "PRJ-H7",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_a",
+            "current_value": "Team Eru",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_b",
+            "current_value": "Cycle Leris",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_c",
+            "current_value": "layout drafting",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_d",
+            "current_value": "Tier P1",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_target",
+            "current_value": "outline review",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "outline review"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_hard",
+            "current_value": "inventory review",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "outline review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "sketch review",
+            "semantics": "changed_state",
+            "previous_value": "outline review",
+            "superseded_values": [
+              "outline review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "sketch review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "component review",
+            "semantics": "changed_state",
+            "previous_value": "sketch review",
+            "superseded_values": [
+              "outline review",
+              "sketch review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "component review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "layout review",
+            "semantics": "changed_state",
+            "previous_value": "component review",
+            "superseded_values": [
+              "outline review",
+              "sketch review",
+              "component review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "layout review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "integration review",
+            "semantics": "changed_state",
+            "previous_value": "layout review",
+            "superseded_values": [
+              "outline review",
+              "sketch review",
+              "component review",
+              "layout review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "integration review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "rehearsal review",
+            "semantics": "changed_state",
+            "previous_value": "integration review",
+            "superseded_values": [
+              "outline review",
+              "sketch review",
+              "component review",
+              "layout review",
+              "integration review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "rehearsal review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "delivery review",
+            "semantics": "changed_state",
+            "previous_value": "rehearsal review",
+            "superseded_values": [
+              "outline review",
+              "sketch review",
+              "component review",
+              "layout review",
+              "integration review",
+              "rehearsal review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "delivery review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "delivery review",
+            "semantics": "same_state",
+            "previous_value": "delivery review",
+            "superseded_values": [
+              "outline review",
+              "sketch review",
+              "component review",
+              "layout review",
+              "integration review",
+              "rehearsal review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "delivery review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "archive review",
+            "semantics": "changed_state",
+            "previous_value": "delivery review",
+            "superseded_values": [
+              "outline review",
+              "sketch review",
+              "component review",
+              "layout review",
+              "integration review",
+              "rehearsal review",
+              "delivery review"
+            ],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "archive review",
+              "k_hard": "inventory review"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "PRJ-H7",
+            "semantics": "same_state",
+            "previous_value": "PRJ-H7",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PRJ-H7",
+              "k_a": "Team Eru",
+              "k_b": "Cycle Leris",
+              "k_c": "layout drafting",
+              "k_d": "Tier P1",
+              "k_target": "archive review",
+              "k_hard": "inventory review"
+            }
+          }
+        ],
+        "final_state": {
+          "k_n2": "PRJ-H7",
+          "k_a": "Team Eru",
+          "k_b": "Cycle Leris",
+          "k_c": "layout drafting",
+          "k_d": "Tier P1",
+          "k_target": "archive review",
+          "k_hard": "inventory review"
+        }
+      }
+    }
+  }
+}

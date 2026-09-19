@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-study-planning-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Study Planning",
+    "entities": [
+      {
+        "entity_id": "b0cal-study-planning-01-primary",
+        "name": "Reading circle Thistle"
+      },
+      {
+        "entity_id": "b0cal-study-planning-01-distractor",
+        "name": "Reading circle Bracken"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "focus_text",
+        "meaning": "current focus text",
+        "units_or_interpretation": "fictional text title"
+      },
+      {
+        "attribute_id": "circle_code",
+        "meaning": "reading circle identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "session_slot",
+        "meaning": "circle session slot",
+        "units_or_interpretation": "slot label"
+      },
+      {
+        "attribute_id": "chapter_range",
+        "meaning": "assigned chapter range",
+        "units_or_interpretation": "chapters"
+      },
+      {
+        "attribute_id": "circle_host",
+        "meaning": "circle host",
+        "units_or_interpretation": "synthetic person"
+      },
+      {
+        "attribute_id": "note_format",
+        "meaning": "note format",
+        "units_or_interpretation": "format label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-study-planning-01-primary",
+        "attribute_id": "focus_text",
+        "initial_value": "Ledger of Moths",
+        "role": "target",
+        "value_inventory": [
+          "Ledger of Moths",
+          "The Salt Orchard",
+          "Notes on Lanterns",
+          "A Grammar of Tides",
+          "The Copper Almanac",
+          "Field Guide to Echoes",
+          "The Glass Cartographer",
+          "Winter Inventory"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-study-planning-01-distractor",
+        "attribute_id": "focus_text",
+        "initial_value": "The Quiet Foundry",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "The Quiet Foundry",
+          "Atlas of Small Rivers",
+          "Marginalia of Rain"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-study-planning-01-primary",
+        "attribute_id": "circle_code",
+        "initial_value": "RDC-T85",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "RDC-T85"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-study-planning-01-primary",
+        "attribute_id": "session_slot",
+        "initial_value": "Slot Dawn",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Slot Dawn",
+          "Slot Noon",
+          "Slot Dusk"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-study-planning-01-primary",
+        "attribute_id": "chapter_range",
+        "initial_value": "chapters 1 to 3",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "chapters 1 to 3",
+          "chapters 4 to 6",
+          "chapters 7 to 9"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-study-planning-01-primary",
+        "attribute_id": "circle_host",
+        "initial_value": "Halden Voss",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Halden Voss",
+          "Marisol Teague",
+          "Corin Ashby"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-study-planning-01-primary",
+        "attribute_id": "note_format",
+        "initial_value": "margin notes",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "margin notes",
+          "index cards",
+          "summary sheet"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_a",
+      "I2": "k_b",
+      "I3": "k_c",
+      "I4": "k_d",
+      "I5": "k_target",
+      "I6": "k_hard",
+      "I7": "k_n2"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-study-planning-01-primary",
+      "attribute_id": "focus_text",
+      "intent": "Ask only for the current focus text of Reading circle Thistle."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Winter Inventory",
+    "coverage": [
+      "study_planning",
+      "categorical_values",
+      "assignments"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Slot Dawn",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "chapters 1 to 3",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "Halden Voss",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "margin notes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "Ledger of Moths",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "The Quiet Foundry",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths",
+              "k_hard": "The Quiet Foundry"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "RDC-T85",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_b",
+            "current_value": "chapters 4 to 6",
+            "semantics": "changed_state",
+            "previous_value": "chapters 1 to 3",
+            "superseded_values": [
+              "chapters 1 to 3"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 4 to 6",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "Marisol Teague",
+            "semantics": "changed_state",
+            "previous_value": "Halden Voss",
+            "superseded_values": [
+              "Halden Voss"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 4 to 6",
+              "k_c": "Marisol Teague",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_hard",
+            "current_value": "Atlas of Small Rivers",
+            "semantics": "changed_state",
+            "previous_value": "The Quiet Foundry",
+            "superseded_values": [
+              "The Quiet Foundry"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 4 to 6",
+              "k_c": "Marisol Teague",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths",
+              "k_hard": "Atlas of Small Rivers",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "Corin Ashby",
+            "semantics": "changed_state",
+            "previous_value": "Marisol Teague",
+            "superseded_values": [
+              "Halden Voss",
+              "Marisol Teague"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 4 to 6",
+              "k_c": "Corin Ashby",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths",
+              "k_hard": "Atlas of Small Rivers",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_d",
+            "current_value": "index cards",
+            "semantics": "changed_state",
+            "previous_value": "margin notes",
+            "superseded_values": [
+              "margin notes"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 4 to 6",
+              "k_c": "Corin Ashby",
+              "k_d": "index cards",
+              "k_target": "Ledger of Moths",
+              "k_hard": "Atlas of Small Rivers",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "Slot Noon",
+            "semantics": "changed_state",
+            "previous_value": "Slot Dawn",
+            "superseded_values": [
+              "Slot Dawn"
+            ],
+            "state_after": {
+              "k_a": "Slot Noon",
+              "k_b": "chapters 4 to 6",
+              "k_c": "Corin Ashby",
+              "k_d": "index cards",
+              "k_target": "Ledger of Moths",
+              "k_hard": "Atlas of Small Rivers",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Ledger of Moths",
+            "semantics": "same_state",
+            "previous_value": "Ledger of Moths",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Noon",
+              "k_b": "chapters 4 to 6",
+              "k_c": "Corin Ashby",
+              "k_d": "index cards",
+              "k_target": "Ledger of Moths",
+              "k_hard": "Atlas of Small Rivers",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Winter Inventory",
+            "semantics": "changed_state",
+            "previous_value": "Ledger of Moths",
+            "superseded_values": [
+              "Ledger of Moths"
+            ],
+            "state_after": {
+              "k_a": "Slot Noon",
+              "k_b": "chapters 4 to 6",
+              "k_c": "Corin Ashby",
+              "k_d": "index cards",
+              "k_target": "Winter Inventory",
+              "k_hard": "Atlas of Small Rivers",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "RDC-T85",
+            "semantics": "same_state",
+            "previous_value": "RDC-T85",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Noon",
+              "k_b": "chapters 4 to 6",
+              "k_c": "Corin Ashby",
+              "k_d": "index cards",
+              "k_target": "Winter Inventory",
+              "k_hard": "Atlas of Small Rivers",
+              "k_n2": "RDC-T85"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Slot Noon",
+          "k_b": "chapters 4 to 6",
+          "k_c": "Corin Ashby",
+          "k_d": "index cards",
+          "k_target": "Winter Inventory",
+          "k_hard": "Atlas of Small Rivers",
+          "k_n2": "RDC-T85"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Slot Dawn",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "chapters 1 to 3",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "Halden Voss",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "margin notes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "Ledger of Moths",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "The Quiet Foundry",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths",
+              "k_hard": "The Quiet Foundry"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "RDC-T85",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "The Salt Orchard",
+            "semantics": "changed_state",
+            "previous_value": "Ledger of Moths",
+            "superseded_values": [
+              "Ledger of Moths"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "The Salt Orchard",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_d",
+            "current_value": "index cards",
+            "semantics": "changed_state",
+            "previous_value": "margin notes",
+            "superseded_values": [
+              "margin notes"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "index cards",
+              "k_target": "The Salt Orchard",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "A Grammar of Tides",
+            "semantics": "changed_state",
+            "previous_value": "The Salt Orchard",
+            "superseded_values": [
+              "Ledger of Moths",
+              "The Salt Orchard"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "index cards",
+              "k_target": "A Grammar of Tides",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "Slot Noon",
+            "semantics": "changed_state",
+            "previous_value": "Slot Dawn",
+            "superseded_values": [
+              "Slot Dawn"
+            ],
+            "state_after": {
+              "k_a": "Slot Noon",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "index cards",
+              "k_target": "A Grammar of Tides",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Field Guide to Echoes",
+            "semantics": "changed_state",
+            "previous_value": "A Grammar of Tides",
+            "superseded_values": [
+              "Ledger of Moths",
+              "The Salt Orchard",
+              "A Grammar of Tides"
+            ],
+            "state_after": {
+              "k_a": "Slot Noon",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "index cards",
+              "k_target": "Field Guide to Echoes",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "Atlas of Small Rivers",
+            "semantics": "changed_state",
+            "previous_value": "The Quiet Foundry",
+            "superseded_values": [
+              "The Quiet Foundry"
+            ],
+            "state_after": {
+              "k_a": "Slot Noon",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "index cards",
+              "k_target": "Field Guide to Echoes",
+              "k_hard": "Atlas of Small Rivers",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Field Guide to Echoes",
+            "semantics": "same_state",
+            "previous_value": "Field Guide to Echoes",
+            "superseded_values": [
+              "Ledger of Moths",
+              "The Salt Orchard",
+              "A Grammar of Tides"
+            ],
+            "state_after": {
+              "k_a": "Slot Noon",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "index cards",
+              "k_target": "Field Guide to Echoes",
+              "k_hard": "Atlas of Small Rivers",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Winter Inventory",
+            "semantics": "changed_state",
+            "previous_value": "Field Guide to Echoes",
+            "superseded_values": [
+              "Ledger of Moths",
+              "The Salt Orchard",
+              "A Grammar of Tides",
+              "Field Guide to Echoes"
+            ],
+            "state_after": {
+              "k_a": "Slot Noon",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "index cards",
+              "k_target": "Winter Inventory",
+              "k_hard": "Atlas of Small Rivers",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "RDC-T85",
+            "semantics": "same_state",
+            "previous_value": "RDC-T85",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Noon",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "index cards",
+              "k_target": "Winter Inventory",
+              "k_hard": "Atlas of Small Rivers",
+              "k_n2": "RDC-T85"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Slot Noon",
+          "k_b": "chapters 1 to 3",
+          "k_c": "Halden Voss",
+          "k_d": "index cards",
+          "k_target": "Winter Inventory",
+          "k_hard": "Atlas of Small Rivers",
+          "k_n2": "RDC-T85"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Slot Dawn",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "chapters 1 to 3",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "Halden Voss",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "margin notes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "Ledger of Moths",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "The Quiet Foundry",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths",
+              "k_hard": "The Quiet Foundry"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "RDC-T85",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Ledger of Moths",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "The Salt Orchard",
+            "semantics": "changed_state",
+            "previous_value": "Ledger of Moths",
+            "superseded_values": [
+              "Ledger of Moths"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "The Salt Orchard",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Notes on Lanterns",
+            "semantics": "changed_state",
+            "previous_value": "The Salt Orchard",
+            "superseded_values": [
+              "Ledger of Moths",
+              "The Salt Orchard"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Notes on Lanterns",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "A Grammar of Tides",
+            "semantics": "changed_state",
+            "previous_value": "Notes on Lanterns",
+            "superseded_values": [
+              "Ledger of Moths",
+              "The Salt Orchard",
+              "Notes on Lanterns"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "A Grammar of Tides",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "The Copper Almanac",
+            "semantics": "changed_state",
+            "previous_value": "A Grammar of Tides",
+            "superseded_values": [
+              "Ledger of Moths",
+              "The Salt Orchard",
+              "Notes on Lanterns",
+              "A Grammar of Tides"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "The Copper Almanac",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Field Guide to Echoes",
+            "semantics": "changed_state",
+            "previous_value": "The Copper Almanac",
+            "superseded_values": [
+              "Ledger of Moths",
+              "The Salt Orchard",
+              "Notes on Lanterns",
+              "A Grammar of Tides",
+              "The Copper Almanac"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Field Guide to Echoes",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "The Glass Cartographer",
+            "semantics": "changed_state",
+            "previous_value": "Field Guide to Echoes",
+            "superseded_values": [
+              "Ledger of Moths",
+              "The Salt Orchard",
+              "Notes on Lanterns",
+              "A Grammar of Tides",
+              "The Copper Almanac",
+              "Field Guide to Echoes"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "The Glass Cartographer",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "The Glass Cartographer",
+            "semantics": "same_state",
+            "previous_value": "The Glass Cartographer",
+            "superseded_values": [
+              "Ledger of Moths",
+              "The Salt Orchard",
+              "Notes on Lanterns",
+              "A Grammar of Tides",
+              "The Copper Almanac",
+              "Field Guide to Echoes"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "The Glass Cartographer",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Winter Inventory",
+            "semantics": "changed_state",
+            "previous_value": "The Glass Cartographer",
+            "superseded_values": [
+              "Ledger of Moths",
+              "The Salt Orchard",
+              "Notes on Lanterns",
+              "A Grammar of Tides",
+              "The Copper Almanac",
+              "Field Guide to Echoes",
+              "The Glass Cartographer"
+            ],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Winter Inventory",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "RDC-T85",
+            "semantics": "same_state",
+            "previous_value": "RDC-T85",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Slot Dawn",
+              "k_b": "chapters 1 to 3",
+              "k_c": "Halden Voss",
+              "k_d": "margin notes",
+              "k_target": "Winter Inventory",
+              "k_hard": "The Quiet Foundry",
+              "k_n2": "RDC-T85"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Slot Dawn",
+          "k_b": "chapters 1 to 3",
+          "k_c": "Halden Voss",
+          "k_d": "margin notes",
+          "k_target": "Winter Inventory",
+          "k_hard": "The Quiet Foundry",
+          "k_n2": "RDC-T85"
+        }
+      }
+    }
+  }
+}

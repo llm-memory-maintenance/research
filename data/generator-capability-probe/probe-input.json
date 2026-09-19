@@ -1,0 +1,406 @@
+{
+  "domain": "Software Configuration",
+  "entities": [
+    {
+      "entity_id": "gateway_q8",
+      "name": "Kestrel-Q8 test gateway"
+    },
+    {
+      "entity_id": "gateway_r6",
+      "name": "Peregrine-R6 test gateway"
+    }
+  ],
+  "attributes": [
+    {
+      "attribute_id": "listener_port",
+      "meaning": "TCP listener port",
+      "units_or_interpretation": "integer TCP port number"
+    },
+    {
+      "attribute_id": "logging_format",
+      "meaning": "log record encoding",
+      "units_or_interpretation": "encoding name"
+    },
+    {
+      "attribute_id": "read_timeout",
+      "meaning": "read timeout",
+      "units_or_interpretation": "seconds"
+    },
+    {
+      "attribute_id": "worker_count",
+      "meaning": "worker process count",
+      "units_or_interpretation": "integer workers"
+    },
+    {
+      "attribute_id": "queue_capacity",
+      "meaning": "request queue capacity",
+      "units_or_interpretation": "integer requests"
+    },
+    {
+      "attribute_id": "cache_limit",
+      "meaning": "cache capacity",
+      "units_or_interpretation": "MiB"
+    }
+  ],
+  "state_keys": [
+    {
+      "state_key": "key_01",
+      "entity_id": "gateway_q8",
+      "attribute_id": "listener_port",
+      "initial_value": "18801",
+      "role": "target"
+    },
+    {
+      "state_key": "key_02",
+      "entity_id": "gateway_r6",
+      "attribute_id": "listener_port",
+      "initial_value": "18990",
+      "role": "hard_distractor"
+    },
+    {
+      "state_key": "key_03",
+      "entity_id": "gateway_q8",
+      "attribute_id": "logging_format",
+      "initial_value": "JSON Lines",
+      "role": "dedicated_n2_secondary"
+    },
+    {
+      "state_key": "key_04",
+      "entity_id": "gateway_q8",
+      "attribute_id": "read_timeout",
+      "initial_value": "20",
+      "role": "updateable_secondary"
+    },
+    {
+      "state_key": "key_05",
+      "entity_id": "gateway_q8",
+      "attribute_id": "worker_count",
+      "initial_value": "2",
+      "role": "updateable_secondary"
+    },
+    {
+      "state_key": "key_06",
+      "entity_id": "gateway_q8",
+      "attribute_id": "queue_capacity",
+      "initial_value": "100",
+      "role": "updateable_secondary"
+    },
+    {
+      "state_key": "key_07",
+      "entity_id": "gateway_q8",
+      "attribute_id": "cache_limit",
+      "initial_value": "64",
+      "role": "updateable_secondary"
+    }
+  ],
+  "initial_order": {
+    "I1": "key_01",
+    "I2": "key_02",
+    "I3": "key_03",
+    "I4": "key_04",
+    "I5": "key_05",
+    "I6": "key_06",
+    "I7": "key_07"
+  },
+  "question_intent": {
+    "entity_id": "gateway_q8",
+    "attribute_id": "listener_port",
+    "intent": "Ask for the current TCP listener port of the identified test gateway."
+  },
+  "variants": {
+    "low": [
+      {
+        "event": "I1",
+        "state_key": "key_01",
+        "current_value": "18801",
+        "semantics": "initial"
+      },
+      {
+        "event": "I2",
+        "state_key": "key_02",
+        "current_value": "18990",
+        "semantics": "initial"
+      },
+      {
+        "event": "I3",
+        "state_key": "key_03",
+        "current_value": "JSON Lines",
+        "semantics": "initial"
+      },
+      {
+        "event": "I4",
+        "state_key": "key_04",
+        "current_value": "20",
+        "semantics": "initial"
+      },
+      {
+        "event": "I5",
+        "state_key": "key_05",
+        "current_value": "2",
+        "semantics": "initial"
+      },
+      {
+        "event": "I6",
+        "state_key": "key_06",
+        "current_value": "100",
+        "semantics": "initial"
+      },
+      {
+        "event": "I7",
+        "state_key": "key_07",
+        "current_value": "64",
+        "semantics": "initial"
+      },
+      {
+        "event": "U1",
+        "state_key": "key_04",
+        "current_value": "25",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U2",
+        "state_key": "key_05",
+        "current_value": "3",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U3",
+        "state_key": "key_06",
+        "current_value": "125",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U4",
+        "state_key": "key_07",
+        "current_value": "96",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U5",
+        "state_key": "key_04",
+        "current_value": "30",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U6",
+        "state_key": "key_05",
+        "current_value": "4",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "N1",
+        "state_key": "key_01",
+        "current_value": "18801",
+        "semantics": "same_state"
+      },
+      {
+        "event": "U7",
+        "state_key": "key_01",
+        "current_value": "18808",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "N2",
+        "state_key": "key_03",
+        "current_value": "JSON Lines",
+        "semantics": "same_state"
+      }
+    ],
+    "medium": [
+      {
+        "event": "I1",
+        "state_key": "key_01",
+        "current_value": "18801",
+        "semantics": "initial"
+      },
+      {
+        "event": "I2",
+        "state_key": "key_02",
+        "current_value": "18990",
+        "semantics": "initial"
+      },
+      {
+        "event": "I3",
+        "state_key": "key_03",
+        "current_value": "JSON Lines",
+        "semantics": "initial"
+      },
+      {
+        "event": "I4",
+        "state_key": "key_04",
+        "current_value": "20",
+        "semantics": "initial"
+      },
+      {
+        "event": "I5",
+        "state_key": "key_05",
+        "current_value": "2",
+        "semantics": "initial"
+      },
+      {
+        "event": "I6",
+        "state_key": "key_06",
+        "current_value": "100",
+        "semantics": "initial"
+      },
+      {
+        "event": "I7",
+        "state_key": "key_07",
+        "current_value": "64",
+        "semantics": "initial"
+      },
+      {
+        "event": "U1",
+        "state_key": "key_01",
+        "current_value": "18802",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U2",
+        "state_key": "key_04",
+        "current_value": "25",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U3",
+        "state_key": "key_01",
+        "current_value": "18804",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U4",
+        "state_key": "key_05",
+        "current_value": "3",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U5",
+        "state_key": "key_01",
+        "current_value": "18806",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U6",
+        "state_key": "key_06",
+        "current_value": "125",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "N1",
+        "state_key": "key_01",
+        "current_value": "18806",
+        "semantics": "same_state"
+      },
+      {
+        "event": "U7",
+        "state_key": "key_01",
+        "current_value": "18808",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "N2",
+        "state_key": "key_03",
+        "current_value": "JSON Lines",
+        "semantics": "same_state"
+      }
+    ],
+    "high": [
+      {
+        "event": "I1",
+        "state_key": "key_01",
+        "current_value": "18801",
+        "semantics": "initial"
+      },
+      {
+        "event": "I2",
+        "state_key": "key_02",
+        "current_value": "18990",
+        "semantics": "initial"
+      },
+      {
+        "event": "I3",
+        "state_key": "key_03",
+        "current_value": "JSON Lines",
+        "semantics": "initial"
+      },
+      {
+        "event": "I4",
+        "state_key": "key_04",
+        "current_value": "20",
+        "semantics": "initial"
+      },
+      {
+        "event": "I5",
+        "state_key": "key_05",
+        "current_value": "2",
+        "semantics": "initial"
+      },
+      {
+        "event": "I6",
+        "state_key": "key_06",
+        "current_value": "100",
+        "semantics": "initial"
+      },
+      {
+        "event": "I7",
+        "state_key": "key_07",
+        "current_value": "64",
+        "semantics": "initial"
+      },
+      {
+        "event": "U1",
+        "state_key": "key_01",
+        "current_value": "18802",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U2",
+        "state_key": "key_01",
+        "current_value": "18803",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U3",
+        "state_key": "key_01",
+        "current_value": "18804",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U4",
+        "state_key": "key_01",
+        "current_value": "18805",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U5",
+        "state_key": "key_01",
+        "current_value": "18806",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "U6",
+        "state_key": "key_01",
+        "current_value": "18807",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "N1",
+        "state_key": "key_01",
+        "current_value": "18807",
+        "semantics": "same_state"
+      },
+      {
+        "event": "U7",
+        "state_key": "key_01",
+        "current_value": "18808",
+        "semantics": "changed_state"
+      },
+      {
+        "event": "N2",
+        "state_key": "key_03",
+        "current_value": "JSON Lines",
+        "semantics": "same_state"
+      }
+    ]
+  }
+}

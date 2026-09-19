@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-quantitative-planning-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Quantitative Planning",
+    "entities": [
+      {
+        "entity_id": "b0cal-quantitative-planning-01-primary",
+        "name": "Batch Pinnacle"
+      },
+      {
+        "entity_id": "b0cal-quantitative-planning-01-distractor",
+        "name": "Batch Cobalt"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "batch_yield",
+        "meaning": "planned batch yield",
+        "units_or_interpretation": "liters"
+      },
+      {
+        "attribute_id": "batch_code",
+        "meaning": "batch identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "vat_count",
+        "meaning": "vat count",
+        "units_or_interpretation": "vats"
+      },
+      {
+        "attribute_id": "fill_rate",
+        "meaning": "fill rate",
+        "units_or_interpretation": "liters per minute"
+      },
+      {
+        "attribute_id": "shift_length",
+        "meaning": "shift length",
+        "units_or_interpretation": "hours"
+      },
+      {
+        "attribute_id": "sample_size",
+        "meaning": "quality sample size",
+        "units_or_interpretation": "samples"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-quantitative-planning-01-primary",
+        "attribute_id": "batch_yield",
+        "initial_value": "340 liters",
+        "role": "target",
+        "value_inventory": [
+          "340 liters",
+          "365 liters",
+          "390 liters",
+          "415 liters",
+          "445 liters",
+          "470 liters",
+          "505 liters",
+          "530 liters"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-quantitative-planning-01-distractor",
+        "attribute_id": "batch_yield",
+        "initial_value": "610 liters",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "610 liters",
+          "640 liters",
+          "675 liters"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-quantitative-planning-01-primary",
+        "attribute_id": "batch_code",
+        "initial_value": "BCH-P73",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "BCH-P73"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-quantitative-planning-01-primary",
+        "attribute_id": "vat_count",
+        "initial_value": "4 vats",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "4 vats",
+          "6 vats",
+          "9 vats"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-quantitative-planning-01-primary",
+        "attribute_id": "fill_rate",
+        "initial_value": "12 liters per minute",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "12 liters per minute",
+          "18 liters per minute",
+          "24 liters per minute"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-quantitative-planning-01-primary",
+        "attribute_id": "shift_length",
+        "initial_value": "6 hours",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "6 hours",
+          "8 hours",
+          "10 hours"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-quantitative-planning-01-primary",
+        "attribute_id": "sample_size",
+        "initial_value": "5 samples",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "5 samples",
+          "7 samples",
+          "11 samples"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_target",
+      "I2": "k_hard",
+      "I3": "k_n2",
+      "I4": "k_a",
+      "I5": "k_b",
+      "I6": "k_c",
+      "I7": "k_d"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-quantitative-planning-01-primary",
+      "attribute_id": "batch_yield",
+      "intent": "Ask only for the current planned batch yield of Batch Pinnacle."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "530 liters",
+    "coverage": [
+      "quantities",
+      "numeric_values",
+      "planning"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "340 liters",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "610 liters",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "BCH-P73",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "4 vats",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "12 liters per minute",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "6 hours",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "5 samples",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_d",
+            "current_value": "7 samples",
+            "semantics": "changed_state",
+            "previous_value": "5 samples",
+            "superseded_values": [
+              "5 samples"
+            ],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "7 samples"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "6 vats",
+            "semantics": "changed_state",
+            "previous_value": "4 vats",
+            "superseded_values": [
+              "4 vats"
+            ],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "7 samples"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_b",
+            "current_value": "18 liters per minute",
+            "semantics": "changed_state",
+            "previous_value": "12 liters per minute",
+            "superseded_values": [
+              "12 liters per minute"
+            ],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "18 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "7 samples"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "8 hours",
+            "semantics": "changed_state",
+            "previous_value": "6 hours",
+            "superseded_values": [
+              "6 hours"
+            ],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "18 liters per minute",
+              "k_c": "8 hours",
+              "k_d": "7 samples"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_hard",
+            "current_value": "640 liters",
+            "semantics": "changed_state",
+            "previous_value": "610 liters",
+            "superseded_values": [
+              "610 liters"
+            ],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "640 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "18 liters per minute",
+              "k_c": "8 hours",
+              "k_d": "7 samples"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "10 hours",
+            "semantics": "changed_state",
+            "previous_value": "8 hours",
+            "superseded_values": [
+              "6 hours",
+              "8 hours"
+            ],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "640 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "18 liters per minute",
+              "k_c": "10 hours",
+              "k_d": "7 samples"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "340 liters",
+            "semantics": "same_state",
+            "previous_value": "340 liters",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "640 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "18 liters per minute",
+              "k_c": "10 hours",
+              "k_d": "7 samples"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "530 liters",
+            "semantics": "changed_state",
+            "previous_value": "340 liters",
+            "superseded_values": [
+              "340 liters"
+            ],
+            "state_after": {
+              "k_target": "530 liters",
+              "k_hard": "640 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "18 liters per minute",
+              "k_c": "10 hours",
+              "k_d": "7 samples"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "BCH-P73",
+            "semantics": "same_state",
+            "previous_value": "BCH-P73",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "530 liters",
+              "k_hard": "640 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "18 liters per minute",
+              "k_c": "10 hours",
+              "k_d": "7 samples"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "530 liters",
+          "k_hard": "640 liters",
+          "k_n2": "BCH-P73",
+          "k_a": "6 vats",
+          "k_b": "18 liters per minute",
+          "k_c": "10 hours",
+          "k_d": "7 samples"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "340 liters",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "610 liters",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "BCH-P73",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "4 vats",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "12 liters per minute",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "6 hours",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "5 samples",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "365 liters",
+            "semantics": "changed_state",
+            "previous_value": "340 liters",
+            "superseded_values": [
+              "340 liters"
+            ],
+            "state_after": {
+              "k_target": "365 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "6 vats",
+            "semantics": "changed_state",
+            "previous_value": "4 vats",
+            "superseded_values": [
+              "4 vats"
+            ],
+            "state_after": {
+              "k_target": "365 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "415 liters",
+            "semantics": "changed_state",
+            "previous_value": "365 liters",
+            "superseded_values": [
+              "340 liters",
+              "365 liters"
+            ],
+            "state_after": {
+              "k_target": "415 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "640 liters",
+            "semantics": "changed_state",
+            "previous_value": "610 liters",
+            "superseded_values": [
+              "610 liters"
+            ],
+            "state_after": {
+              "k_target": "415 liters",
+              "k_hard": "640 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "470 liters",
+            "semantics": "changed_state",
+            "previous_value": "415 liters",
+            "superseded_values": [
+              "340 liters",
+              "365 liters",
+              "415 liters"
+            ],
+            "state_after": {
+              "k_target": "470 liters",
+              "k_hard": "640 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_d",
+            "current_value": "7 samples",
+            "semantics": "changed_state",
+            "previous_value": "5 samples",
+            "superseded_values": [
+              "5 samples"
+            ],
+            "state_after": {
+              "k_target": "470 liters",
+              "k_hard": "640 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "7 samples"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "470 liters",
+            "semantics": "same_state",
+            "previous_value": "470 liters",
+            "superseded_values": [
+              "340 liters",
+              "365 liters",
+              "415 liters"
+            ],
+            "state_after": {
+              "k_target": "470 liters",
+              "k_hard": "640 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "7 samples"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "530 liters",
+            "semantics": "changed_state",
+            "previous_value": "470 liters",
+            "superseded_values": [
+              "340 liters",
+              "365 liters",
+              "415 liters",
+              "470 liters"
+            ],
+            "state_after": {
+              "k_target": "530 liters",
+              "k_hard": "640 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "7 samples"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "BCH-P73",
+            "semantics": "same_state",
+            "previous_value": "BCH-P73",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "530 liters",
+              "k_hard": "640 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "6 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "7 samples"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "530 liters",
+          "k_hard": "640 liters",
+          "k_n2": "BCH-P73",
+          "k_a": "6 vats",
+          "k_b": "12 liters per minute",
+          "k_c": "6 hours",
+          "k_d": "7 samples"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "340 liters",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "610 liters",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "BCH-P73",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "4 vats",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "12 liters per minute",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "6 hours",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "5 samples",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "340 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "365 liters",
+            "semantics": "changed_state",
+            "previous_value": "340 liters",
+            "superseded_values": [
+              "340 liters"
+            ],
+            "state_after": {
+              "k_target": "365 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "390 liters",
+            "semantics": "changed_state",
+            "previous_value": "365 liters",
+            "superseded_values": [
+              "340 liters",
+              "365 liters"
+            ],
+            "state_after": {
+              "k_target": "390 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "415 liters",
+            "semantics": "changed_state",
+            "previous_value": "390 liters",
+            "superseded_values": [
+              "340 liters",
+              "365 liters",
+              "390 liters"
+            ],
+            "state_after": {
+              "k_target": "415 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "445 liters",
+            "semantics": "changed_state",
+            "previous_value": "415 liters",
+            "superseded_values": [
+              "340 liters",
+              "365 liters",
+              "390 liters",
+              "415 liters"
+            ],
+            "state_after": {
+              "k_target": "445 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "470 liters",
+            "semantics": "changed_state",
+            "previous_value": "445 liters",
+            "superseded_values": [
+              "340 liters",
+              "365 liters",
+              "390 liters",
+              "415 liters",
+              "445 liters"
+            ],
+            "state_after": {
+              "k_target": "470 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "505 liters",
+            "semantics": "changed_state",
+            "previous_value": "470 liters",
+            "superseded_values": [
+              "340 liters",
+              "365 liters",
+              "390 liters",
+              "415 liters",
+              "445 liters",
+              "470 liters"
+            ],
+            "state_after": {
+              "k_target": "505 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "505 liters",
+            "semantics": "same_state",
+            "previous_value": "505 liters",
+            "superseded_values": [
+              "340 liters",
+              "365 liters",
+              "390 liters",
+              "415 liters",
+              "445 liters",
+              "470 liters"
+            ],
+            "state_after": {
+              "k_target": "505 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "530 liters",
+            "semantics": "changed_state",
+            "previous_value": "505 liters",
+            "superseded_values": [
+              "340 liters",
+              "365 liters",
+              "390 liters",
+              "415 liters",
+              "445 liters",
+              "470 liters",
+              "505 liters"
+            ],
+            "state_after": {
+              "k_target": "530 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "BCH-P73",
+            "semantics": "same_state",
+            "previous_value": "BCH-P73",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "530 liters",
+              "k_hard": "610 liters",
+              "k_n2": "BCH-P73",
+              "k_a": "4 vats",
+              "k_b": "12 liters per minute",
+              "k_c": "6 hours",
+              "k_d": "5 samples"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "530 liters",
+          "k_hard": "610 liters",
+          "k_n2": "BCH-P73",
+          "k_a": "4 vats",
+          "k_b": "12 liters per minute",
+          "k_c": "6 hours",
+          "k_d": "5 samples"
+        }
+      }
+    }
+  }
+}

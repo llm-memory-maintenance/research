@@ -1,0 +1,225 @@
+# CRST Small Pilot protocol. Authority: docs/crst-specification.md (Sections 5-10, 15) and docs/decisions.md.
+# The pilot is a mechanical/plumbing check. Its results are never effect-size estimates, policy rankings,
+# power-analysis inputs or reasons to change a policy. This file is offline protocol only: it authorizes no
+# generator, provider or backbone call.
+schema_version: crst-small-pilot/1.0.0
+status: PROTOCOL_FROZEN
+frozen_on: '2026-09-19'
+execution_status: NOT_EXECUTED
+# No live step is authorized by this file. Each live step (naturalization, backbone) is gated in code on its
+# own explicit flags, a clean committed worktree, pinned identities and a fresh result directory.
+
+workflow:
+  - {step: A, name: build and validate pilot structured material, live: false}
+  - {step: B, name: live naturalize the two triplets, live: true, entry: experiments/naturalize_crst_pilot.py}
+  - {step: C, name: offline structural and semantic audit of naturalized material, live: false, entry: 'experiments/naturalize_crst_pilot.py --audit'}
+  - {step: D, name: 24 policy runs and 132 backbone logical calls, live: true, entry: experiments/execute_crst_pilot.py, requires: eligible naturalization}
+  - {step: E, name: offline replay scoring and checklist, live: false, entry: 'experiments/execute_crst_pilot.py --replay'}
+  - {step: F, name: researcher reviews the 24 final-answer classifications, live: false}
+
+material:
+  path: data/crst-small-pilot
+  manifest_sha256: e3ef466a872f29da86eb2dc7ce5caf02ec07a514acb69542614c4edee72af11c
+  purpose: CRST-SMALL-PILOT-ONLY
+  builder: experiments/build_crst_pilot_material.py
+  validator: experiments/validate_crst_pilot_material.py
+  scenarios:
+    - {scenario_id: pilot-scheduling-01, generator: G1, model: openai/gpt-5.6-sol}
+    - {scenario_id: pilot-travel-01, generator: G2, model: anthropic/claude-fable-5.1}
+  variants: [low, medium, high]
+  policies: [M1, M2, M3, B0]
+  technical_repetitions: 1
+
+candidate_representation:
+  template: 'For {entity_name}, the {attribute_meaning} is {current_value}.'
+  allowed_fields: [entity_name, attribute_meaning, current_value]
+  renderer: experiments/crst_policies.py::render_candidate
+  used_by: [I1-I7, U1-U7, N1, N2]
+  naturalized_text_used_by: [B0, Q]
+
+backbone:
+  parameters_config: configs/model.yaml
+  parameters_sha256: e9dfac8cd6d3a2ffe763ad6efd32b5ef814a3eec07887f7a3bd6d9561cee509e
+  stateless: true
+  # Provider response mode is the qualified json_object transport for maintenance and answer calls. Strict
+  # json_schema on this provider/model path is not qualified and is never requested. The semantic schemas
+  # below are enforced locally, exactly and without repair, immediately after parsing.
+  provider_response_mode: {response_format: {type: json_object}, applies_to: [maintenance, answer]}
+  local_validation: {schemas: exact_keys_no_repair, sent_to_provider: false}
+  transport: {module: experiments/crst_transport.py, reuses: experiments/qualify_model.py routing and retry rules, url: https://openrouter.ai/api/v1/chat/completions, max_physical_attempts: 3, provider_conversation_state: none}
+  # Approved abort rule. It applies only after the frozen infrastructure retry policy is exhausted.
+  infrastructure_terminal_failure: abort the pilot and preserve evidence; never scored as a model decision or OTHER_ERROR
+  routing_violation: abort the pilot and preserve evidence; never scored as a model decision or OTHER_ERROR
+  partial_execution: never continued and never interpreted; collection.json records interpretation PROHIBITED
+  model_schema_invalid_maintenance_output: invalid model decision under the existing rule, no semantic retry
+  model_malformed_final_answer: OTHER_ERROR under the existing answer rule
+
+maintenance:
+  policies: [M2, M3]
+  schema_role: local_validation_only
+  decisions_per_run: 9
+  event_order: [U1, U2, U3, U4, U5, U6, N1, U7, N2]
+  input: serialized_active_memory_block_plus_canonical_candidate_text
+  raw_conversation: excluded
+  response: {keys: [operation, target_id], target_rule: 'Update requires a nonempty target_id; Add and Noop require null'}
+  operations: {M2: [Add, Update], M3: [Add, Update, Noop]}
+  prompts:
+    M2: {version: crst-pilot-maintenance-m2/1.0.0, sha256: b71c30935771918348d346b58ae32ccf3f0cc9fe836c6382480c6e956721f626}
+    M3: {version: crst-pilot-maintenance-m3/1.0.0, sha256: 7027ca9804f5bdf0bca370aa124312d9b4e5d2702e093816a20f19f33a356a75}
+  schemas:
+    M2: {version: crst-pilot-maintenance-m2-schema/1.0.0, sha256: 00fe3cab18d4c25a26e4c04a962822009852568cdc72b77c51bab19ae28cae87}
+    M3: {version: crst-pilot-maintenance-m3-schema/1.0.0, sha256: 5d1b47e125e8732e926e66365f43b62607a8df91556a9a15fe327f8e965c8832}
+  user_template_sha256: 09c0006cd2de916d6be52d258681b04ea3a4c64a901d28db43da83c018fd99be
+  invalid_or_unmappable: {state: unchanged, log: invalid_decision, repair: none, retry: none}
+  unavailable_update_target: {state: unchanged, log: target_error}
+  valid_but_wrong: executed
+  infrastructure_retries: separate_from_logical_decisions
+
+answering:
+  system: {version: crst-pilot-answer/1.0.0, sha256: 8a6abc2b52c63340aa483023a823c6ff9d8142ab9749b3ae7d6d2f216da5e71e}
+  system_source: configs/b0-calibration.yaml
+  # The system text above is frozen and unchanged. The answer-format instruction is part of the final user
+  # request, which is outside the B0 historical token budget.
+  request:
+    version: crst-pilot-answer-request/1.1.0
+    superseded: {version: crst-pilot-answer-request/1.0.0, sha256: 458e0a8e8a53ed92620386f4211606a2dac6735dd173782a966047e55cf54f2a}
+    memory_policies_sha256: 69296d0d2a01454e3de81a8f6dc2d6f19d1ac73e053bdf784e70df32f6aa9a9c
+    b0_final_user_sha256: 83343904909a383a4e3fef3fb1e94d414b604d277569dfaeaed46a9f9c798a66
+    format_instruction_sha256: 2f791e001065a37ce680cc67c67b7853dec20daca7f8d71d980283f189e5ffb7
+  memory_policies_user_template: "Context:\n{context}\n\nQuestion:\n{question}\n\nReturn exactly one JSON object with exactly one key named \"answer\".\nThe value of \"answer\" must contain only the answer to the question, with no explanation or additional text.\nDo not return any other keys."
+  b0_final_user_template: "Question:\n{question}\n\nReturn exactly one JSON object with exactly one key named \"answer\".\nThe value of \"answer\" must contain only the answer to the question, with no explanation or additional text.\nDo not return any other keys."
+  memory_policies: complete_serialized_active_memory_no_raw_history_no_retrieval
+  response_schema_role: local_validation_only
+  response_schema: {version: crst-pilot-answer-schema/1.0.0, sha256: ee52628cf2b7d10e8d9cd8b9a96eb2468b541a9eabb05aef91693a3ed4abba64}
+  response_schema_scope: identical_for_B0_M1_M2_M3
+  b0:
+    budget_config: configs/b0-suffix-calibration.yaml
+    budget_config_sha256: ccacef29a5df96b66628920e8160977205f8cdca8b83e874ddb0004f917970a8
+    b0_context_tokens: 71
+    derivation_artifact_sha256: 70ed6e326e82378f8f4ab0a4e88cf639a21f7da58cf255c9c693cf24eb4ed365
+    question: final_user_message_outside_budget
+
+scoring:
+  rule: whole_value_normalized_equality
+  normalization: [Unicode NFC, trim, collapse internal whitespace, casefold]
+  type_specific_canonicalization: none
+  classes: [CURRENT_CORRECT, STALE_ERROR, OTHER_ERROR]
+  order: [equals_current_target, equals_superseded_target, other]
+  prohibited: [substring, containment, word_boundary, fuzzy, embedding, llm_judge, paraphrase]
+  raw_exact_equality: diagnostic_only
+  material_precondition: normalized current and superseded target values pairwise distinct
+  manual_crosscheck: all 24 final answers after the live run
+
+active_memory_size:
+  primary: token count of the exact serialized active-memory block presented at Q
+  tokenizer: {repository_id: meta-llama/Llama-3.1-8B-Instruct, revision: 0e9e39f249a16976918f6564b8830bc894c89659, add_special_tokens: false}
+  excludes: [answer wrapper, question, system prompt, inactive entries, non-active version history, evaluator annotations, logs]
+  diagnostics: [text_only_entry_tokens, active_entry_count, size_after_each_information_event]
+  b0: no active-memory metric; selected marginal history tokens recorded separately
+
+backbone_execution:
+  entry: experiments/execute_crst_pilot.py
+  result_directory: results/crst-small-pilot/backbone/attempt-01
+  flags: [--execute, --confirm-spend, --eligibility]
+  requires: [valid pilot material, eligible naturalization audit bound to the archived collection, clean committed worktree, matching source and config identities, explicit spend confirmation, absent result directory, OPENROUTER_API_KEY, pinned tokenizer]
+  order: scenario, variant, then M1 B0 M2 M3
+  stop_on: [infrastructure terminal failure, routing violation]
+
+call_plan:
+  scenarios: 2
+  variants_per_scenario: 3
+  policy_runs: 24
+  backbone_logical_calls_per_variant: {M1: 1, B0: 1, M2: 10, M3: 10}
+  backbone_logical_calls: {total: 132, maintenance: 108, answering: 24}
+  max_physical_attempts_per_logical_call: 3
+  naturalization_logical_units: 2
+
+naturalization:
+  unit: one Low/Medium/High triplet under its preassigned generator
+  contract_path: configs/generator-naturalization-contract.json
+  contract_sha256: 3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee
+  prompt_version: crst-naturalization-prompt/1.1.0
+  input_contract_version: crst-naturalization-input/1.1.0
+  output_schema_version: crst-naturalization-triplet/1.0.0
+  prompt_sha256: a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279
+  output_schema_sha256: c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917
+  max_logical_attempts_per_unit: 3
+  entry: experiments/naturalize_crst_pilot.py
+  result_directory: results/crst-small-pilot/naturalization/attempt-01
+  audit_directory: results/crst-small-pilot/naturalization/audit
+  execution: {flags: [--execute, --confirm-spend], order: G1 unit then G2 unit, stop_on: [UNBUILDABLE, semantic failure], provider_constraints: first party, allow_fallbacks: false}
+  generators:
+    - logical_call_id: G1
+      scenario_id: pilot-scheduling-01
+      model: openai/gpt-5.6-sol
+      provider_order: [openai]
+      execution_profile: primary
+      execution_package_path: configs/generator-capability-probe.yaml
+      execution_package_sha256: 848ca0219ff1d24adcf2f12d0789ebeb8e7a86427336672173b91e034dca6b62
+      qualification_evidence_path: results/generator-qualification/adjudication/v2/attempt-01.json
+      qualification_evidence_sha256: 0e8cec2bd51543d10efe8ad70b2c3e758b75c708209a9665b20d5877555685da
+    - logical_call_id: G2
+      scenario_id: pilot-travel-01
+      model: anthropic/claude-fable-5.1
+      provider_order: [anthropic]
+      execution_profile: second_level_g2
+      execution_package_path: configs/generator-capability-probe-second-level-g2.yaml
+      execution_package_sha256: fb2c74eec9fea2ab49cee00e76cbe84ec7ce0fe2464e80bf84d157e82ec56180
+      qualification_evidence_path: results/generator-qualification/adjudication/v2/attempt-03.json
+      qualification_evidence_sha256: 2d52e22291299aa34f6702eb939c4ca987aed0ac151c2d2536c8b3f1887abad6
+  terminal_failures: [parse_or_schema, required_empty_field, refusal, truncation, infrastructure_terminal]
+  on_terminal_failure: {retry: same generator, prompt and structured input; archive every attempt separately}
+  after_cap: UNBUILDABLE_STOP_FOR_RESEARCHER
+  semantic_failure: {regenerate: false, action: STOP_FOR_RESEARCHER}
+  fluency_only: {regenerate: false, allowed: provenance-aware minimal surface edit before dataset freeze, then revalidation}
+  prohibited: [field mixing, manual completion, selective field retry, generator substitution]
+  rationale: bounded engineering and construction policy fixed prospectively
+  scope: construction only; does not reopen Generator Qualification or B0
+
+accounting_per_logical_request: [logical_id, policy, scenario, variant, event, request_body, request_sha256,
+  model, provider, response, usage, latency_seconds, cost, attempts]
+accounting_per_run: [final_answer, classification, csa_contribution, srr_contribution, moa_diagnostics,
+  update_target_diagnostic, active_memory_primary_tokens, text_only_memory_tokens, active_entry_count,
+  active_entry_trajectory, logical_calls, physical_attempts, logical_token_usage, retry_token_usage,
+  end_to_end_seconds, api_latency_seconds, cost]
+reporting: {policy_rankings: none, aggregate_accuracy_comparison: none, per_run_outcomes_only: true}
+
+checklist_status_vocabulary:
+  OFFLINE: PASS_OFFLINE
+  POST_NATURALIZATION: PENDING_NATURALIZATION
+  POST_RUN: PENDING_LIVE
+  failed_offline_check: FAIL
+
+acceptance_checklist:
+  - {id: DATA-01, stage: OFFLINE, statement: Two scenarios by three variants, each with the 16 events I1-I7 U1-U6 N1 U7 N2 in order plus Q}
+  - {id: DATA-02, stage: OFFLINE, statement: 'Target schedules Low U7, Medium U1 U3 U5 U7, High U1-U7 with no target return'}
+  - {id: DATA-03, stage: OFFLINE, statement: N1 is a target same-state event before U7, U7 is the final target revision, and N2 is a same-state event of a dedicated never-updated secondary}
+  - {id: DATA-04, stage: OFFLINE, statement: The hard distractor shares the target attribute with a different entity}
+  - {id: DATA-05, stage: OFFLINE, statement: Shared triplet controls hold across Low Medium and High}
+  - {id: DATA-06, stage: OFFLINE, statement: Every candidate renders with the frozen template and round-trips exactly}
+  - {id: DATA-07, stage: OFFLINE, statement: Candidates and prompts carry no state key role event label operation prior value gold answer or intensity}
+  - {id: DATA-08, stage: OFFLINE, statement: Normalized current and superseded target values are pairwise distinct}
+  - {id: DATA-09, stage: OFFLINE, statement: Pilot identities names attributes values and codes are absent from every reserved earlier set}
+  - {id: DATA-10, stage: POST_NATURALIZATION, statement: Every naturalized variant passes the frozen deterministic check or has a recorded manual review, with each attempt archived}
+  - {id: POL-01, stage: OFFLINE, statement: M1 appends every treatment candidate as its own active entry}
+  - {id: POL-02, stage: OFFLINE, statement: M2 accepts only Add and Update}
+  - {id: POL-03, stage: OFFLINE, statement: M3 accepts Add Update and Noop}
+  - {id: POL-04, stage: OFFLINE, statement: Update replaces the candidate text exactly, keeps id and created time, and advances the updated time}
+  - {id: POL-05, stage: OFFLINE, statement: Entry ids and semantic timestamps follow the frozen event-index basis}
+  - {id: POL-06, stage: OFFLINE, statement: Noop changes neither content nor timestamp and is logged}
+  - {id: POL-07, stage: OFFLINE, statement: A valid but semantically wrong decision is executed}
+  - {id: POL-08, stage: OFFLINE, statement: An invalid decision leaves state unchanged and is logged without repair or retry, and an unavailable target is logged}
+  - {id: POL-09, stage: OFFLINE, statement: Every M2 and M3 run has exactly nine maintenance decisions}
+  - {id: ANS-01, stage: OFFLINE, statement: M1 M2 M3 answer requests contain the complete serialized active memory and no raw history or retrieval}
+  - {id: ANS-02, stage: POST_NATURALIZATION, statement: B0 history is at most 71 marginal tokens, retains U7 and N2, and Q is outside the budget}
+  - {id: ANS-03, stage: OFFLINE, statement: All four conditions use the same system text and the same structured answer schema}
+  - {id: SCR-01, stage: OFFLINE, statement: Scoring is whole-value normalized equality only, with no partial fuzzy embedding or LLM matching}
+  - {id: SCR-02, stage: OFFLINE, statement: Answers classify as CURRENT_CORRECT STALE_ERROR or OTHER_ERROR, and verbose multi-value or invalid answers are OTHER_ERROR}
+  - {id: SCR-03, stage: POST_RUN, statement: All 24 final-answer classifications are cross-checked manually against the scorer}
+  - {id: ACC-01, stage: POST_RUN, statement: Every logical request and run records the frozen accounting fields}
+  - {id: ACC-02, stage: POST_RUN, statement: Retry attempts and their token usage are recorded separately from logical usage}
+  - {id: ACC-03, stage: OFFLINE, statement: Model provider settings prompts and schemas are pinned by identity and hash}
+  - {id: ACC-04, stage: POST_RUN, statement: Source commit and environment are recorded for the run}
+  - {id: ACC-05, stage: OFFLINE, statement: Replaying archived raw responses reproduces state journal and scores deterministically}
+  - {id: ACC-06, stage: OFFLINE, statement: The plan is 24 runs, 132 backbone calls (108 maintenance, 24 answering) and 2 naturalization units with no repetition}
+  - {id: ACC-07, stage: OFFLINE, statement: No policy ranking or aggregate accuracy comparison is computed or displayed}

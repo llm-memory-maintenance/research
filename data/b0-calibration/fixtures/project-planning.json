@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-project-planning-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Project Planning",
+    "entities": [
+      {
+        "entity_id": "b0cal-project-planning-01-primary",
+        "name": "Initiative Quillon"
+      },
+      {
+        "entity_id": "b0cal-project-planning-01-distractor",
+        "name": "Initiative Bramwell"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "phase_label",
+        "meaning": "current project phase",
+        "units_or_interpretation": "phase label"
+      },
+      {
+        "attribute_id": "ledger_code",
+        "meaning": "initiative ledger identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "sponsor",
+        "meaning": "initiative sponsor",
+        "units_or_interpretation": "synthetic team"
+      },
+      {
+        "attribute_id": "checkpoint",
+        "meaning": "next checkpoint",
+        "units_or_interpretation": "checkpoint label"
+      },
+      {
+        "attribute_id": "budget_band",
+        "meaning": "budget band",
+        "units_or_interpretation": "band label"
+      },
+      {
+        "attribute_id": "risk_rating",
+        "meaning": "risk rating",
+        "units_or_interpretation": "rating label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-project-planning-01-primary",
+        "attribute_id": "phase_label",
+        "initial_value": "scoping phase",
+        "role": "target",
+        "value_inventory": [
+          "scoping phase",
+          "sourcing phase",
+          "drafting phase",
+          "prototyping phase",
+          "piloting phase",
+          "tuning phase",
+          "hardening phase",
+          "wrap-up phase"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-project-planning-01-distractor",
+        "attribute_id": "phase_label",
+        "initial_value": "audit phase",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "audit phase",
+          "budgeting phase",
+          "closeout phase"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-project-planning-01-primary",
+        "attribute_id": "ledger_code",
+        "initial_value": "LDG-Q31",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "LDG-Q31"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-project-planning-01-primary",
+        "attribute_id": "sponsor",
+        "initial_value": "Team Orchard",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Team Orchard",
+          "Team Beacon",
+          "Team Ferrous"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-project-planning-01-primary",
+        "attribute_id": "checkpoint",
+        "initial_value": "Checkpoint Ridgeline",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Checkpoint Ridgeline",
+          "Checkpoint Millrace",
+          "Checkpoint Tidewater"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-project-planning-01-primary",
+        "attribute_id": "budget_band",
+        "initial_value": "Band Silver",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Band Silver",
+          "Band Copper",
+          "Band Zinc"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-project-planning-01-primary",
+        "attribute_id": "risk_rating",
+        "initial_value": "low risk",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "low risk",
+          "moderate risk",
+          "elevated risk"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_c",
+      "I2": "k_d",
+      "I3": "k_target",
+      "I4": "k_hard",
+      "I5": "k_n2",
+      "I6": "k_a",
+      "I7": "k_b"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-project-planning-01-primary",
+      "attribute_id": "phase_label",
+      "intent": "Ask only for the current project phase of Initiative Quillon."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "wrap-up phase",
+    "coverage": [
+      "planning",
+      "categorical_values",
+      "assignments"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "Band Silver",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "low risk",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "scoping phase",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "audit phase",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "LDG-Q31",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "Team Orchard",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "Checkpoint Ridgeline",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_b",
+            "current_value": "Checkpoint Millrace",
+            "semantics": "changed_state",
+            "previous_value": "Checkpoint Ridgeline",
+            "superseded_values": [
+              "Checkpoint Ridgeline"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Millrace"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "budgeting phase",
+            "semantics": "changed_state",
+            "previous_value": "audit phase",
+            "superseded_values": [
+              "audit phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Millrace"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_b",
+            "current_value": "Checkpoint Tidewater",
+            "semantics": "changed_state",
+            "previous_value": "Checkpoint Millrace",
+            "superseded_values": [
+              "Checkpoint Ridgeline",
+              "Checkpoint Millrace"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Tidewater"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "Band Copper",
+            "semantics": "changed_state",
+            "previous_value": "Band Silver",
+            "superseded_values": [
+              "Band Silver"
+            ],
+            "state_after": {
+              "k_c": "Band Copper",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Tidewater"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_d",
+            "current_value": "moderate risk",
+            "semantics": "changed_state",
+            "previous_value": "low risk",
+            "superseded_values": [
+              "low risk"
+            ],
+            "state_after": {
+              "k_c": "Band Copper",
+              "k_d": "moderate risk",
+              "k_target": "scoping phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Tidewater"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "Team Beacon",
+            "semantics": "changed_state",
+            "previous_value": "Team Orchard",
+            "superseded_values": [
+              "Team Orchard"
+            ],
+            "state_after": {
+              "k_c": "Band Copper",
+              "k_d": "moderate risk",
+              "k_target": "scoping phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Beacon",
+              "k_b": "Checkpoint Tidewater"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "scoping phase",
+            "semantics": "same_state",
+            "previous_value": "scoping phase",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Copper",
+              "k_d": "moderate risk",
+              "k_target": "scoping phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Beacon",
+              "k_b": "Checkpoint Tidewater"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "wrap-up phase",
+            "semantics": "changed_state",
+            "previous_value": "scoping phase",
+            "superseded_values": [
+              "scoping phase"
+            ],
+            "state_after": {
+              "k_c": "Band Copper",
+              "k_d": "moderate risk",
+              "k_target": "wrap-up phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Beacon",
+              "k_b": "Checkpoint Tidewater"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "LDG-Q31",
+            "semantics": "same_state",
+            "previous_value": "LDG-Q31",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Copper",
+              "k_d": "moderate risk",
+              "k_target": "wrap-up phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Beacon",
+              "k_b": "Checkpoint Tidewater"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "Band Copper",
+          "k_d": "moderate risk",
+          "k_target": "wrap-up phase",
+          "k_hard": "budgeting phase",
+          "k_n2": "LDG-Q31",
+          "k_a": "Team Beacon",
+          "k_b": "Checkpoint Tidewater"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "Band Silver",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "low risk",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "scoping phase",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "audit phase",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "LDG-Q31",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "Team Orchard",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "Checkpoint Ridgeline",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "sourcing phase",
+            "semantics": "changed_state",
+            "previous_value": "scoping phase",
+            "superseded_values": [
+              "scoping phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "sourcing phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_d",
+            "current_value": "moderate risk",
+            "semantics": "changed_state",
+            "previous_value": "low risk",
+            "superseded_values": [
+              "low risk"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "moderate risk",
+              "k_target": "sourcing phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "prototyping phase",
+            "semantics": "changed_state",
+            "previous_value": "sourcing phase",
+            "superseded_values": [
+              "scoping phase",
+              "sourcing phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "moderate risk",
+              "k_target": "prototyping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "budgeting phase",
+            "semantics": "changed_state",
+            "previous_value": "audit phase",
+            "superseded_values": [
+              "audit phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "moderate risk",
+              "k_target": "prototyping phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "tuning phase",
+            "semantics": "changed_state",
+            "previous_value": "prototyping phase",
+            "superseded_values": [
+              "scoping phase",
+              "sourcing phase",
+              "prototyping phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "moderate risk",
+              "k_target": "tuning phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "Band Copper",
+            "semantics": "changed_state",
+            "previous_value": "Band Silver",
+            "superseded_values": [
+              "Band Silver"
+            ],
+            "state_after": {
+              "k_c": "Band Copper",
+              "k_d": "moderate risk",
+              "k_target": "tuning phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "tuning phase",
+            "semantics": "same_state",
+            "previous_value": "tuning phase",
+            "superseded_values": [
+              "scoping phase",
+              "sourcing phase",
+              "prototyping phase"
+            ],
+            "state_after": {
+              "k_c": "Band Copper",
+              "k_d": "moderate risk",
+              "k_target": "tuning phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "wrap-up phase",
+            "semantics": "changed_state",
+            "previous_value": "tuning phase",
+            "superseded_values": [
+              "scoping phase",
+              "sourcing phase",
+              "prototyping phase",
+              "tuning phase"
+            ],
+            "state_after": {
+              "k_c": "Band Copper",
+              "k_d": "moderate risk",
+              "k_target": "wrap-up phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "LDG-Q31",
+            "semantics": "same_state",
+            "previous_value": "LDG-Q31",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Copper",
+              "k_d": "moderate risk",
+              "k_target": "wrap-up phase",
+              "k_hard": "budgeting phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "Band Copper",
+          "k_d": "moderate risk",
+          "k_target": "wrap-up phase",
+          "k_hard": "budgeting phase",
+          "k_n2": "LDG-Q31",
+          "k_a": "Team Orchard",
+          "k_b": "Checkpoint Ridgeline"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "Band Silver",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "low risk",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "scoping phase",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "audit phase",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "LDG-Q31",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "Team Orchard",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "Checkpoint Ridgeline",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "scoping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "sourcing phase",
+            "semantics": "changed_state",
+            "previous_value": "scoping phase",
+            "superseded_values": [
+              "scoping phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "sourcing phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "drafting phase",
+            "semantics": "changed_state",
+            "previous_value": "sourcing phase",
+            "superseded_values": [
+              "scoping phase",
+              "sourcing phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "drafting phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "prototyping phase",
+            "semantics": "changed_state",
+            "previous_value": "drafting phase",
+            "superseded_values": [
+              "scoping phase",
+              "sourcing phase",
+              "drafting phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "prototyping phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "piloting phase",
+            "semantics": "changed_state",
+            "previous_value": "prototyping phase",
+            "superseded_values": [
+              "scoping phase",
+              "sourcing phase",
+              "drafting phase",
+              "prototyping phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "piloting phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "tuning phase",
+            "semantics": "changed_state",
+            "previous_value": "piloting phase",
+            "superseded_values": [
+              "scoping phase",
+              "sourcing phase",
+              "drafting phase",
+              "prototyping phase",
+              "piloting phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "tuning phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "hardening phase",
+            "semantics": "changed_state",
+            "previous_value": "tuning phase",
+            "superseded_values": [
+              "scoping phase",
+              "sourcing phase",
+              "drafting phase",
+              "prototyping phase",
+              "piloting phase",
+              "tuning phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "hardening phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "hardening phase",
+            "semantics": "same_state",
+            "previous_value": "hardening phase",
+            "superseded_values": [
+              "scoping phase",
+              "sourcing phase",
+              "drafting phase",
+              "prototyping phase",
+              "piloting phase",
+              "tuning phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "hardening phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "wrap-up phase",
+            "semantics": "changed_state",
+            "previous_value": "hardening phase",
+            "superseded_values": [
+              "scoping phase",
+              "sourcing phase",
+              "drafting phase",
+              "prototyping phase",
+              "piloting phase",
+              "tuning phase",
+              "hardening phase"
+            ],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "wrap-up phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "LDG-Q31",
+            "semantics": "same_state",
+            "previous_value": "LDG-Q31",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "Band Silver",
+              "k_d": "low risk",
+              "k_target": "wrap-up phase",
+              "k_hard": "audit phase",
+              "k_n2": "LDG-Q31",
+              "k_a": "Team Orchard",
+              "k_b": "Checkpoint Ridgeline"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "Band Silver",
+          "k_d": "low risk",
+          "k_target": "wrap-up phase",
+          "k_hard": "audit phase",
+          "k_n2": "LDG-Q31",
+          "k_a": "Team Orchard",
+          "k_b": "Checkpoint Ridgeline"
+        }
+      }
+    }
+  }
+}

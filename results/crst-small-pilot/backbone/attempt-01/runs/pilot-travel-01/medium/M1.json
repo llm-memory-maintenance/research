@@ -1,0 +1,2043 @@
+{
+  "run_id": "pilot-travel-01/medium/M1",
+  "scenario_id": "pilot-travel-01",
+  "variant": "medium",
+  "policy": "M1",
+  "logical_ids": [
+    "pilot-travel-01/medium/M1/A"
+  ],
+  "journal": [
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "I1",
+      "event_index": 1,
+      "semantic_time": "2000-01-01T00:01:00Z",
+      "reference_state_key": "k_d",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0001",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0001"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "I2",
+      "event_index": 2,
+      "semantic_time": "2000-01-01T00:02:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0002",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0002"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "I3",
+      "event_index": 3,
+      "semantic_time": "2000-01-01T00:03:00Z",
+      "reference_state_key": "k_hard",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0003",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0003"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "I4",
+      "event_index": 4,
+      "semantic_time": "2000-01-01T00:04:00Z",
+      "reference_state_key": "k_n2",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0004",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0004"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "I5",
+      "event_index": 5,
+      "semantic_time": "2000-01-01T00:05:00Z",
+      "reference_state_key": "k_a",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0005",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0005"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "I6",
+      "event_index": 6,
+      "semantic_time": "2000-01-01T00:06:00Z",
+      "reference_state_key": "k_b",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0006",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0006"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "I7",
+      "event_index": 7,
+      "semantic_time": "2000-01-01T00:07:00Z",
+      "reference_state_key": "k_c",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0007",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0007"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "U1",
+      "event_index": 8,
+      "semantic_time": "2000-01-01T00:08:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": null,
+      "canonical_target_id": "mem_0002",
+      "decision_source": "deterministic",
+      "raw_response": null,
+      "parsed_operation": "Add",
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        }
+      ],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0008"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "U2",
+      "event_index": 9,
+      "semantic_time": "2000-01-01T00:09:00Z",
+      "reference_state_key": "k_hard",
+      "reference_operation": null,
+      "canonical_target_id": "mem_0003",
+      "decision_source": "deterministic",
+      "raw_response": null,
+      "parsed_operation": "Add",
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        }
+      ],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0009"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "U3",
+      "event_index": 10,
+      "semantic_time": "2000-01-01T00:10:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": null,
+      "canonical_target_id": "mem_0002",
+      "decision_source": "deterministic",
+      "raw_response": null,
+      "parsed_operation": "Add",
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        }
+      ],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0010"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "U4",
+      "event_index": 11,
+      "semantic_time": "2000-01-01T00:11:00Z",
+      "reference_state_key": "k_d",
+      "reference_operation": null,
+      "canonical_target_id": "mem_0001",
+      "decision_source": "deterministic",
+      "raw_response": null,
+      "parsed_operation": "Add",
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        }
+      ],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0011"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        },
+        {
+          "entry_id": "mem_0011",
+          "created_time": "2000-01-01T00:11:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "U5",
+      "event_index": 12,
+      "semantic_time": "2000-01-01T00:12:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": null,
+      "canonical_target_id": "mem_0002",
+      "decision_source": "deterministic",
+      "raw_response": null,
+      "parsed_operation": "Add",
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        },
+        {
+          "entry_id": "mem_0011",
+          "created_time": "2000-01-01T00:11:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+        }
+      ],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0012"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        },
+        {
+          "entry_id": "mem_0011",
+          "created_time": "2000-01-01T00:11:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+        },
+        {
+          "entry_id": "mem_0012",
+          "created_time": "2000-01-01T00:12:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "U6",
+      "event_index": 13,
+      "semantic_time": "2000-01-01T00:13:00Z",
+      "reference_state_key": "k_a",
+      "reference_operation": null,
+      "canonical_target_id": "mem_0005",
+      "decision_source": "deterministic",
+      "raw_response": null,
+      "parsed_operation": "Add",
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        },
+        {
+          "entry_id": "mem_0011",
+          "created_time": "2000-01-01T00:11:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+        },
+        {
+          "entry_id": "mem_0012",
+          "created_time": "2000-01-01T00:12:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        }
+      ],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0013"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        },
+        {
+          "entry_id": "mem_0011",
+          "created_time": "2000-01-01T00:11:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+        },
+        {
+          "entry_id": "mem_0012",
+          "created_time": "2000-01-01T00:12:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        },
+        {
+          "entry_id": "mem_0013",
+          "created_time": "2000-01-01T00:13:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Anchor."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "N1",
+      "event_index": 14,
+      "semantic_time": "2000-01-01T00:14:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": null,
+      "canonical_target_id": "mem_0002",
+      "decision_source": "deterministic",
+      "raw_response": null,
+      "parsed_operation": "Add",
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        },
+        {
+          "entry_id": "mem_0011",
+          "created_time": "2000-01-01T00:11:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+        },
+        {
+          "entry_id": "mem_0012",
+          "created_time": "2000-01-01T00:12:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        },
+        {
+          "entry_id": "mem_0013",
+          "created_time": "2000-01-01T00:13:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Anchor."
+        }
+      ],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0014"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        },
+        {
+          "entry_id": "mem_0011",
+          "created_time": "2000-01-01T00:11:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+        },
+        {
+          "entry_id": "mem_0012",
+          "created_time": "2000-01-01T00:12:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        },
+        {
+          "entry_id": "mem_0013",
+          "created_time": "2000-01-01T00:13:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Anchor."
+        },
+        {
+          "entry_id": "mem_0014",
+          "created_time": "2000-01-01T00:14:00Z",
+          "last_updated_time": "2000-01-01T00:14:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "U7",
+      "event_index": 15,
+      "semantic_time": "2000-01-01T00:15:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": null,
+      "canonical_target_id": "mem_0002",
+      "decision_source": "deterministic",
+      "raw_response": null,
+      "parsed_operation": "Add",
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        },
+        {
+          "entry_id": "mem_0011",
+          "created_time": "2000-01-01T00:11:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+        },
+        {
+          "entry_id": "mem_0012",
+          "created_time": "2000-01-01T00:12:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        },
+        {
+          "entry_id": "mem_0013",
+          "created_time": "2000-01-01T00:13:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Anchor."
+        },
+        {
+          "entry_id": "mem_0014",
+          "created_time": "2000-01-01T00:14:00Z",
+          "last_updated_time": "2000-01-01T00:14:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        }
+      ],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0015"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        },
+        {
+          "entry_id": "mem_0011",
+          "created_time": "2000-01-01T00:11:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+        },
+        {
+          "entry_id": "mem_0012",
+          "created_time": "2000-01-01T00:12:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        },
+        {
+          "entry_id": "mem_0013",
+          "created_time": "2000-01-01T00:13:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Anchor."
+        },
+        {
+          "entry_id": "mem_0014",
+          "created_time": "2000-01-01T00:14:00Z",
+          "last_updated_time": "2000-01-01T00:14:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        },
+        {
+          "entry_id": "mem_0015",
+          "created_time": "2000-01-01T00:15:00Z",
+          "last_updated_time": "2000-01-01T00:15:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Hazelgrave."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-travel-01/medium/M1",
+      "scenario_id": "pilot-travel-01",
+      "variant": "medium",
+      "policy": "M1",
+      "event": "N2",
+      "event_index": 16,
+      "semantic_time": "2000-01-01T00:16:00Z",
+      "reference_state_key": "k_n2",
+      "reference_operation": null,
+      "canonical_target_id": "mem_0004",
+      "decision_source": "deterministic",
+      "raw_response": null,
+      "parsed_operation": "Add",
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        },
+        {
+          "entry_id": "mem_0011",
+          "created_time": "2000-01-01T00:11:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+        },
+        {
+          "entry_id": "mem_0012",
+          "created_time": "2000-01-01T00:12:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        },
+        {
+          "entry_id": "mem_0013",
+          "created_time": "2000-01-01T00:13:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Anchor."
+        },
+        {
+          "entry_id": "mem_0014",
+          "created_time": "2000-01-01T00:14:00Z",
+          "last_updated_time": "2000-01-01T00:14:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        },
+        {
+          "entry_id": "mem_0015",
+          "created_time": "2000-01-01T00:15:00Z",
+          "last_updated_time": "2000-01-01T00:15:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Hazelgrave."
+        }
+      ],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0016"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Harbor."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Ferry crossing Wrenfield, the passenger deck level is Deck 2."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Ferry crossing Wrenfield, the onboard meal plan is plan pantry."
+        },
+        {
+          "entry_id": "mem_0008",
+          "created_time": "2000-01-01T00:08:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone."
+        },
+        {
+          "entry_id": "mem_0009",
+          "created_time": "2000-01-01T00:09:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere."
+        },
+        {
+          "entry_id": "mem_0010",
+          "created_time": "2000-01-01T00:10:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere."
+        },
+        {
+          "entry_id": "mem_0011",
+          "created_time": "2000-01-01T00:11:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms."
+        },
+        {
+          "entry_id": "mem_0012",
+          "created_time": "2000-01-01T00:12:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        },
+        {
+          "entry_id": "mem_0013",
+          "created_time": "2000-01-01T00:13:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Ferry crossing Wrenfield, the cabin class is class Anchor."
+        },
+        {
+          "entry_id": "mem_0014",
+          "created_time": "2000-01-01T00:14:00Z",
+          "last_updated_time": "2000-01-01T00:14:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick."
+        },
+        {
+          "entry_id": "mem_0015",
+          "created_time": "2000-01-01T00:15:00Z",
+          "last_updated_time": "2000-01-01T00:15:00Z",
+          "text": "For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Hazelgrave."
+        },
+        {
+          "entry_id": "mem_0016",
+          "created_time": "2000-01-01T00:16:00Z",
+          "last_updated_time": "2000-01-01T00:16:00Z",
+          "text": "For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38."
+        }
+      ]
+    }
+  ],
+  "trajectory": [
+    {
+      "event": "I1",
+      "active_entries": 1,
+      "primary_tokens": 57
+    },
+    {
+      "event": "I2",
+      "active_entries": 2,
+      "primary_tokens": 115
+    },
+    {
+      "event": "I3",
+      "active_entries": 3,
+      "primary_tokens": 174
+    },
+    {
+      "event": "I4",
+      "active_entries": 4,
+      "primary_tokens": 232
+    },
+    {
+      "event": "I5",
+      "active_entries": 5,
+      "primary_tokens": 287
+    },
+    {
+      "event": "I6",
+      "active_entries": 6,
+      "primary_tokens": 344
+    },
+    {
+      "event": "I7",
+      "active_entries": 7,
+      "primary_tokens": 400
+    },
+    {
+      "event": "U1",
+      "active_entries": 8,
+      "primary_tokens": 460
+    },
+    {
+      "event": "U2",
+      "active_entries": 9,
+      "primary_tokens": 519
+    },
+    {
+      "event": "U3",
+      "active_entries": 10,
+      "primary_tokens": 577
+    },
+    {
+      "event": "U4",
+      "active_entries": 11,
+      "primary_tokens": 634
+    },
+    {
+      "event": "U5",
+      "active_entries": 12,
+      "primary_tokens": 693
+    },
+    {
+      "event": "U6",
+      "active_entries": 13,
+      "primary_tokens": 748
+    },
+    {
+      "event": "N1",
+      "active_entries": 14,
+      "primary_tokens": 807
+    },
+    {
+      "event": "U7",
+      "active_entries": 15,
+      "primary_tokens": 865
+    },
+    {
+      "event": "N2",
+      "active_entries": 16,
+      "primary_tokens": 923
+    }
+  ],
+  "raw_answer": "{\"answer\": \"Gate Amberlyn\"}",
+  "classification": {
+    "class": "STALE_ERROR",
+    "reason": "equals_superseded_target",
+    "answer": "Gate Amberlyn",
+    "normalized_answer": "gate amberlyn",
+    "raw_exact_match": false
+  },
+  "csa_contribution": 0,
+  "srr_contribution": 1,
+  "maintenance": null,
+  "memory_size": {
+    "primary_tokens": 923,
+    "text_only_tokens": 267,
+    "active_entries": 16
+  },
+  "b0_context": null,
+  "final_active_memory": "[memory_id=mem_0001; created=2000-01-01T00:01:00Z; updated=2000-01-01T00:01:00Z] For Ferry crossing Wrenfield, the carry-on limit is 6 kilograms.\n[memory_id=mem_0002; created=2000-01-01T00:02:00Z; updated=2000-01-01T00:02:00Z] For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Amberlyn.\n[memory_id=mem_0003; created=2000-01-01T00:03:00Z; updated=2000-01-01T00:03:00Z] For Ferry crossing Halloway, the assigned embarkation gate is Gate Ivorlea.\n[memory_id=mem_0004; created=2000-01-01T00:04:00Z; updated=2000-01-01T00:04:00Z] For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38.\n[memory_id=mem_0005; created=2000-01-01T00:05:00Z; updated=2000-01-01T00:05:00Z] For Ferry crossing Wrenfield, the cabin class is class Harbor.\n[memory_id=mem_0006; created=2000-01-01T00:06:00Z; updated=2000-01-01T00:06:00Z] For Ferry crossing Wrenfield, the passenger deck level is Deck 2.\n[memory_id=mem_0007; created=2000-01-01T00:07:00Z; updated=2000-01-01T00:07:00Z] For Ferry crossing Wrenfield, the onboard meal plan is plan pantry.\n[memory_id=mem_0008; created=2000-01-01T00:08:00Z; updated=2000-01-01T00:08:00Z] For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Bristlecone.\n[memory_id=mem_0009; created=2000-01-01T00:09:00Z; updated=2000-01-01T00:09:00Z] For Ferry crossing Halloway, the assigned embarkation gate is Gate Jessamere.\n[memory_id=mem_0010; created=2000-01-01T00:10:00Z; updated=2000-01-01T00:10:00Z] For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Dunmere.\n[memory_id=mem_0011; created=2000-01-01T00:11:00Z; updated=2000-01-01T00:11:00Z] For Ferry crossing Wrenfield, the carry-on limit is 9 kilograms.\n[memory_id=mem_0012; created=2000-01-01T00:12:00Z; updated=2000-01-01T00:12:00Z] For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick.\n[memory_id=mem_0013; created=2000-01-01T00:13:00Z; updated=2000-01-01T00:13:00Z] For Ferry crossing Wrenfield, the cabin class is class Anchor.\n[memory_id=mem_0014; created=2000-01-01T00:14:00Z; updated=2000-01-01T00:14:00Z] For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Fallowick.\n[memory_id=mem_0015; created=2000-01-01T00:15:00Z; updated=2000-01-01T00:15:00Z] For Ferry crossing Wrenfield, the assigned embarkation gate is Gate Hazelgrave.\n[memory_id=mem_0016; created=2000-01-01T00:16:00Z; updated=2000-01-01T00:16:00Z] For Ferry crossing Wrenfield, the ferry reservation identifier is BKG-W38.",
+  "summary": {
+    "run_id": "pilot-travel-01/medium/M1",
+    "final_answer": "Gate Amberlyn",
+    "classification": "STALE_ERROR",
+    "csa_contribution": 0,
+    "srr_contribution": 1,
+    "moa": null,
+    "update_target": null,
+    "active_memory_primary_tokens": 923,
+    "text_only_memory_tokens": 267,
+    "active_entry_count": 16,
+    "active_entry_trajectory": [
+      {
+        "event": "I1",
+        "active_entries": 1,
+        "primary_tokens": 57
+      },
+      {
+        "event": "I2",
+        "active_entries": 2,
+        "primary_tokens": 115
+      },
+      {
+        "event": "I3",
+        "active_entries": 3,
+        "primary_tokens": 174
+      },
+      {
+        "event": "I4",
+        "active_entries": 4,
+        "primary_tokens": 232
+      },
+      {
+        "event": "I5",
+        "active_entries": 5,
+        "primary_tokens": 287
+      },
+      {
+        "event": "I6",
+        "active_entries": 6,
+        "primary_tokens": 344
+      },
+      {
+        "event": "I7",
+        "active_entries": 7,
+        "primary_tokens": 400
+      },
+      {
+        "event": "U1",
+        "active_entries": 8,
+        "primary_tokens": 460
+      },
+      {
+        "event": "U2",
+        "active_entries": 9,
+        "primary_tokens": 519
+      },
+      {
+        "event": "U3",
+        "active_entries": 10,
+        "primary_tokens": 577
+      },
+      {
+        "event": "U4",
+        "active_entries": 11,
+        "primary_tokens": 634
+      },
+      {
+        "event": "U5",
+        "active_entries": 12,
+        "primary_tokens": 693
+      },
+      {
+        "event": "U6",
+        "active_entries": 13,
+        "primary_tokens": 748
+      },
+      {
+        "event": "N1",
+        "active_entries": 14,
+        "primary_tokens": 807
+      },
+      {
+        "event": "U7",
+        "active_entries": 15,
+        "primary_tokens": 865
+      },
+      {
+        "event": "N2",
+        "active_entries": 16,
+        "primary_tokens": 923
+      }
+    ],
+    "b0_context": null,
+    "logical_calls": 1,
+    "end_to_end_seconds": 0.4974015990155749
+  },
+  "accounting": {
+    "logical_calls": 1,
+    "physical_attempts": 1,
+    "logical_token_usage": {
+      "prompt_tokens": 1048,
+      "completion_tokens": 9
+    },
+    "retry_token_usage": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0
+    },
+    "retry_attempts_without_usage": 0,
+    "api_latency_seconds": 0.4776550279930234,
+    "cost": 0.00023254
+  },
+  "end_to_end_seconds": 0.4974015990155749
+}

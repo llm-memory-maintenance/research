@@ -1,0 +1,1038 @@
+{
+  "schema_version": "crst-small-pilot-reference/1.0.0",
+  "fixture_id": "pilot-scheduling-01",
+  "purpose": "CRST-SMALL-PILOT-ONLY",
+  "reference": {
+    "domain": "Scheduling",
+    "entities": [
+      {
+        "entity_id": "pilot-scheduling-01-primary",
+        "name": "Seminar Brindle"
+      },
+      {
+        "entity_id": "pilot-scheduling-01-distractor",
+        "name": "Seminar Kestrel"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "desk_opening",
+        "meaning": "registration desk opening time",
+        "units_or_interpretation": "24-hour local clock; one synthetic day"
+      },
+      {
+        "attribute_id": "room_code",
+        "meaning": "seminar room identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "moderator",
+        "meaning": "seminar moderator",
+        "units_or_interpretation": "synthetic person"
+      },
+      {
+        "attribute_id": "hall_capacity",
+        "meaning": "seating capacity",
+        "units_or_interpretation": "seats"
+      },
+      {
+        "attribute_id": "handout",
+        "meaning": "handout format",
+        "units_or_interpretation": "format label"
+      },
+      {
+        "attribute_id": "coffee_break",
+        "meaning": "coffee break length",
+        "units_or_interpretation": "minutes"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "pilot-scheduling-01-primary",
+        "attribute_id": "desk_opening",
+        "initial_value": "06:35",
+        "role": "target",
+        "value_inventory": [
+          "06:35",
+          "06:50",
+          "07:35",
+          "08:05",
+          "08:40",
+          "09:20",
+          "10:05",
+          "10:55"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "pilot-scheduling-01-distractor",
+        "attribute_id": "desk_opening",
+        "initial_value": "12:25",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "12:25",
+          "12:55",
+          "13:35"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "pilot-scheduling-01-primary",
+        "attribute_id": "room_code",
+        "initial_value": "ROM-B47",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "ROM-B47"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "pilot-scheduling-01-primary",
+        "attribute_id": "moderator",
+        "initial_value": "Ansel Wickham",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Ansel Wickham",
+          "Perpetua Drune",
+          "Kolya Thrale"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "pilot-scheduling-01-primary",
+        "attribute_id": "hall_capacity",
+        "initial_value": "40 seats",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "40 seats",
+          "55 seats",
+          "72 seats"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "pilot-scheduling-01-primary",
+        "attribute_id": "handout",
+        "initial_value": "stapled packet",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "stapled packet",
+          "folded card",
+          "loose sheets"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "pilot-scheduling-01-primary",
+        "attribute_id": "coffee_break",
+        "initial_value": "22 minutes",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "22 minutes",
+          "33 minutes",
+          "42 minutes"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_c",
+      "I2": "k_d",
+      "I3": "k_target",
+      "I4": "k_hard",
+      "I5": "k_n2",
+      "I6": "k_a",
+      "I7": "k_b"
+    },
+    "question_intent": {
+      "entity_id": "pilot-scheduling-01-primary",
+      "attribute_id": "desk_opening",
+      "intent": "Ask only for the current registration desk opening time of Seminar Brindle."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "10:55",
+    "coverage": [
+      "times",
+      "scheduling",
+      "numeric_values"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "stapled packet",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "22 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "06:35",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "12:25",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "ROM-B47",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "Ansel Wickham",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "40 seats",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_b",
+            "current_value": "55 seats",
+            "semantics": "changed_state",
+            "previous_value": "40 seats",
+            "superseded_values": [
+              "40 seats"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "55 seats"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "12:55",
+            "semantics": "changed_state",
+            "previous_value": "12:25",
+            "superseded_values": [
+              "12:25"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "55 seats"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_b",
+            "current_value": "72 seats",
+            "semantics": "changed_state",
+            "previous_value": "55 seats",
+            "superseded_values": [
+              "40 seats",
+              "55 seats"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "72 seats"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "folded card",
+            "semantics": "changed_state",
+            "previous_value": "stapled packet",
+            "superseded_values": [
+              "stapled packet"
+            ],
+            "state_after": {
+              "k_c": "folded card",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "72 seats"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_d",
+            "current_value": "33 minutes",
+            "semantics": "changed_state",
+            "previous_value": "22 minutes",
+            "superseded_values": [
+              "22 minutes"
+            ],
+            "state_after": {
+              "k_c": "folded card",
+              "k_d": "33 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "72 seats"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "Perpetua Drune",
+            "semantics": "changed_state",
+            "previous_value": "Ansel Wickham",
+            "superseded_values": [
+              "Ansel Wickham"
+            ],
+            "state_after": {
+              "k_c": "folded card",
+              "k_d": "33 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Perpetua Drune",
+              "k_b": "72 seats"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "06:35",
+            "semantics": "same_state",
+            "previous_value": "06:35",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "folded card",
+              "k_d": "33 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Perpetua Drune",
+              "k_b": "72 seats"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "10:55",
+            "semantics": "changed_state",
+            "previous_value": "06:35",
+            "superseded_values": [
+              "06:35"
+            ],
+            "state_after": {
+              "k_c": "folded card",
+              "k_d": "33 minutes",
+              "k_target": "10:55",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Perpetua Drune",
+              "k_b": "72 seats"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "ROM-B47",
+            "semantics": "same_state",
+            "previous_value": "ROM-B47",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "folded card",
+              "k_d": "33 minutes",
+              "k_target": "10:55",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Perpetua Drune",
+              "k_b": "72 seats"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "folded card",
+          "k_d": "33 minutes",
+          "k_target": "10:55",
+          "k_hard": "12:55",
+          "k_n2": "ROM-B47",
+          "k_a": "Perpetua Drune",
+          "k_b": "72 seats"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "stapled packet",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "22 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "06:35",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "12:25",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "ROM-B47",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "Ansel Wickham",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "40 seats",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "06:50",
+            "semantics": "changed_state",
+            "previous_value": "06:35",
+            "superseded_values": [
+              "06:35"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:50",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_d",
+            "current_value": "33 minutes",
+            "semantics": "changed_state",
+            "previous_value": "22 minutes",
+            "superseded_values": [
+              "22 minutes"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "33 minutes",
+              "k_target": "06:50",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "08:05",
+            "semantics": "changed_state",
+            "previous_value": "06:50",
+            "superseded_values": [
+              "06:35",
+              "06:50"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "33 minutes",
+              "k_target": "08:05",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "12:55",
+            "semantics": "changed_state",
+            "previous_value": "12:25",
+            "superseded_values": [
+              "12:25"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "33 minutes",
+              "k_target": "08:05",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "09:20",
+            "semantics": "changed_state",
+            "previous_value": "08:05",
+            "superseded_values": [
+              "06:35",
+              "06:50",
+              "08:05"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "33 minutes",
+              "k_target": "09:20",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "folded card",
+            "semantics": "changed_state",
+            "previous_value": "stapled packet",
+            "superseded_values": [
+              "stapled packet"
+            ],
+            "state_after": {
+              "k_c": "folded card",
+              "k_d": "33 minutes",
+              "k_target": "09:20",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "09:20",
+            "semantics": "same_state",
+            "previous_value": "09:20",
+            "superseded_values": [
+              "06:35",
+              "06:50",
+              "08:05"
+            ],
+            "state_after": {
+              "k_c": "folded card",
+              "k_d": "33 minutes",
+              "k_target": "09:20",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "10:55",
+            "semantics": "changed_state",
+            "previous_value": "09:20",
+            "superseded_values": [
+              "06:35",
+              "06:50",
+              "08:05",
+              "09:20"
+            ],
+            "state_after": {
+              "k_c": "folded card",
+              "k_d": "33 minutes",
+              "k_target": "10:55",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "ROM-B47",
+            "semantics": "same_state",
+            "previous_value": "ROM-B47",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "folded card",
+              "k_d": "33 minutes",
+              "k_target": "10:55",
+              "k_hard": "12:55",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "folded card",
+          "k_d": "33 minutes",
+          "k_target": "10:55",
+          "k_hard": "12:55",
+          "k_n2": "ROM-B47",
+          "k_a": "Ansel Wickham",
+          "k_b": "40 seats"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_c",
+            "current_value": "stapled packet",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_d",
+            "current_value": "22 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_target",
+            "current_value": "06:35",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_hard",
+            "current_value": "12:25",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_n2",
+            "current_value": "ROM-B47",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_a",
+            "current_value": "Ansel Wickham",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_b",
+            "current_value": "40 seats",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:35",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "06:50",
+            "semantics": "changed_state",
+            "previous_value": "06:35",
+            "superseded_values": [
+              "06:35"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "06:50",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "07:35",
+            "semantics": "changed_state",
+            "previous_value": "06:50",
+            "superseded_values": [
+              "06:35",
+              "06:50"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "07:35",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "08:05",
+            "semantics": "changed_state",
+            "previous_value": "07:35",
+            "superseded_values": [
+              "06:35",
+              "06:50",
+              "07:35"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "08:05",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "08:40",
+            "semantics": "changed_state",
+            "previous_value": "08:05",
+            "superseded_values": [
+              "06:35",
+              "06:50",
+              "07:35",
+              "08:05"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "08:40",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "09:20",
+            "semantics": "changed_state",
+            "previous_value": "08:40",
+            "superseded_values": [
+              "06:35",
+              "06:50",
+              "07:35",
+              "08:05",
+              "08:40"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "09:20",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "10:05",
+            "semantics": "changed_state",
+            "previous_value": "09:20",
+            "superseded_values": [
+              "06:35",
+              "06:50",
+              "07:35",
+              "08:05",
+              "08:40",
+              "09:20"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "10:05",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "10:05",
+            "semantics": "same_state",
+            "previous_value": "10:05",
+            "superseded_values": [
+              "06:35",
+              "06:50",
+              "07:35",
+              "08:05",
+              "08:40",
+              "09:20"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "10:05",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "10:55",
+            "semantics": "changed_state",
+            "previous_value": "10:05",
+            "superseded_values": [
+              "06:35",
+              "06:50",
+              "07:35",
+              "08:05",
+              "08:40",
+              "09:20",
+              "10:05"
+            ],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "10:55",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "ROM-B47",
+            "semantics": "same_state",
+            "previous_value": "ROM-B47",
+            "superseded_values": [],
+            "state_after": {
+              "k_c": "stapled packet",
+              "k_d": "22 minutes",
+              "k_target": "10:55",
+              "k_hard": "12:25",
+              "k_n2": "ROM-B47",
+              "k_a": "Ansel Wickham",
+              "k_b": "40 seats"
+            }
+          }
+        ],
+        "final_state": {
+          "k_c": "stapled packet",
+          "k_d": "22 minutes",
+          "k_target": "10:55",
+          "k_hard": "12:25",
+          "k_n2": "ROM-B47",
+          "k_a": "Ansel Wickham",
+          "k_b": "40 seats"
+        }
+      }
+    }
+  }
+}

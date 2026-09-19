@@ -1,0 +1,1039 @@
+{
+  "schema_version": "generator-qualification-reference/1.0.0",
+  "fixture_id": "gq-purchase-order-01",
+  "purpose": "GENERATOR-QUALIFICATION-ONLY",
+  "reference": {
+    "domain": "Purchase & Order",
+    "entities": [
+      {
+        "entity_id": "gq-purchase-order-01-primary",
+        "name": "Order Kittiwake"
+      },
+      {
+        "entity_id": "gq-purchase-order-01-distractor",
+        "name": "Order Sandpiper"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "item_count",
+        "meaning": "ordered number of empty storage sleeves",
+        "units_or_interpretation": "sleeves"
+      },
+      {
+        "attribute_id": "order_code",
+        "meaning": "order identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "packaging",
+        "meaning": "packaging style",
+        "units_or_interpretation": "style label"
+      },
+      {
+        "attribute_id": "delivery_point",
+        "meaning": "delivery point",
+        "units_or_interpretation": "synthetic location"
+      },
+      {
+        "attribute_id": "label_format",
+        "meaning": "package label format",
+        "units_or_interpretation": "format label"
+      },
+      {
+        "attribute_id": "dispatch_cycle",
+        "meaning": "dispatch cycle",
+        "units_or_interpretation": "synthetic calendar label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "gq-purchase-order-01-primary",
+        "attribute_id": "item_count",
+        "initial_value": "120 sleeves",
+        "role": "target",
+        "value_inventory": [
+          "120 sleeves",
+          "145 sleeves",
+          "170 sleeves",
+          "195 sleeves",
+          "220 sleeves",
+          "245 sleeves",
+          "270 sleeves",
+          "295 sleeves"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "gq-purchase-order-01-distractor",
+        "attribute_id": "item_count",
+        "initial_value": "330 sleeves",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "330 sleeves",
+          "355 sleeves",
+          "380 sleeves"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "gq-purchase-order-01-primary",
+        "attribute_id": "order_code",
+        "initial_value": "ORD-K8",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "ORD-K8"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "gq-purchase-order-01-primary",
+        "attribute_id": "packaging",
+        "initial_value": "flat packs",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "flat packs",
+          "rolled packs",
+          "boxed packs"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "gq-purchase-order-01-primary",
+        "attribute_id": "delivery_point",
+        "initial_value": "Dock Ranu",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Dock Ranu",
+          "Dock Selu",
+          "Dock Tavi"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "gq-purchase-order-01-primary",
+        "attribute_id": "label_format",
+        "initial_value": "Label Aster",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Label Aster",
+          "Label Briar",
+          "Label Clover"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "gq-purchase-order-01-primary",
+        "attribute_id": "dispatch_cycle",
+        "initial_value": "Cycle Dori",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Cycle Dori",
+          "Cycle Evi",
+          "Cycle Falu"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_d",
+      "I2": "k_target",
+      "I3": "k_hard",
+      "I4": "k_n2",
+      "I5": "k_a",
+      "I6": "k_b",
+      "I7": "k_c"
+    },
+    "question_intent": {
+      "entity_id": "gq-purchase-order-01-primary",
+      "attribute_id": "item_count",
+      "intent": "Ask only for the current ordered number of empty storage sleeves of Order Kittiwake."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "295 sleeves",
+    "coverage": [
+      "ordering",
+      "quantities",
+      "numeric_values",
+      "locations"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "Cycle Dori",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "120 sleeves",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "330 sleeves",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "ORD-K8",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "flat packs",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "Dock Ranu",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "Label Aster",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_hard",
+            "current_value": "355 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "330 sleeves",
+            "superseded_values": [
+              "330 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "Label Briar",
+            "semantics": "changed_state",
+            "previous_value": "Label Aster",
+            "superseded_values": [
+              "Label Aster"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Briar"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_d",
+            "current_value": "Cycle Evi",
+            "semantics": "changed_state",
+            "previous_value": "Cycle Dori",
+            "superseded_values": [
+              "Cycle Dori"
+            ],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "120 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Briar"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "rolled packs",
+            "semantics": "changed_state",
+            "previous_value": "flat packs",
+            "superseded_values": [
+              "flat packs"
+            ],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "120 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "rolled packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Briar"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_b",
+            "current_value": "Dock Selu",
+            "semantics": "changed_state",
+            "previous_value": "Dock Ranu",
+            "superseded_values": [
+              "Dock Ranu"
+            ],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "120 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "rolled packs",
+              "k_b": "Dock Selu",
+              "k_c": "Label Briar"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "Label Clover",
+            "semantics": "changed_state",
+            "previous_value": "Label Briar",
+            "superseded_values": [
+              "Label Aster",
+              "Label Briar"
+            ],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "120 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "rolled packs",
+              "k_b": "Dock Selu",
+              "k_c": "Label Clover"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "120 sleeves",
+            "semantics": "same_state",
+            "previous_value": "120 sleeves",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "120 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "rolled packs",
+              "k_b": "Dock Selu",
+              "k_c": "Label Clover"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "295 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "120 sleeves",
+            "superseded_values": [
+              "120 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "295 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "rolled packs",
+              "k_b": "Dock Selu",
+              "k_c": "Label Clover"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "ORD-K8",
+            "semantics": "same_state",
+            "previous_value": "ORD-K8",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "295 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "rolled packs",
+              "k_b": "Dock Selu",
+              "k_c": "Label Clover"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "Cycle Evi",
+          "k_target": "295 sleeves",
+          "k_hard": "355 sleeves",
+          "k_n2": "ORD-K8",
+          "k_a": "rolled packs",
+          "k_b": "Dock Selu",
+          "k_c": "Label Clover"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "Cycle Dori",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "120 sleeves",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "330 sleeves",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "ORD-K8",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "flat packs",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "Dock Ranu",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "Label Aster",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "145 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "120 sleeves",
+            "superseded_values": [
+              "120 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "145 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "355 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "330 sleeves",
+            "superseded_values": [
+              "330 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "145 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "195 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "145 sleeves",
+            "superseded_values": [
+              "120 sleeves",
+              "145 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "195 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_d",
+            "current_value": "Cycle Evi",
+            "semantics": "changed_state",
+            "previous_value": "Cycle Dori",
+            "superseded_values": [
+              "Cycle Dori"
+            ],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "195 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "245 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "195 sleeves",
+            "superseded_values": [
+              "120 sleeves",
+              "145 sleeves",
+              "195 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "245 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "rolled packs",
+            "semantics": "changed_state",
+            "previous_value": "flat packs",
+            "superseded_values": [
+              "flat packs"
+            ],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "245 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "rolled packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "245 sleeves",
+            "semantics": "same_state",
+            "previous_value": "245 sleeves",
+            "superseded_values": [
+              "120 sleeves",
+              "145 sleeves",
+              "195 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "245 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "rolled packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "295 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "245 sleeves",
+            "superseded_values": [
+              "120 sleeves",
+              "145 sleeves",
+              "195 sleeves",
+              "245 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "295 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "rolled packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "ORD-K8",
+            "semantics": "same_state",
+            "previous_value": "ORD-K8",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Evi",
+              "k_target": "295 sleeves",
+              "k_hard": "355 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "rolled packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "Cycle Evi",
+          "k_target": "295 sleeves",
+          "k_hard": "355 sleeves",
+          "k_n2": "ORD-K8",
+          "k_a": "rolled packs",
+          "k_b": "Dock Ranu",
+          "k_c": "Label Aster"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "Cycle Dori",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "120 sleeves",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "330 sleeves",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "ORD-K8",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "flat packs",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "Dock Ranu",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "Label Aster",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "120 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "145 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "120 sleeves",
+            "superseded_values": [
+              "120 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "145 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "170 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "145 sleeves",
+            "superseded_values": [
+              "120 sleeves",
+              "145 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "170 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "195 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "170 sleeves",
+            "superseded_values": [
+              "120 sleeves",
+              "145 sleeves",
+              "170 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "195 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "220 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "195 sleeves",
+            "superseded_values": [
+              "120 sleeves",
+              "145 sleeves",
+              "170 sleeves",
+              "195 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "220 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "245 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "220 sleeves",
+            "superseded_values": [
+              "120 sleeves",
+              "145 sleeves",
+              "170 sleeves",
+              "195 sleeves",
+              "220 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "245 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "270 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "245 sleeves",
+            "superseded_values": [
+              "120 sleeves",
+              "145 sleeves",
+              "170 sleeves",
+              "195 sleeves",
+              "220 sleeves",
+              "245 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "270 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "270 sleeves",
+            "semantics": "same_state",
+            "previous_value": "270 sleeves",
+            "superseded_values": [
+              "120 sleeves",
+              "145 sleeves",
+              "170 sleeves",
+              "195 sleeves",
+              "220 sleeves",
+              "245 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "270 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "295 sleeves",
+            "semantics": "changed_state",
+            "previous_value": "270 sleeves",
+            "superseded_values": [
+              "120 sleeves",
+              "145 sleeves",
+              "170 sleeves",
+              "195 sleeves",
+              "220 sleeves",
+              "245 sleeves",
+              "270 sleeves"
+            ],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "295 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "ORD-K8",
+            "semantics": "same_state",
+            "previous_value": "ORD-K8",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Cycle Dori",
+              "k_target": "295 sleeves",
+              "k_hard": "330 sleeves",
+              "k_n2": "ORD-K8",
+              "k_a": "flat packs",
+              "k_b": "Dock Ranu",
+              "k_c": "Label Aster"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "Cycle Dori",
+          "k_target": "295 sleeves",
+          "k_hard": "330 sleeves",
+          "k_n2": "ORD-K8",
+          "k_a": "flat packs",
+          "k_b": "Dock Ranu",
+          "k_c": "Label Aster"
+        }
+      }
+    }
+  }
+}

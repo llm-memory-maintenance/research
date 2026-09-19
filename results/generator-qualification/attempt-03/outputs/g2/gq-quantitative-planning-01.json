@@ -1,0 +1,378 @@
+{
+  "logical_call_id": "G2",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"sheet_count\\\",\\\"meaning\\\":\\\"planned number of blank craft sheets\\\",\\\"units_or_interpretation\\\":\\\"sheets\\\"},{\\\"attribute_id\\\":\\\"plan_code\\\",\\\"meaning\\\":\\\"quantity plan identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"bundle_size\\\",\\\"meaning\\\":\\\"sheets per bundle\\\",\\\"units_or_interpretation\\\":\\\"sheets per bundle\\\"},{\\\"attribute_id\\\":\\\"storage_zone\\\",\\\"meaning\\\":\\\"storage zone\\\",\\\"units_or_interpretation\\\":\\\"zone label\\\"},{\\\"attribute_id\\\":\\\"sheet_shape\\\",\\\"meaning\\\":\\\"sheet shape\\\",\\\"units_or_interpretation\\\":\\\"shape label\\\"},{\\\"attribute_id\\\":\\\"dispatch_order\\\",\\\"meaning\\\":\\\"dispatch priority\\\",\\\"units_or_interpretation\\\":\\\"priority label\\\"}],\\\"domain\\\":\\\"Quantitative Planning\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"gq-quantitative-planning-01-primary\\\",\\\"name\\\":\\\"Plan Osprey\\\"},{\\\"entity_id\\\":\\\"gq-quantitative-planning-01-distractor\\\",\\\"name\\\":\\\"Plan Kestrel\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_b\\\",\\\"I2\\\":\\\"k_c\\\",\\\"I3\\\":\\\"k_d\\\",\\\"I4\\\":\\\"k_target\\\",\\\"I5\\\":\\\"k_hard\\\",\\\"I6\\\":\\\"k_n2\\\",\\\"I7\\\":\\\"k_a\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"sheet_count\\\",\\\"entity_id\\\":\\\"gq-quantitative-planning-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current planned number of blank craft sheets of Plan Osprey.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"sheet_count\\\",\\\"entity_id\\\":\\\"gq-quantitative-planning-01-primary\\\",\\\"initial_value\\\":\\\"420 sheets\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"sheet_count\\\",\\\"entity_id\\\":\\\"gq-quantitative-planning-01-distractor\\\",\\\"initial_value\\\":\\\"720 sheets\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"plan_code\\\",\\\"entity_id\\\":\\\"gq-quantitative-planning-01-primary\\\",\\\"initial_value\\\":\\\"QNT-O7\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"bundle_size\\\",\\\"entity_id\\\":\\\"gq-quantitative-planning-01-primary\\\",\\\"initial_value\\\":\\\"10 sheets per bundle\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"storage_zone\\\",\\\"entity_id\\\":\\\"gq-quantitative-planning-01-primary\\\",\\\"initial_value\\\":\\\"Zone P1\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"sheet_shape\\\",\\\"entity_id\\\":\\\"gq-quantitative-planning-01-primary\\\",\\\"initial_value\\\":\\\"square sheets\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"dispatch_order\\\",\\\"entity_id\\\":\\\"gq-quantitative-planning-01-primary\\\",\\\"initial_value\\\":\\\"Priority D1\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"Zone P1\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"square sheets\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Priority D1\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"420 sheets\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"720 sheets\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"QNT-O7\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"10 sheets per bundle\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"450 sheets\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"480 sheets\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"510 sheets\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"540 sheets\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"570 sheets\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"600 sheets\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"600 sheets\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"630 sheets\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"QNT-O7\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"Zone P1\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"square sheets\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Priority D1\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"420 sheets\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"720 sheets\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"QNT-O7\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"10 sheets per bundle\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Priority D2\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"750 sheets\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Priority D3\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"15 sheets per bundle\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Zone P2\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"round sheets\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"420 sheets\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"630 sheets\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"QNT-O7\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"Zone P1\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"square sheets\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Priority D1\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"420 sheets\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"720 sheets\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"QNT-O7\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"10 sheets per bundle\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"450 sheets\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Zone P2\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"510 sheets\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"750 sheets\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"570 sheets\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"15 sheets per bundle\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"570 sheets\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"630 sheets\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"QNT-O7\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"anthropic/claude-fable-5.1\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"anthropic\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "7c5f5a627fb730fd771e563a3575dd651aff61e5759d20a0606cde3808c40014",
+  "request_body": {
+    "model": "anthropic/claude-fable-5.1",
+    "provider": {
+      "order": [
+        "anthropic"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"sheet_count\",\"meaning\":\"planned number of blank craft sheets\",\"units_or_interpretation\":\"sheets\"},{\"attribute_id\":\"plan_code\",\"meaning\":\"quantity plan identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"bundle_size\",\"meaning\":\"sheets per bundle\",\"units_or_interpretation\":\"sheets per bundle\"},{\"attribute_id\":\"storage_zone\",\"meaning\":\"storage zone\",\"units_or_interpretation\":\"zone label\"},{\"attribute_id\":\"sheet_shape\",\"meaning\":\"sheet shape\",\"units_or_interpretation\":\"shape label\"},{\"attribute_id\":\"dispatch_order\",\"meaning\":\"dispatch priority\",\"units_or_interpretation\":\"priority label\"}],\"domain\":\"Quantitative Planning\",\"entities\":[{\"entity_id\":\"gq-quantitative-planning-01-primary\",\"name\":\"Plan Osprey\"},{\"entity_id\":\"gq-quantitative-planning-01-distractor\",\"name\":\"Plan Kestrel\"}],\"initial_order\":{\"I1\":\"k_b\",\"I2\":\"k_c\",\"I3\":\"k_d\",\"I4\":\"k_target\",\"I5\":\"k_hard\",\"I6\":\"k_n2\",\"I7\":\"k_a\"},\"question_intent\":{\"attribute_id\":\"sheet_count\",\"entity_id\":\"gq-quantitative-planning-01-primary\",\"intent\":\"Ask only for the current planned number of blank craft sheets of Plan Osprey.\"},\"state_keys\":[{\"attribute_id\":\"sheet_count\",\"entity_id\":\"gq-quantitative-planning-01-primary\",\"initial_value\":\"420 sheets\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"sheet_count\",\"entity_id\":\"gq-quantitative-planning-01-distractor\",\"initial_value\":\"720 sheets\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"plan_code\",\"entity_id\":\"gq-quantitative-planning-01-primary\",\"initial_value\":\"QNT-O7\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"bundle_size\",\"entity_id\":\"gq-quantitative-planning-01-primary\",\"initial_value\":\"10 sheets per bundle\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"storage_zone\",\"entity_id\":\"gq-quantitative-planning-01-primary\",\"initial_value\":\"Zone P1\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"sheet_shape\",\"entity_id\":\"gq-quantitative-planning-01-primary\",\"initial_value\":\"square sheets\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"dispatch_order\",\"entity_id\":\"gq-quantitative-planning-01-primary\",\"initial_value\":\"Priority D1\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"Zone P1\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"square sheets\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Priority D1\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"420 sheets\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"720 sheets\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"QNT-O7\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"10 sheets per bundle\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"450 sheets\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"480 sheets\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"510 sheets\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"540 sheets\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"570 sheets\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"600 sheets\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"600 sheets\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"630 sheets\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"QNT-O7\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"Zone P1\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"square sheets\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Priority D1\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"420 sheets\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"720 sheets\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"QNT-O7\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"10 sheets per bundle\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Priority D2\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"750 sheets\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Priority D3\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"15 sheets per bundle\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Zone P2\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"round sheets\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"420 sheets\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"630 sheets\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"QNT-O7\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"Zone P1\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"square sheets\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Priority D1\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"420 sheets\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"720 sheets\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"QNT-O7\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"10 sheets per bundle\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"450 sheets\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Zone P2\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"510 sheets\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"750 sheets\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"570 sheets\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"15 sheets per bundle\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"570 sheets\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"630 sheets\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"QNT-O7\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G2",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T08:08:59.157980+00:00",
+      "requested_model": "anthropic/claude-fable-5.1",
+      "requested_provider_order": [
+        "anthropic"
+      ],
+      "returned_model": "anthropic/claude-fable-5.1",
+      "observed_selected_provider": "Anthropic",
+      "request_id": null,
+      "response_id": "gen-1789805339-XTNpHoqf5oeiiKeKMdkQ",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789805339-XTNpHoqf5oeiiKeKMdkQ\",\"object\":\"chat.completion\",\"created\":1789805339,\"model\":\"anthropic/claude-fable-5.1\",\"provider\":\"Anthropic\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Plan Osprey's storage zone is Zone P1.\\\",\\\"I2\\\":\\\"The sheet shape for Plan Osprey is square sheets.\\\",\\\"I3\\\":\\\"Plan Osprey's dispatch priority is Priority D1.\\\",\\\"I4\\\":\\\"The planned number of blank craft sheets for Plan Osprey is 420 sheets.\\\",\\\"I5\\\":\\\"Plan Kestrel's planned number of blank craft sheets is 720 sheets.\\\",\\\"I6\\\":\\\"The quantity plan identifier for Plan Osprey is QNT-O7.\\\",\\\"I7\\\":\\\"Plan Osprey's bundle size is 10 sheets per bundle.\\\",\\\"N1\\\":\\\"Just confirming, Plan Osprey's planned number of blank craft sheets is still 600 sheets.\\\",\\\"N2\\\":\\\"To reaffirm, the quantity plan identifier for Plan Osprey remains QNT-O7.\\\",\\\"Q\\\":\\\"What is the current planned number of blank craft sheets for Plan Osprey?\\\",\\\"U1\\\":\\\"Update: the planned number of blank craft sheets for Plan Osprey has changed to 450 sheets.\\\",\\\"U2\\\":\\\"Plan Osprey's planned number of blank craft sheets has been revised and is now 480 sheets.\\\",\\\"U3\\\":\\\"Another change: the planned number of blank craft sheets for Plan Osprey is now 510 sheets.\\\",\\\"U4\\\":\\\"The planned sheet count for Plan Osprey has been updated to 540 sheets.\\\",\\\"U5\\\":\\\"Plan Osprey's planned number of blank craft sheets has changed again; it is now 570 sheets.\\\",\\\"U6\\\":\\\"The planned number of blank craft sheets for Plan Osprey has been updated to 600 sheets.\\\",\\\"U7\\\":\\\"One more revision: Plan Osprey's planned number of blank craft sheets is now 630 sheets.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Plan Osprey's storage zone is Zone P1.\\\",\\\"I2\\\":\\\"The sheet shape for Plan Osprey is square sheets.\\\",\\\"I3\\\":\\\"Plan Osprey's dispatch priority is Priority D1.\\\",\\\"I4\\\":\\\"The planned number of blank craft sheets for Plan Osprey is 420 sheets.\\\",\\\"I5\\\":\\\"Plan Kestrel's planned number of blank craft sheets is 720 sheets.\\\",\\\"I6\\\":\\\"The quantity plan identifier for Plan Osprey is QNT-O7.\\\",\\\"I7\\\":\\\"Plan Osprey's bundle size is 10 sheets per bundle.\\\",\\\"N1\\\":\\\"Just confirming, Plan Osprey's planned number of blank craft sheets is still 420 sheets.\\\",\\\"N2\\\":\\\"To reaffirm, the quantity plan identifier for Plan Osprey remains QNT-O7.\\\",\\\"Q\\\":\\\"What is the current planned number of blank craft sheets for Plan Osprey?\\\",\\\"U1\\\":\\\"Update: Plan Osprey's dispatch priority has changed to Priority D2.\\\",\\\"U2\\\":\\\"Plan Kestrel's planned number of blank craft sheets has been updated to 750 sheets.\\\",\\\"U3\\\":\\\"The dispatch priority for Plan Osprey has changed again; it is now Priority D3.\\\",\\\"U4\\\":\\\"Plan Osprey's bundle size has been revised to 15 sheets per bundle.\\\",\\\"U5\\\":\\\"The storage zone for Plan Osprey is now Zone P2.\\\",\\\"U6\\\":\\\"Plan Osprey's sheet shape has been updated to round sheets.\\\",\\\"U7\\\":\\\"Revision: the planned number of blank craft sheets for Plan Osprey is now 630 sheets.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"Plan Osprey's storage zone is Zone P1.\\\",\\\"I2\\\":\\\"The sheet shape for Plan Osprey is square sheets.\\\",\\\"I3\\\":\\\"Plan Osprey's dispatch priority is Priority D1.\\\",\\\"I4\\\":\\\"The planned number of blank craft sheets for Plan Osprey is 420 sheets.\\\",\\\"I5\\\":\\\"Plan Kestrel's planned number of blank craft sheets is 720 sheets.\\\",\\\"I6\\\":\\\"The quantity plan identifier for Plan Osprey is QNT-O7.\\\",\\\"I7\\\":\\\"Plan Osprey's bundle size is 10 sheets per bundle.\\\",\\\"N1\\\":\\\"Just confirming, Plan Osprey's planned number of blank craft sheets is still 570 sheets.\\\",\\\"N2\\\":\\\"To reaffirm, the quantity plan identifier for Plan Osprey remains QNT-O7.\\\",\\\"Q\\\":\\\"What is the current planned number of blank craft sheets for Plan Osprey?\\\",\\\"U1\\\":\\\"Update: the planned number of blank craft sheets for Plan Osprey has changed to 450 sheets.\\\",\\\"U2\\\":\\\"Plan Osprey's storage zone has been moved and is now Zone P2.\\\",\\\"U3\\\":\\\"The planned number of blank craft sheets for Plan Osprey has been revised to 510 sheets.\\\",\\\"U4\\\":\\\"Plan Kestrel's planned number of blank craft sheets has been updated to 750 sheets.\\\",\\\"U5\\\":\\\"Plan Osprey's planned number of blank craft sheets has changed again; it is now 570 sheets.\\\",\\\"U6\\\":\\\"The bundle size for Plan Osprey has been updated to 15 sheets per bundle.\\\",\\\"U7\\\":\\\"One more revision: Plan Osprey's planned number of blank craft sheets is now 630 sheets.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":4636,\"completion_tokens\":1681,\"total_tokens\":6317,\"cost\":0.13041,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.13041,\"upstream_inference_prompt_cost\":0.04636,\"upstream_inference_completions_cost\":0.08405},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"anthropic/claude-fable-5.1\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=Anthropic\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":4,\"available\":[{\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-fable-5.1-20260831\",\"selected\":true}]},\"generation_time\":17136}}",
+      "response_sha256_before_redaction": "a78726c9e47742242b939b10704305b2f1d82c4d8cd7d1757557e98f53ac6c81",
+      "response_envelope": {
+        "id": "gen-1789805339-XTNpHoqf5oeiiKeKMdkQ",
+        "object": "chat.completion",
+        "created": 1789805339,
+        "model": "anthropic/claude-fable-5.1",
+        "provider": "Anthropic",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "end_turn",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Plan Osprey's storage zone is Zone P1.\",\"I2\":\"The sheet shape for Plan Osprey is square sheets.\",\"I3\":\"Plan Osprey's dispatch priority is Priority D1.\",\"I4\":\"The planned number of blank craft sheets for Plan Osprey is 420 sheets.\",\"I5\":\"Plan Kestrel's planned number of blank craft sheets is 720 sheets.\",\"I6\":\"The quantity plan identifier for Plan Osprey is QNT-O7.\",\"I7\":\"Plan Osprey's bundle size is 10 sheets per bundle.\",\"N1\":\"Just confirming, Plan Osprey's planned number of blank craft sheets is still 600 sheets.\",\"N2\":\"To reaffirm, the quantity plan identifier for Plan Osprey remains QNT-O7.\",\"Q\":\"What is the current planned number of blank craft sheets for Plan Osprey?\",\"U1\":\"Update: the planned number of blank craft sheets for Plan Osprey has changed to 450 sheets.\",\"U2\":\"Plan Osprey's planned number of blank craft sheets has been revised and is now 480 sheets.\",\"U3\":\"Another change: the planned number of blank craft sheets for Plan Osprey is now 510 sheets.\",\"U4\":\"The planned sheet count for Plan Osprey has been updated to 540 sheets.\",\"U5\":\"Plan Osprey's planned number of blank craft sheets has changed again; it is now 570 sheets.\",\"U6\":\"The planned number of blank craft sheets for Plan Osprey has been updated to 600 sheets.\",\"U7\":\"One more revision: Plan Osprey's planned number of blank craft sheets is now 630 sheets.\"},\"low\":{\"I1\":\"Plan Osprey's storage zone is Zone P1.\",\"I2\":\"The sheet shape for Plan Osprey is square sheets.\",\"I3\":\"Plan Osprey's dispatch priority is Priority D1.\",\"I4\":\"The planned number of blank craft sheets for Plan Osprey is 420 sheets.\",\"I5\":\"Plan Kestrel's planned number of blank craft sheets is 720 sheets.\",\"I6\":\"The quantity plan identifier for Plan Osprey is QNT-O7.\",\"I7\":\"Plan Osprey's bundle size is 10 sheets per bundle.\",\"N1\":\"Just confirming, Plan Osprey's planned number of blank craft sheets is still 420 sheets.\",\"N2\":\"To reaffirm, the quantity plan identifier for Plan Osprey remains QNT-O7.\",\"Q\":\"What is the current planned number of blank craft sheets for Plan Osprey?\",\"U1\":\"Update: Plan Osprey's dispatch priority has changed to Priority D2.\",\"U2\":\"Plan Kestrel's planned number of blank craft sheets has been updated to 750 sheets.\",\"U3\":\"The dispatch priority for Plan Osprey has changed again; it is now Priority D3.\",\"U4\":\"Plan Osprey's bundle size has been revised to 15 sheets per bundle.\",\"U5\":\"The storage zone for Plan Osprey is now Zone P2.\",\"U6\":\"Plan Osprey's sheet shape has been updated to round sheets.\",\"U7\":\"Revision: the planned number of blank craft sheets for Plan Osprey is now 630 sheets.\"},\"medium\":{\"I1\":\"Plan Osprey's storage zone is Zone P1.\",\"I2\":\"The sheet shape for Plan Osprey is square sheets.\",\"I3\":\"Plan Osprey's dispatch priority is Priority D1.\",\"I4\":\"The planned number of blank craft sheets for Plan Osprey is 420 sheets.\",\"I5\":\"Plan Kestrel's planned number of blank craft sheets is 720 sheets.\",\"I6\":\"The quantity plan identifier for Plan Osprey is QNT-O7.\",\"I7\":\"Plan Osprey's bundle size is 10 sheets per bundle.\",\"N1\":\"Just confirming, Plan Osprey's planned number of blank craft sheets is still 570 sheets.\",\"N2\":\"To reaffirm, the quantity plan identifier for Plan Osprey remains QNT-O7.\",\"Q\":\"What is the current planned number of blank craft sheets for Plan Osprey?\",\"U1\":\"Update: the planned number of blank craft sheets for Plan Osprey has changed to 450 sheets.\",\"U2\":\"Plan Osprey's storage zone has been moved and is now Zone P2.\",\"U3\":\"The planned number of blank craft sheets for Plan Osprey has been revised to 510 sheets.\",\"U4\":\"Plan Kestrel's planned number of blank craft sheets has been updated to 750 sheets.\",\"U5\":\"Plan Osprey's planned number of blank craft sheets has changed again; it is now 570 sheets.\",\"U6\":\"The bundle size for Plan Osprey has been updated to 15 sheets per bundle.\",\"U7\":\"One more revision: Plan Osprey's planned number of blank craft sheets is now 630 sheets.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 4636,
+          "completion_tokens": 1681,
+          "total_tokens": 6317,
+          "cost": 0.13041,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.13041,
+            "upstream_inference_prompt_cost": 0.04636,
+            "upstream_inference_completions_cost": 0.08405
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "anthropic/claude-fable-5.1",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=Anthropic",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 4,
+            "available": [
+              {
+                "provider": "Anthropic",
+                "model": "anthropic/claude-fable-5.1-20260831",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 17136
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "anthropic/claude-fable-5.1",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=Anthropic",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 4,
+          "available": [
+            {
+              "provider": "Anthropic",
+              "model": "anthropic/claude-fable-5.1-20260831",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 17136
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Plan Osprey's storage zone is Zone P1.",
+          "I2": "The sheet shape for Plan Osprey is square sheets.",
+          "I3": "Plan Osprey's dispatch priority is Priority D1.",
+          "I4": "The planned number of blank craft sheets for Plan Osprey is 420 sheets.",
+          "I5": "Plan Kestrel's planned number of blank craft sheets is 720 sheets.",
+          "I6": "The quantity plan identifier for Plan Osprey is QNT-O7.",
+          "I7": "Plan Osprey's bundle size is 10 sheets per bundle.",
+          "N1": "Just confirming, Plan Osprey's planned number of blank craft sheets is still 600 sheets.",
+          "N2": "To reaffirm, the quantity plan identifier for Plan Osprey remains QNT-O7.",
+          "Q": "What is the current planned number of blank craft sheets for Plan Osprey?",
+          "U1": "Update: the planned number of blank craft sheets for Plan Osprey has changed to 450 sheets.",
+          "U2": "Plan Osprey's planned number of blank craft sheets has been revised and is now 480 sheets.",
+          "U3": "Another change: the planned number of blank craft sheets for Plan Osprey is now 510 sheets.",
+          "U4": "The planned sheet count for Plan Osprey has been updated to 540 sheets.",
+          "U5": "Plan Osprey's planned number of blank craft sheets has changed again; it is now 570 sheets.",
+          "U6": "The planned number of blank craft sheets for Plan Osprey has been updated to 600 sheets.",
+          "U7": "One more revision: Plan Osprey's planned number of blank craft sheets is now 630 sheets."
+        },
+        "low": {
+          "I1": "Plan Osprey's storage zone is Zone P1.",
+          "I2": "The sheet shape for Plan Osprey is square sheets.",
+          "I3": "Plan Osprey's dispatch priority is Priority D1.",
+          "I4": "The planned number of blank craft sheets for Plan Osprey is 420 sheets.",
+          "I5": "Plan Kestrel's planned number of blank craft sheets is 720 sheets.",
+          "I6": "The quantity plan identifier for Plan Osprey is QNT-O7.",
+          "I7": "Plan Osprey's bundle size is 10 sheets per bundle.",
+          "N1": "Just confirming, Plan Osprey's planned number of blank craft sheets is still 420 sheets.",
+          "N2": "To reaffirm, the quantity plan identifier for Plan Osprey remains QNT-O7.",
+          "Q": "What is the current planned number of blank craft sheets for Plan Osprey?",
+          "U1": "Update: Plan Osprey's dispatch priority has changed to Priority D2.",
+          "U2": "Plan Kestrel's planned number of blank craft sheets has been updated to 750 sheets.",
+          "U3": "The dispatch priority for Plan Osprey has changed again; it is now Priority D3.",
+          "U4": "Plan Osprey's bundle size has been revised to 15 sheets per bundle.",
+          "U5": "The storage zone for Plan Osprey is now Zone P2.",
+          "U6": "Plan Osprey's sheet shape has been updated to round sheets.",
+          "U7": "Revision: the planned number of blank craft sheets for Plan Osprey is now 630 sheets."
+        },
+        "medium": {
+          "I1": "Plan Osprey's storage zone is Zone P1.",
+          "I2": "The sheet shape for Plan Osprey is square sheets.",
+          "I3": "Plan Osprey's dispatch priority is Priority D1.",
+          "I4": "The planned number of blank craft sheets for Plan Osprey is 420 sheets.",
+          "I5": "Plan Kestrel's planned number of blank craft sheets is 720 sheets.",
+          "I6": "The quantity plan identifier for Plan Osprey is QNT-O7.",
+          "I7": "Plan Osprey's bundle size is 10 sheets per bundle.",
+          "N1": "Just confirming, Plan Osprey's planned number of blank craft sheets is still 570 sheets.",
+          "N2": "To reaffirm, the quantity plan identifier for Plan Osprey remains QNT-O7.",
+          "Q": "What is the current planned number of blank craft sheets for Plan Osprey?",
+          "U1": "Update: the planned number of blank craft sheets for Plan Osprey has changed to 450 sheets.",
+          "U2": "Plan Osprey's storage zone has been moved and is now Zone P2.",
+          "U3": "The planned number of blank craft sheets for Plan Osprey has been revised to 510 sheets.",
+          "U4": "Plan Kestrel's planned number of blank craft sheets has been updated to 750 sheets.",
+          "U5": "Plan Osprey's planned number of blank craft sheets has changed again; it is now 570 sheets.",
+          "U6": "The bundle size for Plan Osprey has been updated to 15 sheets per bundle.",
+          "U7": "One more revision: Plan Osprey's planned number of blank craft sheets is now 630 sheets."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 4636,
+        "completion_tokens": 1681,
+        "total_tokens": 6317,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.13041
+      },
+      "latency_seconds": 17.294060558982892,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G2",
+  "fixture_id": "gq-quantitative-planning-01",
+  "fixture_sha256": "c48692540bfc426234cb09cfeb190c5117b4d0ddf9c57acb4951ce13a7a7ed45",
+  "projection_sha256": "3ac0273d2b680ed9e5ffc3e160251507a940a4e4f4991c87d6f3b94681e38957",
+  "logical_call_index": 12,
+  "provenance": {
+    "source_commit": "1d8fd5e49f1811ad515ff22954220e6dba3334e2",
+    "candidate_profile": "SECOND_LEVEL_G2",
+    "selected_slot": "G2",
+    "fixture_set_commit": "683c0416c5bf47c83021408f26bc7a7ab5e8becc",
+    "fixture_manifest_sha256": "ecce7e579f02f64bb5578d8b18b9164483da1c5438544f21a89e17d7a2aaa1f9",
+    "execution_config_sha256": "fb2c74eec9fea2ab49cee00e76cbe84ec7ce0fe2464e80bf84d157e82ec56180",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "procedure_version": "generator-qualification-procedure/2.0.0",
+    "implementation": {
+      "status": "FROZEN FOR LIVE EXECUTION",
+      "freeze_commit": "51c6c0ec62e5d716ed838120d2505bc8566c338b",
+      "source_sha256": {
+        "experiments/qualify_generators.py": "5652abb3df12b8f23ec05d58456568a5db986069862c5d93bcb869ae953abfba",
+        "experiments/probe_generators.py": "b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0",
+        "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+      }
+    },
+    "python": "3.10.21",
+    "packages": {
+      "httpx": "0.28.1",
+      "pydantic": "2.13.5",
+      "pyyaml": "6.0.3"
+    }
+  },
+  "automated": {
+    "status": "PASS",
+    "meaning": "No deterministic violation detected is not semantic qualification.",
+    "findings": []
+  },
+  "output_sha256": "69590e46b259aadc302dce5813923575b57e0cefaf5c2ee5bd309f52197f2072"
+}

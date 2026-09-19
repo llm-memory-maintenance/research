@@ -1,0 +1,1038 @@
+{
+  "schema_version": "crst-small-pilot-reference/1.0.0",
+  "fixture_id": "pilot-travel-01",
+  "purpose": "CRST-SMALL-PILOT-ONLY",
+  "reference": {
+    "domain": "Travel",
+    "entities": [
+      {
+        "entity_id": "pilot-travel-01-primary",
+        "name": "Ferry crossing Wrenfield"
+      },
+      {
+        "entity_id": "pilot-travel-01-distractor",
+        "name": "Ferry crossing Halloway"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "embark_gate",
+        "meaning": "assigned embarkation gate",
+        "units_or_interpretation": "gate label"
+      },
+      {
+        "attribute_id": "reservation_code",
+        "meaning": "ferry reservation identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "cabin_class",
+        "meaning": "cabin class",
+        "units_or_interpretation": "class label"
+      },
+      {
+        "attribute_id": "deck_level",
+        "meaning": "passenger deck level",
+        "units_or_interpretation": "deck label"
+      },
+      {
+        "attribute_id": "meal_plan",
+        "meaning": "onboard meal plan",
+        "units_or_interpretation": "plan label"
+      },
+      {
+        "attribute_id": "bag_limit",
+        "meaning": "carry-on limit",
+        "units_or_interpretation": "kilograms"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "pilot-travel-01-primary",
+        "attribute_id": "embark_gate",
+        "initial_value": "Gate Amberlyn",
+        "role": "target",
+        "value_inventory": [
+          "Gate Amberlyn",
+          "Gate Bristlecone",
+          "Gate Corvane",
+          "Gate Dunmere",
+          "Gate Eldrith",
+          "Gate Fallowick",
+          "Gate Gorsemoor",
+          "Gate Hazelgrave"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "pilot-travel-01-distractor",
+        "attribute_id": "embark_gate",
+        "initial_value": "Gate Ivorlea",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "Gate Ivorlea",
+          "Gate Jessamere",
+          "Gate Kelderby"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "pilot-travel-01-primary",
+        "attribute_id": "reservation_code",
+        "initial_value": "BKG-W38",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "BKG-W38"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "pilot-travel-01-primary",
+        "attribute_id": "cabin_class",
+        "initial_value": "class Harbor",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "class Harbor",
+          "class Anchor",
+          "class Beacon"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "pilot-travel-01-primary",
+        "attribute_id": "deck_level",
+        "initial_value": "Deck 2",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Deck 2",
+          "Deck 5",
+          "Deck 7"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "pilot-travel-01-primary",
+        "attribute_id": "meal_plan",
+        "initial_value": "plan pantry",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "plan pantry",
+          "plan galley",
+          "plan hearth"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "pilot-travel-01-primary",
+        "attribute_id": "bag_limit",
+        "initial_value": "6 kilograms",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "6 kilograms",
+          "9 kilograms",
+          "12 kilograms"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_d",
+      "I2": "k_target",
+      "I3": "k_hard",
+      "I4": "k_n2",
+      "I5": "k_a",
+      "I6": "k_b",
+      "I7": "k_c"
+    },
+    "question_intent": {
+      "entity_id": "pilot-travel-01-primary",
+      "attribute_id": "embark_gate",
+      "intent": "Ask only for the current assigned embarkation gate of Ferry crossing Wrenfield."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Gate Hazelgrave",
+    "coverage": [
+      "locations",
+      "travel",
+      "categorical_values"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "6 kilograms",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "Gate Amberlyn",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "Gate Ivorlea",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "BKG-W38",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "class Harbor",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "Deck 2",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "plan pantry",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_hard",
+            "current_value": "Gate Jessamere",
+            "semantics": "changed_state",
+            "previous_value": "Gate Ivorlea",
+            "superseded_values": [
+              "Gate Ivorlea"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "plan galley",
+            "semantics": "changed_state",
+            "previous_value": "plan pantry",
+            "superseded_values": [
+              "plan pantry"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan galley"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_d",
+            "current_value": "9 kilograms",
+            "semantics": "changed_state",
+            "previous_value": "6 kilograms",
+            "superseded_values": [
+              "6 kilograms"
+            ],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan galley"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "class Anchor",
+            "semantics": "changed_state",
+            "previous_value": "class Harbor",
+            "superseded_values": [
+              "class Harbor"
+            ],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Anchor",
+              "k_b": "Deck 2",
+              "k_c": "plan galley"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_b",
+            "current_value": "Deck 5",
+            "semantics": "changed_state",
+            "previous_value": "Deck 2",
+            "superseded_values": [
+              "Deck 2"
+            ],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Anchor",
+              "k_b": "Deck 5",
+              "k_c": "plan galley"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "plan hearth",
+            "semantics": "changed_state",
+            "previous_value": "plan galley",
+            "superseded_values": [
+              "plan pantry",
+              "plan galley"
+            ],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Anchor",
+              "k_b": "Deck 5",
+              "k_c": "plan hearth"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Gate Amberlyn",
+            "semantics": "same_state",
+            "previous_value": "Gate Amberlyn",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Anchor",
+              "k_b": "Deck 5",
+              "k_c": "plan hearth"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Gate Hazelgrave",
+            "semantics": "changed_state",
+            "previous_value": "Gate Amberlyn",
+            "superseded_values": [
+              "Gate Amberlyn"
+            ],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Hazelgrave",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Anchor",
+              "k_b": "Deck 5",
+              "k_c": "plan hearth"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "BKG-W38",
+            "semantics": "same_state",
+            "previous_value": "BKG-W38",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Hazelgrave",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Anchor",
+              "k_b": "Deck 5",
+              "k_c": "plan hearth"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "9 kilograms",
+          "k_target": "Gate Hazelgrave",
+          "k_hard": "Gate Jessamere",
+          "k_n2": "BKG-W38",
+          "k_a": "class Anchor",
+          "k_b": "Deck 5",
+          "k_c": "plan hearth"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "6 kilograms",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "Gate Amberlyn",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "Gate Ivorlea",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "BKG-W38",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "class Harbor",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "Deck 2",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "plan pantry",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Gate Bristlecone",
+            "semantics": "changed_state",
+            "previous_value": "Gate Amberlyn",
+            "superseded_values": [
+              "Gate Amberlyn"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Bristlecone",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "Gate Jessamere",
+            "semantics": "changed_state",
+            "previous_value": "Gate Ivorlea",
+            "superseded_values": [
+              "Gate Ivorlea"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Bristlecone",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Gate Dunmere",
+            "semantics": "changed_state",
+            "previous_value": "Gate Bristlecone",
+            "superseded_values": [
+              "Gate Amberlyn",
+              "Gate Bristlecone"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Dunmere",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_d",
+            "current_value": "9 kilograms",
+            "semantics": "changed_state",
+            "previous_value": "6 kilograms",
+            "superseded_values": [
+              "6 kilograms"
+            ],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Dunmere",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Gate Fallowick",
+            "semantics": "changed_state",
+            "previous_value": "Gate Dunmere",
+            "superseded_values": [
+              "Gate Amberlyn",
+              "Gate Bristlecone",
+              "Gate Dunmere"
+            ],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Fallowick",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "class Anchor",
+            "semantics": "changed_state",
+            "previous_value": "class Harbor",
+            "superseded_values": [
+              "class Harbor"
+            ],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Fallowick",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Anchor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Gate Fallowick",
+            "semantics": "same_state",
+            "previous_value": "Gate Fallowick",
+            "superseded_values": [
+              "Gate Amberlyn",
+              "Gate Bristlecone",
+              "Gate Dunmere"
+            ],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Fallowick",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Anchor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Gate Hazelgrave",
+            "semantics": "changed_state",
+            "previous_value": "Gate Fallowick",
+            "superseded_values": [
+              "Gate Amberlyn",
+              "Gate Bristlecone",
+              "Gate Dunmere",
+              "Gate Fallowick"
+            ],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Hazelgrave",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Anchor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "BKG-W38",
+            "semantics": "same_state",
+            "previous_value": "BKG-W38",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "9 kilograms",
+              "k_target": "Gate Hazelgrave",
+              "k_hard": "Gate Jessamere",
+              "k_n2": "BKG-W38",
+              "k_a": "class Anchor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "9 kilograms",
+          "k_target": "Gate Hazelgrave",
+          "k_hard": "Gate Jessamere",
+          "k_n2": "BKG-W38",
+          "k_a": "class Anchor",
+          "k_b": "Deck 2",
+          "k_c": "plan pantry"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "6 kilograms",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "Gate Amberlyn",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "Gate Ivorlea",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "BKG-W38",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "class Harbor",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "Deck 2",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "plan pantry",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Amberlyn",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Gate Bristlecone",
+            "semantics": "changed_state",
+            "previous_value": "Gate Amberlyn",
+            "superseded_values": [
+              "Gate Amberlyn"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Bristlecone",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Gate Corvane",
+            "semantics": "changed_state",
+            "previous_value": "Gate Bristlecone",
+            "superseded_values": [
+              "Gate Amberlyn",
+              "Gate Bristlecone"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Corvane",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Gate Dunmere",
+            "semantics": "changed_state",
+            "previous_value": "Gate Corvane",
+            "superseded_values": [
+              "Gate Amberlyn",
+              "Gate Bristlecone",
+              "Gate Corvane"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Dunmere",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "Gate Eldrith",
+            "semantics": "changed_state",
+            "previous_value": "Gate Dunmere",
+            "superseded_values": [
+              "Gate Amberlyn",
+              "Gate Bristlecone",
+              "Gate Corvane",
+              "Gate Dunmere"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Eldrith",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Gate Fallowick",
+            "semantics": "changed_state",
+            "previous_value": "Gate Eldrith",
+            "superseded_values": [
+              "Gate Amberlyn",
+              "Gate Bristlecone",
+              "Gate Corvane",
+              "Gate Dunmere",
+              "Gate Eldrith"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Fallowick",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "Gate Gorsemoor",
+            "semantics": "changed_state",
+            "previous_value": "Gate Fallowick",
+            "superseded_values": [
+              "Gate Amberlyn",
+              "Gate Bristlecone",
+              "Gate Corvane",
+              "Gate Dunmere",
+              "Gate Eldrith",
+              "Gate Fallowick"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Gorsemoor",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Gate Gorsemoor",
+            "semantics": "same_state",
+            "previous_value": "Gate Gorsemoor",
+            "superseded_values": [
+              "Gate Amberlyn",
+              "Gate Bristlecone",
+              "Gate Corvane",
+              "Gate Dunmere",
+              "Gate Eldrith",
+              "Gate Fallowick"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Gorsemoor",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Gate Hazelgrave",
+            "semantics": "changed_state",
+            "previous_value": "Gate Gorsemoor",
+            "superseded_values": [
+              "Gate Amberlyn",
+              "Gate Bristlecone",
+              "Gate Corvane",
+              "Gate Dunmere",
+              "Gate Eldrith",
+              "Gate Fallowick",
+              "Gate Gorsemoor"
+            ],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Hazelgrave",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "BKG-W38",
+            "semantics": "same_state",
+            "previous_value": "BKG-W38",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "6 kilograms",
+              "k_target": "Gate Hazelgrave",
+              "k_hard": "Gate Ivorlea",
+              "k_n2": "BKG-W38",
+              "k_a": "class Harbor",
+              "k_b": "Deck 2",
+              "k_c": "plan pantry"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "6 kilograms",
+          "k_target": "Gate Hazelgrave",
+          "k_hard": "Gate Ivorlea",
+          "k_n2": "BKG-W38",
+          "k_a": "class Harbor",
+          "k_b": "Deck 2",
+          "k_c": "plan pantry"
+        }
+      }
+    }
+  }
+}
