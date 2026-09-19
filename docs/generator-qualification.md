@@ -19,8 +19,9 @@ results. **Protocol v2 (§14) is frozen and implemented (implementation freeze
 r2), and its offline re-adjudication of the archived evidence is closed: Sol
 QUALIFIED, Terra QUALIFIED, Sonnet FAIL; G1 is Sol by frozen primary
 precedence with Terra a qualified fallback; G2 remains unresolved.** The
-second-level G2 candidate `anthropic/claude-fable-5.1` has since been named and frozen (§12;
-capability probe pending, no call made). The Protocol-v1 results above are
+second-level G2 candidate `anthropic/claude-fable-5.1` has since been named and frozen (§12), and
+its capability probe closed PASS (Attempt-04); Generator Qualification has not run.
+The Protocol-v1 results above are
 preserved unchanged alongside, never overwritten.
 
 Generator diversity addresses dependence on one model family. Qualification
@@ -34,7 +35,7 @@ CLOSED and unchanged; they do not qualify construction generators.
 | Slot | Primary candidate | Predeclared corresponding fallback | Current status |
 | --- | --- | --- | --- |
 | G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | Primary Protocol-v1 FAIL (Attempt-01); fallback capability CLOSED/PASS (Capability Probe Attempt-03); fallback Generator Qualification Attempt-02 CLOSED, Protocol-v1 FAIL (§13); **Protocol-v2 (§14): Sol QUALIFIED, Terra QUALIFIED; G1 = Sol by frozen primary precedence, Terra qualified fallback** |
-| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary Protocol-v1 FAIL (Attempt-01), **Protocol-v2 FAIL (§14; four Level-1 terminal failures); G2 unresolved**; fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03), not re-adjudicated; **second-level G2 candidate `anthropic/claude-fable-5.1` frozen before any output (§12), capability probe pending**; selection criteria unchanged (§12) |
+| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary Protocol-v1 FAIL (Attempt-01), **Protocol-v2 FAIL (§14; four Level-1 terminal failures); G2 unresolved**; fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03), not re-adjudicated; **second-level G2 candidate `anthropic/claude-fable-5.1` frozen before any output (§12); capability CLOSED/PASS (Capability Probe Attempt-04), Generator Qualification not run**; selection criteria unchanged (§12) |
 
 **FROZEN:** use different OpenAI/Anthropic families/vendors to diversify
 naturalization provenance. Consider a fallback only if its corresponding primary
@@ -272,7 +273,7 @@ Qualification may record message/token lengths descriptively, but these numeric
 values are not final pass/fail gates without separate adjudication. Exact
 message-count requirements are independently frozen and must pass.
 
-**OPEN:** second-level G2 candidate capability probe and qualification (candidate `anthropic/claude-fable-5.1` frozen, §12), handling of a final-CRST item with a
+**OPEN:** second-level G2 candidate qualification (candidate `anthropic/claude-fable-5.1` frozen with capability CLOSED/PASS, §12), handling of a final-CRST item with a
 Level-1 failure (§14), assignment mechanism/seed, B0 calibration material/grid/budget, and Small Pilot
 size/acceptance procedure. Final CRST N/R/minimum effect of interest and
 statistical procedures are not chosen here. Official Generator Qualification
@@ -635,8 +636,12 @@ eligible for native Protocol-v2 Generator Qualification
 same frozen 12 fixtures, prompt, schema, semantic checks, comprehensibility/
 fluency audit and r2 adjudicator, none changed for it).
 
-The capability probe and Generator Qualification for this candidate have not been
-run, and G2 remains unresolved until qualification completes. The official CLIs
+The candidate's capability probe closed PASS (Capability Probe Attempt-04,
+`probe.json` SHA-256
+`4821739b668e2b5894a28e8f345588dd9869aa92420384cc10120d637fcc9365`), recorded in the per-slot record of
+`configs/generator-capability-probe-second-level-g2.yaml`. This is capability
+compatibility only: the candidate remains a CANDIDATE, Generator Qualification has
+not run, and G2 remains unresolved until it completes. The official CLIs
 select candidates from profiles in the pinned sources, so support was added as the
 `second_level_g2` profile: one G2 slot with this exact candidate, the routing
 above and the frozen config. The probe input, fixtures, prompt, schema, reasoning
@@ -645,8 +650,8 @@ supports the capability preview (`--profile second_level_g2`: one G2 call) and,
 should capability close PASS, native qualification (`--profile second_level_g2
 --slot G2 --protocol-version v2`: the same 12 frozen fixtures as 12 G2 calls, no
 G1 call), so a capability PASS needs no further source change. The implementation
-freeze for this support is in place (§14, revision 3). Live qualification still
-requires this candidate's own capability probe to close PASS and an explicit
+freeze revision r3 covered the profile support (§14) and is superseded by r4, which
+is pending. Live qualification additionally requires an explicit
 `--output-directory`. The closed results (Sol, Terra, Sonnet, Opus and all
 Protocol-v1 and Protocol-v2 attempt artifacts) and the G1 resolution are not
 affected.
@@ -787,7 +792,7 @@ Terra, and Opus all remained not Generator-Qualified under Protocol v1; the
 later Protocol-v2 offline re-adjudication (§14) is recorded separately and
 does not alter this v1 closure.
 
-## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r3; Offline Re-adjudication Closed)
+## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r4 Pending; Offline Re-adjudication Closed)
 
 **Status.** The Protocol-v2 methodology is frozen. The offline re-adjudication of
 the archived evidence is closed (Sol and Terra qualified, Sonnet failed, G1 is
@@ -811,17 +816,21 @@ Support for the second-level G2 candidate profile (`second_level_g2`; see §12)
 then changed `experiments/probe_generators.py` and
 `experiments/qualify_generators.py`, two of the three pinned sources. Revision 2
 therefore remains as historical provenance of the earlier implementation and no
-longer freezes the current code. The current freeze record is revision 3,
-`configs/generator-qualification-implementation-freeze-v2-r3.json`, which names the
+longer freezes the current code. Revision 3,
+`configs/generator-qualification-implementation-freeze-v2-r3.json`, names the
 implementation commit that carries this support (`45f06ae8508485ff2f4d5a886fef89f01bf1b807`,
-"feat: support second-level G2 generator profile") and pins the current sources.
-`implementation('v2')` reads only r3 and reports FROZEN, so live `--protocol-version
-v2 --execute` passes this gate, subject to every other execution guard (clean
-worktree, per-slot capability evidence, API key and, for single-slot profiles, an
-explicit output directory). No live execution has been performed under it. The
-revision suffix names the implementation freeze only; the procedure and audit
-versions remain `generator-qualification-procedure/2.0.0` and
-`generator-manual-audit/2.0.0`.
+"feat: support second-level G2 generator profile") and pinned the sources at that
+commit; it froze that implementation, and live execution was not performed under it.
+
+Recording the second-level candidate's capability closure then changed the package
+hash pinned in `experiments/qualify_generators.py`, so revision 3 is in turn
+historical provenance. The active freeze record is revision 4,
+`configs/generator-qualification-implementation-freeze-v2-r4.json`, to be created
+against the implementation commit that carries that change. Until it exists,
+`implementation('v2')` reports NOT_FROZEN and live `--protocol-version v2
+--execute` refuses before any network request. The revision suffix names the
+implementation freeze only; the procedure and audit versions remain
+`generator-qualification-procedure/2.0.0` and `generator-manual-audit/2.0.0`.
 
 **Implementation freeze records.** All records use the same protocol-agnostic schema
 (`generator-qualification-implementation-freeze/1.0.0`), which pins a commit and
@@ -843,11 +852,13 @@ already existed when the record was created:
   `experiments/qualify_generators.py` SHA-256
   `4f985518dec34731737794009f4c7841a3584dc0d11c1a9c83ee2e367644f09e`).
 - `configs/generator-qualification-implementation-freeze-v2-r3.json` (revision 3):
-  the current record. It pins the implementation commit `45f06ae8508485ff2f4d5a886fef89f01bf1b807`
+  pins the implementation commit `45f06ae8508485ff2f4d5a886fef89f01bf1b807`
   (`experiments/qualify_generators.py` SHA-256
   `6765c1e456a7223ea2108cb79851cbfd8858f0f7eba557beb67ff871afe5687d`;
   `experiments/probe_generators.py` SHA-256
   `b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`).
+- `configs/generator-qualification-implementation-freeze-v2-r4.json` (revision 4):
+  the active record; not yet created.
 
 `validate_generator_qualification_fixtures.py` is unchanged across all v2 revisions
 and `probe_generators.py` across revisions 1 and 2. `implementation('v1')` reads only the v1

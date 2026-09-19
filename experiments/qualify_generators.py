@@ -29,7 +29,7 @@ SCHEMA_HASH = 'c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917'
 # Fallback capability-probe execution-package identity (Sec. 1); UNDER_DEVELOPMENT, never CLOSED here.
 FALLBACK_PACKAGE_HASH = '1316b2b1f3a7f5f15f64d5b3b2ef379c60f96edddff8b5f62bf0e712d7099e1b'
 # Execution package hash for the second-level G2 profile.
-SECOND_LEVEL_G2_PACKAGE_HASH = '94ffcab04921bbdaabc84a66c2bc490706d80941024e74859e3c65bb198a038d'
+SECOND_LEVEL_G2_PACKAGE_HASH = 'fb2c74eec9fea2ab49cee00e76cbe84ec7ce0fe2464e80bf84d157e82ec56180'
 PACKAGE_HASHES = {'primary': PACKAGE_HASH, 'fallback': FALLBACK_PACKAGE_HASH,
                   'second_level_g2': SECOND_LEVEL_G2_PACKAGE_HASH}
 DEFAULT_OUTPUT = ROOT / 'results/generator-qualification/attempt-01'
@@ -45,7 +45,7 @@ FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze.js
 # protocol v1. Protocol v2 uses revisioned records (-v2, -v2-r2, -v2-r3, ...): only the current revision,
 # V2_FREEZE_RECORD, is consulted, and earlier revisions are kept as historical provenance. The revision
 # suffix is independent of the protocol version. implementation('v2') reports NOT_FROZEN until it exists.
-V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2-r3.json'
+V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2-r4.json'
 FREEZE_SCHEMA = 'generator-qualification-implementation-freeze/1.0.0'
 NOT_FROZEN = 'NOT YET FROZEN FOR LIVE EXECUTION'
 FROZEN = 'FROZEN FOR LIVE EXECUTION'

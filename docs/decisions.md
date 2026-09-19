@@ -815,11 +815,11 @@ reverified unaffected. Opus remains capability CLOSED/FAIL (provider-policy
 refusal). No new G2 candidate has been selected. Neither Terra nor Opus is
 Generator-Qualified.
 
-## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r3, Offline Re-adjudication Closed
+## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r4 Pending, Offline Re-adjudication Closed
 
 The methodology is frozen and the offline re-adjudication is closed (see the
-final entries of this section). Implementation freeze revision r3 is the current
-record; revision r2 (Commit C) is historical provenance. Full specification:
+final entries of this section). The active implementation freeze is revision r4,
+which is pending; revisions r1 to r3 are historical provenance. Full specification:
 `generator-qualification.md` §14.
 Versions: `generator-qualification-procedure/2.0.0`,
 `generator-manual-audit/2.0.0`; Protocol v1 (`.../1.0.0`) and all its
@@ -828,9 +828,10 @@ artifacts remain immutable historical records.
 **Freeze lineage.** Four distinct immutable records: the historical v1 record; v2
 revision 1 (`...-freeze-v2.json`, Commit A); v2 revision 2 (`...-freeze-v2-r2.json`,
 Commit C `30d65102e618aa5713f0710964978f1eb46c4a15`); and v2 revision 3
-(`...-freeze-v2-r3.json`, commit `45f06ae8508485ff2f4d5a886fef89f01bf1b807`), the current record. Each superseded the
-previous one when second-level G2 profile support changed the pinned sources (see
-the final entries below). The methodology stays 2.0.0.
+(`...-freeze-v2-r3.json`, commit `45f06ae8508485ff2f4d5a886fef89f01bf1b807`). Each
+was superseded when a later change altered the pinned sources; the active target is
+revision 4 (`...-freeze-v2-r4.json`), not yet created (see the final entries below).
+The methodology stays 2.0.0.
 
 **Two-commit freeze workflow, revision 1 (historical).** Commit A
 (implementation, `6412b368e9c49891510aeb73d1fa208442df3c01`, "feat: implement
@@ -1099,3 +1100,30 @@ closes PASS. The offline previews are unchanged: the capability preview contains
 one call (G2, `anthropic/claude-fable-5.1`, first-party Anthropic route) and the
 qualification preview contains 12 G2 calls on the same 12 frozen fixtures under
 native Protocol v2. No call has been made to this candidate.
+
+### Second-level G2 capability probe closed PASS (2026-09-19)
+
+The capability probe for `anthropic/claude-fable-5.1` (Capability Probe Attempt-04, one G2 call under
+`--profile second_level_g2`, first-party Anthropic route) closed PASS. It is
+recorded in the per-slot capability record of
+`configs/generator-capability-probe-second-level-g2.yaml`, following the fallback
+profile's convention: model `anthropic/claude-fable-5.1`, status CLOSED, capability_result PASS, evidence
+`results/generator-capability-probe/attempt-04` with `probe.json` SHA-256
+`4821739b668e2b5894a28e8f345588dd9869aa92420384cc10120d637fcc9365`. The profile-level fields stay OPEN/NOT_ASSESSED because the frozen
+profile definition validates them; the per-slot record is authoritative. No
+execution-relevant field changed: the configuration equals the one archived with
+Attempt-04 apart from this record. The candidate's generator status remains
+CANDIDATE; capability compatibility is not Generator Qualification, which has not
+run, and G2 remains unresolved.
+
+The capability gate now admits exactly this candidate in the G2 slot of this
+profile, and the probe refuses to re-run the closed slot. Recording the closure
+changed the config bytes, so the pinned package hash for this profile in
+`experiments/qualify_generators.py` was updated; that source change means no
+implementation freeze record (r3 included) pins the current sources, and
+`implementation('v2')` reports NOT_FROZEN. The active v2 freeze target is
+therefore revision 4, `configs/generator-qualification-implementation-freeze-v2-r4.json`,
+which does not exist yet; r1 to r3 are unchanged historical records. Live
+Protocol-v2 qualification for this candidate is blocked only by the implementation
+freeze until r4 is created against the implementation commit. The qualification preview is unchanged: 12 G2 calls
+on the 12 frozen fixtures under native Protocol v2.

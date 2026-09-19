@@ -721,7 +721,9 @@ def test_execute_probe_without_profile_name_skips_per_slot_reopening_check(monke
 # qualification call to it. No source change and no call: these tests read config and build requests offline.
 
 SECOND_LEVEL_G2_CONFIG = p.ROOT / 'configs/generator-capability-probe-second-level-g2.yaml'
-SECOND_LEVEL_G2_CONFIG_SHA256 = '94ffcab04921bbdaabc84a66c2bc490706d80941024e74859e3c65bb198a038d'
+SECOND_LEVEL_G2_CONFIG_SHA256 = 'fb2c74eec9fea2ab49cee00e76cbe84ec7ce0fe2464e80bf84d157e82ec56180'
+ATTEMPT_04 = p.ROOT / 'results/generator-capability-probe/attempt-04'
+ATTEMPT_04_PROBE_SHA256 = '4821739b668e2b5894a28e8f345588dd9869aa92420384cc10120d637fcc9365'
 FALLBACK_CONFIG_SHA256 = '1316b2b1f3a7f5f15f64d5b3b2ef379c60f96edddff8b5f62bf0e712d7099e1b'
 FABLE_SLOT = dict(logical_call_id='G2', model='anthropic/claude-fable-5.1', provider_order=['anthropic'])
 
@@ -810,13 +812,44 @@ def test_second_level_g2_cli_rejects_an_empty_slot_selection_and_ungated_executi
     assert not output.exists()
 
 
-def test_second_level_g2_capability_is_pending_with_no_evidence_and_authorizes_no_other_candidate():
-    pending = p.slot_capability('second_level_g2', FABLE_SLOT)
-    assert pending == {'model': 'anthropic/claude-fable-5.1', 'status': 'OPEN', 'capability_result': 'NOT_ASSESSED',
-                       'reason': None, 'evidence_attempt': None, 'evidence_path': None, 'evidence_sha256': None}
+def test_second_level_g2_capability_is_closed_pass_for_the_exact_candidate_only():
+    """The per-slot record (the same convention as the fallback profile) closes capability PASS for exactly
+    this model, citing Attempt-04; it does not qualify the generator."""
+    recorded = p.slot_capability('second_level_g2', FABLE_SLOT)
+    assert recorded == {'model': 'anthropic/claude-fable-5.1', 'status': 'CLOSED', 'capability_result': 'PASS',
+                        'reason': None, 'evidence_attempt': 'attempt-04',
+                        'evidence_path': 'results/generator-capability-probe/attempt-04',
+                        'evidence_sha256': ATTEMPT_04_PROBE_SHA256}
     for other in ('anthropic/claude-sonnet-5', 'anthropic/claude-opus-5', 'anthropic/claude-hypothetical-next'):
         got = p.slot_capability('second_level_g2', dict(FABLE_SLOT, model=other))
         assert got['status'] == 'OPEN' and got['capability_result'] == 'NOT_ASSESSED' and got['evidence_sha256'] is None
+    config = yaml.safe_load(SECOND_LEVEL_G2_CONFIG.read_text(encoding='utf-8'))
+    assert config['generator_status'] == 'CANDIDATE'  # Capability PASS is not Generator Qualification.
+    # Profile-level fields stay as the frozen loader expects; the per-slot record is authoritative.
+    assert (config['status'], config['capability_result']) == ('OPEN', 'NOT_ASSESSED')
+
+
+def test_second_level_g2_recorded_evidence_is_attempt_04_and_execution_fields_are_unchanged():
+    """The recorded SHA-256 is that of the archived probe.json, which shows a passed single G2 call to the
+    frozen candidate; every non-capability field of the config equals the configuration that produced it."""
+    assert p.file_hash(ATTEMPT_04 / 'probe.json') == ATTEMPT_04_PROBE_SHA256
+    assert (ATTEMPT_04 / 'SHA256SUMS').read_text(encoding='utf-8').split()[0] == ATTEMPT_04_PROBE_SHA256
+    archived = json.loads((ATTEMPT_04 / 'probe.json').read_text(encoding='utf-8'))
+    assert archived['status'] == 'PASS' and archived['failure_reason'] is None
+    assert [(c['logical_call_id'], c['status']) for c in archived['logical_calls']] == [('G2', 'PASS')]
+    current = yaml.safe_load(SECOND_LEVEL_G2_CONFIG.read_text(encoding='utf-8'))
+    assert {k for k in {*archived['config'], *current} if archived['config'].get(k) != current.get(k)} == {'slots'}
+    assert archived['config']['logical_calls'] == current['logical_calls'] == [
+        dict(logical_call_id='G2', model='anthropic/claude-fable-5.1', provider_order=['anthropic'])]
+
+
+def test_closed_second_level_slot_cannot_be_reprobed(monkeypatch, tmp_path):
+    """Re-running the probe for the closed slot is refused before any output directory or network client."""
+    monkeypatch.setenv('OPENROUTER_API_KEY', 'test-secret-must-never-be-sent')
+    output = tmp_path / 'must-not-be-created'
+    with pytest.raises(ValueError, match=r'capability already CLOSED/PASS; reopening requires adjudication'):
+        p.main(['--profile', 'second_level_g2', '--execute', '--confirm-spend', '--output-directory', str(output)])
+    assert not output.exists()
 
 
 def test_closed_candidates_and_their_configs_untouched_by_second_level_freeze():
