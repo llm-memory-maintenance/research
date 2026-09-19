@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-location-logistics-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Location & Logistics",
+    "entities": [
+      {
+        "entity_id": "b0cal-location-logistics-01-primary",
+        "name": "Freight lot Halyard"
+      },
+      {
+        "entity_id": "b0cal-location-logistics-01-distractor",
+        "name": "Freight lot Keelson"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "loading_dock",
+        "meaning": "assigned loading dock",
+        "units_or_interpretation": "dock label"
+      },
+      {
+        "attribute_id": "lot_code",
+        "meaning": "freight lot identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "forklift",
+        "meaning": "assigned forklift",
+        "units_or_interpretation": "vehicle label"
+      },
+      {
+        "attribute_id": "pallet_count",
+        "meaning": "pallet count",
+        "units_or_interpretation": "pallets"
+      },
+      {
+        "attribute_id": "aisle",
+        "meaning": "storage aisle",
+        "units_or_interpretation": "aisle label"
+      },
+      {
+        "attribute_id": "inspector",
+        "meaning": "lot inspector",
+        "units_or_interpretation": "synthetic person"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-location-logistics-01-primary",
+        "attribute_id": "loading_dock",
+        "initial_value": "Dock Aldermere",
+        "role": "target",
+        "value_inventory": [
+          "Dock Aldermere",
+          "Dock Brackwater",
+          "Dock Cindermoor",
+          "Dock Duskfield",
+          "Dock Emberwick",
+          "Dock Frostlea",
+          "Dock Gladehurst",
+          "Dock Hartsgill"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-location-logistics-01-distractor",
+        "attribute_id": "loading_dock",
+        "initial_value": "Dock Ironvale",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "Dock Ironvale",
+          "Dock Juniperton",
+          "Dock Kingsmarch"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-location-logistics-01-primary",
+        "attribute_id": "lot_code",
+        "initial_value": "FRL-H29",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "FRL-H29"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-location-logistics-01-primary",
+        "attribute_id": "forklift",
+        "initial_value": "Lift F11",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Lift F11",
+          "Lift F12",
+          "Lift F13"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-location-logistics-01-primary",
+        "attribute_id": "pallet_count",
+        "initial_value": "8 pallets",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "8 pallets",
+          "14 pallets",
+          "21 pallets"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-location-logistics-01-primary",
+        "attribute_id": "aisle",
+        "initial_value": "Aisle 3B",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Aisle 3B",
+          "Aisle 5D",
+          "Aisle 7F"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-location-logistics-01-primary",
+        "attribute_id": "inspector",
+        "initial_value": "Inspector Yarrow Finch",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Inspector Yarrow Finch",
+          "Inspector Dunmore Kade",
+          "Inspector Tarn Osei"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_d",
+      "I2": "k_target",
+      "I3": "k_hard",
+      "I4": "k_n2",
+      "I5": "k_a",
+      "I6": "k_b",
+      "I7": "k_c"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-location-logistics-01-primary",
+      "attribute_id": "loading_dock",
+      "intent": "Ask only for the current assigned loading dock of Freight lot Halyard."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Dock Hartsgill",
+    "coverage": [
+      "locations",
+      "logistics",
+      "assignments"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "Inspector Yarrow Finch",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "Dock Aldermere",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "Dock Ironvale",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "FRL-H29",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "Lift F11",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "8 pallets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "Aisle 3B",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_b",
+            "current_value": "14 pallets",
+            "semantics": "changed_state",
+            "previous_value": "8 pallets",
+            "superseded_values": [
+              "8 pallets"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "14 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "Aisle 5D",
+            "semantics": "changed_state",
+            "previous_value": "Aisle 3B",
+            "superseded_values": [
+              "Aisle 3B"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "14 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_d",
+            "current_value": "Inspector Dunmore Kade",
+            "semantics": "changed_state",
+            "previous_value": "Inspector Yarrow Finch",
+            "superseded_values": [
+              "Inspector Yarrow Finch"
+            ],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "14 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "Lift F12",
+            "semantics": "changed_state",
+            "previous_value": "Lift F11",
+            "superseded_values": [
+              "Lift F11"
+            ],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F12",
+              "k_b": "14 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_b",
+            "current_value": "21 pallets",
+            "semantics": "changed_state",
+            "previous_value": "14 pallets",
+            "superseded_values": [
+              "8 pallets",
+              "14 pallets"
+            ],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F12",
+              "k_b": "21 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "Dock Juniperton",
+            "semantics": "changed_state",
+            "previous_value": "Dock Ironvale",
+            "superseded_values": [
+              "Dock Ironvale"
+            ],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Juniperton",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F12",
+              "k_b": "21 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Dock Aldermere",
+            "semantics": "same_state",
+            "previous_value": "Dock Aldermere",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Juniperton",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F12",
+              "k_b": "21 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Dock Hartsgill",
+            "semantics": "changed_state",
+            "previous_value": "Dock Aldermere",
+            "superseded_values": [
+              "Dock Aldermere"
+            ],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Hartsgill",
+              "k_hard": "Dock Juniperton",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F12",
+              "k_b": "21 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "FRL-H29",
+            "semantics": "same_state",
+            "previous_value": "FRL-H29",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Hartsgill",
+              "k_hard": "Dock Juniperton",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F12",
+              "k_b": "21 pallets",
+              "k_c": "Aisle 5D"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "Inspector Dunmore Kade",
+          "k_target": "Dock Hartsgill",
+          "k_hard": "Dock Juniperton",
+          "k_n2": "FRL-H29",
+          "k_a": "Lift F12",
+          "k_b": "21 pallets",
+          "k_c": "Aisle 5D"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "Inspector Yarrow Finch",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "Dock Aldermere",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "Dock Ironvale",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "FRL-H29",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "Lift F11",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "8 pallets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "Aisle 3B",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Dock Brackwater",
+            "semantics": "changed_state",
+            "previous_value": "Dock Aldermere",
+            "superseded_values": [
+              "Dock Aldermere"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Brackwater",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "Aisle 5D",
+            "semantics": "changed_state",
+            "previous_value": "Aisle 3B",
+            "superseded_values": [
+              "Aisle 3B"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Brackwater",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Dock Duskfield",
+            "semantics": "changed_state",
+            "previous_value": "Dock Brackwater",
+            "superseded_values": [
+              "Dock Aldermere",
+              "Dock Brackwater"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Duskfield",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_d",
+            "current_value": "Inspector Dunmore Kade",
+            "semantics": "changed_state",
+            "previous_value": "Inspector Yarrow Finch",
+            "superseded_values": [
+              "Inspector Yarrow Finch"
+            ],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Duskfield",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Dock Frostlea",
+            "semantics": "changed_state",
+            "previous_value": "Dock Duskfield",
+            "superseded_values": [
+              "Dock Aldermere",
+              "Dock Brackwater",
+              "Dock Duskfield"
+            ],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Frostlea",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "Dock Juniperton",
+            "semantics": "changed_state",
+            "previous_value": "Dock Ironvale",
+            "superseded_values": [
+              "Dock Ironvale"
+            ],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Frostlea",
+              "k_hard": "Dock Juniperton",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Dock Frostlea",
+            "semantics": "same_state",
+            "previous_value": "Dock Frostlea",
+            "superseded_values": [
+              "Dock Aldermere",
+              "Dock Brackwater",
+              "Dock Duskfield"
+            ],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Frostlea",
+              "k_hard": "Dock Juniperton",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Dock Hartsgill",
+            "semantics": "changed_state",
+            "previous_value": "Dock Frostlea",
+            "superseded_values": [
+              "Dock Aldermere",
+              "Dock Brackwater",
+              "Dock Duskfield",
+              "Dock Frostlea"
+            ],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Hartsgill",
+              "k_hard": "Dock Juniperton",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 5D"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "FRL-H29",
+            "semantics": "same_state",
+            "previous_value": "FRL-H29",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Dunmore Kade",
+              "k_target": "Dock Hartsgill",
+              "k_hard": "Dock Juniperton",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 5D"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "Inspector Dunmore Kade",
+          "k_target": "Dock Hartsgill",
+          "k_hard": "Dock Juniperton",
+          "k_n2": "FRL-H29",
+          "k_a": "Lift F11",
+          "k_b": "8 pallets",
+          "k_c": "Aisle 5D"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "Inspector Yarrow Finch",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "Dock Aldermere",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "Dock Ironvale",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "FRL-H29",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "Lift F11",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "8 pallets",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "Aisle 3B",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Aldermere",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Dock Brackwater",
+            "semantics": "changed_state",
+            "previous_value": "Dock Aldermere",
+            "superseded_values": [
+              "Dock Aldermere"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Brackwater",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Dock Cindermoor",
+            "semantics": "changed_state",
+            "previous_value": "Dock Brackwater",
+            "superseded_values": [
+              "Dock Aldermere",
+              "Dock Brackwater"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Cindermoor",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Dock Duskfield",
+            "semantics": "changed_state",
+            "previous_value": "Dock Cindermoor",
+            "superseded_values": [
+              "Dock Aldermere",
+              "Dock Brackwater",
+              "Dock Cindermoor"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Duskfield",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "Dock Emberwick",
+            "semantics": "changed_state",
+            "previous_value": "Dock Duskfield",
+            "superseded_values": [
+              "Dock Aldermere",
+              "Dock Brackwater",
+              "Dock Cindermoor",
+              "Dock Duskfield"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Emberwick",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Dock Frostlea",
+            "semantics": "changed_state",
+            "previous_value": "Dock Emberwick",
+            "superseded_values": [
+              "Dock Aldermere",
+              "Dock Brackwater",
+              "Dock Cindermoor",
+              "Dock Duskfield",
+              "Dock Emberwick"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Frostlea",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "Dock Gladehurst",
+            "semantics": "changed_state",
+            "previous_value": "Dock Frostlea",
+            "superseded_values": [
+              "Dock Aldermere",
+              "Dock Brackwater",
+              "Dock Cindermoor",
+              "Dock Duskfield",
+              "Dock Emberwick",
+              "Dock Frostlea"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Gladehurst",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Dock Gladehurst",
+            "semantics": "same_state",
+            "previous_value": "Dock Gladehurst",
+            "superseded_values": [
+              "Dock Aldermere",
+              "Dock Brackwater",
+              "Dock Cindermoor",
+              "Dock Duskfield",
+              "Dock Emberwick",
+              "Dock Frostlea"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Gladehurst",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Dock Hartsgill",
+            "semantics": "changed_state",
+            "previous_value": "Dock Gladehurst",
+            "superseded_values": [
+              "Dock Aldermere",
+              "Dock Brackwater",
+              "Dock Cindermoor",
+              "Dock Duskfield",
+              "Dock Emberwick",
+              "Dock Frostlea",
+              "Dock Gladehurst"
+            ],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Hartsgill",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "FRL-H29",
+            "semantics": "same_state",
+            "previous_value": "FRL-H29",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Inspector Yarrow Finch",
+              "k_target": "Dock Hartsgill",
+              "k_hard": "Dock Ironvale",
+              "k_n2": "FRL-H29",
+              "k_a": "Lift F11",
+              "k_b": "8 pallets",
+              "k_c": "Aisle 3B"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "Inspector Yarrow Finch",
+          "k_target": "Dock Hartsgill",
+          "k_hard": "Dock Ironvale",
+          "k_n2": "FRL-H29",
+          "k_a": "Lift F11",
+          "k_b": "8 pallets",
+          "k_c": "Aisle 3B"
+        }
+      }
+    }
+  }
+}

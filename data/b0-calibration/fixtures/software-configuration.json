@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-software-configuration-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Software Configuration",
+    "entities": [
+      {
+        "entity_id": "b0cal-software-configuration-01-primary",
+        "name": "Deploy target Sable"
+      },
+      {
+        "entity_id": "b0cal-software-configuration-01-distractor",
+        "name": "Deploy target Umber"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "cache_policy",
+        "meaning": "selected cache policy",
+        "units_or_interpretation": "policy label"
+      },
+      {
+        "attribute_id": "deploy_code",
+        "meaning": "deploy target identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "pool_size",
+        "meaning": "worker pool size",
+        "units_or_interpretation": "workers"
+      },
+      {
+        "attribute_id": "request_timeout",
+        "meaning": "request timeout",
+        "units_or_interpretation": "seconds"
+      },
+      {
+        "attribute_id": "log_sink",
+        "meaning": "log destination",
+        "units_or_interpretation": "sink label"
+      },
+      {
+        "attribute_id": "region_tag",
+        "meaning": "deployment region tag",
+        "units_or_interpretation": "region label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-software-configuration-01-primary",
+        "attribute_id": "cache_policy",
+        "initial_value": "ttl-short",
+        "role": "target",
+        "value_inventory": [
+          "ttl-short",
+          "ttl-medium",
+          "ttl-long",
+          "sliding-30",
+          "sliding-60",
+          "sliding-90",
+          "pinned-soft",
+          "pinned-hard"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-software-configuration-01-distractor",
+        "attribute_id": "cache_policy",
+        "initial_value": "no-cache",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "no-cache",
+          "edge-only",
+          "bypass-all"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-software-configuration-01-primary",
+        "attribute_id": "deploy_code",
+        "initial_value": "DEP-S72",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "DEP-S72"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-software-configuration-01-primary",
+        "attribute_id": "pool_size",
+        "initial_value": "3 workers",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "3 workers",
+          "5 workers",
+          "9 workers"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-software-configuration-01-primary",
+        "attribute_id": "request_timeout",
+        "initial_value": "12 seconds",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "12 seconds",
+          "30 seconds",
+          "45 seconds"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-software-configuration-01-primary",
+        "attribute_id": "log_sink",
+        "initial_value": "sink-harbor",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "sink-harbor",
+          "sink-lantern",
+          "sink-quarry"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-software-configuration-01-primary",
+        "attribute_id": "region_tag",
+        "initial_value": "region-fjord",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "region-fjord",
+          "region-mesa",
+          "region-delta"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_target",
+      "I2": "k_hard",
+      "I3": "k_n2",
+      "I4": "k_a",
+      "I5": "k_b",
+      "I6": "k_c",
+      "I7": "k_d"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-software-configuration-01-primary",
+      "attribute_id": "cache_policy",
+      "intent": "Ask only for the current selected cache policy of Deploy target Sable."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "pinned-hard",
+    "coverage": [
+      "configuration_values",
+      "numeric_values",
+      "categorical_values"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "ttl-short",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "no-cache",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "DEP-S72",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "3 workers",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "12 seconds",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "sink-harbor",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "region-fjord",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_d",
+            "current_value": "region-mesa",
+            "semantics": "changed_state",
+            "previous_value": "region-fjord",
+            "superseded_values": [
+              "region-fjord"
+            ],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-mesa"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "5 workers",
+            "semantics": "changed_state",
+            "previous_value": "3 workers",
+            "superseded_values": [
+              "3 workers"
+            ],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-mesa"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_b",
+            "current_value": "30 seconds",
+            "semantics": "changed_state",
+            "previous_value": "12 seconds",
+            "superseded_values": [
+              "12 seconds"
+            ],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-mesa"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "sink-lantern",
+            "semantics": "changed_state",
+            "previous_value": "sink-harbor",
+            "superseded_values": [
+              "sink-harbor"
+            ],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-lantern",
+              "k_d": "region-mesa"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_d",
+            "current_value": "region-delta",
+            "semantics": "changed_state",
+            "previous_value": "region-mesa",
+            "superseded_values": [
+              "region-fjord",
+              "region-mesa"
+            ],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-lantern",
+              "k_d": "region-delta"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "edge-only",
+            "semantics": "changed_state",
+            "previous_value": "no-cache",
+            "superseded_values": [
+              "no-cache"
+            ],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "edge-only",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-lantern",
+              "k_d": "region-delta"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "ttl-short",
+            "semantics": "same_state",
+            "previous_value": "ttl-short",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "edge-only",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-lantern",
+              "k_d": "region-delta"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "pinned-hard",
+            "semantics": "changed_state",
+            "previous_value": "ttl-short",
+            "superseded_values": [
+              "ttl-short"
+            ],
+            "state_after": {
+              "k_target": "pinned-hard",
+              "k_hard": "edge-only",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-lantern",
+              "k_d": "region-delta"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "DEP-S72",
+            "semantics": "same_state",
+            "previous_value": "DEP-S72",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "pinned-hard",
+              "k_hard": "edge-only",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-lantern",
+              "k_d": "region-delta"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "pinned-hard",
+          "k_hard": "edge-only",
+          "k_n2": "DEP-S72",
+          "k_a": "5 workers",
+          "k_b": "30 seconds",
+          "k_c": "sink-lantern",
+          "k_d": "region-delta"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "ttl-short",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "no-cache",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "DEP-S72",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "3 workers",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "12 seconds",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "sink-harbor",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "region-fjord",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "ttl-medium",
+            "semantics": "changed_state",
+            "previous_value": "ttl-short",
+            "superseded_values": [
+              "ttl-short"
+            ],
+            "state_after": {
+              "k_target": "ttl-medium",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "5 workers",
+            "semantics": "changed_state",
+            "previous_value": "3 workers",
+            "superseded_values": [
+              "3 workers"
+            ],
+            "state_after": {
+              "k_target": "ttl-medium",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "sliding-30",
+            "semantics": "changed_state",
+            "previous_value": "ttl-medium",
+            "superseded_values": [
+              "ttl-short",
+              "ttl-medium"
+            ],
+            "state_after": {
+              "k_target": "sliding-30",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_b",
+            "current_value": "30 seconds",
+            "semantics": "changed_state",
+            "previous_value": "12 seconds",
+            "superseded_values": [
+              "12 seconds"
+            ],
+            "state_after": {
+              "k_target": "sliding-30",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "sliding-90",
+            "semantics": "changed_state",
+            "previous_value": "sliding-30",
+            "superseded_values": [
+              "ttl-short",
+              "ttl-medium",
+              "sliding-30"
+            ],
+            "state_after": {
+              "k_target": "sliding-90",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_hard",
+            "current_value": "edge-only",
+            "semantics": "changed_state",
+            "previous_value": "no-cache",
+            "superseded_values": [
+              "no-cache"
+            ],
+            "state_after": {
+              "k_target": "sliding-90",
+              "k_hard": "edge-only",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "sliding-90",
+            "semantics": "same_state",
+            "previous_value": "sliding-90",
+            "superseded_values": [
+              "ttl-short",
+              "ttl-medium",
+              "sliding-30"
+            ],
+            "state_after": {
+              "k_target": "sliding-90",
+              "k_hard": "edge-only",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "pinned-hard",
+            "semantics": "changed_state",
+            "previous_value": "sliding-90",
+            "superseded_values": [
+              "ttl-short",
+              "ttl-medium",
+              "sliding-30",
+              "sliding-90"
+            ],
+            "state_after": {
+              "k_target": "pinned-hard",
+              "k_hard": "edge-only",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "DEP-S72",
+            "semantics": "same_state",
+            "previous_value": "DEP-S72",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "pinned-hard",
+              "k_hard": "edge-only",
+              "k_n2": "DEP-S72",
+              "k_a": "5 workers",
+              "k_b": "30 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "pinned-hard",
+          "k_hard": "edge-only",
+          "k_n2": "DEP-S72",
+          "k_a": "5 workers",
+          "k_b": "30 seconds",
+          "k_c": "sink-harbor",
+          "k_d": "region-fjord"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_target",
+            "current_value": "ttl-short",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_hard",
+            "current_value": "no-cache",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_n2",
+            "current_value": "DEP-S72",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_a",
+            "current_value": "3 workers",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_b",
+            "current_value": "12 seconds",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_c",
+            "current_value": "sink-harbor",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_d",
+            "current_value": "region-fjord",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "ttl-short",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "ttl-medium",
+            "semantics": "changed_state",
+            "previous_value": "ttl-short",
+            "superseded_values": [
+              "ttl-short"
+            ],
+            "state_after": {
+              "k_target": "ttl-medium",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "ttl-long",
+            "semantics": "changed_state",
+            "previous_value": "ttl-medium",
+            "superseded_values": [
+              "ttl-short",
+              "ttl-medium"
+            ],
+            "state_after": {
+              "k_target": "ttl-long",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "sliding-30",
+            "semantics": "changed_state",
+            "previous_value": "ttl-long",
+            "superseded_values": [
+              "ttl-short",
+              "ttl-medium",
+              "ttl-long"
+            ],
+            "state_after": {
+              "k_target": "sliding-30",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "sliding-60",
+            "semantics": "changed_state",
+            "previous_value": "sliding-30",
+            "superseded_values": [
+              "ttl-short",
+              "ttl-medium",
+              "ttl-long",
+              "sliding-30"
+            ],
+            "state_after": {
+              "k_target": "sliding-60",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "sliding-90",
+            "semantics": "changed_state",
+            "previous_value": "sliding-60",
+            "superseded_values": [
+              "ttl-short",
+              "ttl-medium",
+              "ttl-long",
+              "sliding-30",
+              "sliding-60"
+            ],
+            "state_after": {
+              "k_target": "sliding-90",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "pinned-soft",
+            "semantics": "changed_state",
+            "previous_value": "sliding-90",
+            "superseded_values": [
+              "ttl-short",
+              "ttl-medium",
+              "ttl-long",
+              "sliding-30",
+              "sliding-60",
+              "sliding-90"
+            ],
+            "state_after": {
+              "k_target": "pinned-soft",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "pinned-soft",
+            "semantics": "same_state",
+            "previous_value": "pinned-soft",
+            "superseded_values": [
+              "ttl-short",
+              "ttl-medium",
+              "ttl-long",
+              "sliding-30",
+              "sliding-60",
+              "sliding-90"
+            ],
+            "state_after": {
+              "k_target": "pinned-soft",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "pinned-hard",
+            "semantics": "changed_state",
+            "previous_value": "pinned-soft",
+            "superseded_values": [
+              "ttl-short",
+              "ttl-medium",
+              "ttl-long",
+              "sliding-30",
+              "sliding-60",
+              "sliding-90",
+              "pinned-soft"
+            ],
+            "state_after": {
+              "k_target": "pinned-hard",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "DEP-S72",
+            "semantics": "same_state",
+            "previous_value": "DEP-S72",
+            "superseded_values": [],
+            "state_after": {
+              "k_target": "pinned-hard",
+              "k_hard": "no-cache",
+              "k_n2": "DEP-S72",
+              "k_a": "3 workers",
+              "k_b": "12 seconds",
+              "k_c": "sink-harbor",
+              "k_d": "region-fjord"
+            }
+          }
+        ],
+        "final_state": {
+          "k_target": "pinned-hard",
+          "k_hard": "no-cache",
+          "k_n2": "DEP-S72",
+          "k_a": "3 workers",
+          "k_b": "12 seconds",
+          "k_c": "sink-harbor",
+          "k_d": "region-fjord"
+        }
+      }
+    }
+  }
+}

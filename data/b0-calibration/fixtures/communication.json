@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-communication-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Communication",
+    "entities": [
+      {
+        "entity_id": "b0cal-communication-01-primary",
+        "name": "Mailing list Ember"
+      },
+      {
+        "entity_id": "b0cal-communication-01-distractor",
+        "name": "Mailing list Garnet"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "send_window",
+        "meaning": "weekly send window",
+        "units_or_interpretation": "named window"
+      },
+      {
+        "attribute_id": "list_code",
+        "meaning": "mailing list identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "sender_name",
+        "meaning": "sender display name",
+        "units_or_interpretation": "synthetic sender"
+      },
+      {
+        "attribute_id": "reply_alias",
+        "meaning": "reply-to alias",
+        "units_or_interpretation": "alias label"
+      },
+      {
+        "attribute_id": "tone",
+        "meaning": "message tone",
+        "units_or_interpretation": "tone label"
+      },
+      {
+        "attribute_id": "footer",
+        "meaning": "message footer",
+        "units_or_interpretation": "footer label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-communication-01-primary",
+        "attribute_id": "send_window",
+        "initial_value": "Monday 07:00",
+        "role": "target",
+        "value_inventory": [
+          "Monday 07:00",
+          "Tuesday 08:30",
+          "Wednesday 09:15",
+          "Thursday 10:45",
+          "Friday 12:00",
+          "Saturday 13:30",
+          "Sunday 15:15",
+          "Monday 16:40"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-communication-01-distractor",
+        "attribute_id": "send_window",
+        "initial_value": "Tuesday 18:20",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "Tuesday 18:20",
+          "Thursday 19:05",
+          "Saturday 20:10"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-communication-01-primary",
+        "attribute_id": "list_code",
+        "initial_value": "MLS-E92",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "MLS-E92"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-communication-01-primary",
+        "attribute_id": "sender_name",
+        "initial_value": "Sender Ruskin Hall",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Sender Ruskin Hall",
+          "Sender Delphine Ward",
+          "Sender Osric Lane"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-communication-01-primary",
+        "attribute_id": "reply_alias",
+        "initial_value": "alias help-desk",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "alias help-desk",
+          "alias front-line",
+          "alias night-shift"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-communication-01-primary",
+        "attribute_id": "tone",
+        "initial_value": "formal tone",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "formal tone",
+          "friendly tone",
+          "concise tone"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-communication-01-primary",
+        "attribute_id": "footer",
+        "initial_value": "footer plain",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "footer plain",
+          "footer legal",
+          "footer seasonal"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_b",
+      "I2": "k_c",
+      "I3": "k_d",
+      "I4": "k_target",
+      "I5": "k_hard",
+      "I6": "k_n2",
+      "I7": "k_a"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-communication-01-primary",
+      "attribute_id": "send_window",
+      "intent": "Ask only for the current weekly send window of Mailing list Ember."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Monday 16:40",
+    "coverage": [
+      "communication_settings",
+      "times",
+      "categorical_values"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "alias help-desk",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "formal tone",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "footer plain",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "Monday 07:00",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "Tuesday 18:20",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00",
+              "k_hard": "Tuesday 18:20"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "MLS-E92",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "Sender Ruskin Hall",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_d",
+            "current_value": "footer legal",
+            "semantics": "changed_state",
+            "previous_value": "footer plain",
+            "superseded_values": [
+              "footer plain"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer legal",
+              "k_target": "Monday 07:00",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "Thursday 19:05",
+            "semantics": "changed_state",
+            "previous_value": "Tuesday 18:20",
+            "superseded_values": [
+              "Tuesday 18:20"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer legal",
+              "k_target": "Monday 07:00",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_d",
+            "current_value": "footer seasonal",
+            "semantics": "changed_state",
+            "previous_value": "footer legal",
+            "superseded_values": [
+              "footer plain",
+              "footer legal"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer seasonal",
+              "k_target": "Monday 07:00",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "Sender Delphine Ward",
+            "semantics": "changed_state",
+            "previous_value": "Sender Ruskin Hall",
+            "superseded_values": [
+              "Sender Ruskin Hall"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer seasonal",
+              "k_target": "Monday 07:00",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Delphine Ward"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_b",
+            "current_value": "alias front-line",
+            "semantics": "changed_state",
+            "previous_value": "alias help-desk",
+            "superseded_values": [
+              "alias help-desk"
+            ],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "formal tone",
+              "k_d": "footer seasonal",
+              "k_target": "Monday 07:00",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Delphine Ward"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "friendly tone",
+            "semantics": "changed_state",
+            "previous_value": "formal tone",
+            "superseded_values": [
+              "formal tone"
+            ],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "friendly tone",
+              "k_d": "footer seasonal",
+              "k_target": "Monday 07:00",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Delphine Ward"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Monday 07:00",
+            "semantics": "same_state",
+            "previous_value": "Monday 07:00",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "friendly tone",
+              "k_d": "footer seasonal",
+              "k_target": "Monday 07:00",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Delphine Ward"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Monday 16:40",
+            "semantics": "changed_state",
+            "previous_value": "Monday 07:00",
+            "superseded_values": [
+              "Monday 07:00"
+            ],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "friendly tone",
+              "k_d": "footer seasonal",
+              "k_target": "Monday 16:40",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Delphine Ward"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "MLS-E92",
+            "semantics": "same_state",
+            "previous_value": "MLS-E92",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "friendly tone",
+              "k_d": "footer seasonal",
+              "k_target": "Monday 16:40",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Delphine Ward"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "alias front-line",
+          "k_c": "friendly tone",
+          "k_d": "footer seasonal",
+          "k_target": "Monday 16:40",
+          "k_hard": "Thursday 19:05",
+          "k_n2": "MLS-E92",
+          "k_a": "Sender Delphine Ward"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "alias help-desk",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "formal tone",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "footer plain",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "Monday 07:00",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "Tuesday 18:20",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00",
+              "k_hard": "Tuesday 18:20"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "MLS-E92",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "Sender Ruskin Hall",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Tuesday 08:30",
+            "semantics": "changed_state",
+            "previous_value": "Monday 07:00",
+            "superseded_values": [
+              "Monday 07:00"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Tuesday 08:30",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_b",
+            "current_value": "alias front-line",
+            "semantics": "changed_state",
+            "previous_value": "alias help-desk",
+            "superseded_values": [
+              "alias help-desk"
+            ],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Tuesday 08:30",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Thursday 10:45",
+            "semantics": "changed_state",
+            "previous_value": "Tuesday 08:30",
+            "superseded_values": [
+              "Monday 07:00",
+              "Tuesday 08:30"
+            ],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Thursday 10:45",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "Thursday 19:05",
+            "semantics": "changed_state",
+            "previous_value": "Tuesday 18:20",
+            "superseded_values": [
+              "Tuesday 18:20"
+            ],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Thursday 10:45",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Saturday 13:30",
+            "semantics": "changed_state",
+            "previous_value": "Thursday 10:45",
+            "superseded_values": [
+              "Monday 07:00",
+              "Tuesday 08:30",
+              "Thursday 10:45"
+            ],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Saturday 13:30",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "Sender Delphine Ward",
+            "semantics": "changed_state",
+            "previous_value": "Sender Ruskin Hall",
+            "superseded_values": [
+              "Sender Ruskin Hall"
+            ],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Saturday 13:30",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Delphine Ward"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Saturday 13:30",
+            "semantics": "same_state",
+            "previous_value": "Saturday 13:30",
+            "superseded_values": [
+              "Monday 07:00",
+              "Tuesday 08:30",
+              "Thursday 10:45"
+            ],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Saturday 13:30",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Delphine Ward"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Monday 16:40",
+            "semantics": "changed_state",
+            "previous_value": "Saturday 13:30",
+            "superseded_values": [
+              "Monday 07:00",
+              "Tuesday 08:30",
+              "Thursday 10:45",
+              "Saturday 13:30"
+            ],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 16:40",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Delphine Ward"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "MLS-E92",
+            "semantics": "same_state",
+            "previous_value": "MLS-E92",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias front-line",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 16:40",
+              "k_hard": "Thursday 19:05",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Delphine Ward"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "alias front-line",
+          "k_c": "formal tone",
+          "k_d": "footer plain",
+          "k_target": "Monday 16:40",
+          "k_hard": "Thursday 19:05",
+          "k_n2": "MLS-E92",
+          "k_a": "Sender Delphine Ward"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_b",
+            "current_value": "alias help-desk",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_c",
+            "current_value": "formal tone",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_d",
+            "current_value": "footer plain",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_target",
+            "current_value": "Monday 07:00",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_hard",
+            "current_value": "Tuesday 18:20",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00",
+              "k_hard": "Tuesday 18:20"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_n2",
+            "current_value": "MLS-E92",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_a",
+            "current_value": "Sender Ruskin Hall",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 07:00",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Tuesday 08:30",
+            "semantics": "changed_state",
+            "previous_value": "Monday 07:00",
+            "superseded_values": [
+              "Monday 07:00"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Tuesday 08:30",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Wednesday 09:15",
+            "semantics": "changed_state",
+            "previous_value": "Tuesday 08:30",
+            "superseded_values": [
+              "Monday 07:00",
+              "Tuesday 08:30"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Wednesday 09:15",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Thursday 10:45",
+            "semantics": "changed_state",
+            "previous_value": "Wednesday 09:15",
+            "superseded_values": [
+              "Monday 07:00",
+              "Tuesday 08:30",
+              "Wednesday 09:15"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Thursday 10:45",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "Friday 12:00",
+            "semantics": "changed_state",
+            "previous_value": "Thursday 10:45",
+            "superseded_values": [
+              "Monday 07:00",
+              "Tuesday 08:30",
+              "Wednesday 09:15",
+              "Thursday 10:45"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Friday 12:00",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Saturday 13:30",
+            "semantics": "changed_state",
+            "previous_value": "Friday 12:00",
+            "superseded_values": [
+              "Monday 07:00",
+              "Tuesday 08:30",
+              "Wednesday 09:15",
+              "Thursday 10:45",
+              "Friday 12:00"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Saturday 13:30",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "Sunday 15:15",
+            "semantics": "changed_state",
+            "previous_value": "Saturday 13:30",
+            "superseded_values": [
+              "Monday 07:00",
+              "Tuesday 08:30",
+              "Wednesday 09:15",
+              "Thursday 10:45",
+              "Friday 12:00",
+              "Saturday 13:30"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Sunday 15:15",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Sunday 15:15",
+            "semantics": "same_state",
+            "previous_value": "Sunday 15:15",
+            "superseded_values": [
+              "Monday 07:00",
+              "Tuesday 08:30",
+              "Wednesday 09:15",
+              "Thursday 10:45",
+              "Friday 12:00",
+              "Saturday 13:30"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Sunday 15:15",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Monday 16:40",
+            "semantics": "changed_state",
+            "previous_value": "Sunday 15:15",
+            "superseded_values": [
+              "Monday 07:00",
+              "Tuesday 08:30",
+              "Wednesday 09:15",
+              "Thursday 10:45",
+              "Friday 12:00",
+              "Saturday 13:30",
+              "Sunday 15:15"
+            ],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 16:40",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "MLS-E92",
+            "semantics": "same_state",
+            "previous_value": "MLS-E92",
+            "superseded_values": [],
+            "state_after": {
+              "k_b": "alias help-desk",
+              "k_c": "formal tone",
+              "k_d": "footer plain",
+              "k_target": "Monday 16:40",
+              "k_hard": "Tuesday 18:20",
+              "k_n2": "MLS-E92",
+              "k_a": "Sender Ruskin Hall"
+            }
+          }
+        ],
+        "final_state": {
+          "k_b": "alias help-desk",
+          "k_c": "formal tone",
+          "k_d": "footer plain",
+          "k_target": "Monday 16:40",
+          "k_hard": "Tuesday 18:20",
+          "k_n2": "MLS-E92",
+          "k_a": "Sender Ruskin Hall"
+        }
+      }
+    }
+  }
+}

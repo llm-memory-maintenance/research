@@ -281,10 +281,12 @@ An M2 same-state Update advances `last_updated_time`; an M3 reference Noop does
 not. Presentation order may therefore differ as an actual consequence of policy
 semantics. Do not neutralize that consequence post hoc.
 
-**OPEN:** exact CRST answer prompt, response schema, request wrapper, and handling
-of an unexpectedly oversized complete-memory request. Qualification answering
-prompts do not establish a final experimental prompt. No silent truncation or
-retrieval substitution may alter the complete-memory condition.
+**FROZEN answering wording:** all conditions receive the same policy-neutral system
+message, defined in Section 11. **OPEN:** the CRST response schema, the request
+wrapper that places the memory context, and handling of an unexpectedly oversized
+complete-memory request. Qualification answering prompts do not establish a final
+experimental prompt. No silent truncation or retrieval substitution may alter the
+complete-memory condition.
 
 ## 8. Effectiveness Metrics
 
@@ -439,8 +441,22 @@ that OpenRouter or the serving provider uses byte-identical internal chat
 rendering. Provider-reported `prompt_tokens` remains a separate observed resource
 metric. Local subtraction does not replace actual API accounting.
 
-**OPEN:** exact fixed system/answer prompt wording, calibration history material,
-candidate calibration grid, and final `B0_CONTEXT_TOKENS`.
+**FROZEN answering wording.** The fixed system message is the following text, stored
+and hashed as one UTF-8 string with a blank line between the two parts
+(SHA-256 `8a6abc2b52c63340aa483023a823c6ff9d8142ab9749b3ae7d6d2f216da5e71e`):
+
+```text
+You are a helpful assistant. Use only the information provided in the context to answer the user's final question.
+
+Reply with the answer only.
+```
+
+It is policy-neutral: B0 supplies recent raw conversation as context, M1/M2/M3
+supply active memory as context, and every condition receives the same
+instruction. The wording contains no instruction about newer or older values.
+It is defined in `configs/b0-calibration.yaml`.
+
+**OPEN:** final `B0_CONTEXT_TOKENS`. The calibration design is frozen in Section 12.
 
 ## 12. B0 Calibration Requirements
 
@@ -453,13 +469,40 @@ exchange and the complete N2 exchange. N1 precedes U7 and is not part of the
 minimum retention criterion. Event identity is available only to the dedicated
 structural calibration check, not to normal window selection.
 
-**OPEN:** exact calibration history material, candidate budget grid, and final
-budget. The exchange, overflow, and counting rules are fixed in Section 11.
-Do not infer B0 budgets from the qualified dense-retrieval 512-token setting.
+**FROZEN calibration design** (`configs/b0-calibration.yaml`). The exchange,
+overflow, and counting rules are fixed in Section 11. Do not infer B0 budgets from
+the qualified dense-retrieval 512-token setting.
 
-**RECOMMENDATION FOR ADJUDICATION:** use dedicated B0 calibration material fully
-separate from final confirmatory CRST cases. This is a proposed safeguard, not
-an existing repository freeze. No candidate budget grid is proposed here.
+- **Material.** A dedicated calibration-only CRST set of 12 structured scenarios,
+  one per frozen domain, each with Low/Medium/High variants under the frozen
+  revision design (`data/b0-calibration`). It is separate from Generator
+  Qualification fixtures, final confirmatory CRST cases, Model Qualification
+  fixtures, LongMemEval-S, and probe material, and can never become any of them.
+  Its identifiers, entities, attributes, and values are reserved and excluded from
+  later final-CRST construction.
+- **Histories.** Both final generators, `openai/gpt-5.6-sol` (G1) and
+  `anthropic/claude-fable-5.1` (G2), naturalize every scenario: 12 scenarios x 2
+  generators = 24 logical calls, each returning one Low/Medium/High triplet, giving
+  72 calibration histories under the frozen naturalization contract and package.
+- **Retention.** Every calibration history must retain the complete U7 and N2
+  exchanges (100%); no percentile rule applies.
+- **Budget.** `B0_CONTEXT_TOKENS` is the maximum, over all calibration histories,
+  of the smallest marginal-history budget that retains the complete U7 and N2
+  exchanges. No headroom is added and no candidate grid is used.
+- **Coverage failure.** A final CRST case that needs more than the frozen
+  `B0_CONTEXT_TOKENS` to retain the complete required U7 and N2 suffix reveals a
+  calibration-coverage failure. It is detected before the main experiment. The
+  budget is not increased for that case, no exchange is truncated, the case is not
+  altered, no headroom is added, and the failing case is not used as calibration
+  material. Instead: (1) create new independent calibration-only extension
+  scenarios; (2) naturalize them under the same frozen calibration procedure; (3)
+  recompute `B0_CONTEXT_TOKENS` as the exact maximum over all original official
+  calibration histories and all approved extension histories; (4) freeze the
+  recalibrated budget before the main experiment. The final confirmatory CRST
+  remains separate from B0 calibration material.
+
+**OPEN:** only the final `B0_CONTEXT_TOKENS`, which is derived by the official
+calibration run.
 
 Dense Retrieval Qualification is CLOSED. The broader Retrieval / Context
 Calibration workstream still awaits this separate B0 resolution.
@@ -653,8 +696,9 @@ Neither completed qualification nor final statistical values are reopened.
 
 **OPEN before dependent implementation or execution:**
 
-- B0 calibration history material, candidate grid, and final
-  `B0_CONTEXT_TOKENS`; fixed system/answer prompt wording before calibration.
+- Final `B0_CONTEXT_TOKENS`, derived by the official B0 calibration run; the
+  calibration design and answering wording are frozen in Sections 11 and 12. The
+  CRST response schema and request wrapper remain OPEN (Section 7).
 - Physical journal/version-history artifact schema and storage layout; semantic
   fields, canonical IDs, reference-target comparison, and execution rules are fixed.
 - Scenario allocation/trajectories beyond frozen constraints, CRST schema, and
@@ -680,14 +724,11 @@ LongMemEval-S analysis, and effectiveness/efficiency trade-offs without a compos
 
 ## 19. Recommendations Requiring Adjudication
 
-**RECOMMENDATION:** keep B0 calibration material fully separate from final
-confirmatory CRST cases. The current repository has not frozen that separation.
-
 **RECOMMENDATION:** resolve the remaining physical artifact schemas, experimental
 prompts, and validation procedures before dependent dataset generation. This does
 not reopen the newly adjudicated conversation, identity, or B0 counting rules.
 
-Neither recommendation becomes FROZEN through inclusion in this document.
+This recommendation does not become FROZEN through inclusion in this document.
 
 ## 20. Explicit Non-Goals
 

@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-scheduling-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Scheduling",
+    "entities": [
+      {
+        "entity_id": "b0cal-scheduling-01-primary",
+        "name": "Cedar workshop"
+      },
+      {
+        "entity_id": "b0cal-scheduling-01-distractor",
+        "name": "Willow workshop"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "kickoff_time",
+        "meaning": "scheduled workshop kickoff time",
+        "units_or_interpretation": "24-hour local clock; one synthetic day"
+      },
+      {
+        "attribute_id": "hall_code",
+        "meaning": "workshop hall identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "lead",
+        "meaning": "workshop lead",
+        "units_or_interpretation": "synthetic person"
+      },
+      {
+        "attribute_id": "capacity",
+        "meaning": "workshop capacity",
+        "units_or_interpretation": "participants"
+      },
+      {
+        "attribute_id": "material_set",
+        "meaning": "workshop material set",
+        "units_or_interpretation": "material label"
+      },
+      {
+        "attribute_id": "break_length",
+        "meaning": "scheduled break length",
+        "units_or_interpretation": "minutes"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-scheduling-01-primary",
+        "attribute_id": "kickoff_time",
+        "initial_value": "07:20",
+        "role": "target",
+        "value_inventory": [
+          "07:20",
+          "07:55",
+          "08:25",
+          "09:15",
+          "09:50",
+          "10:25",
+          "11:05",
+          "11:40"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-scheduling-01-distractor",
+        "attribute_id": "kickoff_time",
+        "initial_value": "14:10",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "14:10",
+          "14:45",
+          "15:20"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-scheduling-01-primary",
+        "attribute_id": "hall_code",
+        "initial_value": "HAL-C52",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "HAL-C52"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-scheduling-01-primary",
+        "attribute_id": "lead",
+        "initial_value": "Marek Ollin",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Marek Ollin",
+          "Tamsin Verda",
+          "Ilse Quorn"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-scheduling-01-primary",
+        "attribute_id": "capacity",
+        "initial_value": "14 participants",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "14 participants",
+          "18 participants",
+          "22 participants"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-scheduling-01-primary",
+        "attribute_id": "material_set",
+        "initial_value": "clay set",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "clay set",
+          "felt set",
+          "wire set"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-scheduling-01-primary",
+        "attribute_id": "break_length",
+        "initial_value": "10 minutes",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "10 minutes",
+          "15 minutes",
+          "20 minutes"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_a",
+      "I2": "k_b",
+      "I3": "k_c",
+      "I4": "k_d",
+      "I5": "k_target",
+      "I6": "k_hard",
+      "I7": "k_n2"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-scheduling-01-primary",
+      "attribute_id": "kickoff_time",
+      "intent": "Ask only for the current scheduled workshop kickoff time of Cedar workshop."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "11:40",
+    "coverage": [
+      "times",
+      "scheduling",
+      "numeric_values"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Marek Ollin",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "14 participants",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "clay set",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "10 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "07:20",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:20"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "14:10",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:10"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "HAL-C52",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_b",
+            "current_value": "18 participants",
+            "semantics": "changed_state",
+            "previous_value": "14 participants",
+            "superseded_values": [
+              "14 participants"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "18 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "felt set",
+            "semantics": "changed_state",
+            "previous_value": "clay set",
+            "superseded_values": [
+              "clay set"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "18 participants",
+              "k_c": "felt set",
+              "k_d": "10 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_d",
+            "current_value": "15 minutes",
+            "semantics": "changed_state",
+            "previous_value": "10 minutes",
+            "superseded_values": [
+              "10 minutes"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "18 participants",
+              "k_c": "felt set",
+              "k_d": "15 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "14:45",
+            "semantics": "changed_state",
+            "previous_value": "14:10",
+            "superseded_values": [
+              "14:10"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "18 participants",
+              "k_c": "felt set",
+              "k_d": "15 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_d",
+            "current_value": "20 minutes",
+            "semantics": "changed_state",
+            "previous_value": "15 minutes",
+            "superseded_values": [
+              "10 minutes",
+              "15 minutes"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "18 participants",
+              "k_c": "felt set",
+              "k_d": "20 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "Tamsin Verda",
+            "semantics": "changed_state",
+            "previous_value": "Marek Ollin",
+            "superseded_values": [
+              "Marek Ollin"
+            ],
+            "state_after": {
+              "k_a": "Tamsin Verda",
+              "k_b": "18 participants",
+              "k_c": "felt set",
+              "k_d": "20 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "07:20",
+            "semantics": "same_state",
+            "previous_value": "07:20",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tamsin Verda",
+              "k_b": "18 participants",
+              "k_c": "felt set",
+              "k_d": "20 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "11:40",
+            "semantics": "changed_state",
+            "previous_value": "07:20",
+            "superseded_values": [
+              "07:20"
+            ],
+            "state_after": {
+              "k_a": "Tamsin Verda",
+              "k_b": "18 participants",
+              "k_c": "felt set",
+              "k_d": "20 minutes",
+              "k_target": "11:40",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "HAL-C52",
+            "semantics": "same_state",
+            "previous_value": "HAL-C52",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tamsin Verda",
+              "k_b": "18 participants",
+              "k_c": "felt set",
+              "k_d": "20 minutes",
+              "k_target": "11:40",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Tamsin Verda",
+          "k_b": "18 participants",
+          "k_c": "felt set",
+          "k_d": "20 minutes",
+          "k_target": "11:40",
+          "k_hard": "14:45",
+          "k_n2": "HAL-C52"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Marek Ollin",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "14 participants",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "clay set",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "10 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "07:20",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:20"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "14:10",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:10"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "HAL-C52",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "07:55",
+            "semantics": "changed_state",
+            "previous_value": "07:20",
+            "superseded_values": [
+              "07:20"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:55",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "14:45",
+            "semantics": "changed_state",
+            "previous_value": "14:10",
+            "superseded_values": [
+              "14:10"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:55",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "09:15",
+            "semantics": "changed_state",
+            "previous_value": "07:55",
+            "superseded_values": [
+              "07:20",
+              "07:55"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "09:15",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "Tamsin Verda",
+            "semantics": "changed_state",
+            "previous_value": "Marek Ollin",
+            "superseded_values": [
+              "Marek Ollin"
+            ],
+            "state_after": {
+              "k_a": "Tamsin Verda",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "09:15",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "10:25",
+            "semantics": "changed_state",
+            "previous_value": "09:15",
+            "superseded_values": [
+              "07:20",
+              "07:55",
+              "09:15"
+            ],
+            "state_after": {
+              "k_a": "Tamsin Verda",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "10:25",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_b",
+            "current_value": "18 participants",
+            "semantics": "changed_state",
+            "previous_value": "14 participants",
+            "superseded_values": [
+              "14 participants"
+            ],
+            "state_after": {
+              "k_a": "Tamsin Verda",
+              "k_b": "18 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "10:25",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "10:25",
+            "semantics": "same_state",
+            "previous_value": "10:25",
+            "superseded_values": [
+              "07:20",
+              "07:55",
+              "09:15"
+            ],
+            "state_after": {
+              "k_a": "Tamsin Verda",
+              "k_b": "18 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "10:25",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "11:40",
+            "semantics": "changed_state",
+            "previous_value": "10:25",
+            "superseded_values": [
+              "07:20",
+              "07:55",
+              "09:15",
+              "10:25"
+            ],
+            "state_after": {
+              "k_a": "Tamsin Verda",
+              "k_b": "18 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "11:40",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "HAL-C52",
+            "semantics": "same_state",
+            "previous_value": "HAL-C52",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Tamsin Verda",
+              "k_b": "18 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "11:40",
+              "k_hard": "14:45",
+              "k_n2": "HAL-C52"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Tamsin Verda",
+          "k_b": "18 participants",
+          "k_c": "clay set",
+          "k_d": "10 minutes",
+          "k_target": "11:40",
+          "k_hard": "14:45",
+          "k_n2": "HAL-C52"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_a",
+            "current_value": "Marek Ollin",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_b",
+            "current_value": "14 participants",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_c",
+            "current_value": "clay set",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_d",
+            "current_value": "10 minutes",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_target",
+            "current_value": "07:20",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:20"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_hard",
+            "current_value": "14:10",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:10"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_n2",
+            "current_value": "HAL-C52",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:20",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "07:55",
+            "semantics": "changed_state",
+            "previous_value": "07:20",
+            "superseded_values": [
+              "07:20"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "07:55",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "08:25",
+            "semantics": "changed_state",
+            "previous_value": "07:55",
+            "superseded_values": [
+              "07:20",
+              "07:55"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "08:25",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "09:15",
+            "semantics": "changed_state",
+            "previous_value": "08:25",
+            "superseded_values": [
+              "07:20",
+              "07:55",
+              "08:25"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "09:15",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "09:50",
+            "semantics": "changed_state",
+            "previous_value": "09:15",
+            "superseded_values": [
+              "07:20",
+              "07:55",
+              "08:25",
+              "09:15"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "09:50",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "10:25",
+            "semantics": "changed_state",
+            "previous_value": "09:50",
+            "superseded_values": [
+              "07:20",
+              "07:55",
+              "08:25",
+              "09:15",
+              "09:50"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "10:25",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "11:05",
+            "semantics": "changed_state",
+            "previous_value": "10:25",
+            "superseded_values": [
+              "07:20",
+              "07:55",
+              "08:25",
+              "09:15",
+              "09:50",
+              "10:25"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "11:05",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "11:05",
+            "semantics": "same_state",
+            "previous_value": "11:05",
+            "superseded_values": [
+              "07:20",
+              "07:55",
+              "08:25",
+              "09:15",
+              "09:50",
+              "10:25"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "11:05",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "11:40",
+            "semantics": "changed_state",
+            "previous_value": "11:05",
+            "superseded_values": [
+              "07:20",
+              "07:55",
+              "08:25",
+              "09:15",
+              "09:50",
+              "10:25",
+              "11:05"
+            ],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "11:40",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "HAL-C52",
+            "semantics": "same_state",
+            "previous_value": "HAL-C52",
+            "superseded_values": [],
+            "state_after": {
+              "k_a": "Marek Ollin",
+              "k_b": "14 participants",
+              "k_c": "clay set",
+              "k_d": "10 minutes",
+              "k_target": "11:40",
+              "k_hard": "14:10",
+              "k_n2": "HAL-C52"
+            }
+          }
+        ],
+        "final_state": {
+          "k_a": "Marek Ollin",
+          "k_b": "14 participants",
+          "k_c": "clay set",
+          "k_d": "10 minutes",
+          "k_target": "11:40",
+          "k_hard": "14:10",
+          "k_n2": "HAL-C52"
+        }
+      }
+    }
+  }
+}

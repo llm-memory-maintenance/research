@@ -1,0 +1,124 @@
+# B0 Recent Window calibration design and future naturalization plan.
+# Authority: docs/crst-specification.md Sections 11 and 12 and docs/decisions.md ("B0 calibration design").
+# The B0 fields in configs/retrieval.yaml are historical placeholders; this file is authoritative for B0.
+schema_version: b0-calibration-design/1.0.0
+status: DESIGN_FROZEN
+frozen_on: '2026-09-19'
+budget_status: OPEN
+# Set only by the official calibration run: the exact maximum below. Never entered by hand.
+b0_context_tokens: null
+
+window_contract:
+  unit: user_information_message_plus_deterministic_acknowledgement
+  acknowledgement: Noted.
+  presentation_order: oldest_to_newest
+  selection: newest_first_contiguous_suffix_of_complete_exchanges
+  partial_exchange: forbidden
+  skipping: forbidden
+  empty_history_condition: history_unit_overflow
+  question: appended_after_selection_outside_budget
+  system_prompt: outside_budget
+  required_events: [U7, N2]
+  count: T_chat(system + selected_history) - T_chat(system)
+  generation_prefix: excluded
+  implementation: experiments/b0_window.py
+
+# Repository, revision and artifact hashes are those of reader_tokenizer in configs/retrieval.yaml.
+tokenizer:
+  repository_id: meta-llama/Llama-3.1-8B-Instruct
+  revision: 0e9e39f249a16976918f6564b8830bc894c89659
+  artifact_source: configs/retrieval.yaml
+  chat_template: local template of the pinned tokenizer; add_special_tokens=false; no generation prefix
+
+calibration:
+  material:
+    path: data/b0-calibration
+    manifest_sha256: 52f774a90e983707ce41e64882913de9019d1e6491e4a0b83afd237cf2ee8731
+    scenarios: 12
+    purpose: B0-CALIBRATION-ONLY
+    separate_from:
+      - Generator Qualification fixtures
+      - final confirmatory CRST cases
+      - Model Qualification fixtures
+      - LongMemEval-S
+      - capability probe material
+    final_crst_exclusion: scenario identifiers, entities, attributes and values listed in the manifest are reserved
+  histories:
+    scenarios: 12
+    intensities: [low, medium, high]
+    generators: 2
+    total: 72
+  retention:
+    requirement: all_histories
+    fraction: 1.0
+    percentile_rule: none
+  budget:
+    rule: exact_maximum
+    statistic: maximum over all histories of the smallest budget that retains complete U7 and N2 exchanges
+    headroom_tokens: 0
+    candidate_grid: none
+  selection_signals_excluded: [final QA accuracy, CSA, SRR, M1/M2/M3 outcomes, effect sizes]
+  coverage_failure:
+    status: FROZEN
+    condition: >-
+      A final CRST case requires more than the frozen b0_context_tokens to retain the complete required U7 and
+      N2 historical suffix. Such a case reveals a calibration-coverage failure.
+    detection: >-
+      Before the main experiment, compute the required budget of every final case with experiments/b0_window.py
+      and the pinned tokenizer. Event identity is used only for this structural check, never to select a window.
+    prohibited:
+      - silently increasing the B0 budget for that case
+      - partially truncating an exchange
+      - altering the final CRST case to make it fit
+      - adding arbitrary headroom
+      - using the failing final CRST case itself as calibration material
+    response:
+      - Create new independent calibration-only extension scenarios.
+      - Naturalize the extension scenarios under the same frozen calibration procedure.
+      - >-
+        Recompute b0_context_tokens as the exact maximum over all original official calibration histories and
+        all approved extension calibration histories.
+      - Freeze the recalibrated budget before the main experiment.
+    separation: The final confirmatory CRST remains separate from B0 calibration material.
+
+naturalization:
+  status: PLANNED_NOT_EXECUTED
+  execution_mode: standard
+  prompt_version: crst-naturalization-prompt/1.1.0
+  input_contract_version: crst-naturalization-input/1.1.0
+  output_schema_version: crst-naturalization-triplet/1.0.0
+  contract_path: configs/generator-naturalization-contract.json
+  contract_sha256: 3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee
+  prompt_sha256: a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279
+  output_schema_sha256: c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917
+  order: all G1 scenarios, then all G2 scenarios, each in manifest order
+  calls_per_generator: 12
+  planned_logical_calls: 24
+  expected_histories: 72
+  result_directory: results/b0-calibration/attempt-01
+  output_layout: outputs/<g1|g2>/<scenario_id>.json per call, then collection.json and SHA256SUMS
+  generators:
+    - logical_call_id: G1
+      model: openai/gpt-5.6-sol
+      provider_order: [openai]
+      execution_profile: primary
+      execution_package_path: configs/generator-capability-probe.yaml
+      execution_package_sha256: 848ca0219ff1d24adcf2f12d0789ebeb8e7a86427336672173b91e034dca6b62
+      qualification_evidence_path: results/generator-qualification/adjudication/v2/attempt-01.json
+      qualification_evidence_sha256: 0e8cec2bd51543d10efe8ad70b2c3e758b75c708209a9665b20d5877555685da
+    - logical_call_id: G2
+      model: anthropic/claude-fable-5.1
+      provider_order: [anthropic]
+      execution_profile: second_level_g2
+      execution_package_path: configs/generator-capability-probe-second-level-g2.yaml
+      execution_package_sha256: fb2c74eec9fea2ab49cee00e76cbe84ec7ce0fe2464e80bf84d157e82ec56180
+      qualification_evidence_path: results/generator-qualification/adjudication/v2/attempt-03.json
+      qualification_evidence_sha256: 2d52e22291299aa34f6702eb939c4ca987aed0ac151c2d2536c8b3f1887abad6
+
+# Researcher-approved answering wording, identical for B0 and M1/M2/M3 and neutral between policies. The
+# system message is `system`, a blank line, then `answer`, stored and hashed as one UTF-8 string.
+system_prompt:
+  status: FROZEN
+  system: You are a helpful assistant. Use only the information provided in the context to answer the user's final question.
+  answer: Reply with the answer only.
+  composed_sha256: 8a6abc2b52c63340aa483023a823c6ff9d8142ab9749b3ae7d6d2f216da5e71e

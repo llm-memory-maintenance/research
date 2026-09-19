@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-task-assignment-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Task Assignment",
+    "entities": [
+      {
+        "entity_id": "b0cal-task-assignment-01-primary",
+        "name": "Ticket Marrow"
+      },
+      {
+        "entity_id": "b0cal-task-assignment-01-distractor",
+        "name": "Ticket Tallow"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "ticket_owner",
+        "meaning": "assigned ticket owner",
+        "units_or_interpretation": "synthetic person name"
+      },
+      {
+        "attribute_id": "ticket_ref",
+        "meaning": "ticket reference code",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "urgency",
+        "meaning": "ticket urgency",
+        "units_or_interpretation": "urgency label"
+      },
+      {
+        "attribute_id": "due_stamp",
+        "meaning": "ticket due stamp",
+        "units_or_interpretation": "synthetic date label"
+      },
+      {
+        "attribute_id": "attachment",
+        "meaning": "required attachment",
+        "units_or_interpretation": "attachment label"
+      },
+      {
+        "attribute_id": "approver",
+        "meaning": "ticket approver",
+        "units_or_interpretation": "synthetic person"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-task-assignment-01-primary",
+        "attribute_id": "ticket_owner",
+        "initial_value": "Odalys Prewitt",
+        "role": "target",
+        "value_inventory": [
+          "Odalys Prewitt",
+          "Lennox Farrow",
+          "Ines Calder",
+          "Bram Tolliver",
+          "Hesper Haskett",
+          "Jovan Pellam",
+          "Sabine Orrin",
+          "Cyrus Delaine"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-task-assignment-01-distractor",
+        "attribute_id": "ticket_owner",
+        "initial_value": "Petra Vance",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "Petra Vance",
+          "Rilan Moss",
+          "Ottoline Grey"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-task-assignment-01-primary",
+        "attribute_id": "ticket_ref",
+        "initial_value": "TIC-M83",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "TIC-M83"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-task-assignment-01-primary",
+        "attribute_id": "urgency",
+        "initial_value": "urgency routine",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "urgency routine",
+          "urgency elevated",
+          "urgency critical"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-task-assignment-01-primary",
+        "attribute_id": "due_stamp",
+        "initial_value": "Day Harrow",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Day Harrow",
+          "Day Ilbeck",
+          "Day Jessup"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-task-assignment-01-primary",
+        "attribute_id": "attachment",
+        "initial_value": "chart attachment",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "chart attachment",
+          "photo attachment",
+          "sheet attachment"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-task-assignment-01-primary",
+        "attribute_id": "approver",
+        "initial_value": "Talin Rusk",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Talin Rusk",
+          "Verity Holm",
+          "Emeric Sayle"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_d",
+      "I2": "k_target",
+      "I3": "k_hard",
+      "I4": "k_n2",
+      "I5": "k_a",
+      "I6": "k_b",
+      "I7": "k_c"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-task-assignment-01-primary",
+      "attribute_id": "ticket_owner",
+      "intent": "Ask only for the current assigned ticket owner of Ticket Marrow."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "Cyrus Delaine",
+    "coverage": [
+      "assignments",
+      "categorical_values",
+      "planning"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "Talin Rusk",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "Odalys Prewitt",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "Petra Vance",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "TIC-M83",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "urgency routine",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "Day Harrow",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "chart attachment",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_hard",
+            "current_value": "Rilan Moss",
+            "semantics": "changed_state",
+            "previous_value": "Petra Vance",
+            "superseded_values": [
+              "Petra Vance"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_c",
+            "current_value": "photo attachment",
+            "semantics": "changed_state",
+            "previous_value": "chart attachment",
+            "superseded_values": [
+              "chart attachment"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "photo attachment"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_d",
+            "current_value": "Verity Holm",
+            "semantics": "changed_state",
+            "previous_value": "Talin Rusk",
+            "superseded_values": [
+              "Talin Rusk"
+            ],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "photo attachment"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_a",
+            "current_value": "urgency elevated",
+            "semantics": "changed_state",
+            "previous_value": "urgency routine",
+            "superseded_values": [
+              "urgency routine"
+            ],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency elevated",
+              "k_b": "Day Harrow",
+              "k_c": "photo attachment"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_b",
+            "current_value": "Day Ilbeck",
+            "semantics": "changed_state",
+            "previous_value": "Day Harrow",
+            "superseded_values": [
+              "Day Harrow"
+            ],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency elevated",
+              "k_b": "Day Ilbeck",
+              "k_c": "photo attachment"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "sheet attachment",
+            "semantics": "changed_state",
+            "previous_value": "photo attachment",
+            "superseded_values": [
+              "chart attachment",
+              "photo attachment"
+            ],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency elevated",
+              "k_b": "Day Ilbeck",
+              "k_c": "sheet attachment"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Odalys Prewitt",
+            "semantics": "same_state",
+            "previous_value": "Odalys Prewitt",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency elevated",
+              "k_b": "Day Ilbeck",
+              "k_c": "sheet attachment"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Cyrus Delaine",
+            "semantics": "changed_state",
+            "previous_value": "Odalys Prewitt",
+            "superseded_values": [
+              "Odalys Prewitt"
+            ],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Cyrus Delaine",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency elevated",
+              "k_b": "Day Ilbeck",
+              "k_c": "sheet attachment"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TIC-M83",
+            "semantics": "same_state",
+            "previous_value": "TIC-M83",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Cyrus Delaine",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency elevated",
+              "k_b": "Day Ilbeck",
+              "k_c": "sheet attachment"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "Verity Holm",
+          "k_target": "Cyrus Delaine",
+          "k_hard": "Rilan Moss",
+          "k_n2": "TIC-M83",
+          "k_a": "urgency elevated",
+          "k_b": "Day Ilbeck",
+          "k_c": "sheet attachment"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "Talin Rusk",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "Odalys Prewitt",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "Petra Vance",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "TIC-M83",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "urgency routine",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "Day Harrow",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "chart attachment",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Lennox Farrow",
+            "semantics": "changed_state",
+            "previous_value": "Odalys Prewitt",
+            "superseded_values": [
+              "Odalys Prewitt"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Lennox Farrow",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "Rilan Moss",
+            "semantics": "changed_state",
+            "previous_value": "Petra Vance",
+            "superseded_values": [
+              "Petra Vance"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Lennox Farrow",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Bram Tolliver",
+            "semantics": "changed_state",
+            "previous_value": "Lennox Farrow",
+            "superseded_values": [
+              "Odalys Prewitt",
+              "Lennox Farrow"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Bram Tolliver",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_d",
+            "current_value": "Verity Holm",
+            "semantics": "changed_state",
+            "previous_value": "Talin Rusk",
+            "superseded_values": [
+              "Talin Rusk"
+            ],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Bram Tolliver",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Jovan Pellam",
+            "semantics": "changed_state",
+            "previous_value": "Bram Tolliver",
+            "superseded_values": [
+              "Odalys Prewitt",
+              "Lennox Farrow",
+              "Bram Tolliver"
+            ],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Jovan Pellam",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_a",
+            "current_value": "urgency elevated",
+            "semantics": "changed_state",
+            "previous_value": "urgency routine",
+            "superseded_values": [
+              "urgency routine"
+            ],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Jovan Pellam",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency elevated",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Jovan Pellam",
+            "semantics": "same_state",
+            "previous_value": "Jovan Pellam",
+            "superseded_values": [
+              "Odalys Prewitt",
+              "Lennox Farrow",
+              "Bram Tolliver"
+            ],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Jovan Pellam",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency elevated",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Cyrus Delaine",
+            "semantics": "changed_state",
+            "previous_value": "Jovan Pellam",
+            "superseded_values": [
+              "Odalys Prewitt",
+              "Lennox Farrow",
+              "Bram Tolliver",
+              "Jovan Pellam"
+            ],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Cyrus Delaine",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency elevated",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TIC-M83",
+            "semantics": "same_state",
+            "previous_value": "TIC-M83",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Verity Holm",
+              "k_target": "Cyrus Delaine",
+              "k_hard": "Rilan Moss",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency elevated",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "Verity Holm",
+          "k_target": "Cyrus Delaine",
+          "k_hard": "Rilan Moss",
+          "k_n2": "TIC-M83",
+          "k_a": "urgency elevated",
+          "k_b": "Day Harrow",
+          "k_c": "chart attachment"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_d",
+            "current_value": "Talin Rusk",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_target",
+            "current_value": "Odalys Prewitt",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_hard",
+            "current_value": "Petra Vance",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_n2",
+            "current_value": "TIC-M83",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_a",
+            "current_value": "urgency routine",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_b",
+            "current_value": "Day Harrow",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_c",
+            "current_value": "chart attachment",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Odalys Prewitt",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "Lennox Farrow",
+            "semantics": "changed_state",
+            "previous_value": "Odalys Prewitt",
+            "superseded_values": [
+              "Odalys Prewitt"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Lennox Farrow",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "Ines Calder",
+            "semantics": "changed_state",
+            "previous_value": "Lennox Farrow",
+            "superseded_values": [
+              "Odalys Prewitt",
+              "Lennox Farrow"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Ines Calder",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "Bram Tolliver",
+            "semantics": "changed_state",
+            "previous_value": "Ines Calder",
+            "superseded_values": [
+              "Odalys Prewitt",
+              "Lennox Farrow",
+              "Ines Calder"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Bram Tolliver",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "Hesper Haskett",
+            "semantics": "changed_state",
+            "previous_value": "Bram Tolliver",
+            "superseded_values": [
+              "Odalys Prewitt",
+              "Lennox Farrow",
+              "Ines Calder",
+              "Bram Tolliver"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Hesper Haskett",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "Jovan Pellam",
+            "semantics": "changed_state",
+            "previous_value": "Hesper Haskett",
+            "superseded_values": [
+              "Odalys Prewitt",
+              "Lennox Farrow",
+              "Ines Calder",
+              "Bram Tolliver",
+              "Hesper Haskett"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Jovan Pellam",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "Sabine Orrin",
+            "semantics": "changed_state",
+            "previous_value": "Jovan Pellam",
+            "superseded_values": [
+              "Odalys Prewitt",
+              "Lennox Farrow",
+              "Ines Calder",
+              "Bram Tolliver",
+              "Hesper Haskett",
+              "Jovan Pellam"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Sabine Orrin",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "Sabine Orrin",
+            "semantics": "same_state",
+            "previous_value": "Sabine Orrin",
+            "superseded_values": [
+              "Odalys Prewitt",
+              "Lennox Farrow",
+              "Ines Calder",
+              "Bram Tolliver",
+              "Hesper Haskett",
+              "Jovan Pellam"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Sabine Orrin",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "Cyrus Delaine",
+            "semantics": "changed_state",
+            "previous_value": "Sabine Orrin",
+            "superseded_values": [
+              "Odalys Prewitt",
+              "Lennox Farrow",
+              "Ines Calder",
+              "Bram Tolliver",
+              "Hesper Haskett",
+              "Jovan Pellam",
+              "Sabine Orrin"
+            ],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Cyrus Delaine",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "TIC-M83",
+            "semantics": "same_state",
+            "previous_value": "TIC-M83",
+            "superseded_values": [],
+            "state_after": {
+              "k_d": "Talin Rusk",
+              "k_target": "Cyrus Delaine",
+              "k_hard": "Petra Vance",
+              "k_n2": "TIC-M83",
+              "k_a": "urgency routine",
+              "k_b": "Day Harrow",
+              "k_c": "chart attachment"
+            }
+          }
+        ],
+        "final_state": {
+          "k_d": "Talin Rusk",
+          "k_target": "Cyrus Delaine",
+          "k_hard": "Petra Vance",
+          "k_n2": "TIC-M83",
+          "k_a": "urgency routine",
+          "k_b": "Day Harrow",
+          "k_c": "chart attachment"
+        }
+      }
+    }
+  }
+}

@@ -1212,3 +1212,72 @@ under the frozen primary-precedence rule, and G2 `anthropic/claude-fable-5.1`. T
 supersedes the "G2 remains unresolved" status recorded in the earlier entries above.
 No methodology, criterion, fixture, prompt, configuration or result artifact changes,
 and the final CRST assignment mechanism remains OPEN (`generator-qualification.md` §8).
+
+## B0 Recent Window Calibration Design Frozen (2026-09-19)
+
+The researcher closed the B0 calibration design. It is recorded in
+`configs/b0-calibration.yaml` and CRST specification Section 12, and supersedes the
+earlier OPEN status of B0 calibration material and candidate grid. The window
+contract of CRST specification Section 11 is unchanged.
+
+**Decisions.**
+
+- Generator Qualification fixtures remain separate from B0 calibration material.
+  The frozen separation is not amended.
+- Official calibration material is a dedicated calibration-only CRST set, separate
+  from Generator Qualification fixtures, final confirmatory CRST cases, Model
+  Qualification fixtures, LongMemEval-S, and probe material.
+- The set has 12 structured scenarios, one per frozen domain, each with Low, Medium,
+  and High variants under the frozen revision design.
+- Both final generators, `openai/gpt-5.6-sol` (G1) and `anthropic/claude-fable-5.1`
+  (G2), naturalize every scenario: 12 scenarios x 2 generators = 24 logical calls,
+  each returning one Low/Medium/High triplet, giving 72 calibration histories.
+- All 72 histories are used. Every history must retain the complete U7 and N2
+  exchanges (100%); no percentile rule applies.
+- `B0_CONTEXT_TOKENS` is the exact maximum, over all histories, of the smallest
+  marginal-history budget that retains the complete U7 and N2 exchanges. No headroom
+  is added and no candidate grid is used.
+- A final CRST case that needs more than the frozen budget to retain the complete
+  U7 and N2 suffix is a calibration-coverage failure, detected before the main
+  experiment. The budget is not increased for that case, no exchange is truncated,
+  the case is not altered, no headroom is added, and the failing case is not used as
+  calibration material. Instead, new independent calibration-only extension
+  scenarios are created and naturalized under the same frozen procedure,
+  `B0_CONTEXT_TOKENS` is recomputed as the exact maximum over all original and all
+  approved extension histories, and the recalibrated budget is frozen before the
+  main experiment. The final confirmatory CRST remains separate.
+
+**Material.** `data/b0-calibration` holds the 12 structured scenarios
+(`b0cal-<domain>-01`), a reference schema, and a manifest (SHA-256
+`52f774a90e983707ce41e64882913de9019d1e6491e4a0b83afd237cf2ee8731`). Each scenario
+follows the frozen structured-truth contract with new entities, attributes, codes,
+and values, and the manifest records the prohibited uses and reserves its
+identifiers and values for exclusion from final-CRST construction. The material
+contains no natural-language event text; the selected generators produce it.
+
+**Plan.** The naturalization plan reuses the frozen prompt, input contract, output
+schema, execution packages, and the exact model identifiers and provider constraints
+of the qualified generators (Sol and Fable, both QUALIFIED with CLOSED/PASS
+capability). Order is all 12 Sol calls, then all 12 Fable calls, each in manifest
+order; the official result directory is `results/b0-calibration/attempt-01`.
+`experiments/calibrate_b0.py` previews the plan offline. Live collection needs
+`--execute`, `--confirm-spend`, the frozen output directory, an API key, a clean
+committed worktree, a fully frozen design, and a still-frozen qualification
+implementation. It refuses to overwrite a result directory, keeps partial evidence,
+stops at the first failed call, and repeats a request only for the frozen
+infrastructure retries. It has not been executed: no generator call has been made
+and no B0 result exists. `B0_CONTEXT_TOKENS` remains OPEN until the official run
+derives it.
+
+**Answering prompt (frozen).** The researcher approved one policy-neutral answering
+wording, identical for B0 and M1/M2/M3 and stored and hashed as one string with a
+blank line between the parts (SHA-256
+`8a6abc2b52c63340aa483023a823c6ff9d8142ab9749b3ae7d6d2f216da5e71e`):
+
+```text
+You are a helpful assistant. Use only the information provided in the context to answer the user's final question.
+
+Reply with the answer only.
+```
+
+No B0 design decision remains open except the final `B0_CONTEXT_TOKENS`.

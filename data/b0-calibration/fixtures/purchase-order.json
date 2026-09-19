@@ -1,0 +1,1038 @@
+{
+  "schema_version": "b0-calibration-reference/1.0.0",
+  "fixture_id": "b0cal-purchase-order-01",
+  "purpose": "B0-CALIBRATION-ONLY",
+  "reference": {
+    "domain": "Purchase & Order",
+    "entities": [
+      {
+        "entity_id": "b0cal-purchase-order-01-primary",
+        "name": "Purchase Alcove"
+      },
+      {
+        "entity_id": "b0cal-purchase-order-01-distractor",
+        "name": "Purchase Bastion"
+      }
+    ],
+    "attributes": [
+      {
+        "attribute_id": "tile_quantity",
+        "meaning": "ordered number of ceramic tiles",
+        "units_or_interpretation": "tiles"
+      },
+      {
+        "attribute_id": "po_code",
+        "meaning": "purchase identifier",
+        "units_or_interpretation": "opaque code"
+      },
+      {
+        "attribute_id": "finish",
+        "meaning": "tile finish",
+        "units_or_interpretation": "finish label"
+      },
+      {
+        "attribute_id": "carrier",
+        "meaning": "delivery carrier",
+        "units_or_interpretation": "carrier label"
+      },
+      {
+        "attribute_id": "invoice_terms",
+        "meaning": "invoice terms",
+        "units_or_interpretation": "terms label"
+      },
+      {
+        "attribute_id": "crate_type",
+        "meaning": "crate type",
+        "units_or_interpretation": "crate label"
+      }
+    ],
+    "state_keys": [
+      {
+        "state_key": "k_target",
+        "entity_id": "b0cal-purchase-order-01-primary",
+        "attribute_id": "tile_quantity",
+        "initial_value": "36 tiles",
+        "role": "target",
+        "value_inventory": [
+          "36 tiles",
+          "44 tiles",
+          "52 tiles",
+          "61 tiles",
+          "73 tiles",
+          "88 tiles",
+          "94 tiles",
+          "107 tiles"
+        ]
+      },
+      {
+        "state_key": "k_hard",
+        "entity_id": "b0cal-purchase-order-01-distractor",
+        "attribute_id": "tile_quantity",
+        "initial_value": "128 tiles",
+        "role": "hard_distractor",
+        "value_inventory": [
+          "128 tiles",
+          "136 tiles",
+          "150 tiles"
+        ]
+      },
+      {
+        "state_key": "k_n2",
+        "entity_id": "b0cal-purchase-order-01-primary",
+        "attribute_id": "po_code",
+        "initial_value": "PUR-A47",
+        "role": "dedicated_n2_secondary",
+        "value_inventory": [
+          "PUR-A47"
+        ]
+      },
+      {
+        "state_key": "k_a",
+        "entity_id": "b0cal-purchase-order-01-primary",
+        "attribute_id": "finish",
+        "initial_value": "matte finish",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "matte finish",
+          "satin finish",
+          "gloss finish"
+        ]
+      },
+      {
+        "state_key": "k_b",
+        "entity_id": "b0cal-purchase-order-01-primary",
+        "attribute_id": "carrier",
+        "initial_value": "Carrier Northgate",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "Carrier Northgate",
+          "Carrier Silverline",
+          "Carrier Redoak"
+        ]
+      },
+      {
+        "state_key": "k_c",
+        "entity_id": "b0cal-purchase-order-01-primary",
+        "attribute_id": "invoice_terms",
+        "initial_value": "net 15",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "net 15",
+          "net 30",
+          "net 45"
+        ]
+      },
+      {
+        "state_key": "k_d",
+        "entity_id": "b0cal-purchase-order-01-primary",
+        "attribute_id": "crate_type",
+        "initial_value": "slatted crate",
+        "role": "updateable_secondary",
+        "value_inventory": [
+          "slatted crate",
+          "solid crate",
+          "folded crate"
+        ]
+      }
+    ],
+    "initial_order": {
+      "I1": "k_n2",
+      "I2": "k_a",
+      "I3": "k_b",
+      "I4": "k_c",
+      "I5": "k_d",
+      "I6": "k_target",
+      "I7": "k_hard"
+    },
+    "question_intent": {
+      "entity_id": "b0cal-purchase-order-01-primary",
+      "attribute_id": "tile_quantity",
+      "intent": "Ask only for the current ordered number of ceramic tiles of Purchase Alcove."
+    },
+    "target_state_key": "k_target",
+    "hard_distractor_key": "k_hard",
+    "dedicated_n2_secondary_key": "k_n2",
+    "q_target": "k_target",
+    "gold_current_value": "107 tiles",
+    "coverage": [
+      "ordering",
+      "quantities",
+      "numeric_values"
+    ],
+    "variants": {
+      "low": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_n2",
+            "current_value": "PUR-A47",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_a",
+            "current_value": "matte finish",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_b",
+            "current_value": "Carrier Northgate",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_c",
+            "current_value": "net 15",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_d",
+            "current_value": "slatted crate",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_target",
+            "current_value": "36 tiles",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "36 tiles"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_hard",
+            "current_value": "128 tiles",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "36 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_d",
+            "current_value": "solid crate",
+            "semantics": "changed_state",
+            "previous_value": "slatted crate",
+            "superseded_values": [
+              "slatted crate"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "solid crate",
+              "k_target": "36 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_a",
+            "current_value": "satin finish",
+            "semantics": "changed_state",
+            "previous_value": "matte finish",
+            "superseded_values": [
+              "matte finish"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "satin finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "solid crate",
+              "k_target": "36 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_b",
+            "current_value": "Carrier Silverline",
+            "semantics": "changed_state",
+            "previous_value": "Carrier Northgate",
+            "superseded_values": [
+              "Carrier Northgate"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "satin finish",
+              "k_b": "Carrier Silverline",
+              "k_c": "net 15",
+              "k_d": "solid crate",
+              "k_target": "36 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_hard",
+            "current_value": "136 tiles",
+            "semantics": "changed_state",
+            "previous_value": "128 tiles",
+            "superseded_values": [
+              "128 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "satin finish",
+              "k_b": "Carrier Silverline",
+              "k_c": "net 15",
+              "k_d": "solid crate",
+              "k_target": "36 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_b",
+            "current_value": "Carrier Redoak",
+            "semantics": "changed_state",
+            "previous_value": "Carrier Silverline",
+            "superseded_values": [
+              "Carrier Northgate",
+              "Carrier Silverline"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "satin finish",
+              "k_b": "Carrier Redoak",
+              "k_c": "net 15",
+              "k_d": "solid crate",
+              "k_target": "36 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_c",
+            "current_value": "net 30",
+            "semantics": "changed_state",
+            "previous_value": "net 15",
+            "superseded_values": [
+              "net 15"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "satin finish",
+              "k_b": "Carrier Redoak",
+              "k_c": "net 30",
+              "k_d": "solid crate",
+              "k_target": "36 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "36 tiles",
+            "semantics": "same_state",
+            "previous_value": "36 tiles",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "satin finish",
+              "k_b": "Carrier Redoak",
+              "k_c": "net 30",
+              "k_d": "solid crate",
+              "k_target": "36 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "107 tiles",
+            "semantics": "changed_state",
+            "previous_value": "36 tiles",
+            "superseded_values": [
+              "36 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "satin finish",
+              "k_b": "Carrier Redoak",
+              "k_c": "net 30",
+              "k_d": "solid crate",
+              "k_target": "107 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "PUR-A47",
+            "semantics": "same_state",
+            "previous_value": "PUR-A47",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "satin finish",
+              "k_b": "Carrier Redoak",
+              "k_c": "net 30",
+              "k_d": "solid crate",
+              "k_target": "107 tiles",
+              "k_hard": "136 tiles"
+            }
+          }
+        ],
+        "final_state": {
+          "k_n2": "PUR-A47",
+          "k_a": "satin finish",
+          "k_b": "Carrier Redoak",
+          "k_c": "net 30",
+          "k_d": "solid crate",
+          "k_target": "107 tiles",
+          "k_hard": "136 tiles"
+        }
+      },
+      "medium": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_n2",
+            "current_value": "PUR-A47",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_a",
+            "current_value": "matte finish",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_b",
+            "current_value": "Carrier Northgate",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_c",
+            "current_value": "net 15",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_d",
+            "current_value": "slatted crate",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_target",
+            "current_value": "36 tiles",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "36 tiles"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_hard",
+            "current_value": "128 tiles",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "36 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "44 tiles",
+            "semantics": "changed_state",
+            "previous_value": "36 tiles",
+            "superseded_values": [
+              "36 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "44 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_hard",
+            "current_value": "136 tiles",
+            "semantics": "changed_state",
+            "previous_value": "128 tiles",
+            "superseded_values": [
+              "128 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "44 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "61 tiles",
+            "semantics": "changed_state",
+            "previous_value": "44 tiles",
+            "superseded_values": [
+              "36 tiles",
+              "44 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "61 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_c",
+            "current_value": "net 30",
+            "semantics": "changed_state",
+            "previous_value": "net 15",
+            "superseded_values": [
+              "net 15"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 30",
+              "k_d": "slatted crate",
+              "k_target": "61 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "88 tiles",
+            "semantics": "changed_state",
+            "previous_value": "61 tiles",
+            "superseded_values": [
+              "36 tiles",
+              "44 tiles",
+              "61 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 30",
+              "k_d": "slatted crate",
+              "k_target": "88 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_d",
+            "current_value": "solid crate",
+            "semantics": "changed_state",
+            "previous_value": "slatted crate",
+            "superseded_values": [
+              "slatted crate"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 30",
+              "k_d": "solid crate",
+              "k_target": "88 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "88 tiles",
+            "semantics": "same_state",
+            "previous_value": "88 tiles",
+            "superseded_values": [
+              "36 tiles",
+              "44 tiles",
+              "61 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 30",
+              "k_d": "solid crate",
+              "k_target": "88 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "107 tiles",
+            "semantics": "changed_state",
+            "previous_value": "88 tiles",
+            "superseded_values": [
+              "36 tiles",
+              "44 tiles",
+              "61 tiles",
+              "88 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 30",
+              "k_d": "solid crate",
+              "k_target": "107 tiles",
+              "k_hard": "136 tiles"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "PUR-A47",
+            "semantics": "same_state",
+            "previous_value": "PUR-A47",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 30",
+              "k_d": "solid crate",
+              "k_target": "107 tiles",
+              "k_hard": "136 tiles"
+            }
+          }
+        ],
+        "final_state": {
+          "k_n2": "PUR-A47",
+          "k_a": "matte finish",
+          "k_b": "Carrier Northgate",
+          "k_c": "net 30",
+          "k_d": "solid crate",
+          "k_target": "107 tiles",
+          "k_hard": "136 tiles"
+        }
+      },
+      "high": {
+        "events": [
+          {
+            "event": "I1",
+            "state_key": "k_n2",
+            "current_value": "PUR-A47",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47"
+            }
+          },
+          {
+            "event": "I2",
+            "state_key": "k_a",
+            "current_value": "matte finish",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish"
+            }
+          },
+          {
+            "event": "I3",
+            "state_key": "k_b",
+            "current_value": "Carrier Northgate",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate"
+            }
+          },
+          {
+            "event": "I4",
+            "state_key": "k_c",
+            "current_value": "net 15",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15"
+            }
+          },
+          {
+            "event": "I5",
+            "state_key": "k_d",
+            "current_value": "slatted crate",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate"
+            }
+          },
+          {
+            "event": "I6",
+            "state_key": "k_target",
+            "current_value": "36 tiles",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "36 tiles"
+            }
+          },
+          {
+            "event": "I7",
+            "state_key": "k_hard",
+            "current_value": "128 tiles",
+            "semantics": "initial",
+            "previous_value": null,
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "36 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U1",
+            "state_key": "k_target",
+            "current_value": "44 tiles",
+            "semantics": "changed_state",
+            "previous_value": "36 tiles",
+            "superseded_values": [
+              "36 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "44 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U2",
+            "state_key": "k_target",
+            "current_value": "52 tiles",
+            "semantics": "changed_state",
+            "previous_value": "44 tiles",
+            "superseded_values": [
+              "36 tiles",
+              "44 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "52 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U3",
+            "state_key": "k_target",
+            "current_value": "61 tiles",
+            "semantics": "changed_state",
+            "previous_value": "52 tiles",
+            "superseded_values": [
+              "36 tiles",
+              "44 tiles",
+              "52 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "61 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U4",
+            "state_key": "k_target",
+            "current_value": "73 tiles",
+            "semantics": "changed_state",
+            "previous_value": "61 tiles",
+            "superseded_values": [
+              "36 tiles",
+              "44 tiles",
+              "52 tiles",
+              "61 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "73 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U5",
+            "state_key": "k_target",
+            "current_value": "88 tiles",
+            "semantics": "changed_state",
+            "previous_value": "73 tiles",
+            "superseded_values": [
+              "36 tiles",
+              "44 tiles",
+              "52 tiles",
+              "61 tiles",
+              "73 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "88 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U6",
+            "state_key": "k_target",
+            "current_value": "94 tiles",
+            "semantics": "changed_state",
+            "previous_value": "88 tiles",
+            "superseded_values": [
+              "36 tiles",
+              "44 tiles",
+              "52 tiles",
+              "61 tiles",
+              "73 tiles",
+              "88 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "94 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "N1",
+            "state_key": "k_target",
+            "current_value": "94 tiles",
+            "semantics": "same_state",
+            "previous_value": "94 tiles",
+            "superseded_values": [
+              "36 tiles",
+              "44 tiles",
+              "52 tiles",
+              "61 tiles",
+              "73 tiles",
+              "88 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "94 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "U7",
+            "state_key": "k_target",
+            "current_value": "107 tiles",
+            "semantics": "changed_state",
+            "previous_value": "94 tiles",
+            "superseded_values": [
+              "36 tiles",
+              "44 tiles",
+              "52 tiles",
+              "61 tiles",
+              "73 tiles",
+              "88 tiles",
+              "94 tiles"
+            ],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "107 tiles",
+              "k_hard": "128 tiles"
+            }
+          },
+          {
+            "event": "N2",
+            "state_key": "k_n2",
+            "current_value": "PUR-A47",
+            "semantics": "same_state",
+            "previous_value": "PUR-A47",
+            "superseded_values": [],
+            "state_after": {
+              "k_n2": "PUR-A47",
+              "k_a": "matte finish",
+              "k_b": "Carrier Northgate",
+              "k_c": "net 15",
+              "k_d": "slatted crate",
+              "k_target": "107 tiles",
+              "k_hard": "128 tiles"
+            }
+          }
+        ],
+        "final_state": {
+          "k_n2": "PUR-A47",
+          "k_a": "matte finish",
+          "k_b": "Carrier Northgate",
+          "k_c": "net 15",
+          "k_d": "slatted crate",
+          "k_target": "107 tiles",
+          "k_hard": "128 tiles"
+        }
+      }
+    }
+  }
+}
