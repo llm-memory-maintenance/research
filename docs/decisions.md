@@ -1590,3 +1590,27 @@ SHA-256 `8a6abc2b52c63340aa483023a823c6ff9d8142ab9749b3ae7d6d2f216da5e71e`.
   and a partial pilot is never continued for interpretation (`collection.json` records
   `interpretation: PROHIBITED`). Schema-invalid model maintenance output remains an
   invalid model decision, and a malformed final answer remains an other error.
+
+## CRST Small Pilot Closed (2026-09-20)
+
+The live Small Pilot completed and the researcher explicitly approved the manual
+scoring cross-check. The pilot is CLOSED with mechanical validation PASS.
+
+- Naturalization: 2 of 2 units completed; the offline audit is ELIGIBLE
+  (`0ff0962b...`).
+- Backbone: 24 of 24 policy runs and 132 logical calls (108 maintenance, 24
+  answering); the collection is COMPLETE with no abort (`ee18a9d7...`). All requests
+  used the pinned model and provider with no fallback and `json_object` mode.
+- Deterministic replay from archived raw responses matched all 24 runs.
+- The researcher (Muhammad Rafly Ash Shiddiqi) reviewed all 24 final-answer
+  classifications: 24 of 24 confirmed, 0 disagreements, decision APPROVED. The review
+  is `results/crst-small-pilot/review/attempt-01.json` (`51765bce...`) and is bound to
+  the backbone collection hash. SCR-03 = PASS_RESEARCHER_REVIEW.
+- Final checklist: 32 items, none pending (25 PASS_OFFLINE, 6 PASS_POST_RUN, 1
+  PASS_RESEARCHER_REVIEW). Closure record:
+  `results/crst-small-pilot/closure/attempt-01.json` (`a0a17ec7...`).
+- `B0_CONTEXT_TOKENS` remained 71.
+- The pilot served only as pre-main mechanical validation. Observed outcomes are not
+  effect estimates, rankings, or inputs to power or sample-size decisions; none is
+  interpreted here. The frozen pilot design and `configs/crst-small-pilot.yaml` are
+  unchanged.

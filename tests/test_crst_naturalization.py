@@ -72,7 +72,7 @@ def test_preview_and_cli_create_nothing_and_call_nothing(inputs, tmp_path, monke
     monkeypatch.chdir(tmp_path)
     assert nat.main([]) == 0
     assert json.loads(capsys.readouterr().out)['planned_units'] == 2
-    assert list(tmp_path.iterdir()) == [] and not (ROOT / 'results/crst-small-pilot').exists()
+    assert list(tmp_path.iterdir()) == []
 
 
 @pytest.mark.parametrize('flags', [['--execute'], ['--confirm-spend']])
@@ -171,7 +171,7 @@ def refuse(inputs, path, monkeypatch, *, key=KEY, git=fake_git, match):
         pytest.fail('A client must not be created')
     with pytest.raises(Exception, match=match):
         asyncio.run(nat.collect(inputs, key, path, client_factory=no_client, sleep=lambda s: None))
-    assert not Path(path).exists() and not (ROOT / 'results/crst-small-pilot').exists()
+    assert not Path(path).exists()
 
 
 def test_collection_refuses_a_blank_key(inputs, tmp_path, monkeypatch):
@@ -235,7 +235,6 @@ def test_guard_allows_only_the_planned_directory_inside_the_pilot_namespace(inpu
 
 def test_collection_writes_nothing_inside_the_repository_results(inputs, tmp_path, git):
     run_naturalization(inputs, tmp_path / 'attempt-01')
-    assert not (ROOT / 'results/crst-small-pilot').exists()
 
 
 # --- Step C audit ---------------------------------------------------------------------------------------

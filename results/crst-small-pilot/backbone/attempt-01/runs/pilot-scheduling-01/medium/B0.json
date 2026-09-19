@@ -1,0 +1,69 @@
+{
+  "run_id": "pilot-scheduling-01/medium/B0",
+  "scenario_id": "pilot-scheduling-01",
+  "variant": "medium",
+  "policy": "B0",
+  "logical_ids": [
+    "pilot-scheduling-01/medium/B0/A"
+  ],
+  "journal": [],
+  "trajectory": [],
+  "raw_answer": "{\n  \"answer\": \"10:55\"\n}",
+  "classification": {
+    "class": "CURRENT_CORRECT",
+    "reason": "equals_current_target",
+    "answer": "10:55",
+    "normalized_answer": "10:55",
+    "raw_exact_match": true
+  },
+  "csa_contribution": 1,
+  "srr_contribution": 0,
+  "maintenance": null,
+  "memory_size": null,
+  "b0_context": {
+    "b0_history_tokens": 54,
+    "b0_selected_events": [
+      "U7",
+      "N2"
+    ]
+  },
+  "final_active_memory": null,
+  "summary": {
+    "run_id": "pilot-scheduling-01/medium/B0",
+    "final_answer": "10:55",
+    "classification": "CURRENT_CORRECT",
+    "csa_contribution": 1,
+    "srr_contribution": 0,
+    "moa": null,
+    "update_target": null,
+    "active_memory_primary_tokens": null,
+    "text_only_memory_tokens": null,
+    "active_entry_count": null,
+    "active_entry_trajectory": [],
+    "b0_context": {
+      "b0_history_tokens": 54,
+      "b0_selected_events": [
+        "U7",
+        "N2"
+      ]
+    },
+    "logical_calls": 1,
+    "end_to_end_seconds": 0.5003230290021747
+  },
+  "accounting": {
+    "logical_calls": 1,
+    "physical_attempts": 1,
+    "logical_token_usage": {
+      "prompt_tokens": 174,
+      "completion_tokens": 12
+    },
+    "retry_token_usage": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0
+    },
+    "retry_attempts_without_usage": 0,
+    "api_latency_seconds": 0.49337100298726,
+    "cost": 4.092e-05
+  },
+  "end_to_end_seconds": 0.5003230290021747
+}

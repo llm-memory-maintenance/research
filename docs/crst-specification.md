@@ -883,8 +883,24 @@ power-analysis inputs, or reasons to change a policy. The binary mechanical
 acceptance checklist is encoded in `configs/crst-small-pilot.yaml`; its offline
 items are executable with `experiments/run_crst_pilot.py --checklist`, and its
 post-naturalization and post-run items stay pending until the corresponding steps
-exist. No pilot execution is authorized by this specification, and no pilot results
 exist.
+
+**CLOSED (2026-09-20): Small Pilot execution is COMPLETE and its mechanical validation
+is PASS.** Two pilot scenarios and 24 policy runs were exercised. Naturalization
+(2 of 2 units, audit ELIGIBLE) and backbone (24 runs, 132 logical calls: 108
+maintenance and 24 answering, no abort) evidence are archived under
+`results/crst-small-pilot/`. Deterministic replay from the archived raw responses
+matched all 24 runs, and the researcher verified all 24 final-answer classifications
+against the scorer with no disagreement (SCR-03 = PASS_RESEARCHER_REVIEW). All 32
+checklist items have a final passing state (25 PASS_OFFLINE, 6 PASS_POST_RUN, 1
+PASS_RESEARCHER_REVIEW); the closure record is
+`results/crst-small-pilot/closure/attempt-01.json`. `B0_CONTEXT_TOKENS` remained 71.
+The Small Pilot served only as pre-main mechanical validation. Its observed policy
+outcomes are not effect estimates, rankings, or inputs to statistical power or
+sample-size decisions, and no policy comparison is recorded. The frozen pilot
+design, including `configs/crst-small-pilot.yaml`, is not changed retrospectively;
+the config keeps its protocol-freeze state and is bound to the provenance of the
+archived runs.
 
 ## 16. Reproducibility and Provenance
 

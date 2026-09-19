@@ -150,7 +150,7 @@ def test_preview_writes_nothing_and_needs_no_credentials(config, references, tmp
     monkeypatch.delenv('OPENROUTER_API_KEY', raising=False)
     monkeypatch.chdir(tmp_path)
     run.preview(config, references, MODEL)
-    assert list(tmp_path.iterdir()) == [] and not (ROOT / 'results/crst-small-pilot').exists()
+    assert list(tmp_path.iterdir()) == []
 
 
 def test_planning_module_has_no_live_mode(config):

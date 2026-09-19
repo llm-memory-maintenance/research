@@ -1,0 +1,95 @@
+{
+  "logical_id": "pilot-scheduling-01/low/M3/U7",
+  "policy": "M3",
+  "scenario_id": "pilot-scheduling-01",
+  "variant": "low",
+  "event": "U7",
+  "request_body": {
+    "model": "meta-llama/llama-3.1-8b-instruct",
+    "provider": {
+      "order": [
+        "coreweave/bf16"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 2048,
+    "response_format": {
+      "type": "json_object"
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You maintain a memory of facts. Each active memory entry is one line that begins with its memory_id. You are given the active memory and one candidate fact. Choose exactly one operation for the candidate.\n\nAvailable operations:\n- Add: no active entry records the same entity and the same attribute as the candidate.\n- Update: an active entry records the same entity and the same attribute as the candidate with a different value.\n- Noop: an active entry already records the same entity, the same attribute and the same value as the candidate.\n\nReply with a JSON object that has exactly the keys \"operation\" and \"target_id\" and no other keys. For Update, target_id is the memory_id of the entry to replace. For every other operation, target_id is null."
+      },
+      {
+        "role": "user",
+        "content": "Active memory:\n[memory_id=mem_0003; created=2000-01-01T00:03:00Z; updated=2000-01-01T00:03:00Z] For Seminar Brindle, the registration desk opening time is 06:35.\n[memory_id=mem_0005; created=2000-01-01T00:05:00Z; updated=2000-01-01T00:05:00Z] For Seminar Brindle, the seminar room identifier is ROM-B47.\n[memory_id=mem_0004; created=2000-01-01T00:04:00Z; updated=2000-01-01T00:09:00Z] For Seminar Kestrel, the registration desk opening time is 12:55.\n[memory_id=mem_0007; created=2000-01-01T00:07:00Z; updated=2000-01-01T00:10:00Z] For Seminar Brindle, the seating capacity is 72 seats.\n[memory_id=mem_0001; created=2000-01-01T00:01:00Z; updated=2000-01-01T00:11:00Z] For Seminar Brindle, the handout format is folded card.\n[memory_id=mem_0002; created=2000-01-01T00:02:00Z; updated=2000-01-01T00:12:00Z] For Seminar Brindle, the coffee break length is 33 minutes.\n[memory_id=mem_0006; created=2000-01-01T00:06:00Z; updated=2000-01-01T00:13:00Z] For Seminar Brindle, the seminar moderator is Perpetua Drune.\n\nCandidate:\nFor Seminar Brindle, the registration desk opening time is 10:55."
+      }
+    ]
+  },
+  "request_sha256": "ebf79ef1f9c97a9333d4cdcaf7da9e536d1eed3f070b33b244f6c40933b9554c",
+  "model": "meta-llama/llama-3.1-8b-instruct",
+  "provider": "coreweave/bf16",
+  "request_status": "success",
+  "content": "{\n  \"operation\": \"Update\",\n  \"target_id\": \"mem_0003\"\n}",
+  "finish_reason": "stop",
+  "routing_ok": true,
+  "accounting_ok": true,
+  "usage": {
+    "prompt_tokens": 600,
+    "completion_tokens": 21,
+    "total_tokens": 621,
+    "cost": 0.00013662,
+    "cached_tokens": 288
+  },
+  "latency_seconds": 0.42164522100938484,
+  "cost": 0.00013662,
+  "attempts": [
+    {
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T17:33:51.571987+00:00",
+      "http_status": 200,
+      "error_type": null,
+      "requested_model": "meta-llama/llama-3.1-8b-instruct",
+      "requested_provider_endpoint": "coreweave/bf16",
+      "returned_model": "meta-llama/llama-3.1-8b-instruct",
+      "openrouter_metadata": {
+        "requested": "meta-llama/llama-3.1-8b-instruct",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=CoreWeave",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 5,
+          "available": [
+            {
+              "provider": "CoreWeave",
+              "model": "meta-llama/llama-3.1-8b-instruct",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 394
+      },
+      "request_id": null,
+      "response_id": "gen-1789839231-dQM58I1vkZsgRhsURTdB",
+      "service_tier": null,
+      "finish_reason": "stop",
+      "raw_response": "{\"id\":\"gen-1789839231-dQM58I1vkZsgRhsURTdB\",\"object\":\"chat.completion\",\"created\":1789839231,\"model\":\"meta-llama/llama-3.1-8b-instruct\",\"provider\":\"CoreWeave\",\"system_fingerprint\":\"vllm-0.22.1.dev0+g0b3ba88f1.d20260529-25c7fbc0\",\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"operation\\\": \\\"Update\\\",\\n  \\\"target_id\\\": \\\"mem_0003\\\"\\n}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":600,\"completion_tokens\":21,\"total_tokens\":621,\"cost\":0.00013662,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":288,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.00013662,\"upstream_inference_prompt_cost\":0.000132,\"upstream_inference_completions_cost\":0.00000462},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"meta-llama/llama-3.1-8b-instruct\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=CoreWeave\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":5,\"available\":[{\"provider\":\"CoreWeave\",\"model\":\"meta-llama/llama-3.1-8b-instruct\",\"selected\":true}]},\"generation_time\":394}}",
+      "response_sha256": "095f2f919017e443b1ef305a8d4841037c9810d6535f30944f8aa60d677e47be",
+      "usage": {
+        "prompt_tokens": 600,
+        "completion_tokens": 21,
+        "total_tokens": 621,
+        "cost": 0.00013662,
+        "cached_tokens": 288
+      },
+      "latency_seconds": 0.42162411101162434,
+      "will_retry": false
+    }
+  ]
+}

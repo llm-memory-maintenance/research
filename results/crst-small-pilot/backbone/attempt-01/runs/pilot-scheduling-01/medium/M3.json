@@ -1,0 +1,1588 @@
+{
+  "run_id": "pilot-scheduling-01/medium/M3",
+  "scenario_id": "pilot-scheduling-01",
+  "variant": "medium",
+  "policy": "M3",
+  "logical_ids": [
+    "pilot-scheduling-01/medium/M3/U1",
+    "pilot-scheduling-01/medium/M3/U2",
+    "pilot-scheduling-01/medium/M3/U3",
+    "pilot-scheduling-01/medium/M3/U4",
+    "pilot-scheduling-01/medium/M3/U5",
+    "pilot-scheduling-01/medium/M3/U6",
+    "pilot-scheduling-01/medium/M3/N1",
+    "pilot-scheduling-01/medium/M3/U7",
+    "pilot-scheduling-01/medium/M3/N2",
+    "pilot-scheduling-01/medium/M3/A"
+  ],
+  "journal": [
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "I1",
+      "event_index": 1,
+      "semantic_time": "2000-01-01T00:01:00Z",
+      "reference_state_key": "k_c",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0001",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0001"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "I2",
+      "event_index": 2,
+      "semantic_time": "2000-01-01T00:02:00Z",
+      "reference_state_key": "k_d",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0002",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0002"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 22 minutes."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "I3",
+      "event_index": 3,
+      "semantic_time": "2000-01-01T00:03:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0003",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0003"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 22 minutes."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 06:35."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "I4",
+      "event_index": 4,
+      "semantic_time": "2000-01-01T00:04:00Z",
+      "reference_state_key": "k_hard",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0004",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0004"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 22 minutes."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 06:35."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:25."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "I5",
+      "event_index": 5,
+      "semantic_time": "2000-01-01T00:05:00Z",
+      "reference_state_key": "k_n2",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0005",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0005"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 22 minutes."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 06:35."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:25."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "I6",
+      "event_index": 6,
+      "semantic_time": "2000-01-01T00:06:00Z",
+      "reference_state_key": "k_a",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0006",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0006"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 22 minutes."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 06:35."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:25."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "I7",
+      "event_index": 7,
+      "semantic_time": "2000-01-01T00:07:00Z",
+      "reference_state_key": "k_b",
+      "reference_operation": "Add",
+      "canonical_target_id": "mem_0007",
+      "decision_source": "initialization",
+      "raw_response": null,
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [],
+      "transition": {
+        "kind": "add",
+        "entry_id": "mem_0007"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 22 minutes."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 06:35."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:25."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "U1",
+      "event_index": 8,
+      "semantic_time": "2000-01-01T00:08:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": "Update",
+      "canonical_target_id": "mem_0003",
+      "decision_source": "model",
+      "raw_response": "{\n  \"operation\": \"Update\",\n  \"target_id\": \"mem_0003\"\n}",
+      "parsed_operation": "Update",
+      "selected_target_id": "mem_0003",
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 22 minutes."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:03:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 06:35."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:25."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        }
+      ],
+      "transition": {
+        "kind": "update",
+        "entry_id": "mem_0003"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 22 minutes."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:25."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 06:50."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "U2",
+      "event_index": 9,
+      "semantic_time": "2000-01-01T00:09:00Z",
+      "reference_state_key": "k_d",
+      "reference_operation": "Update",
+      "canonical_target_id": "mem_0002",
+      "decision_source": "model",
+      "raw_response": "{\n  \"operation\": \"Update\",\n  \"target_id\": \"mem_0002\"\n}",
+      "parsed_operation": "Update",
+      "selected_target_id": "mem_0002",
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:02:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 22 minutes."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:25."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 06:50."
+        }
+      ],
+      "transition": {
+        "kind": "update",
+        "entry_id": "mem_0002"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:25."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 06:50."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "U3",
+      "event_index": 10,
+      "semantic_time": "2000-01-01T00:10:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": "Update",
+      "canonical_target_id": "mem_0003",
+      "decision_source": "model",
+      "raw_response": "{\n  \"operation\": \"Update\",\n  \"target_id\": \"mem_0003\"\n}",
+      "parsed_operation": "Update",
+      "selected_target_id": "mem_0003",
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:25."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:08:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 06:50."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        }
+      ],
+      "transition": {
+        "kind": "update",
+        "entry_id": "mem_0003"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:25."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 08:05."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "U4",
+      "event_index": 11,
+      "semantic_time": "2000-01-01T00:11:00Z",
+      "reference_state_key": "k_hard",
+      "reference_operation": "Update",
+      "canonical_target_id": "mem_0004",
+      "decision_source": "model",
+      "raw_response": "{\n  \"operation\": \"Update\",\n  \"target_id\": \"mem_0004\"\n}",
+      "parsed_operation": "Update",
+      "selected_target_id": "mem_0004",
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:04:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:25."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 08:05."
+        }
+      ],
+      "transition": {
+        "kind": "update",
+        "entry_id": "mem_0004"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 08:05."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:55."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "U5",
+      "event_index": 12,
+      "semantic_time": "2000-01-01T00:12:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": "Update",
+      "canonical_target_id": "mem_0003",
+      "decision_source": "model",
+      "raw_response": "{\n  \"operation\": \"Update\",\n  \"target_id\": \"mem_0003\"\n}",
+      "parsed_operation": "Update",
+      "selected_target_id": "mem_0003",
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:10:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 08:05."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:55."
+        }
+      ],
+      "transition": {
+        "kind": "update",
+        "entry_id": "mem_0003"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:55."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 09:20."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "U6",
+      "event_index": 13,
+      "semantic_time": "2000-01-01T00:13:00Z",
+      "reference_state_key": "k_c",
+      "reference_operation": "Update",
+      "canonical_target_id": "mem_0001",
+      "decision_source": "model",
+      "raw_response": "{\n  \"operation\": \"Update\",\n  \"target_id\": \"mem_0001\"\n}",
+      "parsed_operation": "Update",
+      "selected_target_id": "mem_0001",
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:01:00Z",
+          "text": "For Seminar Brindle, the handout format is stapled packet."
+        },
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:55."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 09:20."
+        }
+      ],
+      "transition": {
+        "kind": "update",
+        "entry_id": "mem_0001"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:55."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 09:20."
+        },
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Seminar Brindle, the handout format is folded card."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "N1",
+      "event_index": 14,
+      "semantic_time": "2000-01-01T00:14:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": "Noop",
+      "canonical_target_id": "mem_0003",
+      "decision_source": "model",
+      "raw_response": "{\n  \"operation\": \"Noop\",\n  \"target_id\": \"mem_0003\"\n}",
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "INVALID_DECISION",
+      "error": "target_id_must_be_null",
+      "pre_state": [
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:55."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 09:20."
+        },
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Seminar Brindle, the handout format is folded card."
+        }
+      ],
+      "transition": {
+        "kind": "none"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:55."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 09:20."
+        },
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Seminar Brindle, the handout format is folded card."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "U7",
+      "event_index": 15,
+      "semantic_time": "2000-01-01T00:15:00Z",
+      "reference_state_key": "k_target",
+      "reference_operation": "Update",
+      "canonical_target_id": "mem_0003",
+      "decision_source": "model",
+      "raw_response": "{\n  \"operation\": \"Update\",\n  \"target_id\": \"mem_0003\"\n}",
+      "parsed_operation": "Update",
+      "selected_target_id": "mem_0003",
+      "status": "EXECUTED",
+      "error": null,
+      "pre_state": [
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:55."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:12:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 09:20."
+        },
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Seminar Brindle, the handout format is folded card."
+        }
+      ],
+      "transition": {
+        "kind": "update",
+        "entry_id": "mem_0003"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:55."
+        },
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Seminar Brindle, the handout format is folded card."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:15:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 10:55."
+        }
+      ]
+    },
+    {
+      "run_id": "pilot-scheduling-01/medium/M3",
+      "scenario_id": "pilot-scheduling-01",
+      "variant": "medium",
+      "policy": "M3",
+      "event": "N2",
+      "event_index": 16,
+      "semantic_time": "2000-01-01T00:16:00Z",
+      "reference_state_key": "k_n2",
+      "reference_operation": "Noop",
+      "canonical_target_id": "mem_0005",
+      "decision_source": "model",
+      "raw_response": "{\n  \"operation\": \"Noop\",\n  \"target_id\": \"mem_0005\"\n}",
+      "parsed_operation": null,
+      "selected_target_id": null,
+      "status": "INVALID_DECISION",
+      "error": "target_id_must_be_null",
+      "pre_state": [
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:55."
+        },
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Seminar Brindle, the handout format is folded card."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:15:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 10:55."
+        }
+      ],
+      "transition": {
+        "kind": "none"
+      },
+      "post_state": [
+        {
+          "entry_id": "mem_0005",
+          "created_time": "2000-01-01T00:05:00Z",
+          "last_updated_time": "2000-01-01T00:05:00Z",
+          "text": "For Seminar Brindle, the seminar room identifier is ROM-B47."
+        },
+        {
+          "entry_id": "mem_0006",
+          "created_time": "2000-01-01T00:06:00Z",
+          "last_updated_time": "2000-01-01T00:06:00Z",
+          "text": "For Seminar Brindle, the seminar moderator is Ansel Wickham."
+        },
+        {
+          "entry_id": "mem_0007",
+          "created_time": "2000-01-01T00:07:00Z",
+          "last_updated_time": "2000-01-01T00:07:00Z",
+          "text": "For Seminar Brindle, the seating capacity is 40 seats."
+        },
+        {
+          "entry_id": "mem_0002",
+          "created_time": "2000-01-01T00:02:00Z",
+          "last_updated_time": "2000-01-01T00:09:00Z",
+          "text": "For Seminar Brindle, the coffee break length is 33 minutes."
+        },
+        {
+          "entry_id": "mem_0004",
+          "created_time": "2000-01-01T00:04:00Z",
+          "last_updated_time": "2000-01-01T00:11:00Z",
+          "text": "For Seminar Kestrel, the registration desk opening time is 12:55."
+        },
+        {
+          "entry_id": "mem_0001",
+          "created_time": "2000-01-01T00:01:00Z",
+          "last_updated_time": "2000-01-01T00:13:00Z",
+          "text": "For Seminar Brindle, the handout format is folded card."
+        },
+        {
+          "entry_id": "mem_0003",
+          "created_time": "2000-01-01T00:03:00Z",
+          "last_updated_time": "2000-01-01T00:15:00Z",
+          "text": "For Seminar Brindle, the registration desk opening time is 10:55."
+        }
+      ]
+    }
+  ],
+  "trajectory": [
+    {
+      "event": "I1",
+      "active_entries": 1,
+      "primary_tokens": 55
+    },
+    {
+      "event": "I2",
+      "active_entries": 2,
+      "primary_tokens": 110
+    },
+    {
+      "event": "I3",
+      "active_entries": 3,
+      "primary_tokens": 167
+    },
+    {
+      "event": "I4",
+      "active_entries": 4,
+      "primary_tokens": 225
+    },
+    {
+      "event": "I5",
+      "active_entries": 5,
+      "primary_tokens": 280
+    },
+    {
+      "event": "I6",
+      "active_entries": 6,
+      "primary_tokens": 335
+    },
+    {
+      "event": "I7",
+      "active_entries": 7,
+      "primary_tokens": 389
+    },
+    {
+      "event": "U1",
+      "active_entries": 7,
+      "primary_tokens": 389
+    },
+    {
+      "event": "U2",
+      "active_entries": 7,
+      "primary_tokens": 389
+    },
+    {
+      "event": "U3",
+      "active_entries": 7,
+      "primary_tokens": 389
+    },
+    {
+      "event": "U4",
+      "active_entries": 7,
+      "primary_tokens": 389
+    },
+    {
+      "event": "U5",
+      "active_entries": 7,
+      "primary_tokens": 389
+    },
+    {
+      "event": "U6",
+      "active_entries": 7,
+      "primary_tokens": 388
+    },
+    {
+      "event": "N1",
+      "active_entries": 7,
+      "primary_tokens": 388
+    },
+    {
+      "event": "U7",
+      "active_entries": 7,
+      "primary_tokens": 388
+    },
+    {
+      "event": "N2",
+      "active_entries": 7,
+      "primary_tokens": 388
+    }
+  ],
+  "raw_answer": "{\"answer\": \"10:55\"}",
+  "classification": {
+    "class": "CURRENT_CORRECT",
+    "reason": "equals_current_target",
+    "answer": "10:55",
+    "normalized_answer": "10:55",
+    "raw_exact_match": true
+  },
+  "csa_contribution": 1,
+  "srr_contribution": 0,
+  "maintenance": {
+    "moa_correct": 7,
+    "moa_total": 9,
+    "operation_correct": {
+      "U1": true,
+      "U2": true,
+      "U3": true,
+      "U4": true,
+      "U5": true,
+      "U6": true,
+      "N1": false,
+      "U7": true,
+      "N2": false
+    },
+    "update_target_eligible": 7,
+    "update_target_correct": 7,
+    "invalid_decisions": 2,
+    "target_errors": 0
+  },
+  "memory_size": {
+    "primary_tokens": 388,
+    "text_only_tokens": 101,
+    "active_entries": 7
+  },
+  "b0_context": null,
+  "final_active_memory": "[memory_id=mem_0005; created=2000-01-01T00:05:00Z; updated=2000-01-01T00:05:00Z] For Seminar Brindle, the seminar room identifier is ROM-B47.\n[memory_id=mem_0006; created=2000-01-01T00:06:00Z; updated=2000-01-01T00:06:00Z] For Seminar Brindle, the seminar moderator is Ansel Wickham.\n[memory_id=mem_0007; created=2000-01-01T00:07:00Z; updated=2000-01-01T00:07:00Z] For Seminar Brindle, the seating capacity is 40 seats.\n[memory_id=mem_0002; created=2000-01-01T00:02:00Z; updated=2000-01-01T00:09:00Z] For Seminar Brindle, the coffee break length is 33 minutes.\n[memory_id=mem_0004; created=2000-01-01T00:04:00Z; updated=2000-01-01T00:11:00Z] For Seminar Kestrel, the registration desk opening time is 12:55.\n[memory_id=mem_0001; created=2000-01-01T00:01:00Z; updated=2000-01-01T00:13:00Z] For Seminar Brindle, the handout format is folded card.\n[memory_id=mem_0003; created=2000-01-01T00:03:00Z; updated=2000-01-01T00:15:00Z] For Seminar Brindle, the registration desk opening time is 10:55.",
+  "summary": {
+    "run_id": "pilot-scheduling-01/medium/M3",
+    "final_answer": "10:55",
+    "classification": "CURRENT_CORRECT",
+    "csa_contribution": 1,
+    "srr_contribution": 0,
+    "moa": {
+      "moa_correct": 7,
+      "moa_total": 9
+    },
+    "update_target": {
+      "update_target_eligible": 7,
+      "update_target_correct": 7
+    },
+    "active_memory_primary_tokens": 388,
+    "text_only_memory_tokens": 101,
+    "active_entry_count": 7,
+    "active_entry_trajectory": [
+      {
+        "event": "I1",
+        "active_entries": 1,
+        "primary_tokens": 55
+      },
+      {
+        "event": "I2",
+        "active_entries": 2,
+        "primary_tokens": 110
+      },
+      {
+        "event": "I3",
+        "active_entries": 3,
+        "primary_tokens": 167
+      },
+      {
+        "event": "I4",
+        "active_entries": 4,
+        "primary_tokens": 225
+      },
+      {
+        "event": "I5",
+        "active_entries": 5,
+        "primary_tokens": 280
+      },
+      {
+        "event": "I6",
+        "active_entries": 6,
+        "primary_tokens": 335
+      },
+      {
+        "event": "I7",
+        "active_entries": 7,
+        "primary_tokens": 389
+      },
+      {
+        "event": "U1",
+        "active_entries": 7,
+        "primary_tokens": 389
+      },
+      {
+        "event": "U2",
+        "active_entries": 7,
+        "primary_tokens": 389
+      },
+      {
+        "event": "U3",
+        "active_entries": 7,
+        "primary_tokens": 389
+      },
+      {
+        "event": "U4",
+        "active_entries": 7,
+        "primary_tokens": 389
+      },
+      {
+        "event": "U5",
+        "active_entries": 7,
+        "primary_tokens": 389
+      },
+      {
+        "event": "U6",
+        "active_entries": 7,
+        "primary_tokens": 388
+      },
+      {
+        "event": "N1",
+        "active_entries": 7,
+        "primary_tokens": 388
+      },
+      {
+        "event": "U7",
+        "active_entries": 7,
+        "primary_tokens": 388
+      },
+      {
+        "event": "N2",
+        "active_entries": 7,
+        "primary_tokens": 388
+      }
+    ],
+    "b0_context": null,
+    "logical_calls": 10,
+    "end_to_end_seconds": 5.107209494017297
+  },
+  "accounting": {
+    "logical_calls": 10,
+    "physical_attempts": 10,
+    "logical_token_usage": {
+      "prompt_tokens": 5901,
+      "completion_tokens": 200
+    },
+    "retry_token_usage": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0
+    },
+    "retry_attempts_without_usage": 0,
+    "api_latency_seconds": 5.050500985962572,
+    "cost": 0.00134222
+  },
+  "end_to_end_seconds": 5.107209494017297
+}

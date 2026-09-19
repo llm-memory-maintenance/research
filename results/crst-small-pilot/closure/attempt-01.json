@@ -1,0 +1,89 @@
+{
+  "schema_version": "crst-small-pilot-closure/1.0.0",
+  "status": "CLOSED",
+  "execution_status": "COMPLETE",
+  "mechanical_validation": "PASS",
+  "closed_on": "2026-09-20",
+  "scope": "Pre-main mechanical validation only. Observed pilot outcomes are not effect estimates, policy rankings, or inputs to statistical power or sample-size decisions.",
+  "scenarios": [
+    "pilot-scheduling-01",
+    "pilot-travel-01"
+  ],
+  "policy_runs": 24,
+  "evidence": {
+    "backbone_collection_sha256": "ee18a9d719a02054ecc782f9ec1f74f726ce1894b5d2dc31dcac2af7e0e4af6f",
+    "backbone_sha256sums_sha256": "80d2187033731e5518815fbdb306311f79e04ed2ed41261ee68a3c63942b8625",
+    "naturalization_collection_sha256": "54880ced8042c8972c9dc5d1033c76e03edb9a72e9ce0e64ae655e31314f5001",
+    "naturalization_audit_sha256": "0ff0962bef5b5a3714bab049831ff5a135e308bcc8f8625a91de0fb0cd172f48",
+    "files_verified": {
+      "backbone": 157,
+      "naturalization": 5
+    },
+    "logical_calls": {
+      "total": 132,
+      "maintenance": 108,
+      "answering": 24
+    },
+    "runs": 24,
+    "physical_attempts": 132,
+    "retried_logical_requests": 0,
+    "aborted": false,
+    "routing_provider_model_verified": true,
+    "b0_context_tokens": 71,
+    "source_commits": {
+      "naturalization": "f2b16e6b1243c592898c0b49462c39418128d8a9",
+      "backbone": "f794afd0933d374cc7a9150efd18a0704c4d50d1"
+    }
+  },
+  "researcher_review_sha256": "51765bce52575cace5543f8921ed13bde07d87caf186bc2793024878b35cff09",
+  "replay": {
+    "runs_replayed": 24,
+    "runs_matching": 24
+  },
+  "checklist": {
+    "final_states": {
+      "DATA-01": "PASS_OFFLINE",
+      "DATA-02": "PASS_OFFLINE",
+      "DATA-03": "PASS_OFFLINE",
+      "DATA-04": "PASS_OFFLINE",
+      "DATA-05": "PASS_OFFLINE",
+      "DATA-06": "PASS_OFFLINE",
+      "DATA-07": "PASS_OFFLINE",
+      "DATA-08": "PASS_OFFLINE",
+      "DATA-09": "PASS_OFFLINE",
+      "DATA-10": "PASS_POST_RUN",
+      "POL-01": "PASS_OFFLINE",
+      "POL-02": "PASS_OFFLINE",
+      "POL-03": "PASS_OFFLINE",
+      "POL-04": "PASS_OFFLINE",
+      "POL-05": "PASS_OFFLINE",
+      "POL-06": "PASS_OFFLINE",
+      "POL-07": "PASS_OFFLINE",
+      "POL-08": "PASS_OFFLINE",
+      "POL-09": "PASS_OFFLINE",
+      "ANS-01": "PASS_OFFLINE",
+      "ANS-02": "PASS_POST_RUN",
+      "ANS-03": "PASS_OFFLINE",
+      "SCR-01": "PASS_OFFLINE",
+      "SCR-02": "PASS_OFFLINE",
+      "SCR-03": "PASS_RESEARCHER_REVIEW",
+      "ACC-01": "PASS_POST_RUN",
+      "ACC-02": "PASS_POST_RUN",
+      "ACC-03": "PASS_OFFLINE",
+      "ACC-04": "PASS_POST_RUN",
+      "ACC-05": "PASS_POST_RUN",
+      "ACC-06": "PASS_OFFLINE",
+      "ACC-07": "PASS_OFFLINE"
+    },
+    "counts": {
+      "PASS_OFFLINE": 25,
+      "PASS_POST_RUN": 6,
+      "PASS_RESEARCHER_REVIEW": 1
+    },
+    "items": 32,
+    "pending": 0
+  },
+  "protocol_config_sha256": "d90bc862249da2bb3f146d6ef03d1dab5a09cef0ba7eed887ed95d74ebb666ee",
+  "protocol_config_note": "The frozen protocol config is intentionally unchanged; it is bound to the provenance of the archived runs.",
+  "outcome_aggregates": null
+}

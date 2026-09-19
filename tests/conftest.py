@@ -18,3 +18,15 @@ def b0_results_are_read_only(monkeypatch):
             pytest.fail(f'Tests must not create {target}')
         return original(self, *args, **kwargs)
     monkeypatch.setattr(Path, 'mkdir', guarded)
+
+
+@pytest.fixture(autouse=True)
+def pilot_results_are_never_touched():
+    """The archived Small Pilot evidence must be identical after every test: nothing added, changed or removed."""
+    base = ROOT / 'results/crst-small-pilot'
+
+    def snapshot():
+        return {str(p): (p.stat().st_size, p.stat().st_mtime_ns) for p in base.rglob('*') if p.is_file()}
+    before = snapshot()
+    yield
+    assert snapshot() == before, 'A test changed the archived Small Pilot results'

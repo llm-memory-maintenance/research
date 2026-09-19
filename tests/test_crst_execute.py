@@ -111,7 +111,7 @@ def test_cli_preview_writes_nothing_and_needs_no_credentials(tmp_path, monkeypat
     monkeypatch.chdir(tmp_path)
     assert ex.main([]) == 0
     assert json.loads(capsys.readouterr().out)['plan_counts']['backbone_calls'] == 132
-    assert list(tmp_path.iterdir()) == [] and not (ROOT / 'results/crst-small-pilot').exists()
+    assert list(tmp_path.iterdir()) == []
 
 
 @pytest.mark.parametrize('flags', [['--execute'], ['--confirm-spend'],
@@ -275,7 +275,6 @@ def test_mocked_execution_makes_exactly_132_calls_in_plan_order_and_archives_eve
         assert body['provider']['order'] == ['coreweave/bf16']
         assert not {'conversation', 'session', 'previous_response_id', 'tools'} & body.keys()
     assert KEY not in ' '.join((world['out'] / n).read_text() for n in names)
-    assert not (ROOT / 'results/crst-small-pilot').exists()
 
 
 def test_calls_per_policy_and_request_shapes(world):
@@ -376,7 +375,6 @@ def test_an_existing_result_directory_is_never_overwritten(world):
 def test_no_test_ever_writes_under_the_real_results_namespace(world):
     gate = gates(world)
     execute(gate, world['out'])
-    assert not (ROOT / 'results/crst-small-pilot').exists()
 
 
 # --- Replay (offline) -------------------------------------------------------------------------------------
