@@ -16,11 +16,14 @@
 ## 1. Status and Boundaries
 
 Exactly 12 qualification-only base fixtures have been constructed offline, one
-per frozen domain. **GENERATOR QUALIFICATION FIXTURE SET: FROZEN.** Final
-researcher review passed after the targeted pre-freeze adjudication. No natural-language outputs, model-result audit
-records, qualification calls, final CRST scenarios, B0 histories, or pilot data
-have been generated. Sol and Sonnet remain CANDIDATE. Capability Probe remains
-CLOSED/PASS; its execution package and semantic contract versions are unchanged.
+per frozen domain. **Generator Qualification fixture set: FROZEN.** Final
+researcher review passed after the targeted pre-freeze adjudication. Generator
+Qualification is CLOSED under Protocol v2 (`generator-qualification.md` §14):
+G1 primary `openai/gpt-5.6-sol` QUALIFIED, G1 fallback `openai/gpt-5.6-terra`
+QUALIFIED, and G2 `anthropic/claude-fable-5.1` QUALIFIED (native Protocol-v2
+Attempt-03). No final CRST scenarios, B0 histories, or pilot data have been
+generated. The Capability Probe is CLOSED/PASS; its execution package and
+semantic contract versions are unchanged.
 
 The [manifest](../data/generator-qualification/manifest.json) records each raw
 fixture SHA-256, canonical model-facing projection SHA-256, roles, schedules,
@@ -169,8 +172,7 @@ sheets; hard-distractor counts are 720, 750 and 780 sheets. All are divisible by
 the 10/15 sheets-per-bundle values encountered in the trajectories. Entities,
 attributes, roles, N2 values and event/allocation structure are preserved.
 The fixtures are FROZEN after final researcher review. Future changes require
-explicit defect adjudication and a new fixture-set version and freeze record. No
-naturalization or Generator Qualification has run; Sol/Sonnet remain CANDIDATE.
+explicit defect adjudication and a new fixture-set version and freeze record.
 
 Known superseded expressions remain available only to reference-side validation.
 Later output checks must require current values, flag known superseded expressions
@@ -182,7 +184,7 @@ state only the still-current fact. These fixtures contain no naturalized outputs
 ## 5. Blank Manual Result-Audit Format
 
 Use one audit record per model/fixture/variant/event after authorized qualification.
-Required record fields (no records are filled in this task):
+Required record fields (this section defines the format only):
 
 - Model ID, observed provider, qualification attempt, fixture ID/hash, manifest hash.
 - Prompt/input/output-schema versions; raw response hash and event-text location.
@@ -242,10 +244,12 @@ scores, rankings or policy outcome criteria are used. No LLM judge is used.
 ## 6. Remaining Review and Execution Boundaries
 
 The qualification runner, automated naturalized-output fidelity checks, audit
-storage and adjudication procedure are implemented offline but **NOT YET
-FROZEN**. See [Generator Qualification §10](generator-qualification.md#10-offline-qualification-runner--implemented-not-frozen).
-Live execution requires the reviewed implementation commit and a subsequent
-freeze record pinning it. The 5%/2%
+storage and adjudication procedure are implemented, and the Protocol-v2
+implementation is **FROZEN** under revision r5
+(`configs/generator-qualification-implementation-freeze-v2-r5.json`, pinning
+implementation commit `b8aa5b70350a2d32590e7808d2a7396f83494299`). The frozen
+implementation supports native Protocol-v2 replay and offline adjudication; see
+[Generator Qualification](generator-qualification.md) §14. The 5%/2%
 length tolerances remain PROVISIONAL and are not pass/fail gates here. Generator
 assignment mechanism/seed, final N/R/MOI/statistical details, B0 material/grid/budget
 and Small Pilot details remain unresolved in their respective workstreams.

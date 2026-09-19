@@ -1063,7 +1063,7 @@ def test_bounded_retries(inputs):
     assert not q.probe.retryable(status=401) and not q.probe.retryable(error=ValueError('semantic'))
 
 
-# --- Predeclared fallback candidate profile (Terra/Opus): offline design only, never executed here. ---
+# --- Predeclared fallback candidate profile (Terra/Opus) ---
 
 @pytest.fixture(scope='module')
 def loaded_fallback():
@@ -1729,7 +1729,7 @@ def test_real_attempt_02_v1_replay_reproduces_frozen_terra_fail():
     assert verdict['candidates'] == {'G1': 'FAIL'}
 
 
-# --- Protocol v2 as a DIRECT, native qualification protocol for a future candidate (docs/
+# --- Protocol v2 as a direct, native qualification protocol (docs/
 # generator-qualification.md Sec. 14) -- distinct from the historical v1 -> v2 mapping above.
 # collect() and load_inputs() accept protocol='v2' and never touch the network here: the no_network
 # fixture (autouse) blocks real sockets, and every "execution" below is httpx.MockTransport. ---
@@ -1849,8 +1849,8 @@ def test_v2_historical_mapping_stays_separate_from_native_v2_audit_creation(inpu
         q.derive_v2_audit_template(result, checksum, v2_audit, v2_inputs['slots'])
 
 
-# --- Second-level G2 profile (anthropic/claude-fable-5.1): offline support for both its Capability Probe and
-# future native Protocol-v2 Generator Qualification; nothing here executes or calls any API. ---
+# --- Second-level G2 profile (anthropic/claude-fable-5.1): offline support for its Capability Probe and
+# native Protocol-v2 Generator Qualification. ---
 
 FABLE = 'anthropic/claude-fable-5.1'
 

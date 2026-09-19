@@ -163,11 +163,12 @@ globally, and balance within each domain (difference at most one for an odd doma
 count). Record generator identity in provenance; it is not a primary experimental
 factor. Final N remains unresolved within the multiple-of-12 constraint.
 
-**OPEN:** qualification outcomes/final qualified pair, any activated fallback
-capabilities, and deterministic assignment mechanism/seed. The primary pair's
-execution package and transport are FROZEN after Capability Probe Attempt-02 PASS;
-semantic Generator Qualification has not executed. STANDARD mode and intended first-party routing are
-selected; the versioned shared prompt/schema and validation contract are in
+**OPEN:** deterministic assignment mechanism/seed. Generator Qualification is
+closed under Protocol v2: G1 is `openai/gpt-5.6-sol` with `openai/gpt-5.6-terra` as
+qualified fallback, and G2 is `anthropic/claude-fable-5.1`
+([Generator Qualification](generator-qualification.md) §14). The primary pair's
+execution package and transport are FROZEN after Capability Probe Attempt-02 PASS.
+STANDARD mode and intended first-party routing are selected; the versioned shared prompt/schema and validation contract are in
 [the shared naturalization contract](generator-naturalization-contract.md).
 Candidate IDs do not certify
 API availability or compatibility. Controlled candidates and reference labels
@@ -547,8 +548,8 @@ identity/value; and absence of hidden conditional/hypothetical language posing
 as an actual update.
 
 **FROZEN length principle:** Low/Medium/High variants must have comparable length.
-**PROVISIONAL numeric criteria:** the manuscript-current requirements supplied
-for this task specify maximum **5%** difference for specified within-triplet
+**PROVISIONAL numeric criteria:** the current manuscript requirements
+specify maximum **5%** difference for specified within-triplet
 token measures and maximum **2%** difference across aggregate revision-level
 means. Synchronized methodological status leaves these tolerances PROVISIONAL
 pending pre-main adjudication; no later committed resolution was found. They
@@ -658,12 +659,7 @@ Neither completed qualification nor final statistical values are reopened.
   fields, canonical IDs, reference-target comparison, and execution rules are fixed.
 - Scenario allocation/trajectories beyond frozen constraints, CRST schema, and
   deterministic generator-assignment mechanism/seed within the frozen balancing
-  constraints. Candidate IDs are declared; qualification outcomes remain pending.
-- Any activated generator fallback's capabilities; the primary pair's execution
-  compatibility is VERIFIED by Attempt-02. Their standard request package,
-  first-party pins, strict schema, output mapping, input serialization, and
-  reviewed timeout/retry constants are FROZEN in the shared contract. Semantic
-  Generator Qualification outcomes remain OPEN.
+  constraints.
 - Exact CRST prompts, response/scoring contract, invalid-run treatment, resource
   aggregation, active-memory tokenizer/counting representation, timer
   instrumentation, and length-measure implementation. Memory serialization/order

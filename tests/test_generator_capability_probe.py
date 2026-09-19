@@ -514,7 +514,7 @@ def test_closed_cli_does_not_read_key_or_execute(monkeypatch, capsys):
     assert 'CLOSED/PASS' in capsys.readouterr().err
 
 
-# --- Predeclared fallback candidate profile (Terra/Opus): offline design only, never executed here. ---
+# --- Predeclared fallback candidate profile (Terra/Opus) ---
 
 def test_primary_profile_unchanged_by_default(bundle):
     """The PRIMARY profile constant and its default load_bundle()/preview() behavior are untouched."""
@@ -533,7 +533,7 @@ def test_fallback_profile_identities_and_package():
         ('G1', 'openai/gpt-5.6-terra', ['openai']), ('G2', 'anthropic/claude-opus-5', ['anthropic'])]
     profile = p.PROFILES['fallback']
     assert profile['slots'] == slots and profile['config_path'] == p.FALLBACK_CONFIG
-    assert profile['status'] != 'CLOSED' and profile['capability_result'] != 'PASS'  # Never CLOSED here.
+    assert profile['status'] != 'CLOSED' and profile['capability_result'] != 'PASS'  # Capability is recorded per slot.
     bundle = p.load_bundle(profile['config_path'], slots=slots, status=profile['status'],
                            capability_result=profile['capability_result'],
                            successful_attempt=profile['successful_attempt'],
@@ -716,9 +716,8 @@ def test_execute_probe_without_profile_name_skips_per_slot_reopening_check(monke
     assert out.exists()
 
 
-# --- Second-level G2 candidate freeze (docs/generator-qualification.md Sec. 12): anthropic/claude-fable-5.1
-# is named and its identity/route/package frozen in configuration only, BEFORE any capability-probe or
-# qualification call to it. No source change and no call: these tests read config and build requests offline.
+# --- Second-level G2 candidate configuration (docs/generator-qualification.md Sec. 12): identity, route
+# and package for anthropic/claude-fable-5.1. These tests read config and build requests offline.
 
 SECOND_LEVEL_G2_CONFIG = p.ROOT / 'configs/generator-capability-probe-second-level-g2.yaml'
 SECOND_LEVEL_G2_CONFIG_SHA256 = 'fb2c74eec9fea2ab49cee00e76cbe84ec7ce0fe2464e80bf84d157e82ec56180'
@@ -772,7 +771,7 @@ def test_second_level_g2_profile_resolves_exactly_one_frozen_candidate():
     assert p.SECOND_LEVEL_G2_SLOTS == [FABLE_SLOT] and p.SECOND_LEVEL_G2_CONFIG == SECOND_LEVEL_G2_CONFIG
     profile = p.PROFILES['second_level_g2']
     assert profile['slots'] == [FABLE_SLOT] and profile['config_path'] == SECOND_LEVEL_G2_CONFIG
-    assert profile['status'] == 'OPEN' and profile['capability_result'] == 'NOT_ASSESSED'  # Never CLOSED here.
+    assert profile['status'] == 'OPEN' and profile['capability_result'] == 'NOT_ASSESSED'  # Capability is recorded per slot.
     assert profile['successful_attempt'] is None and profile['execution_package'] == 'UNDER_DEVELOPMENT'
     assert sorted(p.PROFILES) == ['fallback', 'primary', 'second_level_g2']
     # Existing profiles are untouched.

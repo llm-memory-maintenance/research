@@ -390,7 +390,7 @@ run; Sol/Sonnet remain CANDIDATE.
 
 ## Generator Qualification — Fixture Set Freeze
 
-**GENERATOR QUALIFICATION FIXTURE SET: FROZEN.** Final researcher review passed
+**Generator Qualification fixture set: FROZEN.** Final researcher review passed
 after the targeted adjudication. Exactly 12 qualification-only fixtures, one per
 frozen CRST domain, are immutable and must be used as the same set for G1 and G2.
 They cannot become final CRST scenarios. Identifier/code-valued N2 is a
@@ -427,7 +427,7 @@ run; Sol/Sonnet remain CANDIDATE.
 
 ## Generator Qualification — Implementation Freeze
 
-**GENERATOR QUALIFICATION IMPLEMENTATION: FROZEN.** The reviewed runner
+**Generator Qualification implementation: FROZEN.** The reviewed runner
 implementation is pinned to implementation commit
 `e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e` (`feat: implement generator
 qualification runner`). `configs/generator-qualification-implementation-freeze.json`
@@ -444,7 +444,7 @@ itself is still NOT EXECUTED; Sol/Sonnet remain CANDIDATE.
 
 ## Generator Qualification Attempt-01 — Closed
 
-**GENERATOR QUALIFICATION ATTEMPT-01: CLOSED.** Official Attempt-01 completed
+**Generator Qualification Attempt-01: CLOSED.** Official Attempt-01 completed
 2026-09-18 under the frozen implementation and fixture set, archived at
 `results/generator-qualification/attempt-01`. All 24 planned logical calls
 completed; the attempt was not invalidated. One infrastructure retry occurred
@@ -491,9 +491,8 @@ showing CLOSED/PASS, checked at execution time against that file directly, so
 the primary's own CLOSED/PASS evidence cannot satisfy it.
 
 This source change means `configs/generator-qualification-implementation-freeze.json`
-(pinning `e5e9d500...`) no longer matches current bytes; the runner now
-correctly reports `NOT YET FROZEN FOR LIVE EXECUTION` again rather than
-falsely claiming FROZEN. `replay()` was changed to verify an archived attempt's
+(pinning `e5e9d500...`) no longer matches current bytes, so the runner
+reports `NOT YET FROZEN FOR LIVE EXECUTION`. `replay()` was changed to verify an archived attempt's
 implementation identity against the git history of the commit that attempt
 itself records, rather than against the current working tree, so Attempt-01
 remains fully replayable and its adjudication is unchanged: G1/G2 FAIL, no
@@ -504,7 +503,7 @@ record before any live execution.
 
 ## Fallback-Capable Generator Qualification Implementation — Frozen
 
-**FALLBACK-CAPABLE GENERATOR QUALIFICATION IMPLEMENTATION: FROZEN.** The
+**Fallback-capable Generator Qualification implementation: FROZEN.** The
 fallback-capable runner implementation (adding the predeclared Terra/Opus
 candidate profile, §"Fallback Candidate Profile" above) was reviewed and is
 committed at `3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`
@@ -540,7 +539,7 @@ candidate QUALIFIED.
 
 ## Fallback Capability Probe Attempt-03 — CLOSED / FAIL (Mixed Per-Candidate Outcome)
 
-**FALLBACK CAPABILITY PROBE ATTEMPT-03: CLOSED.** Official Attempt-03 executed
+**Fallback Capability Probe Attempt-03: CLOSED.** Official Attempt-03 executed
 2026-09-18 under the frozen fallback-capable implementation
 (`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`, freeze commit
 `d96db6d17b5283316216bca79250a5938fa99750`) and the approved fallback request
@@ -709,8 +708,8 @@ single-slot execution requires an explicit `--output-directory`.
 
 This source change means the current implementation freeze
 (`configs/generator-qualification-implementation-freeze.json`, pinning
-`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`) no longer matches; the runner
-correctly reports `NOT YET FROZEN FOR LIVE EXECUTION` again. Primary
+`3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`) no longer matches, so the runner
+reports `NOT YET FROZEN FOR LIVE EXECUTION`. Primary
 Capability Probe Attempt-01/Attempt-02, fallback Capability Probe Attempt-03,
 and Generator Qualification Attempt-01 (replay, completed audit, adjudication:
 G1/G2 FAIL) were all reverified unchanged after this implementation. Terra
@@ -719,7 +718,7 @@ selected. Terra/Opus remain CANDIDATE, not Generator-Qualified.
 
 ## Per-Slot Implementation Freeze and Official Terra Attempt-02 Path
 
-**PER-SLOT GENERATOR QUALIFICATION IMPLEMENTATION: FROZEN.** The reviewed
+**Per-slot Generator Qualification implementation: FROZEN.** The reviewed
 per-slot-capable runner implementation (generic per-slot capability state and
 single-slot Capability Probe / Generator Qualification support, prior entry
 above) is committed at `585b5e2844504fec703287f8dd4869668615671d`
@@ -815,10 +814,12 @@ reverified unaffected. Opus remains capability CLOSED/FAIL (provider-policy
 refusal). No new G2 candidate has been selected. Neither Terra nor Opus is
 Generator-Qualified.
 
-## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r5 Active, Offline Re-adjudication Closed
+## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r5 Active, Generator Qualification Closed
 
-The methodology is frozen and the offline re-adjudication is closed (see the
-final entries of this section). The active implementation freeze is revision r5,
+The methodology is frozen, the offline re-adjudication is closed, and Generator
+Qualification is closed with G1 Sol (Terra a qualified fallback) and G2
+`anthropic/claude-fable-5.1` (see the final entries of this section). Earlier
+entries state the position at their own date. The active implementation freeze is revision r5,
 which is frozen; revisions r1 to r4 are historical provenance. Full specification:
 `generator-qualification.md` §14.
 Versions: `generator-qualification-procedure/2.0.0`,
@@ -1191,3 +1192,23 @@ With r5 present, `implementation('v2')` reports FROZEN. The Attempt-03 archive
 replays through the normal native-v2 path and its adjudication reproduces G2
 QUALIFIED with zero Level-1 failures and twelve Level-2 fluency findings. No
 result artifact, fixture, prompt, execution config or criterion is changed.
+
+### Generator Qualification closed (2026-09-19)
+
+Generator Qualification is closed under Protocol v2. Native Attempt-03 qualified the
+second-level G2 candidate `anthropic/claude-fable-5.1`: 12 G2 calls on the 12 frozen
+fixtures, archived at `results/generator-qualification/attempt-03`, with the completed
+manual audit at `results/generator-qualification/manual-audit/v2/attempt-03.completed.json`
+and the derived disposition at
+`results/generator-qualification/adjudication/v2/attempt-03.json`. The disposition is
+G2 QUALIFIED, with 0 Level-1 failures, 12 Level-2 fluency findings, and all 12
+fixtures deriving PASS. Level-2 findings are descriptive and do not affect the
+outcome.
+
+Combined with the earlier Protocol-v2 dispositions (Sol QUALIFIED, Terra QUALIFIED,
+Sonnet FAIL; Opus capability CLOSED/FAIL), each slot now contains a Generator-Qualified
+candidate: G1 `openai/gpt-5.6-sol` with `openai/gpt-5.6-terra` as qualified fallback
+under the frozen primary-precedence rule, and G2 `anthropic/claude-fable-5.1`. This
+supersedes the "G2 remains unresolved" status recorded in the earlier entries above.
+No methodology, criterion, fixture, prompt, configuration or result artifact changes,
+and the final CRST assignment mechanism remains OPEN (`generator-qualification.md` §8).
