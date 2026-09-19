@@ -1,8 +1,8 @@
 """B0 suffix-only calibration: naturalize only U7 and N2, audit them, then derive the exact-maximum budget.
 
 The default invocation is an offline preview. Live collection needs --execute, --confirm-spend, the planned
---output-directory and OPENROUTER_API_KEY. --audit-template and --adjudicate are offline post-collection steps.
-The full-history procedure (calibrate_b0.py) is closed.
+--output-directory and OPENROUTER_API_KEY. --audit-template, --adjudicate and --derive-budget are the offline
+post-collection steps, in that order. The full-history procedure (calibrate_b0.py) is closed.
 """
 import argparse
 import asyncio
@@ -20,6 +20,7 @@ import yaml
 
 import b0_window as window
 import calibrate_b0 as cal
+import calibrate_retrieval as retrieval
 import probe_generators as probe
 import qualify_generators as q
 import validate_generator_qualification_fixtures as gq
@@ -30,6 +31,9 @@ SCHEMA = 'b0-suffix-calibration/1.0.0'
 COLLECTION = 'b0-suffix-collection/1.0.0'
 AUDIT = 'b0-suffix-audit/1.0.0'
 ADJUDICATION = 'b0-suffix-adjudication/1.0.0'
+DERIVATION = 'b0-suffix-budget-derivation/1.0.0'
+ELIGIBILITY_FIELDS = ('schema_version', 'attempt', 'collection_sha256', 'items_audited', 'status',
+                      'level1_failure_count', 'level1_failures', 'budget_derivation', 'b0_context_tokens')
 LEVEL1 = {
     'U7': {'entity_fidelity': 'automated', 'attribute_fidelity': 'manual', 'current_value_fidelity': 'automated',
            'changed_state_semantics': 'manual', 'no_superseded_value': 'automated',
@@ -574,8 +578,102 @@ def separate(path, directory):
     require(Path(directory).resolve() not in Path(path).resolve().parents, 'Outputs must be outside the attempt')
 
 
+def verify_adjudication(directory, audit_path, adjudication, audit, inputs):
+    """The immutable adjudication must be authentic for this collection and audit; no override is possible."""
+    directory = Path(directory)
+    verdict = adjudicate(directory, audit, inputs)
+    require(type(adjudication) is dict and set(adjudication) == {*verdict, 'audit_file_sha256'},
+            'Adjudication fields')
+    require(adjudication['schema_version'] == ADJUDICATION
+            and adjudication['attempt'] == verdict['attempt']
+            and adjudication['collection_sha256'] == probe.file_hash(directory / 'collection.json'),
+            'Adjudication does not belong to this collection')
+    require(adjudication['audit_file_sha256'] == probe.file_hash(audit_path),
+            'Adjudication does not belong to this completed audit')
+    require(adjudication['status'] == 'ELIGIBLE' and adjudication['level1_failure_count'] == 0
+            and adjudication['level1_failures'] == [] and adjudication['budget_derivation'] == 'ALLOWED'
+            and adjudication['b0_context_tokens'] is None, 'Adjudication is not an ELIGIBLE result')
+    require({k: adjudication[k] for k in ELIGIBILITY_FIELDS} == {k: verdict[k] for k in ELIGIBILITY_FIELDS},
+            'Adjudication disagrees with the recomputed eligibility')
+    return verdict
+
+
+def load_reader_tokenizer(directory=None):
+    """The frozen reader tokenizer: local artifacts verified against the pinned hashes, then loaded offline."""
+    config = yaml.safe_load((ROOT / 'configs/retrieval.yaml').read_text(encoding='utf-8'))
+    reader = config['reader_tokenizer']
+    directory = Path(directory) if directory else Path(
+        config['artifact_provenance']['verification_staging_directory']) / 'reader'
+    checksums = retrieval.verify_artifacts(directory, reader['artifact_sha256'])
+    metadata = directory / 'repository-metadata.json'
+    if metadata.is_file():
+        recorded = json.loads(metadata.read_text(encoding='utf-8'))
+        require(recorded.get('id') == reader['repository_id'] and recorded.get('sha') == reader['revision'],
+                'Local tokenizer metadata does not name the frozen repository and revision')
+    os.environ['HF_HUB_OFFLINE'] = '1'
+    os.environ['TRANSFORMERS_OFFLINE'] = '1'
+    from transformers import AutoTokenizer
+    tokenizer = AutoTokenizer.from_pretrained(str(directory), use_fast=reader['use_fast'], local_files_only=True,
+                                              trust_remote_code=reader['trust_remote_code'])
+    require(type(tokenizer).__name__ == reader['tokenizer_class'], 'Unexpected frozen tokenizer class')
+    return tokenizer, {'repository_id': reader['repository_id'], 'revision': reader['revision'],
+                       'source': 'configs/retrieval.yaml reader_tokenizer', 'artifact_sha256': checksums,
+                       'tokenizer_class': reader['tokenizer_class'], 'use_fast': reader['use_fast'],
+                       'add_special_tokens': reader['add_special_tokens'],
+                       'directory_is_portable_identity': False}
+
+
+def derive_final_budget(directory, audit_path, adjudication_path, output, inputs, tokenizer_directory=None):
+    """The one offline derivation: verify provenance, call derive_budget(), and publish an immutable artifact."""
+    directory, output = Path(directory), Path(output)
+    separate(output, directory)
+    require(not output.exists(), 'The budget derivation output already exists')
+    require(directory.is_dir() and Path(audit_path).is_file() and Path(adjudication_path).is_file(),
+            'The collection, completed audit and adjudication must all exist')
+    audit = gq.read(audit_path)
+    verify_adjudication(directory, audit_path, gq.read(adjudication_path), audit, inputs)
+    tokenizer, identity = load_reader_tokenizer(tokenizer_directory)
+    design = inputs['design']['design']
+    require({k: identity[k] for k in ('repository_id', 'revision')} == {
+        k: design['tokenizer'][k] for k in ('repository_id', 'revision')}, 'Tokenizer differs from the frozen design')
+    result = derive_budget(directory, audit, tokenizer, inputs)
+    config = inputs['config']
+    artifact = {
+        'schema_version': DERIVATION, 'status': 'DERIVED', 'procedure_version': COLLECTION,
+        'attempt': json.loads((directory / 'collection.json').read_text(encoding='utf-8'))['attempt'],
+        'source': {'collection_sha256': probe.file_hash(directory / 'collection.json'),
+                   'audit_sha256': probe.file_hash(audit_path),
+                   'adjudication_sha256': probe.file_hash(adjudication_path), 'adjudication_status': 'ELIGIBLE'},
+        'tokenizer': identity,
+        'design': {'system_prompt_sha256': design['system_prompt']['composed_sha256'],
+                   'window_contract': design['window_contract'], 'suffix_config_sha256': probe.file_hash(inputs['path']),
+                   'design_config_sha256': probe.file_hash(inputs['design']['path']),
+                   'plan_sha256': config['plan']['plan_sha256'], 'contract': config['contract'],
+                   'source_commit': cal.git('rev-parse', 'HEAD').decode().strip(),
+                   'implementation': {path: probe.file_hash(ROOT / path) for path in IMPLEMENTATION},
+                   'python': platform.python_version(),
+                   'packages': {n: importlib.metadata.version(n) for n in ('transformers', 'tokenizers')}},
+        'rule': {'name': design['calibration']['budget']['rule'],
+                 'statistic': design['calibration']['budget']['statistic'], 'percentile_rule': 'none',
+                 'candidate_grid': design['calibration']['budget']['candidate_grid'],
+                 'headroom_tokens': design['calibration']['budget']['headroom_tokens'],
+                 'required_retention_fraction': design['calibration']['retention']['fraction']},
+        'histories': {'eligible': result['histories'], 'retained_at_maximum': result['retention']['retained']},
+        'b0_context_tokens': result['b0_context_tokens'], 'determined_by': result['determined_by'],
+        'retention': result['retention'], 'per_history': result['per_history']}
+    require(artifact['histories']['eligible'] == config['plan']['expected_histories']
+            and artifact['b0_context_tokens'] == max(r['required_tokens'] for r in result['per_history']),
+            'Derivation result is inconsistent')
+    output.parent.mkdir(parents=True, exist_ok=True)
+    return artifact, q.publish(output, artifact)
+
+
 def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, allow_abbrev=False, formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog='Offline budget derivation (after an ELIGIBLE adjudication; never combined with other modes):\n'
+               '  calibrate_b0_suffix.py --derive-budget ATTEMPT_DIRECTORY --audit COMPLETED_AUDIT \\\n'
+               '      --adjudication ADJUDICATION_FILE --budget-output NEW_ARTIFACT_FILE')
     parser.add_argument('--config', type=Path, default=CONFIG)
     parser.add_argument('--execute', action='store_true')
     parser.add_argument('--confirm-spend', action='store_true')
@@ -583,11 +681,31 @@ def main(argv=None):
     parser.add_argument('--audit-template', type=Path, help='Offline blank audit for a complete attempt directory')
     parser.add_argument('--template-output', type=Path, help='New immutable blank audit file')
     parser.add_argument('--adjudicate', type=Path, help='Offline adjudication of a complete attempt directory')
-    parser.add_argument('--audit', type=Path, help='Completed copy of the audit for --adjudicate')
+    parser.add_argument('--audit', type=Path, help='Completed copy of the audit for --adjudicate or --derive-budget')
     parser.add_argument('--adjudication-output', type=Path, help='New immutable adjudication file')
+    parser.add_argument('--derive-budget', type=Path, metavar='ATTEMPT_DIRECTORY',
+                        help='Offline final derivation of B0_CONTEXT_TOKENS from a complete, ELIGIBLE collection; '
+                             'requires --audit, --adjudication and --budget-output')
+    parser.add_argument('--adjudication', type=Path, help='The immutable ELIGIBLE adjudication for --derive-budget')
+    parser.add_argument('--budget-output', type=Path, help='New immutable budget-derivation artifact')
+    parser.add_argument('--reader-tokenizer-dir', type=Path,
+                        help='Local frozen reader tokenizer files for --derive-budget (verified against the pinned '
+                             'hashes; default: the staging directory named in configs/retrieval.yaml)')
     args = parser.parse_args(argv)
     if args.execute != args.confirm_spend:
         parser.error('Execution requires BOTH --execute AND --confirm-spend')
+    if args.derive_budget or args.adjudication or args.budget_output or args.reader_tokenizer_dir:
+        if not (args.derive_budget and args.audit and args.adjudication and args.budget_output):
+            parser.error('--derive-budget requires --audit, --adjudication and --budget-output')
+        if (args.execute or args.output_directory or args.audit_template or args.template_output
+                or args.adjudicate or args.adjudication_output):
+            parser.error('--derive-budget is exclusive: use it without execution, --audit-template or --adjudicate')
+        artifact, checksum = derive_final_budget(args.derive_budget, args.audit, args.adjudication,
+                                                 args.budget_output, load_inputs(args.config),
+                                                 args.reader_tokenizer_dir)
+        print(f'{artifact["status"]}: B0_CONTEXT_TOKENS = {artifact["b0_context_tokens"]} from '
+              f'{artifact["histories"]["eligible"]} eligible suffix histories. Artifact SHA-256: {checksum}')
+        return 0
     offline = (args.audit_template, args.template_output, args.adjudicate, args.audit, args.adjudication_output)
     if any(offline):
         if args.execute or args.output_directory:

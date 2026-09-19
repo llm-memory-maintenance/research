@@ -339,9 +339,10 @@ def test_the_attempt_policy_and_semantic_rule_are_frozen_and_execution_needs_onl
             s.require_official(unapproved)
     monkeypatch.delenv('OPENROUTER_API_KEY', raising=False)
     official = ROOT / 'results/b0-suffix-calibration/attempt-01'
+    existed = official.exists()
     with pytest.raises(ValueError, match='OPENROUTER_API_KEY'):
         s.main(['--execute', '--confirm-spend', '--output-directory', str(official)])
-    assert not official.exists()
+    assert official.exists() == existed
 
 
 def test_exactly_one_attempt_is_allowed_and_no_second_attempt_can_start(config_copy, tmp_path, monkeypatch):
