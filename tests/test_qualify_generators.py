@@ -69,7 +69,7 @@ def fake_git(*args):
 
 def mocked_collect(inputs, tmp_path, monkeypatch, mutate=None):
     monkeypatch.setattr(q, 'git', fake_git)
-    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary', slot=None: inputs)
+    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary', slot=None, protocol='v1': inputs)
     calls = []
     def handler(request):
         body = json.loads(request.content)
@@ -148,7 +148,7 @@ def test_real_git_execution_boundary(inputs, tmp_path, monkeypatch, state):
         git('commit', '-m', 'remove runner')
     monkeypatch.setattr(q, 'ROOT', repo)
     reached = []
-    def boundary(profile='primary', slot=None):
+    def boundary(profile='primary', slot=None, protocol='v1'):
         reached.append(True)
         raise RuntimeError('mock execution boundary')
     monkeypatch.setattr(q, 'load_inputs', boundary)
@@ -524,26 +524,107 @@ def test_offline_adjudication_cli_uses_separate_copy(inputs, tmp_path, monkeypat
 
 
 FROZEN_HISTORICAL_COMMIT = 'e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e'  # The first reviewed, committed freeze.
-CURRENT_FROZEN_COMMIT = '585b5e2844504fec703287f8dd4869668615671d'  # The current live freeze (per-slot support).
+CURRENT_FROZEN_COMMIT = '585b5e2844504fec703287f8dd4869668615671d'  # The historical v1-era freeze (per-slot support).
+# Hardcoded, independent of whatever the live repository's CURRENT bytes happen to be: these pin what
+# the historical Protocol-v1-era freeze record itself must always say, so a future silent overwrite of
+# v1 implementation provenance is caught even if someone also edited q.SOURCES' current live bytes.
+HISTORICAL_FREEZE_RECORD_SHA256 = 'dd9d12ffdfe86e63788dc1facbacee81914c7374e6d548ff6594f03c3f896f4c'
+HISTORICAL_QUALIFY_GENERATORS_SHA256 = '89f82fe9f617275d117d793f936ca1d81fd63aa2ed6f138a8bd8e5b4bc731258'
+PROBE_GENERATORS_SHA256 = 'bf414f46d02400127ba60aa0af1bbcfd4f72c12acba0cdcc8718c9b34774c9cf'
+VALIDATE_FIXTURES_SHA256 = '2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e'
+# The reviewed Protocol-v2-capable implementation awaiting its two-commit freeze workflow (docs/
+# generator-qualification.md Sec. 14): Commit A (implementation) must land first, then a separate
+# Commit B (freeze) creates q.V2_FREEZE_RECORD naming Commit A -- never a self-referential or
+# invented commit hash. Neither commit happens in this task.
+V2_REVIEWED_QUALIFY_GENERATORS_SHA256 = '38896235ec7a4b9b1fff59d2ae0d0ec6ef7c22ee567e131ac614ca8134355dc0'
 
 
-def test_real_freeze_record_matches_reports_frozen(loaded, capsys):
-    """The live freeze record has been reviewed and updated to pin the current (per-slot-capable)
-    implementation commit: current bytes match it exactly, so the runner reports FROZEN, not a raise.
+def test_historical_v1_freeze_record_preserved_not_reinterpreted_as_current(loaded, capsys):
+    """The historical Protocol-v1-era freeze record is immutable implementation provenance, checked
+    here against its own hardcoded historical values -- independent of whatever the live repository's
+    current bytes happen to be. Current qualify_generators.py has legitimately moved past it (Protocol-
+    v2 support added on top): the runner correctly reports NOT_FROZEN, never a false FROZEN claim, and
+    this historical record is never silently reinterpreted as validating that current state.
     """
-    implementation = loaded['provenance']['implementation']
-    current_sources = {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}
-    assert implementation['source_sha256'] == current_sources
     assert q.FREEZE_RECORD.exists()
+    assert q.probe.file_hash(q.FREEZE_RECORD) == HISTORICAL_FREEZE_RECORD_SHA256
     committed = q.fixtures.read(q.FREEZE_RECORD)
-    assert committed['implementation_commit'] == CURRENT_FROZEN_COMMIT
-    assert committed['source_sha256'] == current_sources  # Reviewed and re-frozen: no drift.
-    assert implementation['status'] == q.FROZEN and implementation['freeze_commit'] == CURRENT_FROZEN_COMMIT
+    assert committed == {
+        'schema_version': q.FREEZE_SCHEMA,
+        'implementation_commit': CURRENT_FROZEN_COMMIT,
+        'source_sha256': {
+            'experiments/qualify_generators.py': HISTORICAL_QUALIFY_GENERATORS_SHA256,
+            'experiments/probe_generators.py': PROBE_GENERATORS_SHA256,
+            'experiments/validate_generator_qualification_fixtures.py': VALIDATE_FIXTURES_SHA256,
+        },
+    }
+    implementation = loaded['provenance']['implementation']
+    assert implementation['status'] == q.NOT_FROZEN and implementation['freeze_commit'] is None
+    assert implementation['source_sha256']['experiments/qualify_generators.py'] == \
+        V2_REVIEWED_QUALIFY_GENERATORS_SHA256 != HISTORICAL_QUALIFY_GENERATORS_SHA256
     assert q.main([]) == 0
     shown = json.loads(capsys.readouterr().out)
-    assert shown['qualification_implementation_status'] == q.FROZEN
+    assert shown['qualification_implementation_status'] == q.NOT_FROZEN
     assert shown['qualification_status'] == 'NOT EXECUTED' and shown['status'] == 'NETWORK_DISABLED'
     assert shown['planned_calls'][0] == '1:G1:gq-scheduling-01' and shown['planned_calls'][12] == '13:G2:gq-scheduling-01'
+
+
+def test_v2_freeze_record_absent_before_commit_a(loaded):
+    """(pre-freeze state) No v2 freeze record exists yet -- Commit A (the implementation commit) has
+    not happened, so there is no real commit to name. protocol='v2' correctly, gracefully reports
+    NOT_FROZEN (the same non-fatal status v1 reports when development has moved past its own freeze),
+    computed from the current reviewed bytes, never a false FROZEN claim and never a crash.
+    """
+    assert not q.V2_FREEZE_RECORD.exists()
+    v2 = q.implementation('v2')
+    assert v2 == {'status': q.NOT_FROZEN, 'freeze_commit': None,
+                  'source_sha256': loaded['provenance']['implementation']['source_sha256']}
+    assert v2['source_sha256']['experiments/qualify_generators.py'] == V2_REVIEWED_QUALIFY_GENERATORS_SHA256
+
+
+@pytest.mark.parametrize('protocol_version', ['v1', 'v2'])
+def test_live_execution_refuses_before_network_when_unfrozen(monkeypatch, tmp_path, protocol_version):
+    """(A)+(B)+(C) Both protocols' live-execution gate refuses BEFORE any network/API request when
+    unfrozen, with a message specifically about the implementation not being frozen -- never a claim
+    that the protocol itself is unsupported. v1 is unaffected by adding the v2 gate (both are
+    currently, separately, legitimately unfrozen: v1 because development moved past its freeze, v2
+    because no freeze commit exists yet).
+    """
+    monkeypatch.setenv('OPENROUTER_API_KEY', 'test-secret-must-never-be-sent')
+    output = tmp_path / 'must-not-be-created'
+    with pytest.raises(ValueError) as excinfo:
+        q.main(['--execute', '--confirm-spend', '--protocol-version', protocol_version,
+               '--output-directory', str(output)])
+    assert 'NOT YET FROZEN FOR LIVE EXECUTION' in str(excinfo.value)
+    assert 'unsupported' not in str(excinfo.value).lower()
+    assert not output.exists()
+
+
+def test_v2_freeze_gate_reports_frozen_once_a_valid_v2_record_exists(tmp_path, monkeypatch):
+    """(D) Mirrors test_matching_freeze_record_reports_frozen for the SEPARATE v2 record: the exact
+    same reproducibility principles (real, reachable, authentic ancestor commit whose git-archived
+    bytes match the pinned hashes) apply to v2, never weakened.
+    """
+    repo, commit, sources = synthetic_frozen_repo(tmp_path, monkeypatch)
+    record = repo / 'v2-freeze.json'
+    record.write_text(json.dumps({'schema_version': q.FREEZE_SCHEMA, 'implementation_commit': commit,
+                                  'source_sha256': sources}))
+    monkeypatch.setattr(q, 'V2_FREEZE_RECORD', record)
+    assert q.implementation('v2') == {'status': q.FROZEN, 'freeze_commit': commit, 'source_sha256': sources}
+
+
+def test_v2_gate_never_falls_back_to_v1_record_even_when_v1_is_frozen(tmp_path, monkeypatch):
+    """(G)+(H) Protocol selection cannot silently fall back: even when a well-formed, genuinely FROZEN
+    v1 record exists, protocol='v2' still requires its OWN separate V2_FREEZE_RECORD, never v1's.
+    """
+    repo, commit, sources = synthetic_frozen_repo(tmp_path, monkeypatch)
+    v1_record = repo / 'v1-freeze.json'
+    v1_record.write_text(json.dumps({'schema_version': q.FREEZE_SCHEMA, 'implementation_commit': commit,
+                                     'source_sha256': sources}))
+    monkeypatch.setattr(q, 'FREEZE_RECORD', v1_record)
+    monkeypatch.setattr(q, 'V2_FREEZE_RECORD', repo / 'absent-v2-freeze.json')
+    assert q.implementation('v1') == {'status': q.FROZEN, 'freeze_commit': commit, 'source_sha256': sources}
+    assert q.implementation('v2')['status'] == q.NOT_FROZEN  # v1 being FROZEN never leaks into v2.
 
 
 def synthetic_frozen_repo(tmp_path, monkeypatch, *, content=None):
@@ -672,7 +753,7 @@ def test_probe_default_behavior_unchanged(loaded, monkeypatch):
 @pytest.mark.parametrize('failure', ['http_503', 'read_timeout'])
 def test_infrastructure_retry_exhaustion_invalidates_attempt(inputs, tmp_path, monkeypatch, failure):
     monkeypatch.setattr(q, 'git', fake_git)
-    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary', slot=None: inputs)
+    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary', slot=None, protocol='v1': inputs)
     requests, waits = [], []
     def handler(request):
         body = json.loads(request.content)
@@ -710,7 +791,7 @@ def test_infrastructure_retry_exhaustion_invalidates_attempt(inputs, tmp_path, m
 
 def test_retries_within_budget_do_not_invalidate(inputs, tmp_path, monkeypatch):
     monkeypatch.setattr(q, 'git', fake_git)
-    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary', slot=None: inputs)
+    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary', slot=None, protocol='v1': inputs)
     requests = []
     def handler(request):
         body = json.loads(request.content)
@@ -964,7 +1045,7 @@ def test_fallback_qualification_g1_execution_gate_passes_capability_check(loaded
     inputs = q.load_inputs(profile='fallback', slot='G1')
     inputs['provenance']['implementation'].update(status=q.FROZEN, freeze_commit='f' * 40)
     monkeypatch.setattr(q, 'git', fake_git)
-    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary', slot=None: inputs)
+    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary', slot=None, protocol='v1': inputs)
     calls = []
     def handler(request):
         calls.append(1)
@@ -985,7 +1066,7 @@ def test_primary_qualification_execution_gate_transparently_passes(inputs, monke
     `slots:` section, so it is derived uniformly from the whole (CLOSED/PASS) profile and never
     blocks primary execution."""
     monkeypatch.setattr(q, 'git', fake_git)
-    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary', slot=None: inputs)
+    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary', slot=None, protocol='v1': inputs)
     checked = []
     original = q.slot_capability_gate
     def tracking(profile_name, slot):
@@ -1041,12 +1122,368 @@ def test_real_attempt_01_replay_unaffected_by_fallback_support(loaded):
         '8decf4ba0177c7c5808050f846a61aad624073552c5d2f4a7e5b7db580ebede1'
 
 
-def test_implementation_frozen_after_per_slot_support_reviewed_and_refrozen(loaded):
-    """After researcher review, commit, and a new freeze record, the runner reports FROZEN -- not a
-    false claim, since the live freeze record now genuinely pins this exact reviewed commit/bytes.
+def test_implementation_not_frozen_pending_two_commit_freeze_workflow(loaded):
+    """The historical per-slot-support freeze record still pins CURRENT_FROZEN_COMMIT/its own hashes,
+    unaffected by the Protocol-v2 work added on top; the runner correctly reports NOT_FROZEN against
+    current bytes (not a false FROZEN claim). No v2 freeze record exists pre-Commit-A: it can only be
+    created by a LATER, separate freeze commit naming Commit A's real hash (Sec. 1's two-commit
+    workflow), never a self-referential or invented one.
     """
     implementation = loaded['provenance']['implementation']
-    assert implementation['status'] == q.FROZEN
-    assert implementation['freeze_commit'] == CURRENT_FROZEN_COMMIT
+    assert implementation['status'] == q.NOT_FROZEN and implementation['freeze_commit'] is None
     assert implementation['source_sha256'] == {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}
     assert q.fixtures.read(q.FREEZE_RECORD)['implementation_commit'] == CURRENT_FROZEN_COMMIT
+    assert not q.V2_FREEZE_RECORD.exists()
+
+
+# --- Protocol v2 (docs/generator-qualification.md Sec. 14): comprehensibility/fluency split, the
+# offline v1 -> v2 audit mapping, and the primary-precedence helper. Every test below uses SYNTHETIC,
+# mocked evidence (via collected()/mocked_collect()) -- never the real archived Attempt-01/Attempt-02
+# evidence -- so no Sol, Sonnet, or Terra Protocol-v2 disposition is ever produced. ---
+
+def fill_audit_v2(audit):
+    """Analogous to fill_audit, but for a Protocol-v2 template (comprehensibility/fluency)."""
+    audit['reviewer'], audit['reviewed_at'] = 'test-reviewer', REVIEWED_AT
+    for candidate in audit['candidates'].values():
+        candidate['disposition'] = 'PASS'
+        for f in candidate['fixtures'].values():
+            f['disposition'] = 'PASS'
+            for resolution in f['ambiguities'].values():
+                resolution.update(disposition='PASS', notes='Manually resolved in simulated test')
+            for variant in f['variants'].values():
+                variant['disposition'] = 'PASS'
+                for event in variant['events'].values():
+                    for key in q.CHECKS_V2:
+                        if event[key] is None: event[key] = 'PASS'
+
+
+def test_v2_constants_unchanged_v1_surface(loaded):
+    """(A) Protocol v1 constants/behavior are untouched by adding Protocol v2 support."""
+    assert q.PROCEDURE == q.PROCEDURE_V1 == 'generator-qualification-procedure/1.0.0'
+    assert q.AUDIT_SCHEMA == q.AUDIT_SCHEMA_V1 == 'generator-manual-audit/1.0.0'
+    assert q.PROCEDURE_V2 == 'generator-qualification-procedure/2.0.0'
+    assert q.AUDIT_SCHEMA_V2 == 'generator-manual-audit/2.0.0'
+    assert 'natural_english' in q.CHECKS and 'natural_english' not in q.CHECKS_V2
+    assert {'comprehensibility', 'fluency'} <= set(q.CHECKS_V2)
+    assert set(q.CHECKS) - {'natural_english'} <= set(q.CHECKS_V2)
+    # Every applicability entry other than natural_english/comprehensibility/fluency is unchanged.
+    for check in set(q.CHECKS) - {'natural_english'}:
+        assert q.APPLICABILITY_V2[check] == q.APPLICABILITY[check]
+    assert q.APPLICABILITY_V2['comprehensibility'] == q.APPLICABILITY_V2['fluency'] == q.APPLICABILITY['natural_english']
+
+
+def test_v2_comprehensibility_fail_disqualifies_level1(inputs, tmp_path, monkeypatch):
+    """(B) A Level-1 comprehensibility FAIL disqualifies the fixture/candidate, exactly like v1
+    natural_english did."""
+    result, _, checksum, _ = collected(inputs, tmp_path, monkeypatch)
+    audit = q.audit_template(result, checksum, protocol='v2')
+    audit['reviewer'], audit['reviewed_at'] = 'test-reviewer', REVIEWED_AT
+    event = audit['candidates']['G1']['fixtures']['gq-scheduling-01']['variants']['low']['events']['I1']
+    event['comprehensibility'] = 'FAIL'
+    with pytest.raises(ValueError, match='evidence notes'):
+        q.adjudicate(result, audit, checksum, protocol='v2')
+    event['notes'] = 'Sentence structure obscures which entity changed'
+    outcome = q.adjudicate(result, audit, checksum, protocol='v2')
+    assert outcome['candidates']['G1'] == 'FAIL'
+    assert outcome['basis']['G1']['manual_failures'] == ['gq-scheduling-01/low/I1: comprehensibility FAIL']
+    assert outcome['basis']['G1']['level2_findings'] == []
+
+
+def test_v2_fluency_only_fail_does_not_disqualify(inputs, tmp_path, monkeypatch):
+    """(C) A Level-2 fluency FAIL is recorded but never fails the fixture/candidate; it still
+    requires evidence notes and is retained as a finding."""
+    result, _, checksum, _ = collected(inputs, tmp_path, monkeypatch)
+    audit = q.audit_template(result, checksum, protocol='v2')
+    fill_audit_v2(audit)
+    event = audit['candidates']['G1']['fixtures']['gq-scheduling-01']['variants']['low']['events']['I1']
+    event['fluency'] = 'FAIL'
+    with pytest.raises(ValueError, match='evidence notes'):
+        q.adjudicate(result, audit, checksum, protocol='v2')
+    event['notes'] = 'Awkward phrasing but unambiguous meaning'
+    outcome = q.adjudicate(result, audit, checksum, protocol='v2')
+    assert outcome['candidates']['G1'] == 'QUALIFIED'  # Fluency alone never fails a fixture/candidate.
+    assert outcome['basis']['G1']['manual_failures'] == []
+    assert outcome['basis']['G1']['level2_findings'] == ['gq-scheduling-01/low/I1: fluency FAIL']
+
+
+def test_v2_incomplete_review_cannot_qualify(inputs, tmp_path, monkeypatch):
+    """(F) Fluency remains a required manual cell (non-disqualifying, but still gates completeness)."""
+    result, _, checksum, _ = collected(inputs, tmp_path, monkeypatch)
+    audit = q.audit_template(result, checksum, protocol='v2')
+    fill_audit_v2(audit)
+    audit['candidates']['G1']['fixtures']['gq-scheduling-01']['variants']['low']['events']['I1']['fluency'] = None
+    assert q.adjudicate(result, audit, checksum, protocol='v2')['candidates']['G1'] == 'PENDING_MANUAL_AUDIT'
+
+
+@pytest.mark.parametrize('kind', ['malformed_json', 'schema_invalid'])
+def test_v2_terminal_failure_remains_level1_regardless_of_protocol(inputs, tmp_path, monkeypatch, kind):
+    """(G) Execution/contract terminal failures are protocol-agnostic and remain Level-1 under v2."""
+    def mutate(index, reply):
+        if index: return
+        choice = reply['choices'][0]
+        if kind == 'malformed_json': choice['message']['content'] = '{"low":'
+        if kind == 'schema_invalid': choice['message']['content'] = '{}'
+    result, _, checksum, _ = collected(inputs, tmp_path, monkeypatch, mutate)
+    audit = q.audit_template(result, checksum, protocol='v2')
+    outcome = q.adjudicate(result, audit, checksum, protocol='v2')
+    assert outcome['candidates']['G1'] == 'FAIL'
+    assert outcome['basis']['G1']['terminal_failures'][0].startswith(
+        'gq-scheduling-01: terminal logical-call failure')
+
+
+def test_v2_carried_over_semantic_check_remains_level1(inputs, tmp_path, monkeypatch):
+    """(H) A carried-over semantic/structural check (e.g. entity_fidelity) is still Level-1 under v2:
+    only fluency is Level 2."""
+    result, _, checksum, _ = collected(inputs, tmp_path, monkeypatch)
+    audit = q.audit_template(result, checksum, protocol='v2')
+    audit['reviewer'], audit['reviewed_at'] = 'test-reviewer', REVIEWED_AT
+    event = audit['candidates']['G1']['fixtures']['gq-scheduling-01']['variants']['low']['events']['I1']
+    event['entity_fidelity'] = 'FAIL'
+    event['notes'] = 'Entity renamed'
+    outcome = q.adjudicate(result, audit, checksum, protocol='v2')
+    assert outcome['candidates']['G1'] == 'FAIL'
+    assert outcome['basis']['G1']['manual_failures'] == ['gq-scheduling-01/low/I1: entity_fidelity FAIL']
+    assert outcome['basis']['G1']['level2_findings'] == []
+
+
+def test_v2_mapping_natural_english_pass_maps_mechanically(inputs, tmp_path, monkeypatch):
+    """(D) v1 natural_english = PASS maps mechanically to comprehensibility = PASS, fluency = PASS;
+    every other v1 manual cell (including ambiguity resolutions) carries forward unchanged."""
+    result, v1_audit, checksum, _ = collected(inputs, tmp_path, monkeypatch, first_call(
+        lambda out: json.dumps({**out, 'low': {**out['low'], 'I1': 'Tern rehearsal starts at eight ten.'}})))
+    fill_audit(v1_audit)
+    ambiguities = v1_audit['candidates']['G1']['fixtures']['gq-scheduling-01']['ambiguities']
+    for r in ambiguities.values(): r.update(disposition='PASS', notes='Spelled-out clock time is faithful')
+    v2_template, pending = q.derive_v2_audit_template(result, checksum, v1_audit, inputs['slots'])
+    assert pending == []
+    fixture = v2_template['candidates']['G1']['fixtures']['gq-scheduling-01']
+    event = fixture['variants']['low']['events']['I1']
+    assert event['comprehensibility'] == 'PASS' and event['fluency'] == 'PASS'
+    assert event['entity_fidelity'] == 'PASS'  # Carried forward unchanged.
+    assert fixture['ambiguities'] and all(r == {'disposition': 'PASS', 'notes': 'Spelled-out clock time is faithful'}
+                                          for r in fixture['ambiguities'].values())
+    # Summary dispositions are derived, not carried-forward "cells": always left for fresh v2 review.
+    assert fixture['disposition'] is None and fixture['variants']['low']['disposition'] is None
+    assert v2_template['candidates']['G1']['disposition'] is None
+
+
+def test_v2_mapping_natural_english_fail_stays_pending_not_autoclassified(inputs, tmp_path, monkeypatch):
+    """(E) v1 natural_english = FAIL is never auto-classified: comprehensibility/fluency stay None,
+    the cell is listed in pending_reclassification, and the stale v1 note is never copied into the
+    v2 judgment field itself."""
+    result, v1_audit, checksum, _ = collected(inputs, tmp_path, monkeypatch)
+    fill_audit(v1_audit)
+    fixture = v1_audit['candidates']['G1']['fixtures']['gq-scheduling-01']
+    event = fixture['variants']['low']['events']['I1']
+    event['natural_english'], event['notes'] = 'FAIL', 'Wording garbled but meaning recoverable'
+    fixture['variants']['low']['disposition'] = fixture['disposition'] = 'FAIL'
+    v1_audit['candidates']['G1']['disposition'] = 'FAIL'
+    v2_template, pending = q.derive_v2_audit_template(result, checksum, v1_audit, inputs['slots'])
+    assert pending == [{'fixture_id': 'gq-scheduling-01', 'variant': 'low', 'event': 'I1',
+                        'v1_natural_english_note': 'Wording garbled but meaning recoverable'}]
+    mapped = v2_template['candidates']['G1']['fixtures']['gq-scheduling-01']['variants']['low']['events']['I1']
+    assert mapped['comprehensibility'] is None and mapped['fluency'] is None
+    assert mapped['notes'] == ''
+    assert mapped['entity_fidelity'] == 'PASS'  # Every other cell in the same event still carries forward.
+
+
+def test_v2_mapping_rejects_wrong_source_audit(inputs, tmp_path, monkeypatch):
+    result, v1_audit, checksum, _ = collected(inputs, tmp_path, monkeypatch)
+    v1_audit['schema_version'] = q.AUDIT_SCHEMA_V2
+    with pytest.raises(ValueError, match='not a Protocol-v1 audit'):
+        q.derive_v2_audit_template(result, checksum, v1_audit, inputs['slots'])
+    v1_audit['schema_version'] = q.AUDIT_SCHEMA_V1
+    v1_audit['qualification_sha256'] = 'f' * 64
+    with pytest.raises(ValueError, match='does not match this result'):
+        q.derive_v2_audit_template(result, checksum, v1_audit, inputs['slots'])
+
+
+def test_v2_mapping_and_adjudication_do_not_depend_on_candidate_identity(inputs, tmp_path, monkeypatch):
+    """(J) Neither the mapping tool nor adjudication branches on candidate/model identity."""
+    result, v1_audit, checksum, _ = collected(inputs, tmp_path, monkeypatch)
+    fill_audit(v1_audit)
+    renamed_slots = [dict(s, model='some/renamed-model') for s in inputs['slots']]
+    baseline, baseline_pending = q.derive_v2_audit_template(result, checksum, v1_audit, inputs['slots'])
+    renamed, renamed_pending = q.derive_v2_audit_template(result, checksum, v1_audit, renamed_slots)
+    assert baseline_pending == renamed_pending
+    for slot_id in baseline['candidates']:
+        b, r = baseline['candidates'][slot_id], renamed['candidates'][slot_id]
+        assert b['fixtures'] == r['fixtures']
+    assert renamed['candidates']['G1']['model'] == 'some/renamed-model'
+    assert baseline['candidates']['G1']['model'] != 'some/renamed-model'
+
+
+def test_v2_mapping_cli_writes_template_and_pending_list(inputs, tmp_path, monkeypatch, capsys):
+    result, v1_audit, _, path = collected(inputs, tmp_path, monkeypatch)
+    fill_audit(v1_audit)
+    completed = tmp_path / 'completed-v1-audit.json'
+    completed.write_text(json.dumps(v1_audit))
+    output = tmp_path / 'v2-mapping.json'
+    assert q.main(['--attempt', str(path), '--audit', str(completed),
+                  '--v2-mapping-output', str(output)]) == 0
+    capsys.readouterr()
+    written = q.fixtures.read(output)
+    assert written['pending_reclassification'] == []
+    assert written['v2_audit_template']['schema_version'] == q.AUDIT_SCHEMA_V2
+    with pytest.raises(FileExistsError):
+        q.main(['--attempt', str(path), '--audit', str(completed), '--v2-mapping-output', str(output)])
+
+
+def test_offline_v2_mapping_and_adjudication_work_without_live_v2_freeze(inputs, tmp_path, monkeypatch):
+    """(E)+(F) Offline v1->v2 mapping and v2 adjudication never consult any implementation-freeze
+    record: they operate purely on already-archived evidence and manual-audit content (neither
+    derive_v2_audit_template() nor adjudicate() calls implementation() or reads FREEZE_RECORD/
+    V2_FREEZE_RECORD), so both remain fully usable before Commit A or any freeze commit exist.
+    """
+    assert not q.V2_FREEZE_RECORD.exists()
+    result, v1_audit, checksum, _ = collected(inputs, tmp_path, monkeypatch)
+    fill_audit(v1_audit)
+    v2_template, pending = q.derive_v2_audit_template(result, checksum, v1_audit, inputs['slots'])
+    assert pending == []
+    fill_audit_v2(v2_template)
+    outcome = q.adjudicate(result, v2_template, checksum, inputs['slots'], protocol='v2')
+    assert outcome['candidates'] == {'G1': 'QUALIFIED', 'G2': 'QUALIFIED'}
+    assert not q.V2_FREEZE_RECORD.exists()  # Neither function created, required, or consulted one.
+
+
+def test_v2_cli_flag_validation(tmp_path):
+    a, o, m = (tmp_path / n for n in ('a.json', 'o.json', 'm.json'))
+    with pytest.raises(SystemExit):  # Adjudication and mapping are separate, non-combinable modes.
+        q.main(['--attempt', str(tmp_path), '--audit', str(a),
+               '--adjudication-output', str(o), '--v2-mapping-output', str(m)])
+    with pytest.raises(SystemExit):  # Mapping mode needs its own complete flag triple.
+        q.main(['--attempt', str(tmp_path), '--v2-mapping-output', str(m)])
+
+
+@pytest.mark.parametrize('primary_qualified,fallback_qualified,expected', [
+    (True, True, 'primary'),
+    (True, False, 'primary'),
+    (False, True, 'fallback'),
+    (False, False, None),
+])
+def test_resolve_primary_precedence(primary_qualified, fallback_qualified, expected):
+    """docs/generator-qualification.md Sec. 14, "Primary precedence": a pure offline helper, never
+    itself used inside per-candidate qualification adjudication."""
+    assert q.resolve_primary_precedence(primary_qualified, fallback_qualified) == expected
+
+
+def test_real_attempt_02_v1_replay_reproduces_frozen_terra_fail():
+    """(I) Critical regression: the archived, CLOSED Terra Attempt-02 still reproduces its frozen
+    Protocol-v1 verdict exactly. No Protocol-v2 disposition is produced for it here.
+    """
+    inputs = q.load_inputs(profile='fallback', slot='G1')
+    directory = q.ROOT / 'results/generator-qualification/attempt-02'
+    result, checksum = q.replay(directory, inputs)
+    assert result['status'] == 'PENDING_MANUAL_AUDIT' and len(result['calls']) == 12
+    audit = q.fixtures.read(q.ROOT / 'results/generator-qualification/manual-audit/v1/attempt-02.completed.json')
+    verdict = q.adjudicate(result, audit, checksum, inputs['slots'])
+    assert verdict['candidates'] == {'G1': 'FAIL'}
+
+
+# --- Protocol v2 as a DIRECT, native qualification protocol for a future candidate (docs/
+# generator-qualification.md Sec. 14) -- distinct from the historical v1 -> v2 mapping above.
+# collect() and load_inputs() accept protocol='v2' and never touch the network here: the no_network
+# fixture (autouse) blocks real sockets, and every "execution" below is httpx.MockTransport. ---
+
+def mocked_collect_v2(inputs, tmp_path, monkeypatch, mutate=None):
+    """Native Protocol-v2 mocked collection: identical generation contract to v1 (same fixtures,
+    prompt, request construction); only the recorded procedure/audit-schema metadata differs."""
+    v2_inputs = {**inputs, 'provenance': {**inputs['provenance'], 'procedure_version': q.PROCEDURE_V2}}
+    monkeypatch.setattr(q, 'git', fake_git)
+    monkeypatch.setattr(q, 'load_inputs', lambda profile='primary', slot=None, protocol='v1': v2_inputs)
+    calls = []
+    def handler(request):
+        body = json.loads(request.content)
+        index = len(calls)
+        calls.append(body)
+        reply = envelope(body, mock_output(v2_inputs['fixtures'][index % 12]))
+        if mutate:
+            mutate(index, reply)
+        return httpx.Response(200, json=reply)
+    def factory(**kwargs):
+        return httpx.AsyncClient(transport=httpx.MockTransport(handler), **kwargs)
+    path = tmp_path / 'attempt'
+    async def no_wait(seconds): pass
+    result = asyncio.run(q.collect(v2_inputs, 'test-secret', path, client_factory=factory,
+                                   sleep=no_wait, protocol='v2'))
+    return result, calls, path, v2_inputs
+
+
+def test_v2_preview_constructed_offline_no_network(tmp_path, capsys):
+    """(A) A native Protocol-v2 preview is available with no network access and no execution."""
+    output = tmp_path / 'v2-preview-must-not-be-created'
+    assert q.main(['--protocol-version', 'v2', '--output-directory', str(output)]) == 0
+    shown = json.loads(capsys.readouterr().out)
+    assert shown['status'] == 'NETWORK_DISABLED' and shown['credits'] == 'CREDITS_NOT_SPENT'
+    assert shown['procedure_version'] == q.PROCEDURE_V2
+    assert not output.exists()
+    # v1 preview (default, unaffected) still reports the v1 procedure.
+    assert q.main(['--output-directory', str(output)]) == 0
+    assert json.loads(capsys.readouterr().out)['procedure_version'] == q.PROCEDURE_V1
+
+
+def test_v2_mocked_execution_accepted_not_rejected_for_protocol_alone(inputs, tmp_path, monkeypatch):
+    """(B) A mocked v2 execution path completes; it is not refused solely because protocol='v2'."""
+    result, calls, path, _ = mocked_collect_v2(inputs, tmp_path, monkeypatch)
+    assert result['status'] == 'PENDING_MANUAL_AUDIT' and len(result['calls']) == 24 and len(calls) == 24
+
+
+def test_v2_mocked_execution_archives_v2_procedure(inputs, tmp_path, monkeypatch):
+    """(C) A native v2 collection archives procedure_version generator-qualification-procedure/2.0.0."""
+    result, _, path, _ = mocked_collect_v2(inputs, tmp_path, monkeypatch)
+    assert result['procedure_version'] == q.PROCEDURE_V2 == 'generator-qualification-procedure/2.0.0'
+    archived = q.fixtures.read(path / 'qualification.json')
+    assert archived['procedure_version'] == q.PROCEDURE_V2
+    assert archived['provenance']['procedure_version'] == q.PROCEDURE_V2
+
+
+def test_v2_mocked_execution_produces_v2_blank_audit(inputs, tmp_path, monkeypatch):
+    """(D)+(E) The archived blank audit uses generator-manual-audit/2.0.0, exposes comprehensibility
+    and fluency, and never uses natural_english as an operative v2 check."""
+    result, _, path, _ = mocked_collect_v2(inputs, tmp_path, monkeypatch)
+    audit = q.fixtures.read(path / 'manual-audit.json')
+    assert audit['schema_version'] == q.AUDIT_SCHEMA_V2 == 'generator-manual-audit/2.0.0'
+    assert 'natural_english' not in audit['check_applicability']
+    assert {'comprehensibility', 'fluency'} <= set(audit['check_applicability'])
+    event = audit['candidates']['G1']['fixtures']['gq-scheduling-01']['variants']['low']['events']['I1']
+    assert 'comprehensibility' in event and 'fluency' in event and 'natural_english' not in event
+    # This IS the template a human completes directly -- adjudicating it natively needs no mapping step.
+    outcome = q.adjudicate(result, audit, q.probe.file_hash(path / 'qualification.json'),
+                           inputs['slots'], protocol='v2')
+    assert set(outcome['candidates'].values()) == {'PENDING_MANUAL_AUDIT'}
+
+
+def test_v2_mocked_execution_shares_v1_generation_contract(inputs, tmp_path, monkeypatch):
+    """(F) The request bodies sent under native v2 execution are byte-identical to what v1 execution
+    would send: v2 changes qualification/audit interpretation, never the naturalization task."""
+    _, calls_v2, _, v2_inputs = mocked_collect_v2(inputs, tmp_path, monkeypatch)
+    v1_bodies = [q.request(inputs, s, f) for s, f, _ in q.plan(inputs)]
+    assert calls_v2 == v1_bodies
+
+
+def test_v2_direct_execution_no_longer_refused_for_protocol_alone(monkeypatch, tmp_path):
+    """(B) The CLI no longer refuses --protocol-version v2 --execute outright: it fails downstream
+    (missing API key here) exactly like v1 would, not on the protocol flag itself."""
+    monkeypatch.delenv('OPENROUTER_API_KEY', raising=False)
+    output = tmp_path / 'v2-execute-absent'
+    with pytest.raises(ValueError, match='API_KEY'):
+        q.main(['--execute', '--confirm-spend', '--protocol-version', 'v2', '--output-directory', str(output)])
+    assert not output.exists()
+
+
+def test_v1_direct_execution_behavior_unchanged(inputs, tmp_path, monkeypatch):
+    """(G) Default (v1) mocked execution is byte-for-byte unaffected by adding v2 support."""
+    result, calls, path = mocked_collect(inputs, tmp_path, monkeypatch)
+    assert result['procedure_version'] == q.PROCEDURE_V1
+    audit = q.fixtures.read(path / 'manual-audit.json')
+    assert audit['schema_version'] == q.AUDIT_SCHEMA_V1 and 'natural_english' in audit['check_applicability']
+
+
+def test_v2_historical_mapping_stays_separate_from_native_v2_audit_creation(inputs, tmp_path, monkeypatch):
+    """(H) A natively-v2-collected archive is rejected as a mapping SOURCE: derive_v2_audit_template()
+    is for historical Protocol-v1 evidence only, never for a candidate qualified natively under v2."""
+    result, _, path, v2_inputs = mocked_collect_v2(inputs, tmp_path, monkeypatch)
+    checksum = q.probe.file_hash(path / 'qualification.json')
+    v2_audit = q.fixtures.read(path / 'manual-audit.json')
+    with pytest.raises(ValueError, match='not a Protocol-v1 collection'):
+        q.derive_v2_audit_template(result, checksum, v2_audit, v2_inputs['slots'])

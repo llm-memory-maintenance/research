@@ -5,11 +5,13 @@
 > contract used by Protocol v1 (`generator-qualification-procedure/1.0.0`). Its
 > behavior of treating any applicable `natural_english` failure as an absolute
 > fixture (and therefore candidate) failure belongs to Protocol v1 only.
-> Protocol v2 methodology is defined in
-> [generator-qualification.md §14](generator-qualification.md); a Protocol-v2
-> audit implementation/schema (`generator-manual-audit/2.0.0`) does **not yet
-> exist**. This document remains authoritative only for reproducing historical
-> Protocol-v1 audits. The fixture-set construction content (§1–§4) is unaffected.
+> Protocol v2 methodology is defined in, and its
+> `generator-manual-audit/2.0.0` audit schema is now implemented (reviewed;
+> implementation freeze still pending a commit) per,
+> [generator-qualification.md §14](generator-qualification.md); no Protocol-v2
+> re-adjudication has been performed. This document remains authoritative only
+> for reproducing historical Protocol-v1 audits. The fixture-set construction
+> content (§1–§4) is unaffected.
 
 ## 1. Status and Boundaries
 

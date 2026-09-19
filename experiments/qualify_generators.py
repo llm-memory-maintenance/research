@@ -37,6 +37,13 @@ AUDIT_SCHEMA = 'generator-manual-audit/1.0.0'
 SOURCES = ('experiments/qualify_generators.py', 'experiments/probe_generators.py',
            'experiments/validate_generator_qualification_fixtures.py')
 FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze.json'
+# Separate, immutable historical-vs-v2 live-execution freeze records (docs/generator-qualification.md
+# Sec. 14): the schema pins source-code identity only (commit + SOURCES hashes), not a qualification-
+# protocol version, so both reuse it unchanged. FREEZE_RECORD (v1) must never be repinned to
+# Protocol-v2-capable bytes; V2_FREEZE_RECORD is created only by a LATER freeze commit that names an
+# already-existing implementation commit (two-commit workflow: implementation commit first, then a
+# separate freeze commit) -- never a self-referential or invented commit hash.
+V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2.json'
 FREEZE_SCHEMA = 'generator-qualification-implementation-freeze/1.0.0'
 NOT_FROZEN = 'NOT YET FROZEN FOR LIVE EXECUTION'
 FROZEN = 'FROZEN FOR LIVE EXECUTION'
@@ -59,6 +66,23 @@ APPLICABILITY = {
     'answer_leakage': ('Q',),
 }
 CHECKS = tuple(APPLICABILITY)
+PROCEDURE_V1 = PROCEDURE
+AUDIT_SCHEMA_V1 = AUDIT_SCHEMA
+PROCEDURE_V2 = 'generator-qualification-procedure/2.0.0'
+AUDIT_SCHEMA_V2 = 'generator-manual-audit/2.0.0'
+# Protocol v2 (docs/generator-qualification.md Sec. 14, "Two-Level Quality Model", FROZEN): the single
+# v1 natural_english cell splits into comprehensibility (Level 1, hard gate; same applicability as
+# v1 natural_english -- every event) and fluency (Level 2, descriptive only; never disqualifying).
+# Every other v1 check is unchanged and stays Level 1. No score, ranking, or threshold is implemented.
+APPLICABILITY_V2 = {**{c: e for c, e in APPLICABILITY.items() if c != 'natural_english'},
+                     'comprehensibility': EVENTS, 'fluency': EVENTS}
+CHECKS_V2 = tuple(APPLICABILITY_V2)
+PROTOCOLS = {
+    'v1': {'procedure': PROCEDURE_V1, 'audit_schema': AUDIT_SCHEMA_V1,
+           'applicability': APPLICABILITY, 'checks': CHECKS, 'level2': frozenset()},
+    'v2': {'procedure': PROCEDURE_V2, 'audit_schema': AUDIT_SCHEMA_V2,
+           'applicability': APPLICABILITY_V2, 'checks': CHECKS_V2, 'level2': frozenset({'fluency'})},
+}
 TERMINAL_AUTOMATED = {'status': 'FAIL', 'findings': [], 'reason': 'Execution/parse/schema failed'}
 SUMS_LINE = re.compile(r'([0-9a-f]{64})  (\S.*)')
 # RFC 3339 with an explicit offset, e.g. 2026-09-18T21:30:00+07:00.
@@ -73,18 +97,25 @@ def git(*args):
     return subprocess.check_output(['git', '-C', str(ROOT), *args])
 
 
-def implementation():
-    """Technical source identity; live execution is permitted only under a valid, CURRENT freeze record.
+def implementation(protocol='v1'):
+    """Technical source identity; live execution is permitted only under a valid, CURRENT freeze
+    record FOR THE GIVEN PROTOCOL. protocol='v1' reads the historical FREEZE_RECORD; protocol='v2'
+    reads the separate V2_FREEZE_RECORD -- exactly the same reproducibility principles apply to
+    either (a real, reachable, authentic commit whose git-archived bytes match the pinned hashes
+    exactly), and neither record is ever substituted for the other. Defaults to 'v1', so every
+    existing call site is unaffected.
 
     A well-formed freeze record whose pinned hashes no longer match current bytes means development has
     continued past the last freeze -- an expected, normal state (NOT_FROZEN), not a fatal error. Only a
     malformed record, or one whose claimed hashes don't match its own cited commit's real git history
     (an authenticity problem), raises.
     """
+    require(protocol in ('v1', 'v2'), f'Unknown protocol: {protocol}')
+    record_path = FREEZE_RECORD if protocol == 'v1' else V2_FREEZE_RECORD  # Live lookup: respects monkeypatching.
     sources = {path: probe.file_hash(ROOT / path) for path in SOURCES}
-    if not FREEZE_RECORD.exists():
+    if not record_path.exists():
         return {'status': NOT_FROZEN, 'freeze_commit': None, 'source_sha256': sources}
-    record = fixtures.read(FREEZE_RECORD)
+    record = fixtures.read(record_path)
     probe.fields(record, ['schema_version', 'implementation_commit', 'source_sha256'])
     commit = record['implementation_commit']
     require(record['schema_version'] == FREEZE_SCHEMA and type(commit) is str
@@ -120,12 +151,17 @@ def verify_archived_implementation(record):
                 "Archived implementation hash does not match its own frozen commit")
 
 
-def load_inputs(profile='primary', slot=None):
+def load_inputs(profile='primary', slot=None, protocol='v1'):
     """Pin current bytes to the reviewed committed fixture set and execution contract.
 
     profile selects the PRIMARY (CLOSED) or predeclared FALLBACK (Terra/Opus) candidate pair. The
     frozen fixture set, naturalization contract, prompt, and output schema are shared and unchanged
     by profile; only candidate identity and the execution-package file/hash under test differ.
+
+    protocol selects which qualification-procedure identity (docs/generator-qualification.md Sec. 14)
+    a FUTURE collection under these inputs would be recorded under; it never changes the generation
+    task itself (fixtures, prompt, input/output contract, execution package are all shared and
+    unchanged by protocol). Defaults to 'v1', so every existing call site is unaffected.
 
     slot, if given (e.g. 'G1'), restricts the returned plan to that one logical call from the
     profile; the config itself is still validated against the FULL predeclared pair (it always
@@ -163,7 +199,7 @@ def load_inputs(profile='primary', slot=None):
                 'fixture_set_commit': FIXTURE_COMMIT, 'fixture_manifest_sha256': MANIFEST_HASH,
                 'execution_config_sha256': package_hash, 'contract_sha256': CONTRACT_HASH,
                 'prompt_sha256': PROMPT_HASH, 'output_schema_sha256': SCHEMA_HASH,
-                **probe.VERSIONS, 'procedure_version': PROCEDURE, 'implementation': implementation(),
+                **probe.VERSIONS, 'procedure_version': PROTOCOLS[protocol]['procedure'], 'implementation': implementation(protocol),
                 'python': platform.python_version(),
                 'packages': {n: importlib.metadata.version(n) for n in ('httpx', 'pydantic', 'pyyaml')}}}
 
@@ -280,8 +316,8 @@ def semantic_check(truth, output):
             'findings': findings}
 
 
-def applicable(check, event):
-    return event in APPLICABILITY[check]
+def applicable(check, event, applicability=APPLICABILITY):
+    return event in applicability[check]
 
 
 def terminal(call):
@@ -293,13 +329,17 @@ def terminal(call):
     return None
 
 
-def audit_template(result, result_hash, slots=None):
+def audit_template(result, result_hash, slots=None, protocol='v1'):
     """No invented review: null means unreviewed; NA only by the fixed applicability table.
 
     Terminally failed calls have no parsed output to review, so they carry no event records.
     slots defaults to the primary pair; a fallback attempt passes its own candidate identity.
+    protocol selects the manual-audit schema/check set (docs/generator-qualification.md Sec. 14);
+    it defaults to 'v1', so every existing call site keeps producing byte-identical v1 output.
     """
     slots = slots if slots is not None else probe.SLOTS
+    spec = PROTOCOLS[protocol]
+    checks, applicability = spec['checks'], spec['applicability']
     candidates = {}
     for slot in slots:
         records = {}
@@ -313,11 +353,11 @@ def audit_template(result, result_hash, slots=None):
                 'ambiguities': {f['id']: {'disposition': None, 'notes': ''}
                     for f in call['automated']['findings'] if f['status'] == 'MANUAL_REVIEW_REQUIRED'},
                 'variants': {v: {'disposition': None, 'notes': '', 'events': {
-                    e: {**{c: None if applicable(c, e) else 'NA' for c in CHECKS}, 'notes': ''}
+                    e: {**{c: None if applicable(c, e, applicability) else 'NA' for c in checks}, 'notes': ''}
                     for e in EVENTS}} for v in fixtures.VARIANTS} if reviewable else {}}
         candidates[slot['logical_call_id']] = {'model': slot['model'], 'disposition': None, 'fixtures': records}
-    return {'schema_version': AUDIT_SCHEMA, 'qualification_sha256': result_hash,
-            'check_applicability': {c: list(e) for c, e in APPLICABILITY.items()},
+    return {'schema_version': spec['audit_schema'], 'qualification_sha256': result_hash,
+            'check_applicability': {c: list(e) for c, e in applicability.items()},
             'reviewer': '', 'reviewed_at': '', 'notes': '', 'candidates': candidates}
 
 
@@ -332,10 +372,17 @@ def valid_timestamp(text):
     return True
 
 
-def adjudicate(result, audit, result_hash, slots=None):
-    """Terminal failure resolves FAIL at once; otherwise every applicable manual item must PASS."""
+def adjudicate(result, audit, result_hash, slots=None, protocol='v1'):
+    """Terminal failure resolves FAIL at once; otherwise every applicable Level-1 manual item must
+    PASS. Under protocol 'v2' the fluency check is Level 2 (docs/generator-qualification.md Sec. 14):
+    a Level-2 FAIL is recorded in basis[slot]['level2_findings'] and still requires evidence notes and
+    counts toward pending completeness, but never sets a variant/fixture/candidate FAIL by itself.
+    protocol defaults to 'v1', so every existing call site keeps producing byte-identical v1 output.
+    """
     slots = slots if slots is not None else probe.SLOTS
-    expected = audit_template(result, result_hash, slots)
+    spec = PROTOCOLS[protocol]
+    checks, applicability, level2 = spec['checks'], spec['applicability'], spec['level2']
+    expected = audit_template(result, result_hash, slots, protocol)
     probe.fields(audit, expected)
     for field in ('schema_version', 'qualification_sha256', 'check_applicability'):
         require(audit[field] == expected[field], 'Audit provenance mismatch')
@@ -346,7 +393,7 @@ def adjudicate(result, audit, result_hash, slots=None):
     # reviewer names the human reviewer chosen by the researcher; the template never fills it.
     identified = bool(audit['reviewer'].strip() and audit['reviewed_at'])
     if result['status'] == 'INVALIDATED':  # Not model-capability evidence: no candidate becomes FAIL.
-        return {'procedure_version': PROCEDURE, 'qualification_sha256': result_hash,
+        return {'procedure_version': spec['procedure'], 'qualification_sha256': result_hash,
                 'manual_audit_sha256': probe.digest(probe.canonical(audit).encode()),
                 'candidates': {s['logical_call_id']: 'INVALIDATED' for s in slots},
                 'basis': {'invalidation': result['invalidation']}}
@@ -366,7 +413,7 @@ def adjudicate(result, audit, result_hash, slots=None):
         calls = [c for c in result['calls'] if c['candidate'] == slot]
         require(len(calls) == 12, 'Incomplete candidate evidence')
         probe.fields(reviewed['fixtures'], template['fixtures'])
-        terminals, failures, pending = [], [], 0
+        terminals, failures, level2_findings, pending = [], [], [], 0
         for call in calls:
             fid = call['fixture_id']
             record, blank = reviewed['fixtures'][fid], template['fixtures'][fid]
@@ -391,18 +438,22 @@ def adjudicate(result, audit, result_hash, slots=None):
                 probe.fields(vr, ['disposition', 'notes', 'events'])
                 variant_failed = False
                 probe.fields(vr['events'], EVENTS)
-                for event, checks in vr['events'].items():
-                    probe.fields(checks, [*CHECKS, 'notes'])
-                    require(type(checks['notes']) is str, 'Event notes')
-                    for check in CHECKS:
-                        if not applicable(check, event):
-                            require(checks[check] == 'NA', 'Invalid applicability')
+                for event, event_checks in vr['events'].items():
+                    probe.fields(event_checks, [*checks, 'notes'])
+                    require(type(event_checks['notes']) is str, 'Event notes')
+                    for check in checks:
+                        if not applicable(check, event, applicability):
+                            require(event_checks[check] == 'NA', 'Invalid applicability')
                             continue
-                        value = manual(checks[check], checks['notes'], 'check')
+                        value = manual(event_checks[check], event_checks['notes'], 'check')
                         pending += value is None
                         if value == 'FAIL':
-                            failures.append(f'{fid}/{variant}/{event}: {check} FAIL')
-                            variant_failed = True
+                            entry = f'{fid}/{variant}/{event}: {check} FAIL'
+                            if check in level2:
+                                level2_findings.append(entry)
+                            else:
+                                failures.append(entry)
+                                variant_failed = True
                 value = manual(vr['disposition'], vr['notes'], 'variant')
                 require(not (value == 'PASS' and variant_failed), 'Variant PASS contradicts recorded FAIL')
                 pending += value is None
@@ -423,9 +474,83 @@ def adjudicate(result, audit, result_hash, slots=None):
         pending += value is None
         verdicts[slot] = 'FAIL' if failed else 'PENDING_MANUAL_AUDIT' if pending else 'QUALIFIED'
         basis[slot] = {'terminal_failures': terminals, 'manual_failures': failures, 'pending_manual_items': pending}
-    return {'procedure_version': PROCEDURE, 'qualification_sha256': result_hash,
+        if level2:  # Only present for a protocol that defines a Level-2 check (v2: fluency); v1 basis
+            basis[slot]['level2_findings'] = level2_findings  # shape stays byte-identical to before.
+    return {'procedure_version': spec['procedure'], 'qualification_sha256': result_hash,
             'manual_audit_sha256': probe.digest(probe.canonical(audit).encode()),
             'candidates': verdicts, 'basis': basis}
+
+
+def derive_v2_audit_template(result, result_hash, v1_audit, slots=None):
+    """Offline v1 -> v2 audit mapping for HISTORICAL Protocol-v1 evidence only (docs/generator-
+    qualification.md Sec. 14, "Historical v1 -> v2 mapping"; FROZEN) -- i.e. `result` was collected
+    under PROCEDURE_V1. It is not the construction path for a newly qualified Protocol-v2 candidate:
+    a candidate qualified for the first time AFTER Protocol v2 is active is executed natively under
+    v2 (audit_template(..., protocol='v2') from the start, via collect(..., protocol='v2')), and never
+    passes through this mapping function at all. Starts from a blank Protocol-v2 template derived from
+    the SAME archived result the v1_audit was itself completed against, then carries every v1 manual
+    judgment other than natural_english forward unchanged, including ambiguity resolutions.
+
+    natural_english = PASS maps mechanically to comprehensibility = PASS, fluency = PASS.
+    natural_english = FAIL is never auto-classified: comprehensibility and fluency are left None
+    (pending an explicit reviewer decision), and the (fixture, variant, event) plus the historical v1
+    note are returned separately in pending_reclassification -- never copied into the v2 event's own
+    notes field, so a stale v1 note can never be mistaken for an already-made v2 judgment.
+
+    Variant/fixture/candidate-level disposition and notes are always left blank (None/''): they are
+    derived summaries, not the per-check manual "cells" the frozen rule carries forward, and adjudicate()
+    re-derives/validates them once a human completes the applicable v2 cells. This is a conservative
+    reading of the frozen rule, not an invented methodological decision: it changes no outcome, only how
+    much of the review a human must re-confirm.
+
+    No candidate identity is inspected anywhere in this function.
+    """
+    slots = slots if slots is not None else probe.SLOTS
+    require(result['procedure_version'] == PROCEDURE_V1, 'Source evidence is not a Protocol-v1 collection')
+    require(v1_audit['schema_version'] == AUDIT_SCHEMA_V1, 'Source audit is not a Protocol-v1 audit')
+    require(v1_audit['qualification_sha256'] == result_hash, 'Source v1 audit does not match this result')
+    v2_template = audit_template(result, result_hash, slots, protocol='v2')
+    pending_reclassification = []
+    for slot_id, v2_candidate in v2_template['candidates'].items():
+        v1_candidate = v1_audit['candidates'][slot_id]
+        for fixture_id, v2_fixture in v2_candidate['fixtures'].items():
+            v1_fixture = v1_candidate['fixtures'][fixture_id]
+            for finding_id, v2_resolution in v2_fixture['ambiguities'].items():
+                v1_resolution = v1_fixture['ambiguities'][finding_id]
+                v2_resolution['disposition'] = v1_resolution['disposition']
+                v2_resolution['notes'] = v1_resolution['notes']
+            for variant, v2_variant in v2_fixture['variants'].items():
+                v1_variant = v1_fixture['variants'][variant]
+                for event, v2_checks in v2_variant['events'].items():
+                    v1_checks = v1_variant['events'][event]
+                    for check in CHECKS:
+                        if check == 'natural_english' or v2_checks.get(check) == 'NA':
+                            continue
+                        v2_checks[check] = v1_checks[check]
+                    v1_value = v1_checks['natural_english']
+                    if v1_value == 'PASS':
+                        v2_checks['comprehensibility'] = 'PASS'
+                        v2_checks['fluency'] = 'PASS'
+                    elif v1_value == 'FAIL':
+                        pending_reclassification.append({'fixture_id': fixture_id, 'variant': variant,
+                            'event': event, 'v1_natural_english_note': v1_checks['notes']})
+                    # v1_value is None (v1 review incomplete): the v2 cells stay unreviewed, as blank.
+    return v2_template, pending_reclassification
+
+
+def resolve_primary_precedence(primary_qualified, fallback_qualified):
+    """docs/generator-qualification.md Sec. 14, "Primary precedence" (FROZEN) -- a pure, offline G1
+    slot-resolution rule applied only AFTER both candidates' Protocol-v2 QUALIFIED/not-QUALIFIED
+    dispositions are already known. Never used inside per-candidate qualification adjudication itself,
+    and never decided from fluency counts, subjective quality, or any other outcome.
+
+    Returns 'primary' (Sol occupies G1), 'fallback' (Terra occupies G1), or None (unresolved).
+    """
+    if primary_qualified:
+        return 'primary'
+    if fallback_qualified:
+        return 'fallback'
+    return None
 
 
 def publish(path, value, secret=''):
@@ -465,21 +590,29 @@ def invalidation(call, slot):
     return None
 
 
-async def collect(inputs, key, output, *, client_factory=httpx.AsyncClient, sleep=asyncio.sleep):
+async def collect(inputs, key, output, *, client_factory=httpx.AsyncClient, sleep=asyncio.sleep, protocol='v1'):
+    """protocol selects the qualification procedure this NEW collection is recorded under (native
+    Protocol-v1 or Protocol-v2 execution of a candidate not previously qualified under any protocol);
+    it must match the protocol `inputs` was itself loaded under. It never changes the generation task:
+    the same frozen fixtures, prompt, input/output contract and execution package are used either way
+    (docs/generator-qualification.md Sec. 14). Defaults to 'v1', so every existing call site producing
+    historical evidence is unaffected.
+    """
     require(bool(key.strip()), 'Execution requires OPENROUTER_API_KEY')
     require(not git('status', '--porcelain=v1', '-z', '--untracked-files=all', '--ignore-submodules=none'),
             'Official execution requires a clean worktree')
     git('ls-files', '--error-unmatch', *SOURCES)
     for slot in inputs['slots']:
         slot_capability_gate(inputs['profile'], slot)
-    fresh = load_inputs(profile=inputs['profile'], slot=inputs.get('selected_slot'))  # Recheck frozen bytes immediately before any side effect.
+    # Recheck frozen bytes immediately before any side effect, under the same protocol as `inputs`.
+    fresh = load_inputs(profile=inputs['profile'], slot=inputs.get('selected_slot'), protocol=protocol)
     require(fresh['provenance'] == inputs['provenance'], 'Source/input changed since preflight')
     require(fresh['provenance']['implementation']['status'] == FROZEN,
             f'Qualification implementation {NOT_FROZEN}; live execution refused')
     inputs = fresh
     directory = Path(output)
     directory.mkdir(parents=True, exist_ok=False)
-    result = {'procedure_version': PROCEDURE, 'status': 'PENDING_MANUAL_AUDIT',
+    result = {'procedure_version': PROTOCOLS[protocol]['procedure'], 'status': 'PENDING_MANUAL_AUDIT',
               'provenance': inputs['provenance'],
               'planned_logical_calls': len(inputs['slots']) * len(inputs['fixtures']),
               'candidates': {s['logical_call_id']: 'CANDIDATE' for s in inputs['slots']},
@@ -518,7 +651,7 @@ async def collect(inputs, key, output, *, client_factory=httpx.AsyncClient, slee
                       invalidation={'kind': RUNNER, 'logical_call_index': None, 'reason': reason})
     hashes['qualification.json'] = publish(directory / 'qualification.json', result, key)
     hashes['manual-audit.json'] = publish(directory / 'manual-audit.json',
-        audit_template(result, hashes['qualification.json'], inputs['slots']), key)
+        audit_template(result, hashes['qualification.json'], inputs['slots'], protocol), key)
     with (directory / 'SHA256SUMS').open('x', encoding='utf-8') as stream:
         for name, checksum in sorted(hashes.items()):
             stream.write(f'{checksum}  {name}\n')
@@ -554,8 +687,10 @@ def replay(directory, inputs):
     result = fixtures.read(directory / 'qualification.json')
     probe.fields(result, ['procedure_version', 'status', 'provenance', 'planned_logical_calls',
                           'candidates', 'failure_reason', 'invalidation', 'calls'])
-    require(result['procedure_version'] == PROCEDURE and result['status'] in ('PENDING_MANUAL_AUDIT', 'INVALIDATED'),
-            'Unknown attempt procedure/status')
+    # Either a native Protocol-v1 or Protocol-v2 collection (Sec. 14); the provenance-drift check
+    # below ties this to whichever protocol the caller's `inputs` was itself loaded under.
+    require(result['procedure_version'] in (PROCEDURE_V1, PROCEDURE_V2)
+            and result['status'] in ('PENDING_MANUAL_AUDIT', 'INVALIDATED'), 'Unknown attempt procedure/status')
     implied = [invalidation(c, s) for c, (s, _, _) in zip(result['calls'], plan(inputs))]
     if result['status'] == 'INVALIDATED':
         invalid = result['invalidation']
@@ -635,14 +770,31 @@ def main(argv=None):
                              'omit for the full profile (historical 24-call behavior, unchanged default)')
     parser.add_argument('--output-directory', type=Path, default=None)
     parser.add_argument('--attempt', type=Path, help='Offline replay/adjudication of archived attempt')
-    parser.add_argument('--audit', type=Path, help='Completed copy of generated manual-audit.json')
+    parser.add_argument('--audit', type=Path, help='Completed copy of generated manual-audit.json '
+                        '(a v1 audit for --v2-mapping-output; v1 or v2 per --protocol-version otherwise)')
     parser.add_argument('--adjudication-output', type=Path, help='New immutable offline adjudication JSON')
+    parser.add_argument('--protocol-version', choices=['v1', 'v2'], default='v1',
+                        help='For --execute/preview: which qualification procedure a NEW collection is '
+                             'recorded under (native execution; same generation task either way). For '
+                             '--audit/--adjudication-output: the manual-audit schema/adjudication rules '
+                             'for --audit. Default v1, so historical invocations are unaffected.')
+    parser.add_argument('--v2-mapping-output', type=Path,
+                        help='Derive an offline Protocol-v2 audit template from a COMPLETED v1 --audit '
+                             '(docs/generator-qualification.md Sec. 14); writes here instead of adjudicating')
     args = parser.parse_args(argv)
     if args.execute != args.confirm_spend:
         parser.error('Execution requires BOTH --execute AND --confirm-spend')
-    if (args.attempt or args.audit or args.adjudication_output) and (args.execute or not all(
-            (args.attempt, args.audit, args.adjudication_output))):
-        parser.error('Offline adjudication requires --attempt, --audit, --adjudication-output and no execution flags')
+    if any((args.attempt, args.audit, args.adjudication_output, args.v2_mapping_output)):
+        if args.adjudication_output and args.v2_mapping_output:
+            parser.error('--adjudication-output and --v2-mapping-output are separate offline modes; use only one')
+        if args.execute:
+            parser.error('Offline operations require no execution flags')
+        if args.adjudication_output and not (args.attempt and args.audit):
+            parser.error('Offline adjudication requires --attempt, --audit, --adjudication-output')
+        if args.v2_mapping_output and not (args.attempt and args.audit):
+            parser.error('Offline v1->v2 mapping requires --attempt, --audit, --v2-mapping-output')
+        if not args.adjudication_output and not args.v2_mapping_output:
+            parser.error('--attempt/--audit alone requires either --adjudication-output or --v2-mapping-output')
     output_directory = args.output_directory
     if output_directory is None:
         if args.slot is not None:
@@ -654,18 +806,41 @@ def main(argv=None):
             output_directory = 'OPEN: official single-slot result-path identity not yet decided'
         else:
             output_directory = DEFAULT_OUTPUT if args.profile == 'primary' else FALLBACK_DEFAULT_OUTPUT
-    inputs = load_inputs(profile=args.profile, slot=args.slot)
-    if args.attempt:
+    if args.attempt and args.v2_mapping_output:
+        # Historical mapping source evidence is always a Protocol-v1 collection (Sec. 14): inputs are
+        # loaded under v1 regardless of --protocol-version, which this mode does not consult at all.
+        inputs = load_inputs(profile=args.profile, slot=args.slot)
+        attempt = args.attempt.resolve()
+        for path in (args.audit, args.v2_mapping_output):
+            require(not path.resolve().is_relative_to(attempt),
+                    'Completed v1 audit and v2 mapping output must be separate copies outside the archived attempt')
+        result, checksum = replay(attempt, inputs)
+        v2_template, pending = derive_v2_audit_template(result, checksum, fixtures.read(args.audit), inputs['slots'])
+        output = {'v2_audit_template': v2_template, 'pending_reclassification': pending}
+        publish(args.v2_mapping_output, output)
+        print(json.dumps(output, indent=2))
+        return 0
+    if args.attempt and args.adjudication_output:
+        # --protocol-version here selects the manual-audit schema/adjudication rules for --audit, not
+        # the archived evidence's own collection identity: a mapped v2 audit is still adjudicated
+        # against a Protocol-v1-collected archive (Sec. 14, "Historical v1 -> v2 mapping"), so inputs
+        # are loaded under v1 exactly as replay() expects for every archive collected so far.
+        inputs = load_inputs(profile=args.profile, slot=args.slot)
         attempt = args.attempt.resolve()
         for path in (args.audit, args.adjudication_output):
             require(not path.resolve().is_relative_to(attempt),
                     'Completed audit and adjudication must be separate copies outside the archived attempt')
         result, checksum = replay(attempt, inputs)
-        verdict = adjudicate(result, fixtures.read(args.audit), checksum, inputs['slots'])
+        verdict = adjudicate(result, fixtures.read(args.audit), checksum, inputs['slots'], protocol=args.protocol_version)
         verdict['manual_audit_file_sha256'] = probe.file_hash(args.audit)
         publish(args.adjudication_output, verdict)
         print(json.dumps(verdict, indent=2))
         return 0
+    # Preview and (live or mocked) collection: --protocol-version selects which qualification
+    # procedure a NEW collection would be recorded under -- native Protocol-v1 or Protocol-v2
+    # execution of a candidate not previously qualified under any protocol (Sec. 14). It never
+    # changes the generation task itself (same frozen fixtures/prompt/contract/execution package).
+    inputs = load_inputs(profile=args.profile, slot=args.slot, protocol=args.protocol_version)
     if not args.execute:
         print(json.dumps(preview(inputs, output_directory), indent=2))
         return 0
@@ -673,7 +848,7 @@ def main(argv=None):
     require(bool(key.strip()), 'Execution requires OPENROUTER_API_KEY')
     require(inputs['provenance']['implementation']['status'] == FROZEN,
             f'Qualification implementation {NOT_FROZEN}; live execution refused')
-    result = asyncio.run(collect(inputs, key, output_directory))
+    result = asyncio.run(collect(inputs, key, output_directory, protocol=args.protocol_version))
     print(result['status'] + ': qualification requires completed manual adjudication')
     return 1 if result['status'] == 'INVALIDATED' else 0
 
