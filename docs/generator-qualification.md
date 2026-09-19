@@ -650,9 +650,8 @@ supports the capability preview (`--profile second_level_g2`: one G2 call) and,
 should capability close PASS, native qualification (`--profile second_level_g2
 --slot G2 --protocol-version v2`: the same 12 frozen fixtures as 12 G2 calls, no
 G1 call), so a capability PASS needs no further source change. The implementation
-freeze revision r3 covered the profile support (§14) and is superseded by r4, which
-is pending. Live qualification additionally requires an explicit
-`--output-directory`. The closed results (Sol, Terra, Sonnet, Opus and all
+freeze for the profile support and the capability closure is revision r4 (§14).
+Live qualification additionally requires an explicit `--output-directory`. The closed results (Sol, Terra, Sonnet, Opus and all
 Protocol-v1 and Protocol-v2 attempt artifacts) and the G1 resolution are not
 affected.
 
@@ -792,7 +791,7 @@ Terra, and Opus all remained not Generator-Qualified under Protocol v1; the
 later Protocol-v2 offline re-adjudication (§14) is recorded separately and
 does not alter this v1 closure.
 
-## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r4 Pending; Offline Re-adjudication Closed)
+## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r4; Offline Re-adjudication Closed)
 
 **Status.** The Protocol-v2 methodology is frozen. The offline re-adjudication of
 the archived evidence is closed (Sol and Terra qualified, Sonnet failed, G1 is
@@ -825,11 +824,14 @@ commit; it froze that implementation, and live execution was not performed under
 Recording the second-level candidate's capability closure then changed the package
 hash pinned in `experiments/qualify_generators.py`, so revision 3 is in turn
 historical provenance. The active freeze record is revision 4,
-`configs/generator-qualification-implementation-freeze-v2-r4.json`, to be created
-against the implementation commit that carries that change. Until it exists,
-`implementation('v2')` reports NOT_FROZEN and live `--protocol-version v2
---execute` refuses before any network request. The revision suffix names the
-implementation freeze only; the procedure and audit versions remain
+`configs/generator-qualification-implementation-freeze-v2-r4.json`, which names the
+implementation commit that carries that change (`51c6c0ec62e5d716ed838120d2505bc8566c338b`,
+"results: close Fable capability probe") and pins the current sources.
+`implementation('v2')` reads only r4 and reports FROZEN, so live `--protocol-version
+v2 --execute` passes this gate, subject to every other execution guard (clean
+worktree, per-slot capability evidence, API key and, for single-slot profiles, an
+explicit output directory). No live execution has been performed under it. The
+revision suffix names the implementation freeze only; the procedure and audit versions remain
 `generator-qualification-procedure/2.0.0` and `generator-manual-audit/2.0.0`.
 
 **Implementation freeze records.** All records use the same protocol-agnostic schema
@@ -858,7 +860,11 @@ already existed when the record was created:
   `experiments/probe_generators.py` SHA-256
   `b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`).
 - `configs/generator-qualification-implementation-freeze-v2-r4.json` (revision 4):
-  the active record; not yet created.
+  the active record. It pins the implementation commit `51c6c0ec62e5d716ed838120d2505bc8566c338b`
+  (`experiments/qualify_generators.py` SHA-256
+  `5652abb3df12b8f23ec05d58456568a5db986069862c5d93bcb869ae953abfba`;
+  `experiments/probe_generators.py` SHA-256
+  `b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`).
 
 `validate_generator_qualification_fixtures.py` is unchanged across all v2 revisions
 and `probe_generators.py` across revisions 1 and 2. `implementation('v1')` reads only the v1

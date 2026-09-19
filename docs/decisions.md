@@ -815,11 +815,11 @@ reverified unaffected. Opus remains capability CLOSED/FAIL (provider-policy
 refusal). No new G2 candidate has been selected. Neither Terra nor Opus is
 Generator-Qualified.
 
-## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r4 Pending, Offline Re-adjudication Closed
+## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r4, Offline Re-adjudication Closed
 
 The methodology is frozen and the offline re-adjudication is closed (see the
-final entries of this section). The active implementation freeze is revision r4,
-which is pending; revisions r1 to r3 are historical provenance. Full specification:
+final entries of this section). The active implementation freeze is revision r4;
+revisions r1 to r3 are historical provenance. Full specification:
 `generator-qualification.md` §14.
 Versions: `generator-qualification-procedure/2.0.0`,
 `generator-manual-audit/2.0.0`; Protocol v1 (`.../1.0.0`) and all its
@@ -830,7 +830,7 @@ revision 1 (`...-freeze-v2.json`, Commit A); v2 revision 2 (`...-freeze-v2-r2.js
 Commit C `30d65102e618aa5713f0710964978f1eb46c4a15`); and v2 revision 3
 (`...-freeze-v2-r3.json`, commit `45f06ae8508485ff2f4d5a886fef89f01bf1b807`). Each
 was superseded when a later change altered the pinned sources; the active target is
-revision 4 (`...-freeze-v2-r4.json`), not yet created (see the final entries below).
+revision 4 (`...-freeze-v2-r4.json`, commit `51c6c0ec62e5d716ed838120d2505bc8566c338b`), the active record (see the final entries below).
 The methodology stays 2.0.0.
 
 **Two-commit freeze workflow, revision 1 (historical).** Commit A
@@ -1127,3 +1127,24 @@ which does not exist yet; r1 to r3 are unchanged historical records. Live
 Protocol-v2 qualification for this candidate is blocked only by the implementation
 freeze until r4 is created against the implementation commit. The qualification preview is unchanged: 12 G2 calls
 on the 12 frozen fixtures under native Protocol v2.
+
+### Protocol-v2 implementation freeze revision r4 (2026-09-19)
+
+Revision 4, `configs/generator-qualification-implementation-freeze-v2-r4.json`,
+freezes the implementation that follows the second-level G2 capability closure. It
+uses the existing freeze schema, names implementation commit `51c6c0ec62e5d716ed838120d2505bc8566c338b`,
+and pins `experiments/qualify_generators.py`
+(`5652abb3df12b8f23ec05d58456568a5db986069862c5d93bcb869ae953abfba`),
+`experiments/probe_generators.py`
+(`b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`) and
+`experiments/validate_generator_qualification_fixtures.py`
+(`2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e`). The v1, r1, r2
+and r3 records are unmodified and none can substitute for r4: with r4 hidden,
+`implementation('v2')` reports NOT_FROZEN even though the earlier records exist.
+
+With r4 present, `implementation('v2')` reports FROZEN, and the capability gate admits
+the recorded candidate (`anthropic/claude-fable-5.1`, capability CLOSED/PASS from
+Attempt-04, generator status CANDIDATE), so neither gate blocks native Protocol-v2
+qualification of that candidate. The qualification preview is unchanged: 12 G2 calls
+on the 12 frozen fixtures, no G1 call. Generator Qualification has not run, and G2
+remains unresolved.
