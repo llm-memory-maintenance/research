@@ -1,0 +1,2315 @@
+{
+  "schema_version": "b0-suffix-audit/1.0.0",
+  "attempt": "attempt-01",
+  "procedure_version": "b0-suffix-collection/1.0.0",
+  "collection_sha256": "39d8c7ac1297a2fd432d956657b32f318dfc62846dc28c3722c31a562203735b",
+  "reviewer": "",
+  "reviewed_at": "",
+  "notes": "",
+  "items": {
+    "G1/b0cal-scheduling-01/low/U7": {
+      "text": "The Cedar workshop kickoff time is now 11:40.",
+      "text_sha256": "e5b5be029af9271e52f0b83a4a73c25576d7a9a1c743848da865cf014fb6fee8",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-scheduling-01/low/N2": {
+      "text": "The Cedar workshop hall code is HAL-C52.",
+      "text_sha256": "1c6562e8baf753da6f72a305dd7b647695505b781e84e06f5ca08f0e2c91d4b3",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-scheduling-01/medium/U7": {
+      "text": "The scheduled kickoff time for the Cedar workshop has changed to 11:40.",
+      "text_sha256": "1a087fe08ea448aa9f53795f03b5f35ab80e4fea3c4163542d698cf1a3c34f1b",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-scheduling-01/medium/N2": {
+      "text": "The hall code for the Cedar workshop is still HAL-C52.",
+      "text_sha256": "c1f8933b65161534f5b868f8bb225698d1799c0d2864b57b62ca3b55d2049fd5",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-scheduling-01/high/U7": {
+      "text": "The Cedar workshop's scheduled kickoff time has been updated to 11:40.",
+      "text_sha256": "503640823caca93eb9f4f7180817ccda28a97030dd89bd56e7b1b12070dc2345",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-scheduling-01/high/N2": {
+      "text": "The Cedar workshop hall code remains HAL-C52.",
+      "text_sha256": "25043823171a8110259affcc72d22d7a3938e63459ef7e0b70c5836d3fcbc62a",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-travel-01/low/U7": {
+      "text": "Coach tour Larkspur's planned overnight stopover is now Ivelstone.",
+      "text_sha256": "42948c40534e99f0310266741980d498f97a42c3a04d31592110ed1dce9a5e5f",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-travel-01/low/N2": {
+      "text": "Coach tour Larkspur's ticket code is TKT-L58.",
+      "text_sha256": "7d96738bb71fd55d852be225cd3d8f3eaef7e07b77a8d9cc8f6c4060c9fd573f",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-travel-01/medium/U7": {
+      "text": "The planned overnight stopover for Coach tour Larkspur has changed to Ivelstone.",
+      "text_sha256": "62e9eb6551c09821d0865b7cbdf0dde96561933c7ff8ea01a0520db2e19e1860",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-travel-01/medium/N2": {
+      "text": "The ticket code for Coach tour Larkspur is still TKT-L58.",
+      "text_sha256": "1e5f052577f51eeff92cbc85e4d323da64a09a51462eba9309c2e58415dcd291",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-travel-01/high/U7": {
+      "text": "Coach tour Larkspur's planned overnight stopover has been updated to Ivelstone.",
+      "text_sha256": "ab2957449c9f9a50edf589054afe6f7e3d33fdd4f609e39f77088c4a931a99eb",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-travel-01/high/N2": {
+      "text": "The ticket code for Coach tour Larkspur remains TKT-L58.",
+      "text_sha256": "625cd54b9fc3e05b84a1daa9382d923677c01a70101f2b9beea3b0d2f86bd5ea",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-project-planning-01/low/U7": {
+      "text": "Initiative Quillon is now in the wrap-up phase.",
+      "text_sha256": "757f43d83aaa0c1a20df2b68e640f99abb12725748f42332ad97010c98153b0a",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-project-planning-01/low/N2": {
+      "text": "Initiative Quillon's ledger code is LDG-Q31.",
+      "text_sha256": "8a576300a8f9b355d879a74ac1fea35410f1a0a9d206468203183cbf397c86d3",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-project-planning-01/medium/U7": {
+      "text": "The current project phase for Initiative Quillon has changed to the wrap-up phase.",
+      "text_sha256": "61f6fb02a7b9925fff4a930796eacf024d3135fdfc8a0aa6eed96ce1471fd2ed",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-project-planning-01/medium/N2": {
+      "text": "The ledger code for Initiative Quillon is still LDG-Q31.",
+      "text_sha256": "7058971759adead5be6769851a5b25d3cc0009f1083587b7cacb514d66fa0aee",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-project-planning-01/high/U7": {
+      "text": "Initiative Quillon's current project phase has been updated to the wrap-up phase.",
+      "text_sha256": "16c8f7339495618178457f9d1e8581c7b876be8b27fe4cb309bc879c014d669b",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-project-planning-01/high/N2": {
+      "text": "Initiative Quillon's ledger code remains LDG-Q31.",
+      "text_sha256": "617a2ae76b6d86d0764189f0def7d7bd535df27da4fa05d5f9e4ea9df4f4fe2c",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-task-assignment-01/low/U7": {
+      "text": "Ticket Marrow's assigned ticket owner is now Cyrus Delaine.",
+      "text_sha256": "1a0ad4139d51c83b875034d131b1991990ee2abd480d685e87d231ebf79aa982",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-task-assignment-01/low/N2": {
+      "text": "Ticket Marrow's ticket reference code is TIC-M83.",
+      "text_sha256": "5f5b525dbd6f863ae02de6e8e787accf26712b5d3ef860fc64658a2c02aa3e6d",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-task-assignment-01/medium/U7": {
+      "text": "The assigned ticket owner for Ticket Marrow has changed to Cyrus Delaine.",
+      "text_sha256": "85aee56851abe1cd0adb769bba82894e27c8e677c450f13060cba2dc4292c32d",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-task-assignment-01/medium/N2": {
+      "text": "Ticket Marrow still has the ticket reference code TIC-M83.",
+      "text_sha256": "6a4690cf0e4b80f77b23b8fb9179e6f48695c010808d96d013373b15d1306c49",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-task-assignment-01/high/U7": {
+      "text": "The assigned ticket owner for Ticket Marrow has been updated to Cyrus Delaine.",
+      "text_sha256": "4cd06aee8190f31803e8274b210aeab47e8c0e5ea9308738246b7c7725e2599f",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-task-assignment-01/high/N2": {
+      "text": "The ticket reference code for Ticket Marrow remains TIC-M83.",
+      "text_sha256": "41dd2d5921e651eeb6720fb1eb4b44493480fc9da1843652c666a4b5a1189034",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-software-configuration-01/low/U7": {
+      "text": "Deploy target Sable's cache policy is now pinned-hard.",
+      "text_sha256": "f634ca2be168f5ad79e738da7e7bb0b90cb2b67755a594e8050f233c2a492ef8",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-software-configuration-01/low/N2": {
+      "text": "Deploy target Sable's deploy code is DEP-S72.",
+      "text_sha256": "da96b66f0b6232dbec8f2f567b3e52032d52a02b4b4a49ddaeb63fb0cc84604e",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-software-configuration-01/medium/U7": {
+      "text": "The cache policy for Deploy target Sable has changed to pinned-hard.",
+      "text_sha256": "a81c255ce160a4fb5702c6ee0382eb44b1da364ad36d9d1a101977a73d57c36c",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-software-configuration-01/medium/N2": {
+      "text": "The deploy code for Deploy target Sable is still DEP-S72.",
+      "text_sha256": "6dcebc79a4d9123c681f58b2755072ae15e070e40f12a962b4ab6097d8959cda",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-software-configuration-01/high/U7": {
+      "text": "Deploy target Sable's cache policy has been updated to pinned-hard.",
+      "text_sha256": "b019f8be02c419cc81d213e9397b8792fc80ad4b517871ab168e90bdfe209ac2",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-software-configuration-01/high/N2": {
+      "text": "Deploy target Sable's deploy code remains DEP-S72.",
+      "text_sha256": "26e4958eb0646c3b30b76ec7fa7f35217ed9d30e7707afc4eb2b8e1b452d1868",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-personal-preference-01/low/U7": {
+      "text": "Guest Perrin Tallis's preferred tea blend is now cardamom root.",
+      "text_sha256": "2fcb357e01b251168de448eb665ce7680ac1a6a6dba5a62adcf56797e770c35b",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-personal-preference-01/low/N2": {
+      "text": "Guest Perrin Tallis's guest preference record identifier is GST-P16.",
+      "text_sha256": "e6635a96e195f83b698c66767570855535bfc31f9d20db3733a89683b0ce5b40",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-personal-preference-01/medium/U7": {
+      "text": "The preferred tea blend for Guest Perrin Tallis has changed to cardamom root.",
+      "text_sha256": "e304ceda5878006bbd6b62b545312b9d3e1469d1b24faaa7f41159684c3d04e6",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-personal-preference-01/medium/N2": {
+      "text": "For Guest Perrin Tallis, the guest preference record identifier is still GST-P16.",
+      "text_sha256": "a8bcb04ed78b8f35a7ef4f2d20176aed0606f3177b32b0792300492a9d810ab7",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-personal-preference-01/high/U7": {
+      "text": "Guest Perrin Tallis's preferred tea blend has been updated to cardamom root.",
+      "text_sha256": "1db930169648afaed3dff9cf3362f2b70e9786e6080f88b9f338236afdef3213",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-personal-preference-01/high/N2": {
+      "text": "Guest Perrin Tallis's guest preference record identifier remains GST-P16.",
+      "text_sha256": "f673ae28c829248b79bd3d66e6c7491f67c8d62b3ac1ba6564c1bb5524d3be2d",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-purchase-order-01/low/U7": {
+      "text": "Purchase Alcove's ordered number of ceramic tiles is now 107 tiles.",
+      "text_sha256": "0c526a08209ad35162b1ea02c8290a339d23bceaf7aa3dd41a822b1ec593f056",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-purchase-order-01/low/N2": {
+      "text": "Purchase Alcove's purchase identifier is PUR-A47.",
+      "text_sha256": "7c5c0777494a4fcb6912946783299b6848ce2abb2548cf5f706e25975433d89b",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-purchase-order-01/medium/U7": {
+      "text": "For Purchase Alcove, the ordered number of ceramic tiles has changed to 107 tiles.",
+      "text_sha256": "084581383974c58cf7575421e1632303c48115dc40b108c139f6b31d61af2ccd",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-purchase-order-01/medium/N2": {
+      "text": "For Purchase Alcove, the purchase identifier is still PUR-A47.",
+      "text_sha256": "30322072731f7d38cb7618553a7a2afa29eec0e8145e55c76457a3785f3109cc",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-purchase-order-01/high/U7": {
+      "text": "The ordered number of ceramic tiles for Purchase Alcove has been updated to 107 tiles.",
+      "text_sha256": "88b1be2688646194af3bfa1b72257fe4073e7773ca778998a36b0d74dff518e3",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-purchase-order-01/high/N2": {
+      "text": "The purchase identifier for Purchase Alcove remains PUR-A47.",
+      "text_sha256": "db3bad06fce97931980721d15237073748e42c779e2438178d7d0d9d89a392ed",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-study-planning-01/low/U7": {
+      "text": "Reading circle Thistle's current focus text is now Winter Inventory.",
+      "text_sha256": "3f04cfd679675ffa0a7c46355b6c4ebf19994ea03c627401dedafc16d73e9203",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-study-planning-01/low/N2": {
+      "text": "Reading circle Thistle's reading circle identifier is RDC-T85.",
+      "text_sha256": "c7e4ed52002f0ea906a11420bd3690c739816551b8a8bb7ae0d7bcc5fd3133ab",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-study-planning-01/medium/U7": {
+      "text": "The current focus text for Reading circle Thistle has changed to Winter Inventory.",
+      "text_sha256": "d0799beb18717e4ad6c4474c86b3406e227249bc973111f1a4213d114f84781a",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-study-planning-01/medium/N2": {
+      "text": "Reading circle Thistle's reading circle identifier is still RDC-T85.",
+      "text_sha256": "809537eee020d1bc3a838b481c61e71098d625b24226828bb2cdaaf7fceb8adf",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-study-planning-01/high/U7": {
+      "text": "Reading circle Thistle's current focus text has been updated to Winter Inventory.",
+      "text_sha256": "0ade860a32a8a2c5881436f01e9a09e2e36d6736e6e0e79cfc734f342e8a137b",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-study-planning-01/high/N2": {
+      "text": "Reading circle Thistle's reading circle identifier remains RDC-T85.",
+      "text_sha256": "fb925686d6c9a3fa8c80b093415319297f3c5013cd9260af81e5500f2cbcf3ed",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-communication-01/low/U7": {
+      "text": "Mailing list Ember's weekly send window is now Monday 16:40.",
+      "text_sha256": "c64c117d825f0a64a55e0af18f81157aea3e5e22f99c15d0c17d82d7a7883ddf",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-communication-01/low/N2": {
+      "text": "Mailing list Ember's mailing list identifier is MLS-E92.",
+      "text_sha256": "ed0047c9679840a026b36cb20d5196d1e878161a3e11e1325c67b53a208bc585",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-communication-01/medium/U7": {
+      "text": "The weekly send window for Mailing list Ember has changed to Monday 16:40.",
+      "text_sha256": "87bf8b77ca2777c1aae060c583b11cb7e511076bd26d8f8f1ef26a42cc18daaa",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-communication-01/medium/N2": {
+      "text": "For Mailing list Ember, the mailing list identifier is still MLS-E92.",
+      "text_sha256": "48ca77c1ceb7ae58d5999cb1f88ffa3137e94f1d55e6a1606adfc2294b6a3a10",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-communication-01/high/U7": {
+      "text": "The weekly send window for Mailing list Ember has been updated to Monday 16:40.",
+      "text_sha256": "01252510e3f5b00231e0f4113f47f1fcf6ae70951a2be13bcc5548416ea5b405",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-communication-01/high/N2": {
+      "text": "Mailing list Ember's mailing list identifier remains MLS-E92.",
+      "text_sha256": "39dd2912e7cf052ad54494d125bdc3ef51758aa4cabc0bf51b83e5f499fb7116",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-service-subscription-01/low/U7": {
+      "text": "Membership Lodestar's membership tier is now Tier Onyx.",
+      "text_sha256": "307adcaf454c7daa36a29ed6aecd8bbe0dd04297e36a1794c00bf1fbf5200406",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-service-subscription-01/low/N2": {
+      "text": "Membership Lodestar's membership code is MEM-L64.",
+      "text_sha256": "946f974c259aefebbfa38bf717575721a22dff17614ec900030c3fade6ef423b",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-service-subscription-01/medium/U7": {
+      "text": "The membership tier for Membership Lodestar has changed to Tier Onyx.",
+      "text_sha256": "f6faf9de3c4d556df0cef2bda87f5ef0a6ea2dd6c80590c507ad637ab4b14154",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-service-subscription-01/medium/N2": {
+      "text": "The membership code for Membership Lodestar is still MEM-L64.",
+      "text_sha256": "33c384bb3e7b4db30af71235a9b13e58c1489c92aeee37c50a394daa9701f9d9",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-service-subscription-01/high/U7": {
+      "text": "Membership Lodestar's membership tier has been updated to Tier Onyx.",
+      "text_sha256": "33169413117db76705532ad372b6489b5cd09ecc2461c3e553d67c40853a31e0",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-service-subscription-01/high/N2": {
+      "text": "The membership code for Membership Lodestar remains MEM-L64.",
+      "text_sha256": "f5bace999cf250d0cb493f583d0689ee02099a921f65454a3914cac2a35d8f4e",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-location-logistics-01/low/U7": {
+      "text": "Freight lot Halyard is now assigned to Dock Hartsgill.",
+      "text_sha256": "5668e05a5b9cc369d5498f7b4dd8e9383cb345bcc62f89a1665a336ddd3200b4",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-location-logistics-01/low/N2": {
+      "text": "Freight lot Halyard's freight lot identifier is FRL-H29.",
+      "text_sha256": "7490a1ea2609ea8a1542330a68652d4e3175f9e5a4cfbeca3008eb2612c38be4",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-location-logistics-01/medium/U7": {
+      "text": "Freight lot Halyard's assigned loading dock has changed to Dock Hartsgill.",
+      "text_sha256": "8910688bd6098a9579af14b7ade0367f10268b6b6d14cf646fad8dbfe9d8c645",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-location-logistics-01/medium/N2": {
+      "text": "The freight lot identifier for Freight lot Halyard is still FRL-H29.",
+      "text_sha256": "1bd6f4091a5fe5aae6bfa2810684d5f5e9ff40eadce3b07527c9c86b976ab4ad",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-location-logistics-01/high/U7": {
+      "text": "The assigned loading dock for Freight lot Halyard has been updated to Dock Hartsgill.",
+      "text_sha256": "6da286c6823aa5cd93b976e5d1d3c702793259a36342151cb53d303d4fbdd47a",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-location-logistics-01/high/N2": {
+      "text": "Freight lot Halyard's freight lot identifier remains FRL-H29.",
+      "text_sha256": "926b4e2ef8cde2b64cbfb8059296c32bb16364564d125d5457e6dd87b26a8d1b",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-quantitative-planning-01/low/U7": {
+      "text": "Batch Pinnacle's planned batch yield is now 530 liters.",
+      "text_sha256": "fbb9dc10c401605b41f9fc09139e4e4989eb75caf683c581abe925c08b805679",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-quantitative-planning-01/low/N2": {
+      "text": "The batch code for Batch Pinnacle is BCH-P73.",
+      "text_sha256": "a602964ab263a16a69a4f1ab2186ef9689ab6f649c000446faa4f83ea9adc21b",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-quantitative-planning-01/medium/U7": {
+      "text": "Batch Pinnacle's planned batch yield has changed to 530 liters.",
+      "text_sha256": "896af6dc9e8696fd3b5e2b9f9f63804b93e398395036b1c912777eb3c269b5c3",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-quantitative-planning-01/medium/N2": {
+      "text": "Batch Pinnacle has the batch code BCH-P73.",
+      "text_sha256": "869c479b9f35b4e1ab81c1a552210387f4e1c84c267c7dfa069b323e0d79afc0",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-quantitative-planning-01/high/U7": {
+      "text": "The planned batch yield for Batch Pinnacle has been updated to 530 liters.",
+      "text_sha256": "c8de814751257b24d2f9bec98ebb8e1a0a65952280864f188e6442d943430607",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G1/b0cal-quantitative-planning-01/high/N2": {
+      "text": "Batch Pinnacle's batch code is BCH-P73.",
+      "text_sha256": "ffe30bb4c77f830164d1c677659d8cc1e7f4a2601f624c5f823e638ec186ba8a",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-scheduling-01/low/U7": {
+      "text": "The Cedar workshop kickoff time has been updated to 11:40.",
+      "text_sha256": "a806101c4dae96bfbb94bc42637cd362fdb7ed8504a04516a45642db99372fcc",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-scheduling-01/low/N2": {
+      "text": "The Cedar workshop hall code remains HAL-C52.",
+      "text_sha256": "25043823171a8110259affcc72d22d7a3938e63459ef7e0b70c5836d3fcbc62a",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-scheduling-01/medium/U7": {
+      "text": "Heads up, the kickoff time for the Cedar workshop has moved; it's now 11:40.",
+      "text_sha256": "cb051226e0c7d25ccf406cd0c33d69ef0a42659a562d6712f076545fcc5b36ba",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-scheduling-01/medium/N2": {
+      "text": "For the record, the Cedar workshop is still in hall HAL-C52.",
+      "text_sha256": "14f2f15f8f0fd9fe0639ca20667e2980ff16d26215e20f6def706f531b385b63",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-scheduling-01/high/U7": {
+      "text": "Update on the Cedar workshop: the kickoff time has changed and is now 11:40.",
+      "text_sha256": "da9ecf9787d1b343084f65c2804e083cc967444314ecd2267e9d48eb29d5c128",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-scheduling-01/high/N2": {
+      "text": "Just to confirm, the Cedar workshop hall code is still HAL-C52.",
+      "text_sha256": "7ea7764bc93cb5e5a24c0151f8a24c97c2e86b9ad649ef4d02cd769587dbb4ac",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-travel-01/low/U7": {
+      "text": "The overnight stop for Coach tour Larkspur has changed; it is now Ivelstone.",
+      "text_sha256": "d4e446590fb1cf0b1c265bd44adcaa8825cf38c8462dfdb5d85722613f6e5568",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-travel-01/low/N2": {
+      "text": "For Coach tour Larkspur, the ticket code remains TKT-L58.",
+      "text_sha256": "ed9960dd3bcc4cede5be6b69e60fbe2e52e5e72bbb66de8e82da347fcf07c074",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-travel-01/medium/U7": {
+      "text": "Update on Coach tour Larkspur: the planned overnight stopover is now Ivelstone.",
+      "text_sha256": "238b3bb254955536192c36f5364bf29b399d3f70589ee4ce92b006bf33c77e45",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-travel-01/medium/N2": {
+      "text": "Confirming that the ticket code for Coach tour Larkspur is still TKT-L58, no change there.",
+      "text_sha256": "f5b4813179918ad08a29913ff491ab0b40e2fd688a77a9dcd7f3606da4b844e3",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-travel-01/high/U7": {
+      "text": "The planned overnight stopover for Coach tour Larkspur has been updated and is now Ivelstone.",
+      "text_sha256": "a66f8b81f67d450aebeb07e467144fe10b3830e641eab49407da7a731e6e4900",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-travel-01/high/N2": {
+      "text": "Just to reaffirm, the tour ticket identifier for Coach tour Larkspur is still TKT-L58.",
+      "text_sha256": "f015e4f13203cdfac5f5286db469b8f86ecb5f88bcbbfb0b58c71bf1dca0baf7",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-project-planning-01/low/U7": {
+      "text": "Quick update: Initiative Quillon's current project phase has been updated to the wrap-up phase.",
+      "text_sha256": "1c24544f52b7f22c2e0d29ad2442c381682a47a8962e114cb251bef3e4c8c830",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-project-planning-01/low/N2": {
+      "text": "The ledger code for Initiative Quillon remains LDG-Q31.",
+      "text_sha256": "a2e5b43f342ae49c06a4da6794fb3876cbec363dfb967f0555e1f645aaacfc36",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-project-planning-01/medium/U7": {
+      "text": "Initiative Quillon has moved phases; its current project phase is now the wrap-up phase.",
+      "text_sha256": "498d8a38a19451c6154ff815ec40f1c15bb28b793246aedd2261e7f3c6c802ff",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-project-planning-01/medium/N2": {
+      "text": "As before, Initiative Quillon's ledger code is LDG-Q31 — that hasn't moved.",
+      "text_sha256": "07e804bb3d77f1bced39e960d9d75456b0b7c1de8b0041d382f8f22a70b65a2b",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-project-planning-01/high/U7": {
+      "text": "Heads up: the current project phase for Initiative Quillon has changed. It is now in the wrap-up phase.",
+      "text_sha256": "412f4ff59881406bc1870b2a974003183415f55f5b387a8647fc381973cf3a9e",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-project-planning-01/high/N2": {
+      "text": "Just confirming for the record: Initiative Quillon's ledger code is still LDG-Q31.",
+      "text_sha256": "c10bbf448c0d03a4f26d834dc8f685aa964dc1432843b4fc27c1c84f5b0d3a9d",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-task-assignment-01/low/U7": {
+      "text": "The owner of Ticket Marrow has changed. It is now assigned to Cyrus Delaine.",
+      "text_sha256": "c1ec2898d3951c2380d092a35546f84d1852009d5e47a8de623d95e6d036f193",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-task-assignment-01/low/N2": {
+      "text": "The ticket reference for Ticket Marrow remains TIC-M83.",
+      "text_sha256": "3cb3928fc5c3434bd930e5664397c1d8c0cc2ec3d5662ba656db1f84ad9bab5d",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-task-assignment-01/medium/U7": {
+      "text": "Quick update on Ticket Marrow: the assigned ticket owner has been changed and is now Cyrus Delaine.",
+      "text_sha256": "2ca175f61c74079f3335a3e3432cf49714f1d48b742011f0db92390002b8ed13",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-task-assignment-01/medium/N2": {
+      "text": "For the record, Ticket Marrow's ticket reference code is still TIC-M83.",
+      "text_sha256": "bc4a94676c697429c47ce48f8115c662547c83a047838e9018cd700be587b452",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-task-assignment-01/high/U7": {
+      "text": "Heads up: the assigned owner of Ticket Marrow has been updated. The ticket owner is now Cyrus Delaine.",
+      "text_sha256": "a2dc4adbf9b756ad5ca5bc281b5d2d62a0cbe316c4291cc34b396276bbaef81f",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-task-assignment-01/high/N2": {
+      "text": "Just to reaffirm, the ticket reference code for Ticket Marrow is still TIC-M83.",
+      "text_sha256": "f57250617b13a38e775c9f23e5a2d0ed70bfa7c236609a356833873932ce51c4",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-software-configuration-01/low/U7": {
+      "text": "The cache policy on Deploy target Sable has changed; it is now pinned-hard.",
+      "text_sha256": "991074298d60c10befe12a254ae761606bdc53233ba94c824e8eabae852d05e6",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-software-configuration-01/low/N2": {
+      "text": "Deploy target Sable's deploy code remains DEP-S72.",
+      "text_sha256": "26e4958eb0646c3b30b76ec7fa7f35217ed9d30e7707afc4eb2b8e1b452d1868",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-software-configuration-01/medium/U7": {
+      "text": "Update on Deploy target Sable: its cache policy has been revised to pinned-hard.",
+      "text_sha256": "c152fe9be701527a526f312fd47577c39d68995d57fe34dfe93e2cefe7553d28",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-software-configuration-01/medium/N2": {
+      "text": "For the record, Deploy target Sable still has the deploy code DEP-S72.",
+      "text_sha256": "37dd2f2ef5136bb42dd09a2296cd46b4cdfa86148d9defe928e957c14fe46dfe",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-software-configuration-01/high/U7": {
+      "text": "Heads up: the cache policy for Deploy target Sable has been updated and is now pinned-hard.",
+      "text_sha256": "e23308e72160a0326b3bd1a2c26454350aa5c43f73f61ef2d00fda77cb0a5c0b",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-software-configuration-01/high/N2": {
+      "text": "Just to confirm, the deploy code for Deploy target Sable is still DEP-S72.",
+      "text_sha256": "63b8d44bb323412a0779044cfb01c2e84409bbe652f763c8db1a924b73c66d31",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-personal-preference-01/low/U7": {
+      "text": "Update: Guest Perrin Tallis's preferred tea blend has been changed to cardamom root.",
+      "text_sha256": "e4a0c46d2c392b818a9c230364e0a7da59baeccb7d1739f3d44da84be68191f2",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-personal-preference-01/low/N2": {
+      "text": "Guest Perrin Tallis's guest preference record identifier remains GST-P16.",
+      "text_sha256": "f673ae28c829248b79bd3d66e6c7491f67c8d62b3ac1ba6564c1bb5524d3be2d",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-personal-preference-01/medium/U7": {
+      "text": "Guest Perrin Tallis's preferred tea blend has been updated and is now cardamom root.",
+      "text_sha256": "ded8fd6efbff2cc744456f43f051cd3726eb2d59b535bf9bd9279196c1373d49",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-personal-preference-01/medium/N2": {
+      "text": "For the record, Guest Perrin Tallis's guest preference record identifier is still GST-P16, unchanged.",
+      "text_sha256": "a70259ab7454892299bf62ece66d39237f92b3417d2a4ea174c305e22a019ebf",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-personal-preference-01/high/U7": {
+      "text": "Guest Perrin Tallis's preferred tea blend has changed; it is now cardamom root.",
+      "text_sha256": "42eaa9c6b4417596ec0f234ef4b30f9f66eda29717ba3c93084d2bec06ef699e",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-personal-preference-01/high/N2": {
+      "text": "Just confirming that Guest Perrin Tallis's guest preference record identifier is still GST-P16.",
+      "text_sha256": "9e99f9b4c87ae51b73720bf41cf546eed58b5a7d9ae1f8d335da3cefe528d3c1",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-purchase-order-01/low/U7": {
+      "text": "The tile quantity for Purchase Alcove has been updated to 107 tiles.",
+      "text_sha256": "7c3c90fe8254aca9fc985c84a33c5f0738b5ec34244fa21990e165a859948ee9",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-purchase-order-01/low/N2": {
+      "text": "Purchase Alcove's purchase identifier remains PUR-A47.",
+      "text_sha256": "355c5e0ed841c8def2f5f29f3ff9cbe2aa492636c45843488dc8011412859668",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-purchase-order-01/medium/U7": {
+      "text": "Heads up, the ordered number of ceramic tiles on Purchase Alcove has changed — it is now 107 tiles.",
+      "text_sha256": "05fbabfed4214b0b02835533d19827ab60f8690fd3ea6b5ed612ee1b080de7ea",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-purchase-order-01/medium/N2": {
+      "text": "Just confirming, the purchase identifier on Purchase Alcove is PUR-A47, same as before.",
+      "text_sha256": "8af69fd7c0ba0b0d1bb05c6e5dca56d3ecbd3f50f85945f2ba545b3a37f3c180",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-purchase-order-01/high/U7": {
+      "text": "Update on Purchase Alcove: the ordered number of ceramic tiles has changed and is now 107 tiles.",
+      "text_sha256": "98ce8a8e46a5eb472ec709038ef3b403293ca63eb25d18e4c357476ffb3ae195",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-purchase-order-01/high/N2": {
+      "text": "The purchase identifier for Purchase Alcove is still PUR-A47.",
+      "text_sha256": "bd96b137ddb4c7482116762b8ce5e8d8171d5f928d1e87b7df9f3593d4d48c7e",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-study-planning-01/low/U7": {
+      "text": "The current focus text for Reading circle Thistle has changed. It is now Winter Inventory.",
+      "text_sha256": "8193129c8b9fd502febc630ee1bed19234d00129d7fd3a93dbb6ae1ac741fee8",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-study-planning-01/low/N2": {
+      "text": "Reading circle Thistle's reading circle identifier remains RDC-T85.",
+      "text_sha256": "fb925686d6c9a3fa8c80b093415319297f3c5013cd9260af81e5500f2cbcf3ed",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-study-planning-01/medium/U7": {
+      "text": "Update on Reading circle Thistle: the current focus text has been changed to Winter Inventory.",
+      "text_sha256": "9210739d22d838bc696f8ca21c4599a9b94bc4b5b000092ab6dfd8a25c381ae5",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-study-planning-01/medium/N2": {
+      "text": "For the record, Reading circle Thistle's reading circle identifier is still RDC-T85.",
+      "text_sha256": "9202b713594e47b449488d9d73d41c9bb4f7475543c659eaffb86a54f37df16f",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-study-planning-01/high/U7": {
+      "text": "Reading circle Thistle's current focus text has been updated: it is now Winter Inventory.",
+      "text_sha256": "3923ae2b19d5ab59a74706236bf1440459780f30ce19b456c99d963d9695b0df",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-study-planning-01/high/N2": {
+      "text": "Just to confirm, the reading circle identifier for Reading circle Thistle is still RDC-T85.",
+      "text_sha256": "5c632f4c5b61b50adbf317d6be6f00ce90938e4e2c097e3bd46b179825bfcadd",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-communication-01/low/U7": {
+      "text": "The weekly send window for Mailing list Ember has been updated to Monday 16:40.",
+      "text_sha256": "01252510e3f5b00231e0f4113f47f1fcf6ae70951a2be13bcc5548416ea5b405",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-communication-01/low/N2": {
+      "text": "Mailing list Ember's list code remains MLS-E92.",
+      "text_sha256": "55167dd94b256ab8c8122f076ef7aef99fe348f9b14e5e1488e86b93321072b5",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-communication-01/medium/U7": {
+      "text": "Quick update: Mailing list Ember's weekly send window is now Monday 16:40.",
+      "text_sha256": "367943f9d4cb975c7a4f9b019eff19fe0699992ffa7cb47a87dfa7acd661ffb2",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-communication-01/medium/N2": {
+      "text": "For the record, the mailing list identifier of Mailing list Ember is still MLS-E92.",
+      "text_sha256": "24c1c623b3cd64fbacd53ebb61043d547b768807c13c620904ac8126e5be9f40",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-communication-01/high/U7": {
+      "text": "Heads up: the weekly send window for Mailing list Ember has changed and is now Monday 16:40.",
+      "text_sha256": "20e77c2041cdbe757bf10da8ff16c4a3d3da1592f93cbdea64808847398b7cb5",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-communication-01/high/N2": {
+      "text": "Just to confirm, the mailing list identifier for Mailing list Ember is still MLS-E92.",
+      "text_sha256": "95ebc7ac2dfff46f2975d06d8b907df82dfd1e923c8030d87b73019584353caf",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-service-subscription-01/low/U7": {
+      "text": "The membership tier for Membership Lodestar has changed — it is now Tier Onyx.",
+      "text_sha256": "61f56bf65f2f62000dc78be8fba16263060c88fec34e9008b7fbea218354c718",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-service-subscription-01/low/N2": {
+      "text": "The membership code for Membership Lodestar remains MEM-L64.",
+      "text_sha256": "f5bace999cf250d0cb493f583d0689ee02099a921f65454a3914cac2a35d8f4e",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-service-subscription-01/medium/U7": {
+      "text": "Update on Membership Lodestar: the selected membership tier is now Tier Onyx.",
+      "text_sha256": "cfc37ec8fb7f150e0c93b0dc95cd66ced516247136afda09f1a117f52b1a731c",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-service-subscription-01/medium/N2": {
+      "text": "For the record, Membership Lodestar's membership code is still MEM-L64.",
+      "text_sha256": "67712c0cea339ef6a7dfada9af169f3bb205cc999d75aeec49019c5feedd1f33",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-service-subscription-01/high/U7": {
+      "text": "Heads up: the selected membership tier for Membership Lodestar has been updated and is now Tier Onyx.",
+      "text_sha256": "306c3ec8e35ac2b0ea1c589dcadc15616822df6b4191a9dc32594f6855704cb4",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-service-subscription-01/high/N2": {
+      "text": "Just to reaffirm, the membership code for Membership Lodestar is still MEM-L64.",
+      "text_sha256": "ab3ef6adaa483520616f2b1b90a429bbbe9909ec70506ebb10d68ff0bc6a3ada",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-location-logistics-01/low/U7": {
+      "text": "The assigned loading dock for Freight lot Halyard has been updated to Dock Hartsgill.",
+      "text_sha256": "6da286c6823aa5cd93b976e5d1d3c702793259a36342151cb53d303d4fbdd47a",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-location-logistics-01/low/N2": {
+      "text": "Freight lot Halyard's lot code remains FRL-H29.",
+      "text_sha256": "dce3ccfe940207c29cc0bc01fef55783edbe8eede4a4bd71cbc4432cfd6d8f27",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-location-logistics-01/medium/U7": {
+      "text": "Heads up: the loading dock assigned to Freight lot Halyard has changed. It is now Dock Hartsgill.",
+      "text_sha256": "c5e9fe8b3e3fab2aa6ab0c807c5b2fbc776398417ff4099e3de0aa5f36223841",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-location-logistics-01/medium/N2": {
+      "text": "For the record, Freight lot Halyard still has the lot code FRL-H29.",
+      "text_sha256": "655d8f2ffc7c9a43465c00e2f56f9756c548f4c6bc06bb929bbb0dc83262b0ae",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-location-logistics-01/high/U7": {
+      "text": "Update: Freight lot Halyard's assigned loading dock has been changed and is now Dock Hartsgill.",
+      "text_sha256": "c83a53c8b778c76fa5c3254b2e689951aaa1c643ea05bad9ddd9866972f5a5a5",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-location-logistics-01/high/N2": {
+      "text": "Just to confirm, the lot code for Freight lot Halyard is still FRL-H29.",
+      "text_sha256": "54fbac26c4300191d941cbe1714020b2b0c9ee03daa1de3490b503454ffe8d07",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-quantitative-planning-01/low/U7": {
+      "text": "The planned batch yield for Batch Pinnacle has changed; it is now 530 liters.",
+      "text_sha256": "80db1710b79f46bb3170393bdc68c4eee8c2e740555e9da89cd09f04893b1f43",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-quantitative-planning-01/low/N2": {
+      "text": "The batch code for Batch Pinnacle remains BCH-P73.",
+      "text_sha256": "9b6c83fc3c0e5b066f0c97f4a63b5b0fcd653ee0c040474da6be1558cd043f7c",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-quantitative-planning-01/medium/U7": {
+      "text": "Quick update on Batch Pinnacle: the planned batch yield has been revised to 530 liters.",
+      "text_sha256": "abab1b18f1e6f0030ce5ac02c8902935c6eb61868d07311a0124c93737f60237",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-quantitative-planning-01/medium/N2": {
+      "text": "For reference, Batch Pinnacle's batch code is still BCH-P73, unchanged.",
+      "text_sha256": "6e4fd18ddf7f01db62de2d72bd580e4011c1b651b7917eac795777b9897d5d4a",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-quantitative-planning-01/high/U7": {
+      "text": "Heads up: the planned batch yield for Batch Pinnacle has been updated and is now 530 liters.",
+      "text_sha256": "ce27ebc709060b605156970060e96bd5514a9e8f7a37f2d1bd74ad87d184fe62",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "changed_state_semantics": null,
+        "no_invented_value_or_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    },
+    "G2/b0cal-quantitative-planning-01/high/N2": {
+      "text": "Just to confirm, the batch code for Batch Pinnacle is still BCH-P73.",
+      "text_sha256": "e467ef532cb019e2836cad6a15d27dfdf69708b17ff12d13edb268e9df69363e",
+      "automated": {
+        "entity_fidelity": "PASS",
+        "current_value_fidelity": "PASS",
+        "no_historical_or_superseded_value": "PASS"
+      },
+      "manual": {
+        "attribute_fidelity": null,
+        "same_state_semantics": null,
+        "no_invented_change": null,
+        "comprehensibility": null
+      },
+      "fluency": null
+    }
+  }
+}

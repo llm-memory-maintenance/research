@@ -1,0 +1,14 @@
+{
+  "schema_version": "b0-suffix-adjudication/1.0.0",
+  "attempt": "attempt-01",
+  "collection_sha256": "39d8c7ac1297a2fd432d956657b32f318dfc62846dc28c3722c31a562203735b",
+  "items_audited": 144,
+  "status": "ELIGIBLE",
+  "level1_failure_count": 0,
+  "level1_failures": [],
+  "fluency_findings": 2,
+  "fluency_use": "descriptive only; not used for eligibility or ranking",
+  "budget_derivation": "ALLOWED",
+  "b0_context_tokens": null,
+  "audit_file_sha256": "bb2084058e15f643b3f7a347e9d50a1dbc106be7903f96456e374bf7125a7377"
+}
