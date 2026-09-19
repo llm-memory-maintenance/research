@@ -1,0 +1,128 @@
+{
+  "procedure_version": "generator-qualification-procedure/2.0.0",
+  "qualification_sha256": "d5349d9aefb0c319b9986fa02b32ee53cf409c654894bf20fb5ea67a1c6fac7f",
+  "manual_audit_sha256": "9cf80f900c3adfdd6c23bb2e813ceff025cc47eb7fd028d8a56efea6742d5137",
+  "candidates": {
+    "G2": "QUALIFIED"
+  },
+  "basis": {
+    "G2": {
+      "terminal_failures": [],
+      "manual_failures": [],
+      "pending_manual_items": 0,
+      "level2_findings": [
+        "gq-scheduling-01/low/U4: fluency FAIL",
+        "gq-scheduling-01/medium/U6: fluency FAIL",
+        "gq-travel-01/low/I5: fluency FAIL",
+        "gq-travel-01/medium/I5: fluency FAIL",
+        "gq-travel-01/high/I5: fluency FAIL",
+        "gq-personal-preference-01/high/U3: fluency FAIL",
+        "gq-purchase-order-01/low/I2: fluency FAIL",
+        "gq-purchase-order-01/low/I3: fluency FAIL",
+        "gq-purchase-order-01/medium/I2: fluency FAIL",
+        "gq-purchase-order-01/medium/I3: fluency FAIL",
+        "gq-purchase-order-01/high/I2: fluency FAIL",
+        "gq-purchase-order-01/high/I3: fluency FAIL"
+      ],
+      "derived_dispositions": {
+        "gq-scheduling-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        },
+        "gq-travel-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        },
+        "gq-project-planning-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        },
+        "gq-task-assignment-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        },
+        "gq-software-configuration-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        },
+        "gq-personal-preference-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        },
+        "gq-purchase-order-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        },
+        "gq-study-planning-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        },
+        "gq-communication-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        },
+        "gq-service-subscription-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        },
+        "gq-location-logistics-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        },
+        "gq-quantitative-planning-01": {
+          "disposition": "PASS",
+          "variants": {
+            "low": "PASS",
+            "medium": "PASS",
+            "high": "PASS"
+          }
+        }
+      }
+    }
+  },
+  "manual_audit_file_sha256": "fc39a509b06986f1ba77fa8b8389328828b21acfd5040396b7f9acb104a4438d"
+}
