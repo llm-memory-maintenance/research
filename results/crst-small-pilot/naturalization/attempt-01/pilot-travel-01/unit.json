@@ -1,0 +1,10 @@
+{
+  "scenario_id": "pilot-travel-01",
+  "generator": "anthropic/claude-fable-5.1",
+  "outcomes": [
+    "EVALUABLE_PASS"
+  ],
+  "decision": "ACCEPT",
+  "accepted_attempt": 1,
+  "logical_attempts": 1
+}

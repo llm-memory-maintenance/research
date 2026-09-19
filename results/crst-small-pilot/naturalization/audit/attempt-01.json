@@ -1,0 +1,96 @@
+{
+  "schema_version": "crst-pilot-naturalization-audit/1.0.0",
+  "collection_sha256": "54880ced8042c8972c9dc5d1033c76e03edb9a72e9ce0e64ae655e31314f5001",
+  "sha256sums_sha256": "66c363826bd684fbe3b1250b2e230d8a03cb08edcbe29884a018f60af54fb749",
+  "files": {
+    "collection.json": "54880ced8042c8972c9dc5d1033c76e03edb9a72e9ce0e64ae655e31314f5001",
+    "pilot-scheduling-01/attempt-01.json": "7257e34c836e4cd52845797e7c82b6a4b132016f32a42565d44dbfe02845565f",
+    "pilot-scheduling-01/unit.json": "dad2a4294cb3d2b6f711c8413abb7bed6b892a3cbee17226112f60957c5c50c6",
+    "pilot-travel-01/attempt-01.json": "475d616253601c8c8625da525503f990ab1b957a7a615a431945541a2ec03514",
+    "pilot-travel-01/unit.json": "8c58378cc0d4e6981540f90281d54ce54b9c9f4c834d112ced7c3a0a2ee4f39c"
+  },
+  "status": "ELIGIBLE",
+  "semantic_status": "PASS",
+  "b0_budget": 71,
+  "units": [
+    {
+      "scenario_id": "pilot-scheduling-01",
+      "generator": "openai/gpt-5.6-sol",
+      "accepted_attempt": 1,
+      "output_sha256": "72139677b3288b941555592465f0f63846e68c4a60de7b855753b38a4ce5d0fa",
+      "semantic_status": "PASS",
+      "finding_ids": [],
+      "b0_coverage": {
+        "low": {
+          "status": "RETAINED",
+          "history_tokens": 55,
+          "budget": 71,
+          "selected_events": [
+            "U7",
+            "N2"
+          ]
+        },
+        "medium": {
+          "status": "RETAINED",
+          "history_tokens": 54,
+          "budget": 71,
+          "selected_events": [
+            "U7",
+            "N2"
+          ]
+        },
+        "high": {
+          "status": "RETAINED",
+          "history_tokens": 54,
+          "budget": 71,
+          "selected_events": [
+            "U7",
+            "N2"
+          ]
+        }
+      }
+    },
+    {
+      "scenario_id": "pilot-travel-01",
+      "generator": "anthropic/claude-fable-5.1",
+      "accepted_attempt": 1,
+      "output_sha256": "452eab813beb03b299293655d9b417a672489b4d6c9773b271912bc24e7317ef",
+      "semantic_status": "PASS",
+      "finding_ids": [],
+      "b0_coverage": {
+        "low": {
+          "status": "RETAINED",
+          "history_tokens": 69,
+          "budget": 71,
+          "selected_events": [
+            "U7",
+            "N2"
+          ]
+        },
+        "medium": {
+          "status": "RETAINED",
+          "history_tokens": 69,
+          "budget": 71,
+          "selected_events": [
+            "U7",
+            "N2"
+          ]
+        },
+        "high": {
+          "status": "RETAINED",
+          "history_tokens": 69,
+          "budget": 71,
+          "selected_events": [
+            "U7",
+            "N2"
+          ]
+        }
+      }
+    }
+  ],
+  "findings": {},
+  "review_sha256": null,
+  "finding_decisions": null,
+  "source_commit": "f2b16e6b1243c592898c0b49462c39418128d8a9",
+  "note": "Deterministic checks are not semantic qualification; fluency-only findings never regenerate."
+}
