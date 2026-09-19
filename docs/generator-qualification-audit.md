@@ -6,9 +6,12 @@
 > behavior of treating any applicable `natural_english` failure as an absolute
 > fixture (and therefore candidate) failure belongs to Protocol v1 only.
 > Protocol v2 methodology is defined in, and its
-> `generator-manual-audit/2.0.0` audit schema/implementation is now FROZEN
-> per, [generator-qualification.md §14](generator-qualification.md); no
-> Protocol-v2 re-adjudication has been performed. This document remains
+> `generator-manual-audit/2.0.0` audit schema/implementation are specified
+> in, [generator-qualification.md §14](generator-qualification.md) (the
+> implementation freeze is pending its revision r2; under v2 the reviewer
+> decides only cell-level checks and ambiguities, while variant, fixture and
+> candidate dispositions are derived by the adjudicator); no official
+> Protocol-v2 re-adjudication result is recorded. This document remains
 > authoritative only
 > for reproducing historical Protocol-v1 audits. The fixture-set construction
 > content (§1–§4) is unaffected.

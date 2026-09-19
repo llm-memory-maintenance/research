@@ -37,13 +37,17 @@ AUDIT_SCHEMA = 'generator-manual-audit/1.0.0'
 SOURCES = ('experiments/qualify_generators.py', 'experiments/probe_generators.py',
            'experiments/validate_generator_qualification_fixtures.py')
 FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze.json'
-# Separate, immutable historical-vs-v2 live-execution freeze records (docs/generator-qualification.md
-# Sec. 14): the schema pins source-code identity only (commit + SOURCES hashes), not a qualification-
-# protocol version, so both reuse it unchanged. FREEZE_RECORD (v1) must never be repinned to
-# Protocol-v2-capable bytes; V2_FREEZE_RECORD is created only by a LATER freeze commit that names an
-# already-existing implementation commit (two-commit workflow: implementation commit first, then a
-# separate freeze commit) -- never a self-referential or invented commit hash.
-V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2.json'
+# Separate, immutable live-execution freeze records (docs/generator-qualification.md Sec. 14): the
+# schema pins source-code identity only (commit + SOURCES hashes), not a qualification-protocol
+# version, so every record reuses it unchanged. FREEZE_RECORD (v1) must never be repinned to
+# Protocol-v2-capable bytes. Protocol v2 has freeze revisions, each created only by a LATER freeze
+# commit naming an already-existing implementation commit (two-commit workflow) -- never a
+# self-referential or invented hash. Revision 1, configs/generator-qualification-implementation-
+# freeze-v2.json, is immutable historical provenance of the first v2 implementation and is no longer
+# consulted here (the deterministic-summary fix changed this file). The active v2 record is revision 2;
+# 'r2' names the implementation-freeze revision only, not a new methodology version (procedure/audit
+# stay 2.0.0). Until that record exists, implementation('v2') reports NOT_FROZEN.
+V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2-r2.json'
 FREEZE_SCHEMA = 'generator-qualification-implementation-freeze/1.0.0'
 NOT_FROZEN = 'NOT YET FROZEN FOR LIVE EXECUTION'
 FROZEN = 'FROZEN FOR LIVE EXECUTION'
@@ -79,9 +83,10 @@ APPLICABILITY_V2 = {**{c: e for c, e in APPLICABILITY.items() if c != 'natural_e
 CHECKS_V2 = tuple(APPLICABILITY_V2)
 PROTOCOLS = {
     'v1': {'procedure': PROCEDURE_V1, 'audit_schema': AUDIT_SCHEMA_V1,
-           'applicability': APPLICABILITY, 'checks': CHECKS, 'level2': frozenset()},
+           'applicability': APPLICABILITY, 'checks': CHECKS, 'level2': frozenset(), 'derived_summaries': False},
     'v2': {'procedure': PROCEDURE_V2, 'audit_schema': AUDIT_SCHEMA_V2,
-           'applicability': APPLICABILITY_V2, 'checks': CHECKS_V2, 'level2': frozenset({'fluency'})},
+           'applicability': APPLICABILITY_V2, 'checks': CHECKS_V2, 'level2': frozenset({'fluency'}),
+           'derived_summaries': True},
 }
 TERMINAL_AUTOMATED = {'status': 'FAIL', 'findings': [], 'reason': 'Execution/parse/schema failed'}
 SUMS_LINE = re.compile(r'([0-9a-f]{64})  (\S.*)')
@@ -378,10 +383,19 @@ def adjudicate(result, audit, result_hash, slots=None, protocol='v1'):
     a Level-2 FAIL is recorded in basis[slot]['level2_findings'] and still requires evidence notes and
     counts toward pending completeness, but never sets a variant/fixture/candidate FAIL by itself.
     protocol defaults to 'v1', so every existing call site keeps producing byte-identical v1 output.
+
+    Historical v1 requires the reviewer to mark variant/fixture/candidate dispositions by hand. Under
+    v2 the human decides only applicable manual CHECKS and ambiguity resolutions: variant, fixture and
+    candidate outcomes are deterministic derived results (variant FAIL iff a Level-1 check FAILs in it;
+    fixture FAIL iff a terminal failure, ambiguity FAIL or failed variant; PASS once every required cell
+    in scope is complete; candidate FAIL iff any Level-1 failure, QUALIFIED iff none and nothing
+    pending), reported in basis[slot]['derived_dispositions']. A manually supplied v2 summary
+    disposition is rejected rather than silently ignored or allowed to override derived evidence.
     """
     slots = slots if slots is not None else probe.SLOTS
     spec = PROTOCOLS[protocol]
     checks, applicability, level2 = spec['checks'], spec['applicability'], spec['level2']
+    derived = spec['derived_summaries']
     expected = audit_template(result, result_hash, slots, protocol)
     probe.fields(audit, expected)
     for field in ('schema_version', 'qualification_sha256', 'check_applicability'):
@@ -414,6 +428,7 @@ def adjudicate(result, audit, result_hash, slots=None, protocol='v1'):
         require(len(calls) == 12, 'Incomplete candidate evidence')
         probe.fields(reviewed['fixtures'], template['fixtures'])
         terminals, failures, level2_findings, pending = [], [], [], 0
+        derived_fixtures = {}
         for call in calls:
             fid = call['fixture_id']
             record, blank = reviewed['fixtures'][fid], template['fixtures'][fid]
@@ -422,6 +437,8 @@ def adjudicate(result, audit, result_hash, slots=None, protocol='v1'):
                 require(record[field] == blank[field], 'Audit evidence mismatch')
             reason = terminal(call)
             fixture_failed = reason is not None
+            fixture_pending = 0
+            derived_variants = {}
             if reason:
                 terminals.append(reason)
             probe.fields(record['ambiguities'], blank['ambiguities'])
@@ -430,13 +447,14 @@ def adjudicate(result, audit, result_hash, slots=None, protocol='v1'):
                 value = manual(resolution['disposition'], resolution['notes'], 'ambiguity')
                 require(value is None or bool(resolution['notes'].strip()), 'Ambiguity resolution requires notes')
                 pending += value is None
+                fixture_pending += value is None
                 if value == 'FAIL':
                     failures.append(f'{fid}: ambiguity {finding} resolved FAIL')
                     fixture_failed = True
             probe.fields(record['variants'], blank['variants'])
             for variant, vr in record['variants'].items():
                 probe.fields(vr, ['disposition', 'notes', 'events'])
-                variant_failed = False
+                variant_failed, variant_pending = False, 0
                 probe.fields(vr['events'], EVENTS)
                 for event, event_checks in vr['events'].items():
                     probe.fields(event_checks, [*checks, 'notes'])
@@ -447,6 +465,7 @@ def adjudicate(result, audit, result_hash, slots=None, protocol='v1'):
                             continue
                         value = manual(event_checks[check], event_checks['notes'], 'check')
                         pending += value is None
+                        variant_pending += value is None
                         if value == 'FAIL':
                             entry = f'{fid}/{variant}/{event}: {check} FAIL'
                             if check in level2:
@@ -454,28 +473,46 @@ def adjudicate(result, audit, result_hash, slots=None, protocol='v1'):
                             else:
                                 failures.append(entry)
                                 variant_failed = True
+                if derived:
+                    require(vr['disposition'] is None and type(vr['notes']) is str,
+                            'Protocol v2 variant disposition is derived; a manual value was supplied')
+                    derived_variants[variant] = 'FAIL' if variant_failed else None if variant_pending else 'PASS'
+                    fixture_failed |= variant_failed
+                    fixture_pending += variant_pending
+                    continue
                 value = manual(vr['disposition'], vr['notes'], 'variant')
                 require(not (value == 'PASS' and variant_failed), 'Variant PASS contradicts recorded FAIL')
                 pending += value is None
                 if value == 'FAIL':
                     failures.append(f'{fid}/{variant}: variant FAIL')
                 fixture_failed |= variant_failed or value == 'FAIL'
+            if derived:
+                require(record['disposition'] is None and type(record['notes']) is str,
+                        'Protocol v2 fixture disposition is derived; a manual value was supplied')
+                derived_fixtures[fid] = {'disposition': 'FAIL' if fixture_failed else None if fixture_pending else 'PASS',
+                                         'variants': derived_variants}
+                continue
             value = manual(record['disposition'], record['notes'], 'fixture')
             require(not (value == 'PASS' and fixture_failed), 'Fixture PASS contradicts recorded FAIL')
             pending += value is None
             if value == 'FAIL':
                 failures.append(f'{fid}: fixture FAIL')
         failed = bool(terminals or failures)
-        value = reviewed['disposition']  # A summary; its evidence is in the records above.
-        require(value in (None, 'PASS', 'FAIL'), 'Invalid candidate value')
-        require(value is None or identified, 'Manual values require reviewer and reviewed_at')
-        require(not (value == 'PASS' and failed), 'Candidate PASS contradicts recorded FAIL')
-        require(not (value == 'FAIL' and not failed), 'Candidate FAIL without recorded failure')
-        pending += value is None
+        value = reviewed['disposition']  # v1: a manual summary; v2: must be unset (derived below).
+        if derived:
+            require(value is None, 'Protocol v2 candidate disposition is derived; a manual value was supplied')
+        else:
+            require(value in (None, 'PASS', 'FAIL'), 'Invalid candidate value')
+            require(value is None or identified, 'Manual values require reviewer and reviewed_at')
+            require(not (value == 'PASS' and failed), 'Candidate PASS contradicts recorded FAIL')
+            require(not (value == 'FAIL' and not failed), 'Candidate FAIL without recorded failure')
+            pending += value is None
         verdicts[slot] = 'FAIL' if failed else 'PENDING_MANUAL_AUDIT' if pending else 'QUALIFIED'
         basis[slot] = {'terminal_failures': terminals, 'manual_failures': failures, 'pending_manual_items': pending}
         if level2:  # Only present for a protocol that defines a Level-2 check (v2: fluency); v1 basis
             basis[slot]['level2_findings'] = level2_findings  # shape stays byte-identical to before.
+        if derived:
+            basis[slot]['derived_dispositions'] = derived_fixtures
     return {'procedure_version': spec['procedure'], 'qualification_sha256': result_hash,
             'manual_audit_sha256': probe.digest(probe.canonical(audit).encode()),
             'candidates': verdicts, 'basis': basis}
@@ -498,10 +535,9 @@ def derive_v2_audit_template(result, result_hash, v1_audit, slots=None):
     notes field, so a stale v1 note can never be mistaken for an already-made v2 judgment.
 
     Variant/fixture/candidate-level disposition and notes are always left blank (None/''): they are
-    derived summaries, not the per-check manual "cells" the frozen rule carries forward, and adjudicate()
-    re-derives/validates them once a human completes the applicable v2 cells. This is a conservative
-    reading of the frozen rule, not an invented methodological decision: it changes no outcome, only how
-    much of the review a human must re-confirm.
+    derived summaries, not the per-check manual "cells" the frozen rule carries forward. Under v2 they
+    are never manual inputs at all: adjudicate(protocol='v2') derives them deterministically from the
+    cell-level evidence and rejects a manually supplied one.
 
     No candidate identity is inspected anywhere in this function.
     """

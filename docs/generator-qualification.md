@@ -741,24 +741,32 @@ Terra, and Opus all remain not Generator-Qualified; Sol's, Sonnet's, and
 Terra's Protocol-v2 dispositions are undetermined until the §14 offline
 re-adjudication is implemented and performed.
 
-## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation FROZEN; Not Applied)
+## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze Revision 2 Pending; Not Applied)
 
-**Status: PROTOCOL v2 METHODOLOGY: FROZEN. PROTOCOL v2 IMPLEMENTATION: FROZEN.
-NATIVE v2 LIVE EXECUTION: ENABLED BY VALID FREEZE. v2 RE-ADJUDICATION: NOT YET
-PERFORMED.** No Protocol-v1 result or artifact is changed by this section.
-The reviewed implementation was committed as Commit A
+**Status: PROTOCOL v2 METHODOLOGY: FROZEN. PROTOCOL v2 IMPLEMENTATION: FIRST
+FREEZE (REVISION 1) SUPERSEDED BY A DETERMINISTIC-SUMMARY CORRECTION; SUCCESSOR
+FREEZE REVISION r2 PENDING. NATIVE v2 LIVE EXECUTION: BLOCKED UNTIL THE r2
+FREEZE EXISTS. v2 RE-ADJUDICATION: NOT YET CLOSED (no official Protocol-v2
+result is recorded here).** No Protocol-v1 result or artifact is changed by
+this section. The first Protocol-v2 implementation was committed as Commit A
 (`6412b368e9c49891510aeb73d1fa208442df3c01`, "feat: implement generator
-qualification protocol v2"), and a checked-in freeze record now names that
-commit, so `experiments/qualify_generators.py`'s `implementation('v2')`
-genuinely reports FROZEN -- not merely a reviewed-but-uncommitted state. Live
-`--protocol-version v2 --execute` therefore now passes this gate (subject to
-every other unrelated execution guard: clean worktree, capability evidence,
-API key, etc.); no live execution has actually been performed under this
-freeze in this repository yet.
+qualification protocol v2") and frozen by revision 1 of the implementation
+freeze (below). An audit then found an implementation defect: the v2
+adjudicator required the reviewer to mark variant, fixture and candidate
+dispositions manually (a Protocol-v1 requirement), although the frozen v2 rule
+and the frozen v1 -> v2 mapping decision treat them as derived. It was
+corrected (see "Human decisions versus derived outcomes (v2)" below), which
+changes `experiments/qualify_generators.py`. The active v2 freeze record for
+the corrected implementation is therefore revision 2,
+`configs/generator-qualification-implementation-freeze-v2-r2.json`, which does
+not exist yet; until it does, `implementation('v2')` reports NOT_FROZEN and
+live `--protocol-version v2 --execute` refuses before any network request. The
+`r2` suffix names the implementation-freeze revision only: the methodology
+versions remain `generator-qualification-procedure/2.0.0` and
+`generator-manual-audit/2.0.0`.
 
-**Two-commit freeze workflow and implementation freeze records.** Two
-separate, immutable records, both using the same protocol-agnostic freeze
-schema (`generator-qualification-implementation-freeze/1.0.0`, which pins
+**Two-commit freeze workflow and implementation freeze records.** Separate,
+immutable records, all using the same protocol-agnostic freeze schema (`generator-qualification-implementation-freeze/1.0.0`, which pins
 source-code identity -- a commit plus SHA-256 of the three qualification-
 runner source files -- and carries no qualification-procedure-version field of
 its own): `configs/generator-qualification-implementation-freeze.json`
@@ -766,35 +774,44 @@ remains the historical Protocol-v1-era record, untouched, still pinning only
 the pre-v2 (per-slot-support) commit
 (`585b5e2844504fec703287f8dd4869668615671d`) and hashes, and MUST NOT be
 repinned to Protocol-v2-capable bytes. `configs/generator-qualification-
-implementation-freeze-v2.json` (Commit B, this freeze) pins the reviewed
+implementation-freeze-v2.json` (revision 1, the first Protocol-v2
+implementation freeze) is immutable historical provenance that pins the first
 Protocol-v2-capable implementation at Commit A
 (`experiments/qualify_generators.py` SHA-256
 `38896235ec7a4b9b1fff59d2ae0d0ec6ef7c22ee567e131ac614ca8134355dc0`;
 `probe_generators.py` and `validate_generator_qualification_fixtures.py`
 unchanged from the historical record) -- Commit A existed first (a separate,
-prior commit), and this freeze record names its real hash, never inventing
-one or referencing itself. Because the schema has no field for a
+prior commit), and that record names its real hash, never inventing one or
+referencing itself. It is never renamed, modified, deleted or repurposed and
+still authentically identifies the earlier implementation, but no longer
+freezes the current one. The corrected implementation follows the same
+two-commit pattern: its implementation commit first, then a separate freeze
+commit creating revision 2,
+`configs/generator-qualification-implementation-freeze-v2-r2.json`, naming
+that commit. Because the schema has no field for a
 qualification-procedure-version association, that association is documented
-here in prose (and in `docs/decisions.md`) and by the `-v2.json` filename
-itself, rather than by inventing a new schema field. Historical Protocol-v1
+here in prose (and in `docs/decisions.md`) and by the `-v2` / `-v2-r2`
+filenames, rather than by inventing a new schema field. Historical Protocol-v1
 replay/adjudication of Attempt-01 and Attempt-02 remains fully supported and
 reproduces their frozen `{'G1': 'FAIL', 'G2': 'FAIL'}` / `{'G1': 'FAIL'}`
-verdicts unchanged, and is wholly unaffected by the v2 freeze record's
-existence -- `implementation('v1')` reads only the historical record,
-`implementation('v2')` reads only this one, and neither ever substitutes for
-the other. Purely offline Protocol-v2 operations that generate no new
+verdicts unchanged, and is wholly unaffected by the v2 freeze records --
+`implementation('v1')` reads only the historical v1 record and
+`implementation('v2')` reads only the active v2 record (currently r2, absent);
+no freeze record ever substitutes for another, and revision 1 is never
+consulted for the corrected implementation. Purely offline Protocol-v2 operations that generate no new
 evidence -- historical v1 -> v2 mapping, v2 audit-template construction, and
 v2 adjudication of an already-completed audit -- consult no freeze record at
-all and behave identically regardless of whether it exists; the freeze gate
-applies specifically to NATIVE LIVE qualification execution. Protocol v2 now
+all and behave identically regardless of whether any exists; the freeze gate
+applies specifically to NATIVE LIVE qualification execution. Protocol v2
 supports both (1) offline re-adjudication of already-archived Protocol-v1
 evidence via the historical mapping below, and (2) native direct
 qualification of a future candidate that has never been qualified under any
 protocol (`--protocol-version v2 --execute`), which shares the identical
 generation contract and is recorded under
 `generator-qualification-procedure/2.0.0` / `generator-manual-audit/2.0.0`
-from the start. No candidate has been re-adjudicated, and no live v2
-qualification has been executed, under this freeze.
+from the start. No live v2 qualification has been executed, and no official
+Protocol-v2 candidate result is recorded here: final outcomes are recorded
+only after the r2-frozen adjudicator reproduces them.
 
 **Versions.** Protocol v2: `generator-qualification-procedure/2.0.0`,
 `generator-manual-audit/2.0.0`. Protocol v1 remains
@@ -873,6 +890,25 @@ unresolved Level-1 ambiguity remains. Level-2 fluency findings are counted and
 reported descriptively only; they do not disqualify, and candidates are never
 ranked, scored, or placed on a leaderboard by them. Generator Qualification
 remains PASS/FAIL.
+
+**Human decisions versus derived outcomes (v2).** Under Protocol v2 the human
+reviewer decides only the applicable manual CHECKS (cells) and the automated
+ambiguity resolutions. Terminal Level-1 failures are read directly from the
+archived evidence. Variant, fixture and candidate dispositions are
+deterministic derived outcomes, never manual reviewer inputs: a variant FAILs
+iff an applicable Level-1 check FAILs in it and is otherwise PASS once every
+required cell in it is complete; a fixture FAILs iff it has a terminal failure,
+an ambiguity resolved FAIL, or a failed variant, and is otherwise PASS once its
+required review is complete; a candidate FAILs iff any fixture or terminal
+Level-1 failure exists and is QUALIFIED iff all 12 fixtures contain zero
+Level-1 failures and all required review is complete. A deterministic Level-1
+terminal failure suffices to FAIL a candidate even when unrelated manual cells
+were never reviewed. Level-2 fluency findings never cause any of these to
+FAIL. The v2 audit template keeps the summary fields for shape compatibility
+but they must remain unset: the adjudicator rejects a manually supplied v2
+summary disposition rather than using or ignoring it, and reports the derived
+outcomes in its `derived_dispositions` basis. Historical Protocol v1 is
+unchanged and still records these dispositions manually.
 
 **Final-CRST fluency-only correction rule (prospective).** If a final CRST item
 fails *fluency only*, a human reviewer may make a minimal surface edit to the
