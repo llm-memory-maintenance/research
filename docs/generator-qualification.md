@@ -644,8 +644,9 @@ and max-token settings, retry policy and v2 criteria are unchanged. The profile
 supports the capability preview (`--profile second_level_g2`: one G2 call) and,
 should capability close PASS, native qualification (`--profile second_level_g2
 --slot G2 --protocol-version v2`: the same 12 frozen fixtures as 12 G2 calls, no
-G1 call), so a capability PASS needs no further source change. Live execution
-requires the successor implementation freeze (§14) and an explicit
+G1 call), so a capability PASS needs no further source change. The implementation
+freeze for this support is in place (§14, revision 3). Live qualification still
+requires this candidate's own capability probe to close PASS and an explicit
 `--output-directory`. The closed results (Sol, Terra, Sonnet, Opus and all
 Protocol-v1 and Protocol-v2 attempt artifacts) and the G1 resolution are not
 affected.
@@ -786,7 +787,7 @@ Terra, and Opus all remained not Generator-Qualified under Protocol v1; the
 later Protocol-v2 offline re-adjudication (§14) is recorded separately and
 does not alter this v1 closure.
 
-## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r3 Pending; Offline Re-adjudication Closed)
+## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r3; Offline Re-adjudication Closed)
 
 **Status.** The Protocol-v2 methodology is frozen. The offline re-adjudication of
 the archived evidence is closed (Sol and Terra qualified, Sonnet failed, G1 is
@@ -811,12 +812,16 @@ then changed `experiments/probe_generators.py` and
 `experiments/qualify_generators.py`, two of the three pinned sources. Revision 2
 therefore remains as historical provenance of the earlier implementation and no
 longer freezes the current code. The current freeze record is revision 3,
-`configs/generator-qualification-implementation-freeze-v2-r3.json`, to be created
-against the implementation commit that carries this support. Until it exists,
-`implementation('v2')` reports NOT_FROZEN and live `--protocol-version v2
---execute` refuses before any network request. The revision suffix names the
-implementation freeze only; the procedure and audit versions remain
-`generator-qualification-procedure/2.0.0` and `generator-manual-audit/2.0.0`.
+`configs/generator-qualification-implementation-freeze-v2-r3.json`, which names the
+implementation commit that carries this support (`45f06ae8508485ff2f4d5a886fef89f01bf1b807`,
+"feat: support second-level G2 generator profile") and pins the current sources.
+`implementation('v2')` reads only r3 and reports FROZEN, so live `--protocol-version
+v2 --execute` passes this gate, subject to every other execution guard (clean
+worktree, per-slot capability evidence, API key and, for single-slot profiles, an
+explicit output directory). No live execution has been performed under it. The
+revision suffix names the implementation freeze only; the procedure and audit
+versions remain `generator-qualification-procedure/2.0.0` and
+`generator-manual-audit/2.0.0`.
 
 **Implementation freeze records.** All records use the same protocol-agnostic schema
 (`generator-qualification-implementation-freeze/1.0.0`), which pins a commit and
@@ -838,10 +843,14 @@ already existed when the record was created:
   `experiments/qualify_generators.py` SHA-256
   `4f985518dec34731737794009f4c7841a3584dc0d11c1a9c83ee2e367644f09e`).
 - `configs/generator-qualification-implementation-freeze-v2-r3.json` (revision 3):
-  the current record; not yet created.
+  the current record. It pins the implementation commit `45f06ae8508485ff2f4d5a886fef89f01bf1b807`
+  (`experiments/qualify_generators.py` SHA-256
+  `6765c1e456a7223ea2108cb79851cbfd8858f0f7eba557beb67ff871afe5687d`;
+  `experiments/probe_generators.py` SHA-256
+  `b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`).
 
-`probe_generators.py` and `validate_generator_qualification_fixtures.py` were
-unchanged across revisions 1 and 2. `implementation('v1')` reads only the v1
+`validate_generator_qualification_fixtures.py` is unchanged across all v2 revisions
+and `probe_generators.py` across revisions 1 and 2. `implementation('v1')` reads only the v1
 record and `implementation('v2')` reads only the current v2 record; no record
 substitutes for another, and a historical revision cannot freeze the current
 implementation. Historical Protocol-v1 replay and adjudication of Attempt-01 and

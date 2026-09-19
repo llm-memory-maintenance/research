@@ -815,24 +815,22 @@ reverified unaffected. Opus remains capability CLOSED/FAIL (provider-policy
 refusal). No new G2 candidate has been selected. Neither Terra nor Opus is
 Generator-Qualified.
 
-## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r3 Pending, Offline Re-adjudication Closed
+## Generator Qualification Protocol v2 — Methodology Frozen, Implementation Freeze r3, Offline Re-adjudication Closed
 
 The methodology is frozen and the offline re-adjudication is closed (see the
-final entries of this section). Implementation freeze revision r2 (Commit C) is
-superseded for the current code by revision r3, which is pending; live v2
-execution is blocked until r3 exists. Full specification:
+final entries of this section). Implementation freeze revision r3 is the current
+record; revision r2 (Commit C) is historical provenance. Full specification:
 `generator-qualification.md` §14.
 Versions: `generator-qualification-procedure/2.0.0`,
 `generator-manual-audit/2.0.0`; Protocol v1 (`.../1.0.0`) and all its
 artifacts remain immutable historical records.
 
-**Freeze lineage.** Three distinct immutable records: the historical v1
-record; v2 revision 1 (`...-freeze-v2.json`, Commit A, historical); and v2
-revision 2 (`...-freeze-v2-r2.json`, Commit C
-`30d65102e618aa5713f0710964978f1eb46c4a15`, superseded). r2 superseded r1, and is
-in turn superseded for the current code by a pending revision 3
-(`...-freeze-v2-r3.json`) after second-level G2 profile support changed the
-pinned sources (see the final entry below). The methodology stays 2.0.0.
+**Freeze lineage.** Four distinct immutable records: the historical v1 record; v2
+revision 1 (`...-freeze-v2.json`, Commit A); v2 revision 2 (`...-freeze-v2-r2.json`,
+Commit C `30d65102e618aa5713f0710964978f1eb46c4a15`); and v2 revision 3
+(`...-freeze-v2-r3.json`, commit `45f06ae8508485ff2f4d5a886fef89f01bf1b807`), the current record. Each superseded the
+previous one when second-level G2 profile support changed the pinned sources (see
+the final entries below). The methodology stays 2.0.0.
 
 **Two-commit freeze workflow, revision 1 (historical).** Commit A
 (implementation, `6412b368e9c49891510aeb73d1fa208442df3c01`, "feat: implement
@@ -1079,3 +1077,25 @@ not exist yet. Until it is created against the implementation commit,
 any network request. No historical freeze record (v1, r1, r2) is modified, and
 the methodology versions remain 2.0.0. Closed results and the G1 resolution are
 unchanged; G2 remains unresolved.
+
+### Protocol-v2 implementation freeze revision r3 (2026-09-19)
+
+Revision 3, `configs/generator-qualification-implementation-freeze-v2-r3.json`,
+freezes the implementation that adds the second-level G2 profile. It uses the
+existing freeze schema, names implementation commit `45f06ae8508485ff2f4d5a886fef89f01bf1b807`, and
+pins `experiments/qualify_generators.py`
+(`6765c1e456a7223ea2108cb79851cbfd8858f0f7eba557beb67ff871afe5687d`),
+`experiments/probe_generators.py`
+(`b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`) and
+`experiments/validate_generator_qualification_fixtures.py`
+(`2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e`). The v1, r1
+and r2 records are unmodified and none can substitute for r3: with r3 hidden,
+`implementation('v2')` reports NOT_FROZEN even though r1 and r2 exist.
+
+With r3 present, `implementation('v2')` reports FROZEN, so the v2 freeze gate no
+longer blocks live execution. Qualification of the second-level G2 candidate
+remains blocked by the per-slot capability gate until its own capability probe
+closes PASS. The offline previews are unchanged: the capability preview contains
+one call (G2, `anthropic/claude-fable-5.1`, first-party Anthropic route) and the
+qualification preview contains 12 G2 calls on the same 12 frozen fixtures under
+native Protocol v2. No call has been made to this candidate.
