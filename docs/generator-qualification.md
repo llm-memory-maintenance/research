@@ -15,8 +15,11 @@ and closed 2026-09-18: G1 `openai/gpt-5.6-sol` FAIL, G2
 Attempt-02 (Terra, G1 only) has run and closed under historical Protocol v1:
 FAIL (§13). G2's fallback (Opus) remains capability CLOSED/FAIL, not
 qualification-eligible. All dispositions above are historical **Protocol v1**
-results. **Protocol v2 methodology is FROZEN (§14) but NOT yet implemented, and
-no Protocol-v2 re-adjudication has been performed**; v1 results are never
+results. **Protocol v2 (§14) is frozen and implemented (implementation freeze
+r2), and its offline re-adjudication of the archived evidence is closed: Sol
+QUALIFIED, Terra QUALIFIED, Sonnet FAIL; G1 is Sol by frozen primary
+precedence with Terra a qualified fallback; G2 remains unresolved.** The
+Protocol-v1 results above are preserved unchanged alongside, never
 overwritten.
 
 Generator diversity addresses dependence on one model family. Qualification
@@ -29,8 +32,8 @@ CLOSED and unchanged; they do not qualify construction generators.
 
 | Slot | Primary candidate | Predeclared corresponding fallback | Current status |
 | --- | --- | --- | --- |
-| G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | Primary Protocol-v1 FAIL (Attempt-01); fallback capability CLOSED/PASS (Capability Probe Attempt-03); fallback Generator Qualification Attempt-02 CLOSED, Protocol-v1 FAIL (§13); Protocol-v2 dispositions of both pending (§14) |
-| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary Protocol-v1 FAIL (Attempt-01), Protocol-v2 disposition pending (§14); fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03), not re-adjudicated; second-level G2 selection criteria unchanged (§12) |
+| G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | Primary Protocol-v1 FAIL (Attempt-01); fallback capability CLOSED/PASS (Capability Probe Attempt-03); fallback Generator Qualification Attempt-02 CLOSED, Protocol-v1 FAIL (§13); **Protocol-v2 (§14): Sol QUALIFIED, Terra QUALIFIED; G1 = Sol by frozen primary precedence, Terra qualified fallback** |
+| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary Protocol-v1 FAIL (Attempt-01), **Protocol-v2 FAIL (§14; four Level-1 terminal failures); G2 unresolved**; fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03), not re-adjudicated; second-level G2 selection criteria unchanged (§12) |
 
 **FROZEN:** use different OpenAI/Anthropic families/vendors to diversify
 naturalization provenance. Consider a fallback only if its corresponding primary
@@ -268,8 +271,7 @@ Qualification may record message/token lengths descriptively, but these numeric
 values are not final pass/fail gates without separate adjudication. Exact
 message-count requirements are independently frozen and must pass.
 
-**OPEN:** Protocol-v2 implementation and offline re-adjudication (§14),
-second-level G2 candidate selection (§12), handling of a final-CRST item with a
+**OPEN:** second-level G2 candidate selection (§12), handling of a final-CRST item with a
 Level-1 failure (§14), assignment mechanism/seed, B0 calibration material/grid/budget, and Small Pilot
 size/acceptance procedure. Final CRST N/R/minimum effect of interest and
 statistical procedures are not chosen here. Official Generator Qualification
@@ -728,25 +730,26 @@ same `v1/` layout by pathname-only normalization, byte-identical).
 proposal; it was **not applied** anywhere in that closure, and the
 `procedure_version` recorded throughout Attempt-02's evidence and adjudication
 is `generator-qualification-procedure/1.0.0` (historical Protocol v1),
-unchanged. Protocol v2's methodology has since been frozen (§14) but is not
-implemented, and no Protocol-v2 re-adjudication has occurred. Any future
-Protocol-v2 re-adjudication is a separate, explicitly versioned derived
-artifact and does not overwrite this v1 result.
+unchanged. Protocol v2's methodology has since been frozen and implemented
+(§14), and a Protocol-v2 re-adjudication has since been performed as a
+separate, explicitly versioned derived artifact that does not overwrite this v1
+result (Terra: Protocol-v2 QUALIFIED; see §14).
 
 **Status:** Terra Generator Qualification Attempt-02 is CLOSED; Terra's
 Protocol-v1 disposition is FAIL, so Terra is **not** Generator-Qualified under
 Protocol v1. No new G2 candidate has been selected. Opus remains capability
-CLOSED/FAIL (provider-policy refusal, §11/§12). As of this writing Sol, Sonnet,
-Terra, and Opus all remain not Generator-Qualified; Sol's, Sonnet's, and
-Terra's Protocol-v2 dispositions are undetermined until the §14 offline
-re-adjudication is implemented and performed.
+CLOSED/FAIL (provider-policy refusal, §11/§12). As of this closure Sol, Sonnet,
+Terra, and Opus all remained not Generator-Qualified under Protocol v1; the
+later Protocol-v2 offline re-adjudication (§14) is recorded separately and
+does not alter this v1 closure.
 
-## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation r2 FROZEN; Official Result Closure Pending)
+## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation r2 FROZEN; Offline Re-adjudication Closed)
 
 **Status: PROTOCOL v2 METHODOLOGY: FROZEN. PROTOCOL v2 IMPLEMENTATION r2:
 FROZEN. NATIVE v2 LIVE EXECUTION: ENABLED BY THE r2 FREEZE. OFFICIAL v2
-RE-ADJUDICATION RESULT CLOSURE: PENDING (no official Protocol-v2 result is
-recorded here).** No Protocol-v1 result or artifact is changed by this
+RE-ADJUDICATION RESULT CLOSURE: COMPLETE (Sol QUALIFIED, Terra QUALIFIED,
+Sonnet FAIL; G1 = Sol; G2 unresolved) -- see "Protocol-v2 re-adjudication
+results" below.** No Protocol-v1 result or artifact is changed by this
 section. The first Protocol-v2 implementation was committed as Commit A
 (`6412b368e9c49891510aeb73d1fa208442df3c01`, "feat: implement generator
 qualification protocol v2") and frozen by revision 1 of the implementation
@@ -821,10 +824,9 @@ qualification of a future candidate that has never been qualified under any
 protocol (`--protocol-version v2 --execute`), which shares the identical
 generation contract and is recorded under
 `generator-qualification-procedure/2.0.0` / `generator-manual-audit/2.0.0`
-from the start. No live v2 qualification has been executed, and no official
-Protocol-v2 candidate result is recorded here: official result closure is a
-separate, pending step that records final outcomes only after the r2-frozen
-adjudicator reproduces them.
+from the start. No live v2 qualification has been executed; the archived
+evidence was re-adjudicated offline under the r2 freeze (see "Protocol-v2
+re-adjudication results" below).
 
 **Versions.** Protocol v2: `generator-qualification-procedure/2.0.0`,
 `generator-manual-audit/2.0.0`. Protocol v1 remains
@@ -997,6 +999,51 @@ failures unless archived evidence proves otherwise. Opus remains capability
 CLOSED/FAIL. G2 remains an Anthropic-family slot. No second-level G2 candidate
 is selected here, and the second-level selection criteria (§12) are unchanged.
 
+**Protocol-v2 re-adjudication results (closed offline 2026-09-19).** Produced
+only by the frozen offline v1 -> v2 mapping and the r2-frozen Protocol-v2
+adjudicator (freeze revision r2, Commit C `30d65102e618aa5713f0710964978f1eb46c4a15`);
+no API call and no generation was used, and the raw `attempt-NN/` evidence and
+every Protocol-v1 artifact are untouched (all Protocol-v1 dispositions are
+preserved alongside, unchanged). The human reviewer, Muhammad Rafly Ash
+Shiddiqi (`reviewed_at` 2026-09-19T12:40:11+07:00), made exactly seven
+cell-level judgments -- the historical v1 natural_english FAIL cells --
+each approved as comprehensibility PASS / fluency FAIL (a Level-2 finding
+only), judged from the model-visible conversation and never using structured
+truth to supply meaning: Sol `gq-study-planning-01`/low/I6 ("Study plan Wren
+is designated Desk Oris as its study desk." -- entity, attribute and value
+explicit, one clear reading; grammatically malformed/unidiomatic) and Terra
+`gq-purchase-order-01` I2 and I3 in low, medium and high ("Order Kittiwake has
+an ordered number of 120 sleeves of empty storage sleeves." / "Order
+Sandpiper has an ordered number of 330 sleeves of empty storage sleeves." --
+redundant "sleeves" construction, but the conversation consistently expresses
+the attribute as the ordered number of empty storage sleeves and later
+mentions give the same attribute as N sleeves, so one dominant reading; one
+classification for all six cells sharing that realization pattern). All other
+cells were mapped mechanically or carried forward unchanged from v1.
+Variant, fixture and candidate dispositions were derived by code, not entered
+by the reviewer. Final individual Protocol-v2 dispositions (regenerated
+byte-identically from the completed audits): **Sol (Attempt-01 G1)
+QUALIFIED** -- 0 Level-1 failures, 1 Level-2 fluency finding, all 12 fixtures
+derive PASS; **Terra (Attempt-02 G1) QUALIFIED** -- 0 Level-1 failures, 6
+Level-2 fluency findings, all 12 fixtures derive PASS; **Sonnet (Attempt-01
+G2) FAIL** -- 4 Level-1 terminal strict-schema "Expected nonempty string"
+failures (`gq-project-planning-01`, `gq-task-assignment-01`,
+`gq-personal-preference-01`, `gq-service-subscription-01`), which alone make
+qualification impossible, so its 8 remaining fixtures' manual cells were
+correctly left unreviewed. **G1 primary precedence, applied only after these
+individual dispositions:** Sol and Terra both qualify, so **Sol occupies G1
+and Terra remains a qualified fallback** (Terra's Protocol-v1 FAIL and
+Protocol-v2 QUALIFIED are both preserved; no fluency count or subjective
+quality was used). **G2 remains unresolved:** Sonnet FAILs Protocol v2, Opus
+remains capability CLOSED/FAIL and outside qualification, and no second-level
+G2 candidate is selected here (the §12 criteria are unchanged). The r2
+implementation freeze is the authoritative current implementation freeze.
+Artifacts:
+`results/generator-qualification/manual-audit/v2/attempt-01.completed.json`,
+`.../attempt-02.completed.json` and
+`results/generator-qualification/adjudication/v2/attempt-01.json`,
+`.../attempt-02.json`.
+
 **Anti-bias safeguards (frozen).** Preserve every Protocol-v1 result and
 artifact; disclose that v2 was introduced after observing qualification
 outcomes; justify it solely by level-of-analysis alignment with the
@@ -1013,7 +1060,8 @@ Protocol-v1 artifact to make v2 appear pre-specified.
 stay in `results/generator-qualification/manual-audit/v1/` and
 `results/generator-qualification/adjudication/v1/`. Future v2 derived
 artifacts go to `results/generator-qualification/manual-audit/v2/` and
-`results/generator-qualification/adjudication/v2/` (not yet created). v1
+`results/generator-qualification/adjudication/v2/` (now created and closed by
+the re-adjudication above). v1
 artifacts are never overwritten. `generator-qualification-audit.md` §5
 describes the historical v1 audit contract and is superseded prospectively by
 this section for v2 audits only.

@@ -10,10 +10,10 @@
 > in, [generator-qualification.md §14](generator-qualification.md) (the
 > implementation is frozen at revision r2; under v2 the reviewer
 > decides only cell-level checks and ambiguities, while variant, fixture and
-> candidate dispositions are derived by the adjudicator); no official
-> Protocol-v2 re-adjudication result is recorded. This document remains
-> authoritative only
-> for reproducing historical Protocol-v1 audits. The fixture-set construction
+> candidate dispositions are derived by the adjudicator), and the Protocol-v2
+> offline re-adjudication of the archived evidence is closed (see §14). This
+> document remains authoritative only for reproducing historical Protocol-v1
+> audits. The fixture-set construction
 > content (§1–§4) is unaffected.
 
 ## 1. Status and Boundaries
