@@ -532,11 +532,12 @@ HISTORICAL_FREEZE_RECORD_SHA256 = 'dd9d12ffdfe86e63788dc1facbacee81914c7374e6d54
 HISTORICAL_QUALIFY_GENERATORS_SHA256 = '89f82fe9f617275d117d793f936ca1d81fd63aa2ed6f138a8bd8e5b4bc731258'
 PROBE_GENERATORS_SHA256 = 'bf414f46d02400127ba60aa0af1bbcfd4f72c12acba0cdcc8718c9b34774c9cf'
 VALIDATE_FIXTURES_SHA256 = '2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e'
-# The reviewed Protocol-v2-capable implementation awaiting its two-commit freeze workflow (docs/
-# generator-qualification.md Sec. 14): Commit A (implementation) must land first, then a separate
-# Commit B (freeze) creates q.V2_FREEZE_RECORD naming Commit A -- never a self-referential or
-# invented commit hash. Neither commit happens in this task.
+# The reviewed Protocol-v2-capable implementation, committed as Commit A (docs/generator-
+# qualification.md Sec. 14, two-commit freeze workflow: Commit A implementation, then a separate
+# Commit B freeze naming Commit A -- never a self-referential or invented commit hash). This task's
+# freeze commit (Commit B) has not happened yet; only the v2 freeze RECORD is created here.
 V2_REVIEWED_QUALIFY_GENERATORS_SHA256 = '38896235ec7a4b9b1fff59d2ae0d0ec6ef7c22ee567e131ac614ca8134355dc0'
+COMMIT_A = '6412b368e9c49891510aeb73d1fa208442df3c01'  # feat: implement generator qualification protocol v2
 
 
 def test_historical_v1_freeze_record_preserved_not_reinterpreted_as_current(loaded, capsys):
@@ -569,41 +570,73 @@ def test_historical_v1_freeze_record_preserved_not_reinterpreted_as_current(load
     assert shown['planned_calls'][0] == '1:G1:gq-scheduling-01' and shown['planned_calls'][12] == '13:G2:gq-scheduling-01'
 
 
-def test_v2_freeze_record_absent_before_commit_a(loaded):
-    """(pre-freeze state) No v2 freeze record exists yet -- Commit A (the implementation commit) has
-    not happened, so there is no real commit to name. protocol='v2' correctly, gracefully reports
-    NOT_FROZEN (the same non-fatal status v1 reports when development has moved past its own freeze),
-    computed from the current reviewed bytes, never a false FROZEN claim and never a crash.
+def test_v2_freeze_record_points_to_commit_a_matches_reviewed_bytes(loaded):
+    """(C)+(D) The new v2 freeze record pins Commit A's real hash -- never Commit B's (this freeze
+    commit does not exist yet) or an invented one -- and the current reviewed source bytes, using the
+    same protocol-agnostic schema as the historical record (no new field invented).
     """
-    assert not q.V2_FREEZE_RECORD.exists()
-    v2 = q.implementation('v2')
-    assert v2 == {'status': q.NOT_FROZEN, 'freeze_commit': None,
-                  'source_sha256': loaded['provenance']['implementation']['source_sha256']}
+    assert q.V2_FREEZE_RECORD.exists()
+    record = q.fixtures.read(q.V2_FREEZE_RECORD)
+    assert record == {
+        'schema_version': q.FREEZE_SCHEMA,
+        'implementation_commit': COMMIT_A,
+        'source_sha256': {
+            'experiments/qualify_generators.py': V2_REVIEWED_QUALIFY_GENERATORS_SHA256,
+            'experiments/probe_generators.py': PROBE_GENERATORS_SHA256,
+            'experiments/validate_generator_qualification_fixtures.py': VALIDATE_FIXTURES_SHA256,
+        },
+    }
+    current_sources = {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}
+    assert record['source_sha256'] == current_sources == loaded['provenance']['implementation']['source_sha256']
+
+
+def test_v1_and_v2_freeze_records_are_distinct_real_files():
+    """(E) The two REAL freeze records on disk are genuinely distinct: different paths, different
+    pinned commits, different qualify_generators.py hashes -- neither can substitute for the other.
+    """
+    assert q.FREEZE_RECORD != q.V2_FREEZE_RECORD
+    v1 = q.fixtures.read(q.FREEZE_RECORD)
+    v2 = q.fixtures.read(q.V2_FREEZE_RECORD)
+    assert v1['implementation_commit'] == CURRENT_FROZEN_COMMIT != COMMIT_A == v2['implementation_commit']
+    assert v1['source_sha256']['experiments/qualify_generators.py'] == HISTORICAL_QUALIFY_GENERATORS_SHA256
     assert v2['source_sha256']['experiments/qualify_generators.py'] == V2_REVIEWED_QUALIFY_GENERATORS_SHA256
+    assert v1['source_sha256']['experiments/qualify_generators.py'] != \
+        v2['source_sha256']['experiments/qualify_generators.py']
 
 
-@pytest.mark.parametrize('protocol_version', ['v1', 'v2'])
-def test_live_execution_refuses_before_network_when_unfrozen(monkeypatch, tmp_path, protocol_version):
-    """(A)+(B)+(C) Both protocols' live-execution gate refuses BEFORE any network/API request when
-    unfrozen, with a message specifically about the implementation not being frozen -- never a claim
-    that the protocol itself is unsupported. v1 is unaffected by adding the v2 gate (both are
-    currently, separately, legitimately unfrozen: v1 because development moved past its freeze, v2
-    because no freeze commit exists yet).
+def test_v2_load_inputs_reports_frozen_with_real_freeze_record_present():
+    """(F) With the real v2 freeze record now on disk (pinning Commit A), the REAL, non-simulated
+    load_inputs(protocol='v2') pipeline genuinely reports FROZEN -- not merely a synthetic-repo or
+    test-simulated status flag.
+    """
+    implementation = q.load_inputs(profile='primary', protocol='v2')['provenance']['implementation']
+    assert implementation == {'status': q.FROZEN, 'freeze_commit': COMMIT_A,
+                              'source_sha256': {
+                                  'experiments/qualify_generators.py': V2_REVIEWED_QUALIFY_GENERATORS_SHA256,
+                                  'experiments/probe_generators.py': PROBE_GENERATORS_SHA256,
+                                  'experiments/validate_generator_qualification_fixtures.py': VALIDATE_FIXTURES_SHA256,
+                              }}
+
+
+def test_v1_live_execution_still_refuses_before_network_when_unfrozen(monkeypatch, tmp_path):
+    """(A) v1's own live-execution gate is unaffected by the new v2 record: it still refuses BEFORE
+    any network/API request (development has moved past the historical v1 freeze), with a message
+    specifically about the implementation not being frozen, never a claim v1 itself is unsupported.
     """
     monkeypatch.setenv('OPENROUTER_API_KEY', 'test-secret-must-never-be-sent')
     output = tmp_path / 'must-not-be-created'
     with pytest.raises(ValueError) as excinfo:
-        q.main(['--execute', '--confirm-spend', '--protocol-version', protocol_version,
-               '--output-directory', str(output)])
+        q.main(['--execute', '--confirm-spend', '--output-directory', str(output)])
     assert 'NOT YET FROZEN FOR LIVE EXECUTION' in str(excinfo.value)
     assert 'unsupported' not in str(excinfo.value).lower()
     assert not output.exists()
 
 
 def test_v2_freeze_gate_reports_frozen_once_a_valid_v2_record_exists(tmp_path, monkeypatch):
-    """(D) Mirrors test_matching_freeze_record_reports_frozen for the SEPARATE v2 record: the exact
-    same reproducibility principles (real, reachable, authentic ancestor commit whose git-archived
-    bytes match the pinned hashes) apply to v2, never weakened.
+    """Mirrors test_matching_freeze_record_reports_frozen for the SEPARATE v2 record: the exact same
+    reproducibility principles (real, reachable, authentic ancestor commit whose git-archived bytes
+    match the pinned hashes) apply to v2, never weakened -- demonstrated here on a synthetic repo
+    independent of the real Commit A, to isolate the gate LOGIC from this particular real commit.
     """
     repo, commit, sources = synthetic_frozen_repo(tmp_path, monkeypatch)
     record = repo / 'v2-freeze.json'
@@ -614,8 +647,8 @@ def test_v2_freeze_gate_reports_frozen_once_a_valid_v2_record_exists(tmp_path, m
 
 
 def test_v2_gate_never_falls_back_to_v1_record_even_when_v1_is_frozen(tmp_path, monkeypatch):
-    """(G)+(H) Protocol selection cannot silently fall back: even when a well-formed, genuinely FROZEN
-    v1 record exists, protocol='v2' still requires its OWN separate V2_FREEZE_RECORD, never v1's.
+    """Protocol selection cannot silently fall back: even when a well-formed, genuinely FROZEN v1
+    record exists, protocol='v2' still requires its OWN separate V2_FREEZE_RECORD, never v1's.
     """
     repo, commit, sources = synthetic_frozen_repo(tmp_path, monkeypatch)
     v1_record = repo / 'v1-freeze.json'
@@ -625,6 +658,20 @@ def test_v2_gate_never_falls_back_to_v1_record_even_when_v1_is_frozen(tmp_path, 
     monkeypatch.setattr(q, 'V2_FREEZE_RECORD', repo / 'absent-v2-freeze.json')
     assert q.implementation('v1') == {'status': q.FROZEN, 'freeze_commit': commit, 'source_sha256': sources}
     assert q.implementation('v2')['status'] == q.NOT_FROZEN  # v1 being FROZEN never leaks into v2.
+
+
+def test_removing_v2_freeze_record_reverts_to_not_frozen_refuses_before_network(monkeypatch, tmp_path):
+    """(H) Hiding V2_FREEZE_RECORD (e.g. as if Commit B had never happened) reverts protocol='v2' to
+    NOT_FROZEN, and live v2 execution again refuses before any network call: the freeze is contingent
+    on the record's presence, not a permanently-cached fact.
+    """
+    monkeypatch.setattr(q, 'V2_FREEZE_RECORD', tmp_path / 'no-such-v2-freeze.json')
+    assert q.implementation('v2')['status'] == q.NOT_FROZEN
+    monkeypatch.setenv('OPENROUTER_API_KEY', 'test-secret-must-never-be-sent')
+    output = tmp_path / 'must-not-be-created'
+    with pytest.raises(ValueError, match='NOT YET FROZEN FOR LIVE EXECUTION'):
+        q.main(['--execute', '--confirm-spend', '--protocol-version', 'v2', '--output-directory', str(output)])
+    assert not output.exists()
 
 
 def synthetic_frozen_repo(tmp_path, monkeypatch, *, content=None):
@@ -1122,18 +1169,18 @@ def test_real_attempt_01_replay_unaffected_by_fallback_support(loaded):
         '8decf4ba0177c7c5808050f846a61aad624073552c5d2f4a7e5b7db580ebede1'
 
 
-def test_implementation_not_frozen_pending_two_commit_freeze_workflow(loaded):
-    """The historical per-slot-support freeze record still pins CURRENT_FROZEN_COMMIT/its own hashes,
-    unaffected by the Protocol-v2 work added on top; the runner correctly reports NOT_FROZEN against
-    current bytes (not a false FROZEN claim). No v2 freeze record exists pre-Commit-A: it can only be
-    created by a LATER, separate freeze commit naming Commit A's real hash (Sec. 1's two-commit
-    workflow), never a self-referential or invented one.
+def test_v1_implementation_unaffected_by_v2_freeze_completion(loaded):
+    """The historical per-slot-support (v1) freeze record still pins CURRENT_FROZEN_COMMIT/its own
+    hashes, completely unaffected by the Protocol-v2 freeze workflow completing on top: the runner
+    still correctly reports NOT_FROZEN for protocol='v1' against current bytes (not a false FROZEN
+    claim), and the v2 freeze record's own existence/commit is a fully separate fact.
     """
-    implementation = loaded['provenance']['implementation']
+    implementation = loaded['provenance']['implementation']  # loaded defaults to protocol='v1'.
     assert implementation['status'] == q.NOT_FROZEN and implementation['freeze_commit'] is None
     assert implementation['source_sha256'] == {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}
     assert q.fixtures.read(q.FREEZE_RECORD)['implementation_commit'] == CURRENT_FROZEN_COMMIT
-    assert not q.V2_FREEZE_RECORD.exists()
+    assert q.V2_FREEZE_RECORD.exists()  # Commit A's freeze record IS now present (Commit B pending).
+    assert q.fixtures.read(q.V2_FREEZE_RECORD)['implementation_commit'] == COMMIT_A
 
 
 # --- Protocol v2 (docs/generator-qualification.md Sec. 14): comprehensibility/fluency split, the
@@ -1329,21 +1376,26 @@ def test_v2_mapping_cli_writes_template_and_pending_list(inputs, tmp_path, monke
         q.main(['--attempt', str(path), '--audit', str(completed), '--v2-mapping-output', str(output)])
 
 
-def test_offline_v2_mapping_and_adjudication_work_without_live_v2_freeze(inputs, tmp_path, monkeypatch):
-    """(E)+(F) Offline v1->v2 mapping and v2 adjudication never consult any implementation-freeze
-    record: they operate purely on already-archived evidence and manual-audit content (neither
-    derive_v2_audit_template() nor adjudicate() calls implementation() or reads FREEZE_RECORD/
-    V2_FREEZE_RECORD), so both remain fully usable before Commit A or any freeze commit exist.
+def test_offline_v2_mapping_and_adjudication_independent_of_live_freeze(inputs, tmp_path, monkeypatch):
+    """(I) Offline v1->v2 mapping and v2 adjudication never consult any implementation-freeze record
+    (neither derive_v2_audit_template() nor adjudicate() calls implementation() or reads FREEZE_RECORD/
+    V2_FREEZE_RECORD): they behave identically whether or not a v2 freeze record exists on disk.
     """
-    assert not q.V2_FREEZE_RECORD.exists()
     result, v1_audit, checksum, _ = collected(inputs, tmp_path, monkeypatch)
     fill_audit(v1_audit)
-    v2_template, pending = q.derive_v2_audit_template(result, checksum, v1_audit, inputs['slots'])
-    assert pending == []
-    fill_audit_v2(v2_template)
-    outcome = q.adjudicate(result, v2_template, checksum, inputs['slots'], protocol='v2')
-    assert outcome['candidates'] == {'G1': 'QUALIFIED', 'G2': 'QUALIFIED'}
-    assert not q.V2_FREEZE_RECORD.exists()  # Neither function created, required, or consulted one.
+
+    def run_offline_v2_pipeline():
+        v2_template, pending = q.derive_v2_audit_template(result, checksum, v1_audit, inputs['slots'])
+        assert pending == []
+        fill_audit_v2(v2_template)
+        outcome = q.adjudicate(result, v2_template, checksum, inputs['slots'], protocol='v2')
+        assert outcome['candidates'] == {'G1': 'QUALIFIED', 'G2': 'QUALIFIED'}
+
+    assert q.V2_FREEZE_RECORD.exists()  # Real state right now: the freeze record IS present.
+    run_offline_v2_pipeline()
+    monkeypatch.setattr(q, 'V2_FREEZE_RECORD', tmp_path / 'hidden-for-this-test.json')
+    assert not q.V2_FREEZE_RECORD.exists()
+    run_offline_v2_pipeline()  # Identical result whether or not the freeze record is visible.
 
 
 def test_v2_cli_flag_validation(tmp_path):
@@ -1426,6 +1478,24 @@ def test_v2_mocked_execution_accepted_not_rejected_for_protocol_alone(inputs, tm
     """(B) A mocked v2 execution path completes; it is not refused solely because protocol='v2'."""
     result, calls, path, _ = mocked_collect_v2(inputs, tmp_path, monkeypatch)
     assert result['status'] == 'PENDING_MANUAL_AUDIT' and len(result['calls']) == 24 and len(calls) == 24
+
+
+def test_v2_mocked_execution_reaches_transport_and_real_gate_agrees(inputs, tmp_path, monkeypatch):
+    """(G) Native v2 mocked execution proceeds through the freeze gate and reaches the mocked
+    transport (never a real network request); the REAL, unmocked implementation('v2') independently
+    agrees the implementation is genuinely FROZEN at this exact moment (via the real
+    generator-qualification-implementation-freeze-v2.json, pinning the real Commit A), so the
+    fixture's simulated FROZEN status is not fiction relative to the real freeze record.
+    """
+    assert q.implementation('v2') == {'status': q.FROZEN, 'freeze_commit': COMMIT_A,
+                                      'source_sha256': {
+                                          'experiments/qualify_generators.py': V2_REVIEWED_QUALIFY_GENERATORS_SHA256,
+                                          'experiments/probe_generators.py': PROBE_GENERATORS_SHA256,
+                                          'experiments/validate_generator_qualification_fixtures.py':
+                                              VALIDATE_FIXTURES_SHA256}}
+    result, calls, path, _ = mocked_collect_v2(inputs, tmp_path, monkeypatch)
+    assert result['status'] == 'PENDING_MANUAL_AUDIT' and len(result['calls']) == 24 and len(calls) == 24
+    assert result['procedure_version'] == q.PROCEDURE_V2
 
 
 def test_v2_mocked_execution_archives_v2_procedure(inputs, tmp_path, monkeypatch):
