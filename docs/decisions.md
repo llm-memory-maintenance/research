@@ -1486,3 +1486,107 @@ final CRST case that needs more than 71 to retain U7 and N2 remains a
 calibration-coverage failure, handled only by the frozen coverage-failure rule. This
 validates structural retention of U7 and N2 on the calibration material; it does not
 validate B0's answer quality or any policy outcome.
+
+## CRST Candidate and Memory-Entry Representation Frozen (2026-09-19)
+
+The researcher approved the representation of CRST candidates and memory entries.
+It is recorded in CRST specification Section 5 and is FROZEN.
+
+- CRST uses gold/reference candidates with no LLM extraction.
+- Every initial fact (I1-I7) and every maintenance candidate (U1-U7, N1, N2) is
+  rendered deterministically as the single line
+  `For {entity_name}, the {attribute_meaning} is {current_value}.`
+- The renderer uses only the entity name, the human-readable attribute meaning, and
+  the current value. It never exposes the state key, role, semantics label, event ID
+  or position, reference operation, previous or superseded values, gold answer,
+  revision count or intensity, or any current/superseded annotation. It is lossless
+  with respect to those three fields, with no LLM paraphrasing or manual editing.
+- Add stores the rendered text verbatim; Update replaces the entry text exactly with
+  the rendered candidate text; Noop changes neither text nor last-updated time; M1
+  stores every candidate verbatim as a separate entry.
+- Naturalized conversational text is not a policy candidate: B0 uses the naturalized
+  raw conversation, Q uses the naturalized final question, and M1, M2, and M3 use
+  canonical candidates and the active memory derived from them.
+- Structured CRST material must therefore render to a single line that round-trips
+  exactly and must not carry status or time wording in entity names, attribute
+  meanings, or values.
+
+Nothing is implemented by this entry. The maintenance and answer request wrappers,
+response formats, scoring rules, and token-size scope remain open, as does the
+renderer implementation itself.
+
+## CRST Small Pilot Protocol Frozen and Implemented Offline (2026-09-19)
+
+The researcher approved the Small Pilot protocol. It is recorded in CRST
+specification Sections 6-8, 10, and 15 and implemented offline; no generator,
+provider, or backbone call was made and the pilot has not run.
+
+- Maintenance: separate M2 (Add/Update) and M3 (Add/Update/Noop) prompts and strict
+  policy-specific response schemas; the target rule is enforced locally without
+  repair or retry.
+- Answering: one request, `Context:` then the complete serialized active memory,
+  then `Question:` and Q, for M1/M2/M3; B0 uses the same system text and the frozen
+  71-token history with Q outside the budget. The answer response is
+  `{"answer": "<nonempty string>"}` for all four conditions.
+- Scoring: whole-value normalized equality only (NFC, trim, collapse whitespace,
+  casefold); current-correct, stale, other error; no containment or fuzzy matching.
+- Active-memory size: tokens of the exact serialized block at final Q under the
+  pinned Llama-3.1-8B-Instruct tokenizer, with the diagnostics listed in Section 10.
+- Naturalization failure policy: at most three logical attempts per triplet unit for
+  terminal non-evaluable failures; a Level-1 semantic failure stops for a decision.
+- Configuration: `pilot-scheduling-01` (G1) and `pilot-travel-01` (G2), 24 policy
+  runs, 132 backbone calls (108 maintenance, 24 answering), 2 generator units.
+- Also corrected: Section 4 no longer names `anthropic/claude-sonnet-5` as a G2
+  candidate; Generator Qualification closed with `anthropic/claude-fable-5.1`.
+
+Provider support for strict `json_schema` on the pinned backbone endpoint is
+unqualified (Model Qualification used `json_object`); `require_parameters` makes an
+unsupported schema fail closed. Live execution and the live transport are not
+authorized or implemented.
+
+## CRST Small Pilot Response Mode Amended and Live Path Implemented (2026-09-19)
+
+Transport and validation amendment only; maintenance semantics, scoring, and every
+prompt text are unchanged.
+
+- The backbone response mode is `json_object` for maintenance and answer calls, the
+  behavior already qualified by Model Qualification. Strict `json_schema` was never
+  qualified on the provider/model path and is not requested. The maintenance and
+  answer schemas remain frozen and strict, enforced locally right after parsing with
+  no repair. Prompt and schema hashes are unchanged; their role is recorded as local
+  validation only, and the provider response mode is recorded as provenance.
+  No new Model Qualification or capability probe is required.
+- The gated live naturalization path (`experiments/naturalize_crst_pilot.py`), the
+  offline audit, the backbone transport (`experiments/crst_transport.py`), and the
+  gated backbone execution with offline replay (`experiments/execute_crst_pilot.py`)
+  are implemented and tested against mock transports only. Nothing was executed.
+- The workflow is build, live naturalization, offline audit, backbone execution,
+  offline replay, researcher review (CRST specification Section 15).
+- Checklist audit: the pilot checklist has 32 items; 26 are PASS_OFFLINE, 2 are
+  PENDING_NATURALIZATION, and 4 are PENDING_LIVE. An earlier report that counted 23
+  offline passes was a miscount.
+
+## CRST Small Pilot Answer Wrapper Amended (2026-09-20)
+
+Final researcher decision; the frozen answering system text is unchanged and keeps
+SHA-256 `8a6abc2b52c63340aa483023a823c6ff9d8142ab9749b3ae7d6d2f216da5e71e`.
+
+- The answer-format instruction (exactly one JSON object with exactly one key named
+  `answer`, only the answer, no other keys) is part of the final user request, because
+  Q is outside the B0 historical token budget. M1/M2/M3 append it after the
+  `Context:` and `Question:` blocks; B0 appends one final user message `Question:` plus
+  Q plus the same instruction after the frozen selected history. The exact texts are in
+  CRST specification Section 7.
+- The wrapper is versioned `crst-pilot-answer-request/1.1.0`; the never executed 1.0.0
+  (`458e0a8e...`) is recorded as superseded. New SHA-256 values are in
+  `configs/crst-small-pilot.yaml`.
+- Unchanged: the system prompt, `B0_CONTEXT_TOKENS` (71), the answer schema
+  (`crst-pilot-answer-schema/1.0.0`), the maintenance prompts and schemas, the
+  candidate renderer, scoring and normalization, the provider `json_object` mode, the
+  pilot scenarios, and the call counts.
+- Abort rule, approved: after the frozen infrastructure retry policy is exhausted, an
+  infrastructure-terminal failure or a routing/provider identity violation aborts the
+  pilot and preserves evidence. It is not scored as a model decision or an other error,
+  and a partial pilot is never continued for interpretation (`collection.json` records
+  `interpretation: PROHIBITED`). Schema-invalid model maintenance output remains an
+  invalid model decision, and a malformed final answer remains an other error.

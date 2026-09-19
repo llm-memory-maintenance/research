@@ -1,10 +1,11 @@
-"""Tests must never create anything inside the B0 result namespaces, even if a guard under test regresses."""
+"""Tests must never create anything inside the protected result namespaces, even if a guard under test regresses."""
 from pathlib import Path
 
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTECTED = tuple((ROOT / name).resolve() for name in ('results/b0-calibration', 'results/b0-suffix-calibration'))
+PROTECTED = tuple((ROOT / name).resolve() for name in ('results/b0-calibration', 'results/b0-suffix-calibration',
+                                                            'results/crst-small-pilot'))
 
 
 @pytest.fixture(autouse=True)

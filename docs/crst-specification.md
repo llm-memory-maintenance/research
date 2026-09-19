@@ -152,10 +152,11 @@ facts once, and supports joint matched-control, message-count, and wording check
 The construction layer alone inserts the exact acknowledgement `Noted.`; neither
 naturalization LLM generates acknowledgements or experimental final answers.
 
-The [Generator Qualification plan](generator-qualification.md) predeclares G1
-`openai/gpt-5.6-sol` and G2 `anthropic/claude-sonnet-5` as **CANDIDATE**, not
-QUALIFIED. Corresponding fallback candidates are `openai/gpt-5.6-terra` and
-`anthropic/claude-opus-5`. Qualification requires absolute fidelity, not ranking.
+[Generator Qualification](generator-qualification.md) is CLOSED under Protocol v2:
+G1 is `openai/gpt-5.6-sol` (qualified fallback `openai/gpt-5.6-terra`) and G2 is
+`anthropic/claude-fable-5.1`. `anthropic/claude-sonnet-5` and
+`anthropic/claude-opus-5` are not selected. Qualification required absolute
+fidelity, not ranking.
 
 **FROZEN assignment constraints after qualification:** assign at base-scenario
 level, retain the complete triplet with its generator, allocate exactly 50/50
@@ -185,6 +186,44 @@ no LLM candidate-extraction component or associated extraction cost. LLM
 candidate extraction belongs to the distinct LongMemEval-S execution path.
 Reference annotations are evaluator data, not hints supplied to the policy or
 reader and not corrective actions after a model mistake.
+
+**FROZEN CRST candidate and memory-entry representation.** CRST uses gold/reference
+candidates with no LLM extraction. Every initial fact (I1-I7) and every maintenance
+candidate (U1-U7, N1, N2) is rendered by one deterministic renderer as the single
+line
+
+```text
+For {entity_name}, the {attribute_meaning} is {current_value}.
+```
+
+The renderer uses only the entity name, the human-readable attribute meaning, and
+the current value. It never exposes the state key, role, semantics label, event ID
+or position, reference operation, previous or superseded values, gold answer,
+revision count or intensity, or any current/superseded annotation. The same renderer
+applies to I1-I7 initial-memory construction, U1-U7, N1, and N2. The rendering is
+lossless with respect to the three allowed fields, is validated by exact round trip,
+and involves no LLM paraphrasing or manual editing.
+
+Storage follows the policy semantics of Section 6: Add stores the rendered candidate
+text verbatim; Update replaces the entry text exactly with the rendered candidate
+text verbatim, retaining the ID and creation time and advancing the last-updated
+time; Noop changes neither entry text nor last-updated time; M1 stores every
+candidate verbatim as its own entry, preserving historical candidates by separate
+entries. The stored text is the `<TEXT>` of the Section 7 serialization. The state
+key, role, semantics label, and reference operation remain harness and evaluator
+data.
+
+Naturalized conversational text is not a persistent-policy candidate. B0 uses the
+naturalized raw conversation, Q is the naturalized final question, and M1, M2, and
+M3 use canonical candidates and the active memory derived from them. This preserves
+the no-extraction design and keeps candidates independent of naturalization.
+
+Consequences for CRST structured material, as validation requirements: entity
+names, attribute meanings, and values must produce a single line with no leading or
+trailing whitespace and must round-trip exactly, and none may carry status or time
+wording (such as "current", "now", "latest", "previous", or "new"), so that the
+rendered text cannot expose a current or superseded annotation. Attribute meanings
+must be distinct within an entity.
 
 ## 6. Memory Policy Semantics
 
@@ -248,6 +287,27 @@ historical entries are active by policy definition.
 These representation details must preserve the frozen identities, lineage,
 execution semantics, and journal evidence.
 
+**FROZEN for the Small Pilot: maintenance prompt and response.** M2 and M3 use
+separate policy-specific prompts and response schemas (`configs/crst-small-pilot.yaml`,
+`experiments/crst_prompts.py`). The input is the frozen serialized active-memory
+block plus the canonical candidate text, with no raw conversation. M2's action
+space is Add/Update: an active entry for the same entity and attribute means Update
+targeting it (a same-value reaffirmation remains Update), otherwise Add. M3's is
+Add/Update/Noop: no such entry means Add, the same entity and attribute with a
+different value means Update, and the same entity, attribute, and value means Noop.
+The prompts define these policy semantics only. They never expose the event's
+reference operation, event label, intensity, state key, or any evaluator annotation.
+The response is `{"operation": ..., "target_id": ...}` with exactly those keys: the
+operation is in the policy's enum, an Update carries a nonempty `target_id`, and Add
+and Noop carry null. The provider response mode is the qualified `json_object`
+mode (strict `json_schema` is not qualified for the backbone path and is never
+requested); the policy-specific schema, including the conditional target rule, is
+enforced locally, exactly and deterministically, right after parsing. There is
+no semantic repair and no retry of a logical decision: a malformed or unmappable
+response leaves state unchanged and is logged as an invalid decision, and an
+unavailable target leaves state unchanged and is logged as a target error.
+Infrastructure retries stay separate from logical decisions.
+
 The qualification helper's guarded application of its single expected Update
 is a technical-fixture contract. It must not be promoted into a general policy
 rule that rejects or corrects every semantically wrong decision in CRST.
@@ -271,7 +331,7 @@ as one line in the following deterministic form:
 [memory_id=<ID>; created=<CREATED>; updated=<UPDATED>] <TEXT>
 ```
 
-Order entries ascending by `last_updated_time`, then `created_time`, then
+`<TEXT>` is the stored candidate text defined in Section 5. Order entries ascending by `last_updated_time`, then `created_time`, then
 `memory_id`. Exclude evaluator/reference annotations. This is an explicit CRST
 adjudication, not an assumption inherited from LongMemEval retrieval. Supply all
 active entries, without retrieval, top-k, similarity selection, or token-budget
@@ -282,11 +342,49 @@ not. Presentation order may therefore differ as an actual consequence of policy
 semantics. Do not neutralize that consequence post hoc.
 
 **FROZEN answering wording:** all conditions receive the same policy-neutral system
-message, defined in Section 11. **OPEN:** the CRST response schema, the request
-wrapper that places the memory context, and handling of an unexpectedly oversized
-complete-memory request. Qualification answering prompts do not establish a final
-experimental prompt. No silent truncation or retrieval substitution may alter the
-complete-memory condition.
+message, defined in Section 11.
+
+**FROZEN for the Small Pilot: answer request and response.** The answering system
+text is unchanged (Section 11; SHA-256
+`8a6abc2b52c63340aa483023a823c6ff9d8142ab9749b3ae7d6d2f216da5e71e`). The answer-format
+instruction belongs to the final user request, because Q is outside the B0 historical
+token budget. Wrapper version `crst-pilot-answer-request/1.1.0` supersedes the never
+executed 1.0.0. M1, M2, and M3 send one user request:
+
+```text
+Context:
+{serialized_active_memory}
+
+Question:
+{Q}
+
+Return exactly one JSON object with exactly one key named "answer".
+The value of "answer" must contain only the answer to the question, with no explanation or additional text.
+Do not return any other keys.
+```
+
+with no raw history, dense retrieval, or evaluator data. B0 keeps the frozen selected
+raw-history messages under `B0_CONTEXT_TOKENS` and then appends one final user
+message, which is the same text without the `Context:` block:
+
+```text
+Question:
+{Q}
+
+Return exactly one JSON object with exactly one key named "answer".
+The value of "answer" must contain only the answer to the question, with no explanation or additional text.
+Do not return any other keys.
+```
+
+The naturalized Q text stays verbatim inside the wrapper, and the final message never
+enters the historical budget. The provider response mode is `json_object`. The local
+answer schema is `{"answer": "<nonempty nonblank string>"}` with exactly that key,
+validated right after parsing without repair; a malformed answer is an other error.
+Adoption of these decisions for the confirmatory CRST remains a pre-main decision.
+
+**OPEN:** handling of an unexpectedly oversized complete-memory request.
+Qualification answering prompts do not establish a final experimental prompt. No
+silent truncation or retrieval substitution may alter the complete-memory condition.
 
 ## 8. Effectiveness Metrics
 
@@ -306,11 +404,23 @@ CRST final-answer scoring rule, reported separately.
 LongMemEval-S uses its official evaluator and **QA Accuracy**, not CRST CSA/SRR
 as its official final-answer metric.
 
-**OPEN:** exact CRST answer-format/normalization contract, treatment of ambiguous
-multi-value outputs, and missing/invalid-run handling and aggregation. The
-qualification fixture's normalization function is not automatically the final
-CRST scoring implementation. Resolve deterministic rules before pilot scoring
-and confirmatory execution, without adding semantic equivalence heuristics.
+**FROZEN for the Small Pilot: scoring contract.** Scoring is whole-value
+deterministic matching only. Normalization changes representation only: Unicode NFC,
+trim, collapse internal whitespace, and casefold; no type-specific canonicalization
+is used. Classification order: (1) a normalized answer equal to the normalized
+current target is current-correct; (2) otherwise, equal to any normalized superseded
+target value of that variant is a stale/superseded answer; (3) otherwise other error.
+Other error covers invalid structured output, a blank answer, a verbose sentence, a
+distractor value, multiple values, a current-plus-stale combination, and any
+non-whole-value answer. There is no substring, containment, word-boundary, fuzzy,
+embedding, LLM-judge, or paraphrase matching; raw exact equality is a diagnostic
+only. The material validator must ensure the current target and all superseded target
+values remain distinct after normalization. After the live pilot, all 24 final-answer
+classifications are cross-checked manually against the scorer.
+
+**OPEN:** missing/invalid-run handling and aggregation for confirmatory analysis.
+The qualification fixture's normalization function is not the CRST scoring
+implementation.
 
 ## 9. Maintenance Diagnostics
 
@@ -345,8 +455,16 @@ with efficiency.
 **FROZEN active-memory size:** the primary measure is token count across active
 entries at the final query. Exclude version history, inactive entries, reference
 annotations, and logs. Active-entry count and the memory-size trajectory are
-diagnostic. The exact tokenizer for this CRST measure remains **OPEN** until
-explicitly frozen; the retrieval tokenizer freeze does not settle its scope.
+diagnostic. **FROZEN for the Small Pilot:** the primary count is the token count of the exact
+complete serialized active-memory block presented at final Q, including its
+per-entry metadata, and excluding the answer wrapper, Q, the system prompt, inactive
+entries, non-active version history, evaluator annotations, and logs. The tokenizer
+is `meta-llama/Llama-3.1-8B-Instruct` at revision
+`0e9e39f249a16976918f6564b8830bc894c89659` with `add_special_tokens=False`. The
+diagnostics are the text-only entry token count, the active-entry count, and the
+active-memory size after each information event. B0 has no active-memory metric; its
+selected marginal historical tokens are recorded separately. Confirmatory adoption
+remains a pre-main decision.
 
 **FROZEN end-to-end CRST timing:** start the timer when U1 processing starts and
 measure through completion of final answering. Exclude I1–I7 initial-state
@@ -382,10 +500,20 @@ serialized retrieval memory blocks. B0 now has its own explicit marginal
 chat-template counting rule in Section 11; CRST length-matching and active-memory
 size counting are not automatically settled by that B0 scope extension.
 
-**OPEN:** exact CRST accounting schema and aggregation, active-memory tokenizer
-and counting representation, timer instrumentation, missing-usage handling for
-failed attempts, and exact local token-counting measures for CRST length matching. The primary memory-size unit/sampling point and timing boundary above
-are not open. Preserve actual per-attempt evidence rather than guessing details.
+**FROZEN for the Small Pilot: per-request and per-run evidence.** Every logical
+request records its logical ID, policy, scenario, variant, event, the exact request
+body and hash, model and provider, response, usage, latency, cost, and all physical
+attempts. Every policy run records the final answer, its class, the CSA and SRR
+contributions, MOA and Update-target diagnostics where applicable, primary and
+text-only active-memory tokens, the active-entry trajectory, logical API calls,
+physical attempts, logical and retry token usage separately, end-to-end time, the
+API latency diagnostic, and supplemental cost. No policy-level pilot ranking or
+aggregate accuracy comparison is computed or displayed.
+
+**OPEN:** confirmatory accounting aggregation, missing-usage handling for failed
+attempts in summaries, and exact local token-counting measures for CRST length
+matching. The primary memory-size unit/sampling point and timing boundary above are
+not open. Preserve actual per-attempt evidence rather than guessing details.
 
 ## 11. B0 Recent Window
 
@@ -697,10 +825,66 @@ behavior, complete-active-memory answering, and B0 mechanics once resolved.
 It also checks metric logging, token/resource accounting, logical calls versus
 infrastructure retries, provenance, and reproducibility.
 
-**OPEN:** pilot case/sample count, case identities, execution procedure, and
-mechanical acceptance checklist. No pilot cases or results exist by virtue of
-this specification. Pilot outcomes must not be presented as confirmatory policy
-effects or used to select a favored policy.
+**FROZEN pilot configuration** (`configs/crst-small-pilot.yaml`; material in
+`data/crst-small-pilot/`): two pilot-only base scenarios, `pilot-scheduling-01`
+under G1 `openai/gpt-5.6-sol` and `pilot-travel-01` under G2
+`anthropic/claude-fable-5.1`. Their entities, attributes, values, and codes are new
+and are not reused from Generator Qualification, Model Qualification, Dense
+Retrieval Qualification, B0 calibration, LongMemEval-S, or the future confirmatory
+CRST. Each scenario has Low, Medium, and High variants, each run under M1, M2, M3,
+and B0: 6 variants, 24 policy runs, no technical repetition. Backbone logical calls
+per variant are M1 1, B0 1, M2 9 maintenance plus 1 answer, and M3 the same, so 22
+per variant and 132 in total (108 maintenance, 24 answering). Naturalization uses
+2 logical generator units, one triplet per scenario. B0 uses the budget frozen in
+`configs/b0-suffix-calibration.yaml`, which is authoritative for B0; the B0
+placeholders in `configs/retrieval.yaml` are historical.
+
+**FROZEN naturalization failure policy (construction only; it does not reopen
+Generator Qualification or B0).** The unit is one triplet under its preassigned
+generator. A terminal non-evaluable failure (parse or schema failure, a required
+empty or blank field, a refusal, truncation, or an infrastructure-terminal failure
+after the frozen retry policy) allows at most three total logical attempts per unit,
+with the same generator, prompt, and structured input; each attempt is archived
+separately. Field mixing, manual completion, selective field retry, and generator
+substitution are prohibited. After three failures the unit is UNBUILDABLE and work
+stops for a researcher decision. A schema-valid output with a Level-1
+semantic/fidelity failure is not regenerated automatically; work stops for a
+researcher decision. A fluency-only finding does not trigger regeneration; the
+existing provenance-aware minimal surface-edit handling may be used before the final
+dataset freeze, followed by revalidation. The cap is a bounded engineering policy
+fixed prospectively.
+
+**FROZEN pilot workflow and live gates.** (A) Build and validate the structured
+material. (B) Live-naturalize the two triplets with
+`experiments/naturalize_crst_pilot.py`, a separate gated construction step. (C) Audit
+the naturalized material offline (`--audit`): structure, the frozen deterministic
+semantic check, B0 coverage of U7 and N2 within the frozen budget, and, when the
+check leaves findings, a bound researcher review. (D) Only after an eligible audit,
+execute the 24 policy runs and 132 backbone logical calls with
+`experiments/execute_crst_pilot.py`. (E) Replay and score offline from the archived
+raw responses and evaluate the checklist. (F) The researcher reviews the 24
+final-answer classifications. Each live step needs its explicit flags
+(`--execute` and `--confirm-spend`), a clean committed worktree whose files are
+tracked, matching source, config, and material identities, an absent fresh result
+directory, and `OPENROUTER_API_KEY`; the backbone step additionally needs the
+eligible audit bound to the archived naturalization collection and the pinned
+tokenizer. A terminal infrastructure failure or routing violation in step D aborts
+the pilot and preserves the evidence after the frozen infrastructure retry policy is
+exhausted; it is never scored as a model decision or an other error, and a partial
+execution is never continued or interpreted. A schema-invalid maintenance output from
+the model remains an invalid model decision without semantic retry, and a malformed
+final answer remains an other error.
+Backbone calls use the qualified stateless transport (no fallback, no provider
+conversation state, three physical attempts per logical request). There is no main
+experiment in this workflow.
+
+The pilot's results are never effect-size estimates, policy rankings,
+power-analysis inputs, or reasons to change a policy. The binary mechanical
+acceptance checklist is encoded in `configs/crst-small-pilot.yaml`; its offline
+items are executable with `experiments/run_crst_pilot.py --checklist`, and its
+post-naturalization and post-run items stay pending until the corresponding steps
+exist. No pilot execution is authorized by this specification, and no pilot results
+exist.
 
 ## 16. Reproducibility and Provenance
 
@@ -777,19 +961,22 @@ Neither completed qualification nor final statistical values are reopened.
 
 **OPEN before dependent implementation or execution:**
 
-- The CRST response schema and request wrapper remain OPEN (Section 7).
-  `B0_CONTEXT_TOKENS` is frozen at 71 (Section 12), and the calibration design and
+- The CRST response schema and request wrapper are FROZEN for the Small Pilot
+  (Section 7); their adoption for the confirmatory CRST and the handling of an
+  oversized complete-memory request remain OPEN. `B0_CONTEXT_TOKENS` is frozen at 71 (Section 12), and the calibration design and
   answering wording are frozen in Sections 11 and 12.
 - Physical journal/version-history artifact schema and storage layout; semantic
   fields, canonical IDs, reference-target comparison, and execution rules are fixed.
 - Scenario allocation/trajectories beyond frozen constraints, CRST schema, and
   deterministic generator-assignment mechanism/seed within the frozen balancing
   constraints.
-- Exact CRST prompts, response/scoring contract, invalid-run treatment, resource
-  aggregation, active-memory tokenizer/counting representation, timer
-  instrumentation, and length-measure implementation. Memory serialization/order
-  and B0 tokenizer/counting semantics are already frozen.
-- Pilot size/cases/acceptance procedure and other unresolved reproducibility details.
+- Confirmatory adoption of the pilot prompts, response/scoring contract, and
+  active-memory token counting (frozen for the pilot in Sections 6-10), invalid-run
+  treatment, resource aggregation, timer instrumentation, and length-measure
+  implementation. Candidate text, memory serialization/order, and B0
+  tokenizer/counting semantics are already frozen.
+- Pilot execution authorization and other unresolved reproducibility details. The
+  pilot size, cases, and acceptance checklist are FROZEN in Section 15.
 
 **PROVISIONAL:** manuscript-current 5%/2% length tolerances await explicit
 pre-main adjudication; they are not final enforcement thresholds.

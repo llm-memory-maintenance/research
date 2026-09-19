@@ -1,0 +1,248 @@
+{
+  "schema_version": "crst-small-pilot-manifest/1.0.0",
+  "status": "FROZEN",
+  "total_scenarios": 2,
+  "purpose": "CRST-SMALL-PILOT-ONLY",
+  "versions": {
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0"
+  },
+  "construction_source_commit": "8c6cbb8580506b6ed74b2d2b8e30d68bc2e29245",
+  "reference_schema_sha256": "737fe6470599b88b89102305cb6508c0090cd79e16428ee99c6627d2b8a79bf2",
+  "allocation_rule": "Qualification allocation rule evaluated at domain index i + 5, for the secondary-update allocation and for the rotation of the initial-event key order. Pilot-only; not a final CRST allocation decision.",
+  "candidate_template": "For {entity_name}, the {attribute_meaning} is {current_value}.",
+  "generator_assignment": {
+    "pilot-scheduling-01": "G1",
+    "pilot-travel-01": "G2"
+  },
+  "prohibited_uses": [
+    "final confirmatory CRST cases",
+    "Generator Qualification fixtures",
+    "Model Qualification fixtures",
+    "Dense Retrieval Qualification material",
+    "B0 calibration material",
+    "LongMemEval-S material",
+    "capability probe material",
+    "effect-size estimation, policy ranking or power analysis"
+  ],
+  "not_final_crst_data": true,
+  "not_generator_qualification_data": true,
+  "origin": "Independently authored synthetic structured truth; no external corpus content, earlier fixture content or model naturalization.",
+  "reserved_exclusions": {
+    "scenario_ids": [
+      "pilot-scheduling-01",
+      "pilot-travel-01"
+    ],
+    "entity_ids": [
+      "pilot-scheduling-01-distractor",
+      "pilot-scheduling-01-primary",
+      "pilot-travel-01-distractor",
+      "pilot-travel-01-primary"
+    ],
+    "entity_names": [
+      "Ferry crossing Halloway",
+      "Ferry crossing Wrenfield",
+      "Seminar Brindle",
+      "Seminar Kestrel"
+    ],
+    "attribute_ids": [
+      "bag_limit",
+      "cabin_class",
+      "coffee_break",
+      "deck_level",
+      "desk_opening",
+      "embark_gate",
+      "hall_capacity",
+      "handout",
+      "meal_plan",
+      "moderator",
+      "reservation_code",
+      "room_code"
+    ],
+    "state_values": [
+      "06:35",
+      "06:50",
+      "07:35",
+      "08:05",
+      "08:40",
+      "09:20",
+      "10:05",
+      "10:55",
+      "12 kilograms",
+      "12:25",
+      "12:55",
+      "13:35",
+      "22 minutes",
+      "33 minutes",
+      "40 seats",
+      "42 minutes",
+      "55 seats",
+      "6 kilograms",
+      "72 seats",
+      "9 kilograms",
+      "Ansel Wickham",
+      "BKG-W38",
+      "Deck 2",
+      "Deck 5",
+      "Deck 7",
+      "Gate Amberlyn",
+      "Gate Bristlecone",
+      "Gate Corvane",
+      "Gate Dunmere",
+      "Gate Eldrith",
+      "Gate Fallowick",
+      "Gate Gorsemoor",
+      "Gate Hazelgrave",
+      "Gate Ivorlea",
+      "Gate Jessamere",
+      "Gate Kelderby",
+      "Kolya Thrale",
+      "Perpetua Drune",
+      "ROM-B47",
+      "class Anchor",
+      "class Beacon",
+      "class Harbor",
+      "folded card",
+      "loose sheets",
+      "plan galley",
+      "plan hearth",
+      "plan pantry",
+      "stapled packet"
+    ],
+    "attribute_meanings": [
+      "assigned embarkation gate",
+      "cabin class",
+      "carry-on limit",
+      "coffee break length",
+      "ferry reservation identifier",
+      "handout format",
+      "onboard meal plan",
+      "passenger deck level",
+      "registration desk opening time",
+      "seating capacity",
+      "seminar moderator",
+      "seminar room identifier"
+    ]
+  },
+  "coverage_summary": [
+    "categorical_values",
+    "locations",
+    "numeric_values",
+    "scheduling",
+    "times",
+    "travel"
+  ],
+  "scenarios": [
+    {
+      "fixture_id": "pilot-scheduling-01",
+      "domain": "Scheduling",
+      "fixture_path": "fixtures/scheduling.json",
+      "sha256": "c6fcf90929fd7b236eac8ecc9a150d1725180096e58a883533bdae5dc51d9482",
+      "projection_sha256": "9ffe8f72f7d6f841fe5a00e99b6875c37ce77ad9d2a680421babda86f1ccf8c2",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_b",
+          "U2": "k_hard",
+          "U3": "k_b",
+          "U4": "k_c",
+          "U5": "k_d",
+          "U6": "k_a"
+        },
+        "medium": {
+          "U2": "k_d",
+          "U4": "k_hard",
+          "U6": "k_c"
+        },
+        "high": {}
+      },
+      "final_target_value": "10:55",
+      "coverage": [
+        "times",
+        "scheduling",
+        "numeric_values"
+      ],
+      "purpose": "CRST-SMALL-PILOT-ONLY",
+      "generator": "G1",
+      "generator_model": "openai/gpt-5.6-sol"
+    },
+    {
+      "fixture_id": "pilot-travel-01",
+      "domain": "Travel",
+      "fixture_path": "fixtures/travel.json",
+      "sha256": "7776d73e797dfaa1ff75ae4d17e8be27701bb19bd87f10fc913535afec5089a2",
+      "projection_sha256": "e83ef5e0716ed06c9d009d6a16b0eab758a180b59d66fbab96629efb7f3a3297",
+      "target_state_key": "k_target",
+      "hard_distractor_key": "k_hard",
+      "dedicated_n2_secondary_key": "k_n2",
+      "target_schedules": {
+        "low": [
+          "U7"
+        ],
+        "medium": [
+          "U1",
+          "U3",
+          "U5",
+          "U7"
+        ],
+        "high": [
+          "U1",
+          "U2",
+          "U3",
+          "U4",
+          "U5",
+          "U6",
+          "U7"
+        ]
+      },
+      "secondary_allocation": {
+        "low": {
+          "U1": "k_hard",
+          "U2": "k_c",
+          "U3": "k_d",
+          "U4": "k_a",
+          "U5": "k_b",
+          "U6": "k_c"
+        },
+        "medium": {
+          "U2": "k_hard",
+          "U4": "k_d",
+          "U6": "k_a"
+        },
+        "high": {}
+      },
+      "final_target_value": "Gate Hazelgrave",
+      "coverage": [
+        "locations",
+        "travel",
+        "categorical_values"
+      ],
+      "purpose": "CRST-SMALL-PILOT-ONLY",
+      "generator": "G2",
+      "generator_model": "anthropic/claude-fable-5.1"
+    }
+  ]
+}
