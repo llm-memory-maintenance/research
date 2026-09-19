@@ -28,6 +28,10 @@ PROMPT_HASH = 'a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279'
 SCHEMA_HASH = 'c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917'
 # Fallback capability-probe execution-package identity (Sec. 1); UNDER_DEVELOPMENT, never CLOSED here.
 FALLBACK_PACKAGE_HASH = '1316b2b1f3a7f5f15f64d5b3b2ef379c60f96edddff8b5f62bf0e712d7099e1b'
+# Execution package hash for the second-level G2 profile.
+SECOND_LEVEL_G2_PACKAGE_HASH = '94ffcab04921bbdaabc84a66c2bc490706d80941024e74859e3c65bb198a038d'
+PACKAGE_HASHES = {'primary': PACKAGE_HASH, 'fallback': FALLBACK_PACKAGE_HASH,
+                  'second_level_g2': SECOND_LEVEL_G2_PACKAGE_HASH}
 DEFAULT_OUTPUT = ROOT / 'results/generator-qualification/attempt-01'
 FALLBACK_DEFAULT_OUTPUT = ROOT / 'results/generator-qualification/attempt-02'
 PROCEDURE = 'generator-qualification-procedure/1.0.0'
@@ -37,17 +41,11 @@ AUDIT_SCHEMA = 'generator-manual-audit/1.0.0'
 SOURCES = ('experiments/qualify_generators.py', 'experiments/probe_generators.py',
            'experiments/validate_generator_qualification_fixtures.py')
 FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze.json'
-# Separate, immutable live-execution freeze records (docs/generator-qualification.md Sec. 14): the
-# schema pins source-code identity only (commit + SOURCES hashes), not a qualification-protocol
-# version, so every record reuses it unchanged. FREEZE_RECORD (v1) must never be repinned to
-# Protocol-v2-capable bytes. Protocol v2 has freeze revisions, each created only by a LATER freeze
-# commit naming an already-existing implementation commit (two-commit workflow) -- never a
-# self-referential or invented hash. Revision 1, configs/generator-qualification-implementation-
-# freeze-v2.json, is immutable historical provenance of the first v2 implementation and is no longer
-# consulted here (the deterministic-summary fix changed this file). The active v2 record is revision 2;
-# 'r2' names the implementation-freeze revision only, not a new methodology version (procedure/audit
-# stay 2.0.0). Until that record exists, implementation('v2') reports NOT_FROZEN.
-V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2-r2.json'
+# Implementation freeze records pin a commit and the SHA-256 of each file in SOURCES. FREEZE_RECORD covers
+# protocol v1. Protocol v2 uses revisioned records (-v2, -v2-r2, -v2-r3, ...): only the current revision,
+# V2_FREEZE_RECORD, is consulted, and earlier revisions are kept as historical provenance. The revision
+# suffix is independent of the protocol version. implementation('v2') reports NOT_FROZEN until it exists.
+V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2-r3.json'
 FREEZE_SCHEMA = 'generator-qualification-implementation-freeze/1.0.0'
 NOT_FROZEN = 'NOT YET FROZEN FOR LIVE EXECUTION'
 FROZEN = 'FROZEN FOR LIVE EXECUTION'
@@ -174,7 +172,7 @@ def load_inputs(profile='primary', slot=None, protocol='v1'):
     the historical, unchanged two-slot behavior.
     """
     require(profile in probe.PROFILES, f'Unknown candidate profile: {profile}')
-    package_hash = PACKAGE_HASH if profile == 'primary' else FALLBACK_PACKAGE_HASH
+    package_hash = PACKAGE_HASHES[profile]
     selected = probe.PROFILES[profile]
     require(probe.file_hash(selected['config_path']) == package_hash, 'Execution package drift')
     require(probe.file_hash(ROOT / 'configs/generator-naturalization-contract.json') == CONTRACT_HASH,
@@ -800,7 +798,8 @@ def main(argv=None):
     parser.add_argument('--execute', action='store_true')
     parser.add_argument('--confirm-spend', action='store_true')
     parser.add_argument('--profile', choices=sorted(probe.PROFILES), default='primary',
-                        help='primary (CLOSED Attempt-01, FAIL/FAIL) or the predeclared fallback (Terra/Opus)')
+                        help='primary (CLOSED Attempt-01, FAIL/FAIL), the predeclared fallback (Terra/Opus), '
+                             'or the frozen second-level G2 candidate (second_level_g2, one G2 slot)')
     parser.add_argument('--slot', choices=['G1', 'G2'], default=None,
                         help='Restrict Generator Qualification to one candidate slot (12 calls); '
                              'omit for the full profile (historical 24-call behavior, unchanged default)')
@@ -833,9 +832,9 @@ def main(argv=None):
             parser.error('--attempt/--audit alone requires either --adjudication-output or --v2-mapping-output')
     output_directory = args.output_directory
     if output_directory is None:
-        if args.slot is not None:
-            # OPEN: no official single-slot result-path convention has been decided yet (unlike
-            # attempt-01/attempt-02 for the full two-slot profiles); never invented here.
+        if args.slot is not None or args.profile == 'second_level_g2':
+            # Single-slot runs have no default result path, so execution needs an explicit
+            # --output-directory. second_level_g2 has a single slot.
             if args.execute:
                 parser.error('Single-slot execution requires an explicit --output-directory; no '
                              'official single-slot result-path convention exists yet')

@@ -5,16 +5,13 @@
 > contract used by Protocol v1 (`generator-qualification-procedure/1.0.0`). Its
 > behavior of treating any applicable `natural_english` failure as an absolute
 > fixture (and therefore candidate) failure belongs to Protocol v1 only.
-> Protocol v2 methodology is defined in, and its
-> `generator-manual-audit/2.0.0` audit schema/implementation are specified
-> in, [generator-qualification.md §14](generator-qualification.md) (the
-> implementation is frozen at revision r2; under v2 the reviewer
-> decides only cell-level checks and ambiguities, while variant, fixture and
-> candidate dispositions are derived by the adjudicator), and the Protocol-v2
-> offline re-adjudication of the archived evidence is closed (see §14). This
-> document remains authoritative only for reproducing historical Protocol-v1
-> audits. The fixture-set construction
-> content (§1–§4) is unaffected.
+> Protocol v2 and its `generator-manual-audit/2.0.0` audit schema are specified in
+> [generator-qualification.md §14](generator-qualification.md). Under v2 the
+> reviewer decides only cell-level checks and ambiguity resolutions; variant,
+> fixture and candidate dispositions are derived by the adjudicator. The offline v2
+> re-adjudication of the archived evidence is closed (see §14). This document
+> remains authoritative only for reproducing historical Protocol-v1 audits. The
+> fixture-set construction content (§1–§4) is unaffected.
 
 ## 1. Status and Boundaries
 

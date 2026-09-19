@@ -535,13 +535,17 @@ VALIDATE_FIXTURES_SHA256 = '2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf3
 # Freeze history (docs/generator-qualification.md Sec. 14): (1) the historical Protocol-v1-era freeze;
 # (2) Protocol-v2 implementation freeze REVISION 1, configs/generator-qualification-implementation-
 # freeze-v2.json, the immutable historical record of the first v2 implementation (Commit A / freeze
-# 5e00a18); (3) the CURRENT corrected implementation (deterministic v2 summaries), whose active v2
-# freeze record is REVISION 2, configs/generator-qualification-implementation-freeze-v2-r2.json, created
-# only by a later freeze commit. 'r2' names the freeze revision, not a methodology version. r2 pins
-# Commit C (the deterministic-summary fix), whose source bytes are hardcoded below.
+# 5e00a18); (3) v2 REVISION 2, ...-freeze-v2-r2.json, the immutable historical record of the
+# deterministic-summary fix (Commit C); (4) the CURRENT implementation (second_level_g2 profile support
+# added to probe_generators.py / qualify_generators.py), whose active v2 freeze record is REVISION 3,
+# ...-freeze-v2-r3.json, created only by a later freeze commit and NOT yet present. 'r2'/'r3' name freeze
+# revisions, not methodology versions. The historical pins below are hardcoded; the not-yet-frozen
+# current source hashes are deliberately not.
 V2_R1_FREEZE_RECORD = q.ROOT / 'configs/generator-qualification-implementation-freeze-v2.json'
 V2_R1_FREEZE_RECORD_SHA256 = '9ff527e613a9d7096691c41216277c7e17705ca99515160016391d8d70a1d183'
 V2_R2_FREEZE_RECORD_NAME = 'generator-qualification-implementation-freeze-v2-r2.json'
+V2_R2_FREEZE_RECORD = q.ROOT / 'configs' / V2_R2_FREEZE_RECORD_NAME
+V2_R3_FREEZE_RECORD_NAME = 'generator-qualification-implementation-freeze-v2-r3.json'
 V2_R2_FREEZE_RECORD_SHA256 = 'ddbeaee285d5874c2a4a7b6a38dab0262cafcd277449b7d1f073f0e9a497872a'
 COMMIT_C = '30d65102e618aa5713f0710964978f1eb46c4a15'  # fix: derive protocol v2 qualification dispositions
 V2_R2_QUALIFY_GENERATORS_SHA256 = '4f985518dec34731737794009f4c7841a3584dc0d11c1a9c83ee2e367644f09e'
@@ -585,9 +589,8 @@ def test_v2_r1_freeze_record_is_immutable_commit_a_provenance_now_superseded(loa
     """(B) Protocol-v2 freeze revision 1 pins Commit A's real hash and the source bytes reviewed then,
     using the same protocol-agnostic schema as the historical record (no new field invented). It is
     checked by whole-file hash and hardcoded content so it cannot be silently repinned, renamed or
-    repurposed; the summary-derivation fix has since moved qualify_generators.py past it, so the two
-    unchanged support sources still match while qualify_generators.py does not (a successor freeze
-    revision is required, not an overwrite of this record).
+    repurposed; later changes have since moved qualify_generators.py and probe_generators.py past it (only
+    the validator still matches), and a successor freeze revision is required, never an overwrite of it.
     """
     assert V2_R1_FREEZE_RECORD.exists()
     assert q.probe.file_hash(V2_R1_FREEZE_RECORD) == V2_R1_FREEZE_RECORD_SHA256
@@ -601,53 +604,54 @@ def test_v2_r1_freeze_record_is_immutable_commit_a_provenance_now_superseded(loa
             'experiments/validate_generator_qualification_fixtures.py': VALIDATE_FIXTURES_SHA256,
         },
     }
-    current_sources = loaded['provenance']['implementation']['source_sha256']
-    for path in ('experiments/probe_generators.py', 'experiments/validate_generator_qualification_fixtures.py'):
-        assert record['source_sha256'][path] == current_sources[path]
-    assert record['source_sha256']['experiments/qualify_generators.py'] != \
-        current_sources['experiments/qualify_generators.py']
+    assert_moved_past(record, loaded)
 
 
-def test_freeze_history_three_distinct_records_no_record_substitutes_for_another(monkeypatch):
-    """(A)+(B)+(G) Three distinct immutable REAL records: the historical v1 freeze, v2 revision 1 (Commit
-    A) and the active v2 revision 2 (Commit C) -- different paths, commits and qualify_generators.py
-    hashes. No record can substitute for another: with the active lookup pointed at the real r1 record it
-    still validates as authentic (no raise) yet never reports FROZEN for the current bytes, and neither
-    can the v1 record; only r2 freezes the current implementation.
+def assert_moved_past(record, loaded):
+    """A historical freeze record no longer describes the current source: qualify_generators.py and
+    probe_generators.py have changed since, while the fixture validator is still identical."""
+    current = loaded['provenance']['implementation']['source_sha256']
+    assert record['source_sha256']['experiments/validate_generator_qualification_fixtures.py'] == \
+        current['experiments/validate_generator_qualification_fixtures.py']
+    for path in ('experiments/qualify_generators.py', 'experiments/probe_generators.py'):
+        assert record['source_sha256'][path] != current[path]
+
+
+def test_freeze_history_distinct_records_no_record_substitutes_for_another(monkeypatch):
+    """(A)+(B)+(C) Distinct immutable REAL records: the historical v1 freeze, v2 revision 1 (Commit A) and
+    v2 revision 2 (Commit C) exist on disk with different paths, commits and qualify_generators.py hashes;
+    the CURRENT implementation's active v2 record is a fourth path -- revision 3 -- that does not exist yet.
+    No record can substitute for another: with the active lookup pointed at any real historical record it
+    still validates as authentic (no raise) yet never reports FROZEN for the current bytes, and the default
+    active lookup (the absent r3) reports NOT_FROZEN.
     """
-    assert q.V2_FREEZE_RECORD.name == V2_R2_FREEZE_RECORD_NAME and q.V2_FREEZE_RECORD.parent == V2_R1_FREEZE_RECORD.parent
-    assert len({q.FREEZE_RECORD, V2_R1_FREEZE_RECORD, q.V2_FREEZE_RECORD}) == 3
-    assert q.FREEZE_RECORD.exists() and V2_R1_FREEZE_RECORD.exists() and q.V2_FREEZE_RECORD.exists()
-    assert q.implementation('v2')['status'] == q.FROZEN  # Only because r2 exists (see the hide test below).
-    monkeypatch.setattr(q, 'V2_FREEZE_RECORD', V2_R1_FREEZE_RECORD)
-    r1_authentic = q.implementation('v2')  # Authentic vs git history -> graceful NOT_FROZEN, not an error.
-    assert r1_authentic['status'] == q.NOT_FROZEN and r1_authentic['freeze_commit'] is None
-    monkeypatch.setattr(q, 'V2_FREEZE_RECORD', q.FREEZE_RECORD)  # Even the v1 record cannot freeze v2.
-    assert q.implementation('v2')['status'] == q.NOT_FROZEN
-    v1 = q.fixtures.read(q.FREEZE_RECORD)
-    v2 = q.fixtures.read(V2_R1_FREEZE_RECORD)
-    r2 = q.fixtures.read(q.ROOT / 'configs' / V2_R2_FREEZE_RECORD_NAME)
-    assert len({v1['implementation_commit'], v2['implementation_commit'], r2['implementation_commit']}) == 3
-    assert len({v1['source_sha256']['experiments/qualify_generators.py'],
-                v2['source_sha256']['experiments/qualify_generators.py'],
-                r2['source_sha256']['experiments/qualify_generators.py']}) == 3
-    assert v1['implementation_commit'] == CURRENT_FROZEN_COMMIT != COMMIT_A == v2['implementation_commit']
-    assert v1['source_sha256']['experiments/qualify_generators.py'] == HISTORICAL_QUALIFY_GENERATORS_SHA256
-    assert v2['source_sha256']['experiments/qualify_generators.py'] == V2_COMMIT_A_QUALIFY_GENERATORS_SHA256
-    assert v1['source_sha256']['experiments/qualify_generators.py'] != \
-        v2['source_sha256']['experiments/qualify_generators.py']
+    r3 = q.ROOT / 'configs' / V2_R3_FREEZE_RECORD_NAME
+    assert q.V2_FREEZE_RECORD == r3 and not r3.exists()
+    assert len({q.FREEZE_RECORD, V2_R1_FREEZE_RECORD, V2_R2_FREEZE_RECORD, r3}) == 4
+    assert q.FREEZE_RECORD.exists() and V2_R1_FREEZE_RECORD.exists() and V2_R2_FREEZE_RECORD.exists()
+    assert q.implementation('v2')['status'] == q.NOT_FROZEN  # Active r3 absent: no fallback to any other.
+    for historical in (V2_R1_FREEZE_RECORD, V2_R2_FREEZE_RECORD, q.FREEZE_RECORD):
+        monkeypatch.setattr(q, 'V2_FREEZE_RECORD', historical)
+        authentic = q.implementation('v2')  # Authentic vs git history -> graceful NOT_FROZEN, not an error.
+        assert authentic['status'] == q.NOT_FROZEN and authentic['freeze_commit'] is None
+    v1, r1, r2 = (q.fixtures.read(path) for path in (q.FREEZE_RECORD, V2_R1_FREEZE_RECORD, V2_R2_FREEZE_RECORD))
+    assert [v1['implementation_commit'], r1['implementation_commit'], r2['implementation_commit']] == \
+        [CURRENT_FROZEN_COMMIT, COMMIT_A, COMMIT_C]
+    assert [x['source_sha256']['experiments/qualify_generators.py'] for x in (v1, r1, r2)] == \
+        [HISTORICAL_QUALIFY_GENERATORS_SHA256, V2_COMMIT_A_QUALIFY_GENERATORS_SHA256, V2_R2_QUALIFY_GENERATORS_SHA256]
+    assert len({x['source_sha256']['experiments/qualify_generators.py'] for x in (v1, r1, r2)}) == 3
 
 
-def test_v2_r2_freeze_record_points_to_commit_c_and_matches_current_reviewed_bytes(loaded):
-    """(C)+(D) The active v2 freeze (revision 2) pins Commit C's real hash -- never a later freeze commit
-    or an invented one -- and the exact current reviewed source bytes, using the same protocol-agnostic
-    schema as the historical records (no field invented). Checked by whole-file hash and hardcoded
-    content so it cannot be silently repinned. The file is the ONLY one the active lookup reads.
+def test_v2_r2_freeze_record_is_immutable_commit_c_provenance_now_superseded(loaded):
+    """(B) Protocol-v2 freeze revision 2 (the deterministic-summary fix) pins Commit C's real hash and the
+    source bytes reviewed then, by whole-file hash and hardcoded content so it cannot be silently repinned,
+    renamed or repurposed. It is no longer the active record: adding the second_level_g2 profile has since
+    moved qualify_generators.py and probe_generators.py past it, and only revision 3 can freeze the current
+    implementation.
     """
-    path = q.ROOT / 'configs' / V2_R2_FREEZE_RECORD_NAME
-    assert q.V2_FREEZE_RECORD == path and path.exists()
-    assert q.probe.file_hash(path) == V2_R2_FREEZE_RECORD_SHA256
-    record = q.fixtures.read(path)
+    assert V2_R2_FREEZE_RECORD.exists() and q.V2_FREEZE_RECORD != V2_R2_FREEZE_RECORD
+    assert q.probe.file_hash(V2_R2_FREEZE_RECORD) == V2_R2_FREEZE_RECORD_SHA256
+    record = q.fixtures.read(V2_R2_FREEZE_RECORD)
     assert record == {
         'schema_version': q.FREEZE_SCHEMA,
         'implementation_commit': COMMIT_C,
@@ -657,18 +661,18 @@ def test_v2_r2_freeze_record_points_to_commit_c_and_matches_current_reviewed_byt
             'experiments/validate_generator_qualification_fixtures.py': VALIDATE_FIXTURES_SHA256,
         },
     }
-    assert COMMIT_C != COMMIT_A and record['implementation_commit'] != q.fixtures.read(V2_R1_FREEZE_RECORD)['implementation_commit']
-    current_sources = {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}
-    assert record['source_sha256'] == current_sources == loaded['provenance']['implementation']['source_sha256']
-    assert q.V2_FREEZE_RECORD != V2_R1_FREEZE_RECORD and q.V2_FREEZE_RECORD != q.FREEZE_RECORD
+    assert COMMIT_C != COMMIT_A
+    assert_moved_past(record, loaded)
 
 
-def test_v2_real_gate_reports_frozen_only_because_r2_exists():
-    """(E) The real, non-simulated load_inputs(protocol='v2') pipeline reads the r2 record, validates it
-    as authentic against Commit C's git history, and reports FROZEN with Commit C as the freeze commit --
-    solely because r2 exists (see the hide test below)."""
+def test_v2_active_freeze_target_is_r3_and_real_gate_reports_not_frozen_because_it_is_absent():
+    """(D) The real, non-simulated load_inputs(protocol='v2') pipeline reads only the r3 record for the
+    current implementation; it does not exist before its freeze commit, so it reports NOT_FROZEN -- the
+    graceful state, not an error -- and live v2 execution is blocked until r3 exists. r3 is the successor
+    freeze path; its filename names the freeze revision only (methodology stays 2.0.0)."""
+    assert q.V2_FREEZE_RECORD.name == V2_R3_FREEZE_RECORD_NAME and not q.V2_FREEZE_RECORD.exists()
     implementation = q.load_inputs(profile='primary', protocol='v2')['provenance']['implementation']
-    assert implementation == {'status': q.FROZEN, 'freeze_commit': COMMIT_C,
+    assert implementation == {'status': q.NOT_FROZEN, 'freeze_commit': None,
                               'source_sha256': {s: q.probe.file_hash(q.ROOT / s) for s in q.SOURCES}}
 
 
@@ -714,23 +718,22 @@ def test_v2_gate_never_falls_back_to_v1_record_even_when_v1_is_frozen(tmp_path, 
     assert q.implementation('v2')['status'] == q.NOT_FROZEN  # v1 being FROZEN never leaks into v2.
 
 
-def test_hiding_r2_returns_v2_to_not_frozen_even_with_r1_present_and_refuses_before_network(monkeypatch, tmp_path):
-    """(F) Hiding r2 (as if its freeze commit never happened) returns current v2 to NOT_FROZEN even though
-    the historical r1 record is present and untouched, and live v2 execution refuses before any network
-    call and before any output directory is created, with a message about the implementation not being
-    frozen -- never a claim that Protocol v2 is unsupported. (Never run against the real r2: with it
-    present the gate passes, so this test always hides it first.)"""
-    assert V2_R1_FREEZE_RECORD.exists()
-    monkeypatch.setattr(q, 'V2_FREEZE_RECORD', tmp_path / V2_R2_FREEZE_RECORD_NAME)
-    assert not q.V2_FREEZE_RECORD.exists()
+def test_v2_live_execution_refuses_before_network_until_r3_freeze_exists_even_with_r1_r2_present(monkeypatch, tmp_path):
+    """(F) Before the r3 freeze commit (real repository state) current v2 reports NOT_FROZEN even though
+    the historical r1 and r2 records are present and untouched, and live v2 execution refuses before any
+    network call and before any output directory is created, with a message about the implementation not
+    being frozen -- never a claim that Protocol v2 is unsupported. Also holds for the second_level_g2 profile."""
+    assert V2_R1_FREEZE_RECORD.exists() and V2_R2_FREEZE_RECORD.exists() and not q.V2_FREEZE_RECORD.exists()
     assert q.implementation('v2')['status'] == q.NOT_FROZEN
     monkeypatch.setenv('OPENROUTER_API_KEY', 'test-secret-must-never-be-sent')
     output = tmp_path / 'must-not-be-created'
-    with pytest.raises(ValueError) as excinfo:
-        q.main(['--execute', '--confirm-spend', '--protocol-version', 'v2', '--output-directory', str(output)])
-    assert 'NOT YET FROZEN FOR LIVE EXECUTION' in str(excinfo.value)
-    assert 'unsupported' not in str(excinfo.value).lower()
-    assert not output.exists()
+    for profile in ('primary', 'second_level_g2'):
+        with pytest.raises(ValueError) as excinfo:
+            q.main(['--execute', '--confirm-spend', '--protocol-version', 'v2', '--profile', profile,
+                   '--output-directory', str(output)])
+        assert 'NOT YET FROZEN FOR LIVE EXECUTION' in str(excinfo.value)
+        assert 'unsupported' not in str(excinfo.value).lower()
+        assert not output.exists()
 
 
 def test_removing_v2_freeze_record_reverts_to_not_frozen_refuses_before_network(monkeypatch, tmp_path):
@@ -1246,7 +1249,7 @@ def test_v1_implementation_unaffected_by_v2_freeze_completion(loaded):
     """The historical per-slot-support (v1) freeze record still pins CURRENT_FROZEN_COMMIT/its own
     hashes, completely unaffected by the Protocol-v2 freeze workflow completing on top: the runner
     still correctly reports NOT_FROZEN for protocol='v1' against current bytes (not a false FROZEN
-    claim), and the v2 freeze record's own existence/commit is a fully separate fact.
+    claim), and the v2 freeze records' own existence/commits are fully separate facts.
     """
     implementation = loaded['provenance']['implementation']  # loaded defaults to protocol='v1'.
     assert implementation['status'] == q.NOT_FROZEN and implementation['freeze_commit'] is None
@@ -1254,7 +1257,8 @@ def test_v1_implementation_unaffected_by_v2_freeze_completion(loaded):
     assert q.fixtures.read(q.FREEZE_RECORD)['implementation_commit'] == CURRENT_FROZEN_COMMIT
     assert V2_R1_FREEZE_RECORD.exists()  # v2 revision 1 (Commit A) is preserved historical provenance.
     assert q.fixtures.read(V2_R1_FREEZE_RECORD)['implementation_commit'] == COMMIT_A
-    assert q.V2_FREEZE_RECORD.exists()  # The active r2 record (Commit C) now exists; v1 is separate.
+    assert q.fixtures.read(V2_R2_FREEZE_RECORD)['implementation_commit'] == COMMIT_C  # r2: historical.
+    assert not q.V2_FREEZE_RECORD.exists()  # The active r3 record awaits its freeze commit; v1 is separate.
 
 
 # --- Protocol v2 (docs/generator-qualification.md Sec. 14): comprehensibility/fluency split, the
@@ -1600,13 +1604,12 @@ def test_offline_v2_mapping_and_adjudication_independent_of_live_freeze(inputs, 
         outcome = q.adjudicate(result, v2_template, checksum, inputs['slots'], protocol='v2')
         assert outcome['candidates'] == {'G1': 'QUALIFIED', 'G2': 'QUALIFIED'}
 
-    assert q.V2_FREEZE_RECORD.exists()  # Real state: the active r2 record is present.
+    assert not q.V2_FREEZE_RECORD.exists()  # Real state: the active r3 record is absent (pre-r3).
     run_offline_v2_pipeline()
-    monkeypatch.setattr(q, 'V2_FREEZE_RECORD', tmp_path / 'hidden-r2.json')  # r2 hidden.
-    assert not q.V2_FREEZE_RECORD.exists()
-    run_offline_v2_pipeline()
-    monkeypatch.setattr(q, 'V2_FREEZE_RECORD', V2_R1_FREEZE_RECORD)  # A different record present instead.
-    run_offline_v2_pipeline()  # Identical result whichever freeze record is (or isn't) visible.
+    for record in (V2_R1_FREEZE_RECORD, V2_R2_FREEZE_RECORD):  # A historical record present instead.
+        monkeypatch.setattr(q, 'V2_FREEZE_RECORD', record)
+        assert q.V2_FREEZE_RECORD.exists()
+        run_offline_v2_pipeline()  # Identical result whichever freeze record is (or isn't) visible.
 
 
 def test_v2_cli_flag_validation(tmp_path):
@@ -1691,12 +1694,12 @@ def test_v2_mocked_execution_accepted_not_rejected_for_protocol_alone(inputs, tm
     assert result['status'] == 'PENDING_MANUAL_AUDIT' and len(result['calls']) == 24 and len(calls) == 24
 
 
-def test_v2_mocked_execution_reaches_transport_and_real_r2_gate_agrees(inputs, tmp_path, monkeypatch):
+def test_v2_mocked_execution_reaches_transport_while_real_gate_awaits_r3(inputs, tmp_path, monkeypatch):
     """Native v2 mocked execution passes the freeze gate and reaches the mocked transport -- never a real
-    network request (the inputs simulate FROZEN per the suite's hermetic convention) -- while the REAL,
-    unmocked implementation('v2') independently agrees via the r2 record pinning Commit C, so the
-    simulated status is not fiction relative to the real freeze."""
-    assert q.implementation('v2')['status'] == q.FROZEN and q.implementation('v2')['freeze_commit'] == COMMIT_C
+    network request (the inputs simulate FROZEN per the suite's hermetic convention) -- even though the
+    REAL, unmocked implementation('v2') currently reports NOT_FROZEN (the r3 freeze record does not exist
+    yet); live execution stays blocked until it does."""
+    assert q.implementation('v2')['status'] == q.NOT_FROZEN
     result, calls, path, _ = mocked_collect_v2(inputs, tmp_path, monkeypatch)
     assert result['status'] == 'PENDING_MANUAL_AUDIT' and len(result['calls']) == 24 and len(calls) == 24
     assert result['procedure_version'] == q.PROCEDURE_V2
@@ -1763,12 +1766,71 @@ def test_v2_historical_mapping_stays_separate_from_native_v2_audit_creation(inpu
         q.derive_v2_audit_template(result, checksum, v2_audit, v2_inputs['slots'])
 
 
-def test_second_level_g2_candidate_cannot_qualify_before_its_own_capability_closes_pass(monkeypatch):
-    """The frozen second-level G2 candidate (anthropic/claude-fable-5.1) has no capability evidence yet, so
-    Generator Qualification for it is refused by the existing per-slot capability gate, and no other
-    candidate's recorded PASS/FAIL can authorize it (no call is made)."""
-    slot = dict(logical_call_id='G2', model='anthropic/claude-fable-5.1', provider_order=['anthropic'])
-    monkeypatch.setitem(q.probe.PROFILES, 'second_level_g2', dict(
-        config_path=q.ROOT / 'configs/generator-capability-probe-second-level-g2.yaml', slots=[slot]))
-    with pytest.raises(ValueError, match='requires CLOSED/PASS capability evidence.*OPEN/NOT_ASSESSED'):
-        q.slot_capability_gate('second_level_g2', slot)
+# --- Second-level G2 profile (anthropic/claude-fable-5.1): offline support for both its Capability Probe and
+# future native Protocol-v2 Generator Qualification; nothing here executes or calls any API. ---
+
+FABLE = 'anthropic/claude-fable-5.1'
+
+
+def test_second_level_g2_qualification_preview_is_12_g2_calls_native_v2(capsys):
+    primary = q.load_inputs()
+    for argv in (['--profile', 'second_level_g2', '--slot', 'G2', '--protocol-version', 'v2'],
+                 ['--profile', 'second_level_g2', '--protocol-version', 'v2']):
+        assert q.main(argv) == 0
+        shown = json.loads(capsys.readouterr().out)
+        assert shown['status'] == 'NETWORK_DISABLED' and shown['credits'] == 'CREDITS_NOT_SPENT'
+        assert shown['candidate_profile'] == 'SECOND_LEVEL_G2' and shown['procedure_version'] == q.PROCEDURE_V2
+        assert shown['planned_logical_calls'] == 12 and shown['per_candidate'] == 12
+        assert [(c['logical_call_id'], c['model'], c['provider_order']) for c in shown['candidates']] == [
+            ('G2', FABLE, ['anthropic'])]
+        ids = shown['fixture_ids']  # The SAME 12 frozen qualification fixtures, in manifest order.
+        assert ids == [f['fixture_id'] for f in primary['fixtures']] and len(ids) == 12
+        assert shown['planned_calls'] == [f'{i + 1}:G2:{fid}' for i, fid in enumerate(ids)]  # No G1 call.
+        assert shown['execution_config_sha256'] == q.SECOND_LEVEL_G2_PACKAGE_HASH
+        assert shown['qualification_implementation_status'] == q.NOT_FROZEN  # Live blocked until r3.
+        assert shown['result_directory'].startswith('OPEN:')  # Never defaults into an existing attempt directory.
+
+
+def test_second_level_g2_shares_frozen_package_and_pins_first_party_route():
+    inputs = q.load_inputs(profile='second_level_g2', slot='G2', protocol='v2')
+    reference = q.load_inputs()
+    assert q.PACKAGE_HASHES == {'primary': q.PACKAGE_HASH, 'fallback': q.FALLBACK_PACKAGE_HASH,
+                                'second_level_g2': q.SECOND_LEVEL_G2_PACKAGE_HASH}
+    assert len(set(q.PACKAGE_HASHES.values())) == 3
+    shared = ('fixture_set_commit', 'fixture_manifest_sha256', 'contract_sha256', 'prompt_sha256',
+              'output_schema_sha256', *q.probe.VERSIONS)
+    for key in shared:
+        assert inputs['provenance'][key] == reference['provenance'][key]
+    assert inputs['fixtures'] == reference['fixtures'] and inputs['manifest'] == reference['manifest']
+    bodies = [q.request(inputs, slot, truth) for slot, truth, _ in q.plan(inputs)]
+    assert len(bodies) == 12 and len({json.dumps(b, sort_keys=True) for b in bodies}) == 12
+    for body in bodies:
+        assert body['model'] == FABLE and body['provider'] == {
+            'order': ['anthropic'], 'allow_fallbacks': False, 'require_parameters': True}
+        assert not {'temperature', 'top_p', 'tools'} & body.keys()
+        assert body['reasoning'] == {'effort': 'low'} and body['max_tokens'] == 16384
+        assert body['response_format']['json_schema']['strict'] is True
+    primary_body = q.request(reference, reference['slots'][1], reference['fixtures'][0])  # Sonnet, same fixture.
+    assert {**primary_body, 'model': FABLE} == bodies[0]  # Identical request semantics; only identity differs.
+
+
+def test_second_level_g2_live_execution_requires_explicit_output_directory_and_never_uses_existing_attempts(tmp_path):
+    with pytest.raises(SystemExit):  # No official result-path convention exists; none is invented.
+        q.main(['--profile', 'second_level_g2', '--execute', '--confirm-spend', '--protocol-version', 'v2'])
+    assert not (q.ROOT / 'results/generator-qualification/attempt-03').exists()
+
+
+def test_second_level_g2_qualification_blocked_until_its_own_capability_closes_pass(monkeypatch, tmp_path):
+    """The frozen candidate has no capability evidence yet, so live Generator Qualification for it is refused
+    by the existing per-slot capability gate BEFORE any network client is created, even with the freeze
+    gate simulated as satisfied; no other candidate's recorded PASS/FAIL can authorize it."""
+    inputs = q.load_inputs(profile='second_level_g2', slot='G2', protocol='v2')
+    inputs['provenance']['implementation'].update(status=q.FROZEN, freeze_commit='f' * 40)
+    monkeypatch.setattr(q, 'git', fake_git)
+    output = tmp_path / 'absent'
+
+    def forbidden(**kwargs):
+        pytest.fail('Second-level G2 execution reached the network before its capability gate')
+    with pytest.raises(ValueError, match=r'G2 \(anthropic/claude-fable-5.1\).*CLOSED/PASS.*OPEN/NOT_ASSESSED'):
+        asyncio.run(q.collect(inputs, 'test-secret', output, client_factory=forbidden, protocol='v2'))
+    assert not output.exists()

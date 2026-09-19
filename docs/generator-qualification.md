@@ -633,15 +633,22 @@ written freeze before it is probed. If capability closes PASS, the candidate is
 eligible for native Protocol-v2 Generator Qualification
 (`generator-qualification-procedure/2.0.0`, `generator-manual-audit/2.0.0`, the
 same frozen 12 fixtures, prompt, schema, semantic checks, comprehensibility/
-fluency audit and r2 adjudicator, none changed for it). **Capability probe:
-PENDING. Generator Qualification: not run. G2 remains unresolved until
-qualification completes.** Launch mechanism: the official capability/
-qualification CLIs select candidates from profiles hardcoded in the
-freeze-pinned sources (`probe_generators.py`, `qualify_generators.py`), so
-adding a profile for this candidate is a separate reviewed implementation
-change that requires a new implementation-freeze revision before any call;
-this freeze changed no source. Sol, Terra, Sonnet, Opus, every Protocol-v1 and
-Protocol-v2 Attempt-01/02 artifact and the G1 resolution are untouched.
+fluency audit and r2 adjudicator, none changed for it).
+
+The capability probe and Generator Qualification for this candidate have not been
+run, and G2 remains unresolved until qualification completes. The official CLIs
+select candidates from profiles in the pinned sources, so support was added as the
+`second_level_g2` profile: one G2 slot with this exact candidate, the routing
+above and the frozen config. The probe input, fixtures, prompt, schema, reasoning
+and max-token settings, retry policy and v2 criteria are unchanged. The profile
+supports the capability preview (`--profile second_level_g2`: one G2 call) and,
+should capability close PASS, native qualification (`--profile second_level_g2
+--slot G2 --protocol-version v2`: the same 12 frozen fixtures as 12 G2 calls, no
+G1 call), so a capability PASS needs no further source change. Live execution
+requires the successor implementation freeze (§14) and an explicit
+`--output-directory`. The closed results (Sol, Terra, Sonnet, Opus and all
+Protocol-v1 and Protocol-v2 attempt artifacts) and the G1 resolution are not
+affected.
 
 **Approved future procedural order:** (1) freeze these decisions -- done; (2)
 implement generic per-slot capability state and single-slot probe/
@@ -779,90 +786,76 @@ Terra, and Opus all remained not Generator-Qualified under Protocol v1; the
 later Protocol-v2 offline re-adjudication (§14) is recorded separately and
 does not alter this v1 closure.
 
-## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation r2 FROZEN; Offline Re-adjudication Closed)
+## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r3 Pending; Offline Re-adjudication Closed)
 
-**Status: PROTOCOL v2 METHODOLOGY: FROZEN. PROTOCOL v2 IMPLEMENTATION r2:
-FROZEN. NATIVE v2 LIVE EXECUTION: ENABLED BY THE r2 FREEZE. OFFICIAL v2
-RE-ADJUDICATION RESULT CLOSURE: COMPLETE (Sol QUALIFIED, Terra QUALIFIED,
-Sonnet FAIL; G1 = Sol; G2 unresolved) -- see "Protocol-v2 re-adjudication
-results" below.** No Protocol-v1 result or artifact is changed by this
-section. The first Protocol-v2 implementation was committed as Commit A
-(`6412b368e9c49891510aeb73d1fa208442df3c01`, "feat: implement generator
-qualification protocol v2") and frozen by revision 1 of the implementation
-freeze (below). An audit then found an implementation defect: the v2
-adjudicator required the reviewer to mark variant, fixture and candidate
-dispositions manually (a Protocol-v1 requirement), although the frozen v2 rule
-and the frozen v1 -> v2 mapping decision treat them as derived. It was
-corrected (see "Human decisions versus derived outcomes (v2)" below), which
-changes `experiments/qualify_generators.py`. The corrected
-implementation was committed as Commit C
+**Status.** The Protocol-v2 methodology is frozen. The offline re-adjudication of
+the archived evidence is closed (Sol and Terra qualified, Sonnet failed, G1 is
+Sol, G2 is unresolved; see "Protocol-v2 re-adjudication results" below). No
+Protocol-v1 result or artifact is changed by this section.
+
+**Implementation freeze lineage.** The first Protocol-v2 implementation (Commit A,
+`6412b368e9c49891510aeb73d1fa208442df3c01`, "feat: implement generator
+qualification protocol v2") was frozen by revision 1 of the implementation
+freeze. A later audit found that the v2 adjudicator required the reviewer to mark
+variant, fixture and candidate dispositions manually, a Protocol-v1 requirement,
+although the frozen v2 rule and the v1 -> v2 mapping decision treat them as
+derived. The correction (see "Human decisions versus derived outcomes (v2)")
+changed `experiments/qualify_generators.py`; it was committed as Commit C
 (`30d65102e618aa5713f0710964978f1eb46c4a15`, "fix: derive protocol v2
-qualification dispositions"), and the active v2 freeze record for it is
-revision 2, `configs/generator-qualification-implementation-freeze-v2-r2.json`,
-which names Commit C. r2 supersedes r1 for current Protocol-v2 live execution:
-`implementation('v2')` reads only r2 and reports FROZEN, so live
-`--protocol-version v2 --execute` now passes this gate (subject to every other
-unrelated execution guard: clean worktree, capability evidence, API key,
-etc.); no live execution has been performed under it. Between Commit C and the
-r2 freeze commit the gate correctly reported NOT_FROZEN. The `r2` suffix names
-the implementation-freeze revision only: the methodology versions remain
-`generator-qualification-procedure/2.0.0` and
-`generator-manual-audit/2.0.0`.
-
-**Two-commit freeze workflow and implementation freeze records.** Separate,
-immutable records, all using the same protocol-agnostic freeze schema (`generator-qualification-implementation-freeze/1.0.0`, which pins
-source-code identity -- a commit plus SHA-256 of the three qualification-
-runner source files -- and carries no qualification-procedure-version field of
-its own): `configs/generator-qualification-implementation-freeze.json`
-remains the historical Protocol-v1-era record, untouched, still pinning only
-the pre-v2 (per-slot-support) commit
-(`585b5e2844504fec703287f8dd4869668615671d`) and hashes, and MUST NOT be
-repinned to Protocol-v2-capable bytes. `configs/generator-qualification-
-implementation-freeze-v2.json` (revision 1, the first Protocol-v2
-implementation freeze) is immutable historical provenance that pins the first
-Protocol-v2-capable implementation at Commit A
-(`experiments/qualify_generators.py` SHA-256
-`38896235ec7a4b9b1fff59d2ae0d0ec6ef7c22ee567e131ac614ca8134355dc0`;
-`probe_generators.py` and `validate_generator_qualification_fixtures.py`
-unchanged from the historical record) -- Commit A existed first (a separate,
-prior commit), and that record names its real hash, never inventing one or
-referencing itself. It is never renamed, modified, deleted or repurposed and
-still authentically identifies the earlier implementation, but no longer
-freezes the current one. The corrected implementation followed the same
-two-commit pattern: its implementation commit (Commit C) first, then a
-separate freeze commit creating revision 2,
+qualification dispositions") and frozen by revision 2,
 `configs/generator-qualification-implementation-freeze-v2-r2.json`, which
-names Commit C's real hash (`30d65102e618aa5713f0710964978f1eb46c4a15`) and pins the
-current source bytes (`experiments/qualify_generators.py` SHA-256
-`4f985518dec34731737794009f4c7841a3584dc0d11c1a9c83ee2e367644f09e`;
-`probe_generators.py` and `validate_generator_qualification_fixtures.py`
-unchanged from the earlier records). Three distinct immutable records result:
-the historical v1 record, v2 revision 1 (Commit A) and v2 revision 2 (Commit
-C); none substitutes for another, and revision 1 cannot freeze the current
-implementation even though it remains valid historical provenance. Because the schema has no field for a
-qualification-procedure-version association, that association is documented
-here in prose (and in `docs/decisions.md`) and by the `-v2` / `-v2-r2`
-filenames, rather than by inventing a new schema field. Historical Protocol-v1
-replay/adjudication of Attempt-01 and Attempt-02 remains fully supported and
-reproduces their frozen `{'G1': 'FAIL', 'G2': 'FAIL'}` / `{'G1': 'FAIL'}`
-verdicts unchanged, and is wholly unaffected by the v2 freeze records --
-`implementation('v1')` reads only the historical v1 record and
-`implementation('v2')` reads only the active v2 record (r2); no freeze record
-ever substitutes for another, and hiding r2 returns v2 to NOT_FROZEN even with
-revision 1 present. Purely offline Protocol-v2 operations that generate no new
-evidence -- historical v1 -> v2 mapping, v2 audit-template construction, and
-v2 adjudication of an already-completed audit -- consult no freeze record at
-all and behave identically regardless of whether any exists; the freeze gate
-applies specifically to NATIVE LIVE qualification execution. Protocol v2
-supports both (1) offline re-adjudication of already-archived Protocol-v1
-evidence via the historical mapping below, and (2) native direct
-qualification of a future candidate that has never been qualified under any
-protocol (`--protocol-version v2 --execute`), which shares the identical
-generation contract and is recorded under
-`generator-qualification-procedure/2.0.0` / `generator-manual-audit/2.0.0`
-from the start. No live v2 qualification has been executed; the archived
-evidence was re-adjudicated offline under the r2 freeze (see "Protocol-v2
-re-adjudication results" below).
+superseded revision 1.
+
+Support for the second-level G2 candidate profile (`second_level_g2`; see §12)
+then changed `experiments/probe_generators.py` and
+`experiments/qualify_generators.py`, two of the three pinned sources. Revision 2
+therefore remains as historical provenance of the earlier implementation and no
+longer freezes the current code. The current freeze record is revision 3,
+`configs/generator-qualification-implementation-freeze-v2-r3.json`, to be created
+against the implementation commit that carries this support. Until it exists,
+`implementation('v2')` reports NOT_FROZEN and live `--protocol-version v2
+--execute` refuses before any network request. The revision suffix names the
+implementation freeze only; the procedure and audit versions remain
+`generator-qualification-procedure/2.0.0` and `generator-manual-audit/2.0.0`.
+
+**Implementation freeze records.** All records use the same protocol-agnostic schema
+(`generator-qualification-implementation-freeze/1.0.0`), which pins a commit and
+the SHA-256 of the three qualification-runner source files and has no
+procedure-version field. The association with the qualification procedure is
+therefore recorded in prose and in the record filenames rather than in a new
+schema field. Each record is immutable and names an implementation commit that
+already existed when the record was created:
+
+- `configs/generator-qualification-implementation-freeze.json`: the Protocol-v1-era
+  record. It pins commit `585b5e2844504fec703287f8dd4869668615671d` and the pre-v2
+  sources, and is never repinned to Protocol-v2-capable bytes.
+- `configs/generator-qualification-implementation-freeze-v2.json` (revision 1):
+  pins Commit A (`6412b368e9c49891510aeb73d1fa208442df3c01`;
+  `experiments/qualify_generators.py` SHA-256
+  `38896235ec7a4b9b1fff59d2ae0d0ec6ef7c22ee567e131ac614ca8134355dc0`).
+- `configs/generator-qualification-implementation-freeze-v2-r2.json` (revision 2):
+  pins Commit C (`30d65102e618aa5713f0710964978f1eb46c4a15`;
+  `experiments/qualify_generators.py` SHA-256
+  `4f985518dec34731737794009f4c7841a3584dc0d11c1a9c83ee2e367644f09e`).
+- `configs/generator-qualification-implementation-freeze-v2-r3.json` (revision 3):
+  the current record; not yet created.
+
+`probe_generators.py` and `validate_generator_qualification_fixtures.py` were
+unchanged across revisions 1 and 2. `implementation('v1')` reads only the v1
+record and `implementation('v2')` reads only the current v2 record; no record
+substitutes for another, and a historical revision cannot freeze the current
+implementation. Historical Protocol-v1 replay and adjudication of Attempt-01 and
+Attempt-02 is unaffected and reproduces `{'G1': 'FAIL', 'G2': 'FAIL'}` and
+`{'G1': 'FAIL'}`. Offline Protocol-v2 operations that generate no new evidence
+(the historical v1 -> v2 mapping, v2 audit-template construction and v2
+adjudication of a completed audit) consult no freeze record; the freeze gate
+applies only to live qualification execution. Protocol v2 supports offline
+re-adjudication of archived Protocol-v1 evidence (mapping below) and native
+qualification of a candidate not previously qualified
+(`--protocol-version v2 --execute`), which shares the same generation contract
+and is recorded under the 2.0.0 procedure and audit versions from the start. No
+live v2 qualification has been executed; the archived evidence was re-adjudicated
+offline under the r2 freeze (see "Protocol-v2 re-adjudication results" below).
 
 **Versions.** Protocol v2: `generator-qualification-procedure/2.0.0`,
 `generator-manual-audit/2.0.0`. Protocol v1 remains
@@ -1073,7 +1066,8 @@ Protocol-v2 QUALIFIED are both preserved; no fluency count or subjective
 quality was used). **G2 remains unresolved:** Sonnet FAILs Protocol v2, Opus
 remains capability CLOSED/FAIL and outside qualification, and no second-level
 G2 candidate is selected here (the §12 criteria are unchanged). The r2
-implementation freeze is the authoritative current implementation freeze.
+implementation freeze (Commit C) is the implementation freeze under which
+these results were produced.
 Artifacts:
 `results/generator-qualification/manual-audit/v2/attempt-01.completed.json`,
 `.../attempt-02.completed.json` and

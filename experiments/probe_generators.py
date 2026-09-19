@@ -31,6 +31,9 @@ SLOTS = [dict(logical_call_id='G1', model='openai/gpt-5.6-sol', provider_order=[
 FALLBACK_CONFIG = ROOT / 'configs/generator-capability-probe-fallback.yaml'
 FALLBACK_SLOTS = [dict(logical_call_id='G1', model='openai/gpt-5.6-terra', provider_order=['openai']),
                    dict(logical_call_id='G2', model='anthropic/claude-opus-5', provider_order=['anthropic'])]
+# Second-level G2 candidate: exact model identifier (no alias or :batch variant), first-party Anthropic route.
+SECOND_LEVEL_G2_CONFIG = ROOT / 'configs/generator-capability-probe-second-level-g2.yaml'
+SECOND_LEVEL_G2_SLOTS = [dict(logical_call_id='G2', model='anthropic/claude-fable-5.1', provider_order=['anthropic'])]
 VERSIONS = {'prompt_version': 'crst-naturalization-prompt/1.1.0',
             'input_contract_version': 'crst-naturalization-input/1.1.0',
             'output_schema_version': 'crst-naturalization-triplet/1.0.0'}
@@ -39,8 +42,7 @@ MAPPING = {'max_output_tokens': 'max_tokens', 'reasoning_effort': 'reasoning.eff
 GENERATION = {'reasoning_effort': 'low', 'max_output_tokens': 16384}
 TRANSPORT = {'per_attempt_deadline_seconds': 300, 'max_infrastructure_retries': 2,
              'backoff_seconds': [1, 2], 'retryable_http_statuses': [408, 429, 500, 502, 503, 504]}
-# Candidate-profile identity: PRIMARY is the CLOSED, byte-frozen probe; FALLBACK is under development,
-# never CLOSED here. Only the predeclared Terra/Opus pair is representable -- not an open-ended model CLI.
+# Candidate profiles. Only these predeclared candidate sets are selectable, not an arbitrary model.
 PROFILES = {
     'primary': dict(config_path=CONFIG, slots=SLOTS, status='CLOSED', capability_result='PASS',
                      successful_attempt='attempt-02', execution_package='FROZEN',
@@ -49,6 +51,10 @@ PROFILES = {
                       capability_result='NOT_ASSESSED', successful_attempt=None,
                       execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED',
                       preview_status='CAPABILITY_PROBE_FALLBACK_NOT_EXECUTED'),
+    'second_level_g2': dict(config_path=SECOND_LEVEL_G2_CONFIG, slots=SECOND_LEVEL_G2_SLOTS, status='OPEN',
+                            capability_result='NOT_ASSESSED', successful_attempt=None,
+                            execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED',
+                            preview_status='CAPABILITY_PROBE_SECOND_LEVEL_G2_NOT_EXECUTED'),
 }
 # Schema version marking the per-slot capability addition to a profile's config (optional; a
 # profile's config with no `slots:` section, such as the CLOSED primary, predates this and is read
@@ -277,7 +283,7 @@ def slot_capability(profile_name, slot):
 
 def request_body(bundle, slot, *, input_validator=None):
     (input_validator or validate_input)(bundle['input'])  # Also enforce at the public construction boundary.
-    require(slot in SLOTS or slot in FALLBACK_SLOTS, 'Unknown probe slot')
+    require(any(slot in group for group in (SLOTS, FALLBACK_SLOTS, SECOND_LEVEL_G2_SLOTS)), 'Unknown probe slot')
     return {'model': slot['model'],
             'provider': {'order': slot['provider_order'], 'allow_fallbacks': False, 'require_parameters': True},
             'messages': [{'role': 'system', 'content': bundle['contract']['prompt']},
@@ -560,7 +566,8 @@ def main(argv=None):
     parser.add_argument('--execute', action='store_true', help='Permit execution only together with --confirm-spend')
     parser.add_argument('--confirm-spend', action='store_true', help='Acknowledge model charges; also requires --execute')
     parser.add_argument('--profile', choices=sorted(PROFILES), default='primary',
-                        help='primary (CLOSED) or the predeclared fallback (Terra/Opus)')
+                        help='primary (CLOSED), the predeclared fallback (Terra/Opus), or the frozen '
+                             'second-level G2 candidate (second_level_g2)')
     parser.add_argument('--slot', choices=['G1', 'G2'], default=None,
                         help='Restrict to one logical call from the selected profile; omit for the '
                              'full profile (historical two-slot behavior, unchanged default)')
@@ -580,6 +587,8 @@ def main(argv=None):
                          execution_compatibility=profile['execution_compatibility'])
     active_slots = profile['slots'] if args.slot is None else [
         s for s in profile['slots'] if s['logical_call_id'] == args.slot]
+    if not active_slots:
+        parser.error(f'Profile {args.profile} has no slot {args.slot}')
     if not args.execute:
         print(json.dumps(preview(bundle, slots=active_slots, profile_name=args.profile.upper(),
                                  status=profile['preview_status'], execution_package=profile['execution_package'],
@@ -592,6 +601,8 @@ def main(argv=None):
     key = os.environ.get('OPENROUTER_API_KEY', '')  # Only read in explicitly gated execution.
     if not key.strip():
         parser.error('Execution requires OPENROUTER_API_KEY')
+    if args.output_directory is None and bundle['config']['output_directory'] is None:
+        parser.error('--output-directory is required for this profile when executing')
     output = args.output_directory or ROOT / bundle['config']['output_directory']
     result = asyncio.run(execute_probe(bundle, key, output, slots=active_slots, profile_name=args.profile))
     return 0 if result['status'] == 'PASS' else 1

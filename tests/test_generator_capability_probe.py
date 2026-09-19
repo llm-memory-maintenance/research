@@ -766,8 +766,19 @@ def test_second_level_g2_package_identical_to_fallback_except_candidate_identity
     assert second_level_bundle()['contract'] == fallback['contract'] and second_level_bundle()['input'] == fallback['input']
 
 
-def test_second_level_g2_request_and_offline_preview_identify_only_fable(monkeypatch):
-    monkeypatch.setattr(p, 'FALLBACK_SLOTS', [*p.FALLBACK_SLOTS, FABLE_SLOT])  # In-memory only; source untouched.
+def test_second_level_g2_profile_resolves_exactly_one_frozen_candidate():
+    assert p.SECOND_LEVEL_G2_SLOTS == [FABLE_SLOT] and p.SECOND_LEVEL_G2_CONFIG == SECOND_LEVEL_G2_CONFIG
+    profile = p.PROFILES['second_level_g2']
+    assert profile['slots'] == [FABLE_SLOT] and profile['config_path'] == SECOND_LEVEL_G2_CONFIG
+    assert profile['status'] == 'OPEN' and profile['capability_result'] == 'NOT_ASSESSED'  # Never CLOSED here.
+    assert profile['successful_attempt'] is None and profile['execution_package'] == 'UNDER_DEVELOPMENT'
+    assert sorted(p.PROFILES) == ['fallback', 'primary', 'second_level_g2']
+    # Existing profiles are untouched.
+    assert [s['model'] for s in p.SLOTS] == ['openai/gpt-5.6-sol', 'anthropic/claude-sonnet-5']
+    assert [s['model'] for s in p.FALLBACK_SLOTS] == ['openai/gpt-5.6-terra', 'anthropic/claude-opus-5']
+
+
+def test_second_level_g2_request_and_offline_capability_preview_identify_only_fable(capsys):
     bundle = second_level_bundle()
     body = p.request_body(bundle, FABLE_SLOT)
     assert body['model'] == 'anthropic/claude-fable-5.1'
@@ -776,14 +787,30 @@ def test_second_level_g2_request_and_offline_preview_identify_only_fable(monkeyp
     assert body['max_tokens'] == 16384 and body['response_format']['json_schema']['strict'] is True
     primary_sonnet_body = p.request_body(p.load_bundle(), p.SLOTS[1])
     assert {**primary_sonnet_body, 'model': body['model']} == body  # Same package; only identity differs.
-    shown = p.preview(bundle, slots=[FABLE_SLOT], profile_name='SECOND_LEVEL_G2', status='NOT_EXECUTED',
-                      execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED',
-                      successful_attempt=None)
-    assert [r['requested_model'] for r in shown['requests']] == ['anthropic/claude-fable-5.1']  # ONLY Fable.
+    for argv in (['--profile', 'second_level_g2'], ['--profile', 'second_level_g2', '--slot', 'G2']):
+        assert p.main(argv) == 0  # The official CLI preview: offline (network is blocked by the fixture).
+        shown = json.loads(capsys.readouterr().out)
+        assert shown['status'] == 'CAPABILITY_PROBE_SECOND_LEVEL_G2_NOT_EXECUTED'
+        assert shown['candidate_profile'] == 'SECOND_LEVEL_G2' and shown['expected_logical_calls'] == 1
+        assert [(r['logical_call_id'], r['requested_model'], r['requested_provider_order'])
+                for r in shown['requests']] == [('G2', 'anthropic/claude-fable-5.1', ['anthropic'])]
+        assert shown['execution_package'] == 'UNDER_DEVELOPMENT' and shown['successful_attempt'] is None
+        assert shown['output_directory'] is None
 
 
-def test_second_level_g2_capability_is_pending_with_no_evidence_and_authorizes_no_other_candidate(monkeypatch):
-    monkeypatch.setitem(p.PROFILES, 'second_level_g2', dict(config_path=SECOND_LEVEL_G2_CONFIG, slots=[FABLE_SLOT]))
+def test_second_level_g2_cli_rejects_an_empty_slot_selection_and_ungated_execution(monkeypatch, tmp_path):
+    with pytest.raises(SystemExit):  # The profile has no G1: never a silent zero-call selection.
+        p.main(['--profile', 'second_level_g2', '--slot', 'G1'])
+    with pytest.raises(SystemExit):
+        p.main(['--profile', 'second_level_g2', '--execute'])  # Needs BOTH --execute and --confirm-spend.
+    monkeypatch.delenv('OPENROUTER_API_KEY', raising=False)
+    output = tmp_path / 'must-not-be-created'
+    with pytest.raises(SystemExit):  # Gated execution still requires a key before any side effect.
+        p.main(['--profile', 'second_level_g2', '--execute', '--confirm-spend', '--output-directory', str(output)])
+    assert not output.exists()
+
+
+def test_second_level_g2_capability_is_pending_with_no_evidence_and_authorizes_no_other_candidate():
     pending = p.slot_capability('second_level_g2', FABLE_SLOT)
     assert pending == {'model': 'anthropic/claude-fable-5.1', 'status': 'OPEN', 'capability_result': 'NOT_ASSESSED',
                        'reason': None, 'evidence_attempt': None, 'evidence_path': None, 'evidence_sha256': None}
@@ -798,3 +825,31 @@ def test_closed_candidates_and_their_configs_untouched_by_second_level_freeze():
     assert (opus['status'], opus['capability_result'], opus['reason']) == ('CLOSED', 'FAIL', 'provider-policy refusal')
     assert (terra['status'], terra['capability_result']) == ('CLOSED', 'PASS')
     assert p.SLOTS[1]['model'] == 'anthropic/claude-sonnet-5' and p.FALLBACK_SLOTS[1]['model'] == 'anthropic/claude-opus-5'
+
+
+@pytest.mark.parametrize('profile', ['second_level_g2', 'fallback'])
+def test_execute_without_output_directory_fails_explicitly_before_network(monkeypatch, capsys, profile):
+    """These profiles configure output_directory as null, so execution must require --output-directory
+    instead of failing later with a TypeError; the check is generic, not specific to one candidate."""
+    assert yaml.safe_load(p.PROFILES[profile]['config_path'].read_text(encoding='utf-8'))['output_directory'] is None
+    monkeypatch.setenv('OPENROUTER_API_KEY', 'test-secret-must-never-be-sent')
+    with pytest.raises(SystemExit) as excinfo:
+        p.main(['--profile', profile, '--execute', '--confirm-spend'])
+    assert excinfo.value.code == 2
+    assert '--output-directory is required for this profile when executing' in capsys.readouterr().err
+
+
+def test_explicit_output_directory_is_accepted_and_preview_needs_none(monkeypatch, tmp_path, capsys):
+    calls = []
+
+    async def fake_execute(bundle, key, output, **kwargs):
+        calls.append((Path(output), [s['logical_call_id'] for s in kwargs['slots']]))
+        return {'status': 'PASS'}
+    monkeypatch.setattr(p, 'execute_probe', fake_execute)
+    monkeypatch.setenv('OPENROUTER_API_KEY', 'test-secret-must-never-be-sent')
+    output = tmp_path / 'attempt'
+    assert p.main(['--profile', 'second_level_g2', '--execute', '--confirm-spend',
+                   '--output-directory', str(output)]) == 0
+    assert calls == [(output, ['G2'])]
+    assert p.main(['--profile', 'second_level_g2']) == 0  # Preview is unaffected.
+    assert json.loads(capsys.readouterr().out)['expected_logical_calls'] == 1
