@@ -1,0 +1,343 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"overnight_stop\\\",\\\"meaning\\\":\\\"planned overnight stopover\\\",\\\"units_or_interpretation\\\":\\\"fictional town name\\\"},{\\\"attribute_id\\\":\\\"ticket_code\\\",\\\"meaning\\\":\\\"tour ticket identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"seat_row\\\",\\\"meaning\\\":\\\"assigned seat row\\\",\\\"units_or_interpretation\\\":\\\"row label\\\"},{\\\"attribute_id\\\":\\\"pickup_stop\\\",\\\"meaning\\\":\\\"pickup stop\\\",\\\"units_or_interpretation\\\":\\\"stop label\\\"},{\\\"attribute_id\\\":\\\"luggage_limit\\\",\\\"meaning\\\":\\\"luggage allowance\\\",\\\"units_or_interpretation\\\":\\\"kilograms\\\"},{\\\"attribute_id\\\":\\\"guide_style\\\",\\\"meaning\\\":\\\"guide style\\\",\\\"units_or_interpretation\\\":\\\"style label\\\"}],\\\"domain\\\":\\\"Travel\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"name\\\":\\\"Coach tour Larkspur\\\"},{\\\"entity_id\\\":\\\"b0cal-travel-01-distractor\\\",\\\"name\\\":\\\"Coach tour Foxglove\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_b\\\",\\\"I2\\\":\\\"k_c\\\",\\\"I3\\\":\\\"k_d\\\",\\\"I4\\\":\\\"k_target\\\",\\\"I5\\\":\\\"k_hard\\\",\\\"I6\\\":\\\"k_n2\\\",\\\"I7\\\":\\\"k_a\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"overnight_stop\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current planned overnight stopover of Coach tour Larkspur.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"overnight_stop\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"initial_value\\\":\\\"Brenmar\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"overnight_stop\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-distractor\\\",\\\"initial_value\\\":\\\"Jaspermoor\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"ticket_code\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"initial_value\\\":\\\"TKT-L58\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"seat_row\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"initial_value\\\":\\\"Row 4\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"pickup_stop\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"initial_value\\\":\\\"Stop Anvil Lane\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"luggage_limit\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"initial_value\\\":\\\"15 kilograms\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"guide_style\\\",\\\"entity_id\\\":\\\"b0cal-travel-01-primary\\\",\\\"initial_value\\\":\\\"storytelling guide\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"Stop Anvil Lane\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"15 kilograms\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"storytelling guide\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Brenmar\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Jaspermoor\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"TKT-L58\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Row 4\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Coldwick\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Dunhollow\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Eskerby\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Fennimore\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Garrowick\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Hollinmere\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Hollinmere\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Ivelstone\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"TKT-L58\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"Stop Anvil Lane\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"15 kilograms\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"storytelling guide\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Brenmar\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Jaspermoor\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"TKT-L58\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Row 4\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"technical guide\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Row 9\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Kettlewynd\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Row 12\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Stop Bell Court\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"20 kilograms\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Brenmar\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Ivelstone\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"TKT-L58\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"Stop Anvil Lane\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"15 kilograms\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"storytelling guide\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Brenmar\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Jaspermoor\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"TKT-L58\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Row 4\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Coldwick\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Stop Bell Court\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Eskerby\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"20 kilograms\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Garrowick\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Kettlewynd\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Garrowick\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Ivelstone\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"TKT-L58\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-sol\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "db2ce89a8e016bafcf62c74114d292e2b21dcaa90c793ba90b579c3db4ea7667",
+  "request_body": {
+    "model": "openai/gpt-5.6-sol",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"overnight_stop\",\"meaning\":\"planned overnight stopover\",\"units_or_interpretation\":\"fictional town name\"},{\"attribute_id\":\"ticket_code\",\"meaning\":\"tour ticket identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"seat_row\",\"meaning\":\"assigned seat row\",\"units_or_interpretation\":\"row label\"},{\"attribute_id\":\"pickup_stop\",\"meaning\":\"pickup stop\",\"units_or_interpretation\":\"stop label\"},{\"attribute_id\":\"luggage_limit\",\"meaning\":\"luggage allowance\",\"units_or_interpretation\":\"kilograms\"},{\"attribute_id\":\"guide_style\",\"meaning\":\"guide style\",\"units_or_interpretation\":\"style label\"}],\"domain\":\"Travel\",\"entities\":[{\"entity_id\":\"b0cal-travel-01-primary\",\"name\":\"Coach tour Larkspur\"},{\"entity_id\":\"b0cal-travel-01-distractor\",\"name\":\"Coach tour Foxglove\"}],\"initial_order\":{\"I1\":\"k_b\",\"I2\":\"k_c\",\"I3\":\"k_d\",\"I4\":\"k_target\",\"I5\":\"k_hard\",\"I6\":\"k_n2\",\"I7\":\"k_a\"},\"question_intent\":{\"attribute_id\":\"overnight_stop\",\"entity_id\":\"b0cal-travel-01-primary\",\"intent\":\"Ask only for the current planned overnight stopover of Coach tour Larkspur.\"},\"state_keys\":[{\"attribute_id\":\"overnight_stop\",\"entity_id\":\"b0cal-travel-01-primary\",\"initial_value\":\"Brenmar\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"overnight_stop\",\"entity_id\":\"b0cal-travel-01-distractor\",\"initial_value\":\"Jaspermoor\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"ticket_code\",\"entity_id\":\"b0cal-travel-01-primary\",\"initial_value\":\"TKT-L58\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"seat_row\",\"entity_id\":\"b0cal-travel-01-primary\",\"initial_value\":\"Row 4\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"pickup_stop\",\"entity_id\":\"b0cal-travel-01-primary\",\"initial_value\":\"Stop Anvil Lane\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"luggage_limit\",\"entity_id\":\"b0cal-travel-01-primary\",\"initial_value\":\"15 kilograms\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"guide_style\",\"entity_id\":\"b0cal-travel-01-primary\",\"initial_value\":\"storytelling guide\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"Stop Anvil Lane\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"15 kilograms\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"storytelling guide\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Brenmar\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Jaspermoor\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"TKT-L58\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Row 4\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Coldwick\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Dunhollow\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Eskerby\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Fennimore\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Garrowick\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Hollinmere\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Hollinmere\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Ivelstone\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"TKT-L58\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"Stop Anvil Lane\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"15 kilograms\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"storytelling guide\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Brenmar\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Jaspermoor\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"TKT-L58\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Row 4\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"technical guide\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Row 9\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Kettlewynd\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Row 12\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Stop Bell Court\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"20 kilograms\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Brenmar\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Ivelstone\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"TKT-L58\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"Stop Anvil Lane\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"15 kilograms\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"storytelling guide\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Brenmar\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Jaspermoor\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"TKT-L58\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Row 4\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Coldwick\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Stop Bell Court\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"Eskerby\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"20 kilograms\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Garrowick\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Kettlewynd\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Garrowick\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Ivelstone\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"TKT-L58\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T11:51:21.938176+00:00",
+      "requested_model": "openai/gpt-5.6-sol",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-sol",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789818681-vYhYr8SDDgWeUlvHU0hV",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n{\"id\":\"gen-1789818681-vYhYr8SDDgWeUlvHU0hV\",\"object\":\"chat.completion\",\"created\":1789818681,\"model\":\"openai/gpt-5.6-sol\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"The pickup stop for Coach tour Larkspur is Stop Anvil Lane.\\\",\\\"I2\\\":\\\"Coach tour Larkspur has a luggage allowance of 15 kilograms.\\\",\\\"I3\\\":\\\"Coach tour Larkspur has a storytelling guide.\\\",\\\"I4\\\":\\\"The planned overnight stopover for Coach tour Larkspur is Brenmar.\\\",\\\"I5\\\":\\\"The planned overnight stopover for Coach tour Foxglove is Jaspermoor.\\\",\\\"I6\\\":\\\"The ticket code for Coach tour Larkspur is TKT-L58.\\\",\\\"I7\\\":\\\"The assigned seat row for Coach tour Larkspur is Row 4.\\\",\\\"N1\\\":\\\"The planned overnight stopover for Coach tour Larkspur remains Hollinmere.\\\",\\\"N2\\\":\\\"The ticket code for Coach tour Larkspur remains TKT-L58.\\\",\\\"Q\\\":\\\"What is the current planned overnight stopover of Coach tour Larkspur?\\\",\\\"U1\\\":\\\"The planned overnight stopover for Coach tour Larkspur has changed to Coldwick.\\\",\\\"U2\\\":\\\"The planned overnight stopover for Coach tour Larkspur is now Dunhollow.\\\",\\\"U3\\\":\\\"The planned overnight stopover for Coach tour Larkspur has been updated to Eskerby.\\\",\\\"U4\\\":\\\"The planned overnight stopover for Coach tour Larkspur is now Fennimore.\\\",\\\"U5\\\":\\\"The planned overnight stopover for Coach tour Larkspur has changed to Garrowick.\\\",\\\"U6\\\":\\\"The planned overnight stopover for Coach tour Larkspur has been updated to Hollinmere.\\\",\\\"U7\\\":\\\"The planned overnight stopover for Coach tour Larkspur is now Ivelstone.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Coach tour Larkspur has its pickup at Stop Anvil Lane.\\\",\\\"I2\\\":\\\"The luggage allowance for Coach tour Larkspur is 15 kilograms.\\\",\\\"I3\\\":\\\"The guide style for Coach tour Larkspur is storytelling guide.\\\",\\\"I4\\\":\\\"Coach tour Larkspur's planned overnight stopover is Brenmar.\\\",\\\"I5\\\":\\\"Coach tour Foxglove's planned overnight stopover is Jaspermoor.\\\",\\\"I6\\\":\\\"Coach tour Larkspur has the ticket code TKT-L58.\\\",\\\"I7\\\":\\\"Coach tour Larkspur is assigned to Row 4.\\\",\\\"N1\\\":\\\"Coach tour Larkspur's planned overnight stopover remains Brenmar.\\\",\\\"N2\\\":\\\"Coach tour Larkspur's ticket code remains TKT-L58.\\\",\\\"Q\\\":\\\"What is the current planned overnight stopover of Coach tour Larkspur?\\\",\\\"U1\\\":\\\"The guide style for Coach tour Larkspur has changed to technical guide.\\\",\\\"U2\\\":\\\"The assigned seat row for Coach tour Larkspur is now Row 9.\\\",\\\"U3\\\":\\\"The planned overnight stopover for Coach tour Foxglove has changed to Kettlewynd.\\\",\\\"U4\\\":\\\"The assigned seat row for Coach tour Larkspur has been updated to Row 12.\\\",\\\"U5\\\":\\\"The pickup stop for Coach tour Larkspur is now Stop Bell Court.\\\",\\\"U6\\\":\\\"The luggage allowance for Coach tour Larkspur has changed to 20 kilograms.\\\",\\\"U7\\\":\\\"Coach tour Larkspur's planned overnight stopover is now Ivelstone.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"The pickup stop for Coach tour Larkspur is Stop Anvil Lane.\\\",\\\"I2\\\":\\\"Coach tour Larkspur's luggage allowance is 15 kilograms.\\\",\\\"I3\\\":\\\"The guide style for Coach tour Larkspur is storytelling guide.\\\",\\\"I4\\\":\\\"The planned overnight stopover for Coach tour Larkspur is Brenmar.\\\",\\\"I5\\\":\\\"Coach tour Foxglove has a planned overnight stopover in Jaspermoor.\\\",\\\"I6\\\":\\\"The ticket code assigned to Coach tour Larkspur is TKT-L58.\\\",\\\"I7\\\":\\\"The assigned seat row for Coach tour Larkspur is Row 4.\\\",\\\"N1\\\":\\\"The planned overnight stopover for Coach tour Larkspur remains Garrowick.\\\",\\\"N2\\\":\\\"The ticket code for Coach tour Larkspur remains TKT-L58.\\\",\\\"Q\\\":\\\"What is the current planned overnight stopover of Coach tour Larkspur?\\\",\\\"U1\\\":\\\"The planned overnight stopover for Coach tour Larkspur has changed to Coldwick.\\\",\\\"U2\\\":\\\"The pickup stop for Coach tour Larkspur has been updated to Stop Bell Court.\\\",\\\"U3\\\":\\\"The planned overnight stopover for Coach tour Larkspur is now Eskerby.\\\",\\\"U4\\\":\\\"Coach tour Larkspur's luggage allowance has changed to 20 kilograms.\\\",\\\"U5\\\":\\\"The planned overnight stopover for Coach tour Larkspur has been updated to Garrowick.\\\",\\\"U6\\\":\\\"The planned overnight stopover for Coach tour Foxglove is now Kettlewynd.\\\",\\\"U7\\\":\\\"The planned overnight stopover for Coach tour Larkspur is now Ivelstone.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":2557,\"completion_tokens\":968,\"total_tokens\":3525,\"cost\":0.016071,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2554,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.016071,\"upstream_inference_prompt_cost\":0.006391,\"upstream_inference_completions_cost\":0.00968},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-sol\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-sol-20260709\",\"selected\":true}]},\"generation_time\":8566}}",
+      "response_sha256_before_redaction": "d2725d99b4841a87bdd1ac2e4917284550957d48978273cd09a812c3045efddb",
+      "response_envelope": {
+        "id": "gen-1789818681-vYhYr8SDDgWeUlvHU0hV",
+        "object": "chat.completion",
+        "created": 1789818681,
+        "model": "openai/gpt-5.6-sol",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"The pickup stop for Coach tour Larkspur is Stop Anvil Lane.\",\"I2\":\"Coach tour Larkspur has a luggage allowance of 15 kilograms.\",\"I3\":\"Coach tour Larkspur has a storytelling guide.\",\"I4\":\"The planned overnight stopover for Coach tour Larkspur is Brenmar.\",\"I5\":\"The planned overnight stopover for Coach tour Foxglove is Jaspermoor.\",\"I6\":\"The ticket code for Coach tour Larkspur is TKT-L58.\",\"I7\":\"The assigned seat row for Coach tour Larkspur is Row 4.\",\"N1\":\"The planned overnight stopover for Coach tour Larkspur remains Hollinmere.\",\"N2\":\"The ticket code for Coach tour Larkspur remains TKT-L58.\",\"Q\":\"What is the current planned overnight stopover of Coach tour Larkspur?\",\"U1\":\"The planned overnight stopover for Coach tour Larkspur has changed to Coldwick.\",\"U2\":\"The planned overnight stopover for Coach tour Larkspur is now Dunhollow.\",\"U3\":\"The planned overnight stopover for Coach tour Larkspur has been updated to Eskerby.\",\"U4\":\"The planned overnight stopover for Coach tour Larkspur is now Fennimore.\",\"U5\":\"The planned overnight stopover for Coach tour Larkspur has changed to Garrowick.\",\"U6\":\"The planned overnight stopover for Coach tour Larkspur has been updated to Hollinmere.\",\"U7\":\"The planned overnight stopover for Coach tour Larkspur is now Ivelstone.\"},\"low\":{\"I1\":\"Coach tour Larkspur has its pickup at Stop Anvil Lane.\",\"I2\":\"The luggage allowance for Coach tour Larkspur is 15 kilograms.\",\"I3\":\"The guide style for Coach tour Larkspur is storytelling guide.\",\"I4\":\"Coach tour Larkspur's planned overnight stopover is Brenmar.\",\"I5\":\"Coach tour Foxglove's planned overnight stopover is Jaspermoor.\",\"I6\":\"Coach tour Larkspur has the ticket code TKT-L58.\",\"I7\":\"Coach tour Larkspur is assigned to Row 4.\",\"N1\":\"Coach tour Larkspur's planned overnight stopover remains Brenmar.\",\"N2\":\"Coach tour Larkspur's ticket code remains TKT-L58.\",\"Q\":\"What is the current planned overnight stopover of Coach tour Larkspur?\",\"U1\":\"The guide style for Coach tour Larkspur has changed to technical guide.\",\"U2\":\"The assigned seat row for Coach tour Larkspur is now Row 9.\",\"U3\":\"The planned overnight stopover for Coach tour Foxglove has changed to Kettlewynd.\",\"U4\":\"The assigned seat row for Coach tour Larkspur has been updated to Row 12.\",\"U5\":\"The pickup stop for Coach tour Larkspur is now Stop Bell Court.\",\"U6\":\"The luggage allowance for Coach tour Larkspur has changed to 20 kilograms.\",\"U7\":\"Coach tour Larkspur's planned overnight stopover is now Ivelstone.\"},\"medium\":{\"I1\":\"The pickup stop for Coach tour Larkspur is Stop Anvil Lane.\",\"I2\":\"Coach tour Larkspur's luggage allowance is 15 kilograms.\",\"I3\":\"The guide style for Coach tour Larkspur is storytelling guide.\",\"I4\":\"The planned overnight stopover for Coach tour Larkspur is Brenmar.\",\"I5\":\"Coach tour Foxglove has a planned overnight stopover in Jaspermoor.\",\"I6\":\"The ticket code assigned to Coach tour Larkspur is TKT-L58.\",\"I7\":\"The assigned seat row for Coach tour Larkspur is Row 4.\",\"N1\":\"The planned overnight stopover for Coach tour Larkspur remains Garrowick.\",\"N2\":\"The ticket code for Coach tour Larkspur remains TKT-L58.\",\"Q\":\"What is the current planned overnight stopover of Coach tour Larkspur?\",\"U1\":\"The planned overnight stopover for Coach tour Larkspur has changed to Coldwick.\",\"U2\":\"The pickup stop for Coach tour Larkspur has been updated to Stop Bell Court.\",\"U3\":\"The planned overnight stopover for Coach tour Larkspur is now Eskerby.\",\"U4\":\"Coach tour Larkspur's luggage allowance has changed to 20 kilograms.\",\"U5\":\"The planned overnight stopover for Coach tour Larkspur has been updated to Garrowick.\",\"U6\":\"The planned overnight stopover for Coach tour Foxglove is now Kettlewynd.\",\"U7\":\"The planned overnight stopover for Coach tour Larkspur is now Ivelstone.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2557,
+          "completion_tokens": 968,
+          "total_tokens": 3525,
+          "cost": 0.016071,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2554,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.016071,
+            "upstream_inference_prompt_cost": 0.006391,
+            "upstream_inference_completions_cost": 0.00968
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-sol",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-sol-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 8566
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-sol",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-sol-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 8566
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "The pickup stop for Coach tour Larkspur is Stop Anvil Lane.",
+          "I2": "Coach tour Larkspur has a luggage allowance of 15 kilograms.",
+          "I3": "Coach tour Larkspur has a storytelling guide.",
+          "I4": "The planned overnight stopover for Coach tour Larkspur is Brenmar.",
+          "I5": "The planned overnight stopover for Coach tour Foxglove is Jaspermoor.",
+          "I6": "The ticket code for Coach tour Larkspur is TKT-L58.",
+          "I7": "The assigned seat row for Coach tour Larkspur is Row 4.",
+          "N1": "The planned overnight stopover for Coach tour Larkspur remains Hollinmere.",
+          "N2": "The ticket code for Coach tour Larkspur remains TKT-L58.",
+          "Q": "What is the current planned overnight stopover of Coach tour Larkspur?",
+          "U1": "The planned overnight stopover for Coach tour Larkspur has changed to Coldwick.",
+          "U2": "The planned overnight stopover for Coach tour Larkspur is now Dunhollow.",
+          "U3": "The planned overnight stopover for Coach tour Larkspur has been updated to Eskerby.",
+          "U4": "The planned overnight stopover for Coach tour Larkspur is now Fennimore.",
+          "U5": "The planned overnight stopover for Coach tour Larkspur has changed to Garrowick.",
+          "U6": "The planned overnight stopover for Coach tour Larkspur has been updated to Hollinmere.",
+          "U7": "The planned overnight stopover for Coach tour Larkspur is now Ivelstone."
+        },
+        "low": {
+          "I1": "Coach tour Larkspur has its pickup at Stop Anvil Lane.",
+          "I2": "The luggage allowance for Coach tour Larkspur is 15 kilograms.",
+          "I3": "The guide style for Coach tour Larkspur is storytelling guide.",
+          "I4": "Coach tour Larkspur's planned overnight stopover is Brenmar.",
+          "I5": "Coach tour Foxglove's planned overnight stopover is Jaspermoor.",
+          "I6": "Coach tour Larkspur has the ticket code TKT-L58.",
+          "I7": "Coach tour Larkspur is assigned to Row 4.",
+          "N1": "Coach tour Larkspur's planned overnight stopover remains Brenmar.",
+          "N2": "Coach tour Larkspur's ticket code remains TKT-L58.",
+          "Q": "What is the current planned overnight stopover of Coach tour Larkspur?",
+          "U1": "The guide style for Coach tour Larkspur has changed to technical guide.",
+          "U2": "The assigned seat row for Coach tour Larkspur is now Row 9.",
+          "U3": "The planned overnight stopover for Coach tour Foxglove has changed to Kettlewynd.",
+          "U4": "The assigned seat row for Coach tour Larkspur has been updated to Row 12.",
+          "U5": "The pickup stop for Coach tour Larkspur is now Stop Bell Court.",
+          "U6": "The luggage allowance for Coach tour Larkspur has changed to 20 kilograms.",
+          "U7": "Coach tour Larkspur's planned overnight stopover is now Ivelstone."
+        },
+        "medium": {
+          "I1": "The pickup stop for Coach tour Larkspur is Stop Anvil Lane.",
+          "I2": "Coach tour Larkspur's luggage allowance is 15 kilograms.",
+          "I3": "The guide style for Coach tour Larkspur is storytelling guide.",
+          "I4": "The planned overnight stopover for Coach tour Larkspur is Brenmar.",
+          "I5": "Coach tour Foxglove has a planned overnight stopover in Jaspermoor.",
+          "I6": "The ticket code assigned to Coach tour Larkspur is TKT-L58.",
+          "I7": "The assigned seat row for Coach tour Larkspur is Row 4.",
+          "N1": "The planned overnight stopover for Coach tour Larkspur remains Garrowick.",
+          "N2": "The ticket code for Coach tour Larkspur remains TKT-L58.",
+          "Q": "What is the current planned overnight stopover of Coach tour Larkspur?",
+          "U1": "The planned overnight stopover for Coach tour Larkspur has changed to Coldwick.",
+          "U2": "The pickup stop for Coach tour Larkspur has been updated to Stop Bell Court.",
+          "U3": "The planned overnight stopover for Coach tour Larkspur is now Eskerby.",
+          "U4": "Coach tour Larkspur's luggage allowance has changed to 20 kilograms.",
+          "U5": "The planned overnight stopover for Coach tour Larkspur has been updated to Garrowick.",
+          "U6": "The planned overnight stopover for Coach tour Foxglove is now Kettlewynd.",
+          "U7": "The planned overnight stopover for Coach tour Larkspur is now Ivelstone."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2557,
+        "completion_tokens": 968,
+        "total_tokens": 3525,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.016071
+      },
+      "latency_seconds": 8.694588409009157,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "b0cal-travel-01",
+  "projection_sha256": "9103307cf60d1a22e3b109a58ad447034056a87ff9e1a63851402ff51ee87d23",
+  "logical_call_index": 2,
+  "attempt": "attempt-02",
+  "output_sha256": "9f06357f8b9f263a8fa7c7b60a4421aeb7a87df0a556d4494cfedb78f56b3bfd"
+}

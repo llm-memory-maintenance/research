@@ -1,0 +1,152 @@
+# B0 suffix-only calibration procedure. It replaces the closed full-history naturalization procedure
+# (configs/b0-calibration.yaml, naturalization block) with a procedure whose output scope matches the calibration
+# estimand: only the U7 and N2 events are naturalized.
+# The calibration design in configs/b0-calibration.yaml is unchanged and remains authoritative for the window
+# contract, retention criterion, exact-maximum rule, coverage-failure rule, tokenizer and answering wording.
+schema_version: b0-suffix-calibration/1.0.0
+status: PROCEDURE_FROZEN
+frozen_on: '2026-09-19'
+design_config: configs/b0-calibration.yaml
+budget_status: OPEN
+# Set only by the official calibration run; never entered by hand.
+b0_context_tokens: null
+
+supersedes:
+  procedure_version: b0-calibration-naturalization/1.0.0
+  status: CLOSED_NO_ELIGIBLE_SET
+  closed_attempts:
+    - id: attempt-01
+      closure: results/b0-calibration/closure/attempt-01.json
+    - id: attempt-02
+      closure: results/b0-calibration/closure/attempt-02.json
+  reason: >-
+    The full-history collection contract required 17 fields per variant. Both pre-authorized attempts ended in a
+    terminal output-contract failure in fields outside the U7+N2 calibration estimand (Attempt-01: high N1, N2 and Q
+    empty; Attempt-02: high N1 empty while U7 and N2 were present), so no eligible complete calibration set exists.
+    This is a procedure amendment, not a Generator Qualification change and not a generator or scenario defect.
+  old_output_use: prohibited
+
+estimand:
+  required_events: [U7, N2]
+  history_construction: U7 user message, Noted., N2 user message, Noted.
+  unchanged: >-
+    Atomic unit, complete-exchange contiguous newest suffix, U7 and N2 retained, N1 not required, Q and system prompt
+    outside the budget, tokenizer and revision, marginal counting formula, 100% retention, exact maximum, no
+    percentile, no grid, no headroom, and the coverage-failure rule.
+
+contract:
+  path: configs/b0-suffix-naturalization-contract.json
+  sha256: 7138d078f114ea4d5df0743c770c2c84ee409b1322cf2c658cc0e0be495719db
+  prompt_version: b0-suffix-naturalization-prompt/1.0.0
+  input_contract_version: b0-suffix-naturalization-input/1.0.0
+  output_schema_version: b0-suffix-naturalization-output/1.0.0
+  prompt_sha256: 841dd95d7e535f1001e5bcab2f0905562f4140d76a956891487fcdccca33eb03
+  input_schema_sha256: 23c0783af2c07e3b0869980e67a5d71e3311bcba8b3554ef404cd94122596d99
+  output_schema_sha256: cee7b2f73bb02fed193ad5fd7da170adf9f55d55a13d9db805feba4117f32064
+
+input_projection:
+  derivation: deterministic projection of the U7 and N2 facts of each frozen B0 calibration scenario
+  set_sha256: 0afea6fe046877983a77c57f4af0d1665e514fe20f758a760b38f445cb361a66
+
+generators:
+  - logical_call_id: G1
+    model: openai/gpt-5.6-sol
+    provider_order: [openai]
+  - logical_call_id: G2
+    model: anthropic/claude-fable-5.1
+    provider_order: [anthropic]
+
+plan:
+  order: all G1 scenarios, then all G2 scenarios, each in manifest order
+  calls_per_generator: 12
+  planned_logical_calls: 24
+  events_per_history: [U7, N2]
+  expected_histories: 72
+  plan_sha256: d9b7d7f06ab20b38c2bc1ace39b089434320f81cfa9c43a5b8a42b513b801526
+
+# Failure handling and eligibility, frozen before any execution.
+collection_rule:
+  status: FROZEN
+  unit: An attempt is atomic and consists of all 24 logical calls.
+  infrastructure_retries: only the frozen infrastructure retry policy
+  terminal_failures:
+    - empty or blank U7 or N2
+    - parse failure
+    - schema failure
+    - refusal
+    - truncation
+    - other terminal execution or output-contract failure
+  on_terminal_failure:
+    - is not selectively retried
+    - immediately closes the collection incomplete
+    - preserves all evidence already produced
+  prohibited:
+    - selective resampling
+    - manual repair
+    - field completion
+    - dropping a variant
+    - generator substitution
+    - mixing outputs of different attempts
+    - reusing any output of the closed full-history procedure
+
+# Semantic eligibility. Semantic findings never affect collection execution.
+semantic_eligibility:
+  status: FROZEN
+  during_collection: >-
+    Semantic findings do not stop later scheduled calls. If execution and schema remain valid, all 24 logical calls
+    are completed.
+  after_collection: >-
+    A completed collection is eligible for b0_context_tokens derivation only if all 72 suffix histories pass every
+    required Level-1 semantic check for U7 and N2. Any Level-1 failure does not interrupt collection but makes the
+    completed collection COMPLETE_BUT_INELIGIBLE; b0_context_tokens then stays null and OPEN.
+  level1_checks:
+    U7:
+      entity_fidelity: automated
+      attribute_fidelity: manual
+      current_value_fidelity: automated
+      changed_state_semantics: manual
+      no_superseded_value: automated
+      no_invented_value_or_change: manual
+      comprehensibility: manual
+    N2:
+      entity_fidelity: automated
+      attribute_fidelity: manual
+      current_value_fidelity: automated
+      same_state_semantics: manual
+      no_invented_change: manual
+      no_historical_or_superseded_value: automated
+      comprehensibility: manual
+  automated_checks: >-
+    Deterministic and final: the exact entity name and supplied current value must appear, and no earlier target
+    value, distractor value or (for N2) any target value may appear. No LLM judge is used.
+  manual_checks: >-
+    Recorded per item as PASS or FAIL by the researcher in a completed audit copy. The audit is bound to the
+    archived evidence and every manual cell must be completed.
+  fluency: >-
+    Fluency-only defects where the meaning is unambiguous do not affect eligibility. They are recorded only as
+    optional descriptive findings and are never used to rank generators.
+  refusal_conditions:
+    - collection execution is not complete
+    - a schema-valid U7 or N2 output is missing
+    - the semantic audit is incomplete or does not match the archived evidence
+    - any Level-1 semantic failure remains
+
+# The approved attempt policy: exactly one complete official collection attempt.
+attempt_policy:
+  status: FROZEN
+  cap: 1
+  policy: >-
+    Exactly one complete official suffix collection attempt is allowed. No second suffix attempt is created or
+    executed automatically; any further attempt would need a separate researcher decision.
+
+results:
+  namespace: results/b0-suffix-calibration
+  output_layout: outputs/<g1|g2>/<scenario_id>.json per call, then collection.json and SHA256SUMS
+  audit_layout:
+    blank_template: generated offline from the archived collection; never stored inside the attempt
+    completed_audit: results/b0-suffix-calibration/manual-audit/attempt-01.completed.json
+    adjudication: results/b0-suffix-calibration/adjudication/attempt-01.json
+  attempts:
+    - id: attempt-01
+      status: PLANNED_NOT_EXECUTED
+      result_directory: results/b0-suffix-calibration/attempt-01

@@ -1330,3 +1330,121 @@ generators, exact-maximum rule, retention criterion, and coverage-failure rule a
 unchanged, and the final `B0_CONTEXT_TOKENS` remains OPEN. Attempt-02 is prepared
 (`results/b0-calibration/attempt-02`, the same 24-call plan and request hashes) and
 has not been executed.
+
+## B0 Full-History Naturalization Closed; Suffix-Only Procedure Adopted (2026-09-19)
+
+**Attempt-02 closed.** Official full-history naturalization Attempt-02
+(`results/b0-calibration/attempt-02`, source commit
+`5b08811310b6b1036e17b8a6c9d4397a187eaaed`) recorded 16 of 24 logical calls. Calls
+1 to 15 passed. Call 16 (G2 `anthropic/claude-fable-5.1`,
+`b0cal-task-assignment-01`) returned HTTP 200 with `finish_reason` `stop`, no
+refusal, and no truncation. Only the HIGH variant's `N1` was an empty string, while
+`U7`, `N2` and `Q` were present, so schema validation failed with "Expected nonempty
+string". No response was processing- or charge-uncertain, no retry applied, and calls
+17 to 24 were never executed. Attempt-02 is CLOSED/INCOMPLETE and cannot yield
+`B0_CONTEXT_TOKENS`. Its closure is
+`results/b0-calibration/closure/attempt-02.json` (SHA-256
+`b1b6330a5495706a38107e8c823721b13f10614a22101699d894eca15743b743`); the raw
+evidence is unchanged.
+
+**Full-history procedure closed.** Both pre-authorized attempts ended in a terminal
+output-contract failure in fields outside the calibration estimand: Attempt-01
+(empty HIGH `N1`, `N2` and `Q`) and Attempt-02 (empty HIGH `N1`). The estimand is the
+smallest marginal budget that retains the complete U7 and N2 exchanges; N1, Q, I1 to
+I7 and U1 to U6 do not enter it, and Attempt-02 failed on `N1` while the
+budget-critical `U7` and `N2` were present. The full-history collection contract
+therefore added terminal failure modes outside the estimand and produced no
+eligible complete calibration set. The cap of two attempts is reached and no further
+attempt may run under this procedure. This does not invalidate the generators,
+Fable's QUALIFIED status, Generator Qualification, or the structured calibration
+scenarios. Attempt-01 and Attempt-02 remain immutable historical evidence that
+motivates this amendment, and no output of either is used or repaired.
+
+**Suffix-only procedure (new).** The researcher replaced the full-history collection
+with a B0-specific procedure whose output scope matches the estimand.
+
+- The 12 structured scenarios, the generators (`openai/gpt-5.6-sol`,
+  `anthropic/claude-fable-5.1`), the first-party provider constraints, and the
+  execution settings are unchanged. One call is one scenario and one generator and
+  returns the Low, Medium and High variants: 12 x 2 = 24 logical calls and 72
+  histories. Order is all Sol calls, then all Fable calls, in manifest order.
+- Each variant contains only `U7` and `N2`, both required and nonempty, with no other
+  property. `I1` to `I7`, `U1` to `U6`, `N1` and `Q` are not requested.
+- The input projection carries only the U7 (changed state) and N2 (same state) facts
+  of each variant, with the entity and attribute identities and current values
+  needed to realize them, derived deterministically and losslessly from the frozen
+  scenario. The output must not restate superseded values, and only surface wording
+  may vary.
+- Each calibration history is exactly the U7 user message, `Noted.`, the N2 user
+  message, `Noted.`. The per-history requirement is the smallest budget that retains
+  both complete exchanges, counted with the same marginal chat-template rule.
+- Unchanged: the atomic unit, complete-exchange contiguous newest suffix, U7 and N2
+  retained, N1 not required, Q and system prompt outside the budget, tokenizer and
+  revision, marginal counting, 100% retention, exact maximum, no percentile, no
+  grid, no headroom, and the coverage-failure rule. The final `B0_CONTEXT_TOKENS`
+  remains OPEN.
+- Identity: `b0-suffix-naturalization-prompt/1.0.0`,
+  `b0-suffix-naturalization-input/1.0.0` and
+  `b0-suffix-naturalization-output/1.0.0`, defined in
+  `configs/b0-suffix-naturalization-contract.json`; the plan and failure handling
+  are in `configs/b0-suffix-calibration.yaml`, with results in
+  `results/b0-suffix-calibration`. The Generator Qualification contract is
+  unchanged.
+- Failure handling (fixed before execution): only the frozen infrastructure retries
+  repeat a request. An empty U7 or N2, parse failure, schema failure, refusal,
+  truncation, or other terminal execution or output-contract failure closes the
+  attempt incomplete, with no selective resampling, manual repair, mixing of
+  attempts, reuse of any old output, or generator substitution.
+- Attempt policy (approved): exactly one complete official suffix collection attempt.
+  No second attempt is created or executed automatically.
+
+The suffix collection has not been executed.
+
+## B0 Suffix Procedure Approved: Attempt Policy, Semantic Eligibility, Final Prompt (2026-09-19)
+
+The researcher approved the suffix-only procedure with the following decisions,
+recorded in `configs/b0-suffix-calibration.yaml`.
+
+**Attempt policy (frozen).** Exactly one complete official collection attempt. No
+second suffix attempt starts automatically. Infrastructure retries follow only the
+frozen infrastructure retry policy. An empty U7 or N2, parse failure, schema
+failure, refusal, truncation, or other terminal execution or output-contract failure
+closes the collection incomplete. There is no selective resampling, manual repair,
+cross-attempt mixing, reuse of old full-history output, or generator substitution.
+
+**Semantic eligibility (frozen; replaces the earlier descriptive-only proposal).**
+Semantic findings never stop later scheduled calls: if execution and schema stay
+valid, all 24 logical calls complete. After collection, the collection is eligible
+for `B0_CONTEXT_TOKENS` derivation only if all 72 suffix histories pass every
+required Level-1 semantic check.
+
+- U7: entity fidelity, attribute fidelity, supplied current-value fidelity,
+  changed-state semantics, no superseded value, no invented value or state change
+  beyond the supplied revision, and comprehensibility.
+- N2: entity fidelity, attribute fidelity, supplied current-value fidelity,
+  same-state semantics, no invented change, no historical or superseded value, and
+  comprehensibility.
+- A Level-1 failure does not interrupt collection but makes the completed collection
+  COMPLETE_BUT_INELIGIBLE. `B0_CONTEXT_TOKENS` then stays null and OPEN.
+- Fluency-only defects where the meaning is unambiguous do not affect eligibility
+  and are never used to rank generators.
+
+**Audit.** No LLM judge is used. Entity, supplied-value, and superseded-value checks
+are deterministic and final. The other checks are recorded per item as PASS or FAIL
+by the researcher in a completed copy of an offline audit template that is derived
+from the archived collection and bound to its hashes. Adjudication produces
+ELIGIBLE or COMPLETE_BUT_INELIGIBLE, and budget derivation refuses unless the
+collection is complete, all outputs are schema-valid, the audit is complete, and no
+Level-1 failure remains. Fluency never blocks derivation.
+
+**Prompt (frozen).** The suffix prompt is unchanged except that the sentence "N2
+concerns a different attribute than U7 and must not repeat U7." is replaced by "N2
+concerns the dedicated N2 state supplied in the input. It must not repeat, revise,
+or otherwise alter U7." Prompt SHA-256
+`841dd95d7e535f1001e5bcab2f0905562f4140d76a956891487fcdccca33eb03`, contract SHA-256
+`7138d078f114ea4d5df0743c770c2c84ee409b1322cf2c658cc0e0be495719db`. Only the
+prompt-derived hashes change: the 24 request hashes and the execution-plan identity
+(`d9b7d7f06ab20b38c2bc1ace39b089434320f81cfa9c43a5b8a42b513b801526`). The scenarios,
+U7/N2 projection facts, output schema, model identifiers, providers, reasoning
+effort, exact-maximum rule, tokenizer, B0 selector, and coverage-failure rule are
+unchanged, and the final `B0_CONTEXT_TOKENS` remains OPEN.

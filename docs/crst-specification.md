@@ -483,7 +483,8 @@ the qualified dense-retrieval 512-token setting.
 - **Histories.** Both final generators, `openai/gpt-5.6-sol` (G1) and
   `anthropic/claude-fable-5.1` (G2), naturalize every scenario: 12 scenarios x 2
   generators = 24 logical calls, each returning one Low/Medium/High triplet, giving
-  72 calibration histories under the frozen naturalization contract and package.
+  72 calibration histories. Under the suffix-only procedure below, each history
+  contains only the U7 and N2 events.
 - **Retention.** Every calibration history must retain the complete U7 and N2
   exchanges (100%); no percentile rule applies.
 - **Budget.** `B0_CONTEXT_TOKENS` is the maximum, over all calibration histories,
@@ -518,6 +519,47 @@ the qualified dense-retrieval 512-token setting.
   in another terminal failure, B0 calibration stops, no further attempt is created
   automatically, and a separate researcher decision is required. This is
   construction-quality handling; it does not change Generator Qualification.
+  **Status:** this full-history procedure (17 naturalized events per variant) is
+  CLOSED. Both attempts ended in a terminal output-contract failure in a field
+  outside the calibration estimand (Attempt-01: empty `N1`, `N2` and `Q`;
+  Attempt-02: empty `N1` with `U7` and `N2` present), so it produced no eligible
+  complete calibration set. It remains reproducible historical evidence, and no
+  output of either attempt is used to derive the budget.
+- **Suffix-only naturalization.** The calibration estimand is the smallest marginal
+  budget that retains the complete U7 and N2 exchanges, so the replacement
+  procedure naturalizes only those two events. The same 12 structured scenarios
+  and the same generators and provider constraints are used, and one logical call
+  still returns the Low, Medium and High variants for one scenario and one
+  generator, but each variant contains only `U7` and `N2` (both required and
+  nonempty; no `I1`-`I7`, `U1`-`U6`, `N1` or `Q`). Each calibration history is
+  exactly the U7 user message, `Noted.`, the N2 user message, `Noted.`, counted
+  with the same chat-template rule. The procedure has its own prompt, input and
+  output-schema versions (`b0-suffix-naturalization-*/1.0.0`), defined in
+  `configs/b0-suffix-naturalization-contract.json` and planned in
+  `configs/b0-suffix-calibration.yaml`; the Generator Qualification contract is
+  unchanged. Failure handling is fixed before execution: only the frozen
+  infrastructure retries repeat a request, and an empty U7 or N2, parse or schema
+  failure, refusal, truncation, or other terminal execution or output-contract
+  failure closes the attempt incomplete, with no selective resampling, repair,
+  mixing of attempts, reuse of full-history output, or generator substitution.
+  Exactly one complete suffix attempt is allowed (approved), and no second attempt
+  starts automatically.
+  **Semantic eligibility.** Semantic findings never stop later scheduled calls; if
+  execution and schema stay valid, all 24 calls complete. A completed collection is
+  eligible for `B0_CONTEXT_TOKENS` derivation only if all 72 suffix histories pass
+  every required Level-1 check. For U7: entity, attribute, and supplied
+  current-value fidelity, changed-state semantics, no superseded value, no invented
+  value or change, and comprehensibility. For N2: entity, attribute, and supplied
+  current-value fidelity, same-state semantics, no invented change, no historical or
+  superseded value, and comprehensibility. Entity, value, and value-absence checks
+  are deterministic and final; the rest are recorded by the researcher as PASS or
+  FAIL in an audit bound to the archived evidence. No LLM judge is used. A Level-1
+  failure makes the completed collection COMPLETE_BUT_INELIGIBLE and leaves
+  `B0_CONTEXT_TOKENS` null and OPEN. Fluency-only defects with unambiguous meaning do
+  not affect eligibility and are never used to rank generators. Derivation refuses
+  unless the collection is complete, all outputs are schema-valid, the audit is
+  complete, and no Level-1 failure remains. All estimand, rule, and coverage
+  decisions above are unchanged.
 
 **OPEN:** only the final `B0_CONTEXT_TOKENS`, which is derived by the official
 calibration run.

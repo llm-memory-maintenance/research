@@ -81,8 +81,14 @@ calibration:
       - Freeze the recalibrated budget before the main experiment.
     separation: The final confirmatory CRST remains separate from B0 calibration material.
 
+# Full-history naturalization procedure (17 events per variant). CLOSED: both pre-authorized attempts ended in a
+# terminal output-contract failure in fields outside the U7+N2 calibration estimand, so no eligible complete
+# calibration set exists. No attempt may run under this procedure. It remains reproducible as historical
+# evidence. The replacement procedure is configs/b0-suffix-calibration.yaml.
 naturalization:
-  status: AWAITING_COMPLETE_ATTEMPT
+  status: CLOSED_NO_ELIGIBLE_SET
+  procedure_version: b0-calibration-naturalization/1.0.0
+  superseded_by: configs/b0-suffix-calibration.yaml
   execution_mode: standard
   prompt_version: crst-naturalization-prompt/1.1.0
   input_contract_version: crst-naturalization-input/1.1.0
@@ -98,16 +104,18 @@ naturalization:
   output_layout: outputs/<g1|g2>/<scenario_id>.json per call, then collection.json and SHA256SUMS
   attempt_cap: 2
   # Attempt-01 recorded 17 of 24 calls and stopped at call 17 (G2, b0cal-software-configuration-01): the HIGH
-  # variant returned empty N1, N2 and Q, violating the output schema. Its closure is derived offline from the
-  # archived evidence. The single additional attempt reruns all 24 calls from call 1.
+  # variant returned empty N1, N2 and Q. Attempt-02 recorded 16 of 24 and stopped at call 16 (G2,
+  # b0cal-task-assignment-01): the HIGH variant returned an empty N1 while U7, N2 and Q were present. Each closure
+  # is derived offline from the archived evidence. Neither attempt can yield a budget.
   attempts:
     - id: attempt-01
       status: CLOSED_INCOMPLETE
       result_directory: results/b0-calibration/attempt-01
       closure: results/b0-calibration/closure/attempt-01.json
     - id: attempt-02
-      status: PLANNED_NOT_EXECUTED
+      status: CLOSED_INCOMPLETE
       result_directory: results/b0-calibration/attempt-02
+      closure: results/b0-calibration/closure/attempt-02.json
   collection_rule:
     status: FROZEN
     frozen_on: '2026-09-19'

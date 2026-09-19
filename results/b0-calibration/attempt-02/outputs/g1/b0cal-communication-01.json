@@ -1,0 +1,343 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"send_window\\\",\\\"meaning\\\":\\\"weekly send window\\\",\\\"units_or_interpretation\\\":\\\"named window\\\"},{\\\"attribute_id\\\":\\\"list_code\\\",\\\"meaning\\\":\\\"mailing list identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"sender_name\\\",\\\"meaning\\\":\\\"sender display name\\\",\\\"units_or_interpretation\\\":\\\"synthetic sender\\\"},{\\\"attribute_id\\\":\\\"reply_alias\\\",\\\"meaning\\\":\\\"reply-to alias\\\",\\\"units_or_interpretation\\\":\\\"alias label\\\"},{\\\"attribute_id\\\":\\\"tone\\\",\\\"meaning\\\":\\\"message tone\\\",\\\"units_or_interpretation\\\":\\\"tone label\\\"},{\\\"attribute_id\\\":\\\"footer\\\",\\\"meaning\\\":\\\"message footer\\\",\\\"units_or_interpretation\\\":\\\"footer label\\\"}],\\\"domain\\\":\\\"Communication\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"name\\\":\\\"Mailing list Ember\\\"},{\\\"entity_id\\\":\\\"b0cal-communication-01-distractor\\\",\\\"name\\\":\\\"Mailing list Garnet\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_b\\\",\\\"I2\\\":\\\"k_c\\\",\\\"I3\\\":\\\"k_d\\\",\\\"I4\\\":\\\"k_target\\\",\\\"I5\\\":\\\"k_hard\\\",\\\"I6\\\":\\\"k_n2\\\",\\\"I7\\\":\\\"k_a\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"send_window\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current weekly send window of Mailing list Ember.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"send_window\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"initial_value\\\":\\\"Monday 07:00\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"send_window\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-distractor\\\",\\\"initial_value\\\":\\\"Tuesday 18:20\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"list_code\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"initial_value\\\":\\\"MLS-E92\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"sender_name\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"initial_value\\\":\\\"Sender Ruskin Hall\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"reply_alias\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"initial_value\\\":\\\"alias help-desk\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"tone\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"initial_value\\\":\\\"formal tone\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"footer\\\",\\\"entity_id\\\":\\\"b0cal-communication-01-primary\\\",\\\"initial_value\\\":\\\"footer plain\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"alias help-desk\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"formal tone\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"footer plain\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Monday 07:00\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Tuesday 18:20\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"MLS-E92\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Sender Ruskin Hall\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Tuesday 08:30\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Wednesday 09:15\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Thursday 10:45\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Friday 12:00\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Saturday 13:30\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Sunday 15:15\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Sunday 15:15\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Monday 16:40\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"MLS-E92\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"alias help-desk\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"formal tone\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"footer plain\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Monday 07:00\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Tuesday 18:20\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"MLS-E92\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Sender Ruskin Hall\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"footer legal\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Thursday 19:05\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"footer seasonal\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Sender Delphine Ward\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"alias front-line\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"friendly tone\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Monday 07:00\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Monday 16:40\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"MLS-E92\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"alias help-desk\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"formal tone\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"footer plain\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Monday 07:00\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Tuesday 18:20\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"MLS-E92\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"Sender Ruskin Hall\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Tuesday 08:30\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"alias front-line\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"Thursday 10:45\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Thursday 19:05\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Saturday 13:30\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Sender Delphine Ward\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Saturday 13:30\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Monday 16:40\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"MLS-E92\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-sol\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "c3421cba2f922fc03e5a5edbd2c9c26ef46be7c301ee31b432d3143a7d36e585",
+  "request_body": {
+    "model": "openai/gpt-5.6-sol",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"send_window\",\"meaning\":\"weekly send window\",\"units_or_interpretation\":\"named window\"},{\"attribute_id\":\"list_code\",\"meaning\":\"mailing list identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"sender_name\",\"meaning\":\"sender display name\",\"units_or_interpretation\":\"synthetic sender\"},{\"attribute_id\":\"reply_alias\",\"meaning\":\"reply-to alias\",\"units_or_interpretation\":\"alias label\"},{\"attribute_id\":\"tone\",\"meaning\":\"message tone\",\"units_or_interpretation\":\"tone label\"},{\"attribute_id\":\"footer\",\"meaning\":\"message footer\",\"units_or_interpretation\":\"footer label\"}],\"domain\":\"Communication\",\"entities\":[{\"entity_id\":\"b0cal-communication-01-primary\",\"name\":\"Mailing list Ember\"},{\"entity_id\":\"b0cal-communication-01-distractor\",\"name\":\"Mailing list Garnet\"}],\"initial_order\":{\"I1\":\"k_b\",\"I2\":\"k_c\",\"I3\":\"k_d\",\"I4\":\"k_target\",\"I5\":\"k_hard\",\"I6\":\"k_n2\",\"I7\":\"k_a\"},\"question_intent\":{\"attribute_id\":\"send_window\",\"entity_id\":\"b0cal-communication-01-primary\",\"intent\":\"Ask only for the current weekly send window of Mailing list Ember.\"},\"state_keys\":[{\"attribute_id\":\"send_window\",\"entity_id\":\"b0cal-communication-01-primary\",\"initial_value\":\"Monday 07:00\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"send_window\",\"entity_id\":\"b0cal-communication-01-distractor\",\"initial_value\":\"Tuesday 18:20\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"list_code\",\"entity_id\":\"b0cal-communication-01-primary\",\"initial_value\":\"MLS-E92\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"sender_name\",\"entity_id\":\"b0cal-communication-01-primary\",\"initial_value\":\"Sender Ruskin Hall\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"reply_alias\",\"entity_id\":\"b0cal-communication-01-primary\",\"initial_value\":\"alias help-desk\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"tone\",\"entity_id\":\"b0cal-communication-01-primary\",\"initial_value\":\"formal tone\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"footer\",\"entity_id\":\"b0cal-communication-01-primary\",\"initial_value\":\"footer plain\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"alias help-desk\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"formal tone\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"footer plain\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Monday 07:00\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Tuesday 18:20\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"MLS-E92\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Sender Ruskin Hall\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Tuesday 08:30\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Wednesday 09:15\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Thursday 10:45\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Friday 12:00\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Saturday 13:30\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Sunday 15:15\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Sunday 15:15\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Monday 16:40\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"MLS-E92\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"alias help-desk\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"formal tone\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"footer plain\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Monday 07:00\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Tuesday 18:20\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"MLS-E92\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Sender Ruskin Hall\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"footer legal\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Thursday 19:05\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"footer seasonal\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Sender Delphine Ward\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"alias front-line\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"friendly tone\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Monday 07:00\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Monday 16:40\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"MLS-E92\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"alias help-desk\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"formal tone\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"footer plain\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Monday 07:00\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Tuesday 18:20\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"MLS-E92\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"Sender Ruskin Hall\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Tuesday 08:30\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"alias front-line\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"Thursday 10:45\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Thursday 19:05\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Saturday 13:30\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Sender Delphine Ward\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Saturday 13:30\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Monday 16:40\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"MLS-E92\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T11:52:18.772151+00:00",
+      "requested_model": "openai/gpt-5.6-sol",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-sol",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789818738-k1AR2D1xcl7PGFuuDEzB",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n{\"id\":\"gen-1789818738-k1AR2D1xcl7PGFuuDEzB\",\"object\":\"chat.completion\",\"created\":1789818738,\"model\":\"openai/gpt-5.6-sol\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Mailing list Ember uses alias help-desk as its reply-to alias.\\\",\\\"I2\\\":\\\"Mailing list Ember has a formal tone.\\\",\\\"I3\\\":\\\"Mailing list Ember uses footer plain as its message footer.\\\",\\\"I4\\\":\\\"The weekly send window for Mailing list Ember is Monday 07:00.\\\",\\\"I5\\\":\\\"The weekly send window for Mailing list Garnet is Tuesday 18:20.\\\",\\\"I6\\\":\\\"The mailing list identifier for Mailing list Ember is MLS-E92.\\\",\\\"I7\\\":\\\"The sender display name for Mailing list Ember is Sender Ruskin Hall.\\\",\\\"N1\\\":\\\"The weekly send window for Mailing list Ember remains Sunday 15:15.\\\",\\\"N2\\\":\\\"The mailing list identifier for Mailing list Ember remains MLS-E92.\\\",\\\"Q\\\":\\\"What is the current weekly send window of Mailing list Ember?\\\",\\\"U1\\\":\\\"The weekly send window for Mailing list Ember has changed to Tuesday 08:30.\\\",\\\"U2\\\":\\\"The weekly send window for Mailing list Ember is now Wednesday 09:15.\\\",\\\"U3\\\":\\\"The weekly send window for Mailing list Ember has been updated to Thursday 10:45.\\\",\\\"U4\\\":\\\"The weekly send window for Mailing list Ember is now Friday 12:00.\\\",\\\"U5\\\":\\\"The weekly send window for Mailing list Ember has changed to Saturday 13:30.\\\",\\\"U6\\\":\\\"The weekly send window for Mailing list Ember is now Sunday 15:15.\\\",\\\"U7\\\":\\\"The weekly send window for Mailing list Ember has been updated to Monday 16:40.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"The reply-to alias for Mailing list Ember is alias help-desk.\\\",\\\"I2\\\":\\\"The message tone for Mailing list Ember is formal tone.\\\",\\\"I3\\\":\\\"The message footer for Mailing list Ember is footer plain.\\\",\\\"I4\\\":\\\"Mailing list Ember has a weekly send window of Monday 07:00.\\\",\\\"I5\\\":\\\"Mailing list Garnet has a weekly send window of Tuesday 18:20.\\\",\\\"I6\\\":\\\"Mailing list Ember has the mailing list identifier MLS-E92.\\\",\\\"I7\\\":\\\"Mailing list Ember has the sender display name Sender Ruskin Hall.\\\",\\\"N1\\\":\\\"Mailing list Ember's weekly send window remains Monday 07:00.\\\",\\\"N2\\\":\\\"Mailing list Ember's mailing list identifier remains MLS-E92.\\\",\\\"Q\\\":\\\"What is the current weekly send window of Mailing list Ember?\\\",\\\"U1\\\":\\\"The message footer for Mailing list Ember has changed to footer legal.\\\",\\\"U2\\\":\\\"The weekly send window for Mailing list Garnet has been updated to Thursday 19:05.\\\",\\\"U3\\\":\\\"The message footer for Mailing list Ember is now footer seasonal.\\\",\\\"U4\\\":\\\"The sender display name for Mailing list Ember has changed to Sender Delphine Ward.\\\",\\\"U5\\\":\\\"The reply-to alias for Mailing list Ember is now alias front-line.\\\",\\\"U6\\\":\\\"The message tone for Mailing list Ember has been updated to friendly tone.\\\",\\\"U7\\\":\\\"The weekly send window for Mailing list Ember has changed to Monday 16:40.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"Mailing list Ember's reply-to alias is alias help-desk.\\\",\\\"I2\\\":\\\"Mailing list Ember's message tone is formal tone.\\\",\\\"I3\\\":\\\"Mailing list Ember's message footer is footer plain.\\\",\\\"I4\\\":\\\"Mailing list Ember's weekly send window is Monday 07:00.\\\",\\\"I5\\\":\\\"Mailing list Garnet's weekly send window is Tuesday 18:20.\\\",\\\"I6\\\":\\\"Mailing list Ember's mailing list identifier is MLS-E92.\\\",\\\"I7\\\":\\\"Mailing list Ember's sender display name is Sender Ruskin Hall.\\\",\\\"N1\\\":\\\"Mailing list Ember's weekly send window is still Saturday 13:30.\\\",\\\"N2\\\":\\\"Mailing list Ember's mailing list identifier is still MLS-E92.\\\",\\\"Q\\\":\\\"What is the current weekly send window of Mailing list Ember?\\\",\\\"U1\\\":\\\"Mailing list Ember's weekly send window has changed to Tuesday 08:30.\\\",\\\"U2\\\":\\\"Mailing list Ember's reply-to alias has been updated to alias front-line.\\\",\\\"U3\\\":\\\"Mailing list Ember's weekly send window is now Thursday 10:45.\\\",\\\"U4\\\":\\\"Mailing list Garnet's weekly send window has changed to Thursday 19:05.\\\",\\\"U5\\\":\\\"Mailing list Ember's weekly send window has been updated to Saturday 13:30.\\\",\\\"U6\\\":\\\"Mailing list Ember's sender display name is now Sender Delphine Ward.\\\",\\\"U7\\\":\\\"Mailing list Ember's weekly send window has changed to Monday 16:40.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":2586,\"completion_tokens\":926,\"total_tokens\":3512,\"cost\":0.0157235,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2583,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0157235,\"upstream_inference_prompt_cost\":0.0064635,\"upstream_inference_completions_cost\":0.00926},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-sol\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-sol-20260709\",\"selected\":true}]},\"generation_time\":7987}}",
+      "response_sha256_before_redaction": "9ef331e3982e51aded51be1ce279a10fed6a54b2462fed9f561d5acb19c0a9fc",
+      "response_envelope": {
+        "id": "gen-1789818738-k1AR2D1xcl7PGFuuDEzB",
+        "object": "chat.completion",
+        "created": 1789818738,
+        "model": "openai/gpt-5.6-sol",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Mailing list Ember uses alias help-desk as its reply-to alias.\",\"I2\":\"Mailing list Ember has a formal tone.\",\"I3\":\"Mailing list Ember uses footer plain as its message footer.\",\"I4\":\"The weekly send window for Mailing list Ember is Monday 07:00.\",\"I5\":\"The weekly send window for Mailing list Garnet is Tuesday 18:20.\",\"I6\":\"The mailing list identifier for Mailing list Ember is MLS-E92.\",\"I7\":\"The sender display name for Mailing list Ember is Sender Ruskin Hall.\",\"N1\":\"The weekly send window for Mailing list Ember remains Sunday 15:15.\",\"N2\":\"The mailing list identifier for Mailing list Ember remains MLS-E92.\",\"Q\":\"What is the current weekly send window of Mailing list Ember?\",\"U1\":\"The weekly send window for Mailing list Ember has changed to Tuesday 08:30.\",\"U2\":\"The weekly send window for Mailing list Ember is now Wednesday 09:15.\",\"U3\":\"The weekly send window for Mailing list Ember has been updated to Thursday 10:45.\",\"U4\":\"The weekly send window for Mailing list Ember is now Friday 12:00.\",\"U5\":\"The weekly send window for Mailing list Ember has changed to Saturday 13:30.\",\"U6\":\"The weekly send window for Mailing list Ember is now Sunday 15:15.\",\"U7\":\"The weekly send window for Mailing list Ember has been updated to Monday 16:40.\"},\"low\":{\"I1\":\"The reply-to alias for Mailing list Ember is alias help-desk.\",\"I2\":\"The message tone for Mailing list Ember is formal tone.\",\"I3\":\"The message footer for Mailing list Ember is footer plain.\",\"I4\":\"Mailing list Ember has a weekly send window of Monday 07:00.\",\"I5\":\"Mailing list Garnet has a weekly send window of Tuesday 18:20.\",\"I6\":\"Mailing list Ember has the mailing list identifier MLS-E92.\",\"I7\":\"Mailing list Ember has the sender display name Sender Ruskin Hall.\",\"N1\":\"Mailing list Ember's weekly send window remains Monday 07:00.\",\"N2\":\"Mailing list Ember's mailing list identifier remains MLS-E92.\",\"Q\":\"What is the current weekly send window of Mailing list Ember?\",\"U1\":\"The message footer for Mailing list Ember has changed to footer legal.\",\"U2\":\"The weekly send window for Mailing list Garnet has been updated to Thursday 19:05.\",\"U3\":\"The message footer for Mailing list Ember is now footer seasonal.\",\"U4\":\"The sender display name for Mailing list Ember has changed to Sender Delphine Ward.\",\"U5\":\"The reply-to alias for Mailing list Ember is now alias front-line.\",\"U6\":\"The message tone for Mailing list Ember has been updated to friendly tone.\",\"U7\":\"The weekly send window for Mailing list Ember has changed to Monday 16:40.\"},\"medium\":{\"I1\":\"Mailing list Ember's reply-to alias is alias help-desk.\",\"I2\":\"Mailing list Ember's message tone is formal tone.\",\"I3\":\"Mailing list Ember's message footer is footer plain.\",\"I4\":\"Mailing list Ember's weekly send window is Monday 07:00.\",\"I5\":\"Mailing list Garnet's weekly send window is Tuesday 18:20.\",\"I6\":\"Mailing list Ember's mailing list identifier is MLS-E92.\",\"I7\":\"Mailing list Ember's sender display name is Sender Ruskin Hall.\",\"N1\":\"Mailing list Ember's weekly send window is still Saturday 13:30.\",\"N2\":\"Mailing list Ember's mailing list identifier is still MLS-E92.\",\"Q\":\"What is the current weekly send window of Mailing list Ember?\",\"U1\":\"Mailing list Ember's weekly send window has changed to Tuesday 08:30.\",\"U2\":\"Mailing list Ember's reply-to alias has been updated to alias front-line.\",\"U3\":\"Mailing list Ember's weekly send window is now Thursday 10:45.\",\"U4\":\"Mailing list Garnet's weekly send window has changed to Thursday 19:05.\",\"U5\":\"Mailing list Ember's weekly send window has been updated to Saturday 13:30.\",\"U6\":\"Mailing list Ember's sender display name is now Sender Delphine Ward.\",\"U7\":\"Mailing list Ember's weekly send window has changed to Monday 16:40.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2586,
+          "completion_tokens": 926,
+          "total_tokens": 3512,
+          "cost": 0.0157235,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2583,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.0157235,
+            "upstream_inference_prompt_cost": 0.0064635,
+            "upstream_inference_completions_cost": 0.00926
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-sol",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-sol-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 7987
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-sol",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-sol-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 7987
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Mailing list Ember uses alias help-desk as its reply-to alias.",
+          "I2": "Mailing list Ember has a formal tone.",
+          "I3": "Mailing list Ember uses footer plain as its message footer.",
+          "I4": "The weekly send window for Mailing list Ember is Monday 07:00.",
+          "I5": "The weekly send window for Mailing list Garnet is Tuesday 18:20.",
+          "I6": "The mailing list identifier for Mailing list Ember is MLS-E92.",
+          "I7": "The sender display name for Mailing list Ember is Sender Ruskin Hall.",
+          "N1": "The weekly send window for Mailing list Ember remains Sunday 15:15.",
+          "N2": "The mailing list identifier for Mailing list Ember remains MLS-E92.",
+          "Q": "What is the current weekly send window of Mailing list Ember?",
+          "U1": "The weekly send window for Mailing list Ember has changed to Tuesday 08:30.",
+          "U2": "The weekly send window for Mailing list Ember is now Wednesday 09:15.",
+          "U3": "The weekly send window for Mailing list Ember has been updated to Thursday 10:45.",
+          "U4": "The weekly send window for Mailing list Ember is now Friday 12:00.",
+          "U5": "The weekly send window for Mailing list Ember has changed to Saturday 13:30.",
+          "U6": "The weekly send window for Mailing list Ember is now Sunday 15:15.",
+          "U7": "The weekly send window for Mailing list Ember has been updated to Monday 16:40."
+        },
+        "low": {
+          "I1": "The reply-to alias for Mailing list Ember is alias help-desk.",
+          "I2": "The message tone for Mailing list Ember is formal tone.",
+          "I3": "The message footer for Mailing list Ember is footer plain.",
+          "I4": "Mailing list Ember has a weekly send window of Monday 07:00.",
+          "I5": "Mailing list Garnet has a weekly send window of Tuesday 18:20.",
+          "I6": "Mailing list Ember has the mailing list identifier MLS-E92.",
+          "I7": "Mailing list Ember has the sender display name Sender Ruskin Hall.",
+          "N1": "Mailing list Ember's weekly send window remains Monday 07:00.",
+          "N2": "Mailing list Ember's mailing list identifier remains MLS-E92.",
+          "Q": "What is the current weekly send window of Mailing list Ember?",
+          "U1": "The message footer for Mailing list Ember has changed to footer legal.",
+          "U2": "The weekly send window for Mailing list Garnet has been updated to Thursday 19:05.",
+          "U3": "The message footer for Mailing list Ember is now footer seasonal.",
+          "U4": "The sender display name for Mailing list Ember has changed to Sender Delphine Ward.",
+          "U5": "The reply-to alias for Mailing list Ember is now alias front-line.",
+          "U6": "The message tone for Mailing list Ember has been updated to friendly tone.",
+          "U7": "The weekly send window for Mailing list Ember has changed to Monday 16:40."
+        },
+        "medium": {
+          "I1": "Mailing list Ember's reply-to alias is alias help-desk.",
+          "I2": "Mailing list Ember's message tone is formal tone.",
+          "I3": "Mailing list Ember's message footer is footer plain.",
+          "I4": "Mailing list Ember's weekly send window is Monday 07:00.",
+          "I5": "Mailing list Garnet's weekly send window is Tuesday 18:20.",
+          "I6": "Mailing list Ember's mailing list identifier is MLS-E92.",
+          "I7": "Mailing list Ember's sender display name is Sender Ruskin Hall.",
+          "N1": "Mailing list Ember's weekly send window is still Saturday 13:30.",
+          "N2": "Mailing list Ember's mailing list identifier is still MLS-E92.",
+          "Q": "What is the current weekly send window of Mailing list Ember?",
+          "U1": "Mailing list Ember's weekly send window has changed to Tuesday 08:30.",
+          "U2": "Mailing list Ember's reply-to alias has been updated to alias front-line.",
+          "U3": "Mailing list Ember's weekly send window is now Thursday 10:45.",
+          "U4": "Mailing list Garnet's weekly send window has changed to Thursday 19:05.",
+          "U5": "Mailing list Ember's weekly send window has been updated to Saturday 13:30.",
+          "U6": "Mailing list Ember's sender display name is now Sender Delphine Ward.",
+          "U7": "Mailing list Ember's weekly send window has changed to Monday 16:40."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2586,
+        "completion_tokens": 926,
+        "total_tokens": 3512,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.0157235
+      },
+      "latency_seconds": 8.186595881998073,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "b0cal-communication-01",
+  "projection_sha256": "07278dd3b0d7e9fdd4e6e2e5fc000425d97ff8aff3cbc746da137eb75f8cb43e",
+  "logical_call_index": 9,
+  "attempt": "attempt-02",
+  "output_sha256": "8a584cf1f792262513a53a39277a1964c1fb22378780d323ade7f2a86a6ffc0d"
+}

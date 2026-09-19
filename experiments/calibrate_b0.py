@@ -89,6 +89,8 @@ def official_attempt(design):
 
 def require_official(design):
     """Live execution needs every design decision frozen, no completed attempt, and an attempt still allowed."""
+    require(design['naturalization']['status'] != 'CLOSED_NO_ELIGIBLE_SET',
+            'Full-history B0 naturalization is closed; no further attempt may run under this procedure')
     require(design['status'] == 'DESIGN_FROZEN' and design['system_prompt']['status'] == 'FROZEN'
             and design['calibration']['coverage_failure']['status'] == 'FROZEN'
             and design['naturalization']['collection_rule']['status'] == 'FROZEN'
@@ -175,15 +177,21 @@ def plan_identity(inputs):
             'request_sha256': [probe.digest(probe.canonical(request(g, f)).encode()) for g, f, _ in plan(inputs)]}
 
 
+def planned_attempt(design):
+    """The attempt still allowed to run, or None once the procedure is closed."""
+    attempts = design['naturalization']['attempts']
+    return attempts[-1] if attempts[-1]['status'] == 'PLANNED_NOT_EXECUTED' else None
+
+
 def preview(inputs):
     design, nat = inputs['design'], inputs['design']['naturalization']
-    attempt = official_attempt(design)
+    attempt = planned_attempt(design)
     calls = plan(inputs)
     bodies = [request(g, f) for g, f, _ in calls]
     for (_, fixture, entry), body in zip(calls, bodies):
         require(probe.digest(probe.canonical(gq.project(fixture)).encode()) == entry['projection_sha256']
                 and json.loads(body['messages'][1]['content']) == gq.project(fixture), 'Input hash drift')
-    return {'status': 'NETWORK_DISABLED', 'credits': 'CREDITS_NOT_SPENT', 'naturalization_status': 'NOT EXECUTED',
+    return {'status': 'NETWORK_DISABLED', 'credits': 'CREDITS_NOT_SPENT', 'naturalization_status': nat['status'],
             'design_status': design['status'], 'budget_status': design['budget_status'],
             'b0_context_tokens': design['b0_context_tokens'],
             'system_prompt_status': design['system_prompt']['status'],
@@ -201,16 +209,16 @@ def preview(inputs):
                               for i, (g, _, e) in enumerate(calls, 1)],
             'execution_mode': nat['execution_mode'], 'generation': probe.GENERATION, 'transport': probe.TRANSPORT,
             'allow_fallbacks': False, 'require_parameters': True,
-            'attempt': attempt['id'], 'attempt_cap': nat['attempt_cap'],
+            'attempt': attempt and attempt['id'], 'attempt_cap': nat['attempt_cap'],
             'predecessor_closures': verify_predecessors(inputs),
-            'result_directory': attempt['result_directory'],
+            'result_directory': attempt and attempt['result_directory'],
             'system_prompt_sha256': design['system_prompt']['composed_sha256'],
             'request_hashes': [probe.digest(probe.canonical(body).encode()) for body in bodies],
             'calls': [{'index': i, 'logical_call_id': g['entry']['logical_call_id'], 'model': g['entry']['model'],
                        'provider_order': g['entry']['provider_order'], 'scenario_id': e['fixture_id'],
                        'input_sha256': e['projection_sha256'],
                        'request_sha256': probe.digest(probe.canonical(body).encode()),
-                       'output_path': f'{attempt["result_directory"]}/{output_path(g, e)}'}
+                       'output_path': attempt and f'{attempt["result_directory"]}/{output_path(g, e)}'}
                       for i, ((g, _, e), body) in enumerate(zip(calls, bodies), 1)]}
 
 
@@ -484,9 +492,10 @@ def derive(histories, system, tokenizer):
     for h in histories:
         selection = window.select_window(h['exchanges'], maximum, system, tokenizer)
         require(window.retains(selection) and not selection['history_unit_overflow'], 'Retention failure at maximum')
-        messages = window.assemble(system, selection, h['question'])
-        require(messages[-1] == {'role': 'user', 'content': h['question']}
-                and window.history_tokens(system, selection['exchanges'], tokenizer) <= maximum, 'Question boundary')
+        if h.get('question') is not None:
+            messages = window.assemble(system, selection, h['question'])
+            require(messages[-1] == {'role': 'user', 'content': h['question']}, 'Question boundary')
+        require(window.history_tokens(system, selection['exchanges'], tokenizer) <= maximum, 'Budget exceeded')
         retained += 1
     determining = [row for row in rows if row['required_tokens'] == maximum]
     key = {(h['generator'], h['scenario'], h['variant']): h for h in histories}

@@ -1,0 +1,153 @@
+{
+  "schema_version": "b0-calibration-closure/1.0.0",
+  "attempt": "attempt-02",
+  "status": "CLOSED_INCOMPLETE",
+  "terminal_reason": "OUTPUT_CONTRACT_FAILURE",
+  "terminal_detail": "REQUIRED_EMPTY_FIELD_SCHEMA_FAILURE",
+  "terminal_call": {
+    "logical_call_index": 16,
+    "logical_call_id": "G2",
+    "model": "anthropic/claude-fable-5.1",
+    "scenario_id": "b0cal-task-assignment-01",
+    "http_status": 200,
+    "finish_reason": "stop",
+    "refusal": false,
+    "incomplete_or_truncated": false,
+    "parse_status": "passed",
+    "schema_status": "failed",
+    "processing_or_charge_uncertain": false,
+    "retry_reason": null,
+    "physical_attempts": 1,
+    "failure_reason": "Expected nonempty string",
+    "empty_fields": {
+      "high": [
+        "N1"
+      ]
+    },
+    "wire_request_sha256": "b60585ccb574fcbb09e968b5f1d2040eb4fcb420cd2fea4948dc8f661fb5e47a",
+    "response_sha256_before_redaction": "b3a5032f0031392c16d979004afc7d0a511f432e2d299b78cedf56abd0c8ad6e"
+  },
+  "schema_recheck": {
+    "local_validator": {
+      "result": "FAILS",
+      "reason": "Expected nonempty string"
+    },
+    "frozen_schema_nonempty_minimum": [
+      1
+    ]
+  },
+  "calls": {
+    "planned": 24,
+    "recorded": 16,
+    "passed": 15,
+    "failed": 1,
+    "never_executed": [
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24
+    ]
+  },
+  "any_processing_or_charge_uncertain": false,
+  "evidence": {
+    "collection_sha256": "db55b6cf6a0f58b90e3f9c50e3b9e219e59e713157a9364917d17de52a23d5b9",
+    "sha256sums_sha256": "a1472083d75d78a389750e3815566b782053089e80a8d2acf5627e8214bdc875",
+    "files": {
+      "collection.json": "db55b6cf6a0f58b90e3f9c50e3b9e219e59e713157a9364917d17de52a23d5b9",
+      "outputs/g1/b0cal-communication-01.json": "cec03cbab6041cbc362d7c91054113dca39cd4ef5808762f984e7286da2948c2",
+      "outputs/g1/b0cal-location-logistics-01.json": "5e7af403d7d49e793533d054ae7385aee71e111a870789e822ef15456cce5f70",
+      "outputs/g1/b0cal-personal-preference-01.json": "d8907366a515daeee58bd372e025ee453c476dcda40c460bd017d450dff42682",
+      "outputs/g1/b0cal-project-planning-01.json": "3c40ccd2341b576781c6eefa035b3452f65c419c61601e378b043032e3f2f0a1",
+      "outputs/g1/b0cal-purchase-order-01.json": "e25cfcdc17e0a9909c2cf806969f534e9fa59cec1a7252e41f13f7558e849958",
+      "outputs/g1/b0cal-quantitative-planning-01.json": "3713011aa0386e08325161e5777dde927236badc6f3bd66e5212c25b70c397c8",
+      "outputs/g1/b0cal-scheduling-01.json": "3cebcf155f0c3041f66c6a72168f4a28bf4073bc9183571372a1ecacd7955897",
+      "outputs/g1/b0cal-service-subscription-01.json": "97a974de5b8b9deb3731a3162ce70a9d5b5925afb932931c183ecf89c8a96f36",
+      "outputs/g1/b0cal-software-configuration-01.json": "e281459d1e35c072ebd5970a9b3432195cf4e1bea0406da85cfd16817ad162ba",
+      "outputs/g1/b0cal-study-planning-01.json": "dc8f13f97cfb351eb0ba23f0655f7405b17cf3d987d41cbbaef62c53f59d4c73",
+      "outputs/g1/b0cal-task-assignment-01.json": "9fe2e9fad7d1b0d46cdc4880da5d51548036c6850e1e214944d46dcb119f7976",
+      "outputs/g1/b0cal-travel-01.json": "fda2e3a5812cd03ba43de7063cc38bf930ca98c5111465c95e67160a71fa313f",
+      "outputs/g2/b0cal-project-planning-01.json": "0fd9000b8fe8aad8e56f4f2e838b014db6037b0cc5ca6dc05a2b6b82b97556be",
+      "outputs/g2/b0cal-scheduling-01.json": "0503ce80ebc821e11a3401afd743283edad2554ecbd4a45ce0f8035e9029649f",
+      "outputs/g2/b0cal-task-assignment-01.json": "b36ffefa5bc4c81574c6486f219ae63b712efb002ab2c6bd5c763b59c0fa528d",
+      "outputs/g2/b0cal-travel-01.json": "6f33d83d465592c5d799f3ec2589039d2f293345142b0d7166f7df57e19edc26"
+    },
+    "source_commit": "5b08811310b6b1036e17b8a6c9d4397a187eaaed",
+    "design_sha256": "de2e7ffac4fe9608ec1ad061f5174545f26a009f056751b05cbaa12250855c4c"
+  },
+  "plan_identity": {
+    "material_manifest_sha256": "52f774a90e983707ce41e64882913de9019d1e6491e4a0b83afd237cf2ee8731",
+    "system_prompt_sha256": "8a6abc2b52c63340aa483023a823c6ff9d8142ab9749b3ae7d6d2f216da5e71e",
+    "contract_sha256": "3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee",
+    "prompt_sha256": "a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279",
+    "output_schema_sha256": "c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917",
+    "prompt_version": "crst-naturalization-prompt/1.1.0",
+    "input_contract_version": "crst-naturalization-input/1.1.0",
+    "output_schema_version": "crst-naturalization-triplet/1.0.0",
+    "order": "all G1 scenarios, then all G2 scenarios, each in manifest order",
+    "generators": [
+      {
+        "logical_call_id": "G1",
+        "model": "openai/gpt-5.6-sol",
+        "provider_order": [
+          "openai"
+        ],
+        "execution_package_sha256": "848ca0219ff1d24adcf2f12d0789ebeb8e7a86427336672173b91e034dca6b62"
+      },
+      {
+        "logical_call_id": "G2",
+        "model": "anthropic/claude-fable-5.1",
+        "provider_order": [
+          "anthropic"
+        ],
+        "execution_package_sha256": "fb2c74eec9fea2ab49cee00e76cbe84ec7ce0fe2464e80bf84d157e82ec56180"
+      }
+    ],
+    "scenario_ids": [
+      "b0cal-scheduling-01",
+      "b0cal-travel-01",
+      "b0cal-project-planning-01",
+      "b0cal-task-assignment-01",
+      "b0cal-software-configuration-01",
+      "b0cal-personal-preference-01",
+      "b0cal-purchase-order-01",
+      "b0cal-study-planning-01",
+      "b0cal-communication-01",
+      "b0cal-service-subscription-01",
+      "b0cal-location-logistics-01",
+      "b0cal-quantitative-planning-01"
+    ],
+    "request_sha256": [
+      "da2d528478ace089583157c299c687c5424dbe277b7a74452c35ad9c87e0321e",
+      "db2ce89a8e016bafcf62c74114d292e2b21dcaa90c793ba90b579c3db4ea7667",
+      "bbb2e5ee893e1e4d0875dc9ad82eefc6ee2ede8254e4491e3d97b890bd3ac41c",
+      "10c6eeadcd64c44bcbc7b7c146a6753a5e0f9c89b64fc1f770b253e5524a62f7",
+      "0596f4928f18e802ca4a062c0d0fcb471f0f418647cb331cf3163ada1ed99eee",
+      "08f1d8d5cfaa7b8fe5da5797a7f74afd59c71592576a7a85160d8403c8a04c1c",
+      "708cdf56e519f8f7aaa73eb02f4f879e4e83dab038aca128aa560bcad6f47712",
+      "811ffbaa0f89eef9fb3c776988fc8f9ac4227a777f210cf92cab9e5baabf391d",
+      "c3421cba2f922fc03e5a5edbd2c9c26ef46be7c301ee31b432d3143a7d36e585",
+      "584c3590a13a48b8edb2a5f3de78fba8b4803036ec4514d2f92c7660e05a1d15",
+      "ec7b924bb73d2e489b5ad451c88d73000352814de3a8e938490efb7d61243221",
+      "5fa067d29997de965f9b7a71fcc5a5d839fb90a850d356129913d805c850d7d3",
+      "0326e6bdf693245a915bba71d04542d9cee1c225c4b6f19fbaedb2422593e967",
+      "e02c3fcc91f64a0c2b7b7aceb96fa7e4b353a905b44cc5e0f4d389856e7ac243",
+      "164323435efd4fe1822ab6138c23e3b91addc22f213ef779a092b8fd67c3155e",
+      "b60585ccb574fcbb09e968b5f1d2040eb4fcb420cd2fea4948dc8f661fb5e47a",
+      "38ba614fffe9d7065cd195b4e07efe4b9be8638d39021953211fe8df80cd9430",
+      "05a518c87f545bad5a945a1e5819223cae6d20ad98809ea72f8a7275091d9ec0",
+      "1938dcc0946f05a0f1410ce0510d435415a8c73f2197c38beeba214640852042",
+      "fb576054bf474546494bae1b8b8f3c0738de1cc8f6438a73abb17b41a5cf6650",
+      "553d926f0fc91ec5056c5df93adb27aef4b0f66efb8b6c28841fbe9249001b1d",
+      "15eed2f42e63d57647d1310ab73212a5ba6769351ba35b74b90636130473abb2",
+      "7724378d5c84dbfe13b0f0b23dacc3b65ddfbd65e1f0ff6ad56899357f66f929",
+      "8d6d69cd79c26828d44dc48a649b6fa1d4d52320a39a7abd38a3c625eeabe20e"
+    ]
+  },
+  "budget_derivation": "PROHIBITED",
+  "b0_context_tokens": null,
+  "output_use": "No output of this attempt may be combined with another attempt or used to construct the official calibration histories."
+}

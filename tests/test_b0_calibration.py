@@ -44,8 +44,12 @@ def fixtures(material):
 
 
 @pytest.fixture(scope='module')
-def inputs():
-    return cal.load_inputs()
+def inputs(tmp_path_factory):
+    """Inputs of the full-history procedure in its pre-Attempt-02 state, which exercises its machinery.
+
+    The real design is closed and refuses every attempt; that is tested separately.
+    """
+    return cal.load_inputs(design_copy(tmp_path_factory.mktemp('historical')))
 
 
 # --- Structured calibration material ---------------------------------------------------------------
@@ -259,8 +263,8 @@ def test_system_and_answer_prompt_are_frozen_with_exact_text_and_hash():
         assert forbidden not in lowered, forbidden
 
 
-def test_unapproved_prompt_wording_is_refused_for_official_use():
-    design = cal.load_design()
+def test_unapproved_prompt_wording_is_refused_for_official_use(inputs):
+    design = inputs['design']
     proposed = deepcopy(design)
     proposed['system_prompt']['status'] = 'PROPOSED_PENDING_RESEARCHER_APPROVAL'
     with pytest.raises(ValueError, match='not approved'):
@@ -269,7 +273,7 @@ def test_unapproved_prompt_wording_is_refused_for_official_use():
         cal.require_official(proposed)
 
 
-def test_coverage_failure_rule_is_frozen_with_the_approved_procedure():
+def test_coverage_failure_rule_is_frozen_with_the_approved_procedure(inputs):
     design = cal.load_design()
     rule = design['calibration']['coverage_failure']
     assert rule['status'] == 'FROZEN'
@@ -284,14 +288,15 @@ def test_coverage_failure_rule_is_frozen_with_the_approved_procedure():
         in ' '.join(rule['response'][2].split())
     assert rule['response'][3].startswith('Freeze the recalibrated budget before the main experiment')
     assert 'separate from B0 calibration material' in rule['separation']
-    cal.require_official(design)
+    cal.require_official(inputs['design'])
     assert design['budget_status'] == 'OPEN' and design['b0_context_tokens'] is None
-    assert design['naturalization']['status'] == 'AWAITING_COMPLETE_ATTEMPT'
+    assert inputs['design']['naturalization']['status'] == 'AWAITING_COMPLETE_ATTEMPT'
+    assert design['naturalization']['status'] == 'CLOSED_NO_ELIGIBLE_SET'
 
 
 def test_preview_plans_exactly_24_calls_12_sol_and_12_fable(inputs):
     shown = cal.preview(inputs)
-    assert shown['status'] == 'NETWORK_DISABLED' and shown['naturalization_status'] == 'NOT EXECUTED'
+    assert shown['status'] == 'NETWORK_DISABLED' and shown['naturalization_status'] == 'AWAITING_COMPLETE_ATTEMPT'
     assert shown['planned_logical_calls'] == 24 and shown['expected_histories'] == 72
     assert shown['per_generator'] == {'G1': 12, 'G2': 12}
     assert [(g['logical_call_id'], g['model']) for g in shown['generators']] == [
@@ -320,7 +325,7 @@ def test_requests_use_the_frozen_contract_and_exact_generator_identities(inputs)
 
 
 def test_preview_is_deterministic_and_makes_no_network_call(inputs):
-    assert cal.preview(inputs) == cal.preview(cal.load_inputs())
+    assert cal.preview(inputs) == cal.preview(cal.load_inputs(inputs['path']))
 
 
 def test_design_drift_is_rejected(tmp_path):
@@ -782,9 +787,18 @@ def test_collect_refuses_before_any_side_effect_when_prerequisites_fail(inputs, 
     refused(q.NOT_FROZEN)
 
 
-def design_copy(tmp_path, mutate):
+def historical(design):
+    nat = design['naturalization']
+    nat['status'] = 'AWAITING_COMPLETE_ATTEMPT'
+    nat['attempts'][1]['status'] = 'PLANNED_NOT_EXECUTED'
+    nat['attempts'][1].pop('closure', None)
+
+
+def design_copy(tmp_path, mutate=None):
     design = yaml.safe_load((ROOT / 'configs/b0-calibration.yaml').read_text(encoding='utf-8'))
-    mutate(design)
+    historical(design)
+    if mutate:
+        mutate(design)
     path = tmp_path / 'design.yaml'
     path.write_text(yaml.safe_dump(design), encoding='utf-8')
     return path
@@ -846,15 +860,16 @@ def test_collect_refuses_when_inputs_change_after_preflight(inputs, tmp_path, mo
 def test_cli_execution_gates(inputs, tmp_path, monkeypatch, capsys):
     official = ROOT / cal.official_attempt(inputs['design'])['result_directory']
     existed = official.exists()
+    design = ['--design', str(inputs['path'])]
     for flags in (['--execute'], ['--confirm-spend'], ['--execute', '--confirm-spend'],
                   ['--output-directory', str(tmp_path / 'x')]):
         with pytest.raises(SystemExit):
-            cal.main(flags)
+            cal.main([*design, *flags])
     with pytest.raises(ValueError, match='frozen result directory'):
-        cal.main(['--execute', '--confirm-spend', '--output-directory', str(tmp_path / 'elsewhere')])
+        cal.main([*design, '--execute', '--confirm-spend', '--output-directory', str(tmp_path / 'elsewhere')])
     monkeypatch.delenv('OPENROUTER_API_KEY', raising=False)
     with pytest.raises(ValueError, match='OPENROUTER_API_KEY'):
-        cal.main(['--execute', '--confirm-spend', '--output-directory', str(official)])
+        cal.main([*design, '--execute', '--confirm-spend', '--output-directory', str(official)])
     assert official.exists() == existed and not (tmp_path / 'x').exists() and not (tmp_path / 'elsewhere').exists()
 
     async def stub(inputs, key, output, **kwargs):
@@ -864,6 +879,6 @@ def test_cli_execution_gates(inputs, tmp_path, monkeypatch, capsys):
     monkeypatch.setenv('OPENROUTER_API_KEY', 'k')
     for status, code in (('COMPLETE', 0), ('INCOMPLETE', 1)):
         stub.status = status
-        assert cal.main(['--execute', '--confirm-spend', '--output-directory', str(official)]) == code
+        assert cal.main([*design, '--execute', '--confirm-spend', '--output-directory', str(official)]) == code
         assert stub.seen == ('k', official)
     assert 'no budget derived' in capsys.readouterr().out

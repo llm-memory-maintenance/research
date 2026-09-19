@@ -32,7 +32,13 @@ def no_network(monkeypatch):
 
 
 @pytest.fixture(scope='module')
-def inputs():
+def inputs(tmp_path_factory):
+    """The full-history procedure in its pre-Attempt-02 state; the real design is closed (tested below)."""
+    return cal.load_inputs(design_copy(tmp_path_factory.mktemp('historical')))
+
+
+@pytest.fixture(scope='module')
+def real_inputs():
     return cal.load_inputs()
 
 
@@ -334,7 +340,8 @@ def test_no_attempt_03_or_existing_attempt_directory_can_be_written(inputs, tmp_
             asyncio.run(cal.collect(inputs, 'test-secret', target, client_factory=lambda **k: pytest.fail('No client')))
         assert target.exists() == existed
         with pytest.raises(ValueError, match='frozen result directory'):
-            cal.main(['--execute', '--confirm-spend', '--output-directory', str(target)])
+            cal.main(['--design', str(inputs['path']), '--execute', '--confirm-spend',
+                      '--output-directory', str(target)])
     assert not (ROOT / 'results/b0-calibration/attempt-03').exists()
 
 
@@ -392,3 +399,101 @@ def test_live_collection_refuses_when_the_predecessor_closure_is_missing(inputs,
     with pytest.raises(ValueError, match='Missing closure'):
         asyncio.run(cal.collect(inputs, 'test-secret', path, client_factory=lambda **k: pytest.fail('No client')))
     assert not path.exists()
+
+
+# --- Attempt-02 closure and the closed full-history procedure --------------------------------------
+
+ATTEMPT_02 = ROOT / 'results/b0-calibration/attempt-02'
+CLOSURE_02 = ROOT / 'results/b0-calibration/closure/attempt-02.json'
+TERMINAL_02 = 'b0cal-task-assignment-01'
+
+
+@pytest.fixture(scope='module')
+def closure_02():
+    return json.loads(CLOSURE_02.read_text(encoding='utf-8'))
+
+
+def test_attempt_02_is_a_terminal_output_contract_failure_derived_from_its_evidence(real_inputs, closure_02):
+    assert closure_02 == cal.classify_attempt(ATTEMPT_02, real_inputs)
+    assert (closure_02['status'], closure_02['attempt']) == ('CLOSED_INCOMPLETE', 'attempt-02')
+    assert closure_02['terminal_reason'] == 'OUTPUT_CONTRACT_FAILURE'
+    assert closure_02['terminal_detail'] == 'REQUIRED_EMPTY_FIELD_SCHEMA_FAILURE'
+    call = closure_02['terminal_call']
+    assert (call['logical_call_index'], call['logical_call_id'], call['model'], call['scenario_id']) == (
+        16, 'G2', 'anthropic/claude-fable-5.1', TERMINAL_02)
+    assert (call['http_status'], call['finish_reason'], call['refusal'], call['incomplete_or_truncated']) == (
+        200, 'stop', False, False)
+    assert (call['parse_status'], call['schema_status']) == ('passed', 'failed')
+    assert (call['processing_or_charge_uncertain'], call['retry_reason'], call['physical_attempts']) == (False, None, 1)
+    assert call['failure_reason'] == 'Expected nonempty string' and call['empty_fields'] == {'high': ['N1']}
+    assert closure_02['calls'] == {'planned': 24, 'recorded': 16, 'passed': 15, 'failed': 1,
+                                   'never_executed': list(range(17, 25))}
+    assert closure_02['budget_derivation'] == 'PROHIBITED' and closure_02['b0_context_tokens'] is None
+    assert closure_02['any_processing_or_charge_uncertain'] is False
+    assert closure_02['evidence']['source_commit'] == '5b08811310b6b1036e17b8a6c9d4397a187eaaed'
+
+
+def closure_02_hash(field):
+    return json.loads(CLOSURE_02.read_text(encoding='utf-8'))['evidence'][field]
+
+
+def test_attempt_02_raw_evidence_shows_only_n1_empty_and_the_budget_fields_present(closure_02):
+    call = record(f'g2/{TERMINAL_02}.json', ATTEMPT_02)
+    attempt = call['attempts'][-1]
+    parsed = attempt['parsed_structured_response']
+    assert {k: v for k, v in parsed['high'].items() if v == ''} == {'N1': ''}
+    assert parsed['high']['U7'] and parsed['high']['N2'] and parsed['high']['Q']
+    assert all(v for variant in ('low', 'medium') for v in parsed[variant].values())
+    content = json.loads(attempt['raw_response'])['choices'][0]['message']['content']
+    assert json.loads(content) == parsed and json.loads(content)['high']['N1'] == ''
+    sums = cal.q.read_sums(ATTEMPT_02)
+    assert len(sums) == 17
+    for name, checksum in sums.items():
+        assert probe.file_hash(ATTEMPT_02 / name) == checksum
+    assert probe.file_hash(ATTEMPT_02 / 'collection.json') == closure_02_hash('collection_sha256')
+    collection = json.loads((ATTEMPT_02 / 'collection.json').read_text(encoding='utf-8'))
+    assert [c['status'] for c in collection['calls']] == ['PASS'] * 15 + ['FAIL']
+    assert not any(a['processing_or_charge_uncertain'] for c in collection['calls'] for a in c['attempts'])
+    assert not (ATTEMPT_02 / 'outputs/g2/b0cal-software-configuration-01.json').exists()
+
+
+def test_attempt_02_cannot_derive_a_budget(real_inputs):
+    with pytest.raises(ValueError, match='complete attempt'):
+        cal.official_calls(ATTEMPT_02)
+    with pytest.raises(ValueError):
+        cal.histories_from_calls(cal.read_calls(ATTEMPT_02), real_inputs)
+
+
+def test_the_full_history_procedure_is_closed_and_can_run_no_further_attempt(real_inputs, tmp_path, monkeypatch):
+    design = real_inputs['design']
+    assert design['naturalization']['status'] == 'CLOSED_NO_ELIGIBLE_SET'
+    assert [a['status'] for a in design['naturalization']['attempts']] == ['CLOSED_INCOMPLETE'] * 2
+    assert cal.planned_attempt(design) is None
+    with pytest.raises(ValueError, match='STOP FOR RESEARCHER DECISION'):
+        cal.official_attempt(design)
+    with pytest.raises(ValueError, match='closed'):
+        cal.require_official(design)
+    assert cal.verify_predecessors(real_inputs) == {'attempt-01': probe.file_hash(CLOSURE),
+                                                    'attempt-02': probe.file_hash(CLOSURE_02)}
+    monkeypatch.setattr(cal, 'git', fake_git)
+    for name in ('attempt-01', 'attempt-02', 'attempt-03'):
+        target = ROOT / 'results/b0-calibration' / name
+        existed = target.exists()
+        with pytest.raises(ValueError):
+            asyncio.run(cal.collect(real_inputs, 'test-secret', target,
+                                    client_factory=lambda **k: pytest.fail('No client')))
+        assert target.exists() == existed
+        with pytest.raises(ValueError, match='closed'):
+            cal.main(['--execute', '--confirm-spend', '--output-directory', str(target)])
+    shown = cal.preview(real_inputs)
+    assert shown['attempt'] is None and shown['result_directory'] is None
+    assert all(c['output_path'] is None for c in shown['calls'])
+    assert shown['naturalization_status'] == 'CLOSED_NO_ELIGIBLE_SET'
+    assert not (ROOT / 'results/b0-calibration/attempt-03').exists()
+
+
+def test_neither_old_attempt_can_be_reused_or_mixed(real_inputs):
+    one, two = cal.read_calls(ATTEMPT_01), cal.read_calls(ATTEMPT_02)
+    assert len(one) == 17 and len(two) == 16
+    with pytest.raises(ValueError):
+        cal.histories_from_calls(one[:16] + two[16:], real_inputs)
