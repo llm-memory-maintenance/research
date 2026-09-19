@@ -1761,3 +1761,14 @@ def test_v2_historical_mapping_stays_separate_from_native_v2_audit_creation(inpu
     v2_audit = q.fixtures.read(path / 'manual-audit.json')
     with pytest.raises(ValueError, match='not a Protocol-v1 collection'):
         q.derive_v2_audit_template(result, checksum, v2_audit, v2_inputs['slots'])
+
+
+def test_second_level_g2_candidate_cannot_qualify_before_its_own_capability_closes_pass(monkeypatch):
+    """The frozen second-level G2 candidate (anthropic/claude-fable-5.1) has no capability evidence yet, so
+    Generator Qualification for it is refused by the existing per-slot capability gate, and no other
+    candidate's recorded PASS/FAIL can authorize it (no call is made)."""
+    slot = dict(logical_call_id='G2', model='anthropic/claude-fable-5.1', provider_order=['anthropic'])
+    monkeypatch.setitem(q.probe.PROFILES, 'second_level_g2', dict(
+        config_path=q.ROOT / 'configs/generator-capability-probe-second-level-g2.yaml', slots=[slot]))
+    with pytest.raises(ValueError, match='requires CLOSED/PASS capability evidence.*OPEN/NOT_ASSESSED'):
+        q.slot_capability_gate('second_level_g2', slot)

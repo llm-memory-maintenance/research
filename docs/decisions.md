@@ -998,3 +998,51 @@ unchanged). Artifacts:
 and `results/generator-qualification/adjudication/v2/attempt-0{1,2}.json`. This
 is a derived, explicitly versioned Protocol-v2 result; it does not amend the
 frozen methodology and was not informed by any M1/M2/M3 outcome.
+
+
+## Second-level G2 candidate frozen: `anthropic/claude-fable-5.1` (2026-09-19)
+
+G2 remains unresolved (Sonnet Protocol-v2 FAIL; Opus capability CLOSED/FAIL;
+G1 resolved to Sol, unchanged). Applying the frozen second-level selection
+principles (item 3 above), the researcher named `anthropic/claude-fable-5.1` as the second-level G2
+candidate **before any capability-probe or qualification call to it; no output
+from it has been observed**.
+
+**Identity and route.** Exact immutable identifier `anthropic/claude-fable-5.1`; moving aliases (e.g.
+`~anthropic/claude-fable-latest`) and the `:batch` variant are excluded so the
+candidate stays reproducible if Anthropic later releases another Fable model.
+Provider route: the repository's existing first-party pinning,
+`provider.order=["anthropic"]`, `allow_fallbacks=false`,
+`require_parameters=true`; no OpenRouter multi-provider auto-routing and no
+Azure/Vertex/Bedrock substitution. No new provider policy was invented.
+
+**Basis (eligibility only).** Anthropic family; distinct from
+`anthropic/claude-sonnet-5` and `anthropic/claude-opus-5`; available through
+OpenRouter with a first-party Anthropic route; structured-output support;
+exact identifier available. Not benchmark ranking, prestige or any expected
+pass probability. Availability, route and structured-output support are
+researcher-attested at selection time and were not independently verified
+offline; the capability probe is their first empirical test.
+
+**Package and procedure.** Same capability request package, unchanged; the
+frozen record is `configs/generator-capability-probe-second-level-g2.yaml`
+(identical to the fallback config except candidate identity; per-slot
+capability OPEN/NOT_ASSESSED, no evidence; validated offline by the existing
+frozen loader, no source change). No ordered backup list is adopted. Step (8)
+of the approved procedural order (this candidate's own Capability Probe) is
+pending; a capability FAIL is recorded and the process stops (no
+retry-until-pass); only a capability PASS makes it eligible for native
+Protocol-v2 Generator Qualification (procedure/audit 2.0.0, same 12 fixtures,
+prompt, schema, semantic checks, comprehensibility/fluency audit and r2
+adjudicator, all unchanged). Generator Qualification has not run; G2 remains
+unresolved until it completes.
+
+**Launch prerequisite (not done here).** Candidate profiles are hardcoded in
+the freeze-pinned sources (`probe_generators.py`, `qualify_generators.py`), so
+enabling the official probe/qualification CLIs for this candidate is a
+separate reviewed implementation change (a new profile) that requires a new
+implementation-freeze revision before any call. This decision changed no
+source and made no call.
+
+Sol, Terra, Sonnet, Opus, all Protocol-v1 artifacts, the Protocol-v2
+Attempt-01/02 artifacts and the G1 resolution are not reopened or modified.

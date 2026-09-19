@@ -19,8 +19,9 @@ results. **Protocol v2 (§14) is frozen and implemented (implementation freeze
 r2), and its offline re-adjudication of the archived evidence is closed: Sol
 QUALIFIED, Terra QUALIFIED, Sonnet FAIL; G1 is Sol by frozen primary
 precedence with Terra a qualified fallback; G2 remains unresolved.** The
-Protocol-v1 results above are preserved unchanged alongside, never
-overwritten.
+second-level G2 candidate `anthropic/claude-fable-5.1` has since been named and frozen (§12;
+capability probe pending, no call made). The Protocol-v1 results above are
+preserved unchanged alongside, never overwritten.
 
 Generator diversity addresses dependence on one model family. Qualification
 uses absolute fidelity to fixed structured truth, not a relative ranking,
@@ -33,7 +34,7 @@ CLOSED and unchanged; they do not qualify construction generators.
 | Slot | Primary candidate | Predeclared corresponding fallback | Current status |
 | --- | --- | --- | --- |
 | G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | Primary Protocol-v1 FAIL (Attempt-01); fallback capability CLOSED/PASS (Capability Probe Attempt-03); fallback Generator Qualification Attempt-02 CLOSED, Protocol-v1 FAIL (§13); **Protocol-v2 (§14): Sol QUALIFIED, Terra QUALIFIED; G1 = Sol by frozen primary precedence, Terra qualified fallback** |
-| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary Protocol-v1 FAIL (Attempt-01), **Protocol-v2 FAIL (§14; four Level-1 terminal failures); G2 unresolved**; fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03), not re-adjudicated; second-level G2 selection criteria unchanged (§12) |
+| G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary Protocol-v1 FAIL (Attempt-01), **Protocol-v2 FAIL (§14; four Level-1 terminal failures); G2 unresolved**; fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03), not re-adjudicated; **second-level G2 candidate `anthropic/claude-fable-5.1` frozen before any output (§12), capability probe pending**; selection criteria unchanged (§12) |
 
 **FROZEN:** use different OpenAI/Anthropic families/vendors to diversify
 naturalization provenance. Consider a fallback only if its corresponding primary
@@ -271,7 +272,7 @@ Qualification may record message/token lengths descriptively, but these numeric
 values are not final pass/fail gates without separate adjudication. Exact
 message-count requirements are independently frozen and must pass.
 
-**OPEN:** second-level G2 candidate selection (§12), handling of a final-CRST item with a
+**OPEN:** second-level G2 candidate capability probe and qualification (candidate `anthropic/claude-fable-5.1` frozen, §12), handling of a final-CRST item with a
 Level-1 failure (§14), assignment mechanism/seed, B0 calibration material/grid/budget, and Small Pilot
 size/acceptance procedure. Final CRST N/R/minimum effect of interest and
 statistical procedures are not chosen here. Official Generator Qualification
@@ -606,6 +607,41 @@ called). Before any replacement G2 candidate is named or called, it must:
 
 An ordered backup list, if adopted, must itself be frozen in writing before
 the first candidate on it is probed.
+
+**FROZEN: second-level G2 candidate `anthropic/claude-fable-5.1`** (named and frozen 2026-09-19,
+before any capability-probe or qualification call to it; **no output from it
+has been observed**). Exact immutable identifier: no moving alias (not
+`~anthropic/claude-fable-latest`) and not the `:batch` variant, so the
+candidate stays reproducible if a later Fable model is released. Route: the
+repository's existing first-party pinning, `provider.order=["anthropic"]` with
+`allow_fallbacks=false` and `require_parameters=true` -- no OpenRouter
+multi-provider auto-routing and no Azure/Vertex/Bedrock substitution. The
+selection is eligibility-based against the frozen criteria above -- Anthropic
+family; distinct from `anthropic/claude-sonnet-5` and `anthropic/claude-opus-5`;
+available through OpenRouter with a first-party Anthropic route;
+structured-output support; exact identifier available -- and not justified by
+benchmark ranking, model prestige or any expected pass probability. Those
+availability, route and structured-output facts are researcher-attested at
+selection time and were **not independently verified offline**: the capability
+probe is their first empirical test. The candidate is evaluated with the same
+capability request package, unchanged (`configs/generator-capability-probe-
+second-level-g2.yaml`, identical to the fallback config except candidate
+identity, with per-slot capability OPEN/NOT_ASSESSED and no evidence). No
+ordered backup list is adopted: a capability FAIL is recorded and the process
+stops, with no retry-until-pass, and any further candidate needs its own
+written freeze before it is probed. If capability closes PASS, the candidate is
+eligible for native Protocol-v2 Generator Qualification
+(`generator-qualification-procedure/2.0.0`, `generator-manual-audit/2.0.0`, the
+same frozen 12 fixtures, prompt, schema, semantic checks, comprehensibility/
+fluency audit and r2 adjudicator, none changed for it). **Capability probe:
+PENDING. Generator Qualification: not run. G2 remains unresolved until
+qualification completes.** Launch mechanism: the official capability/
+qualification CLIs select candidates from profiles hardcoded in the
+freeze-pinned sources (`probe_generators.py`, `qualify_generators.py`), so
+adding a profile for this candidate is a separate reviewed implementation
+change that requires a new implementation-freeze revision before any call;
+this freeze changed no source. Sol, Terra, Sonnet, Opus, every Protocol-v1 and
+Protocol-v2 Attempt-01/02 artifact and the G1 resolution are untouched.
 
 **Approved future procedural order:** (1) freeze these decisions -- done; (2)
 implement generic per-slot capability state and single-slot probe/

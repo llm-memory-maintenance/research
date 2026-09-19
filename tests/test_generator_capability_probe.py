@@ -714,3 +714,87 @@ def test_execute_probe_without_profile_name_skips_per_slot_reopening_check(monke
                                          client_factory=factory))
     assert result['status'] == 'FAIL'  # Reached real per-call execution, not refused up front.
     assert out.exists()
+
+
+# --- Second-level G2 candidate freeze (docs/generator-qualification.md Sec. 12): anthropic/claude-fable-5.1
+# is named and its identity/route/package frozen in configuration only, BEFORE any capability-probe or
+# qualification call to it. No source change and no call: these tests read config and build requests offline.
+
+SECOND_LEVEL_G2_CONFIG = p.ROOT / 'configs/generator-capability-probe-second-level-g2.yaml'
+SECOND_LEVEL_G2_CONFIG_SHA256 = '94ffcab04921bbdaabc84a66c2bc490706d80941024e74859e3c65bb198a038d'
+FALLBACK_CONFIG_SHA256 = '1316b2b1f3a7f5f15f64d5b3b2ef379c60f96edddff8b5f62bf0e712d7099e1b'
+FABLE_SLOT = dict(logical_call_id='G2', model='anthropic/claude-fable-5.1', provider_order=['anthropic'])
+
+
+def second_level_bundle():
+    return p.load_bundle(SECOND_LEVEL_G2_CONFIG, slots=[FABLE_SLOT], status='OPEN',
+                         capability_result='NOT_ASSESSED', successful_attempt=None,
+                         execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED')
+
+
+def test_second_level_g2_candidate_identity_and_first_party_route_frozen():
+    config = yaml.safe_load(SECOND_LEVEL_G2_CONFIG.read_text(encoding='utf-8'))
+    model = config['candidate_selection']['candidate']
+    assert model == config['slots']['G2']['model'] == config['logical_calls'][0]['model'] == 'anthropic/claude-fable-5.1'
+    # Exact immutable identifier: no moving alias, no variant suffix.
+    assert not model.startswith('~') and ':' not in model and 'latest' not in model and 'batch' not in model
+    assert model.startswith('anthropic/') and model not in {'anthropic/claude-sonnet-5', 'anthropic/claude-opus-5'}
+    # First-party Anthropic via the repository's existing pinning; no provider fallback or auto-routing.
+    assert config['logical_calls'] == [dict(logical_call_id='G2', model=model, provider_order=['anthropic'])]
+    assert config['allow_fallbacks'] is False and config['require_parameters'] is True
+    selection = config['candidate_selection']
+    assert selection['frozen_before_any_output'] is True and selection['frozen_on'] == '2026-09-19'
+    assert selection['backup_list'].startswith('none adopted') and 'no retry-until-pass' in selection['on_capability_fail']
+    assert 'benchmark' not in selection['basis'].lower() and 'prestige' not in selection['basis'].lower()
+
+
+def test_second_level_g2_config_is_pinned_and_valid_under_the_frozen_loader():
+    assert p.file_hash(SECOND_LEVEL_G2_CONFIG) == SECOND_LEVEL_G2_CONFIG_SHA256
+    bundle = second_level_bundle()  # Raises on any deviation from the frozen package/contract/input.
+    assert bundle['config']['output_directory'] is None  # No attempt directory scheduled or created.
+
+
+def test_second_level_g2_package_identical_to_fallback_except_candidate_identity():
+    fallback = p.load_bundle(p.FALLBACK_CONFIG, slots=p.FALLBACK_SLOTS, status='OPEN',
+                             capability_result='NOT_ASSESSED', successful_attempt=None,
+                             execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED')
+    for key in ('contract_sha256', 'contract_document_sha256', 'prompt_sha256', 'output_schema_sha256',
+                'input_sha256', 'input_identity', 'generation', 'wire_mapping', 'transport', 'allow_fallbacks',
+                'require_parameters', 'prompt_version', 'input_contract_version', 'output_schema_version',
+                'parameter_semantics', 'execution_mode'):
+        assert second_level_bundle()['config'][key] == fallback['config'][key], key
+    assert second_level_bundle()['contract'] == fallback['contract'] and second_level_bundle()['input'] == fallback['input']
+
+
+def test_second_level_g2_request_and_offline_preview_identify_only_fable(monkeypatch):
+    monkeypatch.setattr(p, 'FALLBACK_SLOTS', [*p.FALLBACK_SLOTS, FABLE_SLOT])  # In-memory only; source untouched.
+    bundle = second_level_bundle()
+    body = p.request_body(bundle, FABLE_SLOT)
+    assert body['model'] == 'anthropic/claude-fable-5.1'
+    assert body['provider'] == {'order': ['anthropic'], 'allow_fallbacks': False, 'require_parameters': True}
+    assert not {'temperature', 'top_p', 'tools'} & body.keys() and body['reasoning'] == {'effort': 'low'}
+    assert body['max_tokens'] == 16384 and body['response_format']['json_schema']['strict'] is True
+    primary_sonnet_body = p.request_body(p.load_bundle(), p.SLOTS[1])
+    assert {**primary_sonnet_body, 'model': body['model']} == body  # Same package; only identity differs.
+    shown = p.preview(bundle, slots=[FABLE_SLOT], profile_name='SECOND_LEVEL_G2', status='NOT_EXECUTED',
+                      execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED',
+                      successful_attempt=None)
+    assert [r['requested_model'] for r in shown['requests']] == ['anthropic/claude-fable-5.1']  # ONLY Fable.
+
+
+def test_second_level_g2_capability_is_pending_with_no_evidence_and_authorizes_no_other_candidate(monkeypatch):
+    monkeypatch.setitem(p.PROFILES, 'second_level_g2', dict(config_path=SECOND_LEVEL_G2_CONFIG, slots=[FABLE_SLOT]))
+    pending = p.slot_capability('second_level_g2', FABLE_SLOT)
+    assert pending == {'model': 'anthropic/claude-fable-5.1', 'status': 'OPEN', 'capability_result': 'NOT_ASSESSED',
+                       'reason': None, 'evidence_attempt': None, 'evidence_path': None, 'evidence_sha256': None}
+    for other in ('anthropic/claude-sonnet-5', 'anthropic/claude-opus-5', 'anthropic/claude-hypothetical-next'):
+        got = p.slot_capability('second_level_g2', dict(FABLE_SLOT, model=other))
+        assert got['status'] == 'OPEN' and got['capability_result'] == 'NOT_ASSESSED' and got['evidence_sha256'] is None
+
+
+def test_closed_candidates_and_their_configs_untouched_by_second_level_freeze():
+    assert p.file_hash(p.FALLBACK_CONFIG) == FALLBACK_CONFIG_SHA256
+    opus, terra = p.slot_capability('fallback', p.FALLBACK_SLOTS[1]), p.slot_capability('fallback', p.FALLBACK_SLOTS[0])
+    assert (opus['status'], opus['capability_result'], opus['reason']) == ('CLOSED', 'FAIL', 'provider-policy refusal')
+    assert (terra['status'], terra['capability_result']) == ('CLOSED', 'PASS')
+    assert p.SLOTS[1]['model'] == 'anthropic/claude-sonnet-5' and p.FALLBACK_SLOTS[1]['model'] == 'anthropic/claude-opus-5'
