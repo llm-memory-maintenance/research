@@ -1,0 +1,342 @@
+{
+  "logical_call_id": "G2",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"ticket_owner\\\",\\\"meaning\\\":\\\"assigned ticket owner\\\",\\\"units_or_interpretation\\\":\\\"synthetic person name\\\"},{\\\"attribute_id\\\":\\\"ticket_ref\\\",\\\"meaning\\\":\\\"ticket reference code\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"urgency\\\",\\\"meaning\\\":\\\"ticket urgency\\\",\\\"units_or_interpretation\\\":\\\"urgency label\\\"},{\\\"attribute_id\\\":\\\"due_stamp\\\",\\\"meaning\\\":\\\"ticket due stamp\\\",\\\"units_or_interpretation\\\":\\\"synthetic date label\\\"},{\\\"attribute_id\\\":\\\"attachment\\\",\\\"meaning\\\":\\\"required attachment\\\",\\\"units_or_interpretation\\\":\\\"attachment label\\\"},{\\\"attribute_id\\\":\\\"approver\\\",\\\"meaning\\\":\\\"ticket approver\\\",\\\"units_or_interpretation\\\":\\\"synthetic person\\\"}],\\\"domain\\\":\\\"Task Assignment\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"b0cal-task-assignment-01-primary\\\",\\\"name\\\":\\\"Ticket Marrow\\\"},{\\\"entity_id\\\":\\\"b0cal-task-assignment-01-distractor\\\",\\\"name\\\":\\\"Ticket Tallow\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_d\\\",\\\"I2\\\":\\\"k_target\\\",\\\"I3\\\":\\\"k_hard\\\",\\\"I4\\\":\\\"k_n2\\\",\\\"I5\\\":\\\"k_a\\\",\\\"I6\\\":\\\"k_b\\\",\\\"I7\\\":\\\"k_c\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"ticket_owner\\\",\\\"entity_id\\\":\\\"b0cal-task-assignment-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current assigned ticket owner of Ticket Marrow.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"ticket_owner\\\",\\\"entity_id\\\":\\\"b0cal-task-assignment-01-primary\\\",\\\"initial_value\\\":\\\"Odalys Prewitt\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"ticket_owner\\\",\\\"entity_id\\\":\\\"b0cal-task-assignment-01-distractor\\\",\\\"initial_value\\\":\\\"Petra Vance\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"ticket_ref\\\",\\\"entity_id\\\":\\\"b0cal-task-assignment-01-primary\\\",\\\"initial_value\\\":\\\"TIC-M83\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"urgency\\\",\\\"entity_id\\\":\\\"b0cal-task-assignment-01-primary\\\",\\\"initial_value\\\":\\\"urgency routine\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"due_stamp\\\",\\\"entity_id\\\":\\\"b0cal-task-assignment-01-primary\\\",\\\"initial_value\\\":\\\"Day Harrow\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"attachment\\\",\\\"entity_id\\\":\\\"b0cal-task-assignment-01-primary\\\",\\\"initial_value\\\":\\\"chart attachment\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"approver\\\",\\\"entity_id\\\":\\\"b0cal-task-assignment-01-primary\\\",\\\"initial_value\\\":\\\"Talin Rusk\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"Talin Rusk\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Odalys Prewitt\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Petra Vance\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"TIC-M83\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"urgency routine\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Day Harrow\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"chart attachment\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Lennox Farrow\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Ines Calder\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Bram Tolliver\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Hesper Haskett\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Jovan Pellam\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Sabine Orrin\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Sabine Orrin\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Cyrus Delaine\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"TIC-M83\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"Talin Rusk\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Odalys Prewitt\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Petra Vance\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"TIC-M83\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"urgency routine\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Day Harrow\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"chart attachment\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Rilan Moss\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"photo attachment\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Verity Holm\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"urgency elevated\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Day Ilbeck\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"sheet attachment\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Odalys Prewitt\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Cyrus Delaine\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"TIC-M83\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"Talin Rusk\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Odalys Prewitt\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Petra Vance\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"TIC-M83\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"urgency routine\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Day Harrow\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"chart attachment\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"Lennox Farrow\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Rilan Moss\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Bram Tolliver\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Verity Holm\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"Jovan Pellam\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"urgency elevated\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Jovan Pellam\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"Cyrus Delaine\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"TIC-M83\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"anthropic/claude-fable-5.1\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"anthropic\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "b60585ccb574fcbb09e968b5f1d2040eb4fcb420cd2fea4948dc8f661fb5e47a",
+  "request_body": {
+    "model": "anthropic/claude-fable-5.1",
+    "provider": {
+      "order": [
+        "anthropic"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"ticket_owner\",\"meaning\":\"assigned ticket owner\",\"units_or_interpretation\":\"synthetic person name\"},{\"attribute_id\":\"ticket_ref\",\"meaning\":\"ticket reference code\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"urgency\",\"meaning\":\"ticket urgency\",\"units_or_interpretation\":\"urgency label\"},{\"attribute_id\":\"due_stamp\",\"meaning\":\"ticket due stamp\",\"units_or_interpretation\":\"synthetic date label\"},{\"attribute_id\":\"attachment\",\"meaning\":\"required attachment\",\"units_or_interpretation\":\"attachment label\"},{\"attribute_id\":\"approver\",\"meaning\":\"ticket approver\",\"units_or_interpretation\":\"synthetic person\"}],\"domain\":\"Task Assignment\",\"entities\":[{\"entity_id\":\"b0cal-task-assignment-01-primary\",\"name\":\"Ticket Marrow\"},{\"entity_id\":\"b0cal-task-assignment-01-distractor\",\"name\":\"Ticket Tallow\"}],\"initial_order\":{\"I1\":\"k_d\",\"I2\":\"k_target\",\"I3\":\"k_hard\",\"I4\":\"k_n2\",\"I5\":\"k_a\",\"I6\":\"k_b\",\"I7\":\"k_c\"},\"question_intent\":{\"attribute_id\":\"ticket_owner\",\"entity_id\":\"b0cal-task-assignment-01-primary\",\"intent\":\"Ask only for the current assigned ticket owner of Ticket Marrow.\"},\"state_keys\":[{\"attribute_id\":\"ticket_owner\",\"entity_id\":\"b0cal-task-assignment-01-primary\",\"initial_value\":\"Odalys Prewitt\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"ticket_owner\",\"entity_id\":\"b0cal-task-assignment-01-distractor\",\"initial_value\":\"Petra Vance\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"ticket_ref\",\"entity_id\":\"b0cal-task-assignment-01-primary\",\"initial_value\":\"TIC-M83\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"urgency\",\"entity_id\":\"b0cal-task-assignment-01-primary\",\"initial_value\":\"urgency routine\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"due_stamp\",\"entity_id\":\"b0cal-task-assignment-01-primary\",\"initial_value\":\"Day Harrow\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"attachment\",\"entity_id\":\"b0cal-task-assignment-01-primary\",\"initial_value\":\"chart attachment\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"approver\",\"entity_id\":\"b0cal-task-assignment-01-primary\",\"initial_value\":\"Talin Rusk\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"Talin Rusk\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Odalys Prewitt\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Petra Vance\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"TIC-M83\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"urgency routine\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Day Harrow\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"chart attachment\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Lennox Farrow\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Ines Calder\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Bram Tolliver\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Hesper Haskett\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Jovan Pellam\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Sabine Orrin\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Sabine Orrin\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Cyrus Delaine\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"TIC-M83\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"Talin Rusk\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Odalys Prewitt\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Petra Vance\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"TIC-M83\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"urgency routine\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Day Harrow\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"chart attachment\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Rilan Moss\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"photo attachment\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Verity Holm\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"urgency elevated\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Day Ilbeck\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"sheet attachment\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"Odalys Prewitt\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Cyrus Delaine\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"TIC-M83\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"Talin Rusk\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"Odalys Prewitt\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"Petra Vance\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"TIC-M83\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"urgency routine\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Day Harrow\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"chart attachment\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"Lennox Farrow\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Rilan Moss\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Bram Tolliver\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Verity Holm\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"Jovan Pellam\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"urgency elevated\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Jovan Pellam\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"Cyrus Delaine\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"TIC-M83\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G2",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T11:10:00.162049+00:00",
+      "requested_model": "anthropic/claude-fable-5.1",
+      "requested_provider_order": [
+        "anthropic"
+      ],
+      "returned_model": "anthropic/claude-fable-5.1",
+      "observed_selected_provider": "Anthropic",
+      "request_id": null,
+      "response_id": "gen-1789816200-HNXNQG5QcmtZNj4d2nnM",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789816200-HNXNQG5QcmtZNj4d2nnM\",\"object\":\"chat.completion\",\"created\":1789816200,\"model\":\"anthropic/claude-fable-5.1\",\"provider\":\"Anthropic\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"For Ticket Marrow, the ticket approver is Talin Rusk.\\\",\\\"I2\\\":\\\"The assigned ticket owner of Ticket Marrow is Odalys Prewitt.\\\",\\\"I3\\\":\\\"Ticket Tallow's assigned ticket owner is Petra Vance.\\\",\\\"I4\\\":\\\"The ticket reference code for Ticket Marrow is TIC-M83.\\\",\\\"I5\\\":\\\"Ticket Marrow's ticket urgency is urgency routine.\\\",\\\"I6\\\":\\\"The ticket due stamp for Ticket Marrow is Day Harrow.\\\",\\\"I7\\\":\\\"The required attachment for Ticket Marrow is the chart attachment.\\\",\\\"N1\\\":\\\"Just confirming: the assigned ticket owner of Ticket Marrow is still Sabine Orrin.\\\",\\\"N2\\\":\\\"To reconfirm, Ticket Marrow's ticket reference code remains TIC-M83.\\\",\\\"Q\\\":\\\"What is the current assigned ticket owner of Ticket Marrow?\\\",\\\"U1\\\":\\\"Update: the assigned ticket owner of Ticket Marrow has changed to Lennox Farrow.\\\",\\\"U2\\\":\\\"Ticket Marrow's assigned ticket owner has been reassigned; it is now Ines Calder.\\\",\\\"U3\\\":\\\"There's been another change — the assigned ticket owner of Ticket Marrow is now Bram Tolliver.\\\",\\\"U4\\\":\\\"The assigned ticket owner for Ticket Marrow has been updated to Hesper Haskett.\\\",\\\"U5\\\":\\\"Heads up: Ticket Marrow's assigned ticket owner has changed to Jovan Pellam.\\\",\\\"U6\\\":\\\"The assigned ticket owner of Ticket Marrow has been switched to Sabine Orrin.\\\",\\\"U7\\\":\\\"One more change: the assigned ticket owner of Ticket Marrow is now Cyrus Delaine.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"For Ticket Marrow, the ticket approver is Talin Rusk.\\\",\\\"I2\\\":\\\"The assigned ticket owner of Ticket Marrow is Odalys Prewitt.\\\",\\\"I3\\\":\\\"Ticket Tallow's assigned ticket owner is Petra Vance.\\\",\\\"I4\\\":\\\"The ticket reference code for Ticket Marrow is TIC-M83.\\\",\\\"I5\\\":\\\"Ticket Marrow's ticket urgency is urgency routine.\\\",\\\"I6\\\":\\\"The ticket due stamp for Ticket Marrow is Day Harrow.\\\",\\\"I7\\\":\\\"The required attachment for Ticket Marrow is the chart attachment.\\\",\\\"N1\\\":\\\"Just confirming: the assigned ticket owner of Ticket Marrow is still Odalys Prewitt.\\\",\\\"N2\\\":\\\"To reconfirm, Ticket Marrow's ticket reference code remains TIC-M83.\\\",\\\"Q\\\":\\\"What is the current assigned ticket owner of Ticket Marrow?\\\",\\\"U1\\\":\\\"Update: the assigned ticket owner of Ticket Tallow has changed to Rilan Moss.\\\",\\\"U2\\\":\\\"The required attachment for Ticket Marrow has been updated; it is now the photo attachment.\\\",\\\"U3\\\":\\\"Ticket Marrow's ticket approver has changed — it is now Verity Holm.\\\",\\\"U4\\\":\\\"The ticket urgency for Ticket Marrow has been raised; it is now urgency elevated.\\\",\\\"U5\\\":\\\"Ticket Marrow's ticket due stamp has been moved to Day Ilbeck.\\\",\\\"U6\\\":\\\"Another change: the required attachment for Ticket Marrow is now the sheet attachment.\\\",\\\"U7\\\":\\\"The assigned ticket owner of Ticket Marrow has changed; it is now Cyrus Delaine.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"For Ticket Marrow, the ticket approver is Talin Rusk.\\\",\\\"I2\\\":\\\"The assigned ticket owner of Ticket Marrow is Odalys Prewitt.\\\",\\\"I3\\\":\\\"Ticket Tallow's assigned ticket owner is Petra Vance.\\\",\\\"I4\\\":\\\"The ticket reference code for Ticket Marrow is TIC-M83.\\\",\\\"I5\\\":\\\"Ticket Marrow's ticket urgency is urgency routine.\\\",\\\"I6\\\":\\\"The ticket due stamp for Ticket Marrow is Day Harrow.\\\",\\\"I7\\\":\\\"The required attachment for Ticket Marrow is the chart attachment.\\\",\\\"N1\\\":\\\"Just confirming: the assigned ticket owner of Ticket Marrow is still Jovan Pellam.\\\",\\\"N2\\\":\\\"To reconfirm, Ticket Marrow's ticket reference code remains TIC-M83.\\\",\\\"Q\\\":\\\"What is the current assigned ticket owner of Ticket Marrow?\\\",\\\"U1\\\":\\\"Update: the assigned ticket owner of Ticket Marrow has changed to Lennox Farrow.\\\",\\\"U2\\\":\\\"Ticket Tallow's assigned ticket owner has been updated; it is now Rilan Moss.\\\",\\\"U3\\\":\\\"The assigned ticket owner of Ticket Marrow has been reassigned — it is now Bram Tolliver.\\\",\\\"U4\\\":\\\"Ticket Marrow's ticket approver has changed to Verity Holm.\\\",\\\"U5\\\":\\\"Heads up: the assigned ticket owner of Ticket Marrow is now Jovan Pellam.\\\",\\\"U6\\\":\\\"The ticket urgency for Ticket Marrow has been updated; it is now urgency elevated.\\\",\\\"U7\\\":\\\"One more change: the assigned ticket owner of Ticket Marrow is now Cyrus Delaine.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":4696,\"completion_tokens\":1734,\"total_tokens\":6430,\"cost\":0.13366,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.13366,\"upstream_inference_prompt_cost\":0.04696,\"upstream_inference_completions_cost\":0.0867},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"anthropic/claude-fable-5.1\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=Anthropic\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":4,\"available\":[{\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-fable-5.1-20260831\",\"selected\":true}]},\"generation_time\":18429}}",
+      "response_sha256_before_redaction": "34c88dfc144b0965d41357a392da81df79d174c0d8d6cacb2e8d4a4c9963e205",
+      "response_envelope": {
+        "id": "gen-1789816200-HNXNQG5QcmtZNj4d2nnM",
+        "object": "chat.completion",
+        "created": 1789816200,
+        "model": "anthropic/claude-fable-5.1",
+        "provider": "Anthropic",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "end_turn",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"For Ticket Marrow, the ticket approver is Talin Rusk.\",\"I2\":\"The assigned ticket owner of Ticket Marrow is Odalys Prewitt.\",\"I3\":\"Ticket Tallow's assigned ticket owner is Petra Vance.\",\"I4\":\"The ticket reference code for Ticket Marrow is TIC-M83.\",\"I5\":\"Ticket Marrow's ticket urgency is urgency routine.\",\"I6\":\"The ticket due stamp for Ticket Marrow is Day Harrow.\",\"I7\":\"The required attachment for Ticket Marrow is the chart attachment.\",\"N1\":\"Just confirming: the assigned ticket owner of Ticket Marrow is still Sabine Orrin.\",\"N2\":\"To reconfirm, Ticket Marrow's ticket reference code remains TIC-M83.\",\"Q\":\"What is the current assigned ticket owner of Ticket Marrow?\",\"U1\":\"Update: the assigned ticket owner of Ticket Marrow has changed to Lennox Farrow.\",\"U2\":\"Ticket Marrow's assigned ticket owner has been reassigned; it is now Ines Calder.\",\"U3\":\"There's been another change — the assigned ticket owner of Ticket Marrow is now Bram Tolliver.\",\"U4\":\"The assigned ticket owner for Ticket Marrow has been updated to Hesper Haskett.\",\"U5\":\"Heads up: Ticket Marrow's assigned ticket owner has changed to Jovan Pellam.\",\"U6\":\"The assigned ticket owner of Ticket Marrow has been switched to Sabine Orrin.\",\"U7\":\"One more change: the assigned ticket owner of Ticket Marrow is now Cyrus Delaine.\"},\"low\":{\"I1\":\"For Ticket Marrow, the ticket approver is Talin Rusk.\",\"I2\":\"The assigned ticket owner of Ticket Marrow is Odalys Prewitt.\",\"I3\":\"Ticket Tallow's assigned ticket owner is Petra Vance.\",\"I4\":\"The ticket reference code for Ticket Marrow is TIC-M83.\",\"I5\":\"Ticket Marrow's ticket urgency is urgency routine.\",\"I6\":\"The ticket due stamp for Ticket Marrow is Day Harrow.\",\"I7\":\"The required attachment for Ticket Marrow is the chart attachment.\",\"N1\":\"Just confirming: the assigned ticket owner of Ticket Marrow is still Odalys Prewitt.\",\"N2\":\"To reconfirm, Ticket Marrow's ticket reference code remains TIC-M83.\",\"Q\":\"What is the current assigned ticket owner of Ticket Marrow?\",\"U1\":\"Update: the assigned ticket owner of Ticket Tallow has changed to Rilan Moss.\",\"U2\":\"The required attachment for Ticket Marrow has been updated; it is now the photo attachment.\",\"U3\":\"Ticket Marrow's ticket approver has changed — it is now Verity Holm.\",\"U4\":\"The ticket urgency for Ticket Marrow has been raised; it is now urgency elevated.\",\"U5\":\"Ticket Marrow's ticket due stamp has been moved to Day Ilbeck.\",\"U6\":\"Another change: the required attachment for Ticket Marrow is now the sheet attachment.\",\"U7\":\"The assigned ticket owner of Ticket Marrow has changed; it is now Cyrus Delaine.\"},\"medium\":{\"I1\":\"For Ticket Marrow, the ticket approver is Talin Rusk.\",\"I2\":\"The assigned ticket owner of Ticket Marrow is Odalys Prewitt.\",\"I3\":\"Ticket Tallow's assigned ticket owner is Petra Vance.\",\"I4\":\"The ticket reference code for Ticket Marrow is TIC-M83.\",\"I5\":\"Ticket Marrow's ticket urgency is urgency routine.\",\"I6\":\"The ticket due stamp for Ticket Marrow is Day Harrow.\",\"I7\":\"The required attachment for Ticket Marrow is the chart attachment.\",\"N1\":\"Just confirming: the assigned ticket owner of Ticket Marrow is still Jovan Pellam.\",\"N2\":\"To reconfirm, Ticket Marrow's ticket reference code remains TIC-M83.\",\"Q\":\"What is the current assigned ticket owner of Ticket Marrow?\",\"U1\":\"Update: the assigned ticket owner of Ticket Marrow has changed to Lennox Farrow.\",\"U2\":\"Ticket Tallow's assigned ticket owner has been updated; it is now Rilan Moss.\",\"U3\":\"The assigned ticket owner of Ticket Marrow has been reassigned — it is now Bram Tolliver.\",\"U4\":\"Ticket Marrow's ticket approver has changed to Verity Holm.\",\"U5\":\"Heads up: the assigned ticket owner of Ticket Marrow is now Jovan Pellam.\",\"U6\":\"The ticket urgency for Ticket Marrow has been updated; it is now urgency elevated.\",\"U7\":\"One more change: the assigned ticket owner of Ticket Marrow is now Cyrus Delaine.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 4696,
+          "completion_tokens": 1734,
+          "total_tokens": 6430,
+          "cost": 0.13366,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.13366,
+            "upstream_inference_prompt_cost": 0.04696,
+            "upstream_inference_completions_cost": 0.0867
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "anthropic/claude-fable-5.1",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=Anthropic",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 4,
+            "available": [
+              {
+                "provider": "Anthropic",
+                "model": "anthropic/claude-fable-5.1-20260831",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 18429
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "anthropic/claude-fable-5.1",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=Anthropic",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 4,
+          "available": [
+            {
+              "provider": "Anthropic",
+              "model": "anthropic/claude-fable-5.1-20260831",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 18429
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "end_turn",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "For Ticket Marrow, the ticket approver is Talin Rusk.",
+          "I2": "The assigned ticket owner of Ticket Marrow is Odalys Prewitt.",
+          "I3": "Ticket Tallow's assigned ticket owner is Petra Vance.",
+          "I4": "The ticket reference code for Ticket Marrow is TIC-M83.",
+          "I5": "Ticket Marrow's ticket urgency is urgency routine.",
+          "I6": "The ticket due stamp for Ticket Marrow is Day Harrow.",
+          "I7": "The required attachment for Ticket Marrow is the chart attachment.",
+          "N1": "Just confirming: the assigned ticket owner of Ticket Marrow is still Sabine Orrin.",
+          "N2": "To reconfirm, Ticket Marrow's ticket reference code remains TIC-M83.",
+          "Q": "What is the current assigned ticket owner of Ticket Marrow?",
+          "U1": "Update: the assigned ticket owner of Ticket Marrow has changed to Lennox Farrow.",
+          "U2": "Ticket Marrow's assigned ticket owner has been reassigned; it is now Ines Calder.",
+          "U3": "There's been another change — the assigned ticket owner of Ticket Marrow is now Bram Tolliver.",
+          "U4": "The assigned ticket owner for Ticket Marrow has been updated to Hesper Haskett.",
+          "U5": "Heads up: Ticket Marrow's assigned ticket owner has changed to Jovan Pellam.",
+          "U6": "The assigned ticket owner of Ticket Marrow has been switched to Sabine Orrin.",
+          "U7": "One more change: the assigned ticket owner of Ticket Marrow is now Cyrus Delaine."
+        },
+        "low": {
+          "I1": "For Ticket Marrow, the ticket approver is Talin Rusk.",
+          "I2": "The assigned ticket owner of Ticket Marrow is Odalys Prewitt.",
+          "I3": "Ticket Tallow's assigned ticket owner is Petra Vance.",
+          "I4": "The ticket reference code for Ticket Marrow is TIC-M83.",
+          "I5": "Ticket Marrow's ticket urgency is urgency routine.",
+          "I6": "The ticket due stamp for Ticket Marrow is Day Harrow.",
+          "I7": "The required attachment for Ticket Marrow is the chart attachment.",
+          "N1": "Just confirming: the assigned ticket owner of Ticket Marrow is still Odalys Prewitt.",
+          "N2": "To reconfirm, Ticket Marrow's ticket reference code remains TIC-M83.",
+          "Q": "What is the current assigned ticket owner of Ticket Marrow?",
+          "U1": "Update: the assigned ticket owner of Ticket Tallow has changed to Rilan Moss.",
+          "U2": "The required attachment for Ticket Marrow has been updated; it is now the photo attachment.",
+          "U3": "Ticket Marrow's ticket approver has changed — it is now Verity Holm.",
+          "U4": "The ticket urgency for Ticket Marrow has been raised; it is now urgency elevated.",
+          "U5": "Ticket Marrow's ticket due stamp has been moved to Day Ilbeck.",
+          "U6": "Another change: the required attachment for Ticket Marrow is now the sheet attachment.",
+          "U7": "The assigned ticket owner of Ticket Marrow has changed; it is now Cyrus Delaine."
+        },
+        "medium": {
+          "I1": "For Ticket Marrow, the ticket approver is Talin Rusk.",
+          "I2": "The assigned ticket owner of Ticket Marrow is Odalys Prewitt.",
+          "I3": "Ticket Tallow's assigned ticket owner is Petra Vance.",
+          "I4": "The ticket reference code for Ticket Marrow is TIC-M83.",
+          "I5": "Ticket Marrow's ticket urgency is urgency routine.",
+          "I6": "The ticket due stamp for Ticket Marrow is Day Harrow.",
+          "I7": "The required attachment for Ticket Marrow is the chart attachment.",
+          "N1": "Just confirming: the assigned ticket owner of Ticket Marrow is still Jovan Pellam.",
+          "N2": "To reconfirm, Ticket Marrow's ticket reference code remains TIC-M83.",
+          "Q": "What is the current assigned ticket owner of Ticket Marrow?",
+          "U1": "Update: the assigned ticket owner of Ticket Marrow has changed to Lennox Farrow.",
+          "U2": "Ticket Tallow's assigned ticket owner has been updated; it is now Rilan Moss.",
+          "U3": "The assigned ticket owner of Ticket Marrow has been reassigned — it is now Bram Tolliver.",
+          "U4": "Ticket Marrow's ticket approver has changed to Verity Holm.",
+          "U5": "Heads up: the assigned ticket owner of Ticket Marrow is now Jovan Pellam.",
+          "U6": "The ticket urgency for Ticket Marrow has been updated; it is now urgency elevated.",
+          "U7": "One more change: the assigned ticket owner of Ticket Marrow is now Cyrus Delaine."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 4696,
+        "completion_tokens": 1734,
+        "total_tokens": 6430,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.13366
+      },
+      "latency_seconds": 18.532992752006976,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G2",
+  "fixture_id": "b0cal-task-assignment-01",
+  "projection_sha256": "e83679ba5f56ce569963409f0793b86d9413fb5b31f52115d38ef96634baf227",
+  "logical_call_index": 16,
+  "output_sha256": "9bb388561f6b598a38813d1c6807960ca445a1e6726b01c7565ee74edaa96b00"
+}

@@ -1,0 +1,342 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"tile_quantity\\\",\\\"meaning\\\":\\\"ordered number of ceramic tiles\\\",\\\"units_or_interpretation\\\":\\\"tiles\\\"},{\\\"attribute_id\\\":\\\"po_code\\\",\\\"meaning\\\":\\\"purchase identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"finish\\\",\\\"meaning\\\":\\\"tile finish\\\",\\\"units_or_interpretation\\\":\\\"finish label\\\"},{\\\"attribute_id\\\":\\\"carrier\\\",\\\"meaning\\\":\\\"delivery carrier\\\",\\\"units_or_interpretation\\\":\\\"carrier label\\\"},{\\\"attribute_id\\\":\\\"invoice_terms\\\",\\\"meaning\\\":\\\"invoice terms\\\",\\\"units_or_interpretation\\\":\\\"terms label\\\"},{\\\"attribute_id\\\":\\\"crate_type\\\",\\\"meaning\\\":\\\"crate type\\\",\\\"units_or_interpretation\\\":\\\"crate label\\\"}],\\\"domain\\\":\\\"Purchase & Order\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"b0cal-purchase-order-01-primary\\\",\\\"name\\\":\\\"Purchase Alcove\\\"},{\\\"entity_id\\\":\\\"b0cal-purchase-order-01-distractor\\\",\\\"name\\\":\\\"Purchase Bastion\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_n2\\\",\\\"I2\\\":\\\"k_a\\\",\\\"I3\\\":\\\"k_b\\\",\\\"I4\\\":\\\"k_c\\\",\\\"I5\\\":\\\"k_d\\\",\\\"I6\\\":\\\"k_target\\\",\\\"I7\\\":\\\"k_hard\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"tile_quantity\\\",\\\"entity_id\\\":\\\"b0cal-purchase-order-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current ordered number of ceramic tiles of Purchase Alcove.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"tile_quantity\\\",\\\"entity_id\\\":\\\"b0cal-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"36 tiles\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"tile_quantity\\\",\\\"entity_id\\\":\\\"b0cal-purchase-order-01-distractor\\\",\\\"initial_value\\\":\\\"128 tiles\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"po_code\\\",\\\"entity_id\\\":\\\"b0cal-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"PUR-A47\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"finish\\\",\\\"entity_id\\\":\\\"b0cal-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"matte finish\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"carrier\\\",\\\"entity_id\\\":\\\"b0cal-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"Carrier Northgate\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"invoice_terms\\\",\\\"entity_id\\\":\\\"b0cal-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"net 15\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"crate_type\\\",\\\"entity_id\\\":\\\"b0cal-purchase-order-01-primary\\\",\\\"initial_value\\\":\\\"slatted crate\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"PUR-A47\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"matte finish\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Carrier Northgate\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"net 15\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"slatted crate\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"36 tiles\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"128 tiles\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"44 tiles\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"52 tiles\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"61 tiles\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"73 tiles\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"88 tiles\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"94 tiles\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"94 tiles\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"107 tiles\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PUR-A47\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"PUR-A47\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"matte finish\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Carrier Northgate\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"net 15\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"slatted crate\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"36 tiles\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"128 tiles\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"solid crate\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"satin finish\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Carrier Silverline\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"136 tiles\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"Carrier Redoak\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"net 30\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"36 tiles\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"107 tiles\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PUR-A47\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"PUR-A47\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"matte finish\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"Carrier Northgate\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"net 15\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"slatted crate\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"36 tiles\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"128 tiles\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"44 tiles\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"136 tiles\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"61 tiles\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"net 30\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"88 tiles\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"solid crate\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"88 tiles\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"107 tiles\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"PUR-A47\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-sol\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "708cdf56e519f8f7aaa73eb02f4f879e4e83dab038aca128aa560bcad6f47712",
+  "request_body": {
+    "model": "openai/gpt-5.6-sol",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"tile_quantity\",\"meaning\":\"ordered number of ceramic tiles\",\"units_or_interpretation\":\"tiles\"},{\"attribute_id\":\"po_code\",\"meaning\":\"purchase identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"finish\",\"meaning\":\"tile finish\",\"units_or_interpretation\":\"finish label\"},{\"attribute_id\":\"carrier\",\"meaning\":\"delivery carrier\",\"units_or_interpretation\":\"carrier label\"},{\"attribute_id\":\"invoice_terms\",\"meaning\":\"invoice terms\",\"units_or_interpretation\":\"terms label\"},{\"attribute_id\":\"crate_type\",\"meaning\":\"crate type\",\"units_or_interpretation\":\"crate label\"}],\"domain\":\"Purchase & Order\",\"entities\":[{\"entity_id\":\"b0cal-purchase-order-01-primary\",\"name\":\"Purchase Alcove\"},{\"entity_id\":\"b0cal-purchase-order-01-distractor\",\"name\":\"Purchase Bastion\"}],\"initial_order\":{\"I1\":\"k_n2\",\"I2\":\"k_a\",\"I3\":\"k_b\",\"I4\":\"k_c\",\"I5\":\"k_d\",\"I6\":\"k_target\",\"I7\":\"k_hard\"},\"question_intent\":{\"attribute_id\":\"tile_quantity\",\"entity_id\":\"b0cal-purchase-order-01-primary\",\"intent\":\"Ask only for the current ordered number of ceramic tiles of Purchase Alcove.\"},\"state_keys\":[{\"attribute_id\":\"tile_quantity\",\"entity_id\":\"b0cal-purchase-order-01-primary\",\"initial_value\":\"36 tiles\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"tile_quantity\",\"entity_id\":\"b0cal-purchase-order-01-distractor\",\"initial_value\":\"128 tiles\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"po_code\",\"entity_id\":\"b0cal-purchase-order-01-primary\",\"initial_value\":\"PUR-A47\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"finish\",\"entity_id\":\"b0cal-purchase-order-01-primary\",\"initial_value\":\"matte finish\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"carrier\",\"entity_id\":\"b0cal-purchase-order-01-primary\",\"initial_value\":\"Carrier Northgate\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"invoice_terms\",\"entity_id\":\"b0cal-purchase-order-01-primary\",\"initial_value\":\"net 15\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"crate_type\",\"entity_id\":\"b0cal-purchase-order-01-primary\",\"initial_value\":\"slatted crate\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"PUR-A47\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"matte finish\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Carrier Northgate\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"net 15\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"slatted crate\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"36 tiles\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"128 tiles\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"44 tiles\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"52 tiles\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"61 tiles\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"73 tiles\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"88 tiles\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"94 tiles\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"94 tiles\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"107 tiles\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PUR-A47\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"PUR-A47\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"matte finish\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Carrier Northgate\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"net 15\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"slatted crate\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"36 tiles\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"128 tiles\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"solid crate\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"satin finish\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"Carrier Silverline\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"136 tiles\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"Carrier Redoak\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"net 30\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"36 tiles\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"107 tiles\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PUR-A47\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"PUR-A47\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"matte finish\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"Carrier Northgate\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"net 15\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"slatted crate\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"36 tiles\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"128 tiles\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"44 tiles\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"136 tiles\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"61 tiles\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"net 30\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"88 tiles\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"solid crate\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"88 tiles\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"107 tiles\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"PUR-A47\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T11:08:15.096995+00:00",
+      "requested_model": "openai/gpt-5.6-sol",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-sol",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789816095-XWUuxgD4X58ZqwaK01OI",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n{\"id\":\"gen-1789816095-XWUuxgD4X58ZqwaK01OI\",\"object\":\"chat.completion\",\"created\":1789816095,\"model\":\"openai/gpt-5.6-sol\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"The PO code for Purchase Alcove is PUR-A47.\\\",\\\"I2\\\":\\\"Purchase Alcove has a matte finish.\\\",\\\"I3\\\":\\\"The carrier for Purchase Alcove is Carrier Northgate.\\\",\\\"I4\\\":\\\"Purchase Alcove has net 15 invoice terms.\\\",\\\"I5\\\":\\\"The crate type for Purchase Alcove is slatted crate.\\\",\\\"I6\\\":\\\"The ordered number of ceramic tiles for Purchase Alcove is 36 tiles.\\\",\\\"I7\\\":\\\"The ordered number of ceramic tiles for Purchase Bastion is 128 tiles.\\\",\\\"N1\\\":\\\"The ordered number of ceramic tiles for Purchase Alcove remains 94 tiles.\\\",\\\"N2\\\":\\\"The PO code for Purchase Alcove remains PUR-A47.\\\",\\\"Q\\\":\\\"What is the current ordered number of ceramic tiles for Purchase Alcove?\\\",\\\"U1\\\":\\\"The ordered number of ceramic tiles for Purchase Alcove is now 44 tiles.\\\",\\\"U2\\\":\\\"The ordered number of ceramic tiles for Purchase Alcove has changed to 52 tiles.\\\",\\\"U3\\\":\\\"The ordered number of ceramic tiles for Purchase Alcove is now 61 tiles.\\\",\\\"U4\\\":\\\"The ordered number of ceramic tiles for Purchase Alcove has been updated to 73 tiles.\\\",\\\"U5\\\":\\\"The ordered number of ceramic tiles for Purchase Alcove is now 88 tiles.\\\",\\\"U6\\\":\\\"The ordered number of ceramic tiles for Purchase Alcove has changed to 94 tiles.\\\",\\\"U7\\\":\\\"The ordered number of ceramic tiles for Purchase Alcove is now 107 tiles.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Purchase Alcove's PO code is PUR-A47.\\\",\\\"I2\\\":\\\"The finish for Purchase Alcove is matte finish.\\\",\\\"I3\\\":\\\"Purchase Alcove's carrier is Carrier Northgate.\\\",\\\"I4\\\":\\\"The invoice terms for Purchase Alcove are net 15.\\\",\\\"I5\\\":\\\"Purchase Alcove uses a slatted crate.\\\",\\\"I6\\\":\\\"Purchase Alcove has an ordered ceramic tile quantity of 36 tiles.\\\",\\\"I7\\\":\\\"Purchase Bastion has an ordered ceramic tile quantity of 128 tiles.\\\",\\\"N1\\\":\\\"Purchase Alcove's ordered number of ceramic tiles remains 36 tiles.\\\",\\\"N2\\\":\\\"Purchase Alcove's PO code remains PUR-A47.\\\",\\\"Q\\\":\\\"What is the current ordered number of ceramic tiles for Purchase Alcove?\\\",\\\"U1\\\":\\\"The crate type for Purchase Alcove has changed to solid crate.\\\",\\\"U2\\\":\\\"The finish for Purchase Alcove is now satin finish.\\\",\\\"U3\\\":\\\"The carrier for Purchase Alcove has been updated to Carrier Silverline.\\\",\\\"U4\\\":\\\"The ordered number of ceramic tiles for Purchase Bastion is now 136 tiles.\\\",\\\"U5\\\":\\\"The carrier for Purchase Alcove has changed to Carrier Redoak.\\\",\\\"U6\\\":\\\"The invoice terms for Purchase Alcove are now net 30.\\\",\\\"U7\\\":\\\"The ordered number of ceramic tiles for Purchase Alcove has been updated to 107 tiles.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"For Purchase Alcove, the PO code is PUR-A47.\\\",\\\"I2\\\":\\\"For Purchase Alcove, the finish is matte finish.\\\",\\\"I3\\\":\\\"For Purchase Alcove, the carrier is Carrier Northgate.\\\",\\\"I4\\\":\\\"For Purchase Alcove, the invoice terms are net 15.\\\",\\\"I5\\\":\\\"For Purchase Alcove, the crate type is slatted crate.\\\",\\\"I6\\\":\\\"For Purchase Alcove, the ordered number of ceramic tiles is 36 tiles.\\\",\\\"I7\\\":\\\"For Purchase Bastion, the ordered number of ceramic tiles is 128 tiles.\\\",\\\"N1\\\":\\\"The ordered number of ceramic tiles for Purchase Alcove is still 88 tiles.\\\",\\\"N2\\\":\\\"The PO code for Purchase Alcove is still PUR-A47.\\\",\\\"Q\\\":\\\"What is the current ordered number of ceramic tiles for Purchase Alcove?\\\",\\\"U1\\\":\\\"Purchase Alcove's ordered number of ceramic tiles is now 44 tiles.\\\",\\\"U2\\\":\\\"Purchase Bastion's ordered number of ceramic tiles has changed to 136 tiles.\\\",\\\"U3\\\":\\\"Purchase Alcove's ordered number of ceramic tiles has been updated to 61 tiles.\\\",\\\"U4\\\":\\\"Purchase Alcove's invoice terms are now net 30.\\\",\\\"U5\\\":\\\"Purchase Alcove's ordered number of ceramic tiles has changed to 88 tiles.\\\",\\\"U6\\\":\\\"Purchase Alcove's crate type is now solid crate.\\\",\\\"U7\\\":\\\"Purchase Alcove's ordered number of ceramic tiles has been updated to 107 tiles.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":2515,\"completion_tokens\":876,\"total_tokens\":3391,\"cost\":0.015046,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2512,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.015046,\"upstream_inference_prompt_cost\":0.006286,\"upstream_inference_completions_cost\":0.00876},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-sol\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-sol-20260709\",\"selected\":true}]},\"generation_time\":7878}}",
+      "response_sha256_before_redaction": "8e341148049d1566b4c93c1d55a685e680f39c3414deaa85ff0a581416b8cde4",
+      "response_envelope": {
+        "id": "gen-1789816095-XWUuxgD4X58ZqwaK01OI",
+        "object": "chat.completion",
+        "created": 1789816095,
+        "model": "openai/gpt-5.6-sol",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"The PO code for Purchase Alcove is PUR-A47.\",\"I2\":\"Purchase Alcove has a matte finish.\",\"I3\":\"The carrier for Purchase Alcove is Carrier Northgate.\",\"I4\":\"Purchase Alcove has net 15 invoice terms.\",\"I5\":\"The crate type for Purchase Alcove is slatted crate.\",\"I6\":\"The ordered number of ceramic tiles for Purchase Alcove is 36 tiles.\",\"I7\":\"The ordered number of ceramic tiles for Purchase Bastion is 128 tiles.\",\"N1\":\"The ordered number of ceramic tiles for Purchase Alcove remains 94 tiles.\",\"N2\":\"The PO code for Purchase Alcove remains PUR-A47.\",\"Q\":\"What is the current ordered number of ceramic tiles for Purchase Alcove?\",\"U1\":\"The ordered number of ceramic tiles for Purchase Alcove is now 44 tiles.\",\"U2\":\"The ordered number of ceramic tiles for Purchase Alcove has changed to 52 tiles.\",\"U3\":\"The ordered number of ceramic tiles for Purchase Alcove is now 61 tiles.\",\"U4\":\"The ordered number of ceramic tiles for Purchase Alcove has been updated to 73 tiles.\",\"U5\":\"The ordered number of ceramic tiles for Purchase Alcove is now 88 tiles.\",\"U6\":\"The ordered number of ceramic tiles for Purchase Alcove has changed to 94 tiles.\",\"U7\":\"The ordered number of ceramic tiles for Purchase Alcove is now 107 tiles.\"},\"low\":{\"I1\":\"Purchase Alcove's PO code is PUR-A47.\",\"I2\":\"The finish for Purchase Alcove is matte finish.\",\"I3\":\"Purchase Alcove's carrier is Carrier Northgate.\",\"I4\":\"The invoice terms for Purchase Alcove are net 15.\",\"I5\":\"Purchase Alcove uses a slatted crate.\",\"I6\":\"Purchase Alcove has an ordered ceramic tile quantity of 36 tiles.\",\"I7\":\"Purchase Bastion has an ordered ceramic tile quantity of 128 tiles.\",\"N1\":\"Purchase Alcove's ordered number of ceramic tiles remains 36 tiles.\",\"N2\":\"Purchase Alcove's PO code remains PUR-A47.\",\"Q\":\"What is the current ordered number of ceramic tiles for Purchase Alcove?\",\"U1\":\"The crate type for Purchase Alcove has changed to solid crate.\",\"U2\":\"The finish for Purchase Alcove is now satin finish.\",\"U3\":\"The carrier for Purchase Alcove has been updated to Carrier Silverline.\",\"U4\":\"The ordered number of ceramic tiles for Purchase Bastion is now 136 tiles.\",\"U5\":\"The carrier for Purchase Alcove has changed to Carrier Redoak.\",\"U6\":\"The invoice terms for Purchase Alcove are now net 30.\",\"U7\":\"The ordered number of ceramic tiles for Purchase Alcove has been updated to 107 tiles.\"},\"medium\":{\"I1\":\"For Purchase Alcove, the PO code is PUR-A47.\",\"I2\":\"For Purchase Alcove, the finish is matte finish.\",\"I3\":\"For Purchase Alcove, the carrier is Carrier Northgate.\",\"I4\":\"For Purchase Alcove, the invoice terms are net 15.\",\"I5\":\"For Purchase Alcove, the crate type is slatted crate.\",\"I6\":\"For Purchase Alcove, the ordered number of ceramic tiles is 36 tiles.\",\"I7\":\"For Purchase Bastion, the ordered number of ceramic tiles is 128 tiles.\",\"N1\":\"The ordered number of ceramic tiles for Purchase Alcove is still 88 tiles.\",\"N2\":\"The PO code for Purchase Alcove is still PUR-A47.\",\"Q\":\"What is the current ordered number of ceramic tiles for Purchase Alcove?\",\"U1\":\"Purchase Alcove's ordered number of ceramic tiles is now 44 tiles.\",\"U2\":\"Purchase Bastion's ordered number of ceramic tiles has changed to 136 tiles.\",\"U3\":\"Purchase Alcove's ordered number of ceramic tiles has been updated to 61 tiles.\",\"U4\":\"Purchase Alcove's invoice terms are now net 30.\",\"U5\":\"Purchase Alcove's ordered number of ceramic tiles has changed to 88 tiles.\",\"U6\":\"Purchase Alcove's crate type is now solid crate.\",\"U7\":\"Purchase Alcove's ordered number of ceramic tiles has been updated to 107 tiles.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2515,
+          "completion_tokens": 876,
+          "total_tokens": 3391,
+          "cost": 0.015046,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2512,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.015046,
+            "upstream_inference_prompt_cost": 0.006286,
+            "upstream_inference_completions_cost": 0.00876
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-sol",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-sol-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 7878
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-sol",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-sol-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 7878
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "The PO code for Purchase Alcove is PUR-A47.",
+          "I2": "Purchase Alcove has a matte finish.",
+          "I3": "The carrier for Purchase Alcove is Carrier Northgate.",
+          "I4": "Purchase Alcove has net 15 invoice terms.",
+          "I5": "The crate type for Purchase Alcove is slatted crate.",
+          "I6": "The ordered number of ceramic tiles for Purchase Alcove is 36 tiles.",
+          "I7": "The ordered number of ceramic tiles for Purchase Bastion is 128 tiles.",
+          "N1": "The ordered number of ceramic tiles for Purchase Alcove remains 94 tiles.",
+          "N2": "The PO code for Purchase Alcove remains PUR-A47.",
+          "Q": "What is the current ordered number of ceramic tiles for Purchase Alcove?",
+          "U1": "The ordered number of ceramic tiles for Purchase Alcove is now 44 tiles.",
+          "U2": "The ordered number of ceramic tiles for Purchase Alcove has changed to 52 tiles.",
+          "U3": "The ordered number of ceramic tiles for Purchase Alcove is now 61 tiles.",
+          "U4": "The ordered number of ceramic tiles for Purchase Alcove has been updated to 73 tiles.",
+          "U5": "The ordered number of ceramic tiles for Purchase Alcove is now 88 tiles.",
+          "U6": "The ordered number of ceramic tiles for Purchase Alcove has changed to 94 tiles.",
+          "U7": "The ordered number of ceramic tiles for Purchase Alcove is now 107 tiles."
+        },
+        "low": {
+          "I1": "Purchase Alcove's PO code is PUR-A47.",
+          "I2": "The finish for Purchase Alcove is matte finish.",
+          "I3": "Purchase Alcove's carrier is Carrier Northgate.",
+          "I4": "The invoice terms for Purchase Alcove are net 15.",
+          "I5": "Purchase Alcove uses a slatted crate.",
+          "I6": "Purchase Alcove has an ordered ceramic tile quantity of 36 tiles.",
+          "I7": "Purchase Bastion has an ordered ceramic tile quantity of 128 tiles.",
+          "N1": "Purchase Alcove's ordered number of ceramic tiles remains 36 tiles.",
+          "N2": "Purchase Alcove's PO code remains PUR-A47.",
+          "Q": "What is the current ordered number of ceramic tiles for Purchase Alcove?",
+          "U1": "The crate type for Purchase Alcove has changed to solid crate.",
+          "U2": "The finish for Purchase Alcove is now satin finish.",
+          "U3": "The carrier for Purchase Alcove has been updated to Carrier Silverline.",
+          "U4": "The ordered number of ceramic tiles for Purchase Bastion is now 136 tiles.",
+          "U5": "The carrier for Purchase Alcove has changed to Carrier Redoak.",
+          "U6": "The invoice terms for Purchase Alcove are now net 30.",
+          "U7": "The ordered number of ceramic tiles for Purchase Alcove has been updated to 107 tiles."
+        },
+        "medium": {
+          "I1": "For Purchase Alcove, the PO code is PUR-A47.",
+          "I2": "For Purchase Alcove, the finish is matte finish.",
+          "I3": "For Purchase Alcove, the carrier is Carrier Northgate.",
+          "I4": "For Purchase Alcove, the invoice terms are net 15.",
+          "I5": "For Purchase Alcove, the crate type is slatted crate.",
+          "I6": "For Purchase Alcove, the ordered number of ceramic tiles is 36 tiles.",
+          "I7": "For Purchase Bastion, the ordered number of ceramic tiles is 128 tiles.",
+          "N1": "The ordered number of ceramic tiles for Purchase Alcove is still 88 tiles.",
+          "N2": "The PO code for Purchase Alcove is still PUR-A47.",
+          "Q": "What is the current ordered number of ceramic tiles for Purchase Alcove?",
+          "U1": "Purchase Alcove's ordered number of ceramic tiles is now 44 tiles.",
+          "U2": "Purchase Bastion's ordered number of ceramic tiles has changed to 136 tiles.",
+          "U3": "Purchase Alcove's ordered number of ceramic tiles has been updated to 61 tiles.",
+          "U4": "Purchase Alcove's invoice terms are now net 30.",
+          "U5": "Purchase Alcove's ordered number of ceramic tiles has changed to 88 tiles.",
+          "U6": "Purchase Alcove's crate type is now solid crate.",
+          "U7": "Purchase Alcove's ordered number of ceramic tiles has been updated to 107 tiles."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2515,
+        "completion_tokens": 876,
+        "total_tokens": 3391,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.015046
+      },
+      "latency_seconds": 7.977702855976531,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "b0cal-purchase-order-01",
+  "projection_sha256": "c686451004e7b41566f4367084b3e5daf0313ba6bf0599f4c256d83ea5913afe",
+  "logical_call_index": 7,
+  "output_sha256": "bf1aba5cc7140a49f9ccdb74b8df35fe24bb8a0086b59d8099eb0afc42ab3280"
+}

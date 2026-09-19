@@ -1281,3 +1281,52 @@ Reply with the answer only.
 ```
 
 No B0 design decision remains open except the final `B0_CONTEXT_TOKENS`.
+
+## B0 Calibration Attempt-01 Closed Incomplete; Restart Rule Frozen (2026-09-19)
+
+Official B0 naturalization Attempt-01 (`results/b0-calibration/attempt-01`, source
+commit `99b3082521fcc530890c4df749df1b5242a66290`) recorded 17 of 24 planned
+logical calls and stopped. Calls 1 to 16 passed. Call 17 (G2
+`anthropic/claude-fable-5.1`, scenario `b0cal-software-configuration-01`) returned
+HTTP 200 with `finish_reason` `stop`, no refusal, and no truncation. The HIGH
+variant's `N1`, `N2` and `Q` were empty strings, which violate the frozen output
+schema's `minLength` of 1, so schema validation failed with "Expected nonempty
+string". The response was parseable, no response was processing- or
+charge-uncertain, no retry applied, and calls 18 to 24 were never executed. The
+failure is a terminal output-contract failure. It is neither an infrastructure
+failure nor a defect in the local validator, which enforces the frozen schema.
+
+**Closure.** Attempt-01 is CLOSED/INCOMPLETE and cannot yield `B0_CONTEXT_TOKENS`.
+Its raw evidence is unchanged. The closure is derived offline from that evidence by
+`experiments/calibrate_b0.py --close-attempt` and recorded at
+`results/b0-calibration/closure/attempt-01.json` (SHA-256
+`703ac5c55e582ecb575970bb679f32171cc42feb2d24e0e9b8a35b2e95a8b7c1`).
+
+**Collection rule (frozen).** The rule is recorded in `configs/b0-calibration.yaml`
+and CRST specification Section 12.
+
+- A collection attempt is atomic and consists of all 24 logical calls.
+  Infrastructure retries follow only the frozen request retry policy.
+- A parse failure, schema failure, refusal, truncation, required-empty-field
+  failure, or other terminal output-contract failure is not selectively retried. It
+  terminates the attempt and preserves all evidence already produced.
+- Outputs of an incomplete or failed attempt are never combined with another
+  attempt's outputs to construct the official 72 histories.
+- No manual text repair, field completion, resampling of one failed call, dropping
+  of a variant, or generator substitution is allowed.
+- Exactly one additional complete attempt, Attempt-02, is allowed. It reruns all 24
+  calls from call 1 under the same frozen scenarios, order, Sol/Fable assignment,
+  models, provider constraints, prompt, input contract, output schema, request
+  construction, and design, and reuses no Attempt-01 output.
+- If Attempt-02 completes, only it supplies the histories. If it ends in another
+  non-infrastructure terminal failure, B0 calibration stops. No Attempt-03 is
+  created or executed automatically, and a separate researcher decision is required
+  to reassess the construction procedure or generator design.
+- This is construction-quality handling. It does not change Generator Qualification
+  or reopen Fable's QUALIFIED status.
+
+**Unchanged.** The calibration material, answering prompt, output schema,
+generators, exact-maximum rule, retention criterion, and coverage-failure rule are
+unchanged, and the final `B0_CONTEXT_TOKENS` remains OPEN. Attempt-02 is prepared
+(`results/b0-calibration/attempt-02`, the same 24-call plan and request hashes) and
+has not been executed.

@@ -501,6 +501,24 @@ the qualified dense-retrieval 512-token setting.
   recalibrated budget before the main experiment. The final confirmatory CRST
   remains separate from B0 calibration material.
 
+- **Collection attempts.** An official naturalization collection attempt is atomic
+  and consists of the complete frozen set of 24 logical calls. Infrastructure
+  retries follow only the frozen request retry policy. A parse failure, schema
+  failure, refusal, truncation, required-empty-field failure, or other terminal
+  output-contract failure is not selectively retried: it terminates the attempt
+  and preserves the evidence already produced. Outputs of an incomplete attempt are
+  never combined with outputs of another attempt, and no manual text repair, field
+  completion, resampling of a single call, dropping of a variant, or generator
+  substitution is allowed. An incomplete attempt is closed as CLOSED_INCOMPLETE and
+  cannot yield `B0_CONTEXT_TOKENS`. Exactly one additional complete attempt is
+  allowed. It reruns all 24 calls from call 1 under the same frozen scenarios,
+  order, generator assignment, models, provider constraints, prompt, input
+  contract, output schema, request construction, and design, without reusing any
+  earlier output. If it completes, only it supplies the 72 histories. If it ends
+  in another terminal failure, B0 calibration stops, no further attempt is created
+  automatically, and a separate researcher decision is required. This is
+  construction-quality handling; it does not change Generator Qualification.
+
 **OPEN:** only the final `B0_CONTEXT_TOKENS`, which is derived by the official
 calibration run.
 

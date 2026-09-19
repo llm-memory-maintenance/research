@@ -1,0 +1,342 @@
+{
+  "logical_call_id": "G1",
+  "status": "PASS",
+  "failure_reason": null,
+  "wire_request": "{\"max_tokens\":16384,\"messages\":[{\"content\":\"You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\\n\\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\\n\\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\\n\\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\\n\\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \\\"has changed\\\", \\\"has been updated\\\", \\\"is now\\\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\\n\\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\\n\\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\\n\\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \\\"Noted.\\\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you.\",\"role\":\"system\"},{\"content\":\"{\\\"attributes\\\":[{\\\"attribute_id\\\":\\\"tea_blend\\\",\\\"meaning\\\":\\\"preferred tea blend\\\",\\\"units_or_interpretation\\\":\\\"blend label\\\"},{\\\"attribute_id\\\":\\\"guest_code\\\",\\\"meaning\\\":\\\"guest preference record identifier\\\",\\\"units_or_interpretation\\\":\\\"opaque code\\\"},{\\\"attribute_id\\\":\\\"sweetener\\\",\\\"meaning\\\":\\\"preferred sweetener\\\",\\\"units_or_interpretation\\\":\\\"sweetener label\\\"},{\\\"attribute_id\\\":\\\"cup_style\\\",\\\"meaning\\\":\\\"preferred cup style\\\",\\\"units_or_interpretation\\\":\\\"style label\\\"},{\\\"attribute_id\\\":\\\"serving_temp\\\",\\\"meaning\\\":\\\"preferred serving temperature\\\",\\\"units_or_interpretation\\\":\\\"degrees Celsius\\\"},{\\\"attribute_id\\\":\\\"brew_time\\\",\\\"meaning\\\":\\\"preferred brew time\\\",\\\"units_or_interpretation\\\":\\\"minutes\\\"}],\\\"domain\\\":\\\"Personal Preference\\\",\\\"entities\\\":[{\\\"entity_id\\\":\\\"b0cal-personal-preference-01-primary\\\",\\\"name\\\":\\\"Guest Perrin Tallis\\\"},{\\\"entity_id\\\":\\\"b0cal-personal-preference-01-distractor\\\",\\\"name\\\":\\\"Guest Odessa Kray\\\"}],\\\"initial_order\\\":{\\\"I1\\\":\\\"k_hard\\\",\\\"I2\\\":\\\"k_n2\\\",\\\"I3\\\":\\\"k_a\\\",\\\"I4\\\":\\\"k_b\\\",\\\"I5\\\":\\\"k_c\\\",\\\"I6\\\":\\\"k_d\\\",\\\"I7\\\":\\\"k_target\\\"},\\\"question_intent\\\":{\\\"attribute_id\\\":\\\"tea_blend\\\",\\\"entity_id\\\":\\\"b0cal-personal-preference-01-primary\\\",\\\"intent\\\":\\\"Ask only for the current preferred tea blend of Guest Perrin Tallis.\\\"},\\\"state_keys\\\":[{\\\"attribute_id\\\":\\\"tea_blend\\\",\\\"entity_id\\\":\\\"b0cal-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"smoky pine\\\",\\\"role\\\":\\\"target\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"attribute_id\\\":\\\"tea_blend\\\",\\\"entity_id\\\":\\\"b0cal-personal-preference-01-distractor\\\",\\\"initial_value\\\":\\\"mint stem\\\",\\\"role\\\":\\\"hard_distractor\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"attribute_id\\\":\\\"guest_code\\\",\\\"entity_id\\\":\\\"b0cal-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"GST-P16\\\",\\\"role\\\":\\\"dedicated_n2_secondary\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"attribute_id\\\":\\\"sweetener\\\",\\\"entity_id\\\":\\\"b0cal-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"honey drop\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"attribute_id\\\":\\\"cup_style\\\",\\\"entity_id\\\":\\\"b0cal-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"tall mug\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"attribute_id\\\":\\\"serving_temp\\\",\\\"entity_id\\\":\\\"b0cal-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"60 degrees\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"attribute_id\\\":\\\"brew_time\\\",\\\"entity_id\\\":\\\"b0cal-personal-preference-01-primary\\\",\\\"initial_value\\\":\\\"3 minutes\\\",\\\"role\\\":\\\"updateable_secondary\\\",\\\"state_key\\\":\\\"k_d\\\"}],\\\"variants\\\":{\\\"high\\\":[{\\\"current_value\\\":\\\"mint stem\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"GST-P16\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"honey drop\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"tall mug\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"60 degrees\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"3 minutes\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"smoky pine\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"malted oat\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"citrus bark\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"wild fennel\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"dry hibiscus\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"rose husk\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"toasted barley\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"toasted barley\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"cardamom root\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"GST-P16\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"low\\\":[{\\\"current_value\\\":\\\"mint stem\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"GST-P16\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"honey drop\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"tall mug\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"60 degrees\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"3 minutes\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"smoky pine\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"wide bowl\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"70 degrees\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"4 minutes\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"cane syrup\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"plain leaf\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"no sweetener\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"smoky pine\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"cardamom root\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"GST-P16\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}],\\\"medium\\\":[{\\\"current_value\\\":\\\"mint stem\\\",\\\"event\\\":\\\"I1\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"GST-P16\\\",\\\"event\\\":\\\"I2\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_n2\\\"},{\\\"current_value\\\":\\\"honey drop\\\",\\\"event\\\":\\\"I3\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_a\\\"},{\\\"current_value\\\":\\\"tall mug\\\",\\\"event\\\":\\\"I4\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"60 degrees\\\",\\\"event\\\":\\\"I5\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"3 minutes\\\",\\\"event\\\":\\\"I6\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_d\\\"},{\\\"current_value\\\":\\\"smoky pine\\\",\\\"event\\\":\\\"I7\\\",\\\"semantics\\\":\\\"initial\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"malted oat\\\",\\\"event\\\":\\\"U1\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"70 degrees\\\",\\\"event\\\":\\\"U2\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_c\\\"},{\\\"current_value\\\":\\\"wild fennel\\\",\\\"event\\\":\\\"U3\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"plain leaf\\\",\\\"event\\\":\\\"U4\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_hard\\\"},{\\\"current_value\\\":\\\"rose husk\\\",\\\"event\\\":\\\"U5\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"wide bowl\\\",\\\"event\\\":\\\"U6\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_b\\\"},{\\\"current_value\\\":\\\"rose husk\\\",\\\"event\\\":\\\"N1\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"cardamom root\\\",\\\"event\\\":\\\"U7\\\",\\\"semantics\\\":\\\"changed_state\\\",\\\"state_key\\\":\\\"k_target\\\"},{\\\"current_value\\\":\\\"GST-P16\\\",\\\"event\\\":\\\"N2\\\",\\\"semantics\\\":\\\"same_state\\\",\\\"state_key\\\":\\\"k_n2\\\"}]}}\",\"role\":\"user\"}],\"model\":\"openai/gpt-5.6-sol\",\"provider\":{\"allow_fallbacks\":false,\"order\":[\"openai\"],\"require_parameters\":true},\"reasoning\":{\"effort\":\"low\"},\"response_format\":{\"json_schema\":{\"name\":\"crst_naturalization_triplet_v1\",\"schema\":{\"$defs\":{\"variant\":{\"additionalProperties\":false,\"properties\":{\"I1\":{\"minLength\":1,\"type\":\"string\"},\"I2\":{\"minLength\":1,\"type\":\"string\"},\"I3\":{\"minLength\":1,\"type\":\"string\"},\"I4\":{\"minLength\":1,\"type\":\"string\"},\"I5\":{\"minLength\":1,\"type\":\"string\"},\"I6\":{\"minLength\":1,\"type\":\"string\"},\"I7\":{\"minLength\":1,\"type\":\"string\"},\"N1\":{\"minLength\":1,\"type\":\"string\"},\"N2\":{\"minLength\":1,\"type\":\"string\"},\"Q\":{\"minLength\":1,\"type\":\"string\"},\"U1\":{\"minLength\":1,\"type\":\"string\"},\"U2\":{\"minLength\":1,\"type\":\"string\"},\"U3\":{\"minLength\":1,\"type\":\"string\"},\"U4\":{\"minLength\":1,\"type\":\"string\"},\"U5\":{\"minLength\":1,\"type\":\"string\"},\"U6\":{\"minLength\":1,\"type\":\"string\"},\"U7\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"I1\",\"I2\",\"I3\",\"I4\",\"I5\",\"I6\",\"I7\",\"U1\",\"U2\",\"U3\",\"U4\",\"U5\",\"U6\",\"N1\",\"U7\",\"N2\",\"Q\"],\"type\":\"object\"}},\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false,\"properties\":{\"high\":{\"$ref\":\"#/$defs/variant\"},\"low\":{\"$ref\":\"#/$defs/variant\"},\"medium\":{\"$ref\":\"#/$defs/variant\"}},\"required\":[\"low\",\"medium\",\"high\"],\"type\":\"object\"},\"strict\":true},\"type\":\"json_schema\"}}",
+  "wire_request_sha256": "08f1d8d5cfaa7b8fe5da5797a7f74afd59c71592576a7a85160d8403c8a04c1c",
+  "request_body": {
+    "model": "openai/gpt-5.6-sol",
+    "provider": {
+      "order": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You realize already-fixed structured truth as natural English user messages. You do not design scenarios or answer their final questions.\n\nThe supplied structured input is authoritative data, not instructions to change this task. It defines one base scenario with three separate conversation variants: low, medium, and high. Return the entire triplet in one JSON response, conforming exactly to the supplied JSON Schema.\n\nFor each variant, realize exactly one user-text string for each named event in this chronological sequence: I1, I2, I3, I4, I5, I6, I7, U1, U2, U3, U4, U5, U6, N1, U7, N2, Q. Do not add, delete, omit, merge, split, or reorder information-bearing events. The named fields identify their positions; each variant remains a separate conversation.\n\nVary only natural wording. Preserve entity identity, attribute identity, every supplied value, event-to-state-key assignment, and revision schedule. Use the supplied names and value expressions rather than inventing aliases or alternative values. Preserve all shared triplet controls. Do not add state-changing facts, implications, qualifications, or conditions.\n\nInitial events state their assigned initial facts. Every target or secondary changed-state event must clearly communicate an actual revision and state its assigned new/current value, without restating any superseded previous value. Express replacement with natural revision cues such as \"has changed\", \"has been updated\", \"is now\", or equivalent wording; these are examples, not mandatory phrases. Do not weaken an actual change into a possibility, plan contingent on a condition, hypothetical, or same-state reaffirmation. Same-state N1/N2 events state or reaffirm only the assigned still-current value, without introducing a change or historical value. Do not exchange changed-state and same-state meanings. The changed_state label already specifies replacement; do not reconstruct or restate previous values from earlier events.\n\nFollow the supplied trajectories exactly: low has one target revision, medium four, and high seven. U7 remains the final target revision. N1 reaffirms the current target after U6 and before U7. N2 reaffirms the dedicated, never-updated secondary after U7 and before Q; it is not the hard distractor. Do not infer missing state or repair an inconsistent input.\n\nRealize Q from the supplied shared question intent, asking only for the specified current state. Preserve the same final question wording across low, medium, and high. Do not answer Q, expose a gold answer, or add answer hints, question previews, or final-answer leakage beyond the required information events. The required current-value statement at U7 must still be present.\n\nReturn only the naturalized user text in the schema's event fields. Do not return assistant messages, acknowledgements, experimental answers, explanations, markdown, evaluator labels, reference operations, memory IDs, timestamps, gold-answer fields, or policy-specific information. The exact assistant acknowledgement \"Noted.\" is inserted later by deterministic code after each information event; do not generate it. Experimental final answers are generated only in later experiments, not by you."
+      },
+      {
+        "role": "user",
+        "content": "{\"attributes\":[{\"attribute_id\":\"tea_blend\",\"meaning\":\"preferred tea blend\",\"units_or_interpretation\":\"blend label\"},{\"attribute_id\":\"guest_code\",\"meaning\":\"guest preference record identifier\",\"units_or_interpretation\":\"opaque code\"},{\"attribute_id\":\"sweetener\",\"meaning\":\"preferred sweetener\",\"units_or_interpretation\":\"sweetener label\"},{\"attribute_id\":\"cup_style\",\"meaning\":\"preferred cup style\",\"units_or_interpretation\":\"style label\"},{\"attribute_id\":\"serving_temp\",\"meaning\":\"preferred serving temperature\",\"units_or_interpretation\":\"degrees Celsius\"},{\"attribute_id\":\"brew_time\",\"meaning\":\"preferred brew time\",\"units_or_interpretation\":\"minutes\"}],\"domain\":\"Personal Preference\",\"entities\":[{\"entity_id\":\"b0cal-personal-preference-01-primary\",\"name\":\"Guest Perrin Tallis\"},{\"entity_id\":\"b0cal-personal-preference-01-distractor\",\"name\":\"Guest Odessa Kray\"}],\"initial_order\":{\"I1\":\"k_hard\",\"I2\":\"k_n2\",\"I3\":\"k_a\",\"I4\":\"k_b\",\"I5\":\"k_c\",\"I6\":\"k_d\",\"I7\":\"k_target\"},\"question_intent\":{\"attribute_id\":\"tea_blend\",\"entity_id\":\"b0cal-personal-preference-01-primary\",\"intent\":\"Ask only for the current preferred tea blend of Guest Perrin Tallis.\"},\"state_keys\":[{\"attribute_id\":\"tea_blend\",\"entity_id\":\"b0cal-personal-preference-01-primary\",\"initial_value\":\"smoky pine\",\"role\":\"target\",\"state_key\":\"k_target\"},{\"attribute_id\":\"tea_blend\",\"entity_id\":\"b0cal-personal-preference-01-distractor\",\"initial_value\":\"mint stem\",\"role\":\"hard_distractor\",\"state_key\":\"k_hard\"},{\"attribute_id\":\"guest_code\",\"entity_id\":\"b0cal-personal-preference-01-primary\",\"initial_value\":\"GST-P16\",\"role\":\"dedicated_n2_secondary\",\"state_key\":\"k_n2\"},{\"attribute_id\":\"sweetener\",\"entity_id\":\"b0cal-personal-preference-01-primary\",\"initial_value\":\"honey drop\",\"role\":\"updateable_secondary\",\"state_key\":\"k_a\"},{\"attribute_id\":\"cup_style\",\"entity_id\":\"b0cal-personal-preference-01-primary\",\"initial_value\":\"tall mug\",\"role\":\"updateable_secondary\",\"state_key\":\"k_b\"},{\"attribute_id\":\"serving_temp\",\"entity_id\":\"b0cal-personal-preference-01-primary\",\"initial_value\":\"60 degrees\",\"role\":\"updateable_secondary\",\"state_key\":\"k_c\"},{\"attribute_id\":\"brew_time\",\"entity_id\":\"b0cal-personal-preference-01-primary\",\"initial_value\":\"3 minutes\",\"role\":\"updateable_secondary\",\"state_key\":\"k_d\"}],\"variants\":{\"high\":[{\"current_value\":\"mint stem\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"GST-P16\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"honey drop\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"tall mug\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"60 degrees\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"3 minutes\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"smoky pine\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"malted oat\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"citrus bark\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"wild fennel\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"dry hibiscus\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"rose husk\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"toasted barley\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"toasted barley\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"cardamom root\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"GST-P16\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"low\":[{\"current_value\":\"mint stem\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"GST-P16\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"honey drop\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"tall mug\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"60 degrees\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"3 minutes\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"smoky pine\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"wide bowl\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"70 degrees\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"4 minutes\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_d\"},{\"current_value\":\"cane syrup\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"plain leaf\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"no sweetener\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_a\"},{\"current_value\":\"smoky pine\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"cardamom root\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"GST-P16\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}],\"medium\":[{\"current_value\":\"mint stem\",\"event\":\"I1\",\"semantics\":\"initial\",\"state_key\":\"k_hard\"},{\"current_value\":\"GST-P16\",\"event\":\"I2\",\"semantics\":\"initial\",\"state_key\":\"k_n2\"},{\"current_value\":\"honey drop\",\"event\":\"I3\",\"semantics\":\"initial\",\"state_key\":\"k_a\"},{\"current_value\":\"tall mug\",\"event\":\"I4\",\"semantics\":\"initial\",\"state_key\":\"k_b\"},{\"current_value\":\"60 degrees\",\"event\":\"I5\",\"semantics\":\"initial\",\"state_key\":\"k_c\"},{\"current_value\":\"3 minutes\",\"event\":\"I6\",\"semantics\":\"initial\",\"state_key\":\"k_d\"},{\"current_value\":\"smoky pine\",\"event\":\"I7\",\"semantics\":\"initial\",\"state_key\":\"k_target\"},{\"current_value\":\"malted oat\",\"event\":\"U1\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"70 degrees\",\"event\":\"U2\",\"semantics\":\"changed_state\",\"state_key\":\"k_c\"},{\"current_value\":\"wild fennel\",\"event\":\"U3\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"plain leaf\",\"event\":\"U4\",\"semantics\":\"changed_state\",\"state_key\":\"k_hard\"},{\"current_value\":\"rose husk\",\"event\":\"U5\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"wide bowl\",\"event\":\"U6\",\"semantics\":\"changed_state\",\"state_key\":\"k_b\"},{\"current_value\":\"rose husk\",\"event\":\"N1\",\"semantics\":\"same_state\",\"state_key\":\"k_target\"},{\"current_value\":\"cardamom root\",\"event\":\"U7\",\"semantics\":\"changed_state\",\"state_key\":\"k_target\"},{\"current_value\":\"GST-P16\",\"event\":\"N2\",\"semantics\":\"same_state\",\"state_key\":\"k_n2\"}]}}"
+      }
+    ],
+    "reasoning": {
+      "effort": "low"
+    },
+    "max_tokens": 16384,
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "crst_naturalization_triplet_v1",
+        "strict": true,
+        "schema": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "properties": {
+            "low": {
+              "$ref": "#/$defs/variant"
+            },
+            "medium": {
+              "$ref": "#/$defs/variant"
+            },
+            "high": {
+              "$ref": "#/$defs/variant"
+            }
+          },
+          "$defs": {
+            "variant": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "I1",
+                "I2",
+                "I3",
+                "I4",
+                "I5",
+                "I6",
+                "I7",
+                "U1",
+                "U2",
+                "U3",
+                "U4",
+                "U5",
+                "U6",
+                "N1",
+                "U7",
+                "N2",
+                "Q"
+              ],
+              "properties": {
+                "I1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "I7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U3": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U4": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U5": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U6": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N1": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "U7": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "N2": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "Q": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "attempts": [
+    {
+      "logical_call_id": "G1",
+      "physical_attempt": 1,
+      "started_at": "2026-09-19T11:08:03.630931+00:00",
+      "requested_model": "openai/gpt-5.6-sol",
+      "requested_provider_order": [
+        "openai"
+      ],
+      "returned_model": "openai/gpt-5.6-sol",
+      "observed_selected_provider": "OpenAI",
+      "request_id": null,
+      "response_id": "gen-1789816083-Xpr0sghHELL58vSjS0W0",
+      "http_status": 200,
+      "raw_response": "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1789816083-Xpr0sghHELL58vSjS0W0\",\"object\":\"chat.completion\",\"created\":1789816083,\"model\":\"openai/gpt-5.6-sol\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"high\\\":{\\\"I1\\\":\\\"Guest Odessa Kray's preferred tea blend is mint stem.\\\",\\\"I2\\\":\\\"Guest Perrin Tallis's guest preference record identifier is GST-P16.\\\",\\\"I3\\\":\\\"Guest Perrin Tallis's preferred sweetener is honey drop.\\\",\\\"I4\\\":\\\"Guest Perrin Tallis's preferred cup style is tall mug.\\\",\\\"I5\\\":\\\"Guest Perrin Tallis's preferred serving temperature is 60 degrees Celsius.\\\",\\\"I6\\\":\\\"Guest Perrin Tallis's preferred brew time is 3 minutes.\\\",\\\"I7\\\":\\\"Guest Perrin Tallis's preferred tea blend is smoky pine.\\\",\\\"N1\\\":\\\"Guest Perrin Tallis's preferred tea blend remains toasted barley.\\\",\\\"N2\\\":\\\"Guest Perrin Tallis's guest preference record identifier remains GST-P16.\\\",\\\"Q\\\":\\\"What is Guest Perrin Tallis's current preferred tea blend?\\\",\\\"U1\\\":\\\"Guest Perrin Tallis's preferred tea blend is now malted oat.\\\",\\\"U2\\\":\\\"Guest Perrin Tallis's preferred tea blend has changed to citrus bark.\\\",\\\"U3\\\":\\\"Guest Perrin Tallis's preferred tea blend is now wild fennel.\\\",\\\"U4\\\":\\\"Guest Perrin Tallis's preferred tea blend has been updated to dry hibiscus.\\\",\\\"U5\\\":\\\"Guest Perrin Tallis's preferred tea blend is now rose husk.\\\",\\\"U6\\\":\\\"Guest Perrin Tallis's preferred tea blend has changed to toasted barley.\\\",\\\"U7\\\":\\\"Guest Perrin Tallis's preferred tea blend is now cardamom root.\\\"},\\\"low\\\":{\\\"I1\\\":\\\"Guest Odessa Kray's preferred tea blend is mint stem.\\\",\\\"I2\\\":\\\"Guest Perrin Tallis's guest preference record identifier is GST-P16.\\\",\\\"I3\\\":\\\"Guest Perrin Tallis's preferred sweetener is honey drop.\\\",\\\"I4\\\":\\\"Guest Perrin Tallis's preferred cup style is tall mug.\\\",\\\"I5\\\":\\\"Guest Perrin Tallis's preferred serving temperature is 60 degrees Celsius.\\\",\\\"I6\\\":\\\"Guest Perrin Tallis's preferred brew time is 3 minutes.\\\",\\\"I7\\\":\\\"Guest Perrin Tallis's preferred tea blend is smoky pine.\\\",\\\"N1\\\":\\\"Guest Perrin Tallis's preferred tea blend remains smoky pine.\\\",\\\"N2\\\":\\\"Guest Perrin Tallis's guest preference record identifier remains GST-P16.\\\",\\\"Q\\\":\\\"What is Guest Perrin Tallis's current preferred tea blend?\\\",\\\"U1\\\":\\\"Guest Perrin Tallis's preferred cup style is now wide bowl.\\\",\\\"U2\\\":\\\"Guest Perrin Tallis's preferred serving temperature has changed to 70 degrees Celsius.\\\",\\\"U3\\\":\\\"Guest Perrin Tallis's preferred brew time is now 4 minutes.\\\",\\\"U4\\\":\\\"Guest Perrin Tallis's preferred sweetener has been updated to cane syrup.\\\",\\\"U5\\\":\\\"Guest Odessa Kray's preferred tea blend is now plain leaf.\\\",\\\"U6\\\":\\\"Guest Perrin Tallis's preferred sweetener has changed to no sweetener.\\\",\\\"U7\\\":\\\"Guest Perrin Tallis's preferred tea blend is now cardamom root.\\\"},\\\"medium\\\":{\\\"I1\\\":\\\"Guest Odessa Kray's preferred tea blend is mint stem.\\\",\\\"I2\\\":\\\"Guest Perrin Tallis's guest preference record identifier is GST-P16.\\\",\\\"I3\\\":\\\"Guest Perrin Tallis's preferred sweetener is honey drop.\\\",\\\"I4\\\":\\\"Guest Perrin Tallis's preferred cup style is tall mug.\\\",\\\"I5\\\":\\\"Guest Perrin Tallis's preferred serving temperature is 60 degrees Celsius.\\\",\\\"I6\\\":\\\"Guest Perrin Tallis's preferred brew time is 3 minutes.\\\",\\\"I7\\\":\\\"Guest Perrin Tallis's preferred tea blend is smoky pine.\\\",\\\"N1\\\":\\\"Guest Perrin Tallis's preferred tea blend remains rose husk.\\\",\\\"N2\\\":\\\"Guest Perrin Tallis's guest preference record identifier remains GST-P16.\\\",\\\"Q\\\":\\\"What is Guest Perrin Tallis's current preferred tea blend?\\\",\\\"U1\\\":\\\"Guest Perrin Tallis's preferred tea blend is now malted oat.\\\",\\\"U2\\\":\\\"Guest Perrin Tallis's preferred serving temperature has changed to 70 degrees Celsius.\\\",\\\"U3\\\":\\\"Guest Perrin Tallis's preferred tea blend is now wild fennel.\\\",\\\"U4\\\":\\\"Guest Odessa Kray's preferred tea blend has been updated to plain leaf.\\\",\\\"U5\\\":\\\"Guest Perrin Tallis's preferred tea blend has changed to rose husk.\\\",\\\"U6\\\":\\\"Guest Perrin Tallis's preferred cup style is now wide bowl.\\\",\\\"U7\\\":\\\"Guest Perrin Tallis's preferred tea blend is now cardamom root.\\\"}}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":2559,\"completion_tokens\":910,\"total_tokens\":3469,\"cost\":0.015496,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":2556,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.015496,\"upstream_inference_prompt_cost\":0.006396,\"upstream_inference_completions_cost\":0.0091},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}},\"openrouter_metadata\":{\"requested\":\"openai/gpt-5.6-sol\",\"strategy\":\"direct\",\"region\":\"CGK\",\"summary\":\"available=1, selected=OpenAI\",\"attempt\":1,\"is_byok\":false,\"endpoints\":{\"total\":7,\"available\":[{\"provider\":\"OpenAI\",\"model\":\"openai/gpt-5.6-sol-20260709\",\"selected\":true}]},\"generation_time\":11358}}",
+      "response_sha256_before_redaction": "7d22ba8ce7889f281777edddb5bc1840b112b9541eb19f1c4d8640b312115964",
+      "response_envelope": {
+        "id": "gen-1789816083-Xpr0sghHELL58vSjS0W0",
+        "object": "chat.completion",
+        "created": 1789816083,
+        "model": "openai/gpt-5.6-sol",
+        "provider": "OpenAI",
+        "system_fingerprint": null,
+        "service_tier": "default",
+        "choices": [
+          {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "completed",
+            "message": {
+              "role": "assistant",
+              "content": "{\"high\":{\"I1\":\"Guest Odessa Kray's preferred tea blend is mint stem.\",\"I2\":\"Guest Perrin Tallis's guest preference record identifier is GST-P16.\",\"I3\":\"Guest Perrin Tallis's preferred sweetener is honey drop.\",\"I4\":\"Guest Perrin Tallis's preferred cup style is tall mug.\",\"I5\":\"Guest Perrin Tallis's preferred serving temperature is 60 degrees Celsius.\",\"I6\":\"Guest Perrin Tallis's preferred brew time is 3 minutes.\",\"I7\":\"Guest Perrin Tallis's preferred tea blend is smoky pine.\",\"N1\":\"Guest Perrin Tallis's preferred tea blend remains toasted barley.\",\"N2\":\"Guest Perrin Tallis's guest preference record identifier remains GST-P16.\",\"Q\":\"What is Guest Perrin Tallis's current preferred tea blend?\",\"U1\":\"Guest Perrin Tallis's preferred tea blend is now malted oat.\",\"U2\":\"Guest Perrin Tallis's preferred tea blend has changed to citrus bark.\",\"U3\":\"Guest Perrin Tallis's preferred tea blend is now wild fennel.\",\"U4\":\"Guest Perrin Tallis's preferred tea blend has been updated to dry hibiscus.\",\"U5\":\"Guest Perrin Tallis's preferred tea blend is now rose husk.\",\"U6\":\"Guest Perrin Tallis's preferred tea blend has changed to toasted barley.\",\"U7\":\"Guest Perrin Tallis's preferred tea blend is now cardamom root.\"},\"low\":{\"I1\":\"Guest Odessa Kray's preferred tea blend is mint stem.\",\"I2\":\"Guest Perrin Tallis's guest preference record identifier is GST-P16.\",\"I3\":\"Guest Perrin Tallis's preferred sweetener is honey drop.\",\"I4\":\"Guest Perrin Tallis's preferred cup style is tall mug.\",\"I5\":\"Guest Perrin Tallis's preferred serving temperature is 60 degrees Celsius.\",\"I6\":\"Guest Perrin Tallis's preferred brew time is 3 minutes.\",\"I7\":\"Guest Perrin Tallis's preferred tea blend is smoky pine.\",\"N1\":\"Guest Perrin Tallis's preferred tea blend remains smoky pine.\",\"N2\":\"Guest Perrin Tallis's guest preference record identifier remains GST-P16.\",\"Q\":\"What is Guest Perrin Tallis's current preferred tea blend?\",\"U1\":\"Guest Perrin Tallis's preferred cup style is now wide bowl.\",\"U2\":\"Guest Perrin Tallis's preferred serving temperature has changed to 70 degrees Celsius.\",\"U3\":\"Guest Perrin Tallis's preferred brew time is now 4 minutes.\",\"U4\":\"Guest Perrin Tallis's preferred sweetener has been updated to cane syrup.\",\"U5\":\"Guest Odessa Kray's preferred tea blend is now plain leaf.\",\"U6\":\"Guest Perrin Tallis's preferred sweetener has changed to no sweetener.\",\"U7\":\"Guest Perrin Tallis's preferred tea blend is now cardamom root.\"},\"medium\":{\"I1\":\"Guest Odessa Kray's preferred tea blend is mint stem.\",\"I2\":\"Guest Perrin Tallis's guest preference record identifier is GST-P16.\",\"I3\":\"Guest Perrin Tallis's preferred sweetener is honey drop.\",\"I4\":\"Guest Perrin Tallis's preferred cup style is tall mug.\",\"I5\":\"Guest Perrin Tallis's preferred serving temperature is 60 degrees Celsius.\",\"I6\":\"Guest Perrin Tallis's preferred brew time is 3 minutes.\",\"I7\":\"Guest Perrin Tallis's preferred tea blend is smoky pine.\",\"N1\":\"Guest Perrin Tallis's preferred tea blend remains rose husk.\",\"N2\":\"Guest Perrin Tallis's guest preference record identifier remains GST-P16.\",\"Q\":\"What is Guest Perrin Tallis's current preferred tea blend?\",\"U1\":\"Guest Perrin Tallis's preferred tea blend is now malted oat.\",\"U2\":\"Guest Perrin Tallis's preferred serving temperature has changed to 70 degrees Celsius.\",\"U3\":\"Guest Perrin Tallis's preferred tea blend is now wild fennel.\",\"U4\":\"Guest Odessa Kray's preferred tea blend has been updated to plain leaf.\",\"U5\":\"Guest Perrin Tallis's preferred tea blend has changed to rose husk.\",\"U6\":\"Guest Perrin Tallis's preferred cup style is now wide bowl.\",\"U7\":\"Guest Perrin Tallis's preferred tea blend is now cardamom root.\"}}",
+              "refusal": null,
+              "reasoning": null
+            }
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 2559,
+          "completion_tokens": 910,
+          "total_tokens": 3469,
+          "cost": 0.015496,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 2556,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.015496,
+            "upstream_inference_prompt_cost": 0.006396,
+            "upstream_inference_completions_cost": 0.0091
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 0,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "openrouter_metadata": {
+          "requested": "openai/gpt-5.6-sol",
+          "strategy": "direct",
+          "region": "CGK",
+          "summary": "available=1, selected=OpenAI",
+          "attempt": 1,
+          "is_byok": false,
+          "endpoints": {
+            "total": 7,
+            "available": [
+              {
+                "provider": "OpenAI",
+                "model": "openai/gpt-5.6-sol-20260709",
+                "selected": true
+              }
+            ]
+          },
+          "generation_time": 11358
+        }
+      },
+      "envelope_parse_status": "passed",
+      "openrouter_metadata": {
+        "requested": "openai/gpt-5.6-sol",
+        "strategy": "direct",
+        "region": "CGK",
+        "summary": "available=1, selected=OpenAI",
+        "attempt": 1,
+        "is_byok": false,
+        "endpoints": {
+          "total": 7,
+          "available": [
+            {
+              "provider": "OpenAI",
+              "model": "openai/gpt-5.6-sol-20260709",
+              "selected": true
+            }
+          ]
+        },
+        "generation_time": 11358
+      },
+      "service_tier": "default",
+      "finish_reason": "stop",
+      "native_finish_reason": "completed",
+      "refusal": false,
+      "incomplete_or_truncated": false,
+      "parsed_structured_response": {
+        "high": {
+          "I1": "Guest Odessa Kray's preferred tea blend is mint stem.",
+          "I2": "Guest Perrin Tallis's guest preference record identifier is GST-P16.",
+          "I3": "Guest Perrin Tallis's preferred sweetener is honey drop.",
+          "I4": "Guest Perrin Tallis's preferred cup style is tall mug.",
+          "I5": "Guest Perrin Tallis's preferred serving temperature is 60 degrees Celsius.",
+          "I6": "Guest Perrin Tallis's preferred brew time is 3 minutes.",
+          "I7": "Guest Perrin Tallis's preferred tea blend is smoky pine.",
+          "N1": "Guest Perrin Tallis's preferred tea blend remains toasted barley.",
+          "N2": "Guest Perrin Tallis's guest preference record identifier remains GST-P16.",
+          "Q": "What is Guest Perrin Tallis's current preferred tea blend?",
+          "U1": "Guest Perrin Tallis's preferred tea blend is now malted oat.",
+          "U2": "Guest Perrin Tallis's preferred tea blend has changed to citrus bark.",
+          "U3": "Guest Perrin Tallis's preferred tea blend is now wild fennel.",
+          "U4": "Guest Perrin Tallis's preferred tea blend has been updated to dry hibiscus.",
+          "U5": "Guest Perrin Tallis's preferred tea blend is now rose husk.",
+          "U6": "Guest Perrin Tallis's preferred tea blend has changed to toasted barley.",
+          "U7": "Guest Perrin Tallis's preferred tea blend is now cardamom root."
+        },
+        "low": {
+          "I1": "Guest Odessa Kray's preferred tea blend is mint stem.",
+          "I2": "Guest Perrin Tallis's guest preference record identifier is GST-P16.",
+          "I3": "Guest Perrin Tallis's preferred sweetener is honey drop.",
+          "I4": "Guest Perrin Tallis's preferred cup style is tall mug.",
+          "I5": "Guest Perrin Tallis's preferred serving temperature is 60 degrees Celsius.",
+          "I6": "Guest Perrin Tallis's preferred brew time is 3 minutes.",
+          "I7": "Guest Perrin Tallis's preferred tea blend is smoky pine.",
+          "N1": "Guest Perrin Tallis's preferred tea blend remains smoky pine.",
+          "N2": "Guest Perrin Tallis's guest preference record identifier remains GST-P16.",
+          "Q": "What is Guest Perrin Tallis's current preferred tea blend?",
+          "U1": "Guest Perrin Tallis's preferred cup style is now wide bowl.",
+          "U2": "Guest Perrin Tallis's preferred serving temperature has changed to 70 degrees Celsius.",
+          "U3": "Guest Perrin Tallis's preferred brew time is now 4 minutes.",
+          "U4": "Guest Perrin Tallis's preferred sweetener has been updated to cane syrup.",
+          "U5": "Guest Odessa Kray's preferred tea blend is now plain leaf.",
+          "U6": "Guest Perrin Tallis's preferred sweetener has changed to no sweetener.",
+          "U7": "Guest Perrin Tallis's preferred tea blend is now cardamom root."
+        },
+        "medium": {
+          "I1": "Guest Odessa Kray's preferred tea blend is mint stem.",
+          "I2": "Guest Perrin Tallis's guest preference record identifier is GST-P16.",
+          "I3": "Guest Perrin Tallis's preferred sweetener is honey drop.",
+          "I4": "Guest Perrin Tallis's preferred cup style is tall mug.",
+          "I5": "Guest Perrin Tallis's preferred serving temperature is 60 degrees Celsius.",
+          "I6": "Guest Perrin Tallis's preferred brew time is 3 minutes.",
+          "I7": "Guest Perrin Tallis's preferred tea blend is smoky pine.",
+          "N1": "Guest Perrin Tallis's preferred tea blend remains rose husk.",
+          "N2": "Guest Perrin Tallis's guest preference record identifier remains GST-P16.",
+          "Q": "What is Guest Perrin Tallis's current preferred tea blend?",
+          "U1": "Guest Perrin Tallis's preferred tea blend is now malted oat.",
+          "U2": "Guest Perrin Tallis's preferred serving temperature has changed to 70 degrees Celsius.",
+          "U3": "Guest Perrin Tallis's preferred tea blend is now wild fennel.",
+          "U4": "Guest Odessa Kray's preferred tea blend has been updated to plain leaf.",
+          "U5": "Guest Perrin Tallis's preferred tea blend has changed to rose husk.",
+          "U6": "Guest Perrin Tallis's preferred cup style is now wide bowl.",
+          "U7": "Guest Perrin Tallis's preferred tea blend is now cardamom root."
+        }
+      },
+      "parse_status": "passed",
+      "schema_status": "passed",
+      "usage": {
+        "prompt_tokens": 2559,
+        "completion_tokens": 910,
+        "total_tokens": 3469,
+        "reasoning_tokens": 0,
+        "cached_tokens": 0,
+        "cost": 0.015496
+      },
+      "latency_seconds": 11.45631391799543,
+      "retry_reason": null,
+      "will_retry": false,
+      "processing_or_charge_uncertain": false,
+      "error_type": null,
+      "failure_reason": null
+    }
+  ],
+  "candidate": "G1",
+  "fixture_id": "b0cal-personal-preference-01",
+  "projection_sha256": "638df528fb50f3291d945f2d07eb2f75dec650a1ee9411cdce6a9fee7aa9ca1b",
+  "logical_call_index": 6,
+  "output_sha256": "4e23f0a910a009546b5d205043759e03e16a25d1ca72734a52297c08d33f86e3"
+}

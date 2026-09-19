@@ -82,7 +82,7 @@ calibration:
     separation: The final confirmatory CRST remains separate from B0 calibration material.
 
 naturalization:
-  status: PLANNED_NOT_EXECUTED
+  status: AWAITING_COMPLETE_ATTEMPT
   execution_mode: standard
   prompt_version: crst-naturalization-prompt/1.1.0
   input_contract_version: crst-naturalization-input/1.1.0
@@ -95,8 +95,59 @@ naturalization:
   calls_per_generator: 12
   planned_logical_calls: 24
   expected_histories: 72
-  result_directory: results/b0-calibration/attempt-01
   output_layout: outputs/<g1|g2>/<scenario_id>.json per call, then collection.json and SHA256SUMS
+  attempt_cap: 2
+  # Attempt-01 recorded 17 of 24 calls and stopped at call 17 (G2, b0cal-software-configuration-01): the HIGH
+  # variant returned empty N1, N2 and Q, violating the output schema. Its closure is derived offline from the
+  # archived evidence. The single additional attempt reruns all 24 calls from call 1.
+  attempts:
+    - id: attempt-01
+      status: CLOSED_INCOMPLETE
+      result_directory: results/b0-calibration/attempt-01
+      closure: results/b0-calibration/closure/attempt-01.json
+    - id: attempt-02
+      status: PLANNED_NOT_EXECUTED
+      result_directory: results/b0-calibration/attempt-02
+  collection_rule:
+    status: FROZEN
+    frozen_on: '2026-09-19'
+    unit: >-
+      An official naturalization collection attempt is atomic and consists of the complete frozen set of 24
+      logical calls.
+    infrastructure_retries: only the frozen request retry policy
+    terminal_failures:
+      - parse failure
+      - schema failure
+      - refusal
+      - truncation
+      - required-empty-field failure
+      - other terminal output-contract failure
+    on_terminal_failure:
+      - is not selectively retried
+      - immediately terminates the collection attempt
+      - preserves all evidence already produced
+    mixing: >-
+      Outputs of an incomplete or failed attempt must not be combined with outputs of another attempt to
+      construct the official calibration histories.
+    prohibited:
+      - manual text repair
+      - field completion
+      - resampling one failed call
+      - dropping a variant
+      - generator substitution
+    incomplete_attempt: closed as CLOSED_INCOMPLETE; it cannot yield b0_context_tokens
+    additional_attempt: >-
+      Exactly one additional complete attempt, attempt-02, is allowed. It reruns all 24 logical calls from call 1
+      under the same frozen scenarios, order, generator assignment, model identifiers, provider constraints,
+      naturalization prompt, input contract, output schema, request construction and calibration design. No
+      Attempt-01 output is reused.
+    on_success: only the completed attempt supplies the 72 histories from which b0_context_tokens is derived
+    on_second_terminal_failure: >-
+      STOP B0 calibration. No further attempt is created or executed automatically; a separate researcher
+      decision is required to reassess the construction procedure or generator design.
+    scope: >-
+      Construction-quality handling only. It does not change Generator Qualification or reopen any generator's
+      QUALIFIED status.
   generators:
     - logical_call_id: G1
       model: openai/gpt-5.6-sol

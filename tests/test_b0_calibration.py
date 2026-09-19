@@ -286,7 +286,7 @@ def test_coverage_failure_rule_is_frozen_with_the_approved_procedure():
     assert 'separate from B0 calibration material' in rule['separation']
     cal.require_official(design)
     assert design['budget_status'] == 'OPEN' and design['b0_context_tokens'] is None
-    assert design['naturalization']['status'] == 'PLANNED_NOT_EXECUTED'
+    assert design['naturalization']['status'] == 'AWAITING_COMPLETE_ATTEMPT'
 
 
 def test_preview_plans_exactly_24_calls_12_sol_and_12_fable(inputs):
@@ -376,6 +376,7 @@ def synthetic_calls(inputs, mutate=None):
                 block['Q'] = 'A synthetic question?'
                 output[variant] = block
             calls.append({'logical_call_id': generator['entry']['logical_call_id'], 'fixture_id': entry['fixture_id'],
+                          'attempt': 'attempt-02',
                           'status': 'PASS',
                           'attempts': [{'returned_model': generator['entry']['model'], 'parse_status': 'passed',
                                         'schema_status': 'passed', 'parsed_structured_response': output}]})
@@ -622,7 +623,7 @@ def test_plan_records_reproducible_input_request_and_output_metadata(inputs):
         assert call['input_sha256'] == manifest[call['scenario_id']]['projection_sha256'] == gq.sha(gq.canonical(gq.project(fixture)))
         assert call['request_sha256'] == probe.digest(probe.canonical(body).encode())
         assert call['output_path'] == (
-            f'results/b0-calibration/attempt-01/outputs/{call["logical_call_id"].lower()}/{call["scenario_id"]}.json')
+            f'results/b0-calibration/attempt-02/outputs/{call["logical_call_id"].lower()}/{call["scenario_id"]}.json')
         assert 'response' not in ' '.join(call)
     assert len({c['request_sha256'] for c in shown['calls']}) == 24
     assert len({c['output_path'] for c in shown['calls']}) == 24
@@ -632,7 +633,7 @@ def test_plan_records_reproducible_input_request_and_output_metadata(inputs):
 
 
 def test_preview_does_not_create_the_official_result_directory(inputs):
-    official = ROOT / inputs['design']['naturalization']['result_directory']
+    official = ROOT / cal.official_attempt(inputs['design'])['result_directory']
     before = official.exists()
     cal.preview(inputs)
     assert cal.main([]) == 0
@@ -684,7 +685,7 @@ def test_mocked_collection_completes_archives_and_reads_back_72_histories(inputs
     assert result['status'] == 'COMPLETE' and len(result['calls']) == len(bodies) == 24
     assert [probe.digest(probe.canonical(b).encode()) for b in bodies] == shown['request_hashes']
     names = sorted(str(p.relative_to(path)) for p in path.rglob('*') if p.is_file())
-    assert names == sorted([c['output_path'].split('attempt-01/')[1] for c in shown['calls']]
+    assert names == sorted([c['output_path'].removeprefix(shown['result_directory'] + '/') for c in shown['calls']]
                            + ['SHA256SUMS', 'collection.json'])
     assert 'test-secret' not in ' '.join(p.read_text(encoding='utf-8') for p in path.rglob('*') if p.is_file())
     records = cal.read_calls(path)
@@ -729,7 +730,7 @@ def test_semantic_or_schema_failure_stops_without_retry_and_keeps_partial_eviden
     result, bodies = run_collect(inputs, path, monkeypatch, respond)
     assert len(bodies) == 6  # The failed call is not repeated and no later call is made.
     assert result['status'] == 'INCOMPLETE' and len(result['calls']) == 6
-    assert 'STOP FOR ADJUDICATION' in result['failure_reason']
+    assert 'STOP FOR RESEARCHER DECISION' in result['failure_reason']
     failed = result['calls'][5]
     assert failed['status'] == 'FAIL' and len(failed['attempts']) == 1
     assert failed['attempts'][0]['parse_status'] == 'passed' and failed['attempts'][0]['schema_status'] == 'failed'
@@ -843,7 +844,7 @@ def test_collect_refuses_when_inputs_change_after_preflight(inputs, tmp_path, mo
 
 
 def test_cli_execution_gates(inputs, tmp_path, monkeypatch, capsys):
-    official = ROOT / inputs['design']['naturalization']['result_directory']
+    official = ROOT / cal.official_attempt(inputs['design'])['result_directory']
     existed = official.exists()
     for flags in (['--execute'], ['--confirm-spend'], ['--execute', '--confirm-spend'],
                   ['--output-directory', str(tmp_path / 'x')]):
