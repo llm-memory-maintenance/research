@@ -456,7 +456,8 @@ supply active memory as context, and every condition receives the same
 instruction. The wording contains no instruction about newer or older values.
 It is defined in `configs/b0-calibration.yaml`.
 
-**OPEN:** final `B0_CONTEXT_TOKENS`. The calibration design is frozen in Section 12.
+**FROZEN:** `B0_CONTEXT_TOKENS = 71`, derived by the official calibration under
+Section 12. Nothing in this section is open.
 
 ## 12. B0 Calibration Requirements
 
@@ -561,8 +562,28 @@ the qualified dense-retrieval 512-token setting.
   complete, and no Level-1 failure remains. All estimand, rule, and coverage
   decisions above are unchanged.
 
-**OPEN:** only the final `B0_CONTEXT_TOKENS`, which is derived by the official
-calibration run.
+**FROZEN result: B0 calibration is CLOSED and `B0_CONTEXT_TOKENS = 71`.** The
+approved suffix-only procedure (`b0-suffix-collection/1.0.0`) completed in its sole
+official Attempt-01: 24 of 24 logical calls, 72 suffix histories (12 scenarios x 2
+generators x 3 variants). The full-history procedure had closed without an eligible
+complete set after its two attempts. Human semantic adjudication covered 144 audit
+items (72 histories x U7 and N2) with 0 Level-1 failures, so the collection is
+ELIGIBLE; two fluency-only findings (both `G2` Purchase & Order, Medium, U7 and N2)
+did not affect eligibility and are not used to rank generators. The exact maximum
+over the 72 eligible histories of the smallest marginal budget retaining the
+complete U7 and N2 exchanges is 71, attained by `G2` Travel High and `G2` Purchase &
+Order Medium. All 72 histories retain the complete U7 and N2 exchanges at 71. No
+percentile, candidate grid, or headroom was used. Q and the system prompt remain
+outside `B0_CONTEXT_TOKENS`, and the tokenizer is `meta-llama/Llama-3.1-8B-Instruct`
+at `0e9e39f249a16976918f6564b8830bc894c89659`. The value is frozen in
+`configs/b0-suffix-calibration.yaml` and bound to the immutable derivation artifact
+`results/b0-suffix-calibration/derivation/attempt-01.json` (SHA-256
+`70ed6e326e82378f8f4ab0a4e88cf639a21f7da58cf255c9c693cf24eb4ed365`). The
+calibration is closed and is not reopened because later experimental outcomes are
+unfavorable; a final CRST case needing more than 71 to retain U7 and N2 is a
+calibration-coverage failure handled only by the rule above. This validates
+structural retention on the calibration material only; it says nothing about B0's
+answer quality.
 
 Dense Retrieval Qualification is CLOSED. The broader Retrieval / Context
 Calibration workstream still awaits this separate B0 resolution.
@@ -756,9 +777,9 @@ Neither completed qualification nor final statistical values are reopened.
 
 **OPEN before dependent implementation or execution:**
 
-- Final `B0_CONTEXT_TOKENS`, derived by the official B0 calibration run; the
-  calibration design and answering wording are frozen in Sections 11 and 12. The
-  CRST response schema and request wrapper remain OPEN (Section 7).
+- The CRST response schema and request wrapper remain OPEN (Section 7).
+  `B0_CONTEXT_TOKENS` is frozen at 71 (Section 12), and the calibration design and
+  answering wording are frozen in Sections 11 and 12.
 - Physical journal/version-history artifact schema and storage layout; semantic
   fields, canonical IDs, reference-target comparison, and execution rules are fixed.
 - Scenario allocation/trajectories beyond frozen constraints, CRST schema, and

@@ -1448,3 +1448,41 @@ prompt-derived hashes change: the 24 request hashes and the execution-plan ident
 U7/N2 projection facts, output schema, model identifiers, providers, reasoning
 effort, exact-maximum rule, tokenizer, B0 selector, and coverage-failure rule are
 unchanged, and the final `B0_CONTEXT_TOKENS` remains OPEN.
+
+## B0 Calibration Closed; B0_CONTEXT_TOKENS = 71 Frozen (2026-09-19)
+
+B0 calibration is CLOSED and its budget FROZEN at `B0_CONTEXT_TOKENS = 71`. The value
+is recorded in `configs/b0-suffix-calibration.yaml` and bound to the immutable
+derivation artifact `results/b0-suffix-calibration/derivation/attempt-01.json`
+(SHA-256 `70ed6e326e82378f8f4ab0a4e88cf639a21f7da58cf255c9c693cf24eb4ed365`).
+
+**History.** The full-history B0 naturalization procedure closed without an eligible
+complete set after Attempt-01 and Attempt-02 (terminal output-contract failures in
+fields outside the U7+N2 estimand). The approved suffix-only procedure
+`b0-suffix-collection/1.0.0` then completed in its sole official Attempt-01: 24 of 24
+logical calls and 72 suffix histories, with the generators, provider constraints,
+scenarios, and execution settings unchanged.
+
+**Semantic adjudication.** The human audit covered 144 items (72 histories x U7 and
+N2) with 0 Level-1 failures, so the collection is ELIGIBLE (adjudication SHA-256
+`92230d273941317de0298eb08ca3c3c4b1ac679f367cf2eb7065d7b76a3eaa12`, completed audit
+`bb2084058e15f643b3f7a347e9d50a1dbc106be7903f96456e374bf7125a7377`, collection
+`39d8c7ac1297a2fd432d956657b32f318dfc62846dc28c3722c31a562203735b`). Two fluency-only
+findings (`G2` Purchase & Order, Medium, U7 and N2) were recorded. They are
+non-blocking and are not used to rank generators.
+
+**Derivation.** The exact maximum, over all 72 eligible histories, of the smallest
+marginal-history budget that retains the complete U7 and N2 exchanges is 71. It is
+attained by `G2` Travel High and `G2` Purchase & Order Medium. All 72 of 72 histories
+retain the complete U7 and N2 exchanges at 71. No percentile, candidate grid, or
+headroom was used. Q and the system prompt remain outside `B0_CONTEXT_TOKENS` as
+already frozen, and the tokenizer is `meta-llama/Llama-3.1-8B-Instruct` at
+`0e9e39f249a16976918f6564b8830bc894c89659`. The 71 is the derived official budget;
+the earlier diagnostic value 67 is historical only and is not the official budget.
+
+**Closure.** No further suffix-calibration attempt and no re-derivation is permitted.
+B0 calibration is not reopened because later experimental outcomes are unfavorable. A
+final CRST case that needs more than 71 to retain U7 and N2 remains a
+calibration-coverage failure, handled only by the frozen coverage-failure rule. This
+validates structural retention of U7 and N2 on the calibration material; it does not
+validate B0's answer quality or any policy outcome.

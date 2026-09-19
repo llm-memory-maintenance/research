@@ -1,0 +1,539 @@
+{
+  "schema_version": "b0-suffix-budget-derivation/1.0.0",
+  "status": "DERIVED",
+  "procedure_version": "b0-suffix-collection/1.0.0",
+  "attempt": "attempt-01",
+  "source": {
+    "collection_sha256": "39d8c7ac1297a2fd432d956657b32f318dfc62846dc28c3722c31a562203735b",
+    "audit_sha256": "bb2084058e15f643b3f7a347e9d50a1dbc106be7903f96456e374bf7125a7377",
+    "adjudication_sha256": "92230d273941317de0298eb08ca3c3c4b1ac679f367cf2eb7065d7b76a3eaa12",
+    "adjudication_status": "ELIGIBLE"
+  },
+  "tokenizer": {
+    "repository_id": "meta-llama/Llama-3.1-8B-Instruct",
+    "revision": "0e9e39f249a16976918f6564b8830bc894c89659",
+    "source": "configs/retrieval.yaml reader_tokenizer",
+    "artifact_sha256": {
+      "tokenizer.json": "79e3e522635f3171300913bb421464a87de6222182a0570b9b2ccba2a964b2b4",
+      "tokenizer_config.json": "177c7b61e616fecb84c17ce0591acb92c6c4d60e9ac5ababfb940ff23bbcd424",
+      "special_tokens_map.json": "6f38c73729248f6c127296386e3cdde96e254636cc58b4169d3fd32328d9a8ec",
+      "config.json": "29e4c210b0d6ac178b16b2a255a568bdb23b581e50ca1ef6a6d071dd85704e6e"
+    },
+    "tokenizer_class": "PreTrainedTokenizerFast",
+    "use_fast": true,
+    "add_special_tokens": false,
+    "directory_is_portable_identity": false
+  },
+  "design": {
+    "system_prompt_sha256": "8a6abc2b52c63340aa483023a823c6ff9d8142ab9749b3ae7d6d2f216da5e71e",
+    "window_contract": {
+      "unit": "user_information_message_plus_deterministic_acknowledgement",
+      "acknowledgement": "Noted.",
+      "presentation_order": "oldest_to_newest",
+      "selection": "newest_first_contiguous_suffix_of_complete_exchanges",
+      "partial_exchange": "forbidden",
+      "skipping": "forbidden",
+      "empty_history_condition": "history_unit_overflow",
+      "question": "appended_after_selection_outside_budget",
+      "system_prompt": "outside_budget",
+      "required_events": [
+        "U7",
+        "N2"
+      ],
+      "count": "T_chat(system + selected_history) - T_chat(system)",
+      "generation_prefix": "excluded",
+      "implementation": "experiments/b0_window.py"
+    },
+    "suffix_config_sha256": "adbf0eb98ec2f2b08275b045e00f25e53dc280c0484f37db5837c8ec4666ccb3",
+    "design_config_sha256": "e232601d24e1f3aa1ebbeb10554beafc1353eb3ec4f0882f59dfe7addef3227b",
+    "plan_sha256": "d9b7d7f06ab20b38c2bc1ace39b089434320f81cfa9c43a5b8a42b513b801526",
+    "contract": {
+      "path": "configs/b0-suffix-naturalization-contract.json",
+      "sha256": "7138d078f114ea4d5df0743c770c2c84ee409b1322cf2c658cc0e0be495719db",
+      "prompt_version": "b0-suffix-naturalization-prompt/1.0.0",
+      "input_contract_version": "b0-suffix-naturalization-input/1.0.0",
+      "output_schema_version": "b0-suffix-naturalization-output/1.0.0",
+      "prompt_sha256": "841dd95d7e535f1001e5bcab2f0905562f4140d76a956891487fcdccca33eb03",
+      "input_schema_sha256": "23c0783af2c07e3b0869980e67a5d71e3311bcba8b3554ef404cd94122596d99",
+      "output_schema_sha256": "cee7b2f73bb02fed193ad5fd7da170adf9f55d55a13d9db805feba4117f32064"
+    },
+    "source_commit": "3fea90ec2ebeecdd818765e815b5bc3375f93cab",
+    "implementation": {
+      "experiments/calibrate_b0_suffix.py": "3e59e3f2943926af37647c0a280c6c5ee560f937bede510fc3185be0363caf67",
+      "experiments/calibrate_b0.py": "bc54f75725cefe94b96cef71cf6f13f8bfd0a9bf8c6cc2879d6b3cb89f98eacf",
+      "experiments/b0_window.py": "f2a1b281eeae470e0a17a1d9fa54db33000c717ff2710afd8ab88151a9a5acd8",
+      "experiments/validate_b0_calibration_material.py": "798eccd23413c35668eb35d8e5691591d8a00868df2c6a0919506a490e145ccc"
+    },
+    "python": "3.10.21",
+    "packages": {
+      "transformers": "4.57.6",
+      "tokenizers": "0.22.2"
+    }
+  },
+  "rule": {
+    "name": "exact_maximum",
+    "statistic": "maximum over all histories of the smallest budget that retains complete U7 and N2 exchanges",
+    "percentile_rule": "none",
+    "candidate_grid": "none",
+    "headroom_tokens": 0,
+    "required_retention_fraction": 1.0
+  },
+  "histories": {
+    "eligible": 72,
+    "retained_at_maximum": 72
+  },
+  "b0_context_tokens": 71,
+  "determined_by": [
+    {
+      "generator": "G2",
+      "scenario": "b0cal-travel-01",
+      "variant": "high",
+      "required_tokens": 71
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-purchase-order-01",
+      "variant": "medium",
+      "required_tokens": 71
+    }
+  ],
+  "retention": {
+    "histories": 72,
+    "retained": 72,
+    "fraction": 1.0
+  },
+  "per_history": [
+    {
+      "generator": "G1",
+      "scenario": "b0cal-scheduling-01",
+      "variant": "low",
+      "required_tokens": 48
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-scheduling-01",
+      "variant": "medium",
+      "required_tokens": 55
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-scheduling-01",
+      "variant": "high",
+      "required_tokens": 52
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-travel-01",
+      "variant": "low",
+      "required_tokens": 58
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-travel-01",
+      "variant": "medium",
+      "required_tokens": 62
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-travel-01",
+      "variant": "high",
+      "required_tokens": 61
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-project-planning-01",
+      "variant": "low",
+      "required_tokens": 51
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-project-planning-01",
+      "variant": "medium",
+      "required_tokens": 56
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-project-planning-01",
+      "variant": "high",
+      "required_tokens": 56
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-task-assignment-01",
+      "variant": "low",
+      "required_tokens": 52
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-task-assignment-01",
+      "variant": "medium",
+      "required_tokens": 55
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-task-assignment-01",
+      "variant": "high",
+      "required_tokens": 56
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-software-configuration-01",
+      "variant": "low",
+      "required_tokens": 51
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-software-configuration-01",
+      "variant": "medium",
+      "required_tokens": 55
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-software-configuration-01",
+      "variant": "high",
+      "required_tokens": 53
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-personal-preference-01",
+      "variant": "low",
+      "required_tokens": 57
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-personal-preference-01",
+      "variant": "medium",
+      "required_tokens": 62
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-personal-preference-01",
+      "variant": "high",
+      "required_tokens": 59
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-purchase-order-01",
+      "variant": "low",
+      "required_tokens": 54
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-purchase-order-01",
+      "variant": "medium",
+      "required_tokens": 60
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-purchase-order-01",
+      "variant": "high",
+      "required_tokens": 58
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-study-planning-01",
+      "variant": "low",
+      "required_tokens": 53
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-study-planning-01",
+      "variant": "medium",
+      "required_tokens": 56
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-study-planning-01",
+      "variant": "high",
+      "required_tokens": 55
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-communication-01",
+      "variant": "low",
+      "required_tokens": 55
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-communication-01",
+      "variant": "medium",
+      "required_tokens": 60
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-communication-01",
+      "variant": "high",
+      "required_tokens": 58
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-service-subscription-01",
+      "variant": "low",
+      "required_tokens": 49
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-service-subscription-01",
+      "variant": "medium",
+      "required_tokens": 53
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-service-subscription-01",
+      "variant": "high",
+      "required_tokens": 52
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-location-logistics-01",
+      "variant": "low",
+      "required_tokens": 57
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-location-logistics-01",
+      "variant": "medium",
+      "required_tokens": 61
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-location-logistics-01",
+      "variant": "high",
+      "required_tokens": 61
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-quantitative-planning-01",
+      "variant": "low",
+      "required_tokens": 51
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-quantitative-planning-01",
+      "variant": "medium",
+      "required_tokens": 51
+    },
+    {
+      "generator": "G1",
+      "scenario": "b0cal-quantitative-planning-01",
+      "variant": "high",
+      "required_tokens": 53
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-scheduling-01",
+      "variant": "low",
+      "required_tokens": 50
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-scheduling-01",
+      "variant": "medium",
+      "required_tokens": 63
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-scheduling-01",
+      "variant": "high",
+      "required_tokens": 60
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-travel-01",
+      "variant": "low",
+      "required_tokens": 63
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-travel-01",
+      "variant": "medium",
+      "required_tokens": 70
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-travel-01",
+      "variant": "high",
+      "required_tokens": 71
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-project-planning-01",
+      "variant": "low",
+      "required_tokens": 58
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-project-planning-01",
+      "variant": "medium",
+      "required_tokens": 65
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-project-planning-01",
+      "variant": "high",
+      "required_tokens": 69
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-task-assignment-01",
+      "variant": "low",
+      "required_tokens": 57
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-task-assignment-01",
+      "variant": "medium",
+      "required_tokens": 65
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-task-assignment-01",
+      "variant": "high",
+      "required_tokens": 70
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-software-configuration-01",
+      "variant": "low",
+      "required_tokens": 56
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-software-configuration-01",
+      "variant": "medium",
+      "required_tokens": 61
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-software-configuration-01",
+      "variant": "high",
+      "required_tokens": 66
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-personal-preference-01",
+      "variant": "low",
+      "required_tokens": 61
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-personal-preference-01",
+      "variant": "medium",
+      "required_tokens": 68
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-personal-preference-01",
+      "variant": "high",
+      "required_tokens": 65
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-purchase-order-01",
+      "variant": "low",
+      "required_tokens": 54
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-purchase-order-01",
+      "variant": "medium",
+      "required_tokens": 71
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-purchase-order-01",
+      "variant": "high",
+      "required_tokens": 62
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-study-planning-01",
+      "variant": "low",
+      "required_tokens": 58
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-study-planning-01",
+      "variant": "medium",
+      "required_tokens": 63
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-study-planning-01",
+      "variant": "high",
+      "required_tokens": 64
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-communication-01",
+      "variant": "low",
+      "required_tokens": 57
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-communication-01",
+      "variant": "medium",
+      "required_tokens": 64
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-communication-01",
+      "variant": "high",
+      "required_tokens": 69
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-service-subscription-01",
+      "variant": "low",
+      "required_tokens": 55
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-service-subscription-01",
+      "variant": "medium",
+      "required_tokens": 58
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-service-subscription-01",
+      "variant": "high",
+      "required_tokens": 66
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-location-logistics-01",
+      "variant": "low",
+      "required_tokens": 60
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-location-logistics-01",
+      "variant": "medium",
+      "required_tokens": 70
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-location-logistics-01",
+      "variant": "high",
+      "required_tokens": 68
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-quantitative-planning-01",
+      "variant": "low",
+      "required_tokens": 56
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-quantitative-planning-01",
+      "variant": "medium",
+      "required_tokens": 62
+    },
+    {
+      "generator": "G2",
+      "scenario": "b0cal-quantitative-planning-01",
+      "variant": "high",
+      "required_tokens": 65
+    }
+  ]
+}

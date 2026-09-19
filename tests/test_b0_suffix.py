@@ -42,10 +42,20 @@ def inputs():
     return s.load_inputs()
 
 
+def prefreeze(config):
+    """The state before closure (budget OPEN, attempt planned): it exercises the collection and audit machinery."""
+    config.update(calibration_status='OPEN', budget_status='OPEN', b0_context_tokens=None)
+    config.pop('budget_derivation')
+    config['results']['attempts'][0] = {'id': 'attempt-01', 'status': 'PLANNED_NOT_EXECUTED',
+                                        'result_directory': 'results/b0-suffix-calibration/attempt-01'}
+
+
 @pytest.fixture(scope='module')
 def config_copy(tmp_path_factory):
-    def write(mutate=None, directory=None):
+    def write(mutate=None, directory=None, frozen=False):
         config = yaml.safe_load(CONFIG.read_text(encoding='utf-8'))
+        if not frozen:
+            prefreeze(config)
         if mutate:
             mutate(config)
         path = (directory or tmp_path_factory.mktemp('config')) / 'suffix.yaml'
@@ -55,9 +65,9 @@ def config_copy(tmp_path_factory):
 
 
 @pytest.fixture(scope='module')
-def approved():
-    """The real, approved procedure; the live path is exercised offline with a mock transport."""
-    return s.load_inputs()
+def approved(config_copy):
+    """The approved procedure in its pre-closure state; the live path is exercised with a mock transport."""
+    return s.load_inputs(config_copy())
 
 
 def independent_facts(fixture):
@@ -288,7 +298,7 @@ def test_requests_use_the_suffix_contract_with_unchanged_execution_settings(inpu
 def test_preview_plans_24_calls_12_sol_12_fable_and_72_suffix_histories(inputs):
     shown = s.preview(inputs)
     assert (shown['status'], shown['credits'], shown['suffix_collection_status']) == (
-        'NETWORK_DISABLED', 'CREDITS_NOT_SPENT', 'NOT EXECUTED')
+        'NETWORK_DISABLED', 'CREDITS_NOT_SPENT', 'COMPLETE')
     assert shown['planned_logical_calls'] == 24 and shown['per_generator'] == {'G1': 12, 'G2': 12}
     assert shown['expected_histories'] == 72 and shown['suffix_events'] == ['U7', 'N2']
     ids = shown['scenario_ids']
@@ -297,8 +307,8 @@ def test_preview_plans_24_calls_12_sol_12_fable_and_72_suffix_histories(inputs):
         (i, g, sid) for i, (g, sid) in enumerate([(g, sid) for g in ('G1', 'G2') for sid in ids], 1)]
     assert [c['model'] for c in calls] == ['openai/gpt-5.6-sol'] * 12 + ['anthropic/claude-fable-5.1'] * 12
     assert len({(c['logical_call_id'], c['scenario_id']) for c in calls}) == 24
-    assert shown['maximum_physical_attempts'] == 72 and shown['budget_status'] == 'OPEN'
-    assert shown['b0_context_tokens'] is None
+    assert shown['maximum_physical_attempts'] == 72 and shown['budget_status'] == 'FROZEN'
+    assert shown['b0_context_tokens'] == 71 and shown['calibration_status'] == 'CLOSED'
     assert list(shown['old_procedure_closures']) == ['attempt-01', 'attempt-02']
 
 
@@ -327,8 +337,8 @@ def test_preview_and_default_invocation_create_no_result_directory(inputs, capsy
 # --- Approval and execution gates ------------------------------------------------------------------
 
 def test_the_attempt_policy_and_semantic_rule_are_frozen_and_execution_needs_only_the_remaining_gates(
-        inputs, tmp_path, monkeypatch):
-    config = inputs['config']
+        approved, tmp_path, monkeypatch):
+    config = approved['config']
     assert config['attempt_policy']['status'] == 'FROZEN' and config['attempt_policy']['cap'] == 1
     assert config['collection_rule']['status'] == 'FROZEN' and config['semantic_eligibility']['status'] == 'FROZEN'
     s.require_official(config)
@@ -337,12 +347,10 @@ def test_the_attempt_policy_and_semantic_rule_are_frozen_and_execution_needs_onl
         unapproved[section]['status'] = 'PROPOSED_PENDING_RESEARCHER_APPROVAL'
         with pytest.raises(ValueError, match='not fully approved'):
             s.require_official(unapproved)
-    monkeypatch.delenv('OPENROUTER_API_KEY', raising=False)
-    official = ROOT / 'results/b0-suffix-calibration/attempt-01'
-    existed = official.exists()
-    with pytest.raises(ValueError, match='OPENROUTER_API_KEY'):
-        s.main(['--execute', '--confirm-spend', '--output-directory', str(official)])
-    assert official.exists() == existed
+    real = s.load_config()
+    assert real['attempt_policy']['status'] == 'FROZEN' and real['attempt_policy']['cap'] == 1
+    with pytest.raises(ValueError, match='closed and its budget is frozen'):
+        s.require_official(real)
 
 
 def test_exactly_one_attempt_is_allowed_and_no_second_attempt_can_start(config_copy, tmp_path, monkeypatch):
@@ -365,16 +373,18 @@ def test_exactly_one_attempt_is_allowed_and_no_second_attempt_can_start(config_c
                 '--output-directory', str(ROOT / 'results/b0-suffix-calibration/attempt-01')])
 
 
-def test_the_closed_full_history_namespace_and_other_suffix_attempts_cannot_be_written(inputs, tmp_path):
-    config = inputs['config']
+def test_the_closed_full_history_namespace_and_other_suffix_attempts_cannot_be_written(inputs, approved, tmp_path):
     for name in ('', 'attempt-01', 'attempt-02', 'attempt-03', 'closure'):
         with pytest.raises(ValueError, match='immutable'):
-            s.guard_output(ROOT / 'results/b0-calibration' / name, config)
+            s.guard_output(ROOT / 'results/b0-calibration' / name, approved['config'])
     for name in ('attempt-02', 'attempt-03', 'closure'):
         with pytest.raises(ValueError, match='planned attempt directory'):
-            s.guard_output(ROOT / 'results/b0-suffix-calibration' / name, config)
-    s.guard_output(ROOT / 'results/b0-suffix-calibration/attempt-01', config)
-    s.guard_output(tmp_path / 'anywhere', config)
+            s.guard_output(ROOT / 'results/b0-suffix-calibration' / name, approved['config'])
+    s.guard_output(ROOT / 'results/b0-suffix-calibration/attempt-01', approved['config'])
+    s.guard_output(tmp_path / 'anywhere', approved['config'])
+    for name in ('attempt-01', 'attempt-02', 'derivation', 'manual-audit'):
+        with pytest.raises(ValueError, match='closed and its budget is frozen'):
+            s.guard_output(ROOT / 'results/b0-suffix-calibration' / name, inputs['config'])
 
 
 def test_the_full_history_procedure_still_cannot_run(inputs):

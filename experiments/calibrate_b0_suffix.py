@@ -48,6 +48,8 @@ NAMESPACE = 'results/b0-suffix-calibration'
 IMPLEMENTATION = ('experiments/calibrate_b0_suffix.py', 'experiments/calibrate_b0.py', 'experiments/b0_window.py',
                   'experiments/validate_b0_calibration_material.py')
 POLICY_STATUSES = ('PROPOSED_PENDING_RESEARCHER_APPROVAL', 'FROZEN')
+ATTEMPT_STATUSES = ('PLANNED_NOT_EXECUTED', 'CLOSED_INCOMPLETE', 'COMPLETE')
+CLOSED = 'B0 suffix calibration is closed and its budget is frozen; no further attempt or derivation is allowed'
 STOP = 'ATTEMPT CLOSED INCOMPLETE; STOP FOR RESEARCHER DECISION'
 require = gq.require
 
@@ -201,8 +203,6 @@ def load_config(path=CONFIG):
     config = yaml.safe_load(Path(path).read_text(encoding='utf-8'))
     require(type(config) is dict and config.get('schema_version') == SCHEMA and config['status'] == 'PROCEDURE_FROZEN',
             'Unexpected B0 suffix calibration config')
-    require(config['budget_status'] == 'OPEN' and config['b0_context_tokens'] is None,
-            'The budget is set only by the official calibration run')
     require(config['collection_rule']['status'] in POLICY_STATUSES
             and config['attempt_policy']['status'] in POLICY_STATUSES
             and config['semantic_eligibility']['status'] in POLICY_STATUSES, 'Policy status')
@@ -211,14 +211,60 @@ def load_config(path=CONFIG):
     require(config['attempt_policy']['cap'] == 1 and [a['id'] for a in attempts] == ['attempt-01'],
             'Unexpected attempt list: exactly one attempt is allowed')
     for attempt in attempts:
-        require(attempt['status'] in cal.ATTEMPT_STATUSES
+        require(attempt['status'] in ATTEMPT_STATUSES
                 and attempt['result_directory'] == f'{NAMESPACE}/{attempt["id"]}', 'Unexpected attempt entry')
+    tokens = config['b0_context_tokens']
+    if config['budget_status'] == 'FROZEN':
+        require(config['calibration_status'] == 'CLOSED' and type(tokens) is int and tokens > 0
+                and attempts[0]['status'] == 'COMPLETE' and attempts[0]['derivation_status'] == 'DERIVED'
+                and config['budget_derivation']['attempt'] == attempts[0]['id'],
+                'A frozen budget needs a closed calibration with a completed, derived attempt')
+    else:
+        require(config['budget_status'] == 'OPEN' and config['calibration_status'] == 'OPEN' and tokens is None
+                and 'budget_derivation' not in config and attempts[0]['status'] != 'COMPLETE',
+                'The budget is set only by the official calibration run')
     return config
+
+
+def verify_frozen_budget(config, design):
+    """A frozen budget must equal the immutable derivation artifact, which must match its archived sources."""
+    if config['budget_status'] != 'FROZEN':
+        return None
+    binding, attempt = config['budget_derivation'], config['results']['attempts'][0]
+    path = ROOT / binding['artifact']
+    require(probe.file_hash(path) == binding['sha256'], 'Budget derivation artifact drifted')
+    artifact = json.loads(path.read_text(encoding='utf-8'))
+    evidence = {'collection_sha256': ROOT / attempt['result_directory'] / 'collection.json',
+                'audit_sha256': ROOT / attempt['audit']['path'],
+                'adjudication_sha256': ROOT / attempt['adjudication']['path']}
+    recorded = {'collection_sha256': attempt['collection_sha256'], 'audit_sha256': attempt['audit']['sha256'],
+                'adjudication_sha256': attempt['adjudication']['sha256']}
+    require(all(probe.file_hash(evidence[k]) == recorded[k] for k in recorded), 'Archived evidence drifted')
+    rows = artifact['per_history']
+    require(artifact['schema_version'] == DERIVATION and artifact['status'] == 'DERIVED'
+            and artifact['procedure_version'] == COLLECTION and artifact['attempt'] == attempt['id']
+            and artifact['source'] == {**recorded, 'adjudication_status': 'ELIGIBLE'}
+            and artifact['b0_context_tokens'] == config['b0_context_tokens']
+            == max(r['required_tokens'] for r in rows) and len(rows) == attempt['histories']
+            and artifact['histories'] == {'eligible': attempt['histories'], 'retained_at_maximum': attempt['histories']}
+            and artifact['determined_by'] == [r for r in rows if r['required_tokens'] == config['b0_context_tokens']],
+            'The frozen budget disagrees with its derivation artifact')
+    budget, retention = design['design']['calibration']['budget'], design['design']['calibration']['retention']
+    require(artifact['rule'] == {'name': budget['rule'], 'statistic': budget['statistic'], 'percentile_rule': 'none',
+                                 'candidate_grid': budget['candidate_grid'],
+                                 'headroom_tokens': budget['headroom_tokens'],
+                                 'required_retention_fraction': retention['fraction']},
+            'The derivation rule differs from the frozen design')
+    require({k: artifact['tokenizer'][k] for k in ('repository_id', 'revision')} == {
+        k: design['design']['tokenizer'][k] for k in ('repository_id', 'revision')},
+            'The derivation tokenizer differs from the frozen design')
+    return artifact
 
 
 def official_attempt(config):
     """The single attempt that may run: the last one, planned, with every earlier attempt closed incomplete."""
     attempts = config['results']['attempts']
+    require(config['budget_status'] != 'FROZEN' and attempts[-1]['status'] != 'COMPLETE', CLOSED)
     require(attempts[-1]['status'] == 'PLANNED_NOT_EXECUTED'
             and all(a['status'] == 'CLOSED_INCOMPLETE' for a in attempts[:-1]),
             'No official suffix attempt is available; STOP FOR RESEARCHER DECISION')
@@ -226,7 +272,8 @@ def official_attempt(config):
 
 
 def require_official(config):
-    """Live execution needs the procedure, failure handling and attempt policy all frozen."""
+    """Live execution needs the procedure, failure handling and attempt policy all frozen, and no closed budget."""
+    require(config['budget_status'] != 'FROZEN', CLOSED)
     require(config['status'] == 'PROCEDURE_FROZEN' and config['collection_rule']['status'] == 'FROZEN'
             and config['semantic_eligibility']['status'] == 'FROZEN'
             and config['attempt_policy']['status'] == 'FROZEN' and config['budget_status'] == 'OPEN'
@@ -276,6 +323,7 @@ def load_inputs(path=CONFIG):
     require(gq.sha(gq.canonical([gq.sha(gq.canonical(p)) for p in projections]))
             == config['input_projection']['set_sha256'], 'Input projection set drift')
     require(gq.sha(gq.canonical(plan_identity(inputs))) == config['plan']['plan_sha256'], 'Execution plan drift')
+    verify_frozen_budget(config, design)
     return inputs
 
 
@@ -331,9 +379,11 @@ def preview(inputs):
     calls = plan(inputs)
     attempt = config['results']['attempts'][-1]
     bodies = [request(inputs, g, p) for g, _, _, p in calls]
-    return {'status': 'NETWORK_DISABLED', 'credits': 'CREDITS_NOT_SPENT', 'suffix_collection_status': 'NOT EXECUTED',
-            'procedure_version': COLLECTION, 'budget_status': config['budget_status'],
-            'b0_context_tokens': config['b0_context_tokens'],
+    return {'status': 'NETWORK_DISABLED', 'credits': 'CREDITS_NOT_SPENT',
+            'suffix_collection_status': 'NOT EXECUTED' if attempt['status'] == 'PLANNED_NOT_EXECUTED'
+            else attempt['status'],
+            'procedure_version': COLLECTION, 'calibration_status': config['calibration_status'],
+            'budget_status': config['budget_status'], 'b0_context_tokens': config['b0_context_tokens'],
             'attempt_policy_status': config['attempt_policy']['status'], 'attempt_cap': config['attempt_policy']['cap'],
             'attempt': attempt['id'], 'attempt_status': attempt['status'],
             'result_directory': attempt['result_directory'],
@@ -625,6 +675,7 @@ def load_reader_tokenizer(directory=None):
 
 def derive_final_budget(directory, audit_path, adjudication_path, output, inputs, tokenizer_directory=None):
     """The one offline derivation: verify provenance, call derive_budget(), and publish an immutable artifact."""
+    require(inputs['config']['budget_status'] != 'FROZEN', CLOSED)
     directory, output = Path(directory), Path(output)
     separate(output, directory)
     require(not output.exists(), 'The budget derivation output already exists')

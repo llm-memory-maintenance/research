@@ -400,8 +400,9 @@ The window must preserve that required historical suffix completely across the
 calibration material. Append the final question after historical-window selection;
 it does not count toward the historical-window budget.
 
-Do not tune B0 on final QA accuracy. `B0_CONTEXT_TOKENS` remains OPEN until the
-official calibration is executed. The calibration material and rule are frozen in
+Do not tune B0 on final QA accuracy. `B0_CONTEXT_TOKENS` is frozen at 71 by the
+official calibration (CRST specification Section 12). The calibration material and
+rule are frozen in
 `configs/b0-calibration.yaml` and CRST specification Section 12: a dedicated
 calibration-only set (`data/b0-calibration`) of 12 structured scenarios naturalized
 by both final generators (72 histories), an all-history retention requirement, and
@@ -410,9 +411,10 @@ serialized as role-bearing chat messages under the pinned chat template
 (CRST specification Section 11); the active-memory case schema does not purport to
 encode B0 conversation histories.
 
-B0 is not part of dense-retrieval embedding qualification. Its budget remains OPEN
-and must be derived by the separate historical-window calibration before this
-workstream is closed.
+B0 is not part of dense-retrieval embedding qualification. Its budget was derived by
+the separate historical-window calibration and is frozen at 71 in
+`configs/b0-suffix-calibration.yaml`, which is authoritative for B0; the B0
+placeholders in `configs/retrieval.yaml` are historical.
 
 ## 13. Selection and Freeze Rules
 
@@ -431,7 +433,7 @@ adjudication before another calibration run.
 Freeze the qualifying embedding implementation, selected k values, smallest
 shared retrieval-context budget, and deterministically calibrated B0 budget
 with their provenance. Section 13.1 records the resolved dense-retrieval values;
-the B0 budget remains OPEN.
+the B0 budget is frozen at 71 (Section 12).
 
 ### 13.1 Official Retrieval Calibration Attempt 01 — QUALIFIED
 
@@ -484,8 +486,8 @@ the dataset SHA-256 remains
 These synthetic engineering calibration scores measure retrieval target
 retention, not downstream QA accuracy or expected LongMemEval performance.
 Dense retrieval qualification is complete. The broader Retrieval / Context
-Calibration workstream remains open until the separate B0 historical-context
-budget is derived under the frozen B0 calibration design.
+Calibration workstream is closed: the separate B0 historical-context budget was
+derived under the frozen B0 calibration design and is frozen at 71.
 
 ## 14. Required Artifacts
 
@@ -513,5 +515,5 @@ Section 13.1 identifies the archived evidence and resolved configuration.
 
 Only the following implementation/calibration decisions remain OPEN here:
 
-- Final `B0_CONTEXT_TOKENS`, derived by the official B0 calibration run. The
-  calibration material, serialization, and rule are frozen (Section 12).
+- None for the B0 budget: `B0_CONTEXT_TOKENS` is frozen at 71, and the calibration
+  material, serialization, and rule are frozen (Section 12).

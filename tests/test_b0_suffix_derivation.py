@@ -17,7 +17,7 @@ import calibrate_b0 as cal
 import calibrate_b0_suffix as s
 import probe_generators as probe
 from test_b0_calibration import SYSTEM, TOKENIZER
-from test_b0_suffix import approved, collected, completed_audit, mock_output, run_collect  # noqa: F401
+from test_b0_suffix import approved, collected, completed_audit, config_copy, mock_output, run_collect  # noqa: F401
 
 STAGED_READER = Path('/tmp/retrieval-implementation-identity/reader')
 REAL = ROOT / 'results/b0-suffix-calibration'
@@ -33,11 +33,21 @@ def no_network(monkeypatch):
     monkeypatch.setattr(socket, 'getaddrinfo', blocked)
 
 
+CONFIG = {}
+
+
+@pytest.fixture(scope='module', autouse=True)
+def prefreeze_config(approved):
+    """These tests run the derivation from the pre-closure config; the frozen real config refuses it."""
+    CONFIG['path'] = approved['path']
+
+
 def adjudicated(directory, inputs, tmp_path, name, **audit_options):
     audit = tmp_path / f'{name}-audit.json'
     audit.write_text(json.dumps(completed_audit(directory, inputs, **audit_options)), encoding='utf-8')
     adjudication = tmp_path / f'{name}-adjudication.json'
-    assert s.main(['--adjudicate', str(directory), '--audit', str(audit), '--adjudication-output', str(adjudication)]) == 0
+    assert s.main(['--config', str(CONFIG['path']), '--adjudicate', str(directory), '--audit', str(audit),
+                   '--adjudication-output', str(adjudication)]) == 0
     return audit, adjudication
 
 
@@ -60,8 +70,8 @@ def toy_tokenizer(monkeypatch, approved):
 
 
 def derive_args(directory, audit, adjudication, output, *extra):
-    return ['--derive-budget', str(directory), '--audit', str(audit), '--adjudication', str(adjudication),
-            '--budget-output', str(output), *extra]
+    return ['--config', str(CONFIG['path']), '--derive-budget', str(directory), '--audit', str(audit),
+            '--adjudication', str(adjudication), '--budget-output', str(output), *extra]
 
 
 def system(inputs):
@@ -109,7 +119,7 @@ def test_the_artifact_records_the_exact_maximum_and_full_provenance(
         collected, approved, evidence, toy_tokenizer, tmp_path, capsys):
     audit, adjudication = evidence
     out = tmp_path / 'derivation' / 'attempt-01.json'
-    config_before = (ROOT / 'configs/b0-suffix-calibration.yaml').read_bytes()
+    config_before = Path(CONFIG['path']).read_bytes()
     assert s.main(derive_args(collected, audit, adjudication, out)) == 0
     artifact = json.loads(out.read_text(encoding='utf-8'))
     printed = capsys.readouterr().out
@@ -137,7 +147,7 @@ def test_the_artifact_records_the_exact_maximum_and_full_provenance(
     assert design['system_prompt_sha256'] == '8a6abc2b52c63340aa483023a823c6ff9d8142ab9749b3ae7d6d2f216da5e71e'
     assert design['plan_sha256'] == approved['config']['plan']['plan_sha256']
     assert design['window_contract']['required_events'] == ['U7', 'N2'] and set(design['implementation']) == set(s.IMPLEMENTATION)
-    assert (ROOT / 'configs/b0-suffix-calibration.yaml').read_bytes() == config_before
+    assert Path(CONFIG['path']).read_bytes() == config_before
     assert yaml.safe_load(config_before.decode())['b0_context_tokens'] is None
 
 
@@ -390,4 +400,4 @@ def test_the_real_adjudication_satisfies_the_provenance_gate_without_deriving(ap
     verdict = s.verify_adjudication(directory, audit_path, adjudication, json.loads(audit_path.read_text(encoding='utf-8')),
                                     approved)
     assert verdict['status'] == 'ELIGIBLE' and verdict['level1_failure_count'] == 0 and verdict['items_audited'] == 144
-    assert adjudication['b0_context_tokens'] is None and not (REAL / 'derivation').exists()
+    assert adjudication['b0_context_tokens'] is None

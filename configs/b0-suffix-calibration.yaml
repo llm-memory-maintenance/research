@@ -7,9 +7,15 @@ schema_version: b0-suffix-calibration/1.0.0
 status: PROCEDURE_FROZEN
 frozen_on: '2026-09-19'
 design_config: configs/b0-calibration.yaml
-budget_status: OPEN
-# Set only by the official calibration run; never entered by hand.
-b0_context_tokens: null
+# B0 calibration is CLOSED and its budget FROZEN. The value is the exact maximum derived by the official
+# calibration run; it is bound to the immutable derivation artifact below and is never entered by hand.
+calibration_status: CLOSED
+budget_status: FROZEN
+b0_context_tokens: 71
+budget_derivation:
+  artifact: results/b0-suffix-calibration/derivation/attempt-01.json
+  sha256: 70ed6e326e82378f8f4ab0a4e88cf639a21f7da58cf255c9c693cf24eb4ed365
+  attempt: attempt-01
 
 supersedes:
   procedure_version: b0-calibration-naturalization/1.0.0
@@ -143,10 +149,25 @@ results:
   namespace: results/b0-suffix-calibration
   output_layout: outputs/<g1|g2>/<scenario_id>.json per call, then collection.json and SHA256SUMS
   audit_layout:
-    blank_template: generated offline from the archived collection; never stored inside the attempt
+    blank_template: results/b0-suffix-calibration/manual-audit/attempt-01.template.json
     completed_audit: results/b0-suffix-calibration/manual-audit/attempt-01.completed.json
-    adjudication: results/b0-suffix-calibration/adjudication/attempt-01.json
+    adjudication: results/b0-suffix-calibration/manual-audit/attempt-01.adjudication.json
+    derivation: results/b0-suffix-calibration/derivation/attempt-01.json
   attempts:
     - id: attempt-01
-      status: PLANNED_NOT_EXECUTED
+      status: COMPLETE
       result_directory: results/b0-suffix-calibration/attempt-01
+      calls_recorded: 24
+      histories: 72
+      collection_sha256: 39d8c7ac1297a2fd432d956657b32f318dfc62846dc28c3722c31a562203735b
+      audit:
+        path: results/b0-suffix-calibration/manual-audit/attempt-01.completed.json
+        sha256: bb2084058e15f643b3f7a347e9d50a1dbc106be7903f96456e374bf7125a7377
+      adjudication:
+        path: results/b0-suffix-calibration/manual-audit/attempt-01.adjudication.json
+        sha256: 92230d273941317de0298eb08ca3c3c4b1ac679f367cf2eb7065d7b76a3eaa12
+        status: ELIGIBLE
+        items_audited: 144
+        level1_failures: 0
+        fluency_findings: 2
+      derivation_status: DERIVED
