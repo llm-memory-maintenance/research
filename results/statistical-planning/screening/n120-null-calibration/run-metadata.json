@@ -1,0 +1,27 @@
+{
+  "batch_size": 25,
+  "cells": 54,
+  "environment": {
+    "numpy": "2.2.6",
+    "python": "3.10.21",
+    "pyyaml": "6.0.3"
+  },
+  "finished": "2026-09-20T11:59:09.945451+00:00",
+  "fit_control": {
+    "grad_tol": 0.002,
+    "maxfun": 200000,
+    "nagq": 1,
+    "optimizer": "bobyqa",
+    "singular_tol": 0.0001
+  },
+  "host": {
+    "cpu_count": 16,
+    "platform": "Linux-7.1.8-200.fc44.x86_64-x86_64-with-glibc2.43"
+  },
+  "plan_sha256": "02e202d9fab4f413ce95dfc064002c14b3bf209e1e450c79b4c0cc4c59e8cef0",
+  "replications_per_cell": 2000,
+  "schema_version": "crst-power-screening-run/0.1.0",
+  "started": "2026-09-20T07:28:07.701328+00:00",
+  "wall_clock_seconds": 16262.244124221994,
+  "workers": 8
+}

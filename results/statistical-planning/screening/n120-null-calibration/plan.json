@@ -1,0 +1,1123 @@
+{
+  "cells": [
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "7195c4d4a5f3bf84",
+      "family": "primary",
+      "grid": "primary",
+      "index": 0,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET1|point=P4|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "e3e3917dd3eac8f1",
+      "family": "primary",
+      "grid": "primary",
+      "index": 1,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET1|point=P4|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "39dd3ef35f4203f0",
+      "family": "primary",
+      "grid": "primary",
+      "index": 2,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET1|point=P4|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "b2a24e7669474bb2",
+      "family": "primary",
+      "grid": "primary",
+      "index": 3,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET1|point=P4|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "b32917e4da9efabe",
+      "family": "primary",
+      "grid": "primary",
+      "index": 4,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET1|point=P4|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "b406b848b9738082",
+      "family": "primary",
+      "grid": "primary",
+      "index": 5,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET1|point=P4|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "125893bf8c5ac088",
+      "family": "primary",
+      "grid": "primary",
+      "index": 6,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET1|point=P4|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "aabc524ce3a4c5b7",
+      "family": "primary",
+      "grid": "primary",
+      "index": 7,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET1|point=P4|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "54195267cf71d351",
+      "family": "primary",
+      "grid": "primary",
+      "index": 8,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET1|point=P4|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "a4eccd5f6b83bfab",
+      "family": "primary",
+      "grid": "primary",
+      "index": 9,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET1|point=P4|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "2a36bf9aeafdf0bb",
+      "family": "primary",
+      "grid": "primary",
+      "index": 10,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET1|point=P4|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "96e500e434b083b9",
+      "family": "primary",
+      "grid": "primary",
+      "index": 11,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET1|point=P4|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "5f116cc27be8bb65",
+      "family": "primary",
+      "grid": "primary",
+      "index": 12,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET1|point=P4|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "5258a36cb3feb9ab",
+      "family": "primary",
+      "grid": "primary",
+      "index": 13,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET1|point=P4|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "83ed922c4691a8d9",
+      "family": "primary",
+      "grid": "primary",
+      "index": 14,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET1|point=P4|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "140fea640ee5f746",
+      "family": "primary",
+      "grid": "primary",
+      "index": 15,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET1|point=P4|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "52644371e56b3c4a",
+      "family": "primary",
+      "grid": "primary",
+      "index": 16,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET1|point=P4|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET1",
+        "point": "P4",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "4cc059da69b26d1b",
+      "family": "primary",
+      "grid": "primary",
+      "index": 17,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET1|point=P4|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "15a36de208041148",
+      "family": "primary",
+      "grid": "primary",
+      "index": 18,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "3e6e9610beca3def",
+      "family": "primary",
+      "grid": "primary",
+      "index": 19,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "df087557485668a4",
+      "family": "primary",
+      "grid": "primary",
+      "index": 20,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "a9f04296df199a85",
+      "family": "primary",
+      "grid": "primary",
+      "index": 21,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "8e4446d61d1c1c79",
+      "family": "primary",
+      "grid": "primary",
+      "index": 22,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "a89c927e3bb8efb3",
+      "family": "primary",
+      "grid": "primary",
+      "index": 23,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "6169b2132ad591b2",
+      "family": "primary",
+      "grid": "primary",
+      "index": 24,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "c5bfccfeb964a9f1",
+      "family": "primary",
+      "grid": "primary",
+      "index": 25,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "aa6335ee88d0c378",
+      "family": "primary",
+      "grid": "primary",
+      "index": 26,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "390aadc334ff27c7",
+      "family": "primary",
+      "grid": "primary",
+      "index": 27,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "c32327e635cfe6fa",
+      "family": "primary",
+      "grid": "primary",
+      "index": 28,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "2bfcc5b17549e36e",
+      "family": "primary",
+      "grid": "primary",
+      "index": 29,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "e02079af4271398e",
+      "family": "primary",
+      "grid": "primary",
+      "index": 30,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "06af453fea19ce1e",
+      "family": "primary",
+      "grid": "primary",
+      "index": 31,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "47fb558cbff23156",
+      "family": "primary",
+      "grid": "primary",
+      "index": 32,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "42fadcb083e4245e",
+      "family": "primary",
+      "grid": "primary",
+      "index": 33,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "e1830ae42f41fbd5",
+      "family": "primary",
+      "grid": "primary",
+      "index": 34,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET2",
+        "point": "P0",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "b70464ed99b9c248",
+      "family": "primary",
+      "grid": "primary",
+      "index": 35,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "d87084988d6d15ff",
+      "family": "primary",
+      "grid": "primary",
+      "index": 36,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "efc69ad8a06074bc",
+      "family": "primary",
+      "grid": "primary",
+      "index": 37,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "485a9ec6feb09dd2",
+      "family": "primary",
+      "grid": "primary",
+      "index": 38,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "78538813f1ec5415",
+      "family": "primary",
+      "grid": "primary",
+      "index": 39,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "6b77fd0d0a0c904d",
+      "family": "primary",
+      "grid": "primary",
+      "index": 40,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 1,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "160a0e07865d23da",
+      "family": "primary",
+      "grid": "primary",
+      "index": 41,
+      "key": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "a861eed88132cd0f",
+      "family": "primary",
+      "grid": "primary",
+      "index": 42,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "f84c3cb325551d39",
+      "family": "primary",
+      "grid": "primary",
+      "index": 43,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "abe1a0f42e6e2a07",
+      "family": "primary",
+      "grid": "primary",
+      "index": 44,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "fbeed0529a51fca7",
+      "family": "primary",
+      "grid": "primary",
+      "index": 45,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "de945cd08675d7b7",
+      "family": "primary",
+      "grid": "primary",
+      "index": 46,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 2,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "bd50c46e5d9f6a1e",
+      "family": "primary",
+      "grid": "primary",
+      "index": 47,
+      "key": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "a57c950b4a5df569",
+      "family": "primary",
+      "grid": "primary",
+      "index": 48,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "da391eee9c63f6f1",
+      "family": "primary",
+      "grid": "primary",
+      "index": 49,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "CSA",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.75",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "8be1786ac49539c2",
+      "family": "primary",
+      "grid": "primary",
+      "index": 50,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "14d4a1e70c02af46",
+      "family": "primary",
+      "grid": "primary",
+      "index": 51,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "structure": "RE1"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "7b78d69cf8517c17",
+      "family": "primary",
+      "grid": "primary",
+      "index": 52,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+      "structure": "RE2"
+    },
+    {
+      "dgp": {
+        "N": 120,
+        "R": 3,
+        "anchor": "policy_averaged_reference_probability",
+        "endpoint": "SRR",
+        "het": "HET3",
+        "point": "P5",
+        "reference": "0.18",
+        "revision_profile": "MODERATE",
+        "scenario": "NULL:zero",
+        "target_scale": "population_averaged"
+      },
+      "directory": "ce8ec8b77f29b67d",
+      "family": "primary",
+      "grid": "primary",
+      "index": 53,
+      "key": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged",
+      "structure": "RE3"
+    }
+  ],
+  "config_path": "configs/statistical-planning.yaml",
+  "config_sha256": "02e202d9fab4f413ce95dfc064002c14b3bf209e1e450c79b4c0cc4c59e8cef0",
+  "created": "2026-09-20T07:27:45.283540+00:00",
+  "design": {
+    "N": 120,
+    "R": [
+      1,
+      2,
+      3
+    ],
+    "alpha_for_calibration": 0.05,
+    "endpoints": [
+      "CSA",
+      "SRR"
+    ],
+    "het_to_point": {
+      "HET1": "P4",
+      "HET2": "P0",
+      "HET3": "P5"
+    },
+    "replications": 2000,
+    "revision_profile": "MODERATE",
+    "scenario": "NULL:zero",
+    "stage": "screening",
+    "structures": [
+      "RE1",
+      "RE2",
+      "RE3"
+    ],
+    "target_scale": "population_averaged"
+  },
+  "implementation_sha256": {
+    "experiments/fit_glmm.R": "93b0b3f376932c263f80c89a817541713746a4724866e271764cc1c242016892",
+    "experiments/power_simulation.py": "4f0a8923c4219db7a17430e8e4ac2d7cc520ccc0ea1b64f5940120153c51704d",
+    "experiments/simulate_power.py": "aa483e2540f99248c8d19c3b6eef3b4fe1ed6e90fce2954095f6fba56102c559"
+  },
+  "purpose": "targeted null calibration screening (H1 and H2), diagnostics only; no power, no N search",
+  "schema_version": "crst-power-screening-plan/0.1.0",
+  "source_commit": "37ed12541e5dbd4ca951cf34b5c98b847a91baf6"
+}

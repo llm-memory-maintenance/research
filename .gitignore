@@ -22,3 +22,10 @@ results/raw/
 # Logs and local artifacts
 *.log
 .DS_Store
+
+# Statistical simulation raw outputs
+results/statistical-planning/**/batch-*.json
+results/statistical-planning/**/requested.json
+results/statistical-planning/**/cell.json
+results/statistical-planning/**/run-log.jsonl
+

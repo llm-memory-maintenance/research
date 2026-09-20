@@ -1,0 +1,251 @@
+{
+  "combinations": [
+    {
+      "R": 1,
+      "RE": "RE1",
+      "boundary_class": "NOT_APPLICABLE",
+      "coverage_h1_class": "INCONCLUSIVE",
+      "coverage_h1_range": [
+        0.9371196754563894,
+        0.9578466226510919
+      ],
+      "max_applicable_boundary_rate": 0,
+      "min_usable_rate": 0.9845,
+      "overall": "INCONCLUSIVE",
+      "type_i_h1_class": "INCONCLUSIVE",
+      "type_i_h1_range": [
+        0.042153377348908075,
+        0.06288032454361055
+      ],
+      "type_i_h2_class": "INCONCLUSIVE",
+      "type_i_h2_range": [
+        0.042,
+        0.057
+      ],
+      "usable_class": "CANDIDATE",
+      "worst_cells": {
+        "type_i_h1": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET1|point=P4|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged"
+      }
+    },
+    {
+      "R": 1,
+      "RE": "RE2",
+      "boundary_class": "CLEAR_FAILURE",
+      "coverage_h1_class": "INCONCLUSIVE",
+      "coverage_h1_range": [
+        0.9448897795591182,
+        0.9662468513853905
+      ],
+      "max_applicable_boundary_rate": 0.5055,
+      "min_usable_rate": 0.9885,
+      "overall": "CLEAR_FAILURE",
+      "type_i_h1_class": "INCONCLUSIVE",
+      "type_i_h1_range": [
+        0.033753148614609575,
+        0.05511022044088176
+      ],
+      "type_i_h2_class": "INCONCLUSIVE",
+      "type_i_h2_range": [
+        0.043194374686087396,
+        0.06116207951070336
+      ],
+      "usable_class": "CANDIDATE",
+      "worst_cells": {
+        "type_i_h1": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+      }
+    },
+    {
+      "R": 1,
+      "RE": "RE3",
+      "boundary_class": "CLEAR_FAILURE",
+      "coverage_h1_class": "CANDIDATE",
+      "coverage_h1_range": [
+        0.9419128693039559,
+        0.9628140703517588
+      ],
+      "max_applicable_boundary_rate": 0.5075,
+      "min_usable_rate": 0.995,
+      "overall": "CLEAR_FAILURE",
+      "type_i_h1_class": "INCONCLUSIVE",
+      "type_i_h1_range": [
+        0.0371859296482412,
+        0.05808713069604406
+      ],
+      "type_i_h2_class": "INCONCLUSIVE",
+      "type_i_h2_range": [
+        0.04769076305220884,
+        0.06498740554156171
+      ],
+      "usable_class": "CANDIDATE",
+      "worst_cells": {
+        "type_i_h1": "N=120|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged"
+      }
+    },
+    {
+      "R": 2,
+      "RE": "RE1",
+      "boundary_class": "NOT_APPLICABLE",
+      "coverage_h1_class": "INCONCLUSIVE",
+      "coverage_h1_range": [
+        0.928464232116058,
+        0.952
+      ],
+      "max_applicable_boundary_rate": 0,
+      "min_usable_rate": 0.9945,
+      "overall": "CLEAR_FAILURE",
+      "type_i_h1_class": "CLEAR_FAILURE",
+      "type_i_h1_range": [
+        0.048,
+        0.07153576788394198
+      ],
+      "type_i_h2_class": "INCONCLUSIVE",
+      "type_i_h2_range": [
+        0.0415,
+        0.05202601300650325
+      ],
+      "usable_class": "CANDIDATE",
+      "worst_cells": {
+        "type_i_h1": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged"
+      }
+    },
+    {
+      "R": 2,
+      "RE": "RE2",
+      "boundary_class": "CLEAR_FAILURE",
+      "coverage_h1_class": "INCONCLUSIVE",
+      "coverage_h1_range": [
+        0.9363543788187373,
+        0.953953953953954
+      ],
+      "max_applicable_boundary_rate": 0.342,
+      "min_usable_rate": 0.982,
+      "overall": "CLEAR_FAILURE",
+      "type_i_h1_class": "INCONCLUSIVE",
+      "type_i_h1_range": [
+        0.04604604604604605,
+        0.06364562118126273
+      ],
+      "type_i_h2_class": "INCONCLUSIVE",
+      "type_i_h2_range": [
+        0.042042042042042045,
+        0.05458290422245108
+      ],
+      "usable_class": "CANDIDATE",
+      "worst_cells": {
+        "type_i_h1": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+      }
+    },
+    {
+      "R": 2,
+      "RE": "RE3",
+      "boundary_class": "CLEAR_FAILURE",
+      "coverage_h1_class": "INCONCLUSIVE",
+      "coverage_h1_range": [
+        0.935451336359052,
+        0.9524762381190596
+      ],
+      "max_applicable_boundary_rate": 0.3235,
+      "min_usable_rate": 0.9915,
+      "overall": "CLEAR_FAILURE",
+      "type_i_h1_class": "INCONCLUSIVE",
+      "type_i_h1_range": [
+        0.04752376188094047,
+        0.06454866364094806
+      ],
+      "type_i_h2_class": "INCONCLUSIVE",
+      "type_i_h2_range": [
+        0.04254254254254254,
+        0.056402439024390245
+      ],
+      "usable_class": "CANDIDATE",
+      "worst_cells": {
+        "type_i_h1": "N=120|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged"
+      }
+    },
+    {
+      "R": 3,
+      "RE": "RE1",
+      "boundary_class": "NOT_APPLICABLE",
+      "coverage_h1_class": "INCONCLUSIVE",
+      "coverage_h1_range": [
+        0.922,
+        0.9545
+      ],
+      "max_applicable_boundary_rate": 0,
+      "min_usable_rate": 1.0,
+      "overall": "CLEAR_FAILURE",
+      "type_i_h1_class": "CLEAR_FAILURE",
+      "type_i_h1_range": [
+        0.0455,
+        0.078
+      ],
+      "type_i_h2_class": "INCONCLUSIVE",
+      "type_i_h2_range": [
+        0.039,
+        0.053
+      ],
+      "usable_class": "CANDIDATE",
+      "worst_cells": {
+        "type_i_h1": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged"
+      }
+    },
+    {
+      "R": 3,
+      "RE": "RE2",
+      "boundary_class": "CLEAR_FAILURE",
+      "coverage_h1_class": "INCONCLUSIVE",
+      "coverage_h1_range": [
+        0.936491935483871,
+        0.957436154231347
+      ],
+      "max_applicable_boundary_rate": 0.225,
+      "min_usable_rate": 0.992,
+      "overall": "CLEAR_FAILURE",
+      "type_i_h1_class": "INCONCLUSIVE",
+      "type_i_h1_range": [
+        0.04256384576865298,
+        0.06350806451612903
+      ],
+      "type_i_h2_class": "INCONCLUSIVE",
+      "type_i_h2_range": [
+        0.04104104104104104,
+        0.053079619429143715
+      ],
+      "usable_class": "CANDIDATE",
+      "worst_cells": {
+        "type_i_h1": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+      }
+    },
+    {
+      "R": 3,
+      "RE": "RE3",
+      "boundary_class": "CLEAR_FAILURE",
+      "coverage_h1_class": "INCONCLUSIVE",
+      "coverage_h1_range": [
+        0.9346173340091232,
+        0.9569784892446224
+      ],
+      "max_applicable_boundary_rate": 0.2275,
+      "min_usable_rate": 0.9865,
+      "overall": "CLEAR_FAILURE",
+      "type_i_h1_class": "INCONCLUSIVE",
+      "type_i_h1_range": [
+        0.04302151075537769,
+        0.06538266599087683
+      ],
+      "type_i_h2_class": "INCONCLUSIVE",
+      "type_i_h2_range": [
+        0.044012282497441144,
+        0.053714859437751006
+      ],
+      "usable_class": "CANDIDATE",
+      "worst_cells": {
+        "type_i_h1": "N=120|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE3|target_scale=population_averaged"
+      }
+    }
+  ],
+  "note": "Screening resolution only. No final PASS/FAIL, no selection of N, R, RE structure, H1 method or H2 calibration.",
+  "replications_per_cell": 2000,
+  "schema_version": "crst-power-screening-classification/0.1.0",
+  "stage": "screening"
+}
