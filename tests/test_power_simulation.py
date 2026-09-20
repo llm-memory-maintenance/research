@@ -367,24 +367,54 @@ def fitted(beta, names, sds, loglik, **extra):
             'vcov_warnings': [], 'messages': [], **extra}
 
 
-def test_convergence_failure_is_separate_from_singular_boundary():
+def test_status_flags_and_messages_are_independently_auditable():
     sds = {'(Intercept)': 0.5, 'P1': 0.0, 'P2': 0.3}
-    ok = ps.classify_fit(fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0, singular=True), 'RE2', ps.FIXED_NAMES)
-    assert ok['status'] == 'ok' and ok['singular'] and ok['boundary'] == {'(Intercept)': False, 'P1': True,
-                                                                           'P2': False}
-    warned = ps.classify_fit(fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0, convergence_warnings=['failed']),
+    singular = ps.classify_fit(fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0, singular=True), 'RE2', ps.FIXED_NAMES)
+    assert singular['status'] == 'ok' and singular['singular'] is True
+    assert singular['convergence_warning'] is False and singular['vcov_warning'] is False
+    assert singular['boundary'] == {'(Intercept)': False, 'P1': True, 'P2': False}
+    warned = ps.classify_fit(fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0,
+                                    convergence_warnings=['Model failed to converge with max|grad|']),
                              'RE2', ps.FIXED_NAMES)
-    assert warned['status'] == 'convergence_failure'
-    assert ps.classify_fit(fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0, optimizer_code=1), 'RE2',
+    assert warned['status'] == 'ok' and warned['convergence_warning'] is True and warned['singular'] is False
+    assert warned['messages'] == ['Model failed to converge with max|grad|']
+    both = ps.classify_fit(fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0, singular=True,
+                                  convergence_warnings=['nearly unidentifiable']), 'RE2', ps.FIXED_NAMES)
+    assert both['status'] == 'ok' and both['convergence_warning'] and both['singular'] and both['boundary']['P1']
+    failed = ps.classify_fit(fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0, optimizer_code=1), 'RE2', ps.FIXED_NAMES)
+    assert failed['status'] == 'convergence_failure'
+    assert ps.classify_fit(fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0, optimizer_code=None), 'RE2',
                            ps.FIXED_NAMES)['status'] == 'convergence_failure'
-    assert ps.classify_fit({'status': 'error'}, 'RE2', ps.FIXED_NAMES)['status'] == 'numerical_failure'
+    missing = ps.classify_fit({'status': 'error', 'error': 'pwrssUpdate did not converge in 30 iterations'},
+                              'RE2', ps.FIXED_NAMES)
+    assert missing['status'] == 'numerical_failure' and missing['messages'][0].startswith('pwrssUpdate')
+    assert ps.FIT_STATUSES == ('ok', 'convergence_failure', 'invalid_inference', 'numerical_failure')
+    assert ps.FIT_FLAGS == ('convergence_warning', 'vcov_warning', 'singular')
+
+
+def test_invalid_inference_is_still_detected_and_a_vcov_warning_is_only_a_flag():
+    sds = {'(Intercept)': 0.5, 'P1': 0.0, 'P2': 0.3}
     bad = fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0)
     bad['vcov'][0][0] = -1.0
     assert ps.classify_fit(bad, 'RE2', ps.FIXED_NAMES)['status'] == 'invalid_inference'
-    warned_vcov = fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0, vcov_warnings=['not positive definite'])
-    record = sim.analyze_replicate({'full': warned_vcov, 'reduced': fitted([0.0] * 5, ps.REDUCED_NAMES, sds, -11.0)},
+    warned = fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0, vcov_warnings=['not positive definite'])
+    record = sim.analyze_replicate({'full': warned, 'reduced': fitted([0.0] * 5, ps.REDUCED_NAMES, sds, -11.0)},
                                    'RE2', CONFIG)
-    assert record['full']['status'] == 'invalid_inference' and record['h1'] is None and record['h2'] is None
+    assert record['full']['status'] == 'ok' and record['full']['vcov_warning'] is True
+    assert record['h1'] is not None and record['h2'] is not None
+    assert record['full']['messages'] == ['not positive definite']
+    nonpd = fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0, vcov_warnings=['not positive definite'])
+    nonpd['vcov'][3][3] = -0.5
+    broken = sim.analyze_replicate({'full': nonpd, 'reduced': fitted([0.0] * 5, ps.REDUCED_NAMES, sds, -11.0)},
+                                   'RE2', CONFIG)
+    assert broken['full']['status'] == 'invalid_inference' and broken['h1'] is None and broken['h2'] is None
+
+
+def test_messages_are_kept_concise():
+    sds = {'(Intercept)': 0.5}
+    many = ps.classify_fit(fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0,
+                                  convergence_warnings=['x' * 500, 'b', 'c', 'd']), 'RE1', ps.FIXED_NAMES)
+    assert len(many['messages']) == ps.MAX_MESSAGES and len(many['messages'][0]) == ps.MESSAGE_CHARS
 
 
 # --- 20 estimands --------------------------------------------------------------------------------------------
@@ -459,20 +489,150 @@ def test_results_are_identical_for_any_cell_order_and_worker_count(tmp_path):
     assert same_dgp[0] == same_dgp[1]
 
 
-def test_run_cell_resumes_without_overwriting(tmp_path):
-    cell, config = smoke_cell(), {**CONFIG, 'fitting': {**CONFIG['fitting'], 'batch_size': 2}}
-    directory = sim.run_cell(cell, list(range(2)), fake_fitter, tmp_path, config)
-    before = (directory / 'batch-000000.json').read_bytes()
+def counting(fitter=fake_fitter):
+    """Wraps a fitter and records the replicate IDs of every fitting call."""
     calls = []
 
-    def counting(jobs):
-        calls.append([j['job_id'] for j in jobs])
-        return fake_fitter(jobs)
-    sim.run_cell(cell, list(range(4)), counting, tmp_path, config)
-    assert calls == [['2', '3']] and (directory / 'batch-000000.json').read_bytes() == before
+    def call(jobs):
+        calls.append([int(j['job_id']) for j in jobs])
+        return fitter(jobs)
+    return call, calls
+
+
+def test_rerunning_an_exactly_complete_range_makes_no_fitting_call(tmp_path):
+    cell, config = smoke_cell(), {**CONFIG, 'fitting': {**CONFIG['fitting'], 'batch_size': 2}}
+    directory = sim.run_cell(cell, list(range(5)), fake_fitter, tmp_path, config)
+    before = {p.name: p.read_bytes() for p in directory.glob('batch-*.json')}
+    call, calls = counting()
+    sim.run_cell(cell, list(range(5)), call, tmp_path, config)
+    assert calls == [] and {p.name: p.read_bytes() for p in directory.glob('batch-*.json')} == before
+
+
+def test_a_range_inside_an_existing_batch_still_runs_its_missing_ids(tmp_path):
+    """Regression: replicates 5 and 6 were silently skipped because batch-000000.json already existed."""
+    cell = smoke_cell()
+    sim.run_cell(cell, list(range(5)), fake_fitter, tmp_path, CONFIG)
+    assert CONFIG['fitting']['batch_size'] == 25 and len(sim.read_records(sim.cell_directory(tmp_path, cell))) == 5
+    call, calls = counting()
+    directory = sim.run_cell(cell, list(range(5, 7)), call, tmp_path, CONFIG)
+    assert calls == [[5, 6]]
+    assert [r['replicate'] for r in sim.read_records(directory)] == [0, 1, 2, 3, 4, 5, 6]
+
+
+def test_an_overlapping_range_runs_only_the_missing_ids_and_keeps_stored_ones(tmp_path):
+    cell = smoke_cell()
+    directory = sim.run_cell(cell, list(range(5)), fake_fitter, tmp_path, CONFIG)
+    stored = {r['replicate']: r for r in sim.read_records(directory)}
+    call, calls = counting()
+    sim.run_cell(cell, list(range(3, 7)), call, tmp_path, CONFIG)
+    assert calls == [[5, 6]]
+    records = {r['replicate']: r for r in sim.read_records(directory)}
+    assert sorted(records) == [0, 1, 2, 3, 4, 5, 6]
+    assert all(records[k] == stored[k] for k in stored)
+
+
+def test_missing_ids_are_split_into_batches_and_batch_aligned_resume_is_preserved(tmp_path):
+    cell, config = smoke_cell(), {**CONFIG, 'fitting': {**CONFIG['fitting'], 'batch_size': 2}}
+    call, calls = counting()
+    sim.run_cell(cell, list(range(5)), call, tmp_path, config)
+    assert calls == [[0, 1], [2, 3], [4]]
+    calls.clear()
+    sim.run_cell(cell, list(range(8)), call, tmp_path, config)
+    assert calls == [[5, 6], [7]]
+    calls.clear()
+    sim.run_cell(cell, list(range(8)), call, tmp_path, config)
+    assert calls == []
+
+
+def test_a_fitter_that_drops_a_replicate_fails_loudly(tmp_path):
+    cell = smoke_cell()
+
+    def dropping(jobs):
+        versions, fits = fake_fitter(jobs)
+        return versions, {k: v for k, v in fits.items() if k != '2'}
+    with pytest.raises(KeyError):
+        sim.run_cell(cell, list(range(4)), dropping, tmp_path, CONFIG)
+
+
+def test_run_cell_raises_when_a_batch_silently_omits_a_requested_id(tmp_path, monkeypatch):
+    cell = smoke_cell()
+    real = sim.run_batch
+
+    def dropping(cell_, replicates, fitter, config):
+        versions, records = real(cell_, replicates, fitter, config)
+        return versions, [r for r in records if r['replicate'] != 1]
+    monkeypatch.setattr(sim, 'run_batch', dropping)
+    with pytest.raises(ValueError, match=r'requested but not produced: \[1\]'):
+        sim.run_cell(cell, list(range(3)), fake_fitter, tmp_path, CONFIG)
+    assert sim.coverage(sim.cell_directory(tmp_path, cell))['missing'] == [1]
+
+
+def test_coverage_reports_requested_versus_present_and_aggregate_detects_a_gap(tmp_path):
+    cell = smoke_cell()
+    directory = sim.run_cell(cell, list(range(4)), fake_fitter, tmp_path, CONFIG)
+    assert sim.coverage(directory) == {'requested': 4, 'present': 4, 'missing': [], 'status': 'COMPLETE'}
+    [summary] = sim.aggregate(tmp_path, CONFIG)
+    assert summary['coverage']['status'] == 'COMPLETE'
+    sim.record_request(directory, [7])
+    assert sim.coverage(directory) == {'requested': 5, 'present': 4, 'missing': [7], 'status': 'INCOMPLETE'}
+    [summary] = sim.aggregate(tmp_path, CONFIG)
+    assert summary['coverage'] == {'requested': 5, 'present': 4, 'missing': [7], 'status': 'INCOMPLETE'}
+    batch = next(directory.glob('batch-*.json'))
+    payload = json.loads(batch.read_text())
+    payload['records'] = [r for r in payload['records'] if r['replicate'] != 1]
+    batch.write_text(json.dumps(payload))
+    gap = sim.aggregate(tmp_path, CONFIG)[0]['coverage']
+    assert gap['status'] == 'INCOMPLETE' and gap['missing'] == [1, 7]
+
+
+def test_a_directory_without_the_request_manifest_is_never_reported_complete(tmp_path):
+    """Records copied or hand-assembled without requested.json have no request provenance."""
+    cell = smoke_cell()
+    directory = sim.run_cell(cell, list(range(3)), fake_fitter, tmp_path, CONFIG)
+    (directory / 'requested.json').unlink()
+    result = sim.coverage(directory)
+    assert result['status'] == 'UNKNOWN' and result['status'] != 'COMPLETE'
+    assert result['requested'] is None and result['present'] == 3 and result['missing'] is None
+    assert 'provenance is missing' in result['reason']
+    [summary] = sim.aggregate(tmp_path, CONFIG)
+    assert summary['coverage']['status'] == 'UNKNOWN' and summary['requested'] is None
+    assert summary['completed'] == 3
+    assert sim.coverage(directory, requested=[0, 1, 2])['status'] == 'COMPLETE'
+    assert sim.coverage(directory, requested=[0, 1, 2, 9])['status'] == 'INCOMPLETE'
+
+
+def test_a_hand_assembled_directory_with_records_only_is_not_complete(tmp_path):
+    source = sim.run_cell(smoke_cell(), list(range(2)), fake_fitter, tmp_path / 'source', CONFIG)
+    target = tmp_path / 'copy' / source.name
+    target.mkdir(parents=True)
+    for name in ('cell.json', next(source.glob('batch-*.json')).name):
+        (target / name).write_bytes((source / name).read_bytes())
+    assert not (target / 'requested.json').exists()
+    assert sim.coverage(target)['status'] == 'UNKNOWN'
+    [summary] = sim.aggregate(tmp_path / 'copy', CONFIG)
+    assert summary['coverage']['status'] == 'UNKNOWN'
+    resumed = sim.run_cell(smoke_cell(), list(range(2)), fake_fitter, tmp_path / 'copy', CONFIG)
+    assert resumed == target and sim.coverage(target)['status'] == 'COMPLETE'
+
+
+def test_batches_from_an_older_result_schema_are_refused(tmp_path):
+    cell = smoke_cell()
+    directory = sim.run_cell(cell, list(range(2)), fake_fitter, tmp_path, CONFIG)
+    batch = next(directory.glob('batch-*.json'))
+    payload = json.loads(batch.read_text())
+    assert payload['schema_version'] == sim.RESULT_SCHEMA == 'crst-power-batch/0.2.0'
+    assert payload['replicates'] == [0, 1]
+    batch.write_text(json.dumps({**payload, 'schema_version': 'crst-power-batch/0.1.0'}))
+    with pytest.raises(ValueError, match='regenerate the cell'):
+        sim.read_records(directory)
+
+
+def test_directory_still_refuses_another_cell(tmp_path):
+    cell = smoke_cell()
+    directory = sim.run_cell(cell, list(range(2)), fake_fitter, tmp_path, CONFIG)
+    (directory / 'cell.json').write_text(json.dumps(smoke_cell('NULL:zero')))
     with pytest.raises(ValueError, match='another cell'):
-        (directory / 'cell.json').write_text(json.dumps(smoke_cell('NULL:zero')))
-        sim.run_cell(cell, list(range(4)), fake_fitter, tmp_path, config)
+        sim.run_cell(cell, list(range(4)), fake_fitter, tmp_path, CONFIG)
 
 
 def test_aggregation_retains_estimates_bounds_denominators_and_failures(tmp_path):
@@ -482,12 +642,93 @@ def test_aggregation_retains_estimates_bounds_denominators_and_failures(tmp_path
     assert summary['requested'] == 4 and summary['completed'] == 4
     assert summary['fit_status_full'] == {'ok': 4, 'convergence_failure': 0, 'invalid_inference': 0,
                                           'numerical_failure': 0}
+    assert summary['fit_flags_full'] == {'convergence_warning': 0, 'vcov_warning': 0, 'singular': 0}
+    assert summary['fit_flags_reduced'] == {'convergence_warning': 0, 'vcov_warning': 0, 'singular': 0}
+    assert summary['coverage']['status'] == 'COMPLETE'
     test = summary['tests']['h1/B/M2-M1']
     assert test['role'] == 'null' and test['valid'] == 4
     assert set(test['rejection_nominal']) == {'estimate', 'lower', 'upper', 'successes', 'trials'}
     assert 'type_i' in test['decisions'] and 'coverage' in test['decisions']
     assert summary['tests']['h2/lrt_chisq4']['role'] == 'null'
     assert summary['boundary']['P1']['true_sd'] == pytest.approx(0.35)
+
+
+def stub_records(count, *, warned=0, vcov_warned=0, singular=0, failed=0):
+    """Replicate records built from stub fits: clean, warned, vcov-warned, singular or failed."""
+    sds = {'(Intercept)': 0.5}
+    records = []
+    for i in range(count):
+        extra = {}
+        if i < warned:
+            extra['convergence_warnings'] = ['Model failed to converge with max|grad| = 0.004']
+        elif i < warned + vcov_warned:
+            extra['vcov_warnings'] = ['not positive definite']
+        elif i < warned + vcov_warned + singular:
+            extra['singular'] = True
+        elif i < warned + vcov_warned + singular + failed:
+            extra['optimizer_code'] = 1
+        fits = {'full': fitted([0.0] * 9, ps.FIXED_NAMES, sds, -10.0, **extra),
+                'reduced': fitted([0.0] * 5, ps.REDUCED_NAMES, sds, -11.0, **extra)}
+        records.append({'replicate': i, 'seed': i, **sim.analyze_replicate(fits, 'RE1', CONFIG)})
+    return records
+
+
+def test_a_warned_fit_is_returned_but_never_inference_usable():
+    warned, vcov_warned, singular, clean = stub_records(4, warned=1, vcov_warned=1, singular=1)
+    assert [r['full']['status'] for r in (warned, vcov_warned, singular, clean)] == ['ok'] * 4
+    assert [r['full']['fit_returned'] for r in (warned, vcov_warned, singular, clean)] == [True] * 4
+    assert warned['full']['inference_usable'] is False and warned['full']['convergence_warning'] is True
+    assert vcov_warned['full']['inference_usable'] is False and vcov_warned['full']['vcov_warning'] is True
+    assert singular['full']['inference_usable'] is True and singular['full']['singular'] is True
+    assert clean['full']['inference_usable'] is True
+
+
+def test_warned_fits_cannot_silently_satisfy_the_95_percent_usable_criterion():
+    cell = smoke_cell('NULL:zero', 'RE1')
+    records = stub_records(100, warned=10)
+    summary = sim.summarize_cell(cell, records, CONFIG)
+    assert CONFIG['acceptance']['primary']['usable_rate_min'] == 0.95
+    assert summary['counts_full']['fit_returned'] == 100
+    assert summary['counts_full']['inference_usable'] == 90
+    assert summary['counts_full']['convergence_warning'] == 10
+    assert summary['fit_status_full']['ok'] == 100
+    assert summary['usable_rate_full'] == 0.90 and summary['usable_rate_h2'] == 0.90
+    assert summary['usable_decision'] == 'FAIL'
+    borderline = sim.summarize_cell(cell, stub_records(100, warned=6), CONFIG)
+    assert borderline['usable_rate_full'] == 0.94 and borderline['usable_decision'] == 'FAIL'
+    passing = sim.summarize_cell(cell, stub_records(100, warned=3), CONFIG)
+    assert passing['usable_rate_full'] == 0.97 and passing['usable_decision'] == 'PASS'
+
+
+def test_singular_fits_alone_do_not_fail_the_usable_criterion():
+    cell = smoke_cell('NULL:zero', 'RE1')
+    summary = sim.summarize_cell(cell, stub_records(100, singular=40), CONFIG)
+    assert summary['counts_full']['singular'] == 40 and summary['counts_full']['inference_usable'] == 100
+    assert summary['usable_rate_full'] == 1.0 and summary['usable_decision'] == 'PASS'
+
+
+def test_monte_carlo_denominators_use_inference_usable_replications():
+    cell = smoke_cell('NULL:zero', 'RE1')
+    summary = sim.summarize_cell(cell, stub_records(50, warned=5, vcov_warned=3, failed=2), CONFIG)
+    counts = summary['counts_full']
+    assert counts == {'fit_returned': 50, 'inference_usable': 40, 'convergence_warning': 5, 'vcov_warning': 3,
+                      'singular': 0, 'convergence_failure': 2, 'invalid_inference': 0, 'numerical_failure': 0,
+                      'boundary': {'(Intercept)': 0}}
+    for key, test in summary['tests'].items():
+        assert test['valid'] == 40, key
+    assert summary['tests']['h2/lrt_chisq4']['excluded_not_usable'] == 10
+    assert summary['completed'] == 50 and summary['usable_rate_full'] == 0.80
+
+
+def test_every_separately_retained_category_is_reported():
+    cell = smoke_cell('NULL:zero', 'RE2')
+    records = stub_records(10, warned=1, vcov_warned=1, singular=1, failed=1)
+    summary = sim.summarize_cell(cell, records, CONFIG, requested=12)
+    assert summary['requested'] == 12 and summary['completed'] == 10
+    for part in ('counts_full', 'counts_reduced'):
+        assert set(summary[part]) == set(ps.FIT_COUNTS) | {'boundary'}
+    assert summary['counts_full']['boundary'] == {'(Intercept)': 0}
+    assert set(summary['boundary']) == {'P1', 'P2'}
 
 
 def test_test_roles_follow_the_true_parameters():
@@ -555,6 +796,26 @@ def test_real_full_and_reduced_fits_share_the_random_structure_and_differ_by_fou
     assert fits['full']['re_components'] == fits['reduced']['re_components']
     assert len(fits['full']['beta']) - len(fits['reduced']['beta']) == 4
     assert [n for n in fits['full']['beta'] if n not in fits['reduced']['beta']] == list(ps.INTERACTION_NAMES)
+
+
+@pytest.mark.skipif(shutil.which('Rscript') is None, reason='R with lme4 is not installed')
+def test_real_lme4_partial_range_resume_produces_the_missing_replicates(tmp_path):
+    """The reconnaissance bug, against real lme4: 0:2 then 2:3 must actually fit replicate 2."""
+    cell = smoke_cell('NULL:zero', 'RE1')
+    call, calls = counting(sim.RFitter(CONFIG))
+    directory = sim.run_cell(cell, [0, 1], call, tmp_path, CONFIG)
+    first = sim.read_records(directory)
+    assert calls == [[0, 1]] and [r['replicate'] for r in first] == [0, 1]
+    sim.run_cell(cell, [2], call, tmp_path, CONFIG)
+    assert calls == [[0, 1], [2]]
+    records = sim.read_records(directory)
+    assert [r['replicate'] for r in records] == [0, 1, 2]
+    assert records[:2] == first
+    assert all(r['full']['status'] == 'ok' and r['h2']['df'] == 4 for r in records)
+    assert sim.coverage(directory) == {'requested': 3, 'present': 3, 'missing': [], 'status': 'COMPLETE'}
+    calls.clear()
+    sim.run_cell(cell, [0, 1, 2], call, tmp_path, CONFIG)
+    assert calls == []
 
 
 @pytest.mark.skipif(shutil.which('Rscript') is None, reason='R with lme4 is not installed')

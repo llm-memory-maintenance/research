@@ -20,7 +20,10 @@ import numpy as np
 import power_simulation as ps
 
 R_SCRIPT = Path(__file__).resolve().with_name('fit_glmm.R')
-RESULT_SCHEMA = 'crst-power-batch/0.1.0'
+# 0.2.0 stores per-replicate fit flags (convergence warning, vcov warning, singular) separately from status and
+# names each batch after the replicate IDs it holds. Batches written by 0.1.0 lack those fields and are refused.
+RESULT_SCHEMA = 'crst-power-batch/0.2.0'
+UNSET = object()  # distinguishes "caller gave no request count" from "the request count is unknown" (None)
 
 
 # --- Cells ---------------------------------------------------------------------------------------------------
@@ -138,12 +141,10 @@ def analyze_replicate(fits, structure, config):
     tol = config['fitting']['singular_tol']
     full = normalize_fit(fits.get('full'))
     reduced = normalize_fit(fits.get('reduced'))
-    if full and full.get('vcov_warnings'):
-        full = {**full, 'vcov': None}
     status_full = ps.classify_fit(full, structure, ps.FIXED_NAMES, tol)
     status_reduced = ps.classify_fit(reduced, structure, ps.REDUCED_NAMES, tol)
-    record = {'full': {k: status_full[k] for k in ('status', 'singular', 'boundary', 'components')},
-              'reduced': {k: status_reduced[k] for k in ('status', 'singular', 'boundary', 'components')},
+    kept = ('fit_returned', 'inference_usable', 'status', *ps.FIT_FLAGS, 'boundary', 'components', 'messages')
+    record = {'full': {k: status_full[k] for k in kept}, 'reduced': {k: status_reduced[k] for k in kept},
               'h1': None, 'h2': None}
     nodes = config['calibration']['gauss_hermite_nodes']
     if status_full['status'] == 'ok':
@@ -176,8 +177,50 @@ def environment():
             'pyyaml': importlib.metadata.version('pyyaml')}
 
 
+def present_replicates(directory):
+    """Replicate IDs actually stored, read from the records themselves rather than from file names."""
+    return {record['replicate'] for record in read_records(directory)}
+
+
+def requested_replicates(directory):
+    path = Path(directory) / 'requested.json'
+    if not path.exists():
+        return set()
+    return set(json.loads(path.read_text(encoding='utf-8'))['replicates'])
+
+
+def record_request(directory, replicates):
+    """Union of every replicate ID ever requested for this cell, so aggregation can verify coverage."""
+    union = sorted(requested_replicates(directory) | set(replicates))
+    (Path(directory) / 'requested.json').write_text(
+        json.dumps({'replicates': union}, sort_keys=True) + '\n', encoding='utf-8')
+    return union
+
+
+def coverage(directory, requested=None):
+    """Requested-versus-present replicate coverage.
+
+    Without the request manifest the requested set is unknown, so coverage fails closed as UNKNOWN rather than
+    reporting COMPLETE from a requested count of zero.
+    """
+    present = present_replicates(directory)
+    if requested is None and not (Path(directory) / 'requested.json').exists():
+        return {'requested': None, 'present': len(present), 'missing': None, 'status': 'UNKNOWN',
+                'reason': 'requested.json is absent: requested-replicate provenance is missing, so the stored '
+                          'replicates cannot be shown to cover any request'}
+    wanted = set(requested) if requested is not None else requested_replicates(directory)
+    missing = sorted(wanted - present)
+    return {'requested': len(wanted), 'present': len(present), 'missing': missing,
+            'status': 'COMPLETE' if not missing else 'INCOMPLETE'}
+
+
 def run_cell(cell, replicates, fitter, root, config, workers=1):
-    """Fixed-size batches of the replicate range; existing batch files are kept (resume), never overwritten."""
+    """Run exactly the requested replicate IDs that are not already stored.
+
+    Resume is decided by the replicate IDs actually present, never by batch-file names, so an arbitrary range
+    completes its missing IDs while stored ones are never rerun or overwritten. Each batch file is named after the
+    IDs it holds, and the run fails loudly if any requested ID is still absent afterwards.
+    """
     size = config['fitting']['batch_size']
     directory = cell_directory(root, cell)
     directory.mkdir(parents=True, exist_ok=True)
@@ -186,19 +229,23 @@ def run_cell(cell, replicates, fitter, root, config, workers=1):
         cell_file.write_text(json.dumps(cell, indent=2, sort_keys=True) + '\n', encoding='utf-8')
     elif json.loads(cell_file.read_text(encoding='utf-8')) != cell:
         raise ValueError('Output directory belongs to another cell')
-    starts = sorted({(r // size) * size for r in replicates})
-    pending = [s for s in starts if not (directory / f'batch-{s:06d}.json').exists()]
+    requested = sorted(set(replicates))
+    record_request(directory, requested)
+    missing = sorted(set(requested) - present_replicates(directory))
+    pending = [missing[i:i + size] for i in range(0, len(missing), size)]
 
-    def work(start):
-        batch = [r for r in replicates if start <= r < start + size]
+    def work(batch):
         versions, records = run_batch(cell, batch, fitter, config)
         payload = {'schema_version': RESULT_SCHEMA, 'cell': cell, 'cell_key': cell_key(cell),
-                   'fit_control': fit_control(config), 'versions': versions, 'environment': environment(),
-                   'records': records}
-        with (directory / f'batch-{start:06d}.json').open('x', encoding='utf-8') as stream:
+                   'replicates': batch, 'fit_control': fit_control(config), 'versions': versions,
+                   'environment': environment(), 'records': records}
+        with (directory / f'batch-{batch[0]:06d}-{batch[-1]:06d}.json').open('x', encoding='utf-8') as stream:
             stream.write(json.dumps(payload, sort_keys=True) + '\n')
     with ThreadPoolExecutor(max_workers=workers) as pool:
         list(pool.map(work, pending))
+    outstanding = coverage(directory, requested)
+    if outstanding['status'] != 'COMPLETE':
+        raise ValueError(f'Replicates requested but not produced: {outstanding["missing"]}')
     return directory
 
 
@@ -207,7 +254,11 @@ def run_cell(cell, replicates, fitter, root, config, workers=1):
 def read_records(directory):
     records = {}
     for path in sorted(Path(directory).glob('batch-*.json')):
-        for record in json.loads(path.read_text(encoding='utf-8'))['records']:
+        payload = json.loads(path.read_text(encoding='utf-8'))
+        if payload.get('schema_version') != RESULT_SCHEMA:
+            raise ValueError(f'{path.name} uses {payload.get("schema_version")}, not {RESULT_SCHEMA}; '
+                             'regenerate the cell rather than mixing schemas')
+        for record in payload['records']:
             if record['replicate'] in records:
                 raise ValueError('Duplicate replicate')
             records[record['replicate']] = record
@@ -229,7 +280,7 @@ def test_role(cell, dgp, contrast=None, estimand=None):
     return 'other'
 
 
-def summarize_cell(cell, records, config, requested=None, stage='screening'):
+def summarize_cell(cell, records, config, requested=UNSET, stage='screening'):
     """Monte Carlo summary with failure counts, intervals and acceptance decisions for every test."""
     dgp = dgp_of(cell['dgp'], config)
     acceptance = config['acceptance'][cell['grid']]
@@ -238,12 +289,17 @@ def summarize_cell(cell, records, config, requested=None, stage='screening'):
     thresholds = config['inference']['planning_thresholds']
     n = len(records)
     status_counts = {s: sum(r['full']['status'] == s for r in records) for s in ps.FIT_STATUSES}
-    usable_full = status_counts['ok']
-    usable_h2 = sum(r['h2'] is not None and r['h2']['valid'] for r in records)
+    usable = [r for r in records if r['full']['inference_usable']]
+    usable_full = len(usable)
+    usable_h2 = sum(r['full']['inference_usable'] and r['reduced']['inference_usable']
+                    and r['h2'] is not None and r['h2']['valid'] for r in records)
     out = {'cell': cell, 'cell_key': cell_key(cell), 'stage': stage,
-           'requested': requested if requested is not None else n,
+           'requested': n if requested is UNSET else requested,
            'completed': n, 'fit_status_full': status_counts,
            'fit_status_reduced': {s: sum(r['reduced']['status'] == s for r in records) for s in ps.FIT_STATUSES},
+           'fit_flags_full': {flag: sum(bool(r['full'][flag]) for r in records) for flag in ps.FIT_FLAGS},
+           'fit_flags_reduced': {flag: sum(bool(r['reduced'][flag]) for r in records) for flag in ps.FIT_FLAGS},
+           'counts_full': fit_counts(records, 'full'), 'counts_reduced': fit_counts(records, 'reduced'),
            'singular_full': sum(bool(r['full']['singular']) for r in records if r['full']['status'] == 'ok'),
            'usable_rate_full': usable_full / n if n else None, 'usable_rate_h2': usable_h2 / n if n else None,
            'truth': dgp['truth'], 'tests': {}, 'boundary': {}}
@@ -251,7 +307,7 @@ def summarize_cell(cell, records, config, requested=None, stage='screening'):
     out['usable_decision'] = 'PASS' if n and usable_full / n >= minimum and usable_h2 / n >= minimum else 'FAIL'
     added = {'RE2': ('P1', 'P2'), 'RE3': ('V1', 'V2')}.get(cell['structure'], ())
     for component in added:
-        count = sum(r['full']['boundary'].get(component, False) for r in records if r['full']['status'] == 'ok')
+        count = sum(r['full']['boundary'].get(component, False) for r in usable)
         true_sd = float(dgp['sds'][ps.RANDOM_NAMES.index(component)])
         out['boundary'][component] = {
             'count': count, 'usable': usable_full, 'true_sd': true_sd,
@@ -259,7 +315,7 @@ def summarize_cell(cell, records, config, requested=None, stage='screening'):
                 'unstable_boundary_rate', 1.0))}
     for estimand in ps.ESTIMANDS:
         for contrast in ps.CONTRASTS:
-            rows = [r['h1'][estimand][contrast] for r in records if r['h1'] is not None
+            rows = [r['h1'][estimand][contrast] for r in usable if r['h1'] is not None
                     and r['h1'][estimand][contrast]['se'] is not None]
             role, true_value = test_role(cell, dgp, contrast, estimand), dgp['truth'][estimand][contrast]
             nominal = ps.wilson(sum(x['p'] < alpha for x in rows), len(rows), level)
@@ -270,15 +326,31 @@ def summarize_cell(cell, records, config, requested=None, stage='screening'):
             test['decisions'] = decisions(cell['grid'], role, nominal, planning, coverage, acceptance, config,
                                           stage)
             out['tests'][f'h1/{estimand}/{contrast}'] = test
-    rows = [r['h2'] for r in records if r['h2'] is not None and r['h2']['valid']]
+    rows = [r['h2'] for r in records if r['full']['inference_usable'] and r['reduced']['inference_usable']
+            and r['h2'] is not None and r['h2']['valid']]
     role = test_role(cell, dgp)
     nominal = ps.wilson(sum(x['p'] < alpha for x in rows), len(rows), level)
     planning = ps.wilson(sum(x['p'] < thresholds['h2'] for x in rows), len(rows), level)
     out['tests']['h2/lrt_chisq4'] = {'role': role, 'valid': len(rows), 'invalid_lrt': sum(
-        r['h2'] is not None and not r['h2']['valid'] for r in records), 'rejection_nominal': nominal,
+        r['h2'] is not None and not r['h2']['valid'] for r in records),
+        'excluded_not_usable': sum(not (r['full']['inference_usable'] and r['reduced']['inference_usable'])
+                                   for r in records), 'rejection_nominal': nominal,
         'rejection_planning': planning,
         'decisions': decisions(cell['grid'], role, nominal, planning, None, acceptance, config, stage)}
     return out
+
+
+def fit_counts(records, part):
+    """Every category kept separately; only `inference_usable` feeds the Monte Carlo denominators."""
+    counts = {}
+    for name in ps.FIT_COUNTS:
+        if name in ps.FIT_STATUSES:
+            counts[name] = sum(r[part]['status'] == name for r in records)
+        else:
+            counts[name] = sum(bool(r[part][name]) for r in records)
+    counts['boundary'] = {component: sum(bool(r[part]['boundary'].get(component)) for r in records)
+                          for component in (records[0][part]['boundary'] if records else {})}
+    return counts
 
 
 def decisions(grid, role, nominal, planning, coverage, acceptance, config, stage='screening'):
@@ -303,7 +375,12 @@ def aggregate(root, config, stage='screening'):
     summaries = []
     for cell_file in sorted(Path(root).glob('*/cell.json')):
         cell = json.loads(cell_file.read_text(encoding='utf-8'))
-        summaries.append(summarize_cell(cell, read_records(cell_file.parent), config, stage=stage))
+        directory = cell_file.parent
+        cell_coverage = coverage(directory)
+        summary = summarize_cell(cell, read_records(directory), config, stage=stage,
+                                 requested=cell_coverage['requested'])
+        summary['coverage'] = cell_coverage
+        summaries.append(summary)
     return summaries
 
 

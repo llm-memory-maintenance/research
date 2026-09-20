@@ -461,18 +461,49 @@ def bootstrap_p(observed, simulated):
 # --- Fit status ------------------------------------------------------------------------------------------------
 
 FIT_STATUSES = ('ok', 'convergence_failure', 'invalid_inference', 'numerical_failure')
+FIT_FLAGS = ('convergence_warning', 'vcov_warning', 'singular')
+# Counts every report keeps separately; `inference_usable` is the only denominator for Monte Carlo metrics.
+FIT_COUNTS = ('fit_returned', 'inference_usable', 'convergence_warning', 'vcov_warning', 'singular',
+              'convergence_failure', 'invalid_inference', 'numerical_failure')
+MAX_MESSAGES = 3
+MESSAGE_CHARS = 200
+
+
+def concise(messages):
+    """A few truncated raw lme4 messages, kept for audit; never used to decide status."""
+    if isinstance(messages, (str, int, float)):
+        messages = [messages]
+    return [str(m)[:MESSAGE_CHARS] for m in (messages or [])[:MAX_MESSAGES]]
 
 
 def classify_fit(fit, structure, names, singular_tol=1e-4):
-    """Exclusive status plus separate singular/boundary flags. A singular fit is still usable."""
-    record = {'status': None, 'singular': None, 'boundary': {}, 'components': {}}
+    """Status of the fit itself, with independent flags.
+
+    `fit_returned` says the backend returned a fitted model object. `status` says whether that fit yielded usable
+    estimates: 'ok', 'convergence_failure' (the optimizer itself did not report success), 'invalid_inference'
+    (estimates or vcov unusable) and 'numerical_failure' (no fit at all). A convergence warning, a vcov warning and
+    a singular/boundary fit are separate flags: a fit may be returned successfully, carry a warning and be
+    singular, all at once. Nothing is retried automatically.
+
+    `inference_usable` is status 'ok' with no convergence warning and no vcov warning, all inferential quantities
+    finite and valid. It is the only denominator for Monte Carlo rejection, coverage and power. Singularity is
+    deliberately excluded: it is governed by the separate pre-specified boundary criterion.
+    """
+    record = {'fit_returned': False, 'inference_usable': False, 'status': None, 'convergence_warning': None,
+              'vcov_warning': None, 'singular': None, 'boundary': {}, 'components': {}, 'messages': []}
     if fit is None or fit.get('status') != 'fitted':
         record['status'] = 'numerical_failure'
+        record['messages'] = concise([fit.get('error')] if fit and fit.get('error') else
+                                     (fit or {}).get('warnings'))
         return record
+    record['fit_returned'] = True
     record['components'] = dict(zip(fit['re_components'], fit['re_sd']))
     record['boundary'] = {c: record['components'].get(c, 0.0) < singular_tol for c in RE_COMPONENTS[structure]}
     record['singular'] = bool(fit['singular'])
-    if fit['convergence_warnings'] or fit['optimizer_code'] != 0:
+    record['convergence_warning'] = bool(fit['convergence_warnings'])
+    record['vcov_warning'] = bool(fit.get('vcov_warnings'))
+    record['messages'] = concise(list(fit['convergence_warnings'] or []) + list(fit.get('vcov_warnings') or []))
+    if fit['optimizer_code'] is None or fit['optimizer_code'] != 0:
         record['status'] = 'convergence_failure'
         return record
     beta = [fit['beta'].get(n) for n in names]
@@ -485,7 +516,8 @@ def classify_fit(fit, structure, names, singular_tol=1e-4):
     if not np.all(np.isfinite(matrix)) or not np.allclose(matrix, matrix.T) or np.min(np.linalg.eigvalsh(matrix)) <= 0:
         record['status'] = 'invalid_inference'
         return record
-    record.update(status='ok', beta=beta, vcov=matrix.tolist(), loglik=fit['loglik'])
+    record.update(status='ok', beta=beta, vcov=matrix.tolist(), loglik=fit['loglik'],
+                  inference_usable=not (record['convergence_warning'] or record['vcov_warning']))
     return record
 
 
