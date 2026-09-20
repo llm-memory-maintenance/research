@@ -1,0 +1,59 @@
+{
+  "conditions": {
+    "alpha": 0.05,
+    "endpoints": [
+      "CSA",
+      "SRR"
+    ],
+    "het": [
+      "HET2",
+      "HET3"
+    ],
+    "point": {
+      "HET2": "P0",
+      "HET3": "P5"
+    },
+    "replications": 2000,
+    "revision_profile": "MODERATE",
+    "scenario": "NULL:zero",
+    "target_scale": "population_averaged"
+  },
+  "config_sha256": "02e202d9fab4f413ce95dfc064002c14b3bf209e1e450c79b4c0cc4c59e8cef0",
+  "created": "2026-09-20T12:34:12.984003+00:00",
+  "implementation_sha256": {
+    "experiments/fit_glmm.R": "93b0b3f376932c263f80c89a817541713746a4724866e271764cc1c242016892",
+    "experiments/power_simulation.py": "4f0a8923c4219db7a17430e8e4ac2d7cc520ccc0ea1b64f5940120153c51704d",
+    "experiments/simulate_power.py": "aa483e2540f99248c8d19c3b6eef3b4fe1ed6e90fce2954095f6fba56102c559"
+  },
+  "part_a": {
+    "N": [
+      180,
+      240
+    ],
+    "R": 1,
+    "cells_per_N": 4,
+    "structure": "RE1"
+  },
+  "part_b": {
+    "boundary_threshold": 0.2,
+    "cap_N": 300,
+    "cells_per_N": 4,
+    "not_advanced": [
+      "RE1 R=2",
+      "RE1 R=3",
+      "RE3 (reserved)"
+    ],
+    "rule": "upper<0.20 candidate and stop; lower>0.20 clear failure and N+=24; else N+=12",
+    "start_N": {
+      "1": 192,
+      "2": 156,
+      "3": 132
+    },
+    "structure": "RE2"
+  },
+  "prior_evidence": "results/statistical-planning/screening/n120-null-calibration (not rerun)",
+  "purpose": "null-calibration N bracketing: RE1 R=1 misspecification check and RE2 identifiability",
+  "schema_version": "crst-power-nbracketing-plan/0.1.0",
+  "source_commit": "5c95f876d5d2d4b4971c5b1d60b0addb2fa24087",
+  "stage": "screening"
+}

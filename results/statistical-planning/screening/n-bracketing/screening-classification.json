@@ -1,0 +1,1402 @@
+{
+  "boundary_threshold": 0.2,
+  "note": "Screening resolution only. No final N, R, RE structure, H1 method, H2 method or power decision.",
+  "part_a": [
+    {
+      "N": 180,
+      "R": 1,
+      "RE": "RE1",
+      "boundary": {
+        "(Intercept)": {
+          "ci": {
+            "estimate": 0.0,
+            "lower": 0.0,
+            "successes": 0,
+            "trials": 2000,
+            "upper": 0.0013509442079184144
+          },
+          "count": 0,
+          "criterion_applies": false,
+          "rate": 0.0,
+          "true_sd": 0.75
+        }
+      },
+      "counts_full": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 0,
+        "fit_returned": 2000,
+        "inference_usable": 2000,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 0
+      },
+      "counts_reduced": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 0,
+        "fit_returned": 2000,
+        "inference_usable": 2000,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 0
+      },
+      "coverage_manifest": {
+        "missing": [],
+        "present": 2000,
+        "requested": 2000,
+        "status": "COMPLETE"
+      },
+      "endpoint": "CSA",
+      "het": "HET2",
+      "key": "N=180|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "seconds": 144.86699529600446,
+      "singular_full_rate": 0.0,
+      "tests": {
+        "h1/B/M2-M1": {
+          "coverage": {
+            "estimate": 0.936,
+            "lower": 0.9263957846901533,
+            "successes": 1872,
+            "trials": 2000,
+            "upper": 0.944426191960542
+          },
+          "coverage_class": "INCONCLUSIVE",
+          "rejection": {
+            "estimate": 0.064,
+            "lower": 0.05557380803945808,
+            "successes": 128,
+            "trials": 2000,
+            "upper": 0.07360421530984679
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 2000
+        },
+        "h1/B/M3-M2": {
+          "coverage": {
+            "estimate": 0.936,
+            "lower": 0.9263957846901533,
+            "successes": 1872,
+            "trials": 2000,
+            "upper": 0.944426191960542
+          },
+          "coverage_class": "INCONCLUSIVE",
+          "rejection": {
+            "estimate": 0.064,
+            "lower": 0.05557380803945808,
+            "successes": 128,
+            "trials": 2000,
+            "upper": 0.07360421530984679
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 2000
+        },
+        "h2/lrt_chisq4": {
+          "rejection": {
+            "estimate": 0.037,
+            "lower": 0.03065937438781207,
+            "successes": 74,
+            "trials": 2000,
+            "upper": 0.04459159994872038
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 2000
+        }
+      },
+      "usable_ci": {
+        "estimate": 1.0,
+        "lower": 0.9986490557920817,
+        "successes": 2000,
+        "trials": 2000,
+        "upper": 1.0
+      },
+      "usable_class": "CANDIDATE",
+      "usable_rate": 1.0
+    },
+    {
+      "N": 180,
+      "R": 1,
+      "RE": "RE1",
+      "boundary": {
+        "(Intercept)": {
+          "ci": {
+            "estimate": 0.0,
+            "lower": 0.0,
+            "successes": 0,
+            "trials": 2000,
+            "upper": 0.0013509442079184144
+          },
+          "count": 0,
+          "criterion_applies": false,
+          "rate": 0.0,
+          "true_sd": 0.75
+        }
+      },
+      "counts_full": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 0,
+        "fit_returned": 2000,
+        "inference_usable": 2000,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 0
+      },
+      "counts_reduced": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 0,
+        "fit_returned": 2000,
+        "inference_usable": 2000,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 0
+      },
+      "coverage_manifest": {
+        "missing": [],
+        "present": 2000,
+        "requested": 2000,
+        "status": "COMPLETE"
+      },
+      "endpoint": "CSA",
+      "het": "HET3",
+      "key": "N=180|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "seconds": 146.38667036101106,
+      "singular_full_rate": 0.0,
+      "tests": {
+        "h1/B/M2-M1": {
+          "coverage": {
+            "estimate": 0.944,
+            "lower": 0.9349281032393397,
+            "successes": 1888,
+            "trials": 2000,
+            "upper": 0.9518722583040287
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.056,
+            "lower": 0.04812774169597128,
+            "successes": 112,
+            "trials": 2000,
+            "upper": 0.06507189676066027
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 2000
+        },
+        "h1/B/M3-M2": {
+          "coverage": {
+            "estimate": 0.9495,
+            "lower": 0.9408214316718503,
+            "successes": 1899,
+            "trials": 2000,
+            "upper": 0.9569640694852312
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.0505,
+            "lower": 0.04303593051476889,
+            "successes": 101,
+            "trials": 2000,
+            "upper": 0.05917856832814978
+          },
+          "role": "null",
+          "type_i_class": "CANDIDATE",
+          "valid": 2000
+        },
+        "h2/lrt_chisq4": {
+          "rejection": {
+            "estimate": 0.0405,
+            "lower": 0.033848709925974954,
+            "successes": 81,
+            "trials": 2000,
+            "upper": 0.04839280780110207
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 2000
+        }
+      },
+      "usable_ci": {
+        "estimate": 1.0,
+        "lower": 0.9986490557920817,
+        "successes": 2000,
+        "trials": 2000,
+        "upper": 1.0
+      },
+      "usable_class": "CANDIDATE",
+      "usable_rate": 1.0
+    },
+    {
+      "N": 180,
+      "R": 1,
+      "RE": "RE1",
+      "boundary": {
+        "(Intercept)": {
+          "ci": {
+            "estimate": 0.0,
+            "lower": 0.0,
+            "successes": 0,
+            "trials": 2000,
+            "upper": 0.0013509442079184144
+          },
+          "count": 0,
+          "criterion_applies": false,
+          "rate": 0.0,
+          "true_sd": 0.75
+        }
+      },
+      "counts_full": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 37,
+        "fit_returned": 2000,
+        "inference_usable": 1963,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 17
+      },
+      "counts_reduced": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 77,
+        "fit_returned": 2000,
+        "inference_usable": 1923,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 20
+      },
+      "coverage_manifest": {
+        "missing": [],
+        "present": 2000,
+        "requested": 2000,
+        "status": "COMPLETE"
+      },
+      "endpoint": "SRR",
+      "het": "HET2",
+      "key": "N=180|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "seconds": 187.04406642602407,
+      "singular_full_rate": 0.0,
+      "tests": {
+        "h1/B/M2-M1": {
+          "coverage": {
+            "estimate": 0.9409067753438615,
+            "lower": 0.9315308717668231,
+            "successes": 1847,
+            "trials": 1963,
+            "upper": 0.9490689748197232
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.05909322465613857,
+            "lower": 0.05093102518027685,
+            "successes": 116,
+            "trials": 1963,
+            "upper": 0.06846912823317688
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 1963
+        },
+        "h1/B/M3-M2": {
+          "coverage": {
+            "estimate": 0.9439633214467652,
+            "lower": 0.9347978023793043,
+            "successes": 1853,
+            "trials": 1963,
+            "upper": 0.9519067225198002
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.056036678553234846,
+            "lower": 0.048093277480199696,
+            "successes": 110,
+            "trials": 1963,
+            "upper": 0.06520219762069565
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 1963
+        },
+        "h2/lrt_chisq4": {
+          "rejection": {
+            "estimate": 0.05081194342587742,
+            "lower": 0.043161414405630136,
+            "successes": 97,
+            "trials": 1909,
+            "upper": 0.059733900266463746
+          },
+          "role": "null",
+          "type_i_class": "CANDIDATE",
+          "valid": 1909
+        }
+      },
+      "usable_ci": {
+        "estimate": 0.9815,
+        "lower": 0.9758541994584472,
+        "successes": 1963,
+        "trials": 2000,
+        "upper": 0.9858448412693276
+      },
+      "usable_class": "CANDIDATE",
+      "usable_rate": 0.9815
+    },
+    {
+      "N": 180,
+      "R": 1,
+      "RE": "RE1",
+      "boundary": {
+        "(Intercept)": {
+          "ci": {
+            "estimate": 0.0,
+            "lower": 0.0,
+            "successes": 0,
+            "trials": 2000,
+            "upper": 0.0013509442079184144
+          },
+          "count": 0,
+          "criterion_applies": false,
+          "rate": 0.0,
+          "true_sd": 0.75
+        }
+      },
+      "counts_full": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 48,
+        "fit_returned": 2000,
+        "inference_usable": 1952,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 32
+      },
+      "counts_reduced": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 75,
+        "fit_returned": 2000,
+        "inference_usable": 1925,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 19
+      },
+      "coverage_manifest": {
+        "missing": [],
+        "present": 2000,
+        "requested": 2000,
+        "status": "COMPLETE"
+      },
+      "endpoint": "SRR",
+      "het": "HET3",
+      "key": "N=180|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "seconds": 184.46963264301303,
+      "singular_full_rate": 0.0,
+      "tests": {
+        "h1/B/M2-M1": {
+          "coverage": {
+            "estimate": 0.9456967213114754,
+            "lower": 0.9366263537956399,
+            "successes": 1846,
+            "trials": 1952,
+            "upper": 0.9535332949693112
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.05430327868852459,
+            "lower": 0.04646670503068887,
+            "successes": 106,
+            "trials": 1952,
+            "upper": 0.06337364620436026
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 1952
+        },
+        "h1/B/M3-M2": {
+          "coverage": {
+            "estimate": 0.9456967213114754,
+            "lower": 0.9366263537956399,
+            "successes": 1846,
+            "trials": 1952,
+            "upper": 0.9535332949693112
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.05430327868852459,
+            "lower": 0.04646670503068887,
+            "successes": 106,
+            "trials": 1952,
+            "upper": 0.06337364620436026
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 1952
+        },
+        "h2/lrt_chisq4": {
+          "rejection": {
+            "estimate": 0.04842105263157895,
+            "lower": 0.04094341201513482,
+            "successes": 92,
+            "trials": 1900,
+            "upper": 0.057182934489935874
+          },
+          "role": "null",
+          "type_i_class": "CANDIDATE",
+          "valid": 1900
+        }
+      },
+      "usable_ci": {
+        "estimate": 0.976,
+        "lower": 0.9696949694803773,
+        "successes": 1952,
+        "trials": 2000,
+        "upper": 0.9810189316336845
+      },
+      "usable_class": "CANDIDATE",
+      "usable_rate": 0.976
+    },
+    {
+      "N": 240,
+      "R": 1,
+      "RE": "RE1",
+      "boundary": {
+        "(Intercept)": {
+          "ci": {
+            "estimate": 0.0,
+            "lower": 0.0,
+            "successes": 0,
+            "trials": 2000,
+            "upper": 0.0013509442079184144
+          },
+          "count": 0,
+          "criterion_applies": false,
+          "rate": 0.0,
+          "true_sd": 0.75
+        }
+      },
+      "counts_full": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 0,
+        "fit_returned": 2000,
+        "inference_usable": 2000,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 0
+      },
+      "counts_reduced": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 0,
+        "fit_returned": 2000,
+        "inference_usable": 2000,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 0
+      },
+      "coverage_manifest": {
+        "missing": [],
+        "present": 2000,
+        "requested": 2000,
+        "status": "COMPLETE"
+      },
+      "endpoint": "CSA",
+      "het": "HET2",
+      "key": "N=240|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "seconds": 182.06243393098703,
+      "singular_full_rate": 0.0,
+      "tests": {
+        "h1/B/M2-M1": {
+          "coverage": {
+            "estimate": 0.9355,
+            "lower": 0.9258639140630163,
+            "successes": 1871,
+            "trials": 2000,
+            "upper": 0.943959413531887
+          },
+          "coverage_class": "INCONCLUSIVE",
+          "rejection": {
+            "estimate": 0.0645,
+            "lower": 0.05604058646811316,
+            "successes": 129,
+            "trials": 2000,
+            "upper": 0.07413608593698379
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 2000
+        },
+        "h1/B/M3-M2": {
+          "coverage": {
+            "estimate": 0.94,
+            "lower": 0.9306564941354751,
+            "successes": 1880,
+            "trials": 2000,
+            "upper": 0.9481546749615566
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.06,
+            "lower": 0.05184532503844336,
+            "successes": 120,
+            "trials": 2000,
+            "upper": 0.06934350586452485
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 2000
+        },
+        "h2/lrt_chisq4": {
+          "rejection": {
+            "estimate": 0.0445,
+            "lower": 0.0375113777151351,
+            "successes": 89,
+            "trials": 2000,
+            "upper": 0.052719332458278576
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 2000
+        }
+      },
+      "usable_ci": {
+        "estimate": 1.0,
+        "lower": 0.9986490557920817,
+        "successes": 2000,
+        "trials": 2000,
+        "upper": 1.0
+      },
+      "usable_class": "CANDIDATE",
+      "usable_rate": 1.0
+    },
+    {
+      "N": 240,
+      "R": 1,
+      "RE": "RE1",
+      "boundary": {
+        "(Intercept)": {
+          "ci": {
+            "estimate": 0.0,
+            "lower": 0.0,
+            "successes": 0,
+            "trials": 2000,
+            "upper": 0.0013509442079184144
+          },
+          "count": 0,
+          "criterion_applies": false,
+          "rate": 0.0,
+          "true_sd": 0.75
+        }
+      },
+      "counts_full": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 0,
+        "fit_returned": 2000,
+        "inference_usable": 2000,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 0
+      },
+      "counts_reduced": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 0,
+        "fit_returned": 2000,
+        "inference_usable": 2000,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 0
+      },
+      "coverage_manifest": {
+        "missing": [],
+        "present": 2000,
+        "requested": 2000,
+        "status": "COMPLETE"
+      },
+      "endpoint": "CSA",
+      "het": "HET3",
+      "key": "N=240|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "seconds": 180.93029047100572,
+      "singular_full_rate": 0.0,
+      "tests": {
+        "h1/B/M2-M1": {
+          "coverage": {
+            "estimate": 0.953,
+            "lower": 0.9445851600583036,
+            "successes": 1906,
+            "trials": 2000,
+            "upper": 0.9601908844893222
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.047,
+            "lower": 0.03980911551067774,
+            "successes": 94,
+            "trials": 2000,
+            "upper": 0.05541483994169635
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 2000
+        },
+        "h1/B/M3-M2": {
+          "coverage": {
+            "estimate": 0.938,
+            "lower": 0.9285248391164135,
+            "successes": 1876,
+            "trials": 2000,
+            "upper": 0.94629173375745
+          },
+          "coverage_class": "INCONCLUSIVE",
+          "rejection": {
+            "estimate": 0.062,
+            "lower": 0.053708266242550054,
+            "successes": 124,
+            "trials": 2000,
+            "upper": 0.07147516088358648
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 2000
+        },
+        "h2/lrt_chisq4": {
+          "rejection": {
+            "estimate": 0.0465,
+            "lower": 0.03934907345077692,
+            "successes": 93,
+            "trials": 2000,
+            "upper": 0.05487623294580509
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 2000
+        }
+      },
+      "usable_ci": {
+        "estimate": 1.0,
+        "lower": 0.9986490557920817,
+        "successes": 2000,
+        "trials": 2000,
+        "upper": 1.0
+      },
+      "usable_class": "CANDIDATE",
+      "usable_rate": 1.0
+    },
+    {
+      "N": 240,
+      "R": 1,
+      "RE": "RE1",
+      "boundary": {
+        "(Intercept)": {
+          "ci": {
+            "estimate": 0.0,
+            "lower": 0.0,
+            "successes": 0,
+            "trials": 2000,
+            "upper": 0.0013509442079184144
+          },
+          "count": 0,
+          "criterion_applies": false,
+          "rate": 0.0,
+          "true_sd": 0.75
+        }
+      },
+      "counts_full": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 24,
+        "fit_returned": 2000,
+        "inference_usable": 1976,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 15
+      },
+      "counts_reduced": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 65,
+        "fit_returned": 2000,
+        "inference_usable": 1935,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 19
+      },
+      "coverage_manifest": {
+        "missing": [],
+        "present": 2000,
+        "requested": 2000,
+        "status": "COMPLETE"
+      },
+      "endpoint": "SRR",
+      "het": "HET2",
+      "key": "N=240|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "seconds": 239.89057709099143,
+      "singular_full_rate": 0.0,
+      "tests": {
+        "h1/B/M2-M1": {
+          "coverage": {
+            "estimate": 0.9418016194331984,
+            "lower": 0.9325193917544582,
+            "successes": 1861,
+            "trials": 1976,
+            "upper": 0.949875669893837
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.05819838056680162,
+            "lower": 0.05012433010616294,
+            "successes": 115,
+            "trials": 1976,
+            "upper": 0.06748060824554183
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 1976
+        },
+        "h1/B/M3-M2": {
+          "coverage": {
+            "estimate": 0.9483805668016194,
+            "lower": 0.9395630124136388,
+            "successes": 1874,
+            "trials": 1976,
+            "upper": 0.9559719527872655
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.05161943319838057,
+            "lower": 0.044028047212734435,
+            "successes": 102,
+            "trials": 1976,
+            "upper": 0.06043698758636113
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 1976
+        },
+        "h2/lrt_chisq4": {
+          "rejection": {
+            "estimate": 0.048286604361370715,
+            "lower": 0.04086630580296145,
+            "successes": 93,
+            "trials": 1926,
+            "upper": 0.05697420909292304
+          },
+          "role": "null",
+          "type_i_class": "CANDIDATE",
+          "valid": 1926
+        }
+      },
+      "usable_ci": {
+        "estimate": 0.988,
+        "lower": 0.9832847043035465,
+        "successes": 1976,
+        "trials": 2000,
+        "upper": 0.9913967741495252
+      },
+      "usable_class": "CANDIDATE",
+      "usable_rate": 0.988
+    },
+    {
+      "N": 240,
+      "R": 1,
+      "RE": "RE1",
+      "boundary": {
+        "(Intercept)": {
+          "ci": {
+            "estimate": 0.0,
+            "lower": 0.0,
+            "successes": 0,
+            "trials": 2000,
+            "upper": 0.0013509442079184144
+          },
+          "count": 0,
+          "criterion_applies": false,
+          "rate": 0.0,
+          "true_sd": 0.75
+        }
+      },
+      "counts_full": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 45,
+        "fit_returned": 2000,
+        "inference_usable": 1955,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 22
+      },
+      "counts_reduced": {
+        "boundary": {
+          "(Intercept)": 0
+        },
+        "convergence_failure": 0,
+        "convergence_warning": 93,
+        "fit_returned": 2000,
+        "inference_usable": 1907,
+        "invalid_inference": 0,
+        "numerical_failure": 0,
+        "singular": 0,
+        "vcov_warning": 31
+      },
+      "coverage_manifest": {
+        "missing": [],
+        "present": 2000,
+        "requested": 2000,
+        "status": "COMPLETE"
+      },
+      "endpoint": "SRR",
+      "het": "HET3",
+      "key": "N=240|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE1|target_scale=population_averaged",
+      "seconds": 237.5766940570029,
+      "singular_full_rate": 0.0,
+      "tests": {
+        "h1/B/M2-M1": {
+          "coverage": {
+            "estimate": 0.9473145780051151,
+            "lower": 0.9383682950551534,
+            "successes": 1852,
+            "trials": 1955,
+            "upper": 0.9550244860237295
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.052685421994884914,
+            "lower": 0.04497551397627052,
+            "successes": 103,
+            "trials": 1955,
+            "upper": 0.06163170494484664
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 1955
+        },
+        "h1/B/M3-M2": {
+          "coverage": {
+            "estimate": 0.9544757033248081,
+            "lower": 0.9460729937276197,
+            "successes": 1866,
+            "trials": 1955,
+            "upper": 0.9616222446812851
+          },
+          "coverage_class": "CANDIDATE",
+          "rejection": {
+            "estimate": 0.04552429667519182,
+            "lower": 0.03837775531871474,
+            "successes": 89,
+            "trials": 1955,
+            "upper": 0.05392700627238028
+          },
+          "role": "null",
+          "type_i_class": "INCONCLUSIVE",
+          "valid": 1955
+        },
+        "h2/lrt_chisq4": {
+          "rejection": {
+            "estimate": 0.04918032786885246,
+            "lower": 0.04162543157130054,
+            "successes": 93,
+            "trials": 1891,
+            "upper": 0.058023399318162264
+          },
+          "role": "null",
+          "type_i_class": "CANDIDATE",
+          "valid": 1891
+        }
+      },
+      "usable_ci": {
+        "estimate": 0.9775,
+        "lower": 0.9713659850777367,
+        "successes": 1955,
+        "trials": 2000,
+        "upper": 0.9823438632037014
+      },
+      "usable_class": "CANDIDATE",
+      "usable_rate": 0.9775
+    }
+  ],
+  "part_b": {
+    "1": {
+      "outcome": {
+        "N": 300,
+        "status": "NOT_SCREENING_FEASIBLE_AT_CAP"
+      },
+      "path": [
+        {
+          "N": 192,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=192|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=192|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=192|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=192|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.5215,
+              "lower": 0.5031103332054471,
+              "successes": 1043,
+              "trials": 2000,
+              "upper": 0.5398315761936124
+            },
+            "count": 1043,
+            "criterion_applies": true,
+            "rate": 0.5215,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 216,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=216|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=216|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=216|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=216|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.51,
+              "lower": 0.4916125650093659,
+              "successes": 1020,
+              "trials": 2000,
+              "upper": 0.5283604161064757
+            },
+            "count": 1020,
+            "criterion_applies": true,
+            "rate": 0.51,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 240,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=240|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=240|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=240|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=240|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.4955,
+              "lower": 0.47712922608206676,
+              "successes": 991,
+              "trials": 2000,
+              "upper": 0.5138829324158046
+            },
+            "count": 991,
+            "criterion_applies": true,
+            "rate": 0.4955,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 264,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=264|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=264|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=264|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=264|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.5125,
+              "lower": 0.4941112528639667,
+              "successes": 1025,
+              "trials": 2000,
+              "upper": 0.5308549735308353
+            },
+            "count": 1025,
+            "criterion_applies": true,
+            "rate": 0.5125,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 288,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=288|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=288|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=288|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=288|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.511,
+              "lower": 0.49261198505164805,
+              "successes": 1022,
+              "trials": 2000,
+              "upper": 0.5293582941757778
+            },
+            "count": 1022,
+            "criterion_applies": true,
+            "rate": 0.511,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 300,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=300|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=300|R=1|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=300|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=300|R=1|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.51,
+              "lower": 0.4916125650093659,
+              "successes": 1020,
+              "trials": 2000,
+              "upper": 0.5283604161064757
+            },
+            "count": 1020,
+            "criterion_applies": true,
+            "rate": 0.51,
+            "true_sd": 0.35
+          }
+        }
+      ]
+    },
+    "2": {
+      "outcome": {
+        "N": 300,
+        "status": "NOT_SCREENING_FEASIBLE_AT_CAP"
+      },
+      "path": [
+        {
+          "N": 156,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=156|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=156|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=156|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=156|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.312,
+              "lower": 0.2952230414102434,
+              "successes": 624,
+              "trials": 2000,
+              "upper": 0.32928491361193396
+            },
+            "count": 624,
+            "criterion_applies": true,
+            "rate": 0.312,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 180,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=180|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=180|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=180|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=180|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.3015,
+              "lower": 0.2848987308506906,
+              "successes": 603,
+              "trials": 2000,
+              "upper": 0.31863759399985303
+            },
+            "count": 603,
+            "criterion_applies": true,
+            "rate": 0.3015,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 204,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=204|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=204|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=204|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=204|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.3,
+              "lower": 0.28342467651120373,
+              "successes": 600,
+              "trials": 2000,
+              "upper": 0.31711570117196364
+            },
+            "count": 600,
+            "criterion_applies": true,
+            "rate": 0.3,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 228,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=228|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=228|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=228|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=228|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.2815,
+              "lower": 0.26526260534938856,
+              "successes": 563,
+              "trials": 2000,
+              "upper": 0.29832775726947186
+            },
+            "count": 563,
+            "criterion_applies": true,
+            "rate": 0.2815,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 252,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=252|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=252|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=252|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=252|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.256,
+              "lower": 0.24028547588084337,
+              "successes": 512,
+              "trials": 2000,
+              "upper": 0.2723737848926209
+            },
+            "count": 512,
+            "criterion_applies": true,
+            "rate": 0.256,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 276,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=276|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=276|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=276|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=276|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.2445,
+              "lower": 0.22904436828782337,
+              "successes": 489,
+              "trials": 2000,
+              "upper": 0.260645964202423
+            },
+            "count": 489,
+            "criterion_applies": true,
+            "rate": 0.2445,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 300,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=300|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=300|R=2|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=300|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=300|R=2|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.2315,
+              "lower": 0.21635547162553975,
+              "successes": 463,
+              "trials": 2000,
+              "upper": 0.24736998541411254
+            },
+            "count": 463,
+            "criterion_applies": true,
+            "rate": 0.2315,
+            "true_sd": 0.35
+          }
+        }
+      ]
+    },
+    "3": {
+      "outcome": {
+        "N": 180,
+        "status": "IDENTIFIABILITY_CANDIDATE"
+      },
+      "path": [
+        {
+          "N": 132,
+          "boundary_decision": "CLEAR_BOUNDARY_FAILURE",
+          "calibration_failures": [],
+          "cells": [
+            "N=132|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=132|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=132|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=132|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.2195,
+              "lower": 0.20466095643021281,
+              "successes": 439,
+              "trials": 2000,
+              "upper": 0.23509692327042947
+            },
+            "count": 439,
+            "criterion_applies": true,
+            "rate": 0.2195,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 156,
+          "boundary_decision": "INCONCLUSIVE",
+          "calibration_failures": [],
+          "cells": [
+            "N=156|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=156|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=156|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=156|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.212,
+              "lower": 0.19736127393729078,
+              "successes": 424,
+              "trials": 2000,
+              "upper": 0.22741686992647028
+            },
+            "count": 424,
+            "criterion_applies": true,
+            "rate": 0.212,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 168,
+          "boundary_decision": "INCONCLUSIVE",
+          "calibration_failures": [],
+          "cells": [
+            "N=168|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=168|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=168|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=168|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.199,
+              "lower": 0.18472656243646085,
+              "successes": 398,
+              "trials": 2000,
+              "upper": 0.2140867059767061
+            },
+            "count": 398,
+            "criterion_applies": true,
+            "rate": 0.199,
+            "true_sd": 0.35
+          }
+        },
+        {
+          "N": 180,
+          "boundary_decision": "IDENTIFIABILITY_CANDIDATE",
+          "calibration_failures": [],
+          "cells": [
+            "N=180|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET2|point=P0|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=180|R=3|anchor=policy_averaged_reference_probability|endpoint=CSA|het=HET3|point=P5|reference=0.75|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=180|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET2|point=P0|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged",
+            "N=180|R=3|anchor=policy_averaged_reference_probability|endpoint=SRR|het=HET3|point=P5|reference=0.18|revision_profile=MODERATE|scenario=NULL:zero|structure=RE2|target_scale=population_averaged"
+          ],
+          "worst_component": {
+            "ci": {
+              "estimate": 0.1805,
+              "lower": 0.16678886771143694,
+              "successes": 361,
+              "trials": 2000,
+              "upper": 0.195074385637423
+            },
+            "count": 361,
+            "criterion_applies": true,
+            "rate": 0.1805,
+            "true_sd": 0.35
+          }
+        }
+      ]
+    }
+  },
+  "schema_version": "crst-power-nbracketing-classification/0.1.0",
+  "stage": "screening"
+}
