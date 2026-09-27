@@ -1720,3 +1720,24 @@ created against the implementation commit, `implementation('v2')` reports
 NOT_FROZEN and live v2 execution refuses before any network request. The B0 and
 CRST pilot collection tests use the real freeze gate and fail with the same
 NOT_FROZEN message in this interval. No call has been made to either candidate.
+
+### Protocol-v2 implementation freeze revision r6 (2026-09-27)
+
+Revision 6, `configs/generator-qualification-implementation-freeze-v2-r6.json`,
+freezes the implementation that adds the pair revision profiles. It uses the
+existing freeze schema, names implementation commit
+`1083a4284f8a75b39fd8d7fcdf46744498b60eb3` ("feat: support generator pair
+revision profiles"), and pins `experiments/qualify_generators.py`
+(`75a1cb98a4313e5aeb5e19957ef6429ce79fca25ed267441530103c557e9d349`),
+`experiments/probe_generators.py`
+(`7fdaac97ad7cf736a757e4e0775351ab5d808206aa70af6e4920b97e233a1c3c`) and
+`experiments/validate_generator_qualification_fixtures.py`
+(`2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e`). The v1 and
+r1 to r5 records are unmodified and none can substitute for r6.
+
+With r6 present, `implementation('v2')` reports FROZEN, and the B0 and CRST pilot
+collection tests pass again. Qualification of `openai/gpt-6-sol` and
+`anthropic/claude-opus-5.5` remains blocked by the per-slot capability gate
+until each candidate's capability probe closes PASS. The offline previews are
+unchanged: one capability call and 12 qualification calls per candidate. No call
+has been made to either candidate.
