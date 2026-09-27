@@ -245,9 +245,9 @@ scores, rankings or policy outcome criteria are used. No LLM judge is used.
 
 The qualification runner, automated naturalized-output fidelity checks, audit
 storage and adjudication procedure are implemented, and the Protocol-v2
-implementation is **FROZEN** under revision r5
-(`configs/generator-qualification-implementation-freeze-v2-r5.json`, pinning
-implementation commit `b8aa5b70350a2d32590e7808d2a7396f83494299`). The frozen
+implementation is **FROZEN** under revision r7
+(`configs/generator-qualification-implementation-freeze-v2-r7.json`, pinning
+implementation commit `aec5026e8ebd506fd212273c9c6a31d788b2a689`). The frozen
 implementation supports native Protocol-v2 replay and offline adjudication; see
 [Generator Qualification](generator-qualification.md) §14. The 5%/2%
 length tolerances remain PROVISIONAL and are not pass/fail gates here. Generator

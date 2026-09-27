@@ -18,6 +18,14 @@ QUALIFIED by native Protocol-v2 Attempt-03 (0 Level-1 failures, 12 Level-2
 fluency findings). `anthropic/claude-sonnet-5` FAILS Protocol v2 (four Level-1
 terminal failures), and `anthropic/claude-opus-5` failed at the capability stage.
 
+**Generator pair revision (2026-09-27).** A prospective revision of the pair to
+G1 `openai/gpt-6-sol` and G2 `anthropic/claude-opus-5.5` was recorded and then
+withdrawn ([decisions](decisions.md), 2026-09-27). GPT-6 Sol passed its
+capability probe (Attempt-05), and Opus 5.5 failed it with an empty `high.N1`
+(Attempt-06). Because the aligned pair could not be formed, the amendment was
+withdrawn in full and GPT-6 Sol was not qualified. The active pair for final CRST
+naturalization is G1 `openai/gpt-5.6-sol` and G2 `anthropic/claude-fable-5.1`.
+
 **Historical Protocol v1.** Attempt-01 (Sol, Sonnet; closed 2026-09-18, §10) and
 Attempt-02 (Terra, G1 only; §13) were collected and adjudicated under Protocol
 v1, where Sol, Sonnet and Terra were each FAIL. Those results are preserved
@@ -36,6 +44,8 @@ CLOSED and unchanged; they do not qualify construction generators.
 | --- | --- | --- | --- |
 | G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | Primary Protocol-v1 FAIL (Attempt-01); fallback capability CLOSED/PASS (Capability Probe Attempt-03); fallback Generator Qualification Attempt-02 CLOSED, Protocol-v1 FAIL (§13); **Protocol-v2 (§14): Sol QUALIFIED, Terra QUALIFIED; G1 = Sol by frozen primary precedence, Terra qualified fallback** |
 | G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary Protocol-v1 FAIL (Attempt-01), **Protocol-v2 FAIL (§14; four Level-1 terminal failures)**; fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03), not re-adjudicated; **second-level G2 candidate `anthropic/claude-fable-5.1` (§12): capability CLOSED/PASS (Capability Probe Attempt-04); native Protocol-v2 Attempt-03 QUALIFIED (§14)**; selection criteria unchanged (§12) |
+| G1 (pair revision, 2026-09-27, withdrawn) | `openai/gpt-6-sol` | Reversion to `openai/gpt-5.6-sol` | Capability CLOSED/PASS (Capability Probe Attempt-05, profile `pair_revision_g1`); not qualified; amendment withdrawn, **G1 = `openai/gpt-5.6-sol`** |
+| G2 (pair revision, 2026-09-27, withdrawn) | `anthropic/claude-opus-5.5` | Reversion to `anthropic/claude-fable-5.1` | Capability CLOSED/FAIL, empty `high.N1` (Capability Probe Attempt-06, profile `pair_revision_g2`); not probed again; **G2 = `anthropic/claude-fable-5.1`** |
 
 **FROZEN:** use different OpenAI/Anthropic families/vendors to diversify
 naturalization provenance. Consider a fallback only if its corresponding primary
@@ -652,7 +662,7 @@ supports the capability preview (`--profile second_level_g2`: one G2 call) and
 native qualification (`--profile second_level_g2 --slot G2 --protocol-version
 v2`: the same 12 frozen fixtures as 12 G2 calls, no G1 call), so the capability
 PASS required no further source change. The implementation
-freeze covering this support is revision r5 (§14). Live qualification
+freeze covering this support is revision r7 (§14). Live qualification
 additionally requires an explicit `--output-directory`. The closed results (Sol, Terra, Sonnet, Opus and all
 Protocol-v1 and Protocol-v2 attempt artifacts) and the G1 resolution are not
 affected.
@@ -793,7 +803,7 @@ Terra, and Opus all remained not Generator-Qualified under Protocol v1; the
 later Protocol-v2 offline re-adjudication (§14) is recorded separately and
 does not alter this v1 closure.
 
-## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r5 Active; Generator Qualification Closed)
+## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r7 Active; Generator Qualification Closed)
 
 **Status.** The Protocol-v2 methodology is frozen and Generator Qualification is
 closed. The offline re-adjudication of the archived evidence is closed (Sol and
@@ -838,15 +848,30 @@ audit template, and the offline adjudication CLI loaded inputs, under Protocol v
 regardless of the archive. Both now use the protocol recorded in the archive's
 `qualification.json`, and the audit rules default to it. This changes
 `experiments/qualify_generators.py`, so revision 4 is in turn historical
-provenance. The active freeze record is revision 5,
-`configs/generator-qualification-implementation-freeze-v2-r5.json`, which names the
+provenance. Revision 5,
+`configs/generator-qualification-implementation-freeze-v2-r5.json`, names the
 implementation commit that carries the fix (`b8aa5b70350a2d32590e7808d2a7396f83494299`,
 "fix: support native protocol v2 replay") and freezes protocol-aware replay and
-offline adjudication as part of the implementation. With r5 present,
-`implementation('v2')` reports FROZEN; with it absent, or with any earlier record
-in its place, it reports NOT_FROZEN and live `--protocol-version v2 --execute`
-refuses before any network request. The revision suffix names the
-implementation freeze only; the procedure and audit versions remain
+offline adjudication as part of the implementation.
+
+The generator pair revision (`docs/decisions.md`, 2026-09-27) added the
+single-slot profiles `pair_revision_g1` (`openai/gpt-6-sol`) and
+`pair_revision_g2` (`anthropic/claude-opus-5.5`). This changes
+`experiments/probe_generators.py` and `experiments/qualify_generators.py`, so
+revision 5 is in turn historical provenance. Revision 6,
+`configs/generator-qualification-implementation-freeze-v2-r6.json`, names the
+implementation commit that carries the profiles
+(`1083a4284f8a75b39fd8d7fcdf46744498b60eb3`, "feat: support generator pair
+revision profiles"). Recording the capability closures of both candidates
+changed the pinned package hashes in `experiments/qualify_generators.py`. The
+active freeze record is revision 7,
+`configs/generator-qualification-implementation-freeze-v2-r7.json`, which names
+implementation commit `aec5026e8ebd506fd212273c9c6a31d788b2a689` ("results:
+close pair revision capability probes"). With r7 present, `implementation('v2')`
+reports FROZEN; with it absent, or with any earlier record in its place, it
+reports NOT_FROZEN and live `--protocol-version v2 --execute` refuses before any
+network request. The revision suffix names the implementation freeze only; the
+procedure and audit versions remain
 `generator-qualification-procedure/2.0.0` and `generator-manual-audit/2.0.0`.
 
 **Implementation freeze records.** All records use the same protocol-agnostic schema
@@ -881,11 +906,23 @@ already existed when the record was created:
   `experiments/probe_generators.py` SHA-256
   `b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`).
 - `configs/generator-qualification-implementation-freeze-v2-r5.json` (revision 5):
-  the active record; pins the implementation commit `b8aa5b70350a2d32590e7808d2a7396f83494299`
+  pins the implementation commit `b8aa5b70350a2d32590e7808d2a7396f83494299`
   (`experiments/qualify_generators.py` SHA-256
   `62d2796f804ae75556e0037355faadaf08757423b38401cef44f398c896d0c9f`;
   `experiments/probe_generators.py` SHA-256
   `b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`).
+- `configs/generator-qualification-implementation-freeze-v2-r6.json` (revision 6):
+  pins the implementation commit `1083a4284f8a75b39fd8d7fcdf46744498b60eb3`
+  (`experiments/qualify_generators.py` SHA-256
+  `75a1cb98a4313e5aeb5e19957ef6429ce79fca25ed267441530103c557e9d349`;
+  `experiments/probe_generators.py` SHA-256
+  `7fdaac97ad7cf736a757e4e0775351ab5d808206aa70af6e4920b97e233a1c3c`).
+- `configs/generator-qualification-implementation-freeze-v2-r7.json` (revision 7):
+  the active record; pins the implementation commit `aec5026e8ebd506fd212273c9c6a31d788b2a689`
+  (`experiments/qualify_generators.py` SHA-256
+  `5bb655d61a4ac558b3324bf3a2088ce661bdb58644339809cb3c3a6a0c5bdb9d`;
+  `experiments/probe_generators.py` SHA-256
+  `7fdaac97ad7cf736a757e4e0775351ab5d808206aa70af6e4920b97e233a1c3c`).
 
 `validate_generator_qualification_fixtures.py` is unchanged across all v2 revisions
 and `probe_generators.py` across revisions 1 and 2. `implementation('v1')` reads only the v1

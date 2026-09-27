@@ -34,6 +34,12 @@ FALLBACK_SLOTS = [dict(logical_call_id='G1', model='openai/gpt-5.6-terra', provi
 # Second-level G2 candidate: exact model identifier (no alias or :batch variant), first-party Anthropic route.
 SECOND_LEVEL_G2_CONFIG = ROOT / 'configs/generator-capability-probe-second-level-g2.yaml'
 SECOND_LEVEL_G2_SLOTS = [dict(logical_call_id='G2', model='anthropic/claude-fable-5.1', provider_order=['anthropic'])]
+# Generator pair revision candidates (2026-09-27), one single-slot profile each so that each slot is probed,
+# qualified and resolved independently. Exact identifiers, first-party routes.
+PAIR_REVISION_G1_CONFIG = ROOT / 'configs/generator-capability-probe-pair-revision-g1.yaml'
+PAIR_REVISION_G1_SLOTS = [dict(logical_call_id='G1', model='openai/gpt-6-sol', provider_order=['openai'])]
+PAIR_REVISION_G2_CONFIG = ROOT / 'configs/generator-capability-probe-pair-revision-g2.yaml'
+PAIR_REVISION_G2_SLOTS = [dict(logical_call_id='G2', model='anthropic/claude-opus-5.5', provider_order=['anthropic'])]
 VERSIONS = {'prompt_version': 'crst-naturalization-prompt/1.1.0',
             'input_contract_version': 'crst-naturalization-input/1.1.0',
             'output_schema_version': 'crst-naturalization-triplet/1.0.0'}
@@ -55,6 +61,14 @@ PROFILES = {
                             capability_result='NOT_ASSESSED', successful_attempt=None,
                             execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED',
                             preview_status='CAPABILITY_PROBE_SECOND_LEVEL_G2_NOT_EXECUTED'),
+    'pair_revision_g1': dict(config_path=PAIR_REVISION_G1_CONFIG, slots=PAIR_REVISION_G1_SLOTS, status='OPEN',
+                             capability_result='NOT_ASSESSED', successful_attempt=None,
+                             execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED',
+                             preview_status='CAPABILITY_PROBE_PAIR_REVISION_G1_NOT_EXECUTED'),
+    'pair_revision_g2': dict(config_path=PAIR_REVISION_G2_CONFIG, slots=PAIR_REVISION_G2_SLOTS, status='OPEN',
+                             capability_result='NOT_ASSESSED', successful_attempt=None,
+                             execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED',
+                             preview_status='CAPABILITY_PROBE_PAIR_REVISION_G2_NOT_EXECUTED'),
 }
 # Schema version marking the per-slot capability addition to a profile's config (optional; a
 # profile's config with no `slots:` section, such as the CLOSED primary, predates this and is read
@@ -283,7 +297,8 @@ def slot_capability(profile_name, slot):
 
 def request_body(bundle, slot, *, input_validator=None):
     (input_validator or validate_input)(bundle['input'])  # Also enforce at the public construction boundary.
-    require(any(slot in group for group in (SLOTS, FALLBACK_SLOTS, SECOND_LEVEL_G2_SLOTS)), 'Unknown probe slot')
+    require(any(slot in group for group in (SLOTS, FALLBACK_SLOTS, SECOND_LEVEL_G2_SLOTS,
+                                            PAIR_REVISION_G1_SLOTS, PAIR_REVISION_G2_SLOTS)), 'Unknown probe slot')
     return {'model': slot['model'],
             'provider': {'order': slot['provider_order'], 'allow_fallbacks': False, 'require_parameters': True},
             'messages': [{'role': 'system', 'content': bundle['contract']['prompt']},
@@ -566,8 +581,9 @@ def main(argv=None):
     parser.add_argument('--execute', action='store_true', help='Permit execution only together with --confirm-spend')
     parser.add_argument('--confirm-spend', action='store_true', help='Acknowledge model charges; also requires --execute')
     parser.add_argument('--profile', choices=sorted(PROFILES), default='primary',
-                        help='primary (CLOSED), the predeclared fallback (Terra/Opus), or the frozen '
-                             'second-level G2 candidate (second_level_g2)')
+                        help='primary (CLOSED), the predeclared fallback (Terra/Opus), the frozen '
+                             'second-level G2 candidate (second_level_g2), or a generator pair revision '
+                             'candidate (pair_revision_g1, pair_revision_g2)')
     parser.add_argument('--slot', choices=['G1', 'G2'], default=None,
                         help='Restrict to one logical call from the selected profile; omit for the '
                              'full profile (historical two-slot behavior, unchanged default)')

@@ -1,0 +1,9 @@
+{
+  "schema_version": "generator-qualification-implementation-freeze/1.0.0",
+  "implementation_commit": "aec5026e8ebd506fd212273c9c6a31d788b2a689",
+  "source_sha256": {
+    "experiments/qualify_generators.py": "5bb655d61a4ac558b3324bf3a2088ce661bdb58644339809cb3c3a6a0c5bdb9d",
+    "experiments/probe_generators.py": "7fdaac97ad7cf736a757e4e0775351ab5d808206aa70af6e4920b97e233a1c3c",
+    "experiments/validate_generator_qualification_fixtures.py": "2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e"
+  }
+}

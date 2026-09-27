@@ -1614,3 +1614,223 @@ scoring cross-check. The pilot is CLOSED with mechanical validation PASS.
   effect estimates, rankings, or inputs to power or sample-size decisions; none is
   interpreted here. The frozen pilot design and `configs/crst-small-pilot.yaml` are
   unchanged.
+
+## 2026-09-27 — Generator Pair Revised to GPT-6 Sol and Claude Opus 5.5
+
+The generator pair for final CRST naturalization is revised prospectively from
+`openai/gpt-5.6-sol` (G1) and `anthropic/claude-fable-5.1` (G2) to
+`openai/gpt-6-sol` (G1) and `anthropic/claude-opus-5.5` (G2). Both new
+candidates were released on 2026-09-22. The revision is recorded before final
+CRST generation, before any M1/M2/M3 outcome, and before any output from either
+new candidate has been observed.
+
+**Rationale.** The qualified pair spans two capability tiers: Fable 5.1 belongs
+to Anthropic's flagship tier, whereas GPT-5.6 Sol is a mid-to-high tier model
+of the previous OpenAI generation. The revised pair aligns the two slots by
+release generation and capability tier, so that the naturalized material is not
+shaped disproportionately by one generator's tier. The choice is based on the
+vendors' published model positioning. It does not use benchmark rankings,
+qualification outcomes, naturalization quality, or cost; cost continues to be
+logged descriptively only (generator-qualification.md §2).
+
+**Relation to earlier rules.** Section 2 of the generator qualification plan
+limits fallback activation to failure or unavailability of the corresponding
+primary. This revision is not a fallback activation. It is a design amendment
+that replaces the candidate pair after Generator Qualification had closed, and
+its timing is disclosed here for that reason. The recorded evidence and
+dispositions of Sol, Terra, Sonnet, Opus 5 and Fable are not modified.
+
+**Reversion rule.** The rule is fixed before any call to the new candidates.
+Each slot is resolved independently. If `openai/gpt-6-sol` fails its capability
+probe or qualification, G1 reverts to `openai/gpt-5.6-sol`. If
+`anthropic/claude-opus-5.5` fails either stage, G2 reverts to
+`anthropic/claude-fable-5.1`. Both reversion targets are already qualified
+under Protocol v2. No further candidate is considered, and a failed candidate
+is not probed or qualified again.
+
+**Identity and route.** The candidates are identified by the exact identifiers
+above, without moving aliases or `:batch` variants. Routing uses first-party
+providers only: `provider.order=["openai"]` for G1 and
+`provider.order=["anthropic"]` for G2, with `allow_fallbacks=false` and
+`require_parameters=true`. Azure, Amazon Bedrock, Google Vertex and OpenAI Flex
+endpoints are excluded. The dated model snapshot returned by the provider is
+recorded with each call.
+
+**Request package.** Both candidates use the existing request package without
+change: prompt `crst-naturalization-prompt/1.1.0`, input
+`crst-naturalization-input/1.1.0`, output schema
+`crst-naturalization-triplet/1.0.0`, low reasoning effort, a 16,384-token output
+limit, strict JSON-schema response, and the established transport and retry
+settings. The serialized schema, including its property order, is unchanged, so
+the new candidates are evaluated under the same conditions as the earlier ones.
+
+**Procedure.** Each candidate first receives one capability-probe call. A
+candidate that passes is qualified under native Protocol v2
+(`generator-qualification-procedure/2.0.0`, `generator-manual-audit/2.0.0`) on
+the same 12 qualification fixtures, 12 calls per candidate. Candidate profiles
+are defined in pinned sources, so a new implementation freeze revision is
+created before the first call.
+
+**Consequences for B0 and the pilot.** `B0_CONTEXT_TOKENS = 71` was derived from
+histories naturalized by Sol and Fable. Because the calibration generators
+should match the generators of the final CRST, a new B0 suffix calibration with
+the resulting pair is required once both slots are resolved. It follows the
+existing suffix procedure (`b0-suffix-collection/1.0.0`), with the same
+scenarios, retention criterion and exact-maximum rule. The value 71 remains the
+recorded result of the earlier calibration and is replaced only by a completed
+new derivation; if both slots revert, it remains in force. The CRST Small Pilot
+served as mechanical validation and is not repeated; its naturalization by Sol
+and Fable is part of its record.
+
+### Pair revision candidate profiles; implementation freeze r6 pending (2026-09-27)
+
+The two candidates were added as single-slot profiles in
+`experiments/probe_generators.py` and `experiments/qualify_generators.py`, so
+that each slot is probed, qualified and resolved independently.
+`pair_revision_g1` resolves G1 `openai/gpt-6-sol` from
+`configs/generator-capability-probe-pair-revision-g1.yaml` with
+`provider.order=["openai"]`. `pair_revision_g2` resolves G2
+`anthropic/claude-opus-5.5` from
+`configs/generator-capability-probe-pair-revision-g2.yaml` with
+`provider.order=["anthropic"]`. Both use `allow_fallbacks=false` and
+`require_parameters=true`.
+
+Each config equals `configs/generator-capability-probe-second-level-g2.yaml`
+except for the candidate identity, the slot record and the selection record. The
+per-slot capability is OPEN/NOT_ASSESSED with no evidence, and
+`output_directory` is null, so execution requires an explicit
+`--output-directory`. The request bodies equal the Fable request bodies except
+for `model` and `provider.order`, which the tests check for the probe input and
+for all 12 qualification fixtures. The config SHA-256 values are
+`c75bd27e9e56321dd1a66a9acf1ae89118ca0c887251e32b8f74d8e110169c44` (G1) and
+`76c883ba7a661f582edf4724f01702010bb88f7f72b92fe47fa8f349914304e2` (G2).
+
+The offline capability preview of each profile contains one call. The offline
+qualification preview (`--protocol-version v2`) contains 12 calls on the 12
+frozen fixtures for the profile's own slot only. Qualification of either
+candidate is blocked by the per-slot capability gate until its own capability
+probe closes PASS. The rule that single-slot runs need an explicit output
+directory now applies to every profile with one slot rather than to
+`second_level_g2` by name.
+
+The pinned sources changed, so revision 5 is historical provenance and the active
+v2 freeze target is revision 6,
+`configs/generator-qualification-implementation-freeze-v2-r6.json`. Until it is
+created against the implementation commit, `implementation('v2')` reports
+NOT_FROZEN and live v2 execution refuses before any network request. The B0 and
+CRST pilot collection tests use the real freeze gate and fail with the same
+NOT_FROZEN message in this interval. No call has been made to either candidate.
+
+### Protocol-v2 implementation freeze revision r6 (2026-09-27)
+
+Revision 6, `configs/generator-qualification-implementation-freeze-v2-r6.json`,
+freezes the implementation that adds the pair revision profiles. It uses the
+existing freeze schema, names implementation commit
+`1083a4284f8a75b39fd8d7fcdf46744498b60eb3` ("feat: support generator pair
+revision profiles"), and pins `experiments/qualify_generators.py`
+(`75a1cb98a4313e5aeb5e19957ef6429ce79fca25ed267441530103c557e9d349`),
+`experiments/probe_generators.py`
+(`7fdaac97ad7cf736a757e4e0775351ab5d808206aa70af6e4920b97e233a1c3c`) and
+`experiments/validate_generator_qualification_fixtures.py`
+(`2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e`). The v1 and
+r1 to r5 records are unmodified and none can substitute for r6.
+
+With r6 present, `implementation('v2')` reports FROZEN, and the B0 and CRST pilot
+collection tests pass again. Qualification of `openai/gpt-6-sol` and
+`anthropic/claude-opus-5.5` remains blocked by the per-slot capability gate
+until each candidate's capability probe closes PASS. The offline previews are
+unchanged: one capability call and 12 qualification calls per candidate. No call
+has been made to either candidate.
+
+## 2026-09-27 — Capability Probe Result Directories for the Revised Pair
+
+The official result directories of the two capability probes were fixed before
+either probe was run. The probe of `openai/gpt-6-sol` (profile
+`pair_revision_g1`) is archived at
+`results/generator-capability-probe/attempt-05`, and the probe of
+`anthropic/claude-opus-5.5` (profile `pair_revision_g2`) at
+`results/generator-capability-probe/attempt-06`. Neither directory existed when
+this entry was recorded. Each probe is launched with the matching
+`--output-directory`.
+
+## 2026-09-27 — Pair Revision Capability Probes and Withdrawal of the Pair Amendment
+
+**Probe results.** The capability probe of `openai/gpt-6-sol` (Attempt-05,
+profile `pair_revision_g1`) passed. Its single call returned HTTP 200 with finish
+reason `stop` and no refusal, and the response passed parsing and schema
+validation. The probe of `anthropic/claude-opus-5.5` (Attempt-06, profile
+`pair_revision_g2`) failed. Its call returned HTTP 200 from the first-party
+Anthropic route with native finish reason `end_turn`, no refusal and no
+truncation. The response parsed, but one field, `high.N1`, was an empty string,
+so schema validation failed with "Expected nonempty string". This is a terminal
+output-contract failure, to which no retry applies.
+
+| Attempt | Candidate | Result | `probe.json` SHA-256 | `SHA256SUMS` SHA-256 |
+| --- | --- | --- | --- | --- |
+| `results/generator-capability-probe/attempt-05` | `openai/gpt-6-sol` | PASS | `53a4cce7352856777ffaa0055fd8838c8bba888012ec13083bef039eccb83c8c` | `de9cf38b15ed4f2a0be620de4f2992a43318f89381f6a54ce0ee85401b8b1d21` |
+| `results/generator-capability-probe/attempt-06` | `anthropic/claude-opus-5.5` | FAIL | `84f673b3cdfee65dd4298493d31ee1f65b0622da6c3f56fba0c9708f7c77b550` | `9cf375647a3f970c25e1e5c8b035dd13a2ec92650d84cd5ea74af1aa88dccbda` |
+
+Both closures are recorded in the per-slot records of
+`configs/generator-capability-probe-pair-revision-g1.yaml` and
+`configs/generator-capability-probe-pair-revision-g2.yaml`, following the
+convention used for Fable 5.1 and Opus 5. The G2 record gives the reason
+"terminal output-contract failure, empty high.N1". Under the reversion rule, G2
+reverts to `anthropic/claude-fable-5.1`, and Opus 5.5 is not probed again.
+
+**Withdrawal of the amendment.** The amendment was made to form a pair aligned by
+release generation and capability tier. Without Opus 5.5 that pair cannot be
+formed, so the amendment is withdrawn in full and G1 also returns to
+`openai/gpt-5.6-sol`, although `openai/gpt-6-sol` passed its capability probe.
+This departs from the amendment's rule that each slot is resolved independently.
+The decision was taken after the G2 probe result was known and before any
+naturalization or qualification by `openai/gpt-6-sol`. Its only output is the
+capability-probe response, which was checked for mechanical compliance and not
+assessed semantically, and the decision does not rest on the quality of that
+output. Qualification of `openai/gpt-6-sol` was not run.
+
+The active pair for final CRST naturalization is therefore G1
+`openai/gpt-5.6-sol` and G2 `anthropic/claude-fable-5.1`, both qualified under
+Protocol v2. This is the pair from which `B0_CONTEXT_TOKENS = 71` was derived,
+so the value remains in force and no B0 recalibration is needed.
+
+**Implementation freeze r7.** Recording the closures changed both configs
+(SHA-256 `fd5da561d1a90a44770e5a1e06238416bc657ca15f80a800b1558ab4e1c9c462` for
+G1 and `34dcde71b5ef39b46a27e82ea85e8bfa05203077a7929fa63c4a10d098444818` for
+G2) and therefore the pinned package hashes in
+`experiments/qualify_generators.py`. Revision 7,
+`configs/generator-qualification-implementation-freeze-v2-r7.json`, names
+implementation commit `aec5026e8ebd506fd212273c9c6a31d788b2a689` ("results:
+close pair revision capability probes") and pins
+`experiments/qualify_generators.py`
+(`5bb655d61a4ac558b3324bf3a2088ce661bdb58644339809cb3c3a6a0c5bdb9d`),
+`experiments/probe_generators.py`
+(`7fdaac97ad7cf736a757e4e0775351ab5d808206aa70af6e4920b97e233a1c3c`) and
+`experiments/validate_generator_qualification_fixtures.py`
+(`2b099896e4f63022dbe54c08eaa6d37a2ff781625907943e4bf30c26f3604f3e`). Revision 6
+is historical provenance.
+
+**Empty-field observation.** The request serializes the output schema with
+sorted keys (`canonical()` in `experiments/probe_generators.py`). Variants
+therefore appear in the order high, low, medium, and events in the order I1–I7,
+N1, N2, Q, U1–U7, and generators write their fields in that order. The archived
+results contain seven responses with empty required fields. All come from
+Anthropic models, and all completed with HTTP 200, `end_turn` and no refusal:
+
+- `anthropic/claude-sonnet-5`, Generator Qualification Attempt-01
+  (`results/generator-qualification/attempt-01`): `gq-personal-preference-01`
+  (all 51 fields empty), `gq-service-subscription-01` (N1, N2 and Q in every
+  variant), `gq-project-planning-01` (`high.N2`) and `gq-task-assignment-01`
+  (`high.N1`).
+- `anthropic/claude-fable-5.1`, B0 calibration Attempt-01
+  `b0cal-software-configuration-01` (`high.N1`, `high.N2`, `high.Q`) and
+  Attempt-02 `b0cal-task-assignment-01` (`high.N1`).
+- `anthropic/claude-opus-5.5`, capability probe Attempt-06 (`high.N1`).
+
+Apart from the one response in which every field was empty, each empty field is
+N1, N2 or Q, and `high.N1` is empty in six of the seven responses. No archived
+response from `openai/gpt-5.6-sol`, `openai/gpt-5.6-terra` or `openai/gpt-6-sol`
+has an empty field. The pattern coincides with the sorted order, in which the
+same-state events and the question precede the revision events they follow in
+the conversation. It is recorded as an observational finding; no causal test was
+run. The contract is not changed, because every generator was qualified under the
+same serialized schema.

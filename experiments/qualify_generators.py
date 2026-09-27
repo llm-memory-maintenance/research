@@ -30,8 +30,13 @@ SCHEMA_HASH = 'c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917'
 FALLBACK_PACKAGE_HASH = '1316b2b1f3a7f5f15f64d5b3b2ef379c60f96edddff8b5f62bf0e712d7099e1b'
 # Execution package hash for the second-level G2 profile.
 SECOND_LEVEL_G2_PACKAGE_HASH = 'fb2c74eec9fea2ab49cee00e76cbe84ec7ce0fe2464e80bf84d157e82ec56180'
+# Execution package hashes for the generator pair revision profiles (2026-09-27).
+PAIR_REVISION_G1_PACKAGE_HASH = 'fd5da561d1a90a44770e5a1e06238416bc657ca15f80a800b1558ab4e1c9c462'
+PAIR_REVISION_G2_PACKAGE_HASH = '34dcde71b5ef39b46a27e82ea85e8bfa05203077a7929fa63c4a10d098444818'
 PACKAGE_HASHES = {'primary': PACKAGE_HASH, 'fallback': FALLBACK_PACKAGE_HASH,
-                  'second_level_g2': SECOND_LEVEL_G2_PACKAGE_HASH}
+                  'second_level_g2': SECOND_LEVEL_G2_PACKAGE_HASH,
+                  'pair_revision_g1': PAIR_REVISION_G1_PACKAGE_HASH,
+                  'pair_revision_g2': PAIR_REVISION_G2_PACKAGE_HASH}
 DEFAULT_OUTPUT = ROOT / 'results/generator-qualification/attempt-01'
 FALLBACK_DEFAULT_OUTPUT = ROOT / 'results/generator-qualification/attempt-02'
 PROCEDURE = 'generator-qualification-procedure/1.0.0'
@@ -42,10 +47,10 @@ SOURCES = ('experiments/qualify_generators.py', 'experiments/probe_generators.py
            'experiments/validate_generator_qualification_fixtures.py')
 FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze.json'
 # Implementation freeze records pin a commit and the SHA-256 of each file in SOURCES. FREEZE_RECORD covers
-# protocol v1. Protocol v2 uses revisioned records (-v2, -v2-r2, ..., -v2-r5): only the current revision,
+# protocol v1. Protocol v2 uses revisioned records (-v2, -v2-r2, ..., -v2-r7): only the current revision,
 # V2_FREEZE_RECORD, is consulted, and earlier revisions are kept as historical provenance. The revision
 # suffix is independent of the protocol version. implementation('v2') reports NOT_FROZEN until it exists.
-V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2-r5.json'
+V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2-r7.json'
 FREEZE_SCHEMA = 'generator-qualification-implementation-freeze/1.0.0'
 NOT_FROZEN = 'NOT YET FROZEN FOR LIVE EXECUTION'
 FROZEN = 'FROZEN FOR LIVE EXECUTION'
@@ -815,7 +820,8 @@ def main(argv=None):
     parser.add_argument('--confirm-spend', action='store_true')
     parser.add_argument('--profile', choices=sorted(probe.PROFILES), default='primary',
                         help='primary (CLOSED Attempt-01, FAIL/FAIL), the predeclared fallback (Terra/Opus), '
-                             'or the frozen second-level G2 candidate (second_level_g2, one G2 slot)')
+                             'the frozen second-level G2 candidate (second_level_g2, one G2 slot), or a '
+                             'generator pair revision candidate (pair_revision_g1, pair_revision_g2; one slot each)')
     parser.add_argument('--slot', choices=['G1', 'G2'], default=None,
                         help='Restrict Generator Qualification to one candidate slot (12 calls); '
                              'omit for the full profile (historical 24-call behavior, unchanged default)')
@@ -848,9 +854,9 @@ def main(argv=None):
             parser.error('--attempt/--audit alone requires either --adjudication-output or --v2-mapping-output')
     output_directory = args.output_directory
     if output_directory is None:
-        if args.slot is not None or args.profile == 'second_level_g2':
+        if args.slot is not None or len(probe.PROFILES[args.profile]['slots']) == 1:
             # Single-slot runs have no default result path, so execution needs an explicit
-            # --output-directory. second_level_g2 has a single slot.
+            # --output-directory. second_level_g2 and the pair revision profiles have a single slot.
             if args.execute:
                 parser.error('Single-slot execution requires an explicit --output-directory; no '
                              'official single-slot result-path convention exists yet')
