@@ -1614,3 +1614,70 @@ scoring cross-check. The pilot is CLOSED with mechanical validation PASS.
   effect estimates, rankings, or inputs to power or sample-size decisions; none is
   interpreted here. The frozen pilot design and `configs/crst-small-pilot.yaml` are
   unchanged.
+
+## 2026-09-27 — Generator Pair Revised to GPT-6 Sol and Claude Opus 5.5
+
+The generator pair for final CRST naturalization is revised prospectively from
+`openai/gpt-5.6-sol` (G1) and `anthropic/claude-fable-5.1` (G2) to
+`openai/gpt-6-sol` (G1) and `anthropic/claude-opus-5.5` (G2). Both new
+candidates were released on 2026-09-22. The revision is recorded before final
+CRST generation, before any M1/M2/M3 outcome, and before any output from either
+new candidate has been observed.
+
+**Rationale.** The qualified pair spans two capability tiers: Fable 5.1 belongs
+to Anthropic's flagship tier, whereas GPT-5.6 Sol is a mid-to-high tier model
+of the previous OpenAI generation. The revised pair aligns the two slots by
+release generation and capability tier, so that the naturalized material is not
+shaped disproportionately by one generator's tier. The choice is based on the
+vendors' published model positioning. It does not use benchmark rankings,
+qualification outcomes, naturalization quality, or cost; cost continues to be
+logged descriptively only (generator-qualification.md §2).
+
+**Relation to earlier rules.** Section 2 of the generator qualification plan
+limits fallback activation to failure or unavailability of the corresponding
+primary. This revision is not a fallback activation. It is a design amendment
+that replaces the candidate pair after Generator Qualification had closed, and
+its timing is disclosed here for that reason. The recorded evidence and
+dispositions of Sol, Terra, Sonnet, Opus 5 and Fable are not modified.
+
+**Reversion rule.** The rule is fixed before any call to the new candidates.
+Each slot is resolved independently. If `openai/gpt-6-sol` fails its capability
+probe or qualification, G1 reverts to `openai/gpt-5.6-sol`. If
+`anthropic/claude-opus-5.5` fails either stage, G2 reverts to
+`anthropic/claude-fable-5.1`. Both reversion targets are already qualified
+under Protocol v2. No further candidate is considered, and a failed candidate
+is not probed or qualified again.
+
+**Identity and route.** The candidates are identified by the exact identifiers
+above, without moving aliases or `:batch` variants. Routing uses first-party
+providers only: `provider.order=["openai"]` for G1 and
+`provider.order=["anthropic"]` for G2, with `allow_fallbacks=false` and
+`require_parameters=true`. Azure, Amazon Bedrock, Google Vertex and OpenAI Flex
+endpoints are excluded. The dated model snapshot returned by the provider is
+recorded with each call.
+
+**Request package.** Both candidates use the existing request package without
+change: prompt `crst-naturalization-prompt/1.1.0`, input
+`crst-naturalization-input/1.1.0`, output schema
+`crst-naturalization-triplet/1.0.0`, low reasoning effort, a 16,384-token output
+limit, strict JSON-schema response, and the established transport and retry
+settings. The serialized schema, including its property order, is unchanged, so
+the new candidates are evaluated under the same conditions as the earlier ones.
+
+**Procedure.** Each candidate first receives one capability-probe call. A
+candidate that passes is qualified under native Protocol v2
+(`generator-qualification-procedure/2.0.0`, `generator-manual-audit/2.0.0`) on
+the same 12 qualification fixtures, 12 calls per candidate. Candidate profiles
+are defined in pinned sources, so a new implementation freeze revision is
+created before the first call.
+
+**Consequences for B0 and the pilot.** `B0_CONTEXT_TOKENS = 71` was derived from
+histories naturalized by Sol and Fable. Because the calibration generators
+should match the generators of the final CRST, a new B0 suffix calibration with
+the resulting pair is required once both slots are resolved. It follows the
+existing suffix procedure (`b0-suffix-collection/1.0.0`), with the same
+scenarios, retention criterion and exact-maximum rule. The value 71 remains the
+recorded result of the earlier calibration and is replaced only by a completed
+new derivation; if both slots revert, it remains in force. The CRST Small Pilot
+served as mechanical validation and is not repeated; its naturalization by Sol
+and Fable is part of its record.
