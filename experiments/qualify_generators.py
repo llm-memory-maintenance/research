@@ -31,8 +31,8 @@ FALLBACK_PACKAGE_HASH = '1316b2b1f3a7f5f15f64d5b3b2ef379c60f96edddff8b5f62bf0e71
 # Execution package hash for the second-level G2 profile.
 SECOND_LEVEL_G2_PACKAGE_HASH = 'fb2c74eec9fea2ab49cee00e76cbe84ec7ce0fe2464e80bf84d157e82ec56180'
 # Execution package hashes for the generator pair revision profiles (2026-09-27).
-PAIR_REVISION_G1_PACKAGE_HASH = 'c75bd27e9e56321dd1a66a9acf1ae89118ca0c887251e32b8f74d8e110169c44'
-PAIR_REVISION_G2_PACKAGE_HASH = '76c883ba7a661f582edf4724f01702010bb88f7f72b92fe47fa8f349914304e2'
+PAIR_REVISION_G1_PACKAGE_HASH = 'fd5da561d1a90a44770e5a1e06238416bc657ca15f80a800b1558ab4e1c9c462'
+PAIR_REVISION_G2_PACKAGE_HASH = '34dcde71b5ef39b46a27e82ea85e8bfa05203077a7929fa63c4a10d098444818'
 PACKAGE_HASHES = {'primary': PACKAGE_HASH, 'fallback': FALLBACK_PACKAGE_HASH,
                   'second_level_g2': SECOND_LEVEL_G2_PACKAGE_HASH,
                   'pair_revision_g1': PAIR_REVISION_G1_PACKAGE_HASH,
@@ -47,10 +47,10 @@ SOURCES = ('experiments/qualify_generators.py', 'experiments/probe_generators.py
            'experiments/validate_generator_qualification_fixtures.py')
 FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze.json'
 # Implementation freeze records pin a commit and the SHA-256 of each file in SOURCES. FREEZE_RECORD covers
-# protocol v1. Protocol v2 uses revisioned records (-v2, -v2-r2, ..., -v2-r6): only the current revision,
+# protocol v1. Protocol v2 uses revisioned records (-v2, -v2-r2, ..., -v2-r7): only the current revision,
 # V2_FREEZE_RECORD, is consulted, and earlier revisions are kept as historical provenance. The revision
 # suffix is independent of the protocol version. implementation('v2') reports NOT_FROZEN until it exists.
-V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2-r6.json'
+V2_FREEZE_RECORD = ROOT / 'configs/generator-qualification-implementation-freeze-v2-r7.json'
 FREEZE_SCHEMA = 'generator-qualification-implementation-freeze/1.0.0'
 NOT_FROZEN = 'NOT YET FROZEN FOR LIVE EXECUTION'
 FROZEN = 'FROZEN FOR LIVE EXECUTION'

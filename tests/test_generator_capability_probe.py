@@ -888,19 +888,35 @@ def test_explicit_output_directory_is_accepted_and_preview_needs_none(monkeypatc
 
 
 # --- Generator pair revision (docs/decisions.md, 2026-09-27): openai/gpt-6-sol (G1) and
-# anthropic/claude-opus-5.5 (G2), one single-slot profile each. These tests read config and build
-# requests offline; no call has been made to either candidate.
+# anthropic/claude-opus-5.5 (G2), one single-slot profile each. Each capability probe has closed: G1 PASS in
+# Attempt-05 and G2 FAIL in Attempt-06. These tests read config, archived evidence and requests offline.
 
 PAIR_REVISION = {
     'pair_revision_g1': dict(config='configs/generator-capability-probe-pair-revision-g1.yaml',
-                             sha256='c75bd27e9e56321dd1a66a9acf1ae89118ca0c887251e32b8f74d8e110169c44',
+                             sha256='fd5da561d1a90a44770e5a1e06238416bc657ca15f80a800b1558ab4e1c9c462',
                              slot=dict(logical_call_id='G1', model='openai/gpt-6-sol', provider_order=['openai']),
-                             reverts_to='openai/gpt-5.6-sol'),
+                             reverts_to='openai/gpt-5.6-sol',
+                             capability=dict(status='CLOSED', capability_result='PASS', reason=None,
+                                             evidence_attempt='attempt-05',
+                                             evidence_path='results/generator-capability-probe/attempt-05',
+                                             evidence_sha256='53a4cce7352856777ffaa0055fd8838c8bba888012ec13083bef039eccb83c8c')),
     'pair_revision_g2': dict(config='configs/generator-capability-probe-pair-revision-g2.yaml',
-                             sha256='76c883ba7a661f582edf4724f01702010bb88f7f72b92fe47fa8f349914304e2',
+                             sha256='34dcde71b5ef39b46a27e82ea85e8bfa05203077a7929fa63c4a10d098444818',
                              slot=dict(logical_call_id='G2', model='anthropic/claude-opus-5.5',
                                        provider_order=['anthropic']),
-                             reverts_to='anthropic/claude-fable-5.1'),
+                             reverts_to='anthropic/claude-fable-5.1',
+                             capability=dict(status='CLOSED', capability_result='FAIL',
+                                             reason='terminal output-contract failure, empty high.N1',
+                                             evidence_attempt='attempt-06',
+                                             evidence_path='results/generator-capability-probe/attempt-06',
+                                             evidence_sha256='84f673b3cdfee65dd4298493d31ee1f65b0622da6c3f56fba0c9708f7c77b550')),
+}
+
+
+# Config hashes at probe time, before the per-slot closure was recorded.
+PAIR_REVISION_PROBED_CONFIG_SHA256 = {
+    'pair_revision_g1': 'c75bd27e9e56321dd1a66a9acf1ae89118ca0c887251e32b8f74d8e110169c44',
+    'pair_revision_g2': '76c883ba7a661f582edf4724f01702010bb88f7f72b92fe47fa8f349914304e2',
 }
 
 
@@ -928,14 +944,64 @@ def test_pair_revision_candidate_identity_and_first_party_route(profile):
 
 
 @pytest.mark.parametrize('profile', sorted(PAIR_REVISION))
-def test_pair_revision_config_is_pinned_valid_and_not_yet_assessed(profile):
+def test_pair_revision_config_is_pinned_valid_and_capability_is_closed(profile):
+    """The per-slot record (the convention used for Fable and Opus 5) closes capability for exactly this
+    model and cites its own attempt; it does not qualify the generator."""
     expected = PAIR_REVISION[profile]
     assert p.file_hash(p.ROOT / expected['config']) == expected['sha256']
     bundle = pair_revision_bundle(profile)  # Raises on any deviation from the frozen package/contract/input.
     assert bundle['config']['output_directory'] is None and bundle['config']['generator_status'] == 'CANDIDATE'
-    assert p.slot_capability(profile, expected['slot']) == {
-        'model': expected['slot']['model'], 'status': 'OPEN', 'capability_result': 'NOT_ASSESSED', 'reason': None,
-        'evidence_attempt': None, 'evidence_path': None, 'evidence_sha256': None}
+    assert (bundle['config']['status'], bundle['config']['capability_result']) == ('OPEN', 'NOT_ASSESSED')
+    assert p.slot_capability(profile, expected['slot']) == {'model': expected['slot']['model'],
+                                                            **expected['capability']}
+
+
+@pytest.mark.parametrize('profile', sorted(PAIR_REVISION))
+def test_pair_revision_recorded_evidence_is_the_archived_probe_and_execution_fields_are_unchanged(profile):
+    """The recorded SHA-256 is that of the archived probe.json for one call to this candidate; every
+    non-capability field of the config equals the configuration that produced it."""
+    expected = PAIR_REVISION[profile]
+    attempt = p.ROOT / expected['capability']['evidence_path']
+    sha256 = expected['capability']['evidence_sha256']
+    assert p.file_hash(attempt / 'probe.json') == sha256
+    assert (attempt / 'SHA256SUMS').read_text(encoding='utf-8').split() == [sha256, 'probe.json']
+    archived = json.loads((attempt / 'probe.json').read_text(encoding='utf-8'))
+    result = expected['capability']['capability_result']
+    assert archived['status'] == result
+    assert [(c['logical_call_id'], c['status']) for c in archived['logical_calls']] == [
+        (expected['slot']['logical_call_id'], result)]
+    assert archived['provenance']['config_sha256'] == PAIR_REVISION_PROBED_CONFIG_SHA256[profile]
+    current = yaml.safe_load((p.ROOT / expected['config']).read_text(encoding='utf-8'))
+    assert {k for k in {*archived['config'], *current} if archived['config'].get(k) != current.get(k)} == {'slots'}
+    assert archived['config']['logical_calls'] == current['logical_calls'] == [expected['slot']]
+
+
+def test_opus_5_5_failure_is_a_terminal_output_contract_failure_with_one_empty_field():
+    """Attempt-06 completed with HTTP 200 and end_turn and no refusal or truncation; the structured response
+    parsed but failed schema validation because exactly one field, high.N1, was an empty string."""
+    archived = json.loads((p.ROOT / 'results/generator-capability-probe/attempt-06/probe.json').read_text(
+        encoding='utf-8'))
+    assert archived['failure_reason'] == 'G2: Expected nonempty string; STOP FOR ADJUDICATION'
+    [call] = archived['logical_calls']
+    [attempt] = call['attempts']
+    assert call['failure_reason'] == attempt['failure_reason'] == 'Expected nonempty string'
+    assert (attempt['http_status'], attempt['finish_reason'], attempt['native_finish_reason']) == (200, 'stop', 'end_turn')
+    assert attempt['refusal'] is False and attempt['incomplete_or_truncated'] is False
+    assert (attempt['parse_status'], attempt['schema_status']) == ('passed', 'failed')
+    assert attempt['returned_model'] == 'anthropic/claude-opus-5.5' and attempt['observed_selected_provider'] == 'Anthropic'
+    response = attempt['parsed_structured_response']
+    assert [f'{v}.{e}' for v in response for e in response[v] if not response[v][e].strip()] == ['high.N1']
+
+
+@pytest.mark.parametrize('profile', sorted(PAIR_REVISION))
+def test_closed_pair_revision_slot_cannot_be_reprobed(profile, monkeypatch, tmp_path):
+    """Re-running either closed probe is refused before any output directory or network client."""
+    result = PAIR_REVISION[profile]['capability']['capability_result']
+    monkeypatch.setenv('OPENROUTER_API_KEY', 'test-secret-must-never-be-sent')
+    output = tmp_path / 'must-not-be-created'
+    with pytest.raises(ValueError, match=f'capability already CLOSED/{result}; reopening requires adjudication'):
+        p.main(['--profile', profile, '--execute', '--confirm-spend', '--output-directory', str(output)])
+    assert not output.exists()
 
 
 @pytest.mark.parametrize('profile', sorted(PAIR_REVISION))

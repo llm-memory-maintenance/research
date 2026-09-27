@@ -1,7 +1,6 @@
-# Generator pair revision candidate for slot G2 (docs/decisions.md, 2026-09-27). Recorded before any
-# capability-probe or qualification call to this candidate; no output from it has been observed. Same
-# structure and request package as configs/generator-capability-probe-second-level-g2.yaml; only the
-# candidate identity differs. The per-slot capability schema identifier is shared with the fallback config.
+# Generator pair revision candidate for slot G2 (docs/decisions.md, 2026-09-27). Same structure and request
+# package as configs/generator-capability-probe-second-level-g2.yaml; only the candidate identity differs.
+# The per-slot capability schema identifier is shared with the fallback config.
 schema_version: generator-capability-probe-fallback-config/1.1.0
 status: OPEN
 capability_result: NOT_ASSESSED
@@ -13,15 +12,15 @@ execution_compatibility: UNVERIFIED
 slots:
   G2:
     model: anthropic/claude-opus-5.5
-    status: OPEN
-    capability_result: NOT_ASSESSED
-    reason: null
-    evidence_attempt: null
-    evidence_path: null
-    evidence_sha256: null
+    status: CLOSED
+    capability_result: FAIL
+    reason: terminal output-contract failure, empty high.N1
+    evidence_attempt: attempt-06
+    evidence_path: results/generator-capability-probe/attempt-06
+    evidence_sha256: 84f673b3cdfee65dd4298493d31ee1f65b0622da6c3f56fba0c9708f7c77b550
 # Selection basis: alignment of the pair by release generation and capability tier, from the vendors'
 # published model positioning. Availability, first-party route and structured-output support are
-# researcher-attested; the capability probe is their first empirical test.
+# researcher-attested at selection time; the capability probe was their first empirical test.
 candidate_selection:
   role: revised G2 candidate (Anthropic-family slot)
   candidate: anthropic/claude-opus-5.5
