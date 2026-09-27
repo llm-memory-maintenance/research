@@ -1741,3 +1741,14 @@ collection tests pass again. Qualification of `openai/gpt-6-sol` and
 until each candidate's capability probe closes PASS. The offline previews are
 unchanged: one capability call and 12 qualification calls per candidate. No call
 has been made to either candidate.
+
+## 2026-09-27 — Capability Probe Result Directories for the Revised Pair
+
+The official result directories of the two capability probes were fixed before
+either probe was run. The probe of `openai/gpt-6-sol` (profile
+`pair_revision_g1`) is archived at
+`results/generator-capability-probe/attempt-05`, and the probe of
+`anthropic/claude-opus-5.5` (profile `pair_revision_g2`) at
+`results/generator-capability-probe/attempt-06`. Neither directory existed when
+this entry was recorded. Each probe is launched with the matching
+`--output-directory`.

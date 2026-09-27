@@ -18,6 +18,14 @@ QUALIFIED by native Protocol-v2 Attempt-03 (0 Level-1 failures, 12 Level-2
 fluency findings). `anthropic/claude-sonnet-5` FAILS Protocol v2 (four Level-1
 terminal failures), and `anthropic/claude-opus-5` failed at the capability stage.
 
+**Generator pair revision (2026-09-27).** The pair for final CRST naturalization
+was revised prospectively to G1 `openai/gpt-6-sol` and G2
+`anthropic/claude-opus-5.5` ([decisions](decisions.md), 2026-09-27). Neither
+candidate has been through its capability probe yet. Each slot is resolved
+independently: a candidate that fails its capability probe or qualification is
+replaced by the earlier qualified generator, `openai/gpt-5.6-sol` for G1 and
+`anthropic/claude-fable-5.1` for G2.
+
 **Historical Protocol v1.** Attempt-01 (Sol, Sonnet; closed 2026-09-18, §10) and
 Attempt-02 (Terra, G1 only; §13) were collected and adjudicated under Protocol
 v1, where Sol, Sonnet and Terra were each FAIL. Those results are preserved
@@ -36,6 +44,8 @@ CLOSED and unchanged; they do not qualify construction generators.
 | --- | --- | --- | --- |
 | G1: OpenAI family | `openai/gpt-5.6-sol` | `openai/gpt-5.6-terra` | Primary Protocol-v1 FAIL (Attempt-01); fallback capability CLOSED/PASS (Capability Probe Attempt-03); fallback Generator Qualification Attempt-02 CLOSED, Protocol-v1 FAIL (§13); **Protocol-v2 (§14): Sol QUALIFIED, Terra QUALIFIED; G1 = Sol by frozen primary precedence, Terra qualified fallback** |
 | G2: Anthropic family | `anthropic/claude-sonnet-5` | `anthropic/claude-opus-5` | Primary Protocol-v1 FAIL (Attempt-01), **Protocol-v2 FAIL (§14; four Level-1 terminal failures)**; fallback capability CLOSED/FAIL by refusal (Capability Probe Attempt-03), not re-adjudicated; **second-level G2 candidate `anthropic/claude-fable-5.1` (§12): capability CLOSED/PASS (Capability Probe Attempt-04); native Protocol-v2 Attempt-03 QUALIFIED (§14)**; selection criteria unchanged (§12) |
+| G1 (pair revision, 2026-09-27) | `openai/gpt-6-sol` | Reversion to `openai/gpt-5.6-sol` | Capability not yet tested (profile `pair_revision_g1`) |
+| G2 (pair revision, 2026-09-27) | `anthropic/claude-opus-5.5` | Reversion to `anthropic/claude-fable-5.1` | Capability not yet tested (profile `pair_revision_g2`) |
 
 **FROZEN:** use different OpenAI/Anthropic families/vendors to diversify
 naturalization provenance. Consider a fallback only if its corresponding primary
