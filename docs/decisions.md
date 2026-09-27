@@ -1681,3 +1681,42 @@ recorded result of the earlier calibration and is replaced only by a completed
 new derivation; if both slots revert, it remains in force. The CRST Small Pilot
 served as mechanical validation and is not repeated; its naturalization by Sol
 and Fable is part of its record.
+
+### Pair revision candidate profiles; implementation freeze r6 pending (2026-09-27)
+
+The two candidates were added as single-slot profiles in
+`experiments/probe_generators.py` and `experiments/qualify_generators.py`, so
+that each slot is probed, qualified and resolved independently.
+`pair_revision_g1` resolves G1 `openai/gpt-6-sol` from
+`configs/generator-capability-probe-pair-revision-g1.yaml` with
+`provider.order=["openai"]`. `pair_revision_g2` resolves G2
+`anthropic/claude-opus-5.5` from
+`configs/generator-capability-probe-pair-revision-g2.yaml` with
+`provider.order=["anthropic"]`. Both use `allow_fallbacks=false` and
+`require_parameters=true`.
+
+Each config equals `configs/generator-capability-probe-second-level-g2.yaml`
+except for the candidate identity, the slot record and the selection record. The
+per-slot capability is OPEN/NOT_ASSESSED with no evidence, and
+`output_directory` is null, so execution requires an explicit
+`--output-directory`. The request bodies equal the Fable request bodies except
+for `model` and `provider.order`, which the tests check for the probe input and
+for all 12 qualification fixtures. The config SHA-256 values are
+`c75bd27e9e56321dd1a66a9acf1ae89118ca0c887251e32b8f74d8e110169c44` (G1) and
+`76c883ba7a661f582edf4724f01702010bb88f7f72b92fe47fa8f349914304e2` (G2).
+
+The offline capability preview of each profile contains one call. The offline
+qualification preview (`--protocol-version v2`) contains 12 calls on the 12
+frozen fixtures for the profile's own slot only. Qualification of either
+candidate is blocked by the per-slot capability gate until its own capability
+probe closes PASS. The rule that single-slot runs need an explicit output
+directory now applies to every profile with one slot rather than to
+`second_level_g2` by name.
+
+The pinned sources changed, so revision 5 is historical provenance and the active
+v2 freeze target is revision 6,
+`configs/generator-qualification-implementation-freeze-v2-r6.json`. Until it is
+created against the implementation commit, `implementation('v2')` reports
+NOT_FROZEN and live v2 execution refuses before any network request. The B0 and
+CRST pilot collection tests use the real freeze gate and fail with the same
+NOT_FROZEN message in this interval. No call has been made to either candidate.

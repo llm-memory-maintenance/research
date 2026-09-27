@@ -793,7 +793,7 @@ Terra, and Opus all remained not Generator-Qualified under Protocol v1; the
 later Protocol-v2 offline re-adjudication (§14) is recorded separately and
 does not alter this v1 closure.
 
-## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r5 Active; Generator Qualification Closed)
+## 14. Protocol v2 — Two-Level Quality Model (Methodology FROZEN; Implementation Freeze r6 Pending; Generator Qualification Closed)
 
 **Status.** The Protocol-v2 methodology is frozen and Generator Qualification is
 closed. The offline re-adjudication of the archived evidence is closed (Sol and
@@ -838,14 +838,23 @@ audit template, and the offline adjudication CLI loaded inputs, under Protocol v
 regardless of the archive. Both now use the protocol recorded in the archive's
 `qualification.json`, and the audit rules default to it. This changes
 `experiments/qualify_generators.py`, so revision 4 is in turn historical
-provenance. The active freeze record is revision 5,
-`configs/generator-qualification-implementation-freeze-v2-r5.json`, which names the
+provenance. Revision 5,
+`configs/generator-qualification-implementation-freeze-v2-r5.json`, names the
 implementation commit that carries the fix (`b8aa5b70350a2d32590e7808d2a7396f83494299`,
 "fix: support native protocol v2 replay") and freezes protocol-aware replay and
-offline adjudication as part of the implementation. With r5 present,
-`implementation('v2')` reports FROZEN; with it absent, or with any earlier record
-in its place, it reports NOT_FROZEN and live `--protocol-version v2 --execute`
-refuses before any network request. The revision suffix names the
+offline adjudication as part of the implementation.
+
+The generator pair revision (`docs/decisions.md`, 2026-09-27) added the
+single-slot profiles `pair_revision_g1` (`openai/gpt-6-sol`) and
+`pair_revision_g2` (`anthropic/claude-opus-5.5`). This changes
+`experiments/probe_generators.py` and `experiments/qualify_generators.py`, so
+revision 5 is in turn historical provenance. The active freeze target is
+revision 6, `configs/generator-qualification-implementation-freeze-v2-r6.json`,
+which is created against the implementation commit; until then
+`implementation('v2')` reports NOT_FROZEN. With the active record absent, or with
+any earlier record in its place, it reports NOT_FROZEN and live
+`--protocol-version v2 --execute` refuses before any network request. The revision
+suffix names the
 implementation freeze only; the procedure and audit versions remain
 `generator-qualification-procedure/2.0.0` and `generator-manual-audit/2.0.0`.
 
@@ -881,7 +890,7 @@ already existed when the record was created:
   `experiments/probe_generators.py` SHA-256
   `b48729d6603fa2f5abdf4c468d67ed7e00e335162abf4fbf7f86d680d33248c0`).
 - `configs/generator-qualification-implementation-freeze-v2-r5.json` (revision 5):
-  the active record; pins the implementation commit `b8aa5b70350a2d32590e7808d2a7396f83494299`
+  pins the implementation commit `b8aa5b70350a2d32590e7808d2a7396f83494299`
   (`experiments/qualify_generators.py` SHA-256
   `62d2796f804ae75556e0037355faadaf08757423b38401cef44f398c896d0c9f`;
   `experiments/probe_generators.py` SHA-256

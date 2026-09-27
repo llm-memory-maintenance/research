@@ -1,0 +1,78 @@
+# Generator pair revision candidate for slot G2 (docs/decisions.md, 2026-09-27). Recorded before any
+# capability-probe or qualification call to this candidate; no output from it has been observed. Same
+# structure and request package as configs/generator-capability-probe-second-level-g2.yaml; only the
+# candidate identity differs. The per-slot capability schema identifier is shared with the fallback config.
+schema_version: generator-capability-probe-fallback-config/1.1.0
+status: OPEN
+capability_result: NOT_ASSESSED
+execution_package: UNDER_DEVELOPMENT
+execution_compatibility: UNVERIFIED
+# The profile-level fields above are validated against probe_generators.PROFILES; the per-slot record below
+# is authoritative for capability. It applies only to the exact model named: a slot naming a different
+# model has no recorded evidence. Capability compatibility is not Generator Qualification.
+slots:
+  G2:
+    model: anthropic/claude-opus-5.5
+    status: OPEN
+    capability_result: NOT_ASSESSED
+    reason: null
+    evidence_attempt: null
+    evidence_path: null
+    evidence_sha256: null
+# Selection basis: alignment of the pair by release generation and capability tier, from the vendors'
+# published model positioning. Availability, first-party route and structured-output support are
+# researcher-attested; the capability probe is their first empirical test.
+candidate_selection:
+  role: revised G2 candidate (Anthropic-family slot)
+  candidate: anthropic/claude-opus-5.5
+  identifier_policy: exact identifier; moving aliases and the :batch variant are excluded
+  provider_route: first-party Anthropic via provider.order [anthropic] with allow_fallbacks false and require_parameters true; Amazon Bedrock and Google Vertex endpoints are excluded
+  frozen_on: '2026-09-27'
+  frozen_before_any_output: true
+  basis: Anthropic family; released 2026-09-22; same release generation and capability tier as the revised G1 candidate; available through OpenRouter with a first-party Anthropic route; structured-output support; exact identifier available
+  reversion: on capability or qualification failure G2 reverts to anthropic/claude-fable-5.1 (qualified under Protocol v2); no further candidate is considered
+  on_capability_fail: record and stop; the slot reverts and the candidate is not probed again
+parameter_semantics: HIDDEN_REASONING_EQUIVALENCE_NOT_CLAIMED
+generator_status: CANDIDATE
+execution_mode: standard
+logical_calls:
+  - logical_call_id: G2
+    model: anthropic/claude-opus-5.5
+    provider_order: [anthropic]
+allow_fallbacks: false
+require_parameters: true
+prompt_version: crst-naturalization-prompt/1.1.0
+input_contract_version: crst-naturalization-input/1.1.0
+output_schema_version: crst-naturalization-triplet/1.0.0
+# Shared naturalization contract, identical for all candidate profiles.
+contract_path: configs/generator-naturalization-contract.json
+contract_sha256: 3ac8a05ac25a0d7473887979392a825da2f6ee84b1a5b77f1b6e6d6b465b86ee
+contract_document_path: docs/generator-naturalization-contract.md
+contract_document_sha256: 0bdf2ec4e042e3e75645eb364b7ae87512d00511750c9e98ab27810404f99250
+prompt_sha256: a7b7013488d27b95962d1131d4d635eb065238b92e87f2b654d817a01d99d279
+output_schema_sha256: c0970e798666467520b3b33fc2657424c52ecf8be3a97d502f056156257cb917
+# Shared probe-only synthetic input, independent of candidate identity.
+input_path: data/generator-capability-probe/probe-input.json
+input_sha256: da0e7e3e420e84d6c6ac9f0ccf702df09f29fa441c96660c2efe71634442d4b4
+input_identity: generator-capability-probe-only-v1
+input_purpose: CAPABILITY-PROBE-ONLY
+input_domain: Software Configuration
+input_origin: Independently authored synthetic gateway configuration; no external evidence content.
+input_allocation_scope: Probe-local secondary allocation; not a general CRST freeze.
+# Identical to the package used for all earlier candidates except candidate identity; temperature and
+# top_p are intentionally omitted.
+generation:
+  reasoning_effort: low
+  max_output_tokens: 16384
+wire_mapping:
+  max_output_tokens: max_tokens
+  reasoning_effort: reasoning.effort
+  output_schema: response_format.json_schema.schema
+  strict: response_format.json_schema.strict
+transport:
+  per_attempt_deadline_seconds: 300
+  max_infrastructure_retries: 2
+  backoff_seconds: [1, 2]
+  retryable_http_statuses: [408, 429, 500, 502, 503, 504]
+# Unset: execution requires an explicit --output-directory.
+output_directory: null

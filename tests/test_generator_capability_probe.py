@@ -773,7 +773,7 @@ def test_second_level_g2_profile_resolves_exactly_one_frozen_candidate():
     assert profile['slots'] == [FABLE_SLOT] and profile['config_path'] == SECOND_LEVEL_G2_CONFIG
     assert profile['status'] == 'OPEN' and profile['capability_result'] == 'NOT_ASSESSED'  # Capability is recorded per slot.
     assert profile['successful_attempt'] is None and profile['execution_package'] == 'UNDER_DEVELOPMENT'
-    assert sorted(p.PROFILES) == ['fallback', 'primary', 'second_level_g2']
+    assert sorted(p.PROFILES) == ['fallback', 'pair_revision_g1', 'pair_revision_g2', 'primary', 'second_level_g2']
     # Existing profiles are untouched.
     assert [s['model'] for s in p.SLOTS] == ['openai/gpt-5.6-sol', 'anthropic/claude-sonnet-5']
     assert [s['model'] for s in p.FALLBACK_SLOTS] == ['openai/gpt-5.6-terra', 'anthropic/claude-opus-5']
@@ -859,7 +859,7 @@ def test_closed_candidates_and_their_configs_untouched_by_second_level_freeze():
     assert p.SLOTS[1]['model'] == 'anthropic/claude-sonnet-5' and p.FALLBACK_SLOTS[1]['model'] == 'anthropic/claude-opus-5'
 
 
-@pytest.mark.parametrize('profile', ['second_level_g2', 'fallback'])
+@pytest.mark.parametrize('profile', ['second_level_g2', 'fallback', 'pair_revision_g1', 'pair_revision_g2'])
 def test_execute_without_output_directory_fails_explicitly_before_network(monkeypatch, capsys, profile):
     """These profiles configure output_directory as null, so execution must require --output-directory
     instead of failing later with a TypeError; the check is generic, not specific to one candidate."""
@@ -885,3 +885,125 @@ def test_explicit_output_directory_is_accepted_and_preview_needs_none(monkeypatc
     assert calls == [(output, ['G2'])]
     assert p.main(['--profile', 'second_level_g2']) == 0  # Preview is unaffected.
     assert json.loads(capsys.readouterr().out)['expected_logical_calls'] == 1
+
+
+# --- Generator pair revision (docs/decisions.md, 2026-09-27): openai/gpt-6-sol (G1) and
+# anthropic/claude-opus-5.5 (G2), one single-slot profile each. These tests read config and build
+# requests offline; no call has been made to either candidate.
+
+PAIR_REVISION = {
+    'pair_revision_g1': dict(config='configs/generator-capability-probe-pair-revision-g1.yaml',
+                             sha256='c75bd27e9e56321dd1a66a9acf1ae89118ca0c887251e32b8f74d8e110169c44',
+                             slot=dict(logical_call_id='G1', model='openai/gpt-6-sol', provider_order=['openai']),
+                             reverts_to='openai/gpt-5.6-sol'),
+    'pair_revision_g2': dict(config='configs/generator-capability-probe-pair-revision-g2.yaml',
+                             sha256='76c883ba7a661f582edf4724f01702010bb88f7f72b92fe47fa8f349914304e2',
+                             slot=dict(logical_call_id='G2', model='anthropic/claude-opus-5.5',
+                                       provider_order=['anthropic']),
+                             reverts_to='anthropic/claude-fable-5.1'),
+}
+
+
+def pair_revision_bundle(profile):
+    return p.load_bundle(p.ROOT / PAIR_REVISION[profile]['config'], slots=[PAIR_REVISION[profile]['slot']],
+                         status='OPEN', capability_result='NOT_ASSESSED', successful_attempt=None,
+                         execution_package='UNDER_DEVELOPMENT', execution_compatibility='UNVERIFIED')
+
+
+@pytest.mark.parametrize('profile', sorted(PAIR_REVISION))
+def test_pair_revision_candidate_identity_and_first_party_route(profile):
+    expected = PAIR_REVISION[profile]
+    config = yaml.safe_load((p.ROOT / expected['config']).read_text(encoding='utf-8'))
+    slot_id, model = expected['slot']['logical_call_id'], expected['slot']['model']
+    assert config['candidate_selection']['candidate'] == config['slots'][slot_id]['model'] == model
+    assert set(config['slots']) == {slot_id}
+    # Exact identifier: no moving alias, no variant suffix.
+    assert not model.startswith('~') and ':' not in model and 'latest' not in model and 'batch' not in model
+    assert config['logical_calls'] == [expected['slot']]
+    assert config['allow_fallbacks'] is False and config['require_parameters'] is True
+    selection = config['candidate_selection']
+    assert selection['frozen_before_any_output'] is True and selection['frozen_on'] == '2026-09-27'
+    assert expected['reverts_to'] in selection['reversion']
+    assert 'benchmark' not in selection['basis'].lower()
+
+
+@pytest.mark.parametrize('profile', sorted(PAIR_REVISION))
+def test_pair_revision_config_is_pinned_valid_and_not_yet_assessed(profile):
+    expected = PAIR_REVISION[profile]
+    assert p.file_hash(p.ROOT / expected['config']) == expected['sha256']
+    bundle = pair_revision_bundle(profile)  # Raises on any deviation from the frozen package/contract/input.
+    assert bundle['config']['output_directory'] is None and bundle['config']['generator_status'] == 'CANDIDATE'
+    assert p.slot_capability(profile, expected['slot']) == {
+        'model': expected['slot']['model'], 'status': 'OPEN', 'capability_result': 'NOT_ASSESSED', 'reason': None,
+        'evidence_attempt': None, 'evidence_path': None, 'evidence_sha256': None}
+
+
+@pytest.mark.parametrize('profile', sorted(PAIR_REVISION))
+def test_pair_revision_config_equals_the_second_level_config_except_candidate_identity(profile):
+    expected = PAIR_REVISION[profile]
+    config = yaml.safe_load((p.ROOT / expected['config']).read_text(encoding='utf-8'))
+    reference = yaml.safe_load(SECOND_LEVEL_G2_CONFIG.read_text(encoding='utf-8'))
+    assert set(config) == set(reference)
+    assert {k for k in config if config[k] != reference[k]} == {'slots', 'logical_calls', 'candidate_selection'}
+    assert pair_revision_bundle(profile)['contract'] == second_level_bundle()['contract']
+    assert pair_revision_bundle(profile)['input'] == second_level_bundle()['input']
+
+
+@pytest.mark.parametrize('profile', sorted(PAIR_REVISION))
+def test_pair_revision_request_is_the_earlier_package_with_only_identity_and_route_changed(profile):
+    slot = PAIR_REVISION[profile]['slot']
+    body = p.request_body(pair_revision_bundle(profile), slot)
+    fable_body = p.request_body(second_level_bundle(), FABLE_SLOT)
+    assert body == {**fable_body, 'model': slot['model'],
+                    'provider': {'order': slot['provider_order'], 'allow_fallbacks': False, 'require_parameters': True}}
+    assert not {'temperature', 'top_p', 'tools'} & body.keys() and body['reasoning'] == {'effort': 'low'}
+    assert body['max_tokens'] == 16384 and body['response_format']['json_schema']['strict'] is True
+
+
+def test_pair_revision_profiles_each_resolve_exactly_one_candidate():
+    assert p.PAIR_REVISION_G1_SLOTS == [PAIR_REVISION['pair_revision_g1']['slot']]
+    assert p.PAIR_REVISION_G2_SLOTS == [PAIR_REVISION['pair_revision_g2']['slot']]
+    for name, expected in PAIR_REVISION.items():
+        profile = p.PROFILES[name]
+        assert profile['slots'] == [expected['slot']] and profile['config_path'] == p.ROOT / expected['config']
+        assert (profile['status'], profile['capability_result']) == ('OPEN', 'NOT_ASSESSED')
+        assert profile['successful_attempt'] is None and profile['execution_package'] == 'UNDER_DEVELOPMENT'
+    # Earlier profiles keep their candidates.
+    assert p.SECOND_LEVEL_G2_SLOTS == [FABLE_SLOT]
+    assert [s['model'] for s in p.SLOTS] == ['openai/gpt-5.6-sol', 'anthropic/claude-sonnet-5']
+
+
+@pytest.mark.parametrize('profile', sorted(PAIR_REVISION))
+def test_pair_revision_offline_capability_preview_is_one_call(profile, capsys):
+    slot = PAIR_REVISION[profile]['slot']
+    for argv in (['--profile', profile], ['--profile', profile, '--slot', slot['logical_call_id']]):
+        assert p.main(argv) == 0  # Offline: network is blocked by the fixture.
+        shown = json.loads(capsys.readouterr().out)
+        assert shown['status'] == f'CAPABILITY_PROBE_{profile.upper()}_NOT_EXECUTED'
+        assert shown['candidate_profile'] == profile.upper() and shown['expected_logical_calls'] == 1
+        assert [(r['logical_call_id'], r['requested_model'], r['requested_provider_order'])
+                for r in shown['requests']] == [(slot['logical_call_id'], slot['model'], slot['provider_order'])]
+        assert shown['config_sha256'] == PAIR_REVISION[profile]['sha256'] and shown['output_directory'] is None
+
+
+@pytest.mark.parametrize('profile', sorted(PAIR_REVISION))
+def test_pair_revision_cli_rejects_the_other_slot_and_ungated_execution(profile, monkeypatch, tmp_path):
+    other = 'G2' if PAIR_REVISION[profile]['slot']['logical_call_id'] == 'G1' else 'G1'
+    with pytest.raises(SystemExit):  # Never a silent zero-call selection.
+        p.main(['--profile', profile, '--slot', other])
+    with pytest.raises(SystemExit):
+        p.main(['--profile', profile, '--execute'])  # Needs BOTH --execute and --confirm-spend.
+    monkeypatch.delenv('OPENROUTER_API_KEY', raising=False)
+    output = tmp_path / 'must-not-be-created'
+    with pytest.raises(SystemExit):
+        p.main(['--profile', profile, '--execute', '--confirm-spend', '--output-directory', str(output)])
+    assert not output.exists()
+
+
+def test_pair_revision_slots_carry_no_evidence_from_earlier_candidates():
+    """Recorded evidence for Sol, Terra or Fable never authorizes the new candidate in the same slot."""
+    for name, expected in PAIR_REVISION.items():
+        for model in ('openai/gpt-5.6-sol', 'openai/gpt-5.6-terra', 'anthropic/claude-fable-5.1'):
+            got = p.slot_capability(name, dict(expected['slot'], model=model))
+            assert (got['status'], got['capability_result'], got['evidence_sha256']) == ('OPEN', 'NOT_ASSESSED', None)
+    assert p.slot_capability('second_level_g2', FABLE_SLOT)['capability_result'] == 'PASS'
