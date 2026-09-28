@@ -73,17 +73,17 @@ Each variant contains two controlled Noop opportunities:
 
 The sequence is therefore:
 
-I1-I7 -> U1-U6 -> N1 -> U7 -> N2 -> Q
+I1–I7 -> U1–U6 -> N1 -> U7 -> N2 -> Q
 
 N1 reaffirms information whose current state is already represented and provides a controlled opportunity for the Noop operation.
 
 N2 occurs after the final target update and concerns secondary information.
 
-The semantic content of a Noop opportunity must not introduce a new state or invalidate an existing current state.
+The semantic content of a Noop opportunity is not allowed to introduce a new state or invalidate an existing current state.
 
 ### 2.5 Target-Value Constraints
 
-Target revisions must satisfy the following constraints:
+Target revisions are subject to the following constraints:
 
 - every explicit target revision changes the current target value;
 - a superseded target value does not become current again later in the same scenario;
@@ -104,13 +104,13 @@ The secondary information serves several controlled roles, including:
 - distractor information; and
 - the secondary Noop opportunity.
 
-At least one secondary information unit acts as a comparatively difficult distractor.
+One secondary information unit is the hard distractor; it is distinct from the N2 secondary.
 
 One secondary information unit is reserved for the N2 reaffirmation and is not updated elsewhere in the same variant.
 
 The remaining secondary information units may receive updates as required to fill non-target update positions.
 
-The exact assignment of secondary roles must be fixed in the structured scenario representation before natural-language realization.
+The exact assignment of secondary roles is fixed in the structured scenario representation before natural-language realization.
 
 ### 2.7 Scenario Domains
 
@@ -118,15 +118,15 @@ CRST contains 12 scenario domains.
 
 Domains provide semantic diversity and are not treated as a primary experimental factor.
 
-Each domain must support scenarios in which information can be revised naturally without requiring specialized external knowledge.
+Each domain has to support scenarios in which information can be revised naturally without requiring specialized external knowledge.
 
-The final domain inventory is fixed before final CRST generation.
+The 12 domains are listed in the CRST specification (Section 2).
 
 ### 2.8 Structured Representation
 
 Each CRST scenario is defined first in a structured representation.
 
-The structured representation must record at least:
+The structured representation is required to record at least:
 
 - scenario identifier;
 - domain;
@@ -149,7 +149,7 @@ The structured representation is the authoritative source for experimental groun
 
 Natural-language realization converts the validated structured scenario into multi-turn conversational text.
 
-The realization process must preserve:
+The realization process is required to preserve:
 
 - entity identity;
 - attribute identity;
@@ -159,15 +159,15 @@ The realization process must preserve:
 - final current state; and
 - expected answer.
 
-Naturalization must not add information that changes the structured ground truth.
+Naturalization is not allowed to add information that changes the structured ground truth.
 
-The final naturalization procedure and generator configuration remain to be fixed before CRST generation.
+Naturalization uses the qualified generators and the shared contract in [generator-naturalization-contract.md](generator-naturalization-contract.md). The naturalization failure policy for the final CRST is open (Section 5).
 
 ### 2.10 Validation
 
 CRST validation is performed before the main experiment.
 
-Automatic validation must verify at least:
+Automatic validation is required to verify at least:
 
 - required event counts;
 - target-update placement;
@@ -179,7 +179,7 @@ Automatic validation must verify at least:
 
 The final generated CRST dataset is additionally subject to exhaustive manual review before it is frozen for confirmatory execution.
 
-No M1, M2, or M3 comparative results may be used to revise the dataset after the confirmatory dataset has been frozen.
+After the confirmatory dataset has been frozen, no M1, M2, or M3 comparative results are used to revise it.
 
 ## 3. LongMemEval-S Knowledge Update Subset
 
@@ -231,18 +231,18 @@ The historical audit evidence is preserved under:
 
 `data/longmemeval/audit/`
 
-The audit is not repeated as part of the new experimental implementation.
+The audit is not repeated.
 
 ### 3.4 Subset Construction
 
-The executable LongMemEval-S subset must be reconstructed deterministically from:
+The executable LongMemEval-S subset is required to be reconstructed deterministically from:
 
 1. the verified raw source dataset; and
 2. `frozen_usable_ids.json`.
 
 A separate manually edited copy of the 56-instance subset is not treated as an authoritative data source.
 
-The reconstruction procedure must fail if:
+The reconstruction procedure is required to fail if:
 
 - the source hash differs from the expected hash;
 - a frozen identifier cannot be found;
@@ -264,7 +264,7 @@ The same frozen LongMemEval-S instances are evaluated under all persistent memor
 
 ## 4. Dataset Versioning
 
-The following artifacts must be fixed before confirmatory execution:
+The following artifacts have to be fixed before confirmatory execution:
 
 - final CRST structured dataset;
 - final CRST natural-language dataset;
@@ -273,7 +273,7 @@ The following artifacts must be fixed before confirmatory execution:
 - LongMemEval-S source hash; and
 - LongMemEval-S usable-instance identifiers.
 
-Generated experimental results must record the exact dataset versions or hashes used during execution.
+Generated experimental results are required to record the exact dataset versions or hashes used during execution.
 
 ## 5. Open Dataset Decisions
 
@@ -281,10 +281,9 @@ The following dataset-related decisions remain open:
 
 - final number of CRST base scenarios;
 - final number of technical repetitions;
-- final CRST domain inventory;
-- final naturalization generator configuration;
-- final naturalization prompt;
+- naturalization failure policy for the final CRST, covering both non-evaluable and Level-1 failures;
+- generator assignment mechanism and seed for the final CRST;
 - exact machine-readable CRST schema; and
 - final automatic-validation implementation.
 
-These decisions must be fixed before the confirmatory dataset is frozen.
+These decisions have to be fixed before the confirmatory dataset is frozen.

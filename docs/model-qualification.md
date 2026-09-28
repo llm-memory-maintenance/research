@@ -20,7 +20,7 @@ Qualification is completed before any comparative M1, M2, or M3 experiment.
 
 ## 2. Scope
 
-The model must support four experimental functions:
+The model is required to support four areas of the experimental procedure:
 
 1. memory extraction;
 2. memory maintenance;
@@ -28,9 +28,8 @@ The model must support four experimental functions:
 4. API interface and accounting requirements.
 
 Qualification uses synthetic technical fixtures that are separate from CRST
-and LongMemEval-S.
-
-No CRST or LongMemEval-S experimental instance is used during qualification.
+and LongMemEval-S. No CRST or LongMemEval-S experimental instance is used
+during qualification.
 
 ## 3. Memory Representation
 
@@ -72,7 +71,7 @@ Expected current proposition:
 - attribute: locker_color
 - value: cobalt
 
-The superseded value must not be extracted as the current value.
+Extracting the superseded value as the current value is a failure.
 
 ### 4.2 Maintenance
 
@@ -110,7 +109,7 @@ Expected operation:
 
 update
 
-The existing locker-color memory item must be selected as the update target.
+The expected update target is the existing locker-color memory item.
 
 M3 tests Noop.
 
@@ -157,7 +156,7 @@ Expected answer:
 
 cobalt
 
-The model must not answer amber.
+An answer of amber is a failure.
 
 ### 4.4 End-to-End Interface
 
@@ -197,17 +196,13 @@ The qualification consists of ten logical model calls:
 - three calls forming one end-to-end fixture: extraction, maintenance, and
   answering.
 
-Calls are stateless at the API level.
-
-Required state is supplied explicitly by the qualification program.
-
-Concurrency is one.
-
-Automatic provider fallback is disabled.
+Calls are stateless at the API level. Required state is supplied explicitly by
+the qualification program. Concurrency is one. Automatic provider fallback is
+disabled.
 
 ## 6. Response Validation
 
-Every structured response must:
+Every structured response is required to:
 
 1. return successfully;
 2. contain parseable JSON;
@@ -250,11 +245,11 @@ No numerical model score is produced.
 
 ## 8. Failure Handling
 
-A failed qualification does not authorize repeated changes until a passing
-result is obtained.
+A failed qualification does not license a cycle of repeated changes that
+continues until a passing result is obtained.
 
 Any material change to the model, provider, prompts, schemas, generation
-parameters, or qualification criteria must be documented before a new
+parameters, or qualification criteria requires documentation before a new
 qualification run.
 
 Infrastructure retry behavior follows the frozen transport configuration.

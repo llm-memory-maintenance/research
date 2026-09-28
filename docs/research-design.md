@@ -49,7 +49,7 @@ incremental contribution of the maintenance operations:
 - M2: Add + Update
 - M3: Add + Update + Noop
 
-The M1-M2 comparison isolates the addition of Update, while the M2-M3
+The M1–M2 comparison isolates the addition of Update, while the M2–M3
 comparison isolates the addition of Noop. These comparisons are additionally
 evaluated under controlled levels of repeated information revision.
 
@@ -93,12 +93,12 @@ Each base scenario contains seven initial information units:
 - one target information unit;
 - six secondary information units.
 
-The initial information sequence I1-I7 establishes the same starting memory
+The initial information sequence I1–I7 establishes the same starting memory
 state for all persistent-memory policies.
 
 Each CRST variant contains:
 
-- seven update events, U1-U7;
+- seven update events, U1–U7;
 - two Noop opportunities, N1 and N2;
 - one final query.
 
@@ -123,8 +123,8 @@ Target values do not return to a previously superseded value.
 The dataset spans 12 scenario domains. Domain is used to diversify scenarios
 and is not treated as a primary experimental factor.
 
-The final CRST dataset must be validated before the confirmatory experiment is
-executed.
+Validation of the final CRST dataset is required before the confirmatory
+experiment is executed.
 
 ## 6. External Validation
 
@@ -152,7 +152,7 @@ The main experiment uses one fixed language model configuration.
 
 Cross-model performance comparison is outside the scope of the study.
 
-The planned reference backbone is:
+The reference backbone is:
 
 `meta-llama/llama-3.1-8b-instruct`
 
@@ -160,12 +160,14 @@ This model is selected for methodological comparability with the LLaMA-3.1-8B
 backbone setting reported by Hu et al. (2026), the closest prior work to the
 maintenance-operation comparison investigated in this study.
 
-The selection is made before the main M1-M3 experiment and is not based on
+The selection is made before the main M1–M3 experiment and is not based on
 observed treatment effects.
 
-Before the experimental configuration is frozen, the selected model must pass
-a technical qualification confirming that it can reliably support the required
-research procedure, including:
+Before the experimental configuration was frozen, the selected model passed a
+technical qualification (Model Qualification official Attempt 3; see
+[model-qualification.md](model-qualification.md) and [decisions.md](decisions.md))
+confirming that it can reliably support the required research procedure,
+including:
 
 - memory extraction;
 - structured maintenance decisions;
@@ -176,9 +178,6 @@ research procedure, including:
 
 Technical qualification is not a model benchmark or model-selection
 competition.
-
-If the planned backbone cannot satisfy the required technical contract, any
-fallback must be defined before the main experiment and documented separately.
 
 ## 8. Execution Principles
 
@@ -197,8 +196,9 @@ The experiment follows these principles:
 - failed infrastructure attempts are recorded separately from valid model
   behavior.
 
-OpenRouter is the planned API gateway. The upstream provider and exact model
-configuration remain to be verified and fixed during technical qualification.
+OpenRouter is the API gateway. The upstream provider endpoint is
+`coreweave/bf16`, and the model configuration fixed by Model Qualification is
+recorded in `configs/model.yaml`.
 
 ## 9. Memory and Retrieval Conditions
 
@@ -219,8 +219,10 @@ Candidate memory extraction is performed chronologically and shared across M1,
 M2, and M3 so that policy comparisons do not differ because of independently
 generated extraction inputs.
 
-The exact embedding model, retrieval depths, and context budgets remain to be
-fixed before the main experiment.
+Retrieval uses `facebook/contriever` with `K_MAINT = 3`, `K_ANSWER = 5` and
+`LME_RETRIEVAL_CONTEXT_TOKENS = 512`, fixed by the retrieval calibration
+([retrieval-context-calibration.md](retrieval-context-calibration.md) and
+`configs/retrieval-qualified.yaml`).
 
 ## 10. Effectiveness Measures
 
@@ -307,27 +309,27 @@ The final experimental configuration will record at least:
 - retrieval configuration;
 - random seeds where applicable.
 
-Experimental results must be reproducible from versioned configuration and
+Experimental results have to be reproducible from versioned configuration and
 tracked research artifacts without depending on provider-side chat state.
 
 ## 14. Open Decisions
 
-The following items remain unresolved and must be fixed before the main
+The following items remain unresolved and have to be fixed before the main
 experiment:
 
-- exact upstream provider for the main model;
-- supported inference parameters;
 - final prompt and schema definitions;
-- retry and timeout configuration;
 - CRST sample size;
 - technical repetition count;
-- final CRST naturalization generators;
-- embedding model for LongMemEval-S;
-- maintenance and answering retrieval depths;
-- retrieval context budgets;
+- naturalization failure policy for the final CRST, covering both non-evaluable
+  and Level-1 failures;
 - exact statistical random-effects structure;
 - final confidence-interval and bootstrap procedures;
-- final software environment and tokenizer.
+- final software environment.
 
-These decisions must be finalized before comparative M1-M3 results are
+The backbone provider, inference parameters, retry and timeout configuration,
+naturalization generators, embedding model, retrieval depths, retrieval context
+budget, B0 context budget and reader tokenizer were fixed earlier and are
+recorded in [decisions.md](decisions.md).
+
+The open decisions have to be finalized before comparative M1–M3 results are
 inspected.
