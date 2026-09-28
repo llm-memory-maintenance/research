@@ -119,14 +119,15 @@ def validate_input(payload):
     for variant in gq.VARIANTS:
         u7, n2 = payload['variants'][variant]['U7'], payload['variants'][variant]['N2']
         require(u7['semantics'] == 'changed_state' and n2['semantics'] == 'same_state', 'Event semantics')
-        require((u7['entity_id'], u7['attribute_id']) != (n2['entity_id'], n2['attribute_id']), 'U7 and N2 differ')
+        require((u7['entity_id'], u7['attribute_id']) != (n2['entity_id'], n2['attribute_id']),
+                'U7 and N2 name the same entity and attribute')
         for fact in (u7, n2):
             require(fact['entity_id'] in entities and fact['attribute_id'] in attributes, 'Unresolved identity')
             used_entities.add(fact['entity_id'])
             used_attributes.add(fact['attribute_id'])
     require(used_entities == entities and used_attributes == attributes, 'Irrelevant projected content')
     require(payload['variants']['low'] == payload['variants']['medium'] == payload['variants']['high'],
-            'U7 and N2 truth is shared across variants')
+            'U7 and N2 facts differ across variants')
 
 
 def verify_projection(fixture, payload):
