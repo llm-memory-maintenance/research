@@ -43,7 +43,8 @@ def inputs():
 
 
 def prefreeze(config):
-    """The state before closure (budget OPEN, attempt planned): it exercises the collection and audit machinery."""
+    """Reset the config to its pre-closure state (open budget, planned attempt) so that the collection and
+    audit machinery can be exercised."""
     config.update(calibration_status='OPEN', budget_status='OPEN', b0_context_tokens=None)
     config.pop('budget_derivation')
     config['results']['attempts'][0] = {'id': 'attempt-01', 'status': 'PLANNED_NOT_EXECUTED',
@@ -436,7 +437,8 @@ REVIEWED_AT = '2026-09-19T20:00:00+07:00'
 
 
 def completed_audit(path, inputs, manual_fail=(), fluency_fail=(), mutate=None):
-    """A completed copy of the blank audit: every manual cell PASS unless named in manual_fail (item, check)."""
+    """A completed copy of the blank audit. Every manual cell is PASS except the (item, check) pairs in
+    manual_fail, and the items in fluency_fail receive a fluency FAIL."""
     audit = s.audit_template(path, inputs)
     audit.update(reviewer='Test reviewer', reviewed_at=REVIEWED_AT)
     for item, entry in audit['items'].items():

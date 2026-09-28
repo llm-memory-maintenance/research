@@ -199,7 +199,7 @@ def test_stale_annotation_has_no_scoring_effect():
         entry['annotation'] = {'anything': 'changed hidden metadata'}
     second = runner.prepare_case(case, FakeEncoder())
     assert first == second
-    assert first['ranked'][0]['entry_id'] == 'toy-a-1'  # Stale receives the supplied highest score.
+    assert first['ranked'][0]['entry_id'] == 'toy-a-1'  # The stale entry receives the highest fake score.
     assert not runner.case_outcome(first, 1, 100, EntryTokenizer())['success']
 
 
@@ -424,7 +424,7 @@ def test_local_model_loading_controls(monkeypatch, problem):
     for name in ('set_num_threads', 'set_num_interop_threads', 'use_deterministic_algorithms',
                  'set_float32_matmul_precision'):
         monkeypatch.setattr(torch, name, lambda value, name=name: controls.append((name, value)))
-    # Preserve environment after testing the loader's explicit offline settings.
+    # Register these variables with monkeypatch so the loader's offline settings are restored after the test.
     monkeypatch.setenv('HF_HUB_OFFLINE', '1')
     monkeypatch.setenv('TRANSFORMERS_OFFLINE', '1')
 

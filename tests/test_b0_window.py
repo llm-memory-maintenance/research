@@ -78,7 +78,8 @@ def test_history_count_is_the_marginal_chat_template_difference():
     flat = [m for e in two for m in e['messages']]
     base = [{'role': 'system', 'content': SYSTEM}]
     assert count(two) == b0.chat_tokens(base + flat, TOKENIZER) - b0.chat_tokens(base, TOKENIZER)
-    # 8 role/terminator tokens per exchange pair of messages plus content: not a raw-text token sum.
+    # Each exchange adds 8 template tokens (header markers, role and terminator for each of its two
+    # messages) plus its content, so the count is not a raw-text token sum.
     raw = sum(len(TOKENIZER.encode(m['content'], False)) for m in flat)
     assert count(two) > raw and count([]) == 0
 

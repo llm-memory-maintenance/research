@@ -1,4 +1,5 @@
-"""Offline tests for the Attempt-01 closure and the bounded, complete Attempt-02 restart."""
+"""Offline tests for the Attempt-01 closure, the bounded Attempt-02 rerun and its closure, and the closed
+full-history procedure."""
 import asyncio
 import inspect
 import json

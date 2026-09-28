@@ -1,4 +1,4 @@
-"""Reproduce structured qualification-only fixtures offline; never naturalize text."""
+"""Build or reproduce the structured qualification-only fixtures offline, without naturalization."""
 import argparse
 from copy import deepcopy
 import json
@@ -7,10 +7,10 @@ import subprocess
 
 import validate_generator_qualification_fixtures as v
 
-# Per domain: primary entity, same-property distractor entity, target attribute,
-# meaning, units, eight target values, three distinct distractor values,
+# Per domain: primary entity, hard-distractor entity (same attribute, different entity),
+# target attribute, meaning, units, eight target values, three distinct distractor values,
 # dedicated N2 (attribute, meaning, units, one value), four secondary inventories,
-# descriptive coverage. Names/values are independently authored and self-contained.
+# descriptive coverage. Names and values are independently authored and self-contained.
 SPECS = [
  ('Tern rehearsal', 'Gull rehearsal', 'start_time', 'scheduled rehearsal start time', '24-hour local clock; one synthetic day',
   ['08:10','08:35','09:05','09:40','10:15','10:50','11:25','12:05'], ['13:20','13:55','14:30'],
@@ -183,8 +183,12 @@ def artifacts(source_commit):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--check', action='store_true', help='Reproduce in memory using recorded construction HEAD; never overwrite')
-    parser.add_argument('--refresh', action='store_true', help='Refresh existing generated artifacts from the authoritative builder')
+    parser.add_argument('--check', action='store_true',
+                        help='Rebuild in memory with the recorded construction commit and compare byte for byte; '
+                             'writes nothing')
+    parser.add_argument('--refresh', action='store_true',
+                        help='Rewrite generated artifacts that differ from this builder, keeping the recorded '
+                             'construction commit')
     args = parser.parse_args()
     if args.check and args.refresh:
         parser.error('--check and --refresh are mutually exclusive')
@@ -204,9 +208,9 @@ def main():
         if args.refresh:
             expected_paths = set(expected)
             actual_paths = {str(p.relative_to(v.DIRECTORY)) for p in v.DIRECTORY.rglob('*') if p.is_file()}
-            v.require(actual_paths == expected_paths, 'Unexpected/missing generated artifact path')
+            v.require(actual_paths == expected_paths, 'Unexpected or missing generated artifact path')
         else:
-            # This constructor creates once; review corrections must be explicit.
+            # The first construction creates the directory and overwrites nothing; later corrections use --refresh.
             v.DIRECTORY.mkdir(exist_ok=False)
             (v.DIRECTORY / 'fixtures').mkdir()
         for path, data in expected.items():

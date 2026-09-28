@@ -1,9 +1,10 @@
-"""Build synthetic calibration data with fixed templates; no model or external data.
+"""Build synthetic calibration data with fixed templates, without a model or external data.
 
-Protocol checkpoint: 24eb542. The lexicon below is authored independently and
-never reads LongMemEval-S or Model Qualification content. Construction, not an
-external-corpus similarity audit, establishes its source provenance. No reader,
-embedding, retrieval, or naturalization service is involved.
+Protocol checkpoint: 24eb542. The lexicon below was authored independently of
+LongMemEval-S and the Model Qualification content, and the builder reads
+neither. Its source provenance rests on this construction, not on an
+external-corpus similarity audit. No reader, embedding, retrieval or
+naturalization service is involved.
 """
 
 import argparse
@@ -158,7 +159,8 @@ def build_case(case_id, serial, size, rng, *, kind=None, wording=None, stale=Fal
         target = add(entity, attribute, previous if kind == 'changed_state' else current,
                      'oracle_existing_target' if kind else 'oracle_current')
     if stale:
-        # M1/Add-only-like retained history, never a claim about replaced M2/M3 entries.
+        # Stale version of the target key, as retained by Add-only (M1); not a model of the entries that
+        # M2 and M3 replace.
         old = add(entity, attribute, previous, 'stale_competing_version')
         old['created_time'] = timestamp(serial * 1000)
         old['last_updated_time'] = timestamp(serial * 1000 + 1)
@@ -199,7 +201,7 @@ def build_case(case_id, serial, size, rng, *, kind=None, wording=None, stale=Fal
 def build_dataset(seed=SEED):
     if type(seed) is not int or seed != SEED:
         raise ValueError(f'Only the frozen seed {SEED} is supported')
-    rng = random.Random(seed)  # Never global RNG state, wall-clock time, or filesystem order.
+    rng = random.Random(seed)  # Private seeded RNG; no global RNG state, wall-clock time or filesystem order.
     cases = []
     for kind, prefix in (('changed_state', 'changed'), ('same_state', 'same')):
         for size in SIZES:

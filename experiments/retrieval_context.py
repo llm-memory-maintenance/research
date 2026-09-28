@@ -23,7 +23,10 @@ def count_context_tokens(context, tokenizer):
 
 
 def rank_entries(entries, scores):
-    """Order already supplied scores; never calculate embeddings or retrieval quality."""
+    """Order entries by precomputed scores, breaking ties by a hash of entry_id.
+
+    The function computes no embeddings and no retrieval quality.
+    """
     if len(entries) != len(scores) or len({e['entry_id'] for e in entries}) != len(entries):
         raise ValueError('Scores must align with uniquely identified entries')
     if any(not math.isfinite(score) for score in scores):
@@ -58,5 +61,5 @@ def select_context(ranked_entries, k, budget, tokenizer):
     ordered = sorted(admitted, key=chronological_key)
     context = serialize_context(ordered)
     if count_context_tokens(context, tokenizer) > budget:
-        raise ValueError('Final chronological serialization exceeds budget; stop without repair')
+        raise ValueError('Final chronological serialization exceeds budget; no repair is attempted')
     return ordered, context

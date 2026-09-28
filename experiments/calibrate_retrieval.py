@@ -1,4 +1,5 @@
-"""Official local-only calibration; execution requires explicit verified inputs.
+"""Official local calibration of K_MAINT, K_ANSWER and the retrieval context budget from
+checksum-verified inputs.
 
 Importing this module or requesting --help does not load models or datasets.
 """
@@ -25,7 +26,8 @@ else:
     from validate_retrieval_calibration import load_dataset, validate_dataset
 
 ROOT = Path(__file__).resolve().parents[1]
-# The configuration frozen by 4a88d9b, not the future runner source commit.
+# Hash of the retrieval configuration as frozen in 4a88d9b; the runner's own commit is
+# recorded separately as source_commit.
 FROZEN_CONFIG_SHA256 = 'c00f6cf6fac8bf14f24bab6b16b7929c34a62369b9c2e8eee254faed919dbcf9'
 
 
@@ -88,14 +90,14 @@ def verified_environment(config):
     for name, value in actual.items():
         if value != config['environment'][name]:
             raise ValueError(f'Frozen environment mismatch: {name} ({value})')
-    # Also record the configuration/validation tooling actually used.
+    # Also record the configuration and validation tooling actually used.
     for package in ('PyYAML', 'pydantic'):
         actual[package] = version(package)
     return actual
 
 
 class ContrieverEncoder:
-    """One explicit frozen embedding path; no retrieval-policy decisions."""
+    """Frozen Contriever mean-pooling encoder; ranking and selection are in retrieval_context."""
 
     def __init__(self, model, tokenizer):
         self.model = model
@@ -163,7 +165,7 @@ def load_local_models(contriever_dir, reader_dir):
     if (type(model).__name__ != 'BertModel'
             or type(tokenizer).__name__ != 'BertTokenizerFast'
             or type(reader).__name__ != 'PreTrainedTokenizerFast'):
-        raise ValueError('Unexpected frozen model/tokenizer class')
+        raise ValueError('Unexpected frozen model or tokenizer class')
     if any(info.get(key) for key in ('missing_keys', 'unexpected_keys', 'mismatched_keys', 'error_msgs')):
         raise ValueError('Incomplete or incompatible Contriever weight loading')
     if (model.config.hidden_size != 768 or model.config.max_position_embeddings != 512
@@ -172,7 +174,7 @@ def load_local_models(contriever_dir, reader_dir):
         raise ValueError('Unexpected Contriever configuration')
     model.to(device='cpu', dtype=torch.float32).eval()
     if any(p.device.type != 'cpu' or p.dtype != torch.float32 for p in model.parameters()):
-        raise ValueError('Model device/dtype mismatch')
+        raise ValueError('Model device or dtype mismatch')
     return ContrieverEncoder(model, tokenizer), reader
 
 

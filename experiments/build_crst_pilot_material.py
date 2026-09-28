@@ -1,4 +1,4 @@
-"""Reproduce the pilot-only CRST structured scenarios offline; never naturalize text or call a model."""
+"""Build or reproduce the pilot-only CRST structured scenarios offline, without naturalizing text or calling a model."""
 import argparse
 from copy import deepcopy
 import json
@@ -7,10 +7,11 @@ import subprocess
 import validate_crst_pilot_material as v
 import validate_generator_qualification_fixtures as gq
 
-# Per scenario: primary entity, same-property distractor entity, target attribute id, meaning, units,
-# eight target values, three distinct distractor values, dedicated N2 (attribute id, meaning, units,
-# one value), four secondary inventories, descriptive coverage. Authored independently of every earlier
-# material set; all values are synthetic, self-contained and free of status or time wording.
+# Per scenario: primary entity, hard-distractor entity (same attribute, different entity),
+# target attribute id, meaning, units, eight target values, three distinct distractor values, dedicated N2
+# (attribute id, meaning, units, one value), four secondary inventories, descriptive coverage. Authored
+# independently of every earlier material set; all values are synthetic, self-contained and free of status
+# or time wording.
 SPECS = [
  ('Seminar Brindle', 'Seminar Kestrel', 'desk_opening', 'registration desk opening time',
   '24-hour local clock; one synthetic day',
@@ -117,7 +118,8 @@ def artifacts(source_commit):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true',
-                        help='Reproduce in memory using the recorded construction commit; never overwrite')
+                        help='Rebuild in memory with the recorded construction commit and compare byte for byte; '
+                             'writes nothing')
     args = parser.parse_args()
     if args.check:
         manifest, _ = v.validate_directory()

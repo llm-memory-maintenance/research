@@ -1,4 +1,7 @@
-"""Fixed model qualification. Default execution is strictly offline."""
+"""Fixed-call qualification of the backbone model.
+
+Without --authorize-inference, only the offline preflight runs.
+"""
 
 import argparse
 import json
@@ -205,9 +208,9 @@ def evaluate(logical_id, output):
 
 
 def apply_update(active, candidate, decision):
-    """Apply only the validated end-to-end update; never execute model-supplied code."""
+    """Apply the validated end-to-end update to the local active memory; model output is data, not code."""
     if decision.operation != "update":
-        raise ValueError("End-to-end requires update")
+        raise ValueError("End-to-end maintenance requires an update decision")
     matches = [item for item in active if item["id"] == decision.target_id]
     if len(matches) != 1 or any(normalize(matches[0][key]) != normalize(getattr(candidate, key))
                                 for key in ("entity", "attribute")):

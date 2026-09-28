@@ -93,7 +93,7 @@ def test_candidates_render_with_the_frozen_template_and_round_trip(references):
 
 
 def test_candidates_expose_only_the_three_permitted_fields(references):
-    """Same-state events render identically to their earlier text, and no label or annotation enters."""
+    """Same-state events render identically to their earlier text, and no label or annotation enters a candidate."""
     pattern = ('k_', 'state_key', 'role', 'changed_state', 'same_state', 'superseded', 'reference', 'Update',
                'Noop', 'intensity')
     for reference in references:

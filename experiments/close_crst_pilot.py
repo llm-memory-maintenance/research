@@ -1,4 +1,5 @@
-"""Offline closure of the CRST Small Pilot: evidence verification, researcher review, final checklist, closure.
+"""Offline closure of the CRST Small Pilot: evidence verification, researcher review, final checklist and
+closure record.
 
 Nothing here contacts a provider or reruns a live step. Raw evidence is only read. The pilot is a mechanical
 validation; no outcome is aggregated, ranked or interpreted.
@@ -57,7 +58,7 @@ def verify_evidence(backbone=BACKBONE, naturalization=NATURALIZATION, audit=AUDI
     require(collection['status'] == 'COMPLETE' and collection['failure_reason'] is None
             and collection['interpretation'] == 'OFFLINE_REPLAY_THEN_RESEARCHER_REVIEW'
             and nat_collection['status'] == 'COMPLETE' and nat_collection['failure_reason'] is None,
-            'A collection is not a complete, unaborted execution')
+            'A collection is incomplete or aborted')
     require(len(collection['runs']) == collection['planned_runs'] == 24
             and collection['planned_backbone_calls'] == 132, 'Run count')
     audit_record = json.loads(Path(audit).read_text(encoding='utf-8'))
@@ -78,7 +79,7 @@ def verify_evidence(backbone=BACKBONE, naturalization=NATURALIZATION, audit=AUDI
     planned = ex.logical_ids(run.load_fixtures())
     require(sorted(records) == sorted(planned) and len(records) == 132, 'Logical request set')
     maintenance = sum(not i.endswith('/A') for i in records)
-    require((maintenance, len(records) - maintenance) == (108, 24), 'Maintenance/answer split')
+    require((maintenance, len(records) - maintenance) == (108, 24), 'Maintenance and answer split')
     pinned = model['model']['id'], [model['provider']['upstream']]
     for record in records.values():
         body = record['request_body']
@@ -87,7 +88,7 @@ def verify_evidence(backbone=BACKBONE, naturalization=NATURALIZATION, audit=AUDI
                 and body['model'] == pinned[0] and body['provider'] == {
                     'order': pinned[1], 'allow_fallbacks': False, 'require_parameters': True}
                 and body['response_format'] == {'type': 'json_object'} and record['attempts'],
-                f'Routing/provider/accounting requirement failed: {record["logical_id"]}')
+                f'Routing, provider or accounting requirement failed: {record["logical_id"]}')
     documents = [json.loads((Path(backbone) / n).read_text(encoding='utf-8')) for n in sums if n.startswith('runs/')]
     require(len(documents) == 24 and sorted(d['run_id'] for d in documents) == sorted(collection['runs'])
             and all(sum(l in records for l in d['logical_ids']) == len(d['logical_ids']) for d in documents),
@@ -97,12 +98,12 @@ def verify_evidence(backbone=BACKBONE, naturalization=NATURALIZATION, audit=AUDI
         commit = prov['source_commit']
         nat.git('merge-base', '--is-ancestor', commit, 'HEAD')
         require(all(committed_hash(commit, path) == digest for path, digest in prov[commit_key].items()),
-                f'{who} implementation differs from its source commit')
+                f'The {who} implementation differs from its source commit')
         require(committed_hash(commit, 'configs/crst-small-pilot.yaml') == prov['config_sha256'],
-                f'{who} config differs from its source commit')
+                f'The {who} config differs from its source commit')
     require(provenance['prompt_identities'] == prompts.identities()
             and provenance['material_manifest_sha256'] == config['material']['manifest_sha256']
-            == file_hash(ROOT / 'data/crst-small-pilot/manifest.json'), 'Prompt/material identities')
+            == file_hash(ROOT / 'data/crst-small-pilot/manifest.json'), 'Prompt and material identities')
     b0 = yaml_b0()
     require(pol.B0_CONTEXT_TOKENS == 71 == b0 == config['answering']['b0']['b0_context_tokens'], 'B0 budget')
     return {'backbone_collection_sha256': file_hash(Path(backbone) / 'collection.json'),
@@ -226,13 +227,13 @@ def main(argv=None):
                               decision=args.decision, rows_reviewed=args.rows_reviewed,
                               disagreements=args.disagreements)
         args.record_review.parent.mkdir(parents=True, exist_ok=True)
-        print('review sha256:', q.publish(args.record_review, review))
+        print('Review SHA-256:', q.publish(args.record_review, review))
     elif args.close:
         report = replay_report(args)
         review = json.loads(args.review.read_text(encoding='utf-8'))
         states = final_checklist(run.load_fixtures(), report, review, evidence)
         args.close.parent.mkdir(parents=True, exist_ok=True)
-        print('closure sha256:', q.publish(args.close, build_closure(states, evidence, args.review, review)))
+        print('Closure SHA-256:', q.publish(args.close, build_closure(states, evidence, args.review, review)))
         print(json.dumps(counts(states)))
     else:
         print(json.dumps(evidence, indent=2))

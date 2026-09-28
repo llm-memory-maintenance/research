@@ -1,8 +1,10 @@
 """B0 suffix-only calibration: naturalize only U7 and N2, audit them, then derive the exact-maximum budget.
 
-The default invocation is an offline preview. Live collection needs --execute, --confirm-spend, the planned
---output-directory and OPENROUTER_API_KEY. --audit-template, --adjudicate and --derive-budget are the offline
-post-collection steps, in that order. The full-history procedure (calibrate_b0.py) is closed.
+The calibration is closed and its budget is frozen, so live collection and budget derivation refuse to run; the
+default invocation remains an offline preview. Live collection required --execute, --confirm-spend, the planned
+--output-directory and OPENROUTER_API_KEY. --audit-template, --adjudicate and --derive-budget were the offline
+post-collection steps, in that order; the two audit steps still run offline. The full-history procedure
+(calibrate_b0.py) is also closed.
 """
 import argparse
 import asyncio
@@ -156,7 +158,7 @@ def verify_projection(fixture, payload):
 # --- Output contract -------------------------------------------------------------------------------
 
 def validate_output(output):
-    """Exactly low/medium/high, each exactly U7 and N2, both nonblank strings."""
+    """The keys low, medium and high, each holding only U7 and N2 as nonblank strings."""
     probe.fields(output, gq.VARIANTS)
     for variant in gq.VARIANTS:
         probe.fields(output[variant], EVENTS)
@@ -166,7 +168,8 @@ def validate_output(output):
 
 @contextlib.contextmanager
 def suffix_output_contract():
-    """The frozen transport validates every response with probe.validate_output; swap in this procedure's."""
+    """The frozen transport validates every response with probe.validate_output; this context manager substitutes
+    the suffix validator."""
     with mock.patch.object(probe, 'validate_output', validate_output):
         yield
 
@@ -223,7 +226,7 @@ def load_config(path=CONFIG):
     else:
         require(config['budget_status'] == 'OPEN' and config['calibration_status'] == 'OPEN' and tokens is None
                 and 'budget_derivation' not in config and attempts[0]['status'] != 'COMPLETE',
-                'The budget is set only by the official calibration run')
+                'Inconsistent open budget state; the budget is set only by the official calibration run')
     return config
 
 
@@ -413,7 +416,8 @@ def preview(inputs):
 # --- Live collection -------------------------------------------------------------------------------
 
 def guard_output(output, config, root=ROOT):
-    """The closed full-history namespace is immutable; inside the suffix namespace only the planned attempt."""
+    """The closed full-history namespace is immutable; inside the suffix namespace only the planned attempt
+    directory may be written."""
     target = Path(output).resolve()
     old, new = (root / OLD_NAMESPACE).resolve(), (root / NAMESPACE).resolve()
     require(target != old and old not in target.parents, 'The closed full-history B0 result namespace is immutable')
@@ -452,7 +456,7 @@ async def collect(inputs, key, output, *, client_factory=httpx.AsyncClient, slee
     guard_output(output, inputs['config'])
     fresh = load_inputs(inputs['path'])
     fresh_provenance = provenance(fresh)
-    require(fresh_provenance == provenance(inputs), 'Source/input changed since preflight')
+    require(fresh_provenance == provenance(inputs), 'Source or input changed since preflight')
     require(fresh_provenance['qualification_implementation']['status'] == q.FROZEN,
             f'Qualification implementation {q.NOT_FROZEN}; live execution refused')
     inputs = fresh
@@ -492,7 +496,7 @@ async def collect(inputs, key, output, *, client_factory=httpx.AsyncClient, slee
                 else:
                     result['status'] = 'COMPLETE'
     except Exception as exc:
-        result['failure_reason'] = f'Execution/runner defect: {type(exc).__name__}: {exc}; {stop}'
+        result['failure_reason'] = f'Execution or runner defect: {type(exc).__name__}: {exc}; {stop}'
     hashes['collection.json'] = q.publish(directory / 'collection.json', result, key)
     with (directory / 'SHA256SUMS').open('x', encoding='utf-8') as stream:
         for name, checksum in sorted(hashes.items()):
@@ -503,7 +507,7 @@ async def collect(inputs, key, output, *, client_factory=httpx.AsyncClient, slee
 # --- Ingestion and derivation ----------------------------------------------------------------------
 
 def official_calls(directory):
-    """Call records of a COMPLETE suffix attempt only."""
+    """Call records of a complete suffix attempt only."""
     directory = Path(directory)
     calls = cal.read_calls(directory)
     collection = json.loads((directory / 'collection.json').read_text(encoding='utf-8'))
@@ -514,7 +518,7 @@ def official_calls(directory):
 
 
 def suffix_exchanges(u7, n2):
-    """Exactly U7 user message, Noted., N2 user message, Noted."""
+    """The U7 and N2 exchanges; each is a user message followed by the "Noted." acknowledgement."""
     return [{'event': label, 'messages': [{'role': 'user', 'content': text},
                                           {'role': 'assistant', 'content': window.ACKNOWLEDGEMENT}]}
             for label, text in (('U7', u7), ('N2', n2))]
@@ -548,7 +552,7 @@ def histories_from_calls(calls, inputs):
 
 
 def audit_template(directory, inputs):
-    """Blank human audit for a COMPLETE attempt, derived only from its archived evidence."""
+    """Blank human audit for a complete attempt, derived only from its archived evidence."""
     directory = Path(directory)
     calls = official_calls(directory)
     histories_from_calls(calls, inputs)
@@ -626,7 +630,8 @@ def derive_budget(directory, audit, tokenizer, inputs, system=None):
 
 
 def separate(path, directory):
-    require(Path(directory).resolve() not in Path(path).resolve().parents, 'Outputs must be outside the attempt')
+    require(Path(directory).resolve() not in Path(path).resolve().parents,
+            'Outputs must be outside the attempt directory')
 
 
 def verify_adjudication(directory, audit_path, adjudication, audit, inputs):
@@ -745,7 +750,7 @@ def main(argv=None):
                              'hashes; default: the staging directory named in configs/retrieval.yaml)')
     args = parser.parse_args(argv)
     if args.execute != args.confirm_spend:
-        parser.error('Execution requires BOTH --execute AND --confirm-spend')
+        parser.error('Execution requires both --execute and --confirm-spend')
     if args.derive_budget or args.adjudication or args.budget_output or args.reader_tokenizer_dir:
         if not (args.derive_budget and args.audit and args.adjudication and args.budget_output):
             parser.error('--derive-budget requires --audit, --adjudication and --budget-output')
@@ -761,7 +766,7 @@ def main(argv=None):
     offline = (args.audit_template, args.template_output, args.adjudicate, args.audit, args.adjudication_output)
     if any(offline):
         if args.execute or args.output_directory:
-            parser.error('Audit operations are offline; use no execution flags')
+            parser.error('Audit operations are offline and cannot be combined with execution flags')
         if bool(args.audit_template) != bool(args.template_output) or bool(args.adjudicate) != bool(
                 args.audit and args.adjudication_output) or (args.audit_template and args.adjudicate):
             parser.error('Use either --audit-template with --template-output, or --adjudicate with --audit and '

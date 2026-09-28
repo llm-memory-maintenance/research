@@ -1,4 +1,4 @@
-"""Reproduce the calibration-only B0 structured scenarios offline; never naturalize text."""
+"""Build or reproduce the calibration-only B0 structured scenarios offline, without naturalizing text."""
 import argparse
 from copy import deepcopy
 import json
@@ -8,10 +8,10 @@ import subprocess
 import validate_b0_calibration_material as v
 import validate_generator_qualification_fixtures as gq
 
-# Per domain: primary entity, same-property distractor entity, target attribute id, meaning, units,
-# eight target values, three distinct distractor values, dedicated N2 (attribute id, meaning, units,
-# one value), four secondary inventories, descriptive coverage. Authored independently of every
-# qualification fixture; all values are synthetic and self-contained.
+# Per domain: primary entity, hard-distractor entity (same attribute, different entity),
+# target attribute id, meaning, units, eight target values, three distinct distractor values, dedicated N2
+# (attribute id, meaning, units, one value), four secondary inventories, descriptive coverage. Authored
+# independently of every qualification fixture; all values are synthetic and self-contained.
 SPECS = [
  ('Cedar workshop', 'Willow workshop', 'kickoff_time', 'scheduled workshop kickoff time',
   '24-hour local clock; one synthetic day',
@@ -212,7 +212,8 @@ def artifacts(source_commit):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true',
-                        help='Reproduce in memory using the recorded construction commit; never overwrite')
+                        help='Rebuild in memory with the recorded construction commit and compare byte for byte; '
+                             'writes nothing')
     args = parser.parse_args()
     if args.check:
         manifest, _ = v.validate_directory()
@@ -221,7 +222,7 @@ def main():
         print('Byte-identical reproduction: 12 calibration-only scenarios, schema and manifest.')
     else:
         source = subprocess.check_output(['git', '-C', str(v.ROOT), 'rev-parse', 'HEAD'], text=True).strip()
-        # Created once; any later correction must be an explicit, reviewed change.
+        # The directory is created once; later corrections are made as separate reviewed changes.
         v.DIRECTORY.mkdir(exist_ok=False)
         (v.DIRECTORY / 'fixtures').mkdir()
         for path, data in artifacts(source).items():

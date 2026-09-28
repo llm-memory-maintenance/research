@@ -45,9 +45,10 @@ def fixtures(material):
 
 @pytest.fixture(scope='module')
 def inputs(tmp_path_factory):
-    """Inputs of the full-history procedure in its pre-Attempt-02 state, which exercises its machinery.
+    """Inputs of the full-history procedure restored to its pre-Attempt-02 state, so that its collection
+    machinery can be exercised.
 
-    The real design is closed and refuses every attempt; that is tested separately.
+    The real design is closed and refuses every attempt, which is tested separately.
     """
     return cal.load_inputs(design_copy(tmp_path_factory.mktemp('historical')))
 

@@ -62,7 +62,7 @@ def plan_replies(gate):
 
 
 def mock_client(gate, override=None):
-    """(client_factory, bodies): replies follow the plan; `override(i, body)` may return a Response.
+    """Returns (client_factory, bodies). Replies follow the plan, and `override(i, body)` may return a Response.
 
     `i` counts physical requests. An error-status override is an infrastructure failure of that attempt and does
     not consume the logical reply; a 2xx override replaces the reply of the current logical request.

@@ -86,7 +86,7 @@ def independent(h, prompt):
     return max(cost(turn(u7) + turn(n2)), cost(turn(n2)))
 
 
-# --- The derivation runs the existing eligibility-gated function ------------------------------------
+# --- The derivation reuses the eligibility-gated derive_budget function ----------------------------
 
 def test_the_cli_calls_the_existing_derive_budget_with_exactly_72_eligible_histories(
         collected, approved, evidence, toy_tokenizer, tmp_path, monkeypatch):

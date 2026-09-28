@@ -485,7 +485,7 @@ def test_removed_sampling_controls_rejected_in_config(bundle, tmp_path, removed_
 
 
 def mock_open_bundle(bundle):
-    """Exercise preserved execution machinery with mocks, never reopen the config."""
+    """Mark a copy of the bundle MOCK_ONLY so the execution path runs against mocks; the config stays closed."""
     opened = deepcopy(bundle)
     opened['config']['status'] = 'MOCK_ONLY'
     return opened
@@ -517,7 +517,7 @@ def test_closed_cli_does_not_read_key_or_execute(monkeypatch, capsys):
 # --- Predeclared fallback candidate profile (Terra/Opus) ---
 
 def test_primary_profile_unchanged_by_default(bundle):
-    """The PRIMARY profile constant and its default load_bundle()/preview() behavior are untouched."""
+    """The primary profile constant and its default load_bundle() and preview() behavior are unchanged."""
     assert p.SLOTS == [dict(logical_call_id='G1', model='openai/gpt-5.6-sol', provider_order=['openai']),
                        dict(logical_call_id='G2', model='anthropic/claude-sonnet-5', provider_order=['anthropic'])]
     assert p.load_bundle()['config'] == bundle['config']
@@ -576,7 +576,7 @@ def test_fallback_capability_preview_offline_two_calls_terra_then_opus(monkeypat
 
 
 def test_fallback_probe_never_reopens_or_mutates_primary_evidence():
-    """Building/previewing the fallback profile does not touch the CLOSED primary config or its slots."""
+    """Building or previewing the fallback profile does not touch the closed primary config or its slots."""
     before = p.CONFIG.read_bytes()
     primary_bundle = p.load_bundle()
     assert primary_bundle['config']['status'] == 'CLOSED' and primary_bundle['config']['capability_result'] == 'PASS'
@@ -586,7 +586,7 @@ def test_fallback_probe_never_reopens_or_mutates_primary_evidence():
                   successful_attempt=fallback_profile['successful_attempt'],
                   execution_package=fallback_profile['execution_package'],
                   execution_compatibility=fallback_profile['execution_compatibility'])
-    assert p.CONFIG.read_bytes() == before  # The CLOSED primary config file is untouched.
+    assert p.CONFIG.read_bytes() == before  # The closed primary config file is unchanged.
     assert p.SLOTS == [dict(logical_call_id='G1', model='openai/gpt-5.6-sol', provider_order=['openai']),
                        dict(logical_call_id='G2', model='anthropic/claude-sonnet-5', provider_order=['anthropic'])]
 
@@ -626,9 +626,8 @@ def test_single_slot_capability_preview_g2_only_opus(tmp_path, capsys):
 
 
 def test_single_slot_preview_request_package_unchanged(bundle):
-    """The single-slot request body is byte-identical to that candidate's entry within the full,
-    two-slot preview -- restricting to one slot changes only which calls are planned, not their
-    content."""
+    """The single-slot request body is identical to that candidate's entry within the full, two-slot
+    preview; restricting to one slot changes only which calls are planned, not their content."""
     fallback_profile = p.PROFILES['fallback']
     fallback_bundle = p.load_bundle(fallback_profile['config_path'], slots=fallback_profile['slots'],
                                     status=fallback_profile['status'],
@@ -667,8 +666,8 @@ def test_slot_capability_generic_lookup_for_both_profiles(bundle):
 
 
 def test_slot_capability_mismatched_candidate_identity_has_no_evidence():
-    """A hypothetical future/replaced candidate occupying G2 has no recorded evidence at all -- the
-    stale Opus entry is never silently reused for a different model."""
+    """A hypothetical replacement candidate in G2 has no recorded evidence; the recorded Opus entry is not
+    reused for a different model."""
     hypothetical = dict(logical_call_id='G2', model='anthropic/claude-hypothetical-next',
                         provider_order=['anthropic'])
     capability = p.slot_capability('fallback', hypothetical)
@@ -697,8 +696,8 @@ def test_execute_probe_refuses_to_reopen_already_closed_slot(monkeypatch, tmp_pa
 
 
 def test_execute_probe_without_profile_name_skips_per_slot_reopening_check(monkeypatch, tmp_path):
-    """Backward compatibility: existing direct callers that never pass profile_name are unaffected
-    by the new per-slot reopening guard (it is opt-in via that parameter)."""
+    """Backward compatibility: direct callers that do not pass profile_name are not subject to the
+    per-slot reopening guard, which applies only when profile_name is given."""
     fallback_profile = p.PROFILES['fallback']
     fallback_bundle = p.load_bundle(fallback_profile['config_path'], slots=fallback_profile['slots'],
                                     status=fallback_profile['status'],
@@ -803,7 +802,7 @@ def test_second_level_g2_cli_rejects_an_empty_slot_selection_and_ungated_executi
     with pytest.raises(SystemExit):  # The profile has no G1: never a silent zero-call selection.
         p.main(['--profile', 'second_level_g2', '--slot', 'G1'])
     with pytest.raises(SystemExit):
-        p.main(['--profile', 'second_level_g2', '--execute'])  # Needs BOTH --execute and --confirm-spend.
+        p.main(['--profile', 'second_level_g2', '--execute'])  # Requires both --execute and --confirm-spend.
     monkeypatch.delenv('OPENROUTER_API_KEY', raising=False)
     output = tmp_path / 'must-not-be-created'
     with pytest.raises(SystemExit):  # Gated execution still requires a key before any side effect.
@@ -824,7 +823,7 @@ def test_second_level_g2_capability_is_closed_pass_for_the_exact_candidate_only(
         assert got['status'] == 'OPEN' and got['capability_result'] == 'NOT_ASSESSED' and got['evidence_sha256'] is None
     config = yaml.safe_load(SECOND_LEVEL_G2_CONFIG.read_text(encoding='utf-8'))
     assert config['generator_status'] == 'CANDIDATE'  # Capability PASS is not Generator Qualification.
-    # Profile-level fields stay as the frozen loader expects; the per-slot record is authoritative.
+    # Profile-level fields stay as the frozen loader expects; capability is read from the per-slot record.
     assert (config['status'], config['capability_result']) == ('OPEN', 'NOT_ASSESSED')
 
 
@@ -889,7 +888,8 @@ def test_explicit_output_directory_is_accepted_and_preview_needs_none(monkeypatc
 
 # --- Generator pair revision (docs/decisions.md, 2026-09-27): openai/gpt-6-sol (G1) and
 # anthropic/claude-opus-5.5 (G2), one single-slot profile each. Each capability probe has closed: G1 PASS in
-# Attempt-05 and G2 FAIL in Attempt-06. These tests read config, archived evidence and requests offline.
+# Attempt-05 and G2 FAIL in Attempt-06, after which the pair amendment was withdrawn. These tests read the
+# configs and archived evidence and build requests offline.
 
 PAIR_REVISION = {
     'pair_revision_g1': dict(config='configs/generator-capability-probe-pair-revision-g1.yaml',
@@ -977,8 +977,9 @@ def test_pair_revision_recorded_evidence_is_the_archived_probe_and_execution_fie
 
 
 def test_opus_5_5_failure_is_a_terminal_output_contract_failure_with_one_empty_field():
-    """Attempt-06 completed with HTTP 200 and end_turn and no refusal or truncation; the structured response
-    parsed but failed schema validation because exactly one field, high.N1, was an empty string."""
+    """Attempt-06 returned HTTP 200 with native finish reason end_turn, without refusal or truncation; the
+    structured response parsed but failed schema validation because exactly one field, high.N1, was an empty
+    string."""
     archived = json.loads((p.ROOT / 'results/generator-capability-probe/attempt-06/probe.json').read_text(
         encoding='utf-8'))
     assert archived['failure_reason'] == 'G2: Expected nonempty string; STOP FOR ADJUDICATION'
@@ -1058,7 +1059,7 @@ def test_pair_revision_cli_rejects_the_other_slot_and_ungated_execution(profile,
     with pytest.raises(SystemExit):  # Never a silent zero-call selection.
         p.main(['--profile', profile, '--slot', other])
     with pytest.raises(SystemExit):
-        p.main(['--profile', profile, '--execute'])  # Needs BOTH --execute and --confirm-spend.
+        p.main(['--profile', profile, '--execute'])  # Requires both --execute and --confirm-spend.
     monkeypatch.delenv('OPENROUTER_API_KEY', raising=False)
     output = tmp_path / 'must-not-be-created'
     with pytest.raises(SystemExit):

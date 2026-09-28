@@ -1,9 +1,10 @@
-"""Offline structural and semantic validator for the template-built corpus.
+"""Offline structural and semantic validator for the template-built calibration dataset.
 
 Uses standard-library checks corresponding to the frozen schema, not a full
-JSON Schema Draft 2020-12 implementation. Text/annotation consistency and
-semantic distractor roles are checked against the independently authored
-lexicon. No external validation content is read or compared.
+JSON Schema Draft 2020-12 implementation. The consistency of text with
+annotations and the semantic distractor roles are checked against the
+independently authored lexicon. No external validation content is read or
+compared.
 """
 
 import argparse
@@ -48,7 +49,7 @@ def nonempty(value):
 def parse_time(value):
     nonempty(value)
     require(bool(re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|\+00:00)', value)),
-            'Expected UTC RFC3339 timestamp')
+            'Expected a UTC RFC 3339 timestamp')
     result = datetime.fromisoformat(value.replace('Z', '+00:00'))
     require(result.utcoffset() == timedelta(0), 'Timestamp must be UTC')
     return result

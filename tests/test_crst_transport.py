@@ -1,4 +1,4 @@
-"""Offline tests of the backbone transport with a mock HTTP transport; no network."""
+"""Offline tests of the backbone transport against a mock HTTP layer."""
 import json
 
 import httpx

@@ -133,8 +133,8 @@ def test_reject_collapsed_hard_distractor_roles(changed, kind):
     same_entity = next(e for e in entries if 'same_entity_different_attribute' in validator.tags(e))
     related = next(e for e in entries if 'semantically_related_different_key' in validator.tags(e))
     related['annotation']['diagnostic_tags'] = ['other']
-    # This paired attribute really is semantically related, so both tags are
-    # true; rejection must be about distinct entry IDs, not false semantics.
+    # This paired attribute is semantically related, so both tags are true;
+    # the rejection concerns distinct entry IDs, not incorrect semantics.
     same_entity['annotation']['diagnostic_tags'].append('semantically_related_different_key')
     with pytest.raises(ValueError, match='three distinct entry IDs'):
         validator.validate_dataset(changed)

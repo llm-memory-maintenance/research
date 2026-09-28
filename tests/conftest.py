@@ -1,4 +1,5 @@
-"""Tests must never create anything inside the protected result namespaces, even if a guard under test regresses."""
+"""Autouse guards keep tests from creating anything inside the protected result namespaces, even if a guard
+under test regresses."""
 from pathlib import Path
 
 import pytest
