@@ -643,7 +643,7 @@ def assert_moved_past(record, loaded):
 
 
 def test_freeze_history_distinct_records_no_record_substitutes_for_another(monkeypatch):
-    """Eight distinct immutable records exist on disk (v1, v2 r1 to r7) with different paths, commits and
+    """Eight distinct records exist on disk (v1, v2 r1 to r7) with different paths, commits and
     qualify_generators.py hashes. None substitutes for another: only the active r7 freezes the current
     sources, while the lookup pointed at any earlier record validates it as authentic (no raise) yet reports
     NOT_FROZEN.

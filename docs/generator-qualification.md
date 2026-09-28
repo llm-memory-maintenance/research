@@ -341,7 +341,7 @@ executed.
 and committed at `e5e9d500d3e3f0805f5dfbce53eaed5d957ab74e` was extended,
 offline only, to add the predeclared fallback candidate profile (§11), then
 extended again to add generic per-slot capability state and single-slot
-execution (§13). That second extension was reviewed and committed at
+execution (§13). That first extension was reviewed and committed at
 `3d43b6475ca76af7216ba8abb560e7ddb8e5b6ba`; the current reviewed
 implementation, adding per-slot and single-slot support, is committed at
 `585b5e2844504fec703287f8dd4869668615671d`, and
